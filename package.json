@@ -1,0 +1,22 @@
+{
+  "name": "deplo-templates",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "generate": "bun run src/generate/index.ts",
+    "start": "bun run src/index.ts",
+    "dev": "NODE_ENV=development bun --watch src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@joint-ops/hitlimit-bun": "^1.4.0",
+    "consola": "^3.4.2",
+    "zod": "^4.4.3"
+  }
+}
