@@ -1,0 +1,8 @@
+services:
+  dashy:
+    image: lissy93/dashy:latest
+    restart: unless-stopped
+    volumes:
+      - dashy-config:/app/user-data
+volumes:
+  dashy-config: {}

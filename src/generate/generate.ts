@@ -2,7 +2,7 @@ import { categories as sourceCategories } from "../categories";
 import { consola } from "consola";
 import { categoryRawSchema, imageUrlSchema, templateRawSchema } from "../schemas";
 import type { Category, CategoryRaw, Template, TemplateRaw } from "../schemas";
-import { capitalize, normalizeString, slugify } from "../utils/strings";
+import { normalizeString, slugify } from "../utils/strings";
 
 const sourceDirectory = `${import.meta.dir}/../templates`;
 const outputDirectory = `${import.meta.dir}/../generated`;
@@ -29,7 +29,7 @@ function normalizeCategory(category: CategoryRaw): GeneratedCategory {
   const name = normalizeString(category.name);
   if (!name) throw new Error("A category has an empty name.");
   return {
-    name: capitalize(name),
+    name,
     icon: normalizeString(category.icon),
     description: normalizeString(category.description),
     slug: slugify(name),
@@ -49,7 +49,7 @@ function normalizeTemplate(template: TemplateRaw, description: string, category:
 
   return {
     ...template,
-    name: capitalize(name),
+    name,
     shortDescription: normalizeString(template.shortDescription),
     category,
     developedBy: { ...template.developedBy, label: normalizeString(template.developedBy.label) },
@@ -120,10 +120,13 @@ export async function generate() {
     if (!category) throw new Error(`${directory}: category \"${raw.category.name}\" does not exist.`);
 
     const template = normalizeTemplate(raw, await Bun.file(descriptionPath).text(), category);
+    // Deplo reads template.toml with its own lenient parser, so a strict TOML
+    // failure (a raw regex inside a """...""" mount, say) is a warning, not a
+    // reason to keep a working template out of the catalog.
     try {
       Bun.TOML.parse(await Bun.file(configPath).text());
     } catch (error) {
-      throw new Error(`${directory}: invalid template.toml (${error instanceof Error ? error.message : error}).`);
+      consola.warn(`${directory}: template.toml is not strict TOML (${error instanceof Error ? error.message : error}).`);
     }
     try {
       Bun.YAML.parse(await Bun.file(composePath).text());

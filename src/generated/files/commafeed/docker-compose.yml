@@ -1,0 +1,6 @@
+services:
+  commafeed:
+    image: athou/commafeed:latest-h2
+    restart: unless-stopped
+    volumes:
+      - ./commafeed-data:/commafeed/data

@@ -1,0 +1,9 @@
+services:
+  dumbpad:
+    image: dumbwareio/dumbpad:latest
+    restart: unless-stopped
+    volumes:
+      - dumbpad-data:/app/data
+
+volumes:
+  dumbpad-data: {}

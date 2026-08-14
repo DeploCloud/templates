@@ -1,0 +1,11 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome:latest
+    restart: unless-stopped
+    volumes:
+      - adguardhome-work:/opt/adguardhome/work
+      - adguardhome-conf:/opt/adguardhome/conf
+
+volumes:
+  adguardhome-work: {}
+  adguardhome-conf: {}

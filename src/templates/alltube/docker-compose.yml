@@ -1,0 +1,9 @@
+services:
+  alltube:
+    image: dnomd343/alltube:latest
+    restart: unless-stopped
+    environment:
+      - TITLE=${TITLE}
+      - CONVERT=${CONVERT}
+      - STREAM=${STREAM}
+      - REMUX=${REMUX} 

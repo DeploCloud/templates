@@ -1,0 +1,7 @@
+
+services:
+  bentopdf:
+    image: bentopdf/bentopdf:latest
+    restart: unless-stopped
+    expose:
+      - 80
