@@ -78,13 +78,13 @@ const server = Bun.serve({
       return slugSchema.safeParse(slug).success
         ? serveAsset(`${generatedDirectory}/images/${slug}/${file}`)
         : notFound();
-    }),
+    }, "asset"),
     "/files/:slug/:file": withRateLimit((request) => {
       const { slug, file } = request.params;
       return slugSchema.safeParse(slug).success
         ? serveAsset(`${generatedDirectory}/files/${slug}/${file}`)
         : notFound();
-    }),
+    }, "asset"),
     "/version": withRateLimit(() => json({ version })),
   },
   fetch: withRateLimit(async () => notFound()),

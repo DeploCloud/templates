@@ -38,4 +38,6 @@ GET /version                GET /templates/:slug
                             GET /images/:slug/:file  GET /files/:slug/:file
 ```
 
-Read-only, 60 requests per minute per IP.
+Read-only. Rate limited per client: 120 JSON requests and 600 asset requests a
+minute. Behind a reverse proxy, set `TRUSTED_PROXY_HEADER` to the header it sets
+(`cf-connecting-ip` behind Cloudflare) or every client shares one bucket.
