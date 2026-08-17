@@ -20,6 +20,11 @@ export function listTemplates(query: TemplateListQuery) {
           template.description,
           template.category.name,
           template.category.slug,
+          ...template.variants.flatMap((variant) => [
+            variant.name,
+            variant.slug,
+            variant.shortDescription,
+          ]),
         ].some((value) => value.toLocaleLowerCase().includes(search))),
   );
 

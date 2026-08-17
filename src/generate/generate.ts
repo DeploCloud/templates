@@ -1,7 +1,7 @@
 import { categories as sourceCategories } from "../categories";
 import { consola } from "consola";
-import { categoryRawSchema, imageUrlSchema, templateRawSchema } from "../schemas";
-import type { Category, CategoryRaw, Template, TemplateRaw } from "../schemas";
+import { categoryRawSchema, imageUrlSchema, templateRawSchema, templateVariantRawSchema } from "../schemas";
+import type { Category, CategoryRaw, Template, TemplateRaw, TemplateVariant, TemplateVariantRaw } from "../schemas";
 import { normalizeString, slugify } from "../utils/strings";
 
 const sourceDirectory = `${import.meta.dir}/../templates`;
@@ -9,14 +9,19 @@ const outputDirectory = `${import.meta.dir}/../generated`;
 const imageExtensions = new Set([".avif", ".gif", ".jpeg", ".jpg", ".png", ".webp"]);
 
 type GeneratedCategory = Category;
-type GeneratedTemplate = Omit<Template, "lastUpdate" | "createdAt"> & {
+type GeneratedVariant = Omit<TemplateVariant, "lastUpdate" | "createdAt"> & {
   lastUpdate: string;
   createdAt: string;
 };
+type GeneratedTemplate = Omit<Template, "lastUpdate" | "createdAt" | "variants"> & {
+  lastUpdate: string;
+  createdAt: string;
+  variants: GeneratedVariant[];
+};
 
-async function sourceImages(path: string) {
+async function sourceImages(path: string, glob = "**/*") {
   try {
-    return (await Array.fromAsync(new Bun.Glob("**/*").scan({ cwd: path, onlyFiles: true })))
+    return (await Array.fromAsync(new Bun.Glob(glob).scan({ cwd: path, onlyFiles: true })))
       .filter((file) => imageExtensions.has(`.${file.split(".").pop()?.toLowerCase()}`))
       .map((file) => `${path}/${file}`)
       .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
@@ -36,7 +41,26 @@ function normalizeCategory(category: CategoryRaw): GeneratedCategory {
   };
 }
 
-function normalizeTemplate(template: TemplateRaw, description: string, category: GeneratedCategory): GeneratedTemplate {
+function normalizeVariant(templateSlug: string, variant: TemplateVariantRaw): GeneratedVariant {
+  const name = normalizeString(variant.name);
+  if (!name) throw new Error(`${templateSlug}: a variant has an empty name.`);
+  const slug = slugify(name);
+
+  return {
+    ...variant,
+    name,
+    shortDescription: normalizeString(variant.shortDescription),
+    slug,
+    files: {
+      config: `/files/${templateSlug}/${slug}/template.toml`,
+      compose: `/files/${templateSlug}/${slug}/docker-compose.yml`,
+    },
+    lastUpdate: variant.lastUpdate.toISOString(),
+    createdAt: variant.createdAt.toISOString(),
+  };
+}
+
+function normalizeTemplate(template: TemplateRaw, description: string, category: GeneratedCategory, variants: GeneratedVariant[]): GeneratedTemplate {
   const name = normalizeString(template.name);
   if (!name) throw new Error("A template has an empty name.");
   const slug = slugify(name);
@@ -57,13 +81,10 @@ function normalizeTemplate(template: TemplateRaw, description: string, category:
     description: description.trim(),
     logo: null,
     images: [],
-    files: {
-      config: `/files/${slug}/template.toml`,
-      compose: `/files/${slug}/docker-compose.yml`,
-    },
+    variants,
     slug,
-    lastUpdate: template.lastUpdate.toISOString(),
-    createdAt: template.createdAt.toISOString(),
+    lastUpdate: new Date(Math.max(...variants.map(({ lastUpdate }) => Date.parse(lastUpdate)))).toISOString(),
+    createdAt: new Date(Math.min(...variants.map(({ createdAt }) => Date.parse(createdAt)))).toISOString(),
   };
 }
 
@@ -108,8 +129,6 @@ export async function generate() {
     const templateDirectory = `${sourceDirectory}/${directory}`;
     const metaPath = `${templateDirectory}/meta.ts`;
     const descriptionPath = `${templateDirectory}/description.md`;
-    const configPath = `${templateDirectory}/template.toml`;
-    const composePath = `${templateDirectory}/docker-compose.yml`;
     let raw: TemplateRaw;
     try {
       raw = templateRawSchema.parse((await import(metaPath)).default);
@@ -119,27 +138,51 @@ export async function generate() {
     const category = categoriesBySlug.get(slugify(raw.category.name));
     if (!category) throw new Error(`${directory}: category \"${raw.category.name}\" does not exist.`);
 
-    const template = normalizeTemplate(raw, await Bun.file(descriptionPath).text(), category);
-    // Deplo reads template.toml with its own lenient parser, so a strict TOML
-    // failure (a raw regex inside a """...""" mount, say) is a warning, not a
-    // reason to keep a working template out of the catalog.
-    try {
-      Bun.TOML.parse(await Bun.file(configPath).text());
-    } catch (error) {
-      consola.warn(`${directory}: template.toml is not strict TOML (${error instanceof Error ? error.message : error}).`);
+    const templateSlug = slugify(normalizeString(raw.name));
+    const variants: GeneratedVariant[] = [];
+    const variantMetaFiles = await Array.fromAsync(new Bun.Glob("*/meta.ts").scan({ cwd: templateDirectory, onlyFiles: true }));
+    if (!variantMetaFiles.length) throw new Error(`${directory}: at least one variant is required.`);
+
+    for (const variantMetaFile of variantMetaFiles.sort()) {
+      const variantDirectory = variantMetaFile.split("/")[0]!;
+      const variantPath = `${templateDirectory}/${variantDirectory}`;
+      let rawVariant: TemplateVariantRaw;
+      try {
+        rawVariant = templateVariantRawSchema.parse((await import(`${variantPath}/meta.ts`)).default);
+      } catch (error) {
+        throw new Error(`${directory}/${variantDirectory}: could not load meta.ts (${error instanceof Error ? error.message : error}).`);
+      }
+
+      const variant = normalizeVariant(templateSlug, rawVariant);
+      const configPath = `${variantPath}/template.toml`;
+      const composePath = `${variantPath}/docker-compose.yml`;
+      // Deplo reads template.toml with its own lenient parser, so a strict TOML
+      // failure is a warning, not a reason to keep a working variant out.
+      try {
+        Bun.TOML.parse(await Bun.file(configPath).text());
+      } catch (error) {
+        consola.warn(`${directory}/${variantDirectory}: template.toml is not strict TOML (${error instanceof Error ? error.message : error}).`);
+      }
+      try {
+        Bun.YAML.parse(await Bun.file(composePath).text());
+      } catch (error) {
+        throw new Error(`${directory}/${variantDirectory}: invalid docker-compose.yml (${error instanceof Error ? error.message : error}).`);
+      }
+
+      const outputFiles = `${outputDirectory}/files/${templateSlug}/${variant.slug}`;
+      files.push(
+        { source: configPath, destination: `${outputFiles}/template.toml` },
+        { source: composePath, destination: `${outputFiles}/docker-compose.yml` },
+      );
+      variants.push(variant);
     }
-    try {
-      Bun.YAML.parse(await Bun.file(composePath).text());
-    } catch (error) {
-      throw new Error(`${directory}: invalid docker-compose.yml (${error instanceof Error ? error.message : error}).`);
-    }
-    const outputFiles = `${outputDirectory}/files/${template.slug}`;
-    files.push(
-      { source: configPath, destination: `${outputFiles}/template.toml` },
-      { source: composePath, destination: `${outputFiles}/docker-compose.yml` },
-    );
+
+    if (new Set(variants.map(({ slug }) => slug)).size !== variants.length)
+      throw new Error(`${directory}: variant names must produce unique slugs.`);
+
+    const template = normalizeTemplate(raw, await Bun.file(descriptionPath).text(), category, variants);
     const outputImages = `${outputDirectory}/images/${template.slug}`;
-    const logo = (await sourceImages(templateDirectory)).find((file) => file.split("/").pop()?.replace(/\.[^.]+$/, "").toLowerCase() === "logo");
+    const logo = (await sourceImages(templateDirectory, "*")).find((file) => file.split("/").pop()?.replace(/\.[^.]+$/, "").toLowerCase() === "logo");
     if (logo) {
       template.logo = `/images/${template.slug}/logo.webp`;
       jobs.push({ source: logo, destination: `${outputImages}/logo.webp` });
@@ -163,5 +206,5 @@ export async function generate() {
   await Bun.write(`${outputDirectory}/data.ts`, dataFile(data, version));
 
   consola.success("Templates generated");
-  consola.info(`${templates.length} templates · ${categories.length} categories · ${jobs.length} WebP images · ${files.length} files`);
+  consola.info(`${templates.length} templates · ${templates.reduce((total, template) => total + template.variants.length, 0)} variants · ${categories.length} categories · ${jobs.length} WebP images · ${files.length} files`);
 }

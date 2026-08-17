@@ -38,17 +38,24 @@ export const categorySchema = categoryRawSchema.extend({ slug: slugSchema }).sup
   if (slug !== slugify(name)) context.addIssue({ code: "custom", path: ["slug"], message: "Slug must match the category name." });
 });
 
+const templateLinksSchema = z.object({
+  github: httpsUrlSchema.optional(),
+  website: httpsUrlSchema.optional(),
+  docs: httpsUrlSchema.optional(),
+}).strict().refine((links) => Object.values(links).some(Boolean), "At least one project link is required.");
+
 export const templateRawSchema = z.object({
   name: nameSchema,
   shortDescription: z.string().trim().min(20).max(240),
   category: categoryRawSchema,
   developedBy: linkSchema,
   submittedBy: linkSchema,
-  links: z.object({
-    github: httpsUrlSchema.optional(),
-    website: httpsUrlSchema.optional(),
-    docs: httpsUrlSchema.optional(),
-  }).strict().refine((links) => Object.values(links).some(Boolean), "At least one project link is required."),
+  links: templateLinksSchema,
+}).strict();
+
+export const templateVariantRawSchema = z.object({
+  name: nameSchema,
+  shortDescription: z.string().trim().min(20).max(240),
   lastUpdate: z.date(),
   createdAt: z.date(),
 }).strict().superRefine(({ createdAt, lastUpdate }, context) => {
@@ -56,18 +63,27 @@ export const templateRawSchema = z.object({
 });
 
 const logoUrlSchema = z.string().regex(/^\/images\/[a-z0-9]+(?:-[a-z0-9]+)*\/logo\.webp$/, "Expected a WebP logo path.");
-const templateFilesSchema = z.object({
-  config: z.string().regex(/^\/files\/[a-z0-9]+(?:-[a-z0-9]+)*\/template\.toml$/),
-  compose: z.string().regex(/^\/files\/[a-z0-9]+(?:-[a-z0-9]+)*\/docker-compose\.yml$/),
+const templateVariantFilesSchema = z.object({
+  config: z.string().regex(/^\/files\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\/template\.toml$/),
+  compose: z.string().regex(/^\/files\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\/docker-compose\.yml$/),
 }).strict();
+
+export const templateVariantSchema = templateVariantRawSchema.safeExtend({
+  slug: slugSchema,
+  files: templateVariantFilesSchema,
+}).superRefine(({ name, slug }, context) => {
+  if (slug !== slugify(name)) context.addIssue({ code: "custom", path: ["slug"], message: "Slug must match the variant name." });
+});
 
 export const templateSchema = templateRawSchema.safeExtend({
   slug: slugSchema,
   logo: logoUrlSchema.nullable(),
   images: z.array(imageUrlSchema),
-  files: templateFilesSchema,
+  variants: z.array(templateVariantSchema).min(1),
   category: categorySchema,
   description: z.string().trim().min(20).max(20_000),
+  createdAt: z.date(),
+  lastUpdate: z.date(),
 }).superRefine(({ name, slug }, context) => {
   if (!slugSchema.safeParse(slug).success || slug !== slugify(name))
     context.addIssue({ code: "custom", path: ["slug"], message: "Slug must match the template name." });
@@ -79,6 +95,8 @@ export type Link = z.infer<typeof linkSchema>;
 export type CategoryRaw = z.infer<typeof categoryRawSchema>;
 export type Category = z.infer<typeof categorySchema>;
 export type TemplateRaw = z.infer<typeof templateRawSchema>;
+export type TemplateVariantRaw = z.infer<typeof templateVariantRawSchema>;
+export type TemplateVariant = z.infer<typeof templateVariantSchema>;
 export type Template = z.infer<typeof templateSchema>;
 export type TemplateListQuery = z.infer<typeof templateListQuerySchema>;
 export type CategoryListQuery = z.infer<typeof categoryListQuerySchema>;

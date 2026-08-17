@@ -56,9 +56,9 @@ const server = Bun.serve({
         json(paginate(listTemplates(query), query)),
       ),
     ),
-    "/templates/:slug": withRateLimit((request) => {
+    "/templates/:templateSlug": withRateLimit((request) => {
       const template = templates.find(
-        ({ slug }) => slug === request.params.slug,
+        ({ slug }) => slug === request.params.templateSlug,
       );
       return template ? json(template) : notFound();
     }),
@@ -73,16 +73,16 @@ const server = Bun.serve({
       );
       return category ? json(category) : notFound();
     }),
-    "/images/:slug/:file": withRateLimit((request) => {
-      const { slug, file } = request.params;
-      return slugSchema.safeParse(slug).success
-        ? serveAsset(`${generatedDirectory}/images/${slug}/${file}`)
+    "/images/:templateSlug/:file": withRateLimit((request) => {
+      const { templateSlug, file } = request.params;
+      return slugSchema.safeParse(templateSlug).success
+        ? serveAsset(`${generatedDirectory}/images/${templateSlug}/${file}`)
         : notFound();
     }, "asset"),
-    "/files/:slug/:file": withRateLimit((request) => {
-      const { slug, file } = request.params;
-      return slugSchema.safeParse(slug).success
-        ? serveAsset(`${generatedDirectory}/files/${slug}/${file}`)
+    "/files/:templateSlug/:variantSlug/:file": withRateLimit((request) => {
+      const { templateSlug, variantSlug, file } = request.params;
+      return slugSchema.safeParse(templateSlug).success && slugSchema.safeParse(variantSlug).success
+        ? serveAsset(`${generatedDirectory}/files/${templateSlug}/${variantSlug}/${file}`)
         : notFound();
     }, "asset"),
     "/version": withRateLimit(() => json({ version })),

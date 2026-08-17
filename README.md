@@ -5,20 +5,24 @@ a new template goes live without a Deplo release.
 
 ## Adding a template
 
-Create `src/templates/<anything>/` with:
+Each template owns shared metadata and assets, plus one or more deployable variants:
 
-| File                 | Required | What it is                                                      |
-| -------------------- | -------- | --------------------------------------------------------------- |
-| `meta.ts`            | yes      | Default-exports a `TemplateRaw` (name, category, links, dates).   |
-| `description.md`     | yes      | The long description. Markdown, at least 20 characters.           |
-| `docker-compose.yml` | yes      | The stack Deplo deploys. Must be valid YAML.                      |
-| `template.toml`      | yes      | Variables, env, exposed services and mounted config files.        |
-| `logo.png`           | no       | Any raster format Bun reads (PNG, JPEG, WebP, GIF, AVIF, HEIC).   |
-| `images/*`           | no       | Screenshots, converted and numbered in filename order.            |
+```text
+src/templates/<template>/
+├── meta.ts
+├── description.md
+├── logo.png                  # optional
+├── images/                   # optional screenshots
+└── <variant>/
+    ├── meta.ts
+    ├── docker-compose.yml
+    └── template.toml
+```
 
-The **slug is derived from `name`** (`AdGuard Home` → `adguard-home`) and must be
-unique, so the directory name is only for humans. `category.name` has to match
-one of the categories in `src/categories.ts`.
+The template `meta.ts` exports a `TemplateRaw`; each variant `meta.ts` exports a
+`TemplateVariantRaw`. Template and variant slugs are derived from their names
+and must be unique in their respective scope. `category.name` has to match one
+of the categories in `src/categories.ts`.
 
 Then:
 
@@ -33,9 +37,10 @@ bun run dev        # serves it on :3000
 
 ```
 GET /status                 GET /templates?page=&limit=&search=&category=&sort=&order=
-GET /version                GET /templates/:slug
+GET /version                GET /templates/:templateSlug
                             GET /categories        GET /categories/:slug
-                            GET /images/:slug/:file  GET /files/:slug/:file
+                            GET /images/:templateSlug/:file
+                            GET /files/:templateSlug/:variantSlug/:file
 ```
 
 Read-only. Rate limited per client: 120 JSON requests and 600 asset requests a

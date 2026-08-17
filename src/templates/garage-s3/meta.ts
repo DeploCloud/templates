@@ -7,6 +7,4 @@ export default {
   developedBy: {"label":"Deuxfleurs","url":"https://github.com/Deuxfleurs"},
   submittedBy: {"label":"Deplo","url":"https://github.com/DeploCloud"},
   links: {"github":"https://git.deuxfleurs.fr/Deuxfleurs/garage","website":"https://garagehq.deuxfleurs.fr","docs":"https://garagehq.deuxfleurs.fr/documentation/quick-start/"},
-  lastUpdate: new Date("2026-08-14T00:00:00.000Z"),
-  createdAt: new Date("2026-08-14T00:00:00.000Z"),
 } satisfies TemplateRaw;
