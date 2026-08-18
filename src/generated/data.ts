@@ -102,46 +102,72 @@ const data = {
   "templates": [
     {
       "name": "Garage S3",
-      "shortDescription": "Distributed S3-compatible object storage built for self-hosting across multiple machines without a single point of failure.",
-      "category": {
-        "name": "Storage",
-        "icon": "hard-drive",
-        "description": "Object storage, file sync, backups and the shares and drives behind them.",
-        "slug": "storage"
-      },
-      "developedBy": {
-        "label": "Deuxfleurs",
-        "url": "https://github.com/Deuxfleurs"
-      },
-      "submittedBy": {
-        "label": "Deplo",
-        "url": "https://github.com/DeploCloud"
-      },
-      "links": {
-        "github": "https://git.deuxfleurs.fr/Deuxfleurs/garage",
-        "website": "https://garagehq.deuxfleurs.fr",
-        "docs": "https://garagehq.deuxfleurs.fr/documentation/quick-start/"
-      },
-      "description": "Distributed S3-compatible object storage built for self-hosting across multiple machines without a single point of failure.",
       "logo": "/images/garage-s3/logo.webp",
-      "images": [],
       "variants": [
         {
-          "name": "Base",
+          "name": "Default",
           "shortDescription": "Distributed S3-compatible object storage built for self-hosting across multiple machines without a single point of failure.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "Deuxfleurs",
+            "url": "https://github.com/Deuxfleurs"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://git.deuxfleurs.fr/Deuxfleurs/garage",
+            "website": "https://garagehq.deuxfleurs.fr",
+            "docs": [
+              "https://garagehq.deuxfleurs.fr/documentation/quick-start/"
+            ]
+          },
           "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
-          "slug": "base",
+          "description": "# Garage S3\n\n**Garage** è uno storage a oggetti compatibile con **Amazon S3**, progettato per essere eseguito in autonomia su una o più macchine.\n\nLa versione **Base** include il servizio essenziale per:\n\n- creare bucket S3;\n- gestire chiavi e permessi di accesso;\n- distribuire i dati tra più nodi;\n- mantenere lo storage operativo senza dipendere da un singolo server.\n\nPer maggiori informazioni, visita la [documentazione ufficiale di Garage](https://garagehq.deuxfleurs.fr).",
+          "logo": "/images/garage-s3/default/logo.webp",
+          "images": [],
+          "slug": "default",
           "files": {
-            "config": "/files/garage-s3/base/template.toml",
-            "compose": "/files/garage-s3/base/docker-compose.yml"
+            "config": "/files/garage-s3/default/template.toml",
+            "compose": "/files/garage-s3/default/docker-compose.yml"
           }
         },
         {
           "name": "Web UI",
           "shortDescription": "Distributed S3-compatible object storage for self-hosting, bundled with a web UI for managing buckets and access keys.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "Deuxfleurs",
+            "url": "https://github.com/Deuxfleurs"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://git.deuxfleurs.fr/Deuxfleurs/garage",
+            "website": "https://garagehq.deuxfleurs.fr",
+            "docs": [
+              "https://garagehq.deuxfleurs.fr/documentation/quick-start/"
+            ]
+          },
           "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
+          "description": "# Garage S3 con Web UI\n\n**Garage** è uno storage a oggetti compatibile con **Amazon S3**, pensato per il self-hosting e la distribuzione tra più macchine.\n\nQuesta versione aggiunge una **Web UI** per gestire più facilmente:\n\n- bucket e contenuti;\n- chiavi di accesso;\n- configurazione dello storage;\n- operazioni quotidiane di amministrazione.\n\nScopri di più sul [sito ufficiale di Garage](https://garagehq.deuxfleurs.fr).",
+          "logo": "/images/garage-s3/web-ui/logo.webp",
+          "images": [],
           "slug": "web-ui",
           "files": {
             "config": "/files/garage-s3/web-ui/template.toml",
@@ -149,13 +175,11 @@ const data = {
           }
         }
       ],
-      "slug": "garage-s3",
-      "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
-      "createdAt": new Date("2026-08-14T00:00:00.000Z")
+      "slug": "garage-s3"
     }
   ]
 } as const satisfies { categories: readonly Category[]; templates: readonly Template[] };
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "40b8b8a074441d1cd61695aa83da2434a78bdfb44e90cab294a322175250fa85";
+export const version = "b976c48c69962dba78e329aa3b4757d1235a28b342dbb2eb34572f3944e3587f";

@@ -1,6 +1,6 @@
 import { categories as sourceCategories } from "../categories";
 import { consola } from "consola";
-import { categoryRawSchema, imageUrlSchema, templateRawSchema, templateVariantRawSchema } from "../schemas";
+import { categoryRawSchema, DEFAULT_VARIANT_SLUG, imageUrlSchema, templateRawSchema, templateVariantRawSchema } from "../schemas";
 import type { Category, CategoryRaw, Template, TemplateRaw, TemplateVariant, TemplateVariantRaw } from "../schemas";
 import { normalizeString, slugify } from "../utils/strings";
 
@@ -13,9 +13,7 @@ type GeneratedVariant = Omit<TemplateVariant, "lastUpdate" | "createdAt"> & {
   lastUpdate: string;
   createdAt: string;
 };
-type GeneratedTemplate = Omit<Template, "lastUpdate" | "createdAt" | "variants"> & {
-  lastUpdate: string;
-  createdAt: string;
+type GeneratedTemplate = Omit<Template, "variants"> & {
   variants: GeneratedVariant[];
 };
 
@@ -41,15 +39,27 @@ function normalizeCategory(category: CategoryRaw): GeneratedCategory {
   };
 }
 
-function normalizeVariant(templateSlug: string, variant: TemplateVariantRaw): GeneratedVariant {
+function normalizeVariant(templateSlug: string, variant: TemplateVariantRaw, description: string, category: GeneratedCategory): GeneratedVariant {
   const name = normalizeString(variant.name);
   if (!name) throw new Error(`${templateSlug}: a variant has an empty name.`);
   const slug = slugify(name);
+  const validHttps = (value: string) => URL.canParse(value) && new URL(value).protocol === "https:";
+  for (const [label, link] of Object.entries({ developedBy: variant.developedBy, submittedBy: variant.submittedBy }))
+    if (!validHttps(link.url)) throw new Error(`${templateSlug}/${slug}: invalid ${label} URL.`);
+  for (const [label, links] of Object.entries(variant.links))
+    for (const url of Array.isArray(links) ? links : [links])
+      if (!validHttps(url)) throw new Error(`${templateSlug}/${slug}: invalid ${label} URL.`);
 
   return {
     ...variant,
     name,
     shortDescription: normalizeString(variant.shortDescription),
+    category,
+    developedBy: { ...variant.developedBy, label: normalizeString(variant.developedBy.label) },
+    submittedBy: { ...variant.submittedBy, label: normalizeString(variant.submittedBy.label) },
+    description: description.trim(),
+    logo: null,
+    images: [],
     slug,
     files: {
       config: `/files/${templateSlug}/${slug}/template.toml`,
@@ -60,31 +70,16 @@ function normalizeVariant(templateSlug: string, variant: TemplateVariantRaw): Ge
   };
 }
 
-function normalizeTemplate(template: TemplateRaw, description: string, category: GeneratedCategory, variants: GeneratedVariant[]): GeneratedTemplate {
+function normalizeTemplate(template: TemplateRaw, variants: GeneratedVariant[], hasLogo: boolean): GeneratedTemplate {
   const name = normalizeString(template.name);
   if (!name) throw new Error("A template has an empty name.");
   const slug = slugify(name);
 
-  const validHttps = (value: string) => URL.canParse(value) && new URL(value).protocol === "https:";
-  for (const [label, link] of Object.entries({ developedBy: template.developedBy, submittedBy: template.submittedBy }))
-    if (!validHttps(link.url)) throw new Error(`${name}: invalid ${label} URL.`);
-  for (const [label, url] of Object.entries(template.links))
-    if (!validHttps(url)) throw new Error(`${name}: invalid ${label} URL.`);
-
   return {
-    ...template,
     name,
-    shortDescription: normalizeString(template.shortDescription),
-    category,
-    developedBy: { ...template.developedBy, label: normalizeString(template.developedBy.label) },
-    submittedBy: { ...template.submittedBy, label: normalizeString(template.submittedBy.label) },
-    description: description.trim(),
-    logo: null,
-    images: [],
+    logo: hasLogo ? `/images/${slug}/logo.webp` : null,
     variants,
     slug,
-    lastUpdate: new Date(Math.max(...variants.map(({ lastUpdate }) => Date.parse(lastUpdate)))).toISOString(),
-    createdAt: new Date(Math.min(...variants.map(({ createdAt }) => Date.parse(createdAt)))).toISOString(),
   };
 }
 
@@ -128,24 +123,22 @@ export async function generate() {
     const directory = metaFile.split("/")[0]!;
     const templateDirectory = `${sourceDirectory}/${directory}`;
     const metaPath = `${templateDirectory}/meta.ts`;
-    const descriptionPath = `${templateDirectory}/description.md`;
     let raw: TemplateRaw;
     try {
       raw = templateRawSchema.parse((await import(metaPath)).default);
     } catch (error) {
       throw new Error(`${directory}: could not load meta.ts (${error instanceof Error ? error.message : error}).`);
     }
-    const category = categoriesBySlug.get(slugify(raw.category.name));
-    if (!category) throw new Error(`${directory}: category \"${raw.category.name}\" does not exist.`);
-
     const templateSlug = slugify(normalizeString(raw.name));
     const variants: GeneratedVariant[] = [];
+    const variantSources = new Map<string, string>();
     const variantMetaFiles = await Array.fromAsync(new Bun.Glob("*/meta.ts").scan({ cwd: templateDirectory, onlyFiles: true }));
     if (!variantMetaFiles.length) throw new Error(`${directory}: at least one variant is required.`);
 
     for (const variantMetaFile of variantMetaFiles.sort()) {
       const variantDirectory = variantMetaFile.split("/")[0]!;
       const variantPath = `${templateDirectory}/${variantDirectory}`;
+      const descriptionPath = `${variantPath}/description.md`;
       let rawVariant: TemplateVariantRaw;
       try {
         rawVariant = templateVariantRawSchema.parse((await import(`${variantPath}/meta.ts`)).default);
@@ -153,7 +146,9 @@ export async function generate() {
         throw new Error(`${directory}/${variantDirectory}: could not load meta.ts (${error instanceof Error ? error.message : error}).`);
       }
 
-      const variant = normalizeVariant(templateSlug, rawVariant);
+      const category = categoriesBySlug.get(slugify(rawVariant.category.name));
+      if (!category) throw new Error(`${directory}/${variantDirectory}: category \"${rawVariant.category.name}\" does not exist.`);
+      const variant = normalizeVariant(templateSlug, rawVariant, await Bun.file(descriptionPath).text(), category);
       const configPath = `${variantPath}/template.toml`;
       const composePath = `${variantPath}/docker-compose.yml`;
       // Deplo reads template.toml with its own lenient parser, so a strict TOML
@@ -175,22 +170,31 @@ export async function generate() {
         { source: composePath, destination: `${outputFiles}/docker-compose.yml` },
       );
       variants.push(variant);
+      variantSources.set(variant.slug, variantPath);
     }
 
     if (new Set(variants.map(({ slug }) => slug)).size !== variants.length)
       throw new Error(`${directory}: variant names must produce unique slugs.`);
+    if (!variants.some(({ slug }) => slug === DEFAULT_VARIANT_SLUG))
+      throw new Error(`${directory}: a "Default" variant is required.`);
 
-    const template = normalizeTemplate(raw, await Bun.file(descriptionPath).text(), category, variants);
-    const outputImages = `${outputDirectory}/images/${template.slug}`;
-    const logo = (await sourceImages(templateDirectory, "*")).find((file) => file.split("/").pop()?.replace(/\.[^.]+$/, "").toLowerCase() === "logo");
-    if (logo) {
-      template.logo = `/images/${template.slug}/logo.webp`;
-      jobs.push({ source: logo, destination: `${outputImages}/logo.webp` });
-    }
-    for (const [index, image] of (await sourceImages(`${templateDirectory}/images`)).entries()) {
-      const output = imageUrlSchema.parse(`/images/${template.slug}/${index + 1}.webp`);
-      template.images.push(output);
-      jobs.push({ source: image, destination: `${outputImages}/${index + 1}.webp` });
+    const fallbackLogo = (await sourceImages(templateDirectory, "*")).find((file) => file.split("/").pop()?.replace(/\.[^.]+$/, "").toLowerCase() === "logo");
+    const template = normalizeTemplate(raw, variants, Boolean(fallbackLogo));
+    if (fallbackLogo)
+      jobs.push({ source: fallbackLogo, destination: `${outputDirectory}/images/${template.slug}/logo.webp` });
+    for (const variant of template.variants) {
+      const variantSource = variantSources.get(variant.slug)!;
+      const outputImages = `${outputDirectory}/images/${template.slug}/${variant.slug}`;
+      const logo = (await sourceImages(variantSource, "*")).find((file) => file.split("/").pop()?.replace(/\.[^.]+$/, "").toLowerCase() === "logo");
+      if (!logo && !fallbackLogo)
+        throw new Error(`${directory}/${variant.slug}: missing logo; add a template logo or a variant logo.`);
+      variant.logo = `/images/${template.slug}/${variant.slug}/logo.webp`;
+      jobs.push({ source: logo ?? fallbackLogo!, destination: `${outputImages}/logo.webp` });
+      for (const [index, image] of (await sourceImages(`${variantSource}/images`)).entries()) {
+        const output = imageUrlSchema.parse(`/images/${template.slug}/${variant.slug}/${index + 1}.webp`);
+        variant.images.push(output);
+        jobs.push({ source: image, destination: `${outputImages}/${index + 1}.webp` });
+      }
     }
     templates.push(template);
   }

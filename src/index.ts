@@ -73,6 +73,12 @@ const server = Bun.serve({
       );
       return category ? json(category) : notFound();
     }),
+    "/images/:templateSlug/:variantSlug/:file": withRateLimit((request) => {
+      const { templateSlug, variantSlug, file } = request.params;
+      return slugSchema.safeParse(templateSlug).success && slugSchema.safeParse(variantSlug).success
+        ? serveAsset(`${generatedDirectory}/images/${templateSlug}/${variantSlug}/${file}`)
+        : notFound();
+    }, "asset"),
     "/images/:templateSlug/:file": withRateLimit((request) => {
       const { templateSlug, file } = request.params;
       return slugSchema.safeParse(templateSlug).success

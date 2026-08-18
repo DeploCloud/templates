@@ -1,8 +1,8 @@
 import type { TemplateVariantRaw } from "../../../schemas";
 
 export default {
-  name: "Web UI",
-  shortDescription: "Distributed S3-compatible object storage for self-hosting, bundled with a web UI for managing buckets and access keys.",
+  name: "Default",
+  shortDescription: "Distributed S3-compatible object storage built for self-hosting across multiple machines without a single point of failure.",
   category: { name: "Storage", icon: "hard-drive", description: "Object storage, file sync, backups and the shares and drives behind them." },
   developedBy: { label: "Deuxfleurs", url: "https://github.com/Deuxfleurs" },
   submittedBy: { label: "Deplo", url: "https://github.com/DeploCloud" },

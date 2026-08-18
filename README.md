@@ -5,16 +5,17 @@ a new template goes live without a Deplo release.
 
 ## Adding a template
 
-Each template owns shared metadata and assets, plus one or more deployable variants:
+Each template owns only its name. Every deployable variant owns its metadata and assets:
 
 ```text
 src/templates/<template>/
 ├── meta.ts
-├── description.md
-├── logo.png                  # optional
-├── images/                   # optional screenshots
+├── logo.png                  # optional template logo/fallback
 └── <variant>/
     ├── meta.ts
+    ├── description.md
+    ├── logo.png              # optional
+    ├── images/               # optional screenshots
     ├── docker-compose.yml
     └── template.toml
 ```
@@ -22,7 +23,9 @@ src/templates/<template>/
 The template `meta.ts` exports a `TemplateRaw`; each variant `meta.ts` exports a
 `TemplateVariantRaw`. Template and variant slugs are derived from their names
 and must be unique in their respective scope. `category.name` has to match one
-of the categories in `src/categories.ts`.
+of the categories in `src/categories.ts`. Every template must include a variant
+named `Default` (slug `default`), which is the store's canonical variant.
+`links.docs` is an array of HTTPS URLs.
 
 Then:
 
@@ -40,6 +43,7 @@ GET /status                 GET /templates?page=&limit=&search=&category=&sort=&
 GET /version                GET /templates/:templateSlug
                             GET /categories        GET /categories/:slug
                             GET /images/:templateSlug/:file
+                            GET /images/:templateSlug/:variantSlug/:file
                             GET /files/:templateSlug/:variantSlug/:file
 ```
 

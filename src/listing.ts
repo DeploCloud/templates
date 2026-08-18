@@ -11,27 +11,23 @@ export function listTemplates(query: TemplateListQuery) {
   const search = query.search.toLocaleLowerCase();
   const items = templates.filter(
     (template) =>
-      (!query.category || template.category.slug === query.category) &&
+      (!query.category || template.variants.some(({ category }) => category.slug === query.category)) &&
       (!search ||
         [
           template.name,
           template.slug,
-          template.shortDescription,
-          template.description,
-          template.category.name,
-          template.category.slug,
           ...template.variants.flatMap((variant) => [
             variant.name,
             variant.slug,
             variant.shortDescription,
+            variant.description,
+            variant.category.name,
+            variant.category.slug,
           ]),
         ].some((value) => value.toLocaleLowerCase().includes(search))),
   );
 
-  const value = (template: (typeof templates)[number]) =>
-    query.sort === "category"
-      ? template.category.name
-      : template[query.sort];
+  const value = (template: (typeof templates)[number]) => template.name;
   const direction = query.order === "asc" ? 1 : -1;
   return items.toSorted(
     (left, right) => direction * compare(value(left), value(right)),
