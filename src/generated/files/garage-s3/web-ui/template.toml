@@ -19,6 +19,7 @@ env = [
 serviceName = "garage"
 port = 3900
 host = "${main_domain}"
+primary = true
 
 [[config.domains]]
 serviceName = "garage-webui"

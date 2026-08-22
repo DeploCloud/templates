@@ -14,6 +14,7 @@ env = [
 serviceName = "garage"
 port = 3900
 host = "${main_domain}"
+primary = true
 
 [[config.mounts]]
 filePath = "garage.toml"
