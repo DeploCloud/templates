@@ -2,6 +2,7 @@
   "name": "deplo-templates",
   "module": "index.ts",
   "type": "module",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "generate": "bun run src/generate/index.ts",

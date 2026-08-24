@@ -50,3 +50,14 @@ GET /version                GET /templates/:templateSlug
 Read-only. Rate limited per client: 120 JSON requests and 600 asset requests a
 minute. Behind a reverse proxy, set `TRUSTED_PROXY_HEADER` to the header it sets
 (`cf-connecting-ip` behind Cloudflare) or every client shares one bucket.
+
+## License
+
+**[MIT](LICENSE)** © 2026 DeploCloud.
+
+Deliberately more permissive than [deplo itself](https://github.com/DeploCloud/deplo),
+which is AGPL: these are recipes. Copy one, adapt it, ship it somewhere else, no strings.
+Contributing a template back is welcome and never required.
+
+Each template deploys **third-party software under its own license**. MIT covers the
+catalog and the metadata around it, not what a template installs.
