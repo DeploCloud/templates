@@ -13,7 +13,7 @@ let bunServer: Bun.Server<undefined> | undefined;
 
 /**
  * Who a request is counted against. This service sits behind a reverse proxy in
- * every deployment that matters, and the socket address there is the proxy's —
+ * every deployment that matters, and the socket address there is the proxy's,
  * so keying on it puts the whole internet in a single bucket. `TRUSTED_PROXY_HEADER`
  * names the header the proxy in front sets (Cloudflare: `cf-connecting-ip`), and
  * only that one is read, so a client cannot pick its own bucket by inventing one.
@@ -22,7 +22,7 @@ const trustedHeader = process.env.TRUSTED_PROXY_HEADER?.toLowerCase();
 
 function clientKey(request: Request) {
   if (trustedHeader) {
-    // A forwarded chain reads "client, proxy1, proxy2" — the client is first.
+    // A forwarded chain reads "client, proxy1, proxy2" - the client is first.
     const forwarded = request.headers.get(trustedHeader)?.split(",")[0]?.trim();
     if (forwarded) return forwarded;
   }
