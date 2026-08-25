@@ -13,7 +13,9 @@ import { slugify } from "../src/utils/strings";
 
 const source = process.argv[2];
 if (!source) {
-  console.error("usage: bun run scripts/import-legacy-blueprints.ts <deplo-checkout>");
+  console.error(
+    "usage: bun run scripts/import-legacy-blueprints.ts <deplo-checkout>",
+  );
   process.exit(1);
 }
 
@@ -36,21 +38,358 @@ const RENAMES: Record<string, string> = {
  * tagged both `ai` and `api` is an AI template, not a developer tool.
  */
 const RULES: [keyof typeof CATEGORIES, string[]][] = [
-  ["ai", ["ai", "llm", "llms", "chatbot", "ml", "machine-learning", "ollama", "rag", "vector", "openai", "gpt", "nlp", "stable-diffusion", "speech", "transcription", "agents"]],
-  ["database", ["database", "databases", "postgres", "postgresql", "mysql", "mariadb", "redis", "mongodb", "mongo", "sqlite", "clickhouse", "sql", "nosql", "dbms", "key-value", "timeseries", "time-series", "valkey", "couchdb", "neo4j"]],
-  ["security", ["security", "authentication", "auth", "sso", "oauth", "oauth2", "saml", "oidc", "identity", "authorization", "password", "passwords", "vault", "secrets", "2fa", "ldap", "firewall", "antivirus", "privacy", "encryption", "certificate"]],
-  ["monitoring", ["monitoring", "observability", "metrics", "alerting", "alerts", "uptime", "logging", "logs", "tracing", "apm", "status", "statuspage", "healthcheck", "dashboard", "performance"]],
-  ["analytics", ["analytics", "statistics", "bi", "business-intelligence", "tracking", "telemetry", "web-analytics", "data", "data-visualization", "reporting"]],
-  ["email", ["email", "mail", "smtp", "imap", "newsletter", "mailserver", "transactional-email", "mailing-list"]],
-  ["communication", ["chat", "messaging", "communication", "forum", "discussion", "community", "voice", "video-call", "videoconferencing", "conferencing", "matrix", "whatsapp", "telegram", "discord", "irc", "social", "notifications", "sms", "push", "bot", "comments"]],
-  ["media", ["media", "video", "music", "audio", "streaming", "photos", "photo", "movies", "tv", "podcast", "ebook", "ebooks", "books", "torrent", "downloader", "youtube", "comics", "gallery", "images", "media system", "subtitles", "radio"]],
-  ["cms", ["cms", "blog", "blogging", "website", "content-management", "ecommerce", "e-commerce", "shop", "store", "publishing", "landing-page", "portfolio", "static-site", "forms", "survey"]],
-  ["productivity", ["productivity", "notes", "note-taking", "tasks", "todo", "calendar", "project-management", "kanban", "wiki", "knowledge-base", "documentation", "docs", "bookmarks", "collaboration", "spreadsheet", "crm", "erp", "office", "scheduling", "time-tracking", "recipes", "reading", "rss", "read-later", "whiteboard", "diagrams", "helpdesk", "support", "ticketing", "hr", "inventory"]],
-  ["automation", ["automation", "workflow", "workflows", "low-code", "lowcode", "nocode", "no-code", "integration", "integrations", "scheduler", "cron", "rpa", "ifttt", "webhooks"]],
-  ["development", ["development", "developer-tools", "git", "ci", "cd", "ci-cd", "devops", "code", "api", "testing", "docker", "kubernetes", "container", "containers", "registry", "sdk", "ide", "debugging", "scm", "package-manager", "deployment", "backend", "builder", "framework", "hosting", "infrastructure", "paas", "server", "cloud", "feature-flags", "translation", "i18n", "webhook"]],
-  ["storage", ["storage", "s3", "object-storage", "backup", "backups", "file-sharing", "file-manager", "files", "sync", "cloud-storage", "nas", "drive", "cdn", "minio", "sharing", "link-sharing", "pastebin"]],
-  ["networking", ["networking", "network", "proxy", "reverse-proxy", "vpn", "dns", "tunnel", "gateway", "dhcp", "adblock", "ad-blocker", "ssh", "load-balancer", "mesh", "wireguard", "ip"]],
-  ["finance", ["finance", "accounting", "invoicing", "invoice", "budgeting", "budget", "payments", "billing", "banking", "crypto", "expense", "expenses", "money", "ledger", "subscriptions", "subscription-management", "pos", "trading"]],
+  [
+    "ai",
+    [
+      "ai",
+      "llm",
+      "llms",
+      "chatbot",
+      "ml",
+      "machine-learning",
+      "ollama",
+      "rag",
+      "vector",
+      "openai",
+      "gpt",
+      "nlp",
+      "stable-diffusion",
+      "speech",
+      "transcription",
+      "agents",
+    ],
+  ],
+  [
+    "database",
+    [
+      "database",
+      "databases",
+      "postgres",
+      "postgresql",
+      "mysql",
+      "mariadb",
+      "redis",
+      "mongodb",
+      "mongo",
+      "sqlite",
+      "clickhouse",
+      "sql",
+      "nosql",
+      "dbms",
+      "key-value",
+      "timeseries",
+      "time-series",
+      "valkey",
+      "couchdb",
+      "neo4j",
+    ],
+  ],
+  [
+    "security",
+    [
+      "security",
+      "authentication",
+      "auth",
+      "sso",
+      "oauth",
+      "oauth2",
+      "saml",
+      "oidc",
+      "identity",
+      "authorization",
+      "password",
+      "passwords",
+      "vault",
+      "secrets",
+      "2fa",
+      "ldap",
+      "firewall",
+      "antivirus",
+      "privacy",
+      "encryption",
+      "certificate",
+    ],
+  ],
+  [
+    "monitoring",
+    [
+      "monitoring",
+      "observability",
+      "metrics",
+      "alerting",
+      "alerts",
+      "uptime",
+      "logging",
+      "logs",
+      "tracing",
+      "apm",
+      "status",
+      "statuspage",
+      "healthcheck",
+      "dashboard",
+      "performance",
+    ],
+  ],
+  [
+    "analytics",
+    [
+      "analytics",
+      "statistics",
+      "bi",
+      "business-intelligence",
+      "tracking",
+      "telemetry",
+      "web-analytics",
+      "data",
+      "data-visualization",
+      "reporting",
+    ],
+  ],
+  [
+    "email",
+    [
+      "email",
+      "mail",
+      "smtp",
+      "imap",
+      "newsletter",
+      "mailserver",
+      "transactional-email",
+      "mailing-list",
+    ],
+  ],
+  [
+    "communication",
+    [
+      "chat",
+      "messaging",
+      "communication",
+      "forum",
+      "discussion",
+      "community",
+      "voice",
+      "video-call",
+      "videoconferencing",
+      "conferencing",
+      "matrix",
+      "whatsapp",
+      "telegram",
+      "discord",
+      "irc",
+      "social",
+      "notifications",
+      "sms",
+      "push",
+      "bot",
+      "comments",
+    ],
+  ],
+  [
+    "media",
+    [
+      "media",
+      "video",
+      "music",
+      "audio",
+      "streaming",
+      "photos",
+      "photo",
+      "movies",
+      "tv",
+      "podcast",
+      "ebook",
+      "ebooks",
+      "books",
+      "torrent",
+      "downloader",
+      "youtube",
+      "comics",
+      "gallery",
+      "images",
+      "media system",
+      "subtitles",
+      "radio",
+    ],
+  ],
+  [
+    "cms",
+    [
+      "cms",
+      "blog",
+      "blogging",
+      "website",
+      "content-management",
+      "ecommerce",
+      "e-commerce",
+      "shop",
+      "store",
+      "publishing",
+      "landing-page",
+      "portfolio",
+      "static-site",
+      "forms",
+      "survey",
+    ],
+  ],
+  [
+    "productivity",
+    [
+      "productivity",
+      "notes",
+      "note-taking",
+      "tasks",
+      "todo",
+      "calendar",
+      "project-management",
+      "kanban",
+      "wiki",
+      "knowledge-base",
+      "documentation",
+      "docs",
+      "bookmarks",
+      "collaboration",
+      "spreadsheet",
+      "crm",
+      "erp",
+      "office",
+      "scheduling",
+      "time-tracking",
+      "recipes",
+      "reading",
+      "rss",
+      "read-later",
+      "whiteboard",
+      "diagrams",
+      "helpdesk",
+      "support",
+      "ticketing",
+      "hr",
+      "inventory",
+    ],
+  ],
+  [
+    "automation",
+    [
+      "automation",
+      "workflow",
+      "workflows",
+      "low-code",
+      "lowcode",
+      "nocode",
+      "no-code",
+      "integration",
+      "integrations",
+      "scheduler",
+      "cron",
+      "rpa",
+      "ifttt",
+      "webhooks",
+    ],
+  ],
+  [
+    "development",
+    [
+      "development",
+      "developer-tools",
+      "git",
+      "ci",
+      "cd",
+      "ci-cd",
+      "devops",
+      "code",
+      "api",
+      "testing",
+      "docker",
+      "kubernetes",
+      "container",
+      "containers",
+      "registry",
+      "sdk",
+      "ide",
+      "debugging",
+      "scm",
+      "package-manager",
+      "deployment",
+      "backend",
+      "builder",
+      "framework",
+      "hosting",
+      "infrastructure",
+      "paas",
+      "server",
+      "cloud",
+      "feature-flags",
+      "translation",
+      "i18n",
+      "webhook",
+    ],
+  ],
+  [
+    "storage",
+    [
+      "storage",
+      "s3",
+      "object-storage",
+      "backup",
+      "backups",
+      "file-sharing",
+      "file-manager",
+      "files",
+      "sync",
+      "cloud-storage",
+      "nas",
+      "drive",
+      "cdn",
+      "minio",
+      "sharing",
+      "link-sharing",
+      "pastebin",
+    ],
+  ],
+  [
+    "networking",
+    [
+      "networking",
+      "network",
+      "proxy",
+      "reverse-proxy",
+      "vpn",
+      "dns",
+      "tunnel",
+      "gateway",
+      "dhcp",
+      "adblock",
+      "ad-blocker",
+      "ssh",
+      "load-balancer",
+      "mesh",
+      "wireguard",
+      "ip",
+    ],
+  ],
+  [
+    "finance",
+    [
+      "finance",
+      "accounting",
+      "invoicing",
+      "invoice",
+      "budgeting",
+      "budget",
+      "payments",
+      "billing",
+      "banking",
+      "crypto",
+      "expense",
+      "expenses",
+      "money",
+      "ledger",
+      "subscriptions",
+      "subscription-management",
+      "pos",
+      "trading",
+    ],
+  ],
 ];
 
 function categoryFor(tags: string[]): keyof typeof CATEGORIES {
@@ -76,9 +415,16 @@ function developedBy(name: string, links: Record<string, string | undefined>) {
 
 /** An ICO that wraps a PNG; anything else is left without a logo. */
 function pngInsideIco(bytes: Uint8Array): Uint8Array | null {
-  const offset = new DataView(bytes.buffer, bytes.byteOffset).getUint32(18, true);
+  const offset = new DataView(bytes.buffer, bytes.byteOffset).getUint32(
+    18,
+    true,
+  );
   const magic = bytes.subarray(offset, offset + 4);
-  const isPng = magic[0] === 0x89 && magic[1] === 0x50 && magic[2] === 0x4e && magic[3] === 0x47;
+  const isPng =
+    magic[0] === 0x89 &&
+    magic[1] === 0x50 &&
+    magic[2] === 0x4e &&
+    magic[3] === 0x47;
   return isPng ? bytes.subarray(offset) : null;
 }
 
@@ -95,13 +441,16 @@ async function writeLogo(from: string, into: string) {
   if (ext === ".svg") {
     // Rasterised in a child process: resvg aborts the whole runtime on a few
     // real-world SVGs, and one bad logo must not stop the import.
-    const { exitCode } = Bun.spawnSync([
-      "bun",
-      "run",
-      `${import.meta.dir}/svg-to-png.ts`,
-      from,
-      `${into}/logo.png`,
-    ], { stdout: "ignore", stderr: "ignore" });
+    const { exitCode } = Bun.spawnSync(
+      [
+        "bun",
+        "run",
+        `${import.meta.dir}/svg-to-png.ts`,
+        from,
+        `${into}/logo.png`,
+      ],
+      { stdout: "ignore", stderr: "ignore" },
+    );
     return exitCode === 0;
   }
   await Bun.write(`${into}/logo${ext}`, bytes);
@@ -142,7 +491,10 @@ for (const entry of catalog) {
   counts.set(categoryKey, (counts.get(categoryKey) ?? 0) + 1);
   const category = CATEGORIES[categoryKey];
 
-  await Bun.write(`${into}/docker-compose.yml`, Bun.file(`${from}/docker-compose.yml`));
+  await Bun.write(
+    `${into}/docker-compose.yml`,
+    Bun.file(`${from}/docker-compose.yml`),
+  );
   await Bun.write(`${into}/template.toml`, Bun.file(`${from}/template.toml`));
 
   // The legacy catalog only ever carried a one-liner; description.md is where a
@@ -172,6 +524,9 @@ export default {
 
 console.log(`imported ${catalog.length} templates`);
 console.log(
-  [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([c, n]) => `${c}(${n})`).join(" "),
+  [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([c, n]) => `${c}(${n})`)
+    .join(" "),
 );
 if (withoutLogo.length) console.log(`no logo: ${withoutLogo.join(", ")}`);

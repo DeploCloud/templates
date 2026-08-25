@@ -7,11 +7,19 @@
   "scripts": {
     "generate": "bun run src/generate/index.ts",
     "start": "bun run src/index.ts",
-    "dev": "NODE_ENV=development bun --watch src/index.ts"
+    "dev": "NODE_ENV=development bun --watch src/index.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "git config core.hooksPath .githooks || true"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "lint-staged": "^17.3.0",
+    "prettier": "^3.9.6"
   },
   "peerDependencies": {
     "typescript": "^5"

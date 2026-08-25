@@ -11,7 +11,10 @@ export function listTemplates(query: TemplateListQuery) {
   const search = query.search.toLocaleLowerCase();
   const items = templates.filter(
     (template) =>
-      (!query.category || template.variants.some(({ category }) => category.slug === query.category)) &&
+      (!query.category ||
+        template.variants.some(
+          ({ category }) => category.slug === query.category,
+        )) &&
       (!search ||
         [
           template.name,
@@ -45,8 +48,7 @@ export function listCategories(query: CategoryListQuery) {
   );
   const direction = query.order === "asc" ? 1 : -1;
   return items.toSorted(
-    (left, right) =>
-      direction * compare(left[query.sort], right[query.sort]),
+    (left, right) => direction * compare(left[query.sort], right[query.sort]),
   );
 }
 

@@ -75,8 +75,11 @@ const server = Bun.serve({
     }),
     "/images/:templateSlug/:variantSlug/:file": withRateLimit((request) => {
       const { templateSlug, variantSlug, file } = request.params;
-      return slugSchema.safeParse(templateSlug).success && slugSchema.safeParse(variantSlug).success
-        ? serveAsset(`${generatedDirectory}/images/${templateSlug}/${variantSlug}/${file}`)
+      return slugSchema.safeParse(templateSlug).success &&
+        slugSchema.safeParse(variantSlug).success
+        ? serveAsset(
+            `${generatedDirectory}/images/${templateSlug}/${variantSlug}/${file}`,
+          )
         : notFound();
     }, "asset"),
     "/images/:templateSlug/:file": withRateLimit((request) => {
@@ -87,8 +90,11 @@ const server = Bun.serve({
     }, "asset"),
     "/files/:templateSlug/:variantSlug/:file": withRateLimit((request) => {
       const { templateSlug, variantSlug, file } = request.params;
-      return slugSchema.safeParse(templateSlug).success && slugSchema.safeParse(variantSlug).success
-        ? serveAsset(`${generatedDirectory}/files/${templateSlug}/${variantSlug}/${file}`)
+      return slugSchema.safeParse(templateSlug).success &&
+        slugSchema.safeParse(variantSlug).success
+        ? serveAsset(
+            `${generatedDirectory}/files/${templateSlug}/${variantSlug}/${file}`,
+          )
         : notFound();
     }, "asset"),
     "/version": withRateLimit(() => json({ version })),

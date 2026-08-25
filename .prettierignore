@@ -1,0 +1,8 @@
+# Generated output: formatting it would be overwritten by the generator.
+src/generated/
+bun.lock
+
+# Local and vendored trees.
+.history/
+blueprints/
+node_modules/
