@@ -1,0 +1,16 @@
+[config]
+
+[[config.domains]]
+serviceName = "homepage"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+HOMEPAGE_ALLOWED_HOSTS = "${domain}"
+
+[[config.mounts]]
+filePath = "docker.yaml"
+content = """my-docker:
+  host: dockerproxy
+  port: 2375
+"""

@@ -1,0 +1,16 @@
+services:
+  homarr:
+    image: ghcr.io/homarr-labs/homarr:v1.76.2
+    restart: unless-stopped
+    expose:
+      - 7575
+    environment:
+      SECRET_ENCRYPTION_KEY: ${SECRET_ENCRYPTION_KEY}
+      DB_DRIVER: ${DB_DRIVER}
+      DB_DIALECT: ${DB_DIALECT}
+      DB_URL: ${DB_URL}
+    volumes:
+      - homarr-appdata:/appdata
+
+volumes:
+  homarr-appdata: {}

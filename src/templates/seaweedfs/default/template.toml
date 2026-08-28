@@ -1,0 +1,22 @@
+[variables]
+s3_access_key = "${username}"
+s3_secret_key = "${password:32}"
+filer_domain = "filer.${domain}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "seaweedfs"
+port = 8_333
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "seaweedfs"
+port = 8_888
+host = "${filer_domain}"
+
+[config.env]
+AWS_ACCESS_KEY_ID = "${s3_access_key}"
+AWS_SECRET_ACCESS_KEY = "${s3_secret_key}"

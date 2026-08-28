@@ -1,0 +1,21 @@
+[variables]
+posthog_secret = "${password:64}"
+posthog_db_password = "${password:32}"
+object_storage_access_key = "${username}"
+object_storage_secret_key = "${password:32}"
+
+[config]
+env = [
+  "SITE_URL=https://${domain}",
+  "POSTHOG_SECRET=${posthog_secret}",
+  "POSTHOG_DB_PASSWORD=${posthog_db_password}",
+  "POSTHOG_OBJECT_STORAGE_ACCESS_KEY=${object_storage_access_key}",
+  "POSTHOG_OBJECT_STORAGE_SECRET_KEY=${object_storage_secret_key}",
+  "IS_BEHIND_PROXY=true",
+]
+mounts = []
+
+[[config.domains]]
+serviceName = "posthog"
+port = 8_000
+host = "${domain}"

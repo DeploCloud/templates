@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "homepage"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+HOMEPAGE_ALLOWED_HOSTS = "${domain}"

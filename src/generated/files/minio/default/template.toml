@@ -1,0 +1,23 @@
+[variables]
+root_user = "${username}"
+root_password = "${password:32}"
+console_domain = "console.${domain}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "minio"
+port = 9_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "minio"
+port = 9_001
+host = "${console_domain}"
+
+[config.env]
+MINIO_ROOT_USER = "${root_user}"
+MINIO_ROOT_PASSWORD = "${root_password}"
+MINIO_BROWSER_REDIRECT_URL = "https://${console_domain}"

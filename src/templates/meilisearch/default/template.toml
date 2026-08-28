@@ -1,0 +1,15 @@
+[variables]
+master_key = "${base64:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "meilisearch"
+port = 7_700
+host = "${domain}"
+
+[config.env]
+MEILI_MASTER_KEY = "${master_key}"
+MEILI_ENV = "production"
+MEILI_NO_ANALYTICS = "true"
