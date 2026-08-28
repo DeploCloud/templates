@@ -1,0 +1,14 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "umami"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+APP_SECRET = "${base64:64}"
+DB_PASSWORD = "${db_password}"

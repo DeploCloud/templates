@@ -1,0 +1,27 @@
+services:
+  diun:
+    image: crazymax/diun:4.33.0
+    command: serve
+    restart: always
+    volumes:
+      - diun-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "diun", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    environment:
+      - TZ=${TZ}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - DIUN_WATCH_WORKERS=${DIUN_WATCH_WORKERS}
+      - DIUN_WATCH_SCHEDULE=${DIUN_WATCH_SCHEDULE}
+      - DIUN_WATCH_JITTER=${DIUN_WATCH_JITTER}
+      - DIUN_WATCH_RUNONSTARTUP=${DIUN_WATCH_RUNONSTARTUP}
+      - DIUN_PROVIDERS_DOCKER=${DIUN_PROVIDERS_DOCKER}
+      - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=${DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT}
+      - DIUN_PROVIDERS_DOCKER_WATCHSTOPPED=${DIUN_PROVIDERS_DOCKER_WATCHSTOPPED}
+
+volumes:
+  diun-data:
