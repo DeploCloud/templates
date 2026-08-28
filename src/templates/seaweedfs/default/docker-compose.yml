@@ -1,0 +1,17 @@
+services:
+  seaweedfs:
+    image: chrislusf/seaweedfs:4.44
+    restart: unless-stopped
+    command: mini -dir=/data
+    expose:
+      - 8333
+      - 8888
+      - 9333
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - seaweedfs-data:/data
+
+volumes:
+  seaweedfs-data: {}

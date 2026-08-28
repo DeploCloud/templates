@@ -1,0 +1,46 @@
+services:
+  metabase:
+    image: metabase/metabase:v0.63.15
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - /dev/urandom:/dev/random:ro
+    environment:
+      MB_DB_TYPE: ${MB_DB_TYPE}
+      MB_DB_DBNAME: ${MB_DB_DBNAME}
+      MB_DB_PORT: ${MB_DB_PORT}
+      MB_DB_USER: ${MB_DB_USER}
+      MB_DB_PASS: ${MB_DB_PASS}
+      MB_DB_HOST: ${MB_DB_HOST}
+      MB_SITE_URL: ${MB_SITE_URL}
+    depends_on:
+      metabase-db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail -I http://localhost:3000/api/health || exit 1",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  metabase-db:
+    image: postgres:18.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: metabase
+      POSTGRES_PASSWORD: ${MB_DB_PASS}
+      POSTGRES_DB: metabaseappdb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metabase -d metabaseappdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - metabase-postgres:/var/lib/postgresql/data
+
+volumes:
+  metabase-postgres: {}

@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vaultwarden"
+port = 80
+host = "${domain}"
+
+[config.env]
+SIGNUPS_ALLOWED = "true"
+DOMAIN = "https://${domain}"

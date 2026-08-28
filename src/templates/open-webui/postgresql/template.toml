@@ -1,0 +1,16 @@
+[variables]
+webui_secret_key = "${password:32}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-webui"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+WEBUI_SECRET_KEY = "${webui_secret_key}"
+DB_PASSWORD = "${db_password}"
+DATABASE_URL = "postgresql://openwebui:${db_password}@open-webui-db:5432/openwebui"

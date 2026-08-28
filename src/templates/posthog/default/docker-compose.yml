@@ -1,0 +1,147 @@
+services:
+  posthog:
+    image: posthog/posthog:1e6d5b3941528fec2ae1c2d65c1e21762c59b098
+    restart: unless-stopped
+    command: ./bin/start-backend & ./bin/start-frontend
+    expose:
+      - 8000
+    depends_on:
+      posthog-db:
+        condition: service_healthy
+      posthog-redis:
+        condition: service_healthy
+      posthog-clickhouse:
+        condition: service_healthy
+    environment:
+      SITE_URL: ${SITE_URL}
+      SECRET_KEY: ${POSTHOG_SECRET}
+      DATABASE_URL: postgres://posthog:${POSTHOG_DB_PASSWORD}@posthog-db:5432/posthog
+      REDIS_URL: redis://posthog-redis:6379/
+      CLICKHOUSE_HOST: posthog-clickhouse
+      CLICKHOUSE_PORT: 8123
+      KAFKA_HOSTS: posthog-kafka:9092
+      OBJECT_STORAGE_ACCESS_KEY_ID: ${POSTHOG_OBJECT_STORAGE_ACCESS_KEY}
+      OBJECT_STORAGE_SECRET_ACCESS_KEY: ${POSTHOG_OBJECT_STORAGE_SECRET_KEY}
+      OBJECT_STORAGE_ENDPOINT: http://posthog-objectstorage:19000
+      OBJECT_STORAGE_BUCKET: posthog
+      OBJECT_STORAGE_ENABLED: "true"
+      IS_BEHIND_PROXY: ${IS_BEHIND_PROXY}
+      DEPLOYMENT: hobby
+    volumes:
+      - posthog-data:/var/lib/posthog
+
+  posthog-worker:
+    image: posthog/posthog:1e6d5b3941528fec2ae1c2d65c1e21762c59b098
+    restart: unless-stopped
+    command: ./bin/docker-worker-celery
+    depends_on:
+      posthog-db:
+        condition: service_healthy
+      posthog-redis:
+        condition: service_healthy
+    environment:
+      SECRET_KEY: ${POSTHOG_SECRET}
+      DATABASE_URL: postgres://posthog:${POSTHOG_DB_PASSWORD}@posthog-db:5432/posthog
+      REDIS_URL: redis://posthog-redis:6379/
+      CLICKHOUSE_HOST: posthog-clickhouse
+      CLICKHOUSE_PORT: 8123
+      KAFKA_HOSTS: posthog-kafka:9092
+      OBJECT_STORAGE_ACCESS_KEY_ID: ${POSTHOG_OBJECT_STORAGE_ACCESS_KEY}
+      OBJECT_STORAGE_SECRET_ACCESS_KEY: ${POSTHOG_OBJECT_STORAGE_SECRET_KEY}
+      OBJECT_STORAGE_ENDPOINT: http://posthog-objectstorage:19000
+      OBJECT_STORAGE_BUCKET: posthog
+      OBJECT_STORAGE_ENABLED: "true"
+
+  posthog-db:
+    image: postgres:15.12-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: posthog
+      POSTGRES_PASSWORD: ${POSTHOG_DB_PASSWORD}
+      POSTGRES_DB: posthog
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U posthog -d posthog"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - posthog-postgres:/var/lib/postgresql/data
+
+  posthog-redis:
+    image: redis:7.2.16-alpine
+    restart: unless-stopped
+    command: redis-server --maxmemory-policy allkeys-lru --maxmemory 200mb
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - posthog-redis:/data
+
+  posthog-clickhouse:
+    image: clickhouse/clickhouse-server:26.6.2.158
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_SKIP_USER_SETUP: "1"
+      KAFKA_HOSTS: posthog-kafka:9092
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://localhost:8123/ping",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - posthog-clickhouse:/var/lib/clickhouse
+
+  posthog-kafka:
+    image: docker.io/redpandadata/redpanda:v25.1.9
+    restart: unless-stopped
+    command:
+      - redpanda
+      - start
+      - --kafka-addr
+      - internal://0.0.0.0:9092
+      - --advertise-kafka-addr
+      - internal://posthog-kafka:9092
+      - --rpc-addr
+      - posthog-kafka:33145
+      - --advertise-rpc-addr
+      - posthog-kafka:33145
+      - --mode
+      - dev-container
+      - --smp
+      - "2"
+      - --memory
+      - 2G
+      - --overprovisioned
+      - --set
+      - redpanda.empty_seed_starts_cluster=false
+      - --seeds
+      - posthog-kafka:33145
+      - --set
+      - redpanda.auto_create_topics_enabled=true
+    volumes:
+      - posthog-kafka:/var/lib/redpanda/data
+
+  posthog-objectstorage:
+    image: chrislusf/seaweedfs:4.44
+    restart: unless-stopped
+    command: mini -dir=/data -s3.port=19000
+    environment:
+      AWS_ACCESS_KEY_ID: ${POSTHOG_OBJECT_STORAGE_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${POSTHOG_OBJECT_STORAGE_SECRET_KEY}
+      S3_BUCKET: posthog,ducklake-dev,ai-blobs
+    volumes:
+      - posthog-objectstorage:/data
+
+volumes:
+  posthog-data: {}
+  posthog-postgres: {}
+  posthog-redis: {}
+  posthog-clickhouse: {}
+  posthog-kafka: {}
+  posthog-objectstorage: {}

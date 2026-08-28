@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gitea"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+USER_UID = "1000"
+USER_GID = "1000"
+GITEA__database__DB_TYPE = "postgres"
+GITEA__database__HOST = "gitea-db:5432"
+GITEA__database__NAME = "gitea"
+GITEA__database__USER = "gitea"
+GITEA__database__PASSWD = "${db_password}"
+GITEA__server__ROOT_URL = "https://${domain}/"
+GITEA__server__DOMAIN = "${domain}"
+GITEA__server__DISABLE_SSH = "true"
+GITEA_DB_PASSWORD = "${db_password}"

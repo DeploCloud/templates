@@ -1,0 +1,13 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v2.1.2
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
+    volumes:
+      - homepage-config:/app/config
+
+volumes:
+  homepage-config: {}

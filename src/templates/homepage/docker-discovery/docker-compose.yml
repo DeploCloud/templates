@@ -1,0 +1,27 @@
+services:
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0
+    restart: unless-stopped
+    environment:
+      CONTAINERS: "1"
+      SERVICES: "1"
+      TASKS: "1"
+      POST: "0"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v2.1.2
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${HOMEPAGE_ALLOWED_HOSTS}
+    volumes:
+      - homepage-config:/app/config
+      - ./docker.yaml:/app/config/docker.yaml:ro
+    depends_on:
+      - dockerproxy
+
+volumes:
+  homepage-config: {}
