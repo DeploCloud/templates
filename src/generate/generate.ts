@@ -177,6 +177,7 @@ export async function generate() {
   const templates: GeneratedTemplate[] = [];
   const jobs: { source: string; destination: string }[] = [];
   const files: { source: string; destination: string }[] = [];
+  const fileContents: Record<string, string> = {};
   const metaFiles = await Array.fromAsync(
     new Bun.Glob("*/meta.ts").scan({ cwd: sourceDirectory, onlyFiles: true }),
   );
@@ -232,17 +233,21 @@ export async function generate() {
       );
       const configPath = `${variantPath}/template.toml`;
       const composePath = `${variantPath}/docker-compose.yml`;
+      const [configContent, composeContent] = await Promise.all([
+        Bun.file(configPath).text(),
+        Bun.file(composePath).text(),
+      ]);
       // Deplo reads template.toml with its own lenient parser, so a strict TOML
       // failure is a warning, not a reason to keep a working variant out.
       try {
-        Bun.TOML.parse(await Bun.file(configPath).text());
+        Bun.TOML.parse(configContent);
       } catch (error) {
         consola.warn(
           `${directory}/${variantDirectory}: template.toml is not strict TOML (${error instanceof Error ? error.message : error}).`,
         );
       }
       try {
-        Bun.YAML.parse(await Bun.file(composePath).text());
+        Bun.YAML.parse(composeContent);
       } catch (error) {
         throw new Error(
           `${directory}/${variantDirectory}: invalid docker-compose.yml (${error instanceof Error ? error.message : error}).`,
@@ -257,6 +262,10 @@ export async function generate() {
           destination: `${outputFiles}/docker-compose.yml`,
         },
       );
+      fileContents[`${templateSlug}/${variant.slug}/template.toml`] =
+        configContent;
+      fileContents[`${templateSlug}/${variant.slug}/docker-compose.yml`] =
+        composeContent;
       variants.push(variant);
       variantSources.set(variant.slug, variantPath);
     }
@@ -322,8 +331,20 @@ export async function generate() {
   )
     throw new Error("Template names must produce unique slugs.");
   const data = { categories, templates } satisfies GeneratedData;
+  const hashableData = {
+    ...data,
+    templates: data.templates.map((template) => ({
+      ...template,
+      logo: null,
+      variants: template.variants.map((variant) => ({
+        ...variant,
+        logo: null,
+        images: [],
+      })),
+    })),
+  };
   const hash = new Bun.CryptoHasher("sha256")
-    .update(stableJson(data))
+    .update(stableJson({ data: hashableData, files: fileContents }))
     .digest("hex");
   const version = `${hash}`;
   for await (const file of new Bun.Glob("**/*").scan({
