@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+security_secret_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "grafana"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+GF_DATABASE_TYPE = "postgres"
+GF_DATABASE_HOST = "grafana-db:5432"
+GF_DATABASE_NAME = "grafana"
+GF_DATABASE_USER = "grafana"
+GF_DATABASE_PASSWORD = "${db_password}"
+GF_SECURITY_SECRET_KEY = "${security_secret_key}"

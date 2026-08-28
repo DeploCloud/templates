@@ -1,0 +1,35 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.11.1
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - open-webui:/app/backend/data
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    depends_on:
+      open-webui-db:
+        condition: service_healthy
+
+  open-webui-db:
+    image: postgres:18.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: openwebui
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: openwebui
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openwebui -d openwebui"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - open-webui-postgres:/var/lib/postgresql/data
+
+volumes:
+  open-webui: {}
+  open-webui-postgres: {}

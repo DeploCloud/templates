@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "jellyfin"
+port = 8_096
+host = "${domain}"
+
+[config.env]
+JELLYFIN_HOST = "${domain}"

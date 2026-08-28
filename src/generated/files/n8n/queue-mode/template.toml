@@ -1,0 +1,26 @@
+[variables]
+db_password = "${password:32}"
+encryption_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "n8n"
+port = 5_678
+host = "${domain}"
+
+[config.env]
+DB_TYPE = "postgresdb"
+DB_POSTGRESDB_HOST = "n8n-db"
+DB_POSTGRESDB_PORT = "5432"
+DB_POSTGRESDB_DATABASE = "n8n"
+DB_POSTGRESDB_USER = "n8n"
+DB_POSTGRESDB_PASSWORD = "${db_password}"
+N8N_ENCRYPTION_KEY = "${encryption_key}"
+N8N_HOST = "${domain}"
+N8N_PORT = "5678"
+GENERIC_TIMEZONE = "Europe/Berlin"
+EXECUTIONS_MODE = "queue"
+QUEUE_BULL_REDIS_HOST = "n8n-redis"
+QUEUE_BULL_REDIS_PORT = "6379"

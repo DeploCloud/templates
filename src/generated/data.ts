@@ -411,6 +411,41 @@ const data = {
             "config": "/files/grafana/default/template.toml",
             "compose": "/files/grafana/default/docker-compose.yml"
           }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Grafana dashboards backed by a dedicated PostgreSQL database for persistent production deployments.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Grafana Labs",
+            "url": "https://github.com/grafana"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/grafana/grafana",
+            "website": "https://grafana.com/",
+            "docs": [
+              "https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# Grafana with PostgreSQL\n\nGrafana provides dashboards, visualizations and alerting for metrics, logs and\nother observability data sources.\n\nThis variant stores Grafana users, dashboards and settings in the included\nPostgreSQL database instead of the default SQLite store.",
+          "logo": "/images/grafana/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/grafana/postgresql/template.toml",
+            "compose": "/files/grafana/postgresql/docker-compose.yml"
+          }
         }
       ],
       "slug": "grafana"
@@ -607,6 +642,41 @@ const data = {
             "config": "/files/immich/default/template.toml",
             "compose": "/files/immich/default/docker-compose.yml"
           }
+        },
+        {
+          "name": "No Machine Learning",
+          "shortDescription": "Immich photo backup without the machine-learning service for smaller hosts and lower resource use.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Immich",
+            "url": "https://github.com/immich-app"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/immich-app/immich",
+            "website": "https://immich.app/",
+            "docs": [
+              "https://docs.immich.app/FAQ/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# Immich without Machine Learning\n\nImmich is a self-hosted photo and video backup platform with mobile upload,\nsearch and library management.\n\nThis variant keeps the server, Redis-compatible cache and vector-enabled\nPostgreSQL database, but omits the machine-learning service to reduce resource use.",
+          "logo": "/images/immich/no-machine-learning/logo.webp",
+          "images": [],
+          "slug": "no-machine-learning",
+          "files": {
+            "config": "/files/immich/no-machine-learning/template.toml",
+            "compose": "/files/immich/no-machine-learning/docker-compose.yml"
+          }
         }
       ],
       "slug": "immich"
@@ -648,6 +718,42 @@ const data = {
           "files": {
             "config": "/files/jellyfin/default/template.toml",
             "compose": "/files/jellyfin/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "Hardware Acceleration",
+          "shortDescription": "Jellyfin media server with Linux DRI device access for hardware-accelerated transcoding.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Jellyfin",
+            "url": "https://github.com/jellyfin"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/jellyfin/jellyfin",
+            "website": "https://jellyfin.org/",
+            "docs": [
+              "https://jellyfin.org/docs/general/installation/container/",
+              "https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# Jellyfin Hardware Acceleration\n\nJellyfin is a self-hosted media server for organizing and streaming personal\nmovies, shows, music and photos.\n\nThis variant exposes the host Linux DRI device to enable hardware-accelerated\ntranscoding. The host must provide a compatible GPU and device permissions.",
+          "logo": "/images/jellyfin/hardware-acceleration/logo.webp",
+          "images": [],
+          "slug": "hardware-acceleration",
+          "files": {
+            "config": "/files/jellyfin/hardware-acceleration/template.toml",
+            "compose": "/files/jellyfin/hardware-acceleration/docker-compose.yml"
           }
         }
       ],
@@ -817,6 +923,76 @@ const data = {
             "config": "/files/n8n/default/template.toml",
             "compose": "/files/n8n/default/docker-compose.yml"
           }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "n8n workflow automation backed by PostgreSQL for a durable production database.",
+          "category": {
+            "name": "Automation",
+            "icon": "workflow",
+            "description": "Workflow builders, schedulers and low-code tools that wire your services together.",
+            "slug": "automation"
+          },
+          "developedBy": {
+            "label": "n8n",
+            "url": "https://github.com/n8n-io"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/n8n-io/n8n",
+            "website": "https://n8n.io/",
+            "docs": [
+              "https://docs.n8n.io/hosting/configuration/supported-databases/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# n8n with PostgreSQL\n\nn8n is a visual workflow automation platform for connecting applications and APIs.\n\nThis variant stores workflows, credentials and execution data in the included\nPostgreSQL service instead of the default SQLite database.",
+          "logo": "/images/n8n/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/n8n/postgresql/template.toml",
+            "compose": "/files/n8n/postgresql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "Queue mode",
+          "shortDescription": "n8n queue-mode deployment with PostgreSQL, Redis and a dedicated execution worker.",
+          "category": {
+            "name": "Automation",
+            "icon": "workflow",
+            "description": "Workflow builders, schedulers and low-code tools that wire your services together.",
+            "slug": "automation"
+          },
+          "developedBy": {
+            "label": "n8n",
+            "url": "https://github.com/n8n-io"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/n8n-io/n8n",
+            "website": "https://n8n.io/",
+            "docs": [
+              "https://docs.n8n.io/hosting/scaling/queue-mode/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# n8n Queue mode\n\nn8n is a visual workflow automation platform for connecting applications and APIs.\n\nThis variant runs n8n in queue mode with PostgreSQL for state, Redis for the\nexecution queue and a dedicated worker for background executions.",
+          "logo": "/images/n8n/queue-mode/logo.webp",
+          "images": [],
+          "slug": "queue-mode",
+          "files": {
+            "config": "/files/n8n/queue-mode/template.toml",
+            "compose": "/files/n8n/queue-mode/docker-compose.yml"
+          }
         }
       ],
       "slug": "n8n"
@@ -859,6 +1035,41 @@ const data = {
             "config": "/files/nextcloud/default/template.toml",
             "compose": "/files/nextcloud/default/docker-compose.yml"
           }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Nextcloud file storage and collaboration backed by PostgreSQL instead of MariaDB.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "Nextcloud",
+            "url": "https://github.com/nextcloud"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/nextcloud/docker",
+            "website": "https://nextcloud.com/",
+            "docs": [
+              "https://docs.nextcloud.com/server/latest/admin_manual/installation/installation_wizard.html"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# Nextcloud with PostgreSQL\n\nNextcloud provides private file storage, synchronization and collaboration tools\nfor teams and personal data.\n\nThis template includes the web app, a PostgreSQL database, Redis and a cron\nworker, with the database password generated during deployment.",
+          "logo": "/images/nextcloud/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/nextcloud/postgresql/template.toml",
+            "compose": "/files/nextcloud/postgresql/docker-compose.yml"
+          }
         }
       ],
       "slug": "nextcloud"
@@ -900,6 +1111,41 @@ const data = {
           "files": {
             "config": "/files/open-webui/default/template.toml",
             "compose": "/files/open-webui/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Open WebUI backed by PostgreSQL for multi-user and higher-concurrency deployments.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Open WebUI",
+            "url": "https://github.com/open-webui"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/open-webui/open-webui",
+            "website": "https://openwebui.com/",
+            "docs": [
+              "https://docs.openwebui.com/getting-started/advanced-topics/scaling/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# Open WebUI with PostgreSQL\n\nOpen WebUI is a self-hosted chat interface for local language models and\nOpenAI-compatible APIs.\n\nThis variant keeps application data in the persistent volume and stores the\ndatabase-backed state in the included PostgreSQL service.",
+          "logo": "/images/open-webui/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/open-webui/postgresql/template.toml",
+            "compose": "/files/open-webui/postgresql/docker-compose.yml"
           }
         }
       ],
@@ -1153,6 +1399,41 @@ const data = {
             "config": "/files/uptime-kuma/default/template.toml",
             "compose": "/files/uptime-kuma/default/docker-compose.yml"
           }
+        },
+        {
+          "name": "Standalone",
+          "shortDescription": "Uptime Kuma monitoring without Docker socket access for a smaller privilege surface.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Uptime Kuma",
+            "url": "https://github.com/louislam"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/louislam/uptime-kuma",
+            "website": "https://uptime.kuma.pet/",
+            "docs": [
+              "https://github.com/louislam/uptime-kuma/wiki"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "# Uptime Kuma Standalone\n\nUptime Kuma monitors websites and services and sends alerts when checks fail.\n\nThis variant persists monitor definitions and history without access to the\nDocker socket. Use the default variant only when Docker container monitoring is needed.",
+          "logo": "/images/uptime-kuma/standalone/logo.webp",
+          "images": [],
+          "slug": "standalone",
+          "files": {
+            "config": "/files/uptime-kuma/standalone/template.toml",
+            "compose": "/files/uptime-kuma/standalone/docker-compose.yml"
+          }
         }
       ],
       "slug": "uptime-kuma"
@@ -1203,4 +1484,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "ff50f0d4578d145ca326474fda64bcbaa6804d95d1642b03216cedf5ca9a9cf8";
+export const version = "c13b8c0439eeb58d96bcdd284fa02ad52feb5b4ae27e01c37173f4ea49fc3718";
