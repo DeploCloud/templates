@@ -1,0 +1,27 @@
+services:
+  hbbs:
+    image: rustdesk/rustdesk-server:1.1.16
+    restart: unless-stopped
+    command: hbbs -r ${RUSTDESK_RELAY_HOST}:21117
+    ports:
+      - "21115:21115/tcp"
+      - "21116:21116/tcp"
+      - "21116:21116/udp"
+      - "21118:21118/tcp"
+    volumes:
+      - rustdesk-data:/root
+    depends_on:
+      - hbbr
+
+  hbbr:
+    image: rustdesk/rustdesk-server:1.1.16
+    restart: unless-stopped
+    command: hbbr
+    ports:
+      - "21117:21117/tcp"
+      - "21119:21119/tcp"
+    volumes:
+      - rustdesk-data:/root
+
+volumes:
+  rustdesk-data: {}

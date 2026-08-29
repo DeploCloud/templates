@@ -1,0 +1,8 @@
+[variables]
+relay_host = "${domain}"
+
+[config]
+mounts = []
+
+[config.env]
+RUSTDESK_RELAY_HOST = "${relay_host}"

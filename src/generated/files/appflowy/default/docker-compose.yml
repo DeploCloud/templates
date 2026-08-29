@@ -1,0 +1,167 @@
+services:
+  appflowy-gateway:
+    image: nginx:1.30.4-alpine
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - appflowy-web
+      - appflowy-cloud
+      - gotrue
+      - admin-frontend
+
+  postgres:
+    image: pgvector/pgvector:0.8.6-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: appflowy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: appflowy
+    volumes:
+      - appflowy-postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.4.11-alpine
+    restart: unless-stopped
+    volumes:
+      - appflowy-redis:/data
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - appflowy-minio:/data
+
+  gotrue:
+    image: appflowyinc/gotrue:0.18.0
+    restart: unless-stopped
+    expose:
+      - 9999
+    environment:
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DATABASE_URL: ${GOTRUE_DATABASE_URL}
+      GOTRUE_DB_NAMESPACE: auth
+      GOTRUE_SITE_URL: appflowy-flutter://
+      GOTRUE_URI_ALLOW_LIST: "**"
+      GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
+      GOTRUE_JWT_EXP: "604800"
+      GOTRUE_JWT_ADMIN_GROUP_NAME: supabase_admin
+      GOTRUE_ADMIN_EMAIL: ${GOTRUE_ADMIN_EMAIL}
+      GOTRUE_ADMIN_PASSWORD: ${GOTRUE_ADMIN_PASSWORD}
+      GOTRUE_MAILER_AUTOCONFIRM: "true"
+      GOTRUE_DISABLE_SIGNUP: "false"
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL}
+      PORT: "9999"
+    depends_on:
+      - postgres
+
+  appflowy-cloud:
+    image: appflowyinc/appflowy_cloud:0.17.12
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      APPFLOWY_ENVIRONMENT: production
+      APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
+      APPFLOWY_WEBSOCKET_BASE_URL: ${APPFLOWY_WEBSOCKET_BASE_URL}
+      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_GOTRUE_BASE_URL: http://gotrue:9999
+      APPFLOWY_S3_USE_MINIO: "true"
+      APPFLOWY_S3_CREATE_BUCKET: "true"
+      APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
+      APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
+      APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
+      APPFLOWY_S3_REGION: ${APPFLOWY_S3_REGION}
+      APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
+      APPFLOWY_S3_PRESIGNED_URL_ENDPOINT: ${APPFLOWY_S3_PRESIGNED_URL_ENDPOINT}
+      APPFLOWY_SEARCH_SERVICE_URL: ${APPFLOWY_SEARCH_SERVICE_URL}
+      AI_ENABLED: ${AI_ENABLED}
+      AI_SERVER_HOST: ${AI_SERVER_HOST}
+      AI_SERVER_PORT: ${AI_SERVER_PORT}
+    depends_on:
+      - postgres
+      - redis
+      - gotrue
+      - minio
+
+  appflowy-worker:
+    image: appflowyinc/appflowy_worker:0.17.12
+    restart: unless-stopped
+    environment:
+      APPFLOWY_ENVIRONMENT: production
+      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_S3_USE_MINIO: "true"
+      APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
+      APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
+      APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
+      APPFLOWY_S3_REGION: ${APPFLOWY_S3_REGION}
+      APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
+    depends_on:
+      - appflowy-cloud
+
+  appflowy-search:
+    image: appflowyinc/appflowy_search:0.18.0
+    restart: unless-stopped
+    expose:
+      - 4002
+    environment:
+      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
+      APPFLOWY_SEARCH_SERVICE_URL: http://appflowy-search:4002
+    depends_on:
+      - postgres
+      - redis
+
+  appflowy-ai:
+    image: appflowyinc/appflowy_ai:0.17.7
+    restart: unless-stopped
+    expose:
+      - 5001
+    environment:
+      AI_ENABLED: ${AI_ENABLED}
+      AI_OPENAI_API_KEY: ${AI_OPENAI_API_KEY}
+      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_S3_USE_MINIO: "true"
+      APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
+      APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
+      APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
+      APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
+    depends_on:
+      - postgres
+      - redis
+
+  admin-frontend:
+    image: appflowyinc/admin_frontend:0.17.13
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      API_EXTERNAL_URL: ${API_EXTERNAL_URL}
+      APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
+    depends_on:
+      - gotrue
+
+  appflowy-web:
+    image: appflowyinc/appflowy_web:0.17.0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
+      APPFLOWY_GOTRUE_BASE_URL: https://${domain}/gotrue
+      APPFLOWY_WS_BASE_URL: ${APPFLOWY_WEBSOCKET_BASE_URL}
+
+volumes:
+  appflowy-postgres: {}
+  appflowy-redis: {}
+  appflowy-minio: {}

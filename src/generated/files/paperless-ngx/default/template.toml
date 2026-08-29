@@ -1,0 +1,21 @@
+[variables]
+secret_key = "${hash:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "paperless-webserver"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+PAPERLESS_SECRET_KEY = "${secret_key}"
+PAPERLESS_URL = "https://${domain}"
+PAPERLESS_REDIS = "redis://paperless-broker:6379"
+PAPERLESS_DBENGINE = "postgresql"
+PAPERLESS_DBHOST = "paperless-db"
+PAPERLESS_DBNAME = "paperless"
+PAPERLESS_DBUSER = "paperless"
+PAPERLESS_DBPASS = "${db_password}"

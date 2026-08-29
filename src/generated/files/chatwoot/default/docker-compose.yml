@@ -1,0 +1,82 @@
+services:
+  chatwoot:
+    image: chatwoot/chatwoot:v4.17.1
+    restart: unless-stopped
+    command: bundle exec rails server -p 3000 -b 0.0.0.0
+    expose:
+      - 3000
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      FRONTEND_URL: ${FRONTEND_URL}
+      RAILS_ENV: ${RAILS_ENV}
+      INSTALLATION_ENV: ${INSTALLATION_ENV}
+      ACTIVE_STORAGE_SERVICE: ${ACTIVE_STORAGE_SERVICE}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USERNAME: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DB}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@chatwoot-redis:6379
+    volumes:
+      - chatwoot-storage:/app/storage
+    depends_on:
+      chatwoot-db:
+        condition: service_healthy
+      chatwoot-redis:
+        condition: service_healthy
+
+  chatwoot-worker:
+    image: chatwoot/chatwoot:v4.17.1
+    restart: unless-stopped
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      FRONTEND_URL: ${FRONTEND_URL}
+      RAILS_ENV: ${RAILS_ENV}
+      INSTALLATION_ENV: ${INSTALLATION_ENV}
+      ACTIVE_STORAGE_SERVICE: ${ACTIVE_STORAGE_SERVICE}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_USERNAME: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DB}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@chatwoot-redis:6379
+    volumes:
+      - chatwoot-storage:/app/storage
+    depends_on:
+      chatwoot:
+        condition: service_started
+
+  chatwoot-db:
+    image: pgvector/pgvector:0.8.6-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - chatwoot-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chatwoot -d chatwoot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  chatwoot-redis:
+    image: redis:7.4.11-alpine
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - chatwoot-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  chatwoot-storage: {}
+  chatwoot-postgres: {}
+  chatwoot-redis: {}

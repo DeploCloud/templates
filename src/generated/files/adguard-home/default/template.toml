@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "adguard"
+port = 3_000
+host = "${domain}"

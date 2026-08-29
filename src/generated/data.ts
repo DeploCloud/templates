@@ -101,6 +101,216 @@ const data = {
   ],
   "templates": [
     {
+      "name": "Actual Budget",
+      "logo": "/images/actual-budget/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Private budgeting server with a persistent data directory and HTTPS access.",
+          "category": {
+            "name": "Finance",
+            "icon": "wallet",
+            "description": "Accounting, invoicing, budgeting, payments and the ledgers a business runs on.",
+            "slug": "finance"
+          },
+          "developedBy": {
+            "label": "Actual Budget",
+            "url": "https://actualbudget.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/actualbudget/actual",
+            "website": "https://actualbudget.org/",
+            "docs": [
+              "https://actualbudget.org/docs/install/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume and exposes the web application only through the HTTPS domain.",
+          "logo": "/images/actual-budget/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/actual-budget/default/template.toml",
+            "compose": "/files/actual-budget/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "actual-budget"
+    },
+    {
+      "name": "AdGuard Home",
+      "logo": "/images/adguard-home/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Network-wide DNS filtering with a persistent configuration and web setup interface.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "AdGuard Home",
+            "url": "https://adguard.com/en/adguard-home/overview.html"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/AdguardTeam/AdGuardHome",
+            "website": "https://adguard.com/en/adguard-home/overview.html",
+            "docs": [
+              "https://github.com/AdguardTeam/AdGuardHome/wiki/Docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "AdGuard Home is a network-wide DNS server that blocks advertisements and trackers. The container\nkeeps its work and configuration directories on persistent volumes. DNS requires the standard TCP\nand UDP port 53 on the host; the first-run administration wizard is available through the HTTPS\ndomain on port 3000.",
+          "logo": "/images/adguard-home/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/adguard-home/default/template.toml",
+            "compose": "/files/adguard-home/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "adguard-home"
+    },
+    {
+      "name": "AFFiNE",
+      "logo": "/images/affine/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "AFFiNE collaborative workspace with PostgreSQL, Redis and persistent storage.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "AFFiNE",
+            "url": "https://affine.pro/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/toeverything/AFFiNE",
+            "website": "https://affine.pro/",
+            "docs": [
+              "https://docs.affine.pro/self-host-affine"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "AFFiNE is a privacy-first collaborative workspace for documents, whiteboards and knowledge\nmanagement. The official self-host layout is used here with a migration job, the AFFiNE server,\nRedis and PostgreSQL. Storage and configuration survive redeploys, and the server is routed through\nthe supplied HTTPS domain.",
+          "logo": "/images/affine/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/affine/default/template.toml",
+            "compose": "/files/affine/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "affine"
+    },
+    {
+      "name": "AppFlowy",
+      "logo": "/images/appflowy/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Complete AppFlowy Cloud stack with web, API, authentication, search, AI, MinIO and PostgreSQL.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "AppFlowy",
+            "url": "https://appflowy.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/AppFlowy-IO/AppFlowy-Cloud",
+            "website": "https://appflowy.io/",
+            "docs": [
+              "https://docs.appflowy.io/docs/documentation/appflowy-cloud/deployment"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "AppFlowy Cloud is a collaborative workspace with the official web, API, authentication, search,\nAI, worker and administration services. This template keeps the upstream service boundaries and\nadds an internal Nginx gateway for path-based routing, with PostgreSQL, Redis and MinIO data on\npersistent volumes. Configure an OpenAI-compatible key in the generated environment when AI\nfeatures are needed.",
+          "logo": "/images/appflowy/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/appflowy/default/template.toml",
+            "compose": "/files/appflowy/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "appflowy"
+    },
+    {
+      "name": "Chatwoot",
+      "logo": "/images/chatwoot/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Complete Chatwoot production stack with Rails, Sidekiq, PostgreSQL and Redis.",
+          "category": {
+            "name": "Communication",
+            "icon": "message-circle",
+            "description": "Chat, calls, forums and the bots and bridges that connect a team or a community.",
+            "slug": "communication"
+          },
+          "developedBy": {
+            "label": "Chatwoot",
+            "url": "https://www.chatwoot.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/chatwoot/chatwoot",
+            "website": "https://www.chatwoot.com/",
+            "docs": [
+              "https://developers.chatwoot.com/self-hosted/deployment/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "Chatwoot is an open-source customer communication platform for live chat, email and social\nchannels. This template follows the production Docker layout with separate Rails and Sidekiq\nprocesses, PostgreSQL with pgvector, Redis and persistent Active Storage. It is intended for a\nserver with at least 4 GB of RAM and should be placed behind HTTPS.",
+          "logo": "/images/chatwoot/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/chatwoot/default/template.toml",
+            "compose": "/files/chatwoot/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "chatwoot"
+    },
+    {
       "name": "Diun",
       "logo": "/images/diun/logo.webp",
       "variants": [
@@ -141,6 +351,83 @@ const data = {
         }
       ],
       "slug": "diun"
+    },
+    {
+      "name": "Firefly III",
+      "logo": "/images/firefly-iii/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Firefly III personal finance manager with MariaDB, scheduled tasks and persistent storage.",
+          "category": {
+            "name": "Finance",
+            "icon": "wallet",
+            "description": "Accounting, invoicing, budgeting, payments and the ledgers a business runs on.",
+            "slug": "finance"
+          },
+          "developedBy": {
+            "label": "Firefly III",
+            "url": "https://firefly-iii.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/firefly-iii/firefly-iii",
+            "website": "https://firefly-iii.org/",
+            "docs": [
+              "https://www.mintlify.com/firefly-iii/firefly-iii/installation/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "Firefly III is a self-hosted personal finance manager for transactions, budgets, bills and reports.\nThis template follows the official Docker layout with the Firefly application, MariaDB and a\nscheduled cron worker. Application keys, database credentials and the cron token are generated, and\nuploads and database data are persistent.",
+          "logo": "/images/firefly-iii/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/firefly-iii/default/template.toml",
+            "compose": "/files/firefly-iii/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Firefly III with PostgreSQL, scheduled tasks and persistent financial data.",
+          "category": {
+            "name": "Finance",
+            "icon": "wallet",
+            "description": "Accounting, invoicing, budgeting, payments and the ledgers a business runs on.",
+            "slug": "finance"
+          },
+          "developedBy": {
+            "label": "Firefly III",
+            "url": "https://firefly-iii.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/firefly-iii/firefly-iii",
+            "website": "https://firefly-iii.org/",
+            "docs": [
+              "https://www.mintlify.com/firefly-iii/firefly-iii/installation/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "This variant swaps Firefly III's database for PostgreSQL while retaining the official application\nand cron services. The PostgreSQL password and Firefly application secrets are generated, with\npersistent volumes for uploads and database data.",
+          "logo": "/images/firefly-iii/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/firefly-iii/postgresql/template.toml",
+            "compose": "/files/firefly-iii/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "firefly-iii"
     },
     {
       "name": "Forgejo",
@@ -1152,6 +1439,118 @@ const data = {
       "slug": "open-webui"
     },
     {
+      "name": "Paperless-ngx",
+      "logo": "/images/paperless-ngx/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Paperless-ngx document management with PostgreSQL, Valkey and persistent document volumes.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Paperless-ngx",
+            "url": "https://github.com/paperless-ngx/paperless-ngx"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/paperless-ngx/paperless-ngx",
+            "website": "https://docs.paperless-ngx.com/",
+            "docs": [
+              "https://docs.paperless-ngx.com/setup/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "Paperless-ngx turns scanned documents into an indexed online archive. This recommended deployment\nuses PostgreSQL for metadata, Valkey as the task broker and persistent data, media, export and\nconsume directories. The webserver is kept private to the stack and exposed through HTTPS.",
+          "logo": "/images/paperless-ngx/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/paperless-ngx/default/template.toml",
+            "compose": "/files/paperless-ngx/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "Office Documents",
+          "shortDescription": "Paperless-ngx with PostgreSQL, Valkey, Gotenberg and Apache Tika for office conversion.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Paperless-ngx",
+            "url": "https://github.com/paperless-ngx/paperless-ngx"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/paperless-ngx/paperless-ngx",
+            "website": "https://docs.paperless-ngx.com/",
+            "docs": [
+              "https://docs.paperless-ngx.com/setup/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "This variant adds the official Gotenberg and Apache Tika services to Paperless-ngx. It keeps the\nPostgreSQL and Valkey foundation of the default deployment while enabling text extraction and PDF\nconversion for office documents and email attachments.",
+          "logo": "/images/paperless-ngx/office-documents/logo.webp",
+          "images": [],
+          "slug": "office-documents",
+          "files": {
+            "config": "/files/paperless-ngx/office-documents/template.toml",
+            "compose": "/files/paperless-ngx/office-documents/docker-compose.yml"
+          }
+        },
+        {
+          "name": "SQLite",
+          "shortDescription": "Lightweight Paperless-ngx deployment using SQLite, Valkey and persistent document volumes.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Paperless-ngx",
+            "url": "https://github.com/paperless-ngx/paperless-ngx"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/paperless-ngx/paperless-ngx",
+            "website": "https://docs.paperless-ngx.com/",
+            "docs": [
+              "https://docs.paperless-ngx.com/setup/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "This lightweight Paperless-ngx variant keeps metadata in SQLite while retaining the documented\nValkey broker and persistent document directories. It is convenient for a personal archive; use\nthe PostgreSQL variant when several users or high ingest concurrency are expected.",
+          "logo": "/images/paperless-ngx/sqlite/logo.webp",
+          "images": [],
+          "slug": "sqlite",
+          "files": {
+            "config": "/files/paperless-ngx/sqlite/template.toml",
+            "compose": "/files/paperless-ngx/sqlite/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "paperless-ngx"
+    },
+    {
       "name": "Plausible",
       "logo": "/images/plausible/logo.webp",
       "variants": [
@@ -1278,6 +1677,48 @@ const data = {
       "slug": "qdrant"
     },
     {
+      "name": "RustDesk",
+      "logo": "/images/rustdesk/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "RustDesk ID and relay servers with persistent keys and the official network ports.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "RustDesk",
+            "url": "https://rustdesk.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/rustdesk/rustdesk-server",
+            "website": "https://rustdesk.com/",
+            "docs": [
+              "https://rustdesk.com/docs/en/self-host/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "RustDesk is a self-hosted remote desktop server. Its rendezvous and relay protocols use raw TCP\nand UDP ports rather than HTTP, so the official ports are published directly on the host instead\nof being routed through a Deplo HTTP domain. The shared volume preserves the generated server keys.",
+          "logo": "/images/rustdesk/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/rustdesk/default/template.toml",
+            "compose": "/files/rustdesk/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "rustdesk"
+    },
+    {
       "name": "SeaweedFS",
       "logo": "/images/seaweedfs/logo.webp",
       "variants": [
@@ -1318,6 +1759,48 @@ const data = {
         }
       ],
       "slug": "seaweedfs"
+    },
+    {
+      "name": "Twenty",
+      "logo": "/images/twenty/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted Twenty CRM with its API, worker, PostgreSQL and Redis services.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Twenty",
+            "url": "https://twenty.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/twentyhq/twenty",
+            "website": "https://twenty.com/",
+            "docs": [
+              "https://docs.twenty.com/developers/self-host/capabilities/docker-compose"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template\nuses the documented self-hosted layout: an API server, background worker, PostgreSQL database and\nRedis. Files are stored on a persistent local volume and the application is exposed through HTTPS.",
+          "logo": "/images/twenty/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/twenty/default/template.toml",
+            "compose": "/files/twenty/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "twenty"
     },
     {
       "name": "Umami",
@@ -1478,10 +1961,87 @@ const data = {
         }
       ],
       "slug": "vaultwarden"
+    },
+    {
+      "name": "Vikunja",
+      "logo": "/images/vikunja/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Vikunja task management with SQLite and persistent files and database storage.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Vikunja",
+            "url": "https://vikunja.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/go-vikunja/vikunja",
+            "website": "https://vikunja.io/",
+            "docs": [
+              "https://vikunja.io/docs/installing/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "Vikunja is a self-hosted task and project manager. The default deployment follows the simple\nDocker installation with SQLite, a generated service secret, a persistent database and a separate\nfiles volume. It is suitable for personal use and small teams behind the HTTPS domain.",
+          "logo": "/images/vikunja/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/vikunja/default/template.toml",
+            "compose": "/files/vikunja/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Vikunja task management backed by an included PostgreSQL database for larger teams.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Vikunja",
+            "url": "https://vikunja.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/go-vikunja/vikunja",
+            "website": "https://vikunja.io/",
+            "docs": [
+              "https://vikunja.io/docs/full-docker-example/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "This Vikunja variant uses the documented PostgreSQL deployment for installations with more users\nor concurrent activity. The application and database are separate services, with generated database\ncredentials and persistent volumes for both task attachments and PostgreSQL data.",
+          "logo": "/images/vikunja/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/vikunja/postgresql/template.toml",
+            "compose": "/files/vikunja/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "vikunja"
     }
   ]
 } as const satisfies { categories: readonly Category[]; templates: readonly Template[] };
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "983e13c9b86053aa227042b07f5f90acdeb560c232d028b966b60b1145cf1cb2";
+export const version = "394c07dee2917a4c59b467169b4fea9d64c5da623f50213121166ec818cd1c71";

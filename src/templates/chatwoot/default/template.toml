@@ -1,0 +1,26 @@
+[variables]
+db_password = "${password:32}"
+secret_key_base = "${hash:64}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "chatwoot"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+POSTGRES_USER = "chatwoot"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "chatwoot"
+SECRET_KEY_BASE = "${secret_key_base}"
+FRONTEND_URL = "https://${domain}"
+RAILS_ENV = "production"
+INSTALLATION_ENV = "docker"
+ACTIVE_STORAGE_SERVICE = "local"
+POSTGRES_HOST = "chatwoot-db"
+POSTGRES_PORT = "5432"
+REDIS_URL = "redis://:${redis_password}@chatwoot-redis:6379"
+REDIS_PASSWORD = "${redis_password}"
