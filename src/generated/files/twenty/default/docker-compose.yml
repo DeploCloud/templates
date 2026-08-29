@@ -1,0 +1,72 @@
+services:
+  twenty-server:
+    image: twentycrm/twenty:v2.37.0
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PG_DATABASE_URL: ${PG_DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      SERVER_URL: ${SERVER_URL}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      STORAGE_LOCAL_PATH: ${STORAGE_LOCAL_PATH}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      FALLBACK_ENCRYPTION_KEY: ${FALLBACK_ENCRYPTION_KEY}
+      APP_SECRET: ${APP_SECRET}
+    volumes:
+      - twenty-storage:/app/.local-storage
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty-redis:
+        condition: service_healthy
+
+  twenty-worker:
+    image: twentycrm/twenty:v2.37.0
+    restart: unless-stopped
+    command: ["yarn", "worker:prod"]
+    environment:
+      PG_DATABASE_URL: ${PG_DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      SERVER_URL: ${SERVER_URL}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      STORAGE_LOCAL_PATH: ${STORAGE_LOCAL_PATH}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      FALLBACK_ENCRYPTION_KEY: ${FALLBACK_ENCRYPTION_KEY}
+      APP_SECRET: ${APP_SECRET}
+    volumes:
+      - twenty-storage:/app/.local-storage
+    depends_on:
+      twenty-server:
+        condition: service_started
+
+  twenty-db:
+    image: postgres:18.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: twenty
+      POSTGRES_PASSWORD: ${TWENTY_DB_PASSWORD}
+      POSTGRES_DB: twenty
+    volumes:
+      - twenty-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U twenty -d twenty"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  twenty-redis:
+    image: redis:7.4.11-alpine
+    restart: unless-stopped
+    volumes:
+      - twenty-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  twenty-storage: {}
+  twenty-postgres: {}
+  twenty-redis: {}

@@ -1,0 +1,18 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:2.5.0
+    restart: unless-stopped
+    expose:
+      - 3456
+    environment:
+      VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_SERVICE_JWTSECRET}
+      VIKUNJA_SERVICE_PUBLICURL: ${VIKUNJA_SERVICE_PUBLICURL}
+      VIKUNJA_DATABASE_TYPE: ${VIKUNJA_DATABASE_TYPE}
+      VIKUNJA_DATABASE_PATH: ${VIKUNJA_DATABASE_PATH}
+    volumes:
+      - vikunja-files:/app/vikunja/files
+      - vikunja-db:/db
+
+volumes:
+  vikunja-files: {}
+  vikunja-db: {}

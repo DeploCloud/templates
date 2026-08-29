@@ -1,0 +1,16 @@
+[variables]
+jwt_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vikunja"
+port = 3_456
+host = "${domain}"
+
+[config.env]
+VIKUNJA_SERVICE_JWTSECRET = "${jwt_secret}"
+VIKUNJA_SERVICE_PUBLICURL = "https://${domain}/"
+VIKUNJA_DATABASE_TYPE = "sqlite"
+VIKUNJA_DATABASE_PATH = "/db/vikunja.db"

@@ -1,0 +1,65 @@
+services:
+  affine:
+    image: ghcr.io/toeverything/affine:stable@sha256:b649f5ce2384ffdf13c23bccf81d759e15973d59d0b0058af65d895a84373099
+    restart: unless-stopped
+    expose:
+      - 3010
+    environment:
+      REDIS_SERVER_HOST: ${REDIS_SERVER_HOST}
+      REDIS_SERVER_PORT: ${REDIS_SERVER_PORT}
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - affine-storage:/root/.affine/storage
+      - ./config.json:/root/.affine/config/config.json:ro
+    depends_on:
+      affine-migration:
+        condition: service_completed_successfully
+      affine-redis:
+        condition: service_healthy
+      affine-db:
+        condition: service_healthy
+
+  affine-migration:
+    image: ghcr.io/toeverything/affine:stable@sha256:b649f5ce2384ffdf13c23bccf81d759e15973d59d0b0058af65d895a84373099
+    restart: "no"
+    command: ["sh", "-c", "node ./scripts/self-host-predeploy.js"]
+    environment:
+      REDIS_SERVER_HOST: ${REDIS_SERVER_HOST}
+      REDIS_SERVER_PORT: ${REDIS_SERVER_PORT}
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      affine-redis:
+        condition: service_healthy
+      affine-db:
+        condition: service_healthy
+
+  affine-redis:
+    image: redis:7.4.11-alpine
+    restart: unless-stopped
+    volumes:
+      - affine-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  affine-db:
+    image: pgvector/pgvector:0.8.6-pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: affine
+      POSTGRES_PASSWORD: ${AFFINE_DB_PASSWORD}
+      POSTGRES_DB: affine
+    volumes:
+      - affine-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U affine -d affine"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  affine-storage: {}
+  affine-redis: {}
+  affine-postgres: {}

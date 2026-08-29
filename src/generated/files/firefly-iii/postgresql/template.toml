@@ -1,0 +1,26 @@
+[variables]
+app_key = "${base64:32}"
+db_password = "${password:32}"
+cron_token = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "firefly-app"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+APP_KEY = "base64:${app_key}"
+APP_URL = "https://${domain}"
+SITE_OWNER = "${email}"
+TRUSTED_PROXIES = "**"
+DB_CONNECTION = "pgsql"
+DB_HOST = "firefly-db"
+DB_PORT = "5432"
+DB_DATABASE = "firefly"
+DB_USERNAME = "firefly"
+DB_PASSWORD = "${db_password}"
+STATIC_CRON_TOKEN = "${cron_token}"
+TZ = "UTC"

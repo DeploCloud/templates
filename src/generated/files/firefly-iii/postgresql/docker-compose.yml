@@ -1,0 +1,56 @@
+services:
+  firefly-app:
+    image: fireflyiii/core:version-6.6.6
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      SITE_OWNER: ${SITE_OWNER}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      STATIC_CRON_TOKEN: ${STATIC_CRON_TOKEN}
+      TZ: ${TZ}
+    volumes:
+      - firefly-upload:/var/www/html/storage/upload
+    depends_on:
+      firefly-db:
+        condition: service_healthy
+
+  firefly-db:
+    image: postgres:18.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: firefly
+      POSTGRES_USER: firefly
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - firefly-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U firefly -d firefly"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  firefly-cron:
+    image: alpine:3.24.1
+    restart: unless-stopped
+    environment:
+      STATIC_CRON_TOKEN: ${STATIC_CRON_TOKEN}
+    command:
+      - sh
+      - -c
+      - apk add --no-cache wget && while true; do wget -qO- http://firefly-app:8080/api/v1/cron/$$STATIC_CRON_TOKEN; sleep 3600; done
+    depends_on:
+      firefly-app:
+        condition: service_started
+
+volumes:
+  firefly-upload: {}
+  firefly-postgres: {}
