@@ -27,6 +27,28 @@ of the categories in `src/categories.ts`. Every template must include a variant
 named `Default` (slug `default`), which is the store's canonical variant.
 `links.docs` is an array of HTTPS URLs.
 
+### Routed services
+
+`template.toml` declares one `[[config.domains]]` per publicly routed service:
+
+```toml
+[[config.domains]]
+serviceName = "client"
+port = 3002
+host = "${main_domain}"   # optional: one is generated when absent
+primary = true            # optional: this entry takes the app's main domain
+
+[[config.domains]]
+serviceName = "backend"
+port = 3001
+host = "${main_domain}"
+path = "/api"             # optional: same host, different path
+```
+
+`serviceName` and `port` are required; an entry missing either is ignored. A
+`path` with no `host` of its own means the app's own address at that path -
+which is how a stack that only takes one base URL routes its UI and its API.
+
 Then:
 
 ```sh
