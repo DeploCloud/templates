@@ -130,7 +130,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume and exposes the web application only through the HTTPS domain.",
+          "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume. Actual Budget requires a secure HTTPS domain; the generated\nHTTP URL is not supported because browsers disable `SharedArrayBuffer` there.",
           "logo": "/images/actual-budget/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -172,7 +172,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "AdGuard Home is a network-wide DNS server that blocks advertisements and trackers. The container\nkeeps its work and configuration directories on persistent volumes. DNS requires the standard TCP\nand UDP port 53 on the host; the first-run administration wizard is available through the HTTPS\ndomain on port 3000.",
+          "description": "AdGuard Home is a network-wide DNS server that blocks advertisements and trackers. This template\nkeeps its work and configuration directories on persistent volumes, so redeploying the stack does\nnot reset the service.\n\nDNS is published directly on the server's standard **TCP and UDP port 53**. That host port must be\nfree before deployment and can be used by only one DNS service on a server. A local resolver such\nas `systemd-resolved` may already be using it; configure that resolver to release port 53 or deploy\nAdGuard Home on another server. Changing the host port means clients can no longer use the standard\nDNS endpoint without additional configuration.\n\nThe web administration interface listens on **container port 3000** and is available through the\ngenerated HTTPS domain. Open that domain for the first-run setup, then point the devices or network\nyou want to filter at this server's DNS address.",
           "logo": "/images/adguard-home/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2044,4 +2044,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "0927f0cff21810bccade542d1ae6f296367ab17e69ef8159d2e7fd34f2ba2941";
+export const version = "a8c81b6c1a21ca6d43116259c55c5577e30402010ca81343fc43536863674d81";
