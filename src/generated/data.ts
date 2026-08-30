@@ -130,7 +130,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume and exposes the web application only through the HTTPS domain.",
+          "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume. Actual Budget requires a secure HTTPS domain; the generated\nHTTP URL is not supported because browsers disable `SharedArrayBuffer` there.",
           "logo": "/images/actual-budget/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2044,4 +2044,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "0927f0cff21810bccade542d1ae6f296367ab17e69ef8159d2e7fd34f2ba2941";
+export const version = "dac6fbf30c685c1d67abb7e1f1bff2ecec201fa33449fa6d5fd3b7e2cce0e36c";
