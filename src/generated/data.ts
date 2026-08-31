@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a4b837b772cd9cd07112a0a456b1d8cf895daec99e51bffe4d92722514ed6583";
+export const version = "102df0e9693bd35eb5bb29bea07ffdb566ad32a7193af8e2ac35b6a2961faa73";

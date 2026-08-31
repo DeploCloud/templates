@@ -1,6 +1,5 @@
 [variables]
 secret_base = "${base64:64}"
-totp_key = "${base64:32}"
 db_password = "${password:32}"
 
 [[config.domains]]
@@ -11,7 +10,6 @@ host = "${domain}"
 [config.env]
 BASE_URL = "https://${domain}"
 SECRET_KEY_BASE = "${secret_base}"
-TOTP_VAULT_KEY = "${totp_key}"
 POSTGRES_PASSWORD = "${db_password}"
 DATABASE_URL = "postgres://postgres:${db_password}@plausible_db:5432/plausible_db"
 
