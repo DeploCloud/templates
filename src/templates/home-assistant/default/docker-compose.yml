@@ -1,0 +1,26 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    expose:
+      - 8123
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - homeassistant-config:/config
+      - ./configuration.yaml:/config/configuration.yaml
+      - ./automations.yaml:/config/automations.yaml
+      - ./scripts.yaml:/config/scripts.yaml
+      - ./scenes.yaml:/config/scenes.yaml
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123/"]
+      interval: 60s
+      timeout: 5s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  homeassistant-config: {}

@@ -1,0 +1,42 @@
+services:
+  app:
+    image: jc21/nginx-proxy-manager:2.15.1
+    restart: unless-stopped
+    expose:
+      - 81
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      TZ: ${TZ}
+      DB_POSTGRES_HOST: db
+      DB_POSTGRES_PORT: 5432
+      DB_POSTGRES_USER: npm
+      DB_POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD}
+      DB_POSTGRES_NAME: npm
+    volumes:
+      - npm-data:/data
+      - npm-letsencrypt:/etc/letsencrypt
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: npm
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD}
+      POSTGRES_DB: npm
+    volumes:
+      - npm-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U npm -d npm"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  npm-data: {}
+  npm-letsencrypt: {}
+  npm-postgres: {}

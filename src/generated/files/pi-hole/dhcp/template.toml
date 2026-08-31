@@ -1,0 +1,14 @@
+[variables]
+timezone = "Europe/Rome"
+web_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "pihole"
+port = 80
+host = "${domain}"
+
+[config.env]
+TZ = "${timezone}"
+FTLCONF_WEB_PASSWORD = "${web_password}"

@@ -619,6 +619,48 @@ const data = {
       "slug": "garage-s3"
     },
     {
+      "name": "Ghost",
+      "logo": "/images/ghost/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Ghost publishing platform with MySQL, persistent content and HTTPS public URLs.",
+          "category": {
+            "name": "CMS",
+            "icon": "layout-template",
+            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
+            "slug": "cms"
+          },
+          "developedBy": {
+            "label": "Ghost",
+            "url": "https://github.com/TryGhost"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/TryGhost/Ghost",
+            "website": "https://ghost.org/",
+            "docs": [
+              "https://ghost.org/docs/config/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Ghost is a publishing platform for blogs, newsletters and memberships. This template runs Ghost\nwith MySQL and persists both publication content and database data. The generated HTTPS domain is\nused as Ghost's public URL; change the initial administrator password after setup.",
+          "logo": "/images/ghost/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/ghost/default/template.toml",
+            "compose": "/files/ghost/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "ghost"
+    },
+    {
       "name": "Gitea",
       "logo": "/images/gitea/logo.webp",
       "variants": [
@@ -848,6 +890,48 @@ const data = {
         }
       ],
       "slug": "homarr"
+    },
+    {
+      "name": "Home Assistant",
+      "logo": "/images/home-assistant/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Home automation hub with persistent configuration and a generated HTTPS domain.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Home Assistant",
+            "url": "https://github.com/home-assistant/core"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/home-assistant/core",
+            "website": "https://www.home-assistant.io/",
+            "docs": [
+              "https://www.home-assistant.io/installation/linux/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Home Assistant Container is a self-hosted home automation hub. The configuration and automation\nfiles are materialized by the template, while the rest of `/config` stays on a persistent volume.\nBluetooth and other device integrations may require extra host device access.",
+          "logo": "/images/home-assistant/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/home-assistant/default/template.toml",
+            "compose": "/files/home-assistant/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "home-assistant"
     },
     {
       "name": "Homepage",
@@ -1080,6 +1164,83 @@ const data = {
         }
       ],
       "slug": "jellyfin"
+    },
+    {
+      "name": "Joplin",
+      "logo": "/images/joplin/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Joplin note synchronization server using persistent built-in SQLite storage.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Joplin",
+            "url": "https://github.com/laurent22"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/laurent22/joplin",
+            "website": "https://joplinapp.org/",
+            "docs": [
+              "https://hub.docker.com/r/joplin/server"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Joplin Server synchronizes notes, notebooks and attachments between Joplin clients. This\nevaluation variant uses the server's built-in SQLite database and persists its data directory. For\nan internet-facing production setup, use the PostgreSQL variant and change the default admin login.",
+          "logo": "/images/joplin/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/joplin/default/template.toml",
+            "compose": "/files/joplin/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Joplin note synchronization server backed by a persistent PostgreSQL database.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Joplin",
+            "url": "https://github.com/laurent22"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/laurent22/joplin",
+            "website": "https://joplinapp.org/",
+            "docs": [
+              "https://github.com/laurent22/joplin/blob/dev/packages/server/README.md"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Joplin Server with PostgreSQL for a production-shaped deployment. The database is persistent and\nthe server is routed through the generated HTTPS domain. Change the default admin login and create\na separate non-admin sync user after the first login.",
+          "logo": "/images/joplin/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/joplin/postgresql/template.toml",
+            "compose": "/files/joplin/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "joplin"
     },
     {
       "name": "Meilisearch",
@@ -1397,6 +1558,195 @@ const data = {
       "slug": "nextcloud"
     },
     {
+      "name": "Nginx Proxy Manager",
+      "logo": "/images/nginx-proxy-manager/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Reverse proxy manager with SQLite storage, automatic certificates and a web admin UI.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Nginx Proxy Manager",
+            "url": "https://github.com/NginxProxyManager"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/NginxProxyManager/nginx-proxy-manager",
+            "website": "https://nginxproxymanager.com/",
+            "docs": [
+              "https://nginxproxymanager.com/setup/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates. Ports 80 and 443 must be\navailable on the server for public proxy hosts; the generated domain opens the admin UI on port 81.",
+          "logo": "/images/nginx-proxy-manager/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/nginx-proxy-manager/default/template.toml",
+            "compose": "/files/nginx-proxy-manager/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MariaDB",
+          "shortDescription": "Reverse proxy manager backed by MariaDB with persistent certificates and admin data.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Nginx Proxy Manager",
+            "url": "https://github.com/NginxProxyManager"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/NginxProxyManager/nginx-proxy-manager",
+            "website": "https://nginxproxymanager.com/",
+            "docs": [
+              "https://nginxproxymanager.com/setup/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists. Ports 80\nand 443 must be available on the server for public proxy hosts; the generated domain opens the\nadmin UI on port 81.",
+          "logo": "/images/nginx-proxy-manager/mariadb/logo.webp",
+          "images": [],
+          "slug": "mariadb",
+          "files": {
+            "config": "/files/nginx-proxy-manager/mariadb/template.toml",
+            "compose": "/files/nginx-proxy-manager/mariadb/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Reverse proxy manager backed by PostgreSQL with persistent certificates and admin data.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Nginx Proxy Manager",
+            "url": "https://github.com/NginxProxyManager"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/NginxProxyManager/nginx-proxy-manager",
+            "website": "https://nginxproxymanager.com/",
+            "docs": [
+              "https://nginxproxymanager.com/setup/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists. Ports 80\nand 443 must be available on the server for public proxy hosts; the generated domain opens the\nadmin UI on port 81.",
+          "logo": "/images/nginx-proxy-manager/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/nginx-proxy-manager/postgresql/template.toml",
+            "compose": "/files/nginx-proxy-manager/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "nginx-proxy-manager"
+    },
+    {
+      "name": "NocoDB",
+      "logo": "/images/nocodb/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Lightweight NocoDB workspace using persistent built-in SQLite storage.",
+          "category": {
+            "name": "Database",
+            "icon": "database",
+            "description": "Relational, document and key-value stores, plus the tools to browse and manage them.",
+            "slug": "database"
+          },
+          "developedBy": {
+            "label": "NocoDB",
+            "url": "https://github.com/nocodb"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/nocodb/nocodb",
+            "website": "https://www.nocodb.com/",
+            "docs": [
+              "https://www.nocodb.com/docs/self-hosting/environment-variables"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "NocoDB turns a local SQLite database into a browser-based workspace for tables, views and APIs.\nThis lightweight variant persists its application data and is suited to evaluation or small\nworkloads; use the PostgreSQL variant for a production-shaped deployment.",
+          "logo": "/images/nocodb/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/nocodb/default/template.toml",
+            "compose": "/files/nocodb/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "NocoDB with bundled PostgreSQL, Redis and a persistent background worker.",
+          "category": {
+            "name": "Database",
+            "icon": "database",
+            "description": "Relational, document and key-value stores, plus the tools to browse and manage them.",
+            "slug": "database"
+          },
+          "developedBy": {
+            "label": "NocoDB",
+            "url": "https://github.com/nocodb"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/nocodb/nocodb",
+            "website": "https://www.nocodb.com/",
+            "docs": [
+              "https://www.nocodb.com/docs/self-hosting/installation/quickstart"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "NocoDB with bundled PostgreSQL, Redis and a background worker for a production-shaped deployment.\nApplication data, attachments, the database and the job queue persist on named volumes. The\ngenerated HTTPS domain is used for callbacks and shared links.",
+          "logo": "/images/nocodb/postgresql/logo.webp",
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/nocodb/postgresql/template.toml",
+            "compose": "/files/nocodb/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "nocodb"
+    },
+    {
       "name": "Open WebUI",
       "logo": "/images/open-webui/logo.webp",
       "variants": [
@@ -1586,6 +1936,83 @@ const data = {
       "slug": "paperless-ngx"
     },
     {
+      "name": "Pi-hole",
+      "logo": "/images/pi-hole/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Network-wide DNS filtering with persistent configuration and a generated web domain.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Pi-hole",
+            "url": "https://github.com/pi-hole"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/pi-hole/docker-pi-hole",
+            "website": "https://pi-hole.net/",
+            "docs": [
+              "https://docs.pi-hole.net/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and\nDNS data are persistent. Port 53 must be free on the server; use the generated domain for the web\ninterface and point clients at this server's DNS address.",
+          "logo": "/images/pi-hole/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/pi-hole/default/template.toml",
+            "compose": "/files/pi-hole/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "DHCP",
+          "shortDescription": "Pi-hole DNS filtering with the optional DHCP server port and required network capability.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Pi-hole",
+            "url": "https://github.com/pi-hole"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/pi-hole/docker-pi-hole",
+            "website": "https://pi-hole.net/",
+            "docs": [
+              "https://docs.pi-hole.net/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Pi-hole with its optional DHCP server capability. DNS and DHCP ports are published on the host and\nthe configuration is persistent. After deployment, configure the DHCP range in the Pi-hole web\ninterface and ensure no other DHCP server is active on the network.",
+          "logo": "/images/pi-hole/dhcp/logo.webp",
+          "images": [],
+          "slug": "dhcp",
+          "files": {
+            "config": "/files/pi-hole/dhcp/template.toml",
+            "compose": "/files/pi-hole/dhcp/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "pi-hole"
+    },
+    {
       "name": "Plausible",
       "logo": "/images/plausible/logo.webp",
       "variants": [
@@ -1628,6 +2055,48 @@ const data = {
       "slug": "plausible"
     },
     {
+      "name": "Portainer",
+      "logo": "/images/portainer/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Docker management UI with persistent data and the host socket required for administration.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Portainer",
+            "url": "https://github.com/portainer"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/portainer/portainer",
+            "website": "https://www.portainer.io/",
+            "docs": [
+              "https://docs.portainer.io/start/install-ce/server/docker/linux"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Portainer CE provides a web interface for managing Docker environments. Its database is kept on a\npersistent volume, while the Docker socket gives it the host access required to manage containers.\nThe first visit creates the administrator account.",
+          "logo": "/images/portainer/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/portainer/default/template.toml",
+            "compose": "/files/portainer/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "portainer"
+    },
+    {
       "name": "PostHog",
       "logo": "/images/posthog/logo.webp",
       "variants": [
@@ -1668,6 +2137,83 @@ const data = {
         }
       ],
       "slug": "posthog"
+    },
+    {
+      "name": "qBittorrent",
+      "logo": "/images/qbittorrent/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "BitTorrent client with a persistent web UI, settings and download directory.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "qBittorrent",
+            "url": "https://github.com/qbittorrent"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/qbittorrent/qBittorrent",
+            "website": "https://www.qbittorrent.org/",
+            "docs": [
+              "https://docs.linuxserver.io/images/docker-qbittorrent/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "qBittorrent is a BitTorrent client with a browser-based web UI. Its settings and download directory\nare persistent. The generated domain reaches the web UI; TCP and UDP port 6881 are published for\nincoming peer connections.",
+          "logo": "/images/qbittorrent/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/qbittorrent/default/template.toml",
+            "compose": "/files/qbittorrent/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "Libtorrent v1",
+          "shortDescription": "qBittorrent with the libtorrent v1 build and persistent settings and downloads.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "qBittorrent",
+            "url": "https://github.com/qbittorrent"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/qbittorrent/qBittorrent",
+            "website": "https://www.qbittorrent.org/",
+            "docs": [
+              "https://docs.linuxserver.io/images/docker-qbittorrent/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "qBittorrent using the LinuxServer image's libtorrent v1 build for compatibility with peers or\nworkloads that need that torrent library. Settings and downloads persist, and port 6881 TCP/UDP is\npublished for incoming peer connections.",
+          "logo": "/images/qbittorrent/libtorrent-v1/logo.webp",
+          "images": [],
+          "slug": "libtorrent-v1",
+          "files": {
+            "config": "/files/qbittorrent/libtorrent-v1/template.toml",
+            "compose": "/files/qbittorrent/libtorrent-v1/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "qbittorrent"
     },
     {
       "name": "Qdrant",
@@ -1794,6 +2340,48 @@ const data = {
         }
       ],
       "slug": "seaweedfs"
+    },
+    {
+      "name": "Syncthing",
+      "logo": "/images/syncthing/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Peer-to-peer file synchronization with a persistent configuration and sync directory.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "Syncthing",
+            "url": "https://github.com/syncthing"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/syncthing/syncthing",
+            "website": "https://syncthing.net/",
+            "docs": [
+              "https://docs.syncthing.net/users/faq.html"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Syncthing keeps selected folders synchronized between trusted devices without a central cloud\nserver. The configuration and default sync directory are persistent; direct synchronization needs\nthe standard TCP and UDP discovery ports available on the server.",
+          "logo": "/images/syncthing/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/syncthing/default/template.toml",
+            "compose": "/files/syncthing/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "syncthing"
     },
     {
       "name": "Twenty",
@@ -2073,10 +2661,52 @@ const data = {
         }
       ],
       "slug": "vikunja"
+    },
+    {
+      "name": "WordPress",
+      "logo": "/images/wordpress/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "WordPress website with Apache, MySQL and persistent application and database storage.",
+          "category": {
+            "name": "CMS",
+            "icon": "layout-template",
+            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
+            "slug": "cms"
+          },
+          "developedBy": {
+            "label": "WordPress",
+            "url": "https://github.com/WordPress"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/WordPress/WordPress",
+            "website": "https://wordpress.org/",
+            "docs": [
+              "https://wordpress.org/documentation/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "WordPress is a web publishing and content management platform. The Apache image runs with a\npersistent application volume and a bundled MySQL database; uploads and installed plugins survive\nredeploys. Complete the first-run setup at the generated HTTPS domain.",
+          "logo": "/images/wordpress/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/wordpress/default/template.toml",
+            "compose": "/files/wordpress/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "wordpress"
     }
   ]
 } as const satisfies { categories: readonly Category[]; templates: readonly Template[] };
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "609bca77d4f89ba25384817658c1c9a99f8ce9e7c5347f90aa0c7a0b4f06c155";
+export const version = "a4b837b772cd9cd07112a0a456b1d8cf895daec99e51bffe4d92722514ed6583";

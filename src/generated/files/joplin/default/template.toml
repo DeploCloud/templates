@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "joplin"
+port = 22_300
+host = "${domain}"
+
+[config.env]
+APP_BASE_URL = "https://${domain}"
+APP_PORT = "22300"
