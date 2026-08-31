@@ -298,7 +298,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Chatwoot is an open-source customer communication platform for live chat, email and social\nchannels. This template follows the production Docker layout with separate Rails and Sidekiq\nprocesses, PostgreSQL with pgvector, Redis and persistent Active Storage. It is intended for a\nserver with at least 4 GB of RAM and should be placed behind HTTPS.",
+          "description": "Chatwoot is an open-source customer communication platform for live chat, email and social\nchannels. This template follows the production Docker layout with separate Rails and Sidekiq\nprocesses, PostgreSQL with pgvector, Redis and persistent Active Storage. It is intended for a\nserver with at least 4 GB of RAM and should be placed behind HTTPS. The web service prepares the\ndatabase before starting and on subsequent image updates.",
           "logo": "/images/chatwoot/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2079,4 +2079,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3a0d18161fd61fb8d56bae42083b0fd76a65a2bbd6c2d3c965f088babd134705";
+export const version = "17e7a361798870a64dd9ce28bd317b1caaa86f91d0e9b5bdd650c518c1f19fa6";
