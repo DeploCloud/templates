@@ -340,13 +340,48 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-26T00:00:00.000Z"),
           "createdAt": new Date("2026-08-26T00:00:00.000Z"),
-          "description": "# Diun\n\nDiun watches Docker images and reports when newer versions are available in\ntheir registries.\n\nThis template monitors the local Docker host and keeps its notification state in\na persistent volume. Add a notification provider to receive alerts.",
+          "description": "Diun watches Docker images and reports when newer versions are available in\ntheir registries.\n\nThis variant monitors the local Docker host, keeps its notification state in a\npersistent volume and has no web interface or public domain. Configure a\nnotification provider to receive alerts, then use Docker labels or the\nwatch-by-default setting to choose which containers Diun monitors.",
           "logo": "/images/diun/default/logo.webp",
           "images": [],
           "slug": "default",
           "files": {
             "config": "/files/diun/default/template.toml",
             "compose": "/files/diun/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "With Metrics",
+          "shortDescription": "Docker image update notifier with a Prometheus-compatible metrics endpoint.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Diun",
+            "url": "https://github.com/crazy-max"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/crazy-max/diun",
+            "website": "https://crazymax.dev/diun/",
+            "docs": [
+              "https://crazymax.dev/diun/"
+            ]
+          },
+          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-31T00:00:00.000Z"),
+          "description": "Diun watches Docker images and reports when newer versions are available in\ntheir registries.\n\nThis variant also enables Diun's Prometheus-compatible `/metrics` endpoint and\nexposes it through the generated domain for a metrics scraper. It keeps the\nnotification state in a persistent volume; configure a notification provider\nand choose which containers Diun monitors.",
+          "logo": "/images/diun/with-metrics/logo.webp",
+          "images": [],
+          "slug": "with-metrics",
+          "files": {
+            "config": "/files/diun/with-metrics/template.toml",
+            "compose": "/files/diun/with-metrics/docker-compose.yml"
           }
         }
       ],
@@ -2044,4 +2079,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a8c81b6c1a21ca6d43116259c55c5577e30402010ca81343fc43536863674d81";
+export const version = "3a0d18161fd61fb8d56bae42083b0fd76a65a2bbd6c2d3c965f088babd134705";
