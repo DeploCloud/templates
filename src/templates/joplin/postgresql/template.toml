@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "joplin"
+port = 22_300
+host = "${domain}"
+
+[config.env]
+APP_BASE_URL = "https://${domain}"
+APP_PORT = "22300"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DATABASE = "joplin"
+POSTGRES_USER = "joplin"

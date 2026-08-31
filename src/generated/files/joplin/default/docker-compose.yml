@@ -1,0 +1,14 @@
+services:
+  joplin:
+    image: joplin/server:latest
+    restart: unless-stopped
+    expose:
+      - 22300
+    environment:
+      APP_BASE_URL: ${APP_BASE_URL}
+      APP_PORT: ${APP_PORT}
+    volumes:
+      - joplin-data:/home/joplin/data
+
+volumes:
+  joplin-data: {}
