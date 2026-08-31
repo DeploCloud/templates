@@ -1,0 +1,15 @@
+services:
+  nocodb:
+    image: nocodb/nocodb:latest
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      NC_AUTH_JWT_SECRET: ${NC_AUTH_JWT_SECRET}
+      NC_SITE_URL: ${NC_SITE_URL}
+      NC_APP_DATA_DIR: /usr/app/data
+    volumes:
+      - nocodb-data:/usr/app/data
+
+volumes:
+  nocodb-data: {}
