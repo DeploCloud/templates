@@ -1,0 +1,14 @@
+[variables]
+timezone = "Europe/Rome"
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "app"
+port = 81
+host = "${domain}"
+
+[config.env]
+TZ = "${timezone}"
+DB_POSTGRES_PASSWORD = "${db_password}"
