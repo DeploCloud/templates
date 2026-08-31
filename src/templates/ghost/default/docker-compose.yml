@@ -1,0 +1,43 @@
+services:
+  ghost:
+    image: ghost:6-alpine
+    restart: unless-stopped
+    expose:
+      - 2368
+    environment:
+      database__client: mysql
+      database__connection__host: ghost-db
+      database__connection__user: ghost
+      database__connection__password: ${GHOST_DB_PASSWORD}
+      database__connection__database: ghost
+      url: https://${GHOST_HOST}
+    volumes:
+      - ghost-content:/var/lib/ghost/content
+    depends_on:
+      ghost-db:
+        condition: service_healthy
+
+  ghost-db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${GHOST_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ghost
+      MYSQL_USER: ghost
+      MYSQL_PASSWORD: ${GHOST_DB_PASSWORD}
+    volumes:
+      - ghost-db:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  ghost-content: {}
+  ghost-db: {}
