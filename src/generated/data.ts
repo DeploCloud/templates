@@ -963,7 +963,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets. This default variant keeps its configuration in a persistent volume and does not require access to the server Docker socket.\n\nEdit the files in the app storage area to add services, bookmarks, settings and widgets.",
+          "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets. This default variant keeps its configuration in a persistent volume and does not require access to the server Docker socket.\n\nOn first start, Homepage creates example cards whose links point to `http://localhost/`. These are placeholders; replace them in `services.yaml` with the real URLs of your services.",
           "logo": "/images/homepage/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -998,7 +998,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets. This variant adds a restricted Docker socket proxy so containers carrying Homepage labels can be discovered automatically.\n\nThe proxy allows read-only container, service and task inspection. The Homepage configuration remains in a persistent volume.",
+          "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets. This variant adds a restricted Docker socket proxy so containers carrying Homepage labels can be discovered automatically.\n\nThe proxy allows read-only container, service and task inspection. The Homepage configuration remains in a persistent volume.\n\nOn first start, Homepage creates example cards whose links point to `http://localhost/`. These are placeholders; replace them in `services.yaml` with the real URLs of your services.",
           "logo": "/images/homepage/docker-discovery/logo.webp",
           "images": [],
           "slug": "docker-discovery",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "102df0e9693bd35eb5bb29bea07ffdb566ad32a7193af8e2ac35b6a2961faa73";
+export const version = "490b99f73fb3932fc04cfab4403cd59837c672d13239ddf24c8536324479a690";
