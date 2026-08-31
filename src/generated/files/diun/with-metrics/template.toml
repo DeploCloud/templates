@@ -1,0 +1,36 @@
+[variables]
+timezone = "Europe/Rome"
+log_level = "info"
+watch_workers = "20"
+watch_schedule = "0 */6 * * *"
+watch_jitter = "30s"
+watch_run_on_startup = "true"
+providers_docker = "true"
+providers_docker_watch_by_default = "true"
+providers_docker_watch_stopped = "true"
+metrics_enabled = "true"
+metrics_addr = ":9090"
+metrics_path = "/metrics"
+
+[config]
+env = [
+  "TZ=${timezone}",
+  "LOG_LEVEL=${log_level}",
+  "DIUN_WATCH_WORKERS=${watch_workers}",
+  "DIUN_WATCH_SCHEDULE=${watch_schedule}",
+  "DIUN_WATCH_JITTER=${watch_jitter}",
+  "DIUN_WATCH_RUNONSTARTUP=${watch_run_on_startup}",
+  "DIUN_PROVIDERS_DOCKER=${providers_docker}",
+  "DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=${providers_docker_watch_by_default}",
+  "DIUN_PROVIDERS_DOCKER_WATCHSTOPPED=${providers_docker_watch_stopped}",
+  "DIUN_METRICS_ENABLED=${metrics_enabled}",
+  "DIUN_METRICS_ADDR=${metrics_addr}",
+  "DIUN_METRICS_PATH=${metrics_path}",
+]
+mounts = []
+
+[[config.domains]]
+serviceName = "diun"
+port = 9090
+host = "${domain}"
+primary = true
