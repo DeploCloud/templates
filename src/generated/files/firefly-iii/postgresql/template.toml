@@ -12,7 +12,7 @@ port = 8_080
 host = "${domain}"
 
 [config.env]
-APP_KEY = "base64:${app_key}"
+APP_KEY = "${app_key}"
 APP_URL = "https://${domain}"
 SITE_OWNER = "${email}"
 TRUSTED_PROXIES = "**"
