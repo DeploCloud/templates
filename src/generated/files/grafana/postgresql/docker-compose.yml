@@ -30,7 +30,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - grafana-postgres:/var/lib/postgresql/data
+      - grafana-postgres:/var/lib/postgresql
 
 volumes:
   grafana-storage: {}
