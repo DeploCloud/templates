@@ -1,4 +1,5 @@
 Chatwoot is an open-source customer communication platform for live chat, email and social
 channels. This template follows the production Docker layout with separate Rails and Sidekiq
 processes, PostgreSQL with pgvector, Redis and persistent Active Storage. It is intended for a
-server with at least 4 GB of RAM and should be placed behind HTTPS.
+server with at least 4 GB of RAM and should be placed behind HTTPS. The web service prepares the
+database before starting and on subsequent image updates.

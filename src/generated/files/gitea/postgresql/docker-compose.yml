@@ -39,7 +39,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - gitea-postgres:/var/lib/postgresql/data
+      - gitea-postgres:/var/lib/postgresql
 
 volumes:
   gitea-data: {}

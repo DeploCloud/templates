@@ -28,7 +28,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - homarr-postgres:/var/lib/postgresql/data
+      - homarr-postgres:/var/lib/postgresql
 
 volumes:
   homarr-appdata: {}
