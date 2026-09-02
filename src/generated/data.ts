@@ -1153,7 +1153,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "# Jellyfin Hardware Acceleration\n\nJellyfin is a self-hosted media server for organizing and streaming personal\nmovies, shows, music and photos.\n\nThis variant exposes the host Linux DRI device to enable hardware-accelerated\ntranscoding. The host must provide a compatible GPU and device permissions.",
+          "description": "# Jellyfin Hardware Acceleration\n\nJellyfin is a self-hosted media server for organizing and streaming personal\nmovies, shows, music and photos.\n\nThis variant exposes the host Linux DRI device to enable hardware-accelerated\ntranscoding. It can run only on a Linux host that provides `/dev/dri` and grants\nthe container access to a compatible GPU. On hosts without that device, use the\nDefault variant.",
           "logo": "/images/jellyfin/hardware-acceleration/logo.webp",
           "images": [],
           "slug": "hardware-acceleration",
@@ -1272,7 +1272,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Meilisearch is a fast, typo-tolerant search engine for application search experiences. The template enables production mode, persists indexes and protects the API with a generated master key.",
+          "description": "Meilisearch is a fast, typo-tolerant search engine for application search experiences. This template exposes the protected HTTP API, enables production mode, persists indexes and generates the master key. It does not provide a browser UI: opening the root URL returns a status response; use `/health` for health checks and the API endpoints for search operations.",
           "logo": "/images/meilisearch/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a758dc4f0b5b88a1948d1c25ac5c1afcef00fa5350b30b72737669eb9a00143f";
+export const version = "7f1379d44426e0b9c87c951d0830cf9010bf236c4015012461c9ae1ea3916491";

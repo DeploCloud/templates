@@ -1,1 +1,1 @@
-Meilisearch is a fast, typo-tolerant search engine for application search experiences. The template enables production mode, persists indexes and protects the API with a generated master key.
+Meilisearch is a fast, typo-tolerant search engine for application search experiences. This template exposes the protected HTTP API, enables production mode, persists indexes and generates the master key. It does not provide a browser UI: opening the root URL returns a status response; use `/health` for health checks and the API endpoints for search operations.
