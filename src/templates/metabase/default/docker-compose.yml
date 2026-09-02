@@ -40,7 +40,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - metabase-postgres:/var/lib/postgresql/data
+      - metabase-postgres:/var/lib/postgresql
 
 volumes:
   metabase-postgres: {}
