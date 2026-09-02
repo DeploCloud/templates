@@ -1272,7 +1272,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Meilisearch is a fast, typo-tolerant search engine for application search experiences. The template enables production mode, persists indexes and protects the API with a generated master key.",
+          "description": "Meilisearch is a fast, typo-tolerant search engine for application search experiences. This template exposes the protected HTTP API, enables production mode, persists indexes and generates the master key. It does not provide a browser UI: opening the root URL returns a status response; use `/health` for health checks and the API endpoints for search operations.",
           "logo": "/images/meilisearch/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "e46e4f5bc59791fef783b43b6e1b22733957fdf831cfff11004bf8d35b533a9d";
+export const version = "7f1379d44426e0b9c87c951d0830cf9010bf236c4015012461c9ae1ea3916491";
