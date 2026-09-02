@@ -28,7 +28,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - open-webui-postgres:/var/lib/postgresql/data
+      - open-webui-postgres:/var/lib/postgresql
 
 volumes:
   open-webui: {}

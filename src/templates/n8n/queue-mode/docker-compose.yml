@@ -19,6 +19,7 @@ services:
       WEBHOOK_URL: https://${N8N_HOST}/
       GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
       N8N_SECURE_COOKIE: "true"
+      N8N_PROXY_HOPS: "1"
       EXECUTIONS_MODE: ${EXECUTIONS_MODE}
       QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
       QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
@@ -66,7 +67,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - n8n-postgres:/var/lib/postgresql/data
+      - n8n-postgres:/var/lib/postgresql
 
   n8n-redis:
     image: redis:7.4.11-alpine
