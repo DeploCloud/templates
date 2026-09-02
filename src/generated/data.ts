@@ -1153,7 +1153,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "# Jellyfin Hardware Acceleration\n\nJellyfin is a self-hosted media server for organizing and streaming personal\nmovies, shows, music and photos.\n\nThis variant exposes the host Linux DRI device to enable hardware-accelerated\ntranscoding. The host must provide a compatible GPU and device permissions.",
+          "description": "# Jellyfin Hardware Acceleration\n\nJellyfin is a self-hosted media server for organizing and streaming personal\nmovies, shows, music and photos.\n\nThis variant exposes the host Linux DRI device to enable hardware-accelerated\ntranscoding. It can run only on a Linux host that provides `/dev/dri` and grants\nthe container access to a compatible GPU. On hosts without that device, use the\nDefault variant.",
           "logo": "/images/jellyfin/hardware-acceleration/logo.webp",
           "images": [],
           "slug": "hardware-acceleration",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a758dc4f0b5b88a1948d1c25ac5c1afcef00fa5350b30b72737669eb9a00143f";
+export const version = "e46e4f5bc59791fef783b43b6e1b22733957fdf831cfff11004bf8d35b533a9d";
