@@ -39,7 +39,7 @@ services:
       timeout: 5s
       retries: 20
     volumes:
-      - forgejo-postgres:/var/lib/postgresql/data
+      - forgejo-postgres:/var/lib/postgresql
 
 volumes:
   forgejo-data: {}
