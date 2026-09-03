@@ -31,7 +31,7 @@ services:
       POSTGRES_USER: firefly
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - firefly-postgres:/var/lib/postgresql/data
+      - firefly-postgres:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U firefly -d firefly"]
       interval: 5s
