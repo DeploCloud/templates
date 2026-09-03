@@ -48,7 +48,7 @@ services:
       POSTGRES_PASSWORD: ${TWENTY_DB_PASSWORD}
       POSTGRES_DB: twenty
     volumes:
-      - twenty-postgres:/var/lib/postgresql/data
+      - twenty-postgres:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U twenty -d twenty"]
       interval: 5s
