@@ -1587,7 +1587,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates. Ports 80 and 443 must be\navailable on the server for public proxy hosts; the generated domain opens the admin UI on port 81.",
+          "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates.\n\nPorts **80 and 443** are published directly on the server for standard HTTP and HTTPS traffic. Both\nhost ports must be free before deployment and can be used by only one public proxy service on a\nserver. If another service is already using them, deploy this template on another server. Changing\nthe host ports requires additional configuration for public proxy hosts.\n\nThe generated domain opens the admin UI on container port 81.",
           "logo": "/images/nginx-proxy-manager/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -1622,7 +1622,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists. Ports 80\nand 443 must be available on the server for public proxy hosts; the generated domain opens the\nadmin UI on port 81.",
+          "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists.\n\nPorts **80 and 443** are published directly on the server for standard HTTP and HTTPS traffic. Both\nhost ports must be free before deployment and can be used by only one public proxy service on a\nserver. If another service is already using them, deploy this template on another server. Changing\nthe host ports requires additional configuration for public proxy hosts.\n\nThe generated domain opens the admin UI on container port 81.",
           "logo": "/images/nginx-proxy-manager/mariadb/logo.webp",
           "images": [],
           "slug": "mariadb",
@@ -1657,7 +1657,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists. Ports 80\nand 443 must be available on the server for public proxy hosts; the generated domain opens the\nadmin UI on port 81.",
+          "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists.\n\nPorts **80 and 443** are published directly on the server for standard HTTP and HTTPS traffic. Both\nhost ports must be free before deployment and can be used by only one public proxy service on a\nserver. If another service is already using them, deploy this template on another server. Changing\nthe host ports requires additional configuration for public proxy hosts.\n\nThe generated domain opens the admin UI on container port 81.",
           "logo": "/images/nginx-proxy-manager/postgresql/logo.webp",
           "images": [],
           "slug": "postgresql",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5953c0e402c84757b47fc0739ab4f282f0032693b1c9d4826cbdec1e5705eae6";
+export const version = "78eedd85f46a531ceb96b6d8381b10d841ba0bf00cebcb8e39a13429e773b9af";
