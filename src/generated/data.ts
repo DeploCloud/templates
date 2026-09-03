@@ -1965,7 +1965,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and\nDNS data are persistent. Port 53 must be free on the server; use the generated domain for the web\ninterface and point clients at this server's DNS address.",
+          "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and\nDNS data are persistent.\n\nDNS is published directly on the server's standard **TCP and UDP port 53**. That host port must be\nfree before deployment and can be used by only one DNS service on a server. A local resolver such\nas `systemd-resolved` may already be using it; configure that resolver to release port 53 or deploy\nPi-hole on another server. Changing the host port means clients can no longer use the standard DNS\nendpoint without additional configuration.\n\nUse the generated domain for the web interface and point clients at this server's DNS address.",
           "logo": "/images/pi-hole/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2000,7 +2000,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Pi-hole with its optional DHCP server capability. DNS and DHCP ports are published on the host and\nthe configuration is persistent. After deployment, configure the DHCP range in the Pi-hole web\ninterface and ensure no other DHCP server is active on the network.",
+          "description": "Pi-hole with its optional DHCP server capability. Its configuration and DNS data are persistent.\n\nDNS is published directly on the server's standard **TCP and UDP port 53**. That host port must be\nfree before deployment and can be used by only one DNS service on a server. The DHCP service also\npublishes **UDP port 67**, which must be free and cannot be shared with another DHCP server. A local\nresolver such as `systemd-resolved` may already be using port 53; configure it to release the port\nor deploy Pi-hole on another server. Changing these host ports requires additional client or network\nconfiguration.\n\nAfter deployment, configure the DHCP range in the Pi-hole web interface and ensure no other DHCP\nserver is active on the network.",
           "logo": "/images/pi-hole/dhcp/logo.webp",
           "images": [],
           "slug": "dhcp",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "4cd856576443e9732755ea86ac1b81ece567492a18122c32512c2caed1939d31";
+export const version = "5953c0e402c84757b47fc0739ab4f282f0032693b1c9d4826cbdec1e5705eae6";
