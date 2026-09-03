@@ -27,6 +27,7 @@ services:
       OBJECT_STORAGE_ENABLED: "true"
       IS_BEHIND_PROXY: ${IS_BEHIND_PROXY}
       DEPLOYMENT: hobby
+      HOST_BIND: 0.0.0.0
     volumes:
       - posthog-data:/var/lib/posthog
 

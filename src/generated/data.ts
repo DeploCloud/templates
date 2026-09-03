@@ -1587,7 +1587,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates. Ports 80 and 443 must be\navailable on the server for public proxy hosts; the generated domain opens the admin UI on port 81.",
+          "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates.\n\nPorts **80 and 443** are published directly on the server for standard HTTP and HTTPS traffic. Both\nhost ports must be free before deployment and can be used by only one public proxy service on a\nserver. If another service is already using them, deploy this template on another server. Changing\nthe host ports requires additional configuration for public proxy hosts.\n\nThe generated domain opens the admin UI on container port 81.",
           "logo": "/images/nginx-proxy-manager/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -1622,7 +1622,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists. Ports 80\nand 443 must be available on the server for public proxy hosts; the generated domain opens the\nadmin UI on port 81.",
+          "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists.\n\nPorts **80 and 443** are published directly on the server for standard HTTP and HTTPS traffic. Both\nhost ports must be free before deployment and can be used by only one public proxy service on a\nserver. If another service is already using them, deploy this template on another server. Changing\nthe host ports requires additional configuration for public proxy hosts.\n\nThe generated domain opens the admin UI on container port 81.",
           "logo": "/images/nginx-proxy-manager/mariadb/logo.webp",
           "images": [],
           "slug": "mariadb",
@@ -1657,7 +1657,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists. Ports 80\nand 443 must be available on the server for public proxy hosts; the generated domain opens the\nadmin UI on port 81.",
+          "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists.\n\nPorts **80 and 443** are published directly on the server for standard HTTP and HTTPS traffic. Both\nhost ports must be free before deployment and can be used by only one public proxy service on a\nserver. If another service is already using them, deploy this template on another server. Changing\nthe host ports requires additional configuration for public proxy hosts.\n\nThe generated domain opens the admin UI on container port 81.",
           "logo": "/images/nginx-proxy-manager/postgresql/logo.webp",
           "images": [],
           "slug": "postgresql",
@@ -1965,7 +1965,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and\nDNS data are persistent. Port 53 must be free on the server; use the generated domain for the web\ninterface and point clients at this server's DNS address.",
+          "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and\nDNS data are persistent.\n\nDNS is published directly on the server's standard **TCP and UDP port 53**. That host port must be\nfree before deployment and can be used by only one DNS service on a server. A local resolver such\nas `systemd-resolved` may already be using it; configure that resolver to release port 53 or deploy\nPi-hole on another server. Changing the host port means clients can no longer use the standard DNS\nendpoint without additional configuration.\n\nUse the generated domain for the web interface and point clients at this server's DNS address.",
           "logo": "/images/pi-hole/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2000,7 +2000,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Pi-hole with its optional DHCP server capability. DNS and DHCP ports are published on the host and\nthe configuration is persistent. After deployment, configure the DHCP range in the Pi-hole web\ninterface and ensure no other DHCP server is active on the network.",
+          "description": "Pi-hole with its optional DHCP server capability. Its configuration and DNS data are persistent.\n\nDNS is published directly on the server's standard **TCP and UDP port 53**. That host port must be\nfree before deployment and can be used by only one DNS service on a server. The DHCP service also\npublishes **UDP port 67**, which must be free and cannot be shared with another DHCP server. A local\nresolver such as `systemd-resolved` may already be using port 53; configure it to release the port\nor deploy Pi-hole on another server. Changing these host ports requires additional client or network\nconfiguration.\n\nAfter deployment, configure the DHCP range in the Pi-hole web interface and ensure no other DHCP\nserver is active on the network.",
           "logo": "/images/pi-hole/dhcp/logo.webp",
           "images": [],
           "slug": "dhcp",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "4cd856576443e9732755ea86ac1b81ece567492a18122c32512c2caed1939d31";
+export const version = "954273e3a64a40d357a0d2847514937f1908573a885782b37ea5ed448a6474ec";
