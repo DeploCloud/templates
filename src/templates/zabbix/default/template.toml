@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "zabbix"
+port = 8080
+host = "${domain}"

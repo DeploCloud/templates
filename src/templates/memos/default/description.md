@@ -1,0 +1,1 @@
+Memos is a lightweight Markdown note-taking and knowledge base application for private or shared notes. This single-container variant uses SQLite and persists the database and local assets in `/var/opt/memos`. The generated domain is configured as the instance URL.

@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "ntfy"
+port = 80
+host = "${domain}"

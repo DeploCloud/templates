@@ -1,0 +1,11 @@
+services:
+  erpnext:
+    image: frappe/erpnext:v15
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - erpnext-sites:/home/frappe/frappe-bench/sites
+
+volumes:
+  erpnext-sites: {}

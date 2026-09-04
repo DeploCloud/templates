@@ -1,0 +1,14 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "odoo"
+port = 8069
+host = "${domain}"
+
+[config.env]
+HOST = "db"
+USER = "odoo"
+PASSWORD = "${db_password}"
+POSTGRES_PASSWORD = "${db_password}"

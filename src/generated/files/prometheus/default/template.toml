@@ -1,0 +1,12 @@
+[config]
+
+[[config.domains]]
+serviceName = "prometheus"
+port = 9090
+host = "${domain}"
+[[config.mounts]]
+filePath = "prometheus.yml"
+content = """global:
+  scrape_interval: 15s
+scrape_configs: []
+"""

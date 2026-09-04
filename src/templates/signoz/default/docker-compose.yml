@@ -1,0 +1,11 @@
+services:
+  signoz:
+    image: signoz/signoz:latest
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - signoz-data:/var/lib/signoz
+
+volumes:
+  signoz-data: {}

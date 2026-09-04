@@ -1,0 +1,11 @@
+[variables]
+secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "directus"
+port = 8055
+host = "${domain}"
+
+[config.env]
+SECRET = "${secret}"

@@ -1,0 +1,56 @@
+services:
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:alpine-7.4-latest
+    restart: unless-stopped
+    depends_on:
+      zabbix-db:
+        condition: service_healthy
+    expose:
+      - 10051
+    environment:
+      DB_SERVER_HOST: zabbix-db
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  zabbix-web:
+    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4-latest
+    restart: unless-stopped
+    depends_on:
+      zabbix-server:
+        condition: service_started
+      zabbix-db:
+        condition: service_healthy
+    expose:
+      - 8080
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+      DB_SERVER_HOST: zabbix-db
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      PHP_TZ: Europe/Rome
+
+  zabbix-db:
+    image: mysql:8.0
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    environment:
+      MYSQL_DATABASE: zabbix
+      MYSQL_USER: zabbix
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p${DB_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - zabbix-database:/var/lib/mysql
+
+volumes:
+  zabbix-database: {}

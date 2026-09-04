@@ -1,0 +1,15 @@
+[variables]
+app_keys = "${password:64}"
+jwt_secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "strapi"
+port = 1337
+host = "${domain}"
+
+[config.env]
+DATABASE_CLIENT = "sqlite"
+DATABASE_FILENAME = "/opt/app/.tmp/data.db"
+APP_KEYS = "${app_keys}"
+JWT_SECRET = "${jwt_secret}"

@@ -1,0 +1,17 @@
+services:
+  ollama:
+    image: ollama/ollama:rocm
+    restart: unless-stopped
+    expose:
+      - 11434
+    environment:
+      OLLAMA_HOST: ${OLLAMA_HOST}
+
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  ollama-data: {}

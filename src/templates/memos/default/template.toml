@@ -1,0 +1,8 @@
+[config.env]
+MEMOS_PORT = "5230"
+MEMOS_INSTANCE_URL = "https://${domain}"
+
+[[config.domains]]
+serviceName = "memos"
+port = 5_230
+host = "${domain}"

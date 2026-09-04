@@ -1,0 +1,136 @@
+services:
+  web:
+    image: makeplane/plane-frontend:v0.27.1
+    command: node web/server.js web
+    depends_on:
+      - api
+      - worker
+    env_file: .env
+
+  space:
+    image: makeplane/plane-space:v0.27.1
+    command: node space/server.js space
+    depends_on:
+      - api
+      - worker
+      - web
+    env_file: .env
+
+  admin:
+    image: makeplane/plane-admin:v0.27.1
+    command: node admin/server.js admin
+    depends_on:
+      - api
+      - web
+    env_file: .env
+
+  live:
+    image: makeplane/plane-live:v0.27.1
+    command: node live/dist/server.js live
+    depends_on:
+      - api
+      - web
+    env_file: .env
+
+  api:
+    image: makeplane/plane-backend:v0.27.1
+    command: ./bin/docker-entrypoint-api.sh
+    depends_on:
+      - plane-db
+      - plane-redis
+      - plane-mq
+    env_file: .env
+    volumes:
+      - plane-api-logs:/code/plane/logs
+
+  worker:
+    image: makeplane/plane-backend:v0.27.1
+    command: ./bin/docker-entrypoint-worker.sh
+    depends_on:
+      - api
+      - plane-db
+      - plane-redis
+      - plane-mq
+    env_file: .env
+    volumes:
+      - plane-worker-logs:/code/plane/logs
+
+  beat-worker:
+    image: makeplane/plane-backend:v0.27.1
+    command: ./bin/docker-entrypoint-beat.sh
+    depends_on:
+      - api
+      - plane-db
+      - plane-redis
+      - plane-mq
+    env_file: .env
+    volumes:
+      - plane-beat-logs:/code/plane/logs
+
+  migrator:
+    image: makeplane/plane-backend:v0.27.1
+    command: ./bin/docker-entrypoint-migrator.sh
+    depends_on:
+      - plane-db
+      - plane-redis
+    env_file: .env
+    volumes:
+      - plane-migrator-logs:/code/plane/logs
+
+  plane-db:
+    image: postgres:17-alpine
+    command: postgres -c max_connections=1000
+    environment:
+      POSTGRES_DB: plane
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U plane -d plane"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - plane-postgres:/var/lib/postgresql/data
+
+  plane-redis:
+    image: valkey/valkey:7.2.5-alpine
+    volumes:
+      - plane-redis:/data
+
+  plane-mq:
+    image: rabbitmq:3.13.6-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: plane
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_VHOST: plane
+    volumes:
+      - plane-rabbitmq:/var/lib/rabbitmq
+
+  plane-minio:
+    image: minio/minio:latest
+    command: server /export --console-address ":9090"
+    environment:
+      MINIO_ROOT_USER: access-key
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - plane-uploads:/export
+
+  proxy:
+    image: makeplane/plane-proxy:v0.27.1
+    depends_on:
+      - web
+      - api
+      - space
+    env_file: .env
+    expose:
+      - 80
+
+volumes:
+  plane-api-logs: {}
+  plane-worker-logs: {}
+  plane-beat-logs: {}
+  plane-migrator-logs: {}
+  plane-postgres: {}
+  plane-redis: {}
+  plane-rabbitmq: {}
+  plane-uploads: {}

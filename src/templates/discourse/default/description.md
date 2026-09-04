@@ -1,0 +1,1 @@
+Discourse is a forum platform for community discussions, mailing lists and chat-style conversations. This variant bundles the application with PostgreSQL and Redis and persists forum content, configuration and database data. Configure SMTP after setup before enabling email-dependent features.

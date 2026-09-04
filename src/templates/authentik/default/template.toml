@@ -1,0 +1,17 @@
+[variables]
+secret_key = "${password:64}"
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "authentik"
+port = 9000
+host = "${domain}"
+
+[config.env]
+AUTHENTIK_SECRET_KEY = "${secret_key}"
+AUTHENTIK_POSTGRESQL__HOST = "db"
+AUTHENTIK_POSTGRESQL__NAME = "authentik"
+AUTHENTIK_POSTGRESQL__USER = "authentik"
+AUTHENTIK_POSTGRESQL__PASSWORD = "${db_password}"
+POSTGRES_PASSWORD = "${db_password}"

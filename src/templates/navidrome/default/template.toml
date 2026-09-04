@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "navidrome"
+port = 4533
+host = "${domain}"
+
+[config.env]
+ND_SCANSCHEDULE = "1h"
+ND_LOGLEVEL = "info"

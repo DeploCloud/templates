@@ -1,0 +1,1 @@
+Zabbix appliance with a bundled monitoring server and web interface. Add monitored hosts and agents after the initial administrator setup; larger installations should use the official split database stack.

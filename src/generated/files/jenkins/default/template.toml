@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "jenkins"
+port = 8080
+host = "${domain}"

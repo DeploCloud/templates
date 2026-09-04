@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "stirling-pdf"
+port = 8080
+host = "${domain}"
+
+[config.env]
+DOCKER_ENABLE_SECURITY = "true"
+SYSTEM_DEFAULTLOCALE = "en-US"

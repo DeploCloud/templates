@@ -1,0 +1,16 @@
+[variables]
+mongo_password = "${password:32}"
+jwt_secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "librechat"
+port = 3080
+host = "${domain}"
+
+[config.env]
+HOST = "0.0.0.0"
+PORT = "3080"
+MONGO_URI = "mongodb://mongo:27017/librechat"
+JWT_SECRET = "${jwt_secret}"
+MONGO_PASSWORD = "${mongo_password}"

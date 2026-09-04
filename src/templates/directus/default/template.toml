@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "directus"
+port = 8055
+host = "${domain}"
+
+[config.env]
+DB_CLIENT = "pg"
+DB_HOST = "db"
+DB_PORT = "5432"
+DB_DATABASE = "directus"
+DB_USER = "directus"
+DB_PASSWORD = "${db_password}"
+SECRET = "${secret}"
+POSTGRES_PASSWORD = "${db_password}"

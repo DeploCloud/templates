@@ -1,0 +1,9 @@
+[config]
+
+[[config.domains]]
+serviceName = "anythingllm"
+port = 3001
+host = "${domain}"
+
+[config.env]
+STORAGE_DIR = "/app/server/storage"

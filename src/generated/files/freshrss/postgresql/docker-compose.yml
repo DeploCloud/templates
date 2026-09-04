@@ -1,0 +1,50 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    restart: unless-stopped
+    depends_on:
+      freshrss-db:
+        condition: service_healthy
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+      FRESHRSS_INSTALL: |-
+        --api-enabled
+        --base-url https://${FRESHRSS_DOMAIN}
+        --db-base freshrss
+        --db-host freshrss-db
+        --db-password ${DB_PASSWORD}
+        --db-type pgsql
+        --db-user freshrss
+        --default-user admin
+        --language en
+      FRESHRSS_USER: |-
+        --api-password ${ADMIN_API_PASSWORD}
+        --email ${ADMIN_EMAIL}
+        --language en
+        --password ${ADMIN_PASSWORD}
+        --user admin
+    volumes:
+      - freshrss-data:/var/www/FreshRSS/data
+      - freshrss-extensions:/var/www/FreshRSS/extensions
+
+  freshrss-db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: freshrss
+      POSTGRES_USER: freshrss
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U freshrss -d freshrss"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - freshrss-database:/var/lib/postgresql/data
+
+volumes:
+  freshrss-data: {}
+  freshrss-extensions: {}
+  freshrss-database: {}

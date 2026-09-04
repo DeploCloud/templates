@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "flowise"
+port = 3000
+host = "${domain}"
+
+[config.env]
+PORT = "3000"
+DATABASE_PATH = "/root/.flowise"

@@ -1,0 +1,11 @@
+services:
+  zabbix:
+    image: zabbix/zabbix-appliance:alpine-7.4-latest
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - zabbix-data:/var/lib/mysql
+
+volumes:
+  zabbix-data: {}

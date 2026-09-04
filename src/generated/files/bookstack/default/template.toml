@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+app_key = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "bookstack"
+port = 8080
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_KEY = "${app_key}"
+DB_HOST = "db"
+DB_DATABASE = "bookstack"
+DB_USERNAME = "bookstack"
+DB_PASSWORD = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${db_password}"

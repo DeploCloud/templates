@@ -1,0 +1,14 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      ALLOW_SIGNUP: ${ALLOW_SIGNUP}
+      TZ: ${TZ}
+    volumes:
+      - mealie-data:/app/data
+
+volumes:
+  mealie-data: {}

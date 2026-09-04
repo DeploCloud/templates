@@ -1,0 +1,13 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "ntfy"
+port = 80
+host = "${domain}"
+
+[config.env]
+NTFY_DOMAIN = "${domain}"
+NTFY_DATABASE_URL = "postgres://ntfy:${db_password}@db:5432/ntfy?sslmode=disable"
+DB_PASSWORD = "${db_password}"

@@ -1,0 +1,1 @@
+Node-RED is a visual flow editor for connecting hardware, APIs and online services. The template persists flows, credentials, installed nodes and runtime configuration in the `/data` volume. Set a credential secret before using sensitive flows and review the generated instance security after the first login.

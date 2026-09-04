@@ -1,0 +1,32 @@
+services:
+  headscale:
+    image: headscale/headscale:latest
+    restart: unless-stopped
+    depends_on:
+      headscale-db:
+        condition: service_healthy
+    expose:
+      - 8080
+    command: serve
+    volumes:
+      - headscale-data:/var/lib/headscale
+      - ./config.yaml:/etc/headscale/config.yaml:ro
+
+  headscale-db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: headscale
+      POSTGRES_USER: headscale
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U headscale -d headscale"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - headscale-database:/var/lib/postgresql/data
+
+volumes:
+  headscale-data: {}
+  headscale-database: {}
