@@ -20,6 +20,7 @@ services:
       GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
       N8N_SECURE_COOKIE: "true"
       N8N_PROXY_HOPS: "1"
+      QUEUE_HEALTH_CHECK_ACTIVE: "true"
       EXECUTIONS_MODE: ${EXECUTIONS_MODE}
       QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
       QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
@@ -30,6 +31,16 @@ services:
         condition: service_healthy
       n8n-redis:
         condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --spider -q http://127.0.0.1:5678/healthz || exit 1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
 
   n8n-worker:
     image: docker.n8n.io/n8nio/n8n:1.104.0
@@ -49,6 +60,8 @@ services:
       QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
       QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
     depends_on:
+      n8n:
+        condition: service_healthy
       n8n-db:
         condition: service_healthy
       n8n-redis:

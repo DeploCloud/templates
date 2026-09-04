@@ -20,6 +20,11 @@ services:
         condition: service_healthy
       twenty-redis:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3000/healthz || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   twenty-worker:
     image: twentycrm/twenty:v2.37.0
@@ -34,11 +39,15 @@ services:
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
       FALLBACK_ENCRYPTION_KEY: ${FALLBACK_ENCRYPTION_KEY}
       APP_SECRET: ${APP_SECRET}
+      DISABLE_DB_MIGRATIONS: "true"
+      DISABLE_CRON_JOBS_REGISTRATION: "true"
     volumes:
       - twenty-storage:/app/.local-storage
     depends_on:
       twenty-server:
-        condition: service_started
+        condition: service_healthy
+      twenty-db:
+        condition: service_healthy
 
   twenty-db:
     image: postgres:18.6-alpine

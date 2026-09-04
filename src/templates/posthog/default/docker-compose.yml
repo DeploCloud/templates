@@ -12,6 +12,8 @@ services:
         condition: service_healthy
       posthog-clickhouse:
         condition: service_healthy
+      posthog-migrate:
+        condition: service_completed_successfully
     environment:
       SITE_URL: ${SITE_URL}
       SECRET_KEY: ${POSTHOG_SECRET}
@@ -40,6 +42,8 @@ services:
         condition: service_healthy
       posthog-redis:
         condition: service_healthy
+      posthog-migrate:
+        condition: service_completed_successfully
     environment:
       SECRET_KEY: ${POSTHOG_SECRET}
       DATABASE_URL: postgres://posthog:${POSTHOG_DB_PASSWORD}@posthog-db:5432/posthog
@@ -52,6 +56,25 @@ services:
       OBJECT_STORAGE_ENDPOINT: http://posthog-objectstorage:19000
       OBJECT_STORAGE_BUCKET: posthog
       OBJECT_STORAGE_ENABLED: "true"
+
+  posthog-migrate:
+    image: posthog/posthog:1e6d5b3941528fec2ae1c2d65c1e21762c59b098
+    restart: "no"
+    command: sh -c "python manage.py migrate && python manage.py migrate_clickhouse && python manage.py run_async_migrations"
+    depends_on:
+      posthog-db:
+        condition: service_healthy
+      posthog-redis:
+        condition: service_healthy
+      posthog-clickhouse:
+        condition: service_healthy
+    environment:
+      SECRET_KEY: ${POSTHOG_SECRET}
+      DATABASE_URL: postgres://posthog:${POSTHOG_DB_PASSWORD}@posthog-db:5432/posthog
+      REDIS_URL: redis://posthog-redis:6379/
+      CLICKHOUSE_HOST: posthog-clickhouse
+      CLICKHOUSE_PORT: 8123
+      KAFKA_HOSTS: posthog-kafka:9092
 
   posthog-db:
     image: postgres:15.12-alpine
