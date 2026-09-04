@@ -648,7 +648,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
-          "description": "Ghost is a publishing platform for blogs, newsletters and memberships. This template runs Ghost\nwith MySQL and persists both publication content and database data. The generated domain is\nconfigured as Ghost's public HTTPS URL; enable TLS/HTTPS for the domain in Deplo before opening\nthis variant. Change the initial administrator password after setup.",
+          "description": "Ghost is a publishing platform for blogs, newsletters and memberships. This template runs Ghost\nwith MySQL and persists both publication content and database data. Ghost is configured with the\ngenerated domain as its public HTTPS URL, so TLS/HTTPS must be enabled for that domain in Deplo;\nwithout it, the generated URL is not reachable. Change the initial administrator password after\nsetup.",
           "logo": "/images/ghost/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2709,4 +2709,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "77d117ee2014d0ba87df643fb32217082af5a4b80c5d9c210eb610e53bd57f7a";
+export const version = "0fc782d10302dad0caa285be3e1e487e64551d897c675c5cdf71e8eb300acbee";
