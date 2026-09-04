@@ -1,0 +1,38 @@
+services:
+  flowise:
+    image: flowiseai/flowise:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 3000
+    environment:
+      PORT: ${PORT}
+      DATABASE_TYPE: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: flowise
+      DATABASE_USER: flowise
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - flowise-data:/root/.flowise
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: flowise
+      POSTGRES_USER: flowise
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flowise -d flowise"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - flowise-database:/var/lib/postgresql/data
+
+volumes:
+  flowise-data: {}
+  flowise-database: {}

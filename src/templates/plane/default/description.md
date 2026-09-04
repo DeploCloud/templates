@@ -1,0 +1,1 @@
+Plane is a project management workspace for issues, cycles, modules and roadmaps. This variant runs the application, background workers, PostgreSQL, Valkey, RabbitMQ and MinIO and persists project data, uploaded files and service state. The bundled stack needs at least 2 vCPUs and 4 GB RAM; configure email and any optional integrations after setup.

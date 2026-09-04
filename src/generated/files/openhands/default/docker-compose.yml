@@ -1,0 +1,11 @@
+services:
+  openhands:
+    image: ghcr.io/all-hands-ai/openhands:latest
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - openhands-data:/openhands
+
+volumes:
+  openhands-data: {}

@@ -1,0 +1,11 @@
+[config]
+
+[[config.domains]]
+serviceName = "jitsi-web"
+port = 80
+host = "${domain}"
+
+[config.env]
+ENABLE_AUTH = "0"
+ENABLE_GUESTS = "1"
+PUBLIC_URL = "https://${domain}"

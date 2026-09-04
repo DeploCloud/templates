@@ -1,0 +1,15 @@
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy:latest
+    restart: unless-stopped
+    expose:
+      - 51821
+    environment:
+      PORT: ${PORT}
+      INSECURE: ${INSECURE}
+      PASSWORD_HASH: ${PASSWORD_HASH}
+    volumes:
+      - wg-easy-data:/etc/wireguard
+
+volumes:
+  wg-easy-data: {}

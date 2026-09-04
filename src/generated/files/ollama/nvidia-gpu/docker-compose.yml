@@ -1,0 +1,21 @@
+services:
+  ollama:
+    image: ollama/ollama
+    restart: unless-stopped
+    expose:
+      - 11434
+    environment:
+      OLLAMA_HOST: ${OLLAMA_HOST}
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  ollama-data: {}

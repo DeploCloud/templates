@@ -1,0 +1,35 @@
+services:
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 80
+    command: serve
+    environment:
+      NTFY_BASE_URL: https://${NTFY_DOMAIN}
+      NTFY_DATABASE_URL: ${NTFY_DATABASE_URL}
+      NTFY_BEHIND_PROXY: "true"
+    volumes:
+      - ntfy-cache:/var/cache/ntfy
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ntfy
+      POSTGRES_USER: ntfy
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ntfy -d ntfy"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ntfy-database:/var/lib/postgresql/data
+
+volumes:
+  ntfy-cache: {}
+  ntfy-database: {}

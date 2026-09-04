@@ -1,0 +1,1 @@
+Supabase Studio interface for managing a self-hosted Supabase project. The complete Supabase stack requires the official Compose bundle with its database, API, authentication, storage and realtime services.

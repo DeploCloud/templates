@@ -1,0 +1,11 @@
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - audiobookshelf-config:/config
+
+volumes:
+  audiobookshelf-config: {}

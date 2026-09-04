@@ -1,0 +1,13 @@
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      STORAGE_DIR: ${STORAGE_DIR}
+    volumes:
+      - anythingllm-storage:/app/server/storage
+
+volumes:
+  anythingllm-storage: {}

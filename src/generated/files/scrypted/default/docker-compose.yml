@@ -1,0 +1,11 @@
+services:
+  scrypted:
+    image: ghcr.io/koush/scrypted:latest
+    restart: unless-stopped
+    expose:
+      - 10443
+    volumes:
+      - scrypted-data:/server/volume
+
+volumes:
+  scrypted-data: {}

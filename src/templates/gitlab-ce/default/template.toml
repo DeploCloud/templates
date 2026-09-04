@@ -1,0 +1,9 @@
+[config]
+
+[[config.domains]]
+serviceName = "gitlab"
+port = 80
+host = "${domain}"
+
+[config.env]
+GITLAB_OMNIBUS_CONFIG = "external_url 'https://${domain}'"

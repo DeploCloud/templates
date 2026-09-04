@@ -1,0 +1,13 @@
+services:
+  homebridge:
+    image: homebridge/homebridge:latest
+    restart: unless-stopped
+    expose:
+      - 8581
+    environment:
+      HOMEBRIDGE_CONFIG_UI_PORT: ${HOMEBRIDGE_CONFIG_UI_PORT}
+    volumes:
+      - homebridge-data:/homebridge
+
+volumes:
+  homebridge-data: {}

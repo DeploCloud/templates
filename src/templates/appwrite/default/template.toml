@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "appwrite"
+port = 80
+host = "${domain}"

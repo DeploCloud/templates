@@ -1,0 +1,26 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "headscale"
+port = 8080
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """server_url: https://${domain}
+listen_addr: 0.0.0.0:8080
+metrics_listen_addr: 0.0.0.0:9090
+database:
+  type: postgres
+  postgres:
+    host: headscale-db
+    port: 5432
+    name: headscale
+    user: headscale
+    pass: ${db_password}
+"""

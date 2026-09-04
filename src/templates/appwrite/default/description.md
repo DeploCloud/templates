@@ -1,0 +1,1 @@
+Appwrite backend platform with persistent storage for projects and uploaded files. Appwrite normally uses its complete multi-service Compose bundle; add the required databases, queues and workers for a production installation.

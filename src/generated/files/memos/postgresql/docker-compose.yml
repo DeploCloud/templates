@@ -1,0 +1,36 @@
+services:
+  memos:
+    image: neosmemo/memos:stable
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 5230
+    environment:
+      MEMOS_PORT: ${MEMOS_PORT}
+      MEMOS_INSTANCE_URL: ${MEMOS_INSTANCE_URL}
+      MEMOS_DATA: /var/opt/memos
+      MEMOS_DRIVER: postgres
+      MEMOS_DSN: ${MEMOS_DSN}
+    volumes:
+      - memos-data:/var/opt/memos
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: memos
+      POSTGRES_USER: memos
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U memos -d memos"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - memos-database:/var/lib/postgresql/data
+
+volumes:
+  memos-data: {}
+  memos-database: {}

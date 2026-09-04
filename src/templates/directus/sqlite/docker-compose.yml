@@ -1,0 +1,17 @@
+services:
+  directus:
+    image: directus/directus:latest
+    restart: unless-stopped
+    expose:
+      - 8055
+    environment:
+      DB_CLIENT: sqlite3
+      DB_FILENAME: /directus/database/data.db
+      SECRET: ${SECRET}
+    volumes:
+      - directus-database:/directus/database
+      - directus-uploads:/directus/uploads
+
+volumes:
+  directus-database: {}
+  directus-uploads: {}

@@ -1,0 +1,11 @@
+services:
+  netdata:
+    image: netdata/netdata:stable
+    restart: unless-stopped
+    expose:
+      - 19999
+    volumes:
+      - netdata-lib:/var/lib/netdata
+
+volumes:
+  netdata-lib: {}

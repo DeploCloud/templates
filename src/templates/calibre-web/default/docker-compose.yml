@@ -1,0 +1,15 @@
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    restart: unless-stopped
+    expose:
+      - 8083
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - calibre-web-config:/config
+
+volumes:
+  calibre-web-config: {}

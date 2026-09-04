@@ -1,0 +1,15 @@
+services:
+  jitsi-web:
+    image: jitsi/web:stable
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      ENABLE_AUTH: ${ENABLE_AUTH}
+      ENABLE_GUESTS: ${ENABLE_GUESTS}
+      PUBLIC_URL: ${PUBLIC_URL}
+    volumes:
+      - jitsi-web-config:/config
+
+volumes:
+  jitsi-web-config: {}

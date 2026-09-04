@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "supabase-studio"
+port = 3000
+host = "${domain}"
+
+[config.env]
+STUDIO_DEFAULT_ORGANIZATION = "Deplo"
+STUDIO_DEFAULT_PROJECT = "Supabase"

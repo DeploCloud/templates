@@ -1,0 +1,1 @@
+PhotoPrism is a self-hosted photo and video library with indexing, search and automatic classification. This variant includes MariaDB and persists originals, thumbnails, metadata and database data. The generated domain is used as the public URL and an initial administrator password is generated automatically; allow at least 4 GB of swap for indexing larger libraries.

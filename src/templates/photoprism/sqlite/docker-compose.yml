@@ -1,0 +1,34 @@
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    restart: unless-stopped
+    stop_grace_period: 15s
+    expose:
+      - 2342
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    environment:
+      PHOTOPRISM_ADMIN_USER: admin
+      PHOTOPRISM_ADMIN_PASSWORD: ${PHOTOPRISM_ADMIN_PASSWORD}
+      PHOTOPRISM_AUTH_MODE: password
+      PHOTOPRISM_SITE_URL: ${PHOTOPRISM_SITE_URL}
+      PHOTOPRISM_DISABLE_TLS: "true"
+      PHOTOPRISM_DEFAULT_TLS: "false"
+      PHOTOPRISM_DATABASE_DRIVER: sqlite
+      PHOTOPRISM_INIT: "https tensorflow"
+      PHOTOPRISM_HTTP_COMPRESSION: gzip
+      PHOTOPRISM_READONLY: "false"
+      PHOTOPRISM_BACKUP_ALBUMS: "true"
+      PHOTOPRISM_BACKUP_DATABASE: "true"
+      PHOTOPRISM_BACKUP_SCHEDULE: daily
+      PHOTOPRISM_INDEX_SCHEDULE: ""
+      PHOTOPRISM_AUTO_INDEX: 300
+      PHOTOPRISM_AUTO_IMPORT: -1
+    volumes:
+      - photoprism-originals:/photoprism/originals
+      - photoprism-storage:/photoprism/storage
+
+volumes:
+  photoprism-originals: {}
+  photoprism-storage: {}

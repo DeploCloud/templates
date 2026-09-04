@@ -1,0 +1,14 @@
+services:
+  flowise:
+    image: flowiseai/flowise:latest
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PORT: ${PORT}
+      DATABASE_PATH: ${DATABASE_PATH}
+    volumes:
+      - flowise-data:/root/.flowise
+
+volumes:
+  flowise-data: {}

@@ -1,0 +1,11 @@
+services:
+  pocketbase:
+    image: ghcr.io/pocketbase/pocketbase:latest
+    restart: unless-stopped
+    expose:
+      - 8090
+    volumes:
+      - pocketbase-data:/pb/pb_data
+
+volumes:
+  pocketbase-data: {}

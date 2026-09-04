@@ -1,0 +1,18 @@
+services:
+  strapi:
+    image: strapi/strapi:latest
+    restart: unless-stopped
+    expose:
+      - 1337
+    environment:
+      DATABASE_CLIENT: sqlite
+      DATABASE_FILENAME: /opt/app/.tmp/data.db
+      APP_KEYS: ${APP_KEYS}
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - strapi-database:/opt/app/.tmp
+      - strapi-uploads:/opt/app/public/uploads
+
+volumes:
+  strapi-database: {}
+  strapi-uploads: {}

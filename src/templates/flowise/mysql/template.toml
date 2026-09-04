@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "flowise"
+port = 3000
+host = "${domain}"
+
+[config.env]
+PORT = "3000"
+DATABASE_TYPE = "mysql"
+DATABASE_HOST = "db"
+DATABASE_PORT = "3306"
+DATABASE_NAME = "flowise"
+DATABASE_USER = "flowise"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"

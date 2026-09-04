@@ -1,0 +1,23 @@
+[variables]
+admin_password = "${password:32}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+jwt_key = "${password:40}"
+redis_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "seafile"
+port = 80
+host = "${domain}"
+
+[config.env]
+SEAFILE_SERVER_HOSTNAME = "${domain}"
+SEAFILE_SERVER_PROTOCOL = "https"
+SEAFILE_ADMIN_EMAIL = "admin@example.com"
+SEAFILE_ADMIN_PASSWORD = "${admin_password}"
+SEAFILE_MYSQL_DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+JWT_PRIVATE_KEY = "${jwt_key}"

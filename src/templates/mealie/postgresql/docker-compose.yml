@@ -1,0 +1,39 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - 9000
+    environment:
+      ALLOW_SIGNUP: ${ALLOW_SIGNUP}
+      TZ: ${TZ}
+      DB_ENGINE: postgres
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_SERVER: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mealie
+    volumes:
+      - mealie-data:/app/data
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mealie
+      POSTGRES_USER: mealie
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mealie -d mealie"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  mealie-data: {}
+  postgres-data: {}

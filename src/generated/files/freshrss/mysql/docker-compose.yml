@@ -1,0 +1,55 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    restart: unless-stopped
+    depends_on:
+      freshrss-db:
+        condition: service_healthy
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+      FRESHRSS_INSTALL: |-
+        --api-enabled
+        --base-url https://${FRESHRSS_DOMAIN}
+        --db-base freshrss
+        --db-host freshrss-db
+        --db-password ${DB_PASSWORD}
+        --db-type mysql
+        --db-user freshrss
+        --default-user admin
+        --language en
+      FRESHRSS_USER: |-
+        --api-password ${ADMIN_API_PASSWORD}
+        --email ${ADMIN_EMAIL}
+        --language en
+        --password ${ADMIN_PASSWORD}
+        --user admin
+    volumes:
+      - freshrss-data:/var/www/FreshRSS/data
+      - freshrss-extensions:/var/www/FreshRSS/extensions
+
+  freshrss-db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: freshrss
+      MYSQL_USER: freshrss
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p${DB_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - freshrss-database:/var/lib/mysql
+
+volumes:
+  freshrss-data: {}
+  freshrss-extensions: {}
+  freshrss-database: {}

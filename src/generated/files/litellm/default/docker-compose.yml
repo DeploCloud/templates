@@ -1,0 +1,15 @@
+services:
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    restart: unless-stopped
+    expose:
+      - 4000
+    command: --config /app/config.yaml --port 4000
+    environment:
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY}
+    volumes:
+      - litellm-data:/app/data
+      - ./config.yaml:/app/config.yaml:ro
+
+volumes:
+  litellm-data: {}

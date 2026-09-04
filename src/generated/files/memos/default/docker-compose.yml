@@ -1,0 +1,14 @@
+services:
+  memos:
+    image: neosmemo/memos:stable
+    restart: unless-stopped
+    expose:
+      - 5230
+    environment:
+      MEMOS_PORT: ${MEMOS_PORT}
+      MEMOS_INSTANCE_URL: ${MEMOS_INSTANCE_URL}
+    volumes:
+      - memos-data:/var/opt/memos
+
+volumes:
+  memos-data: {}

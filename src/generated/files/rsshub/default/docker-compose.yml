@@ -1,0 +1,13 @@
+services:
+  rsshub:
+    image: diygod/rsshub:latest
+    restart: unless-stopped
+    expose:
+      - 1200
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    volumes:
+      - rsshub-data:/app/data
+
+volumes:
+  rsshub-data: {}
