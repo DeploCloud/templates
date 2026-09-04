@@ -21,6 +21,11 @@ services:
       POSTGRES_DB: appflowy
     volumes:
       - appflowy-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "appflowy", "-d", "appflowy"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
 
   redis:
     image: redis:7.4.11-alpine
@@ -35,6 +40,11 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
     volumes:
       - appflowy-minio:/data
 
@@ -60,7 +70,14 @@ services:
       API_EXTERNAL_URL: ${API_EXTERNAL_URL}
       PORT: "9999"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail http://127.0.0.1:9999/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
 
   appflowy-cloud:
     image: appflowyinc/appflowy_cloud:0.17.12
@@ -74,6 +91,7 @@ services:
       APPFLOWY_WEBSOCKET_BASE_URL: ${APPFLOWY_WEBSOCKET_BASE_URL}
       APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
       APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
       APPFLOWY_GOTRUE_BASE_URL: http://gotrue:9999
       APPFLOWY_S3_USE_MINIO: "true"
       APPFLOWY_S3_CREATE_BUCKET: "true"
@@ -88,10 +106,13 @@ services:
       AI_SERVER_HOST: ${AI_SERVER_HOST}
       AI_SERVER_PORT: ${AI_SERVER_PORT}
     depends_on:
-      - postgres
-      - redis
-      - gotrue
-      - minio
+      gotrue:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail http://127.0.0.1:8000/api/health || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 12
 
   appflowy-worker:
     image: appflowyinc/appflowy_worker:0.17.12
@@ -108,7 +129,10 @@ services:
       APPFLOWY_S3_REGION: ${APPFLOWY_S3_REGION}
       APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
     depends_on:
-      - appflowy-cloud
+      postgres:
+        condition: service_healthy
+      appflowy-cloud:
+        condition: service_healthy
 
   appflowy-search:
     image: appflowyinc/appflowy_search:0.18.0
@@ -116,13 +140,28 @@ services:
     expose:
       - 4002
     environment:
-      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
-      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_SEARCH_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      APPFLOWY_SEARCH_REDIS_URL: ${APPFLOWY_REDIS_URI}
       APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
-      APPFLOWY_SEARCH_SERVICE_URL: http://appflowy-search:4002
+      APPFLOWY_SEARCH_HOST: "[::]"
+      APPFLOWY_SEARCH_PORT: "4002"
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -ec
+        - |
+          exec 3<>/dev/tcp/127.0.0.1/$${APPFLOWY_SEARCH_PORT:-4002}
+          printf 'GET /health HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3
+          read -r _ status _ <&3
+          [ "$$status" = 200 ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
 
   appflowy-ai:
     image: appflowyinc/appflowy_ai:0.17.7
@@ -130,19 +169,28 @@ services:
     expose:
       - 5001
     environment:
-      AI_ENABLED: ${AI_ENABLED}
-      JWT_SECRET: ${GOTRUE_JWT_SECRET}
-      AI_OPENAI_API_KEY: ${AI_OPENAI_API_KEY}
-      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
-      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
-      APPFLOWY_S3_USE_MINIO: "true"
+      AI_SERVER_PORT: ${AI_SERVER_PORT}
+      OPENAI_API_KEY: ${AI_OPENAI_API_KEY}
+      AI_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      AI_REDIS_URL: ${APPFLOWY_REDIS_URI}
+      AI_USE_MINIO: "true"
       APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
       APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
       APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
-      APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
+      AI_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
+      AI_APPFLOWY_HOST: ${APPFLOWY_BASE_URL}
+      APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      appflowy-cloud:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   admin-frontend:
     image: appflowyinc/admin_frontend:0.17.13
@@ -150,10 +198,13 @@ services:
     expose:
       - 3000
     environment:
-      API_EXTERNAL_URL: ${API_EXTERNAL_URL}
+      APPFLOWY_GOTRUE_BASE_URL: http://gotrue:9999
       APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
     depends_on:
-      - gotrue
+      gotrue:
+        condition: service_healthy
+      appflowy-cloud:
+        condition: service_healthy
 
   appflowy-web:
     image: appflowyinc/appflowy_web:0.17.0
@@ -164,6 +215,9 @@ services:
       APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
       APPFLOWY_GOTRUE_BASE_URL: ${APPFLOWY_BASE_URL}/gotrue
       APPFLOWY_WS_BASE_URL: ${APPFLOWY_WEBSOCKET_BASE_URL}
+    depends_on:
+      appflowy-cloud:
+        condition: service_healthy
 
 volumes:
   appflowy-postgres: {}
