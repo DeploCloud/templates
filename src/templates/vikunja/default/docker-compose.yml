@@ -1,6 +1,7 @@
 services:
   vikunja:
     image: vikunja/vikunja:2.5.0
+    user: "0:0"
     restart: unless-stopped
     expose:
       - 3456
