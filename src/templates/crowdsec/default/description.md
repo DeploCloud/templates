@@ -1,0 +1,1 @@
+CrowdSec collaborative security engine with persistent decisions and local configuration. It is an API and security component rather than a general-purpose web UI; connect a bouncer or reverse proxy separately.

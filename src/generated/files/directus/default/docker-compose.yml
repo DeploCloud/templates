@@ -1,0 +1,39 @@
+services:
+  directus:
+    image: directus/directus:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 8055
+    environment:
+      DB_CLIENT: ${DB_CLIENT}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SECRET: ${SECRET}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - directus-uploads:/directus/uploads
+
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: directus
+      POSTGRES_USER: directus
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U directus -d directus"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - directus-database:/var/lib/postgresql
+
+volumes:
+  directus-uploads: {}
+  directus-database: {}

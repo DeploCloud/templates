@@ -1,0 +1,8 @@
+[config.env]
+DRAWIO_BASE_URL = "https://${domain}"
+DRAWIO_SERVER_URL = "https://${domain}/"
+
+[[config.domains]]
+serviceName = "drawio"
+port = 8_080
+host = "${domain}"

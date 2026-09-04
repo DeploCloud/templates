@@ -1,0 +1,13 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - freshrss-data:/var/www/FreshRSS/data
+
+volumes:
+  freshrss-data: {}

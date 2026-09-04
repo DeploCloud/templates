@@ -1,0 +1,14 @@
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    restart: unless-stopped
+    expose:
+      - 4533
+    environment:
+      ND_SCANSCHEDULE: ${ND_SCANSCHEDULE}
+      ND_LOGLEVEL: ${ND_LOGLEVEL}
+    volumes:
+      - navidrome-data:/data
+
+volumes:
+  navidrome-data: {}

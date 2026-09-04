@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+nextauth_secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "documenso"
+port = 3000
+host = "${domain}"
+
+[config.env]
+NEXT_PUBLIC_WEBAPP_URL = "https://${domain}"
+NEXTAUTH_URL = "https://${domain}"
+NEXTAUTH_SECRET = "${nextauth_secret}"
+DATABASE_URL = "postgresql://documenso:${db_password}@db:5432/documenso"
+POSTGRES_PASSWORD = "${db_password}"

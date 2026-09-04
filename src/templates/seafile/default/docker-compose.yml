@@ -1,0 +1,16 @@
+services:
+  seafile:
+    image: seafileltd/seafile-mc:latest
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SEAFILE_SERVER_HOSTNAME: ${SEAFILE_SERVER_HOSTNAME}
+      SEAFILE_SERVER_PROTOCOL: ${SEAFILE_SERVER_PROTOCOL}
+      SEAFILE_ADMIN_EMAIL: ${SEAFILE_ADMIN_EMAIL}
+      SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD}
+    volumes:
+      - seafile-data:/shared
+
+volumes:
+  seafile-data: {}

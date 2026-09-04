@@ -227,6 +227,48 @@ const data = {
       "slug": "affine"
     },
     {
+      "name": "AnythingLLM",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Document chat workspace with persistent data and embeddings.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "AnythingLLM",
+            "url": "https://anythingllm.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/Mintplex-Labs/anything-llm",
+            "website": "https://anythingllm.com/",
+            "docs": [
+              "https://docs.anythingllm.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "AnythingLLM workspace for chatting with documents and language models, with persistent workspaces and embeddings. Configure a model provider and review the generated security settings before use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/anythingllm/default/template.toml",
+            "compose": "/files/anythingllm/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "anythingllm"
+    },
+    {
       "name": "AppFlowy",
       "logo": "/images/appflowy/logo.webp",
       "variants": [
@@ -269,6 +311,412 @@ const data = {
       "slug": "appflowy"
     },
     {
+      "name": "Appwrite",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Appwrite backend with persistent project and storage data.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Appwrite",
+            "url": "https://appwrite.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/appwrite/appwrite",
+            "website": "https://appwrite.io/",
+            "docs": [
+              "https://appwrite.io/docs/advanced/self-hosting"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Appwrite backend platform with persistent storage for projects and uploaded files. Appwrite normally uses its complete multi-service Compose bundle; add the required databases, queues and workers for a production installation.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/appwrite/default/template.toml",
+            "compose": "/files/appwrite/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "appwrite"
+    },
+    {
+      "name": "Audiobookshelf",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Audiobook and podcast server with persistent metadata and progress.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Audiobookshelf",
+            "url": "https://www.audiobookshelf.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/advplyr/audiobookshelf",
+            "website": "https://www.audiobookshelf.org/",
+            "docs": [
+              "https://www.audiobookshelf.org/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Audiobookshelf server for organizing and streaming audiobooks and podcasts. Configuration, metadata and progress persist in dedicated volumes; add your media libraries after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/audiobookshelf/default/template.toml",
+            "compose": "/files/audiobookshelf/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "audiobookshelf"
+    },
+    {
+      "name": "Authelia",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Authentication portal providing single sign-on and two-factor protection for web applications.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Authelia",
+            "url": "https://github.com/authelia"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/authelia/authelia",
+            "website": "https://www.authelia.com/",
+            "docs": [
+              "https://www.authelia.com/integration/deployment/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Authelia is an authentication portal that adds single sign-on and multi-factor authentication in front of web applications. This variant includes Authelia, Redis and PostgreSQL and persists configuration, sessions and identity data. Configure the access-control rules and replace the seeded administrator password before protecting production applications.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/authelia/default/template.toml",
+            "compose": "/files/authelia/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Authelia using mysql storage with Redis-backed sessions.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Authelia",
+            "url": "https://github.com/authelia"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/authelia/authelia",
+            "website": "https://www.authelia.com/",
+            "docs": [
+              "https://www.authelia.com/integration/deployment/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Authelia authentication gateway using mysql for persistent storage and Redis for sessions. Configuration, users and storage persist in volumes; adapt access-control rules and credentials before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/authelia/mysql/template.toml",
+            "compose": "/files/authelia/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "SQLite",
+          "shortDescription": "Authelia using sqlite storage with Redis-backed sessions.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Authelia",
+            "url": "https://github.com/authelia"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/authelia/authelia",
+            "website": "https://www.authelia.com/",
+            "docs": [
+              "https://www.authelia.com/integration/deployment/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Authelia authentication gateway using sqlite for persistent storage and Redis for sessions. Configuration, users and storage persist in volumes; adapt access-control rules and credentials before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "sqlite",
+          "files": {
+            "config": "/files/authelia/sqlite/template.toml",
+            "compose": "/files/authelia/sqlite/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "authelia"
+    },
+    {
+      "name": "Authentik",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Identity provider with persistent media and PostgreSQL configuration.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Authentik",
+            "url": "https://goauthentik.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/goauthentik/authentik",
+            "website": "https://goauthentik.io/",
+            "docs": [
+              "https://docs.goauthentik.io/install-config/install/docker-compose/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Authentik identity provider with persistent media and PostgreSQL-backed configuration. Configure an initial bootstrap email and password and keep the generated secret private.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/authentik/default/template.toml",
+            "compose": "/files/authentik/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "authentik"
+    },
+    {
+      "name": "Beszel",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Lightweight monitoring hub with persistent systems and history.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Beszel",
+            "url": "https://beszel.dev/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/henrygd/beszel",
+            "website": "https://beszel.dev/",
+            "docs": [
+              "https://beszel.dev/guide/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Beszel lightweight server monitoring hub with persistent users, monitored systems and history. Install agents on the systems to monitor and keep the generated hub secret private.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/beszel/default/template.toml",
+            "compose": "/files/beszel/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "beszel"
+    },
+    {
+      "name": "BookStack",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "BookStack documentation platform with persistent MariaDB storage.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "BookStack",
+            "url": "https://www.bookstackapp.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/BookStackApp/BookStack",
+            "website": "https://www.bookstackapp.com/",
+            "docs": [
+              "https://www.bookstackapp.com/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "BookStack documentation platform with persistent configuration and a MariaDB database. Set the application URL and complete the initial administrator setup before inviting users.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/bookstack/default/template.toml",
+            "compose": "/files/bookstack/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "bookstack"
+    },
+    {
+      "name": "Cal.com",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Scheduling application with persistent PostgreSQL data.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Cal.com",
+            "url": "https://cal.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/calcom/cal.com",
+            "website": "https://cal.com/",
+            "docs": [
+              "https://cal.com/docs"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Cal.com scheduling application with persistent PostgreSQL data. Configure the public URL, encryption and mail provider, then complete the first administrator setup.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/cal-com/default/template.toml",
+            "compose": "/files/cal-com/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "cal-com"
+    },
+    {
+      "name": "Calibre-Web",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Calibre-Web ebook library with persistent configuration.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Calibre-Web",
+            "url": "https://github.com/janeczku/calibre-web"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/janeczku/calibre-web",
+            "website": "https://github.com/janeczku/calibre-web",
+            "docs": [
+              "https://docs.linuxserver.io/images/docker-calibre-web/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Calibre-Web ebook library and reading interface with persistent configuration. Mount an existing Calibre database and books directory after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/calibre-web/default/template.toml",
+            "compose": "/files/calibre-web/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "calibre-web"
+    },
+    {
       "name": "Chatwoot",
       "logo": "/images/chatwoot/logo.webp",
       "variants": [
@@ -309,6 +757,286 @@ const data = {
         }
       ],
       "slug": "chatwoot"
+    },
+    {
+      "name": "Cloudflared",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Cloudflare Tunnel connector for publishing private services.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Cloudflared",
+            "url": "https://www.cloudflare.com/products/tunnel/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/cloudflare/cloudflared",
+            "website": "https://www.cloudflare.com/products/tunnel/",
+            "docs": [
+              "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. Provide a tunnel token after deployment; this connector does not expose a web UI or an HTTP application port.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/cloudflared/default/template.toml",
+            "compose": "/files/cloudflared/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "cloudflared"
+    },
+    {
+      "name": "Coder",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted cloud development environment for remote workspaces on your infrastructure.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Coder",
+            "url": "https://github.com/coder"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/coder/coder",
+            "website": "https://coder.com/",
+            "docs": [
+              "https://coder.com/docs/install/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Coder is a self-hosted cloud development environment for provisioning remote workspaces. This variant includes Coder and PostgreSQL and persists application state in the database. Creating Docker-based workspaces requires access to the host Docker socket and a Linux host; configure the external access URL and workspace templates after setup.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/coder/default/template.toml",
+            "compose": "/files/coder/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "coder"
+    },
+    {
+      "name": "CrowdSec",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Collaborative security engine with persistent decisions and configuration.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "CrowdSec",
+            "url": "https://www.crowdsec.net/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/crowdsecurity/crowdsec",
+            "website": "https://www.crowdsec.net/",
+            "docs": [
+              "https://docs.crowdsec.net/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "CrowdSec collaborative security engine with persistent decisions and local configuration. It is an API and security component rather than a general-purpose web UI; connect a bouncer or reverse proxy separately.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/crowdsec/default/template.toml",
+            "compose": "/files/crowdsec/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "crowdsec"
+    },
+    {
+      "name": "Directus",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Directus data platform with PostgreSQL and persistent uploads.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Directus",
+            "url": "https://directus.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/directus/directus",
+            "website": "https://directus.io/",
+            "docs": [
+              "https://docs.directus.io/self-hosted/quickstart.html"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Directus data platform and API with persistent uploads backed by PostgreSQL. The first start creates the administrator account and the generated secret should be kept private.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/directus/default/template.toml",
+            "compose": "/files/directus/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Directus with MySQL persistence and persistent uploads.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Directus",
+            "url": "https://directus.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/directus/directus",
+            "website": "https://directus.io/",
+            "docs": [
+              "https://docs.directus.io/self-hosted/quickstart.html"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Directus data platform using a dedicated MySQL database. The database and uploaded assets persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/directus/mysql/template.toml",
+            "compose": "/files/directus/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "SQLite",
+          "shortDescription": "Directus with its built-in SQLite database and persistent uploads.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Directus",
+            "url": "https://directus.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/directus/directus",
+            "website": "https://directus.io/",
+            "docs": [
+              "https://docs.directus.io/self-hosted/quickstart.html"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Directus data platform using the built-in SQLite database. The database file, uploaded assets and generated configuration persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "sqlite",
+          "files": {
+            "config": "/files/directus/sqlite/template.toml",
+            "compose": "/files/directus/sqlite/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "directus"
+    },
+    {
+      "name": "Discourse",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Modern forum platform for community discussions, mailing lists and real-time chat rooms.",
+          "category": {
+            "name": "Communication",
+            "icon": "message-circle",
+            "description": "Chat, calls, forums and the bots and bridges that connect a team or a community.",
+            "slug": "communication"
+          },
+          "developedBy": {
+            "label": "Discourse",
+            "url": "https://github.com/discourse"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/discourse/discourse",
+            "website": "https://www.discourse.org/",
+            "docs": [
+              "https://meta.discourse.org/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Discourse is a forum platform for community discussions, mailing lists and chat-style conversations. This variant bundles the application with PostgreSQL and Redis and persists forum content, configuration and database data. Configure SMTP after setup before enabling email-dependent features.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/discourse/default/template.toml",
+            "compose": "/files/discourse/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "discourse"
     },
     {
       "name": "Diun",
@@ -388,6 +1116,216 @@ const data = {
       "slug": "diun"
     },
     {
+      "name": "Docmost",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Collaborative wiki with persistent attachments and PostgreSQL.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Docmost",
+            "url": "https://docmost.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/docmost/docmost",
+            "website": "https://docmost.com/",
+            "docs": [
+              "https://docmost.com/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Docmost collaborative wiki and knowledge base with persistent attachments. The application expects PostgreSQL and Redis; complete the generated connection settings before first use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/docmost/default/template.toml",
+            "compose": "/files/docmost/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "docmost"
+    },
+    {
+      "name": "Documenso",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Document signing application with PostgreSQL and persistent files.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Documenso",
+            "url": "https://documenso.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/documenso/documenso",
+            "website": "https://documenso.com/",
+            "docs": [
+              "https://docs.documenso.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Documenso document signing application with persistent local files and PostgreSQL metadata. Configure mail delivery and complete the first administrator setup after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/documenso/default/template.toml",
+            "compose": "/files/documenso/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "documenso"
+    },
+    {
+      "name": "draw.io",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Browser-based diagramming and whiteboarding tool for flowcharts, maps and wireframes.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "draw.io",
+            "url": "https://github.com/jgraph"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/jgraph/drawio",
+            "website": "https://www.drawio.com/",
+            "docs": [
+              "https://www.drawio.com/doc/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "draw.io is a browser-based diagramming and whiteboarding application for flowcharts, architecture diagrams and wireframes. The self-contained image includes the editor and its optional export integration; the editor itself does not require an application database. Use the offline URL option when diagrams must not contact external storage providers.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/draw-io/default/template.toml",
+            "compose": "/files/draw-io/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "draw-io"
+    },
+    {
+      "name": "ERPNext",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "ERPNext application image with persistent Frappe sites and files.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "ERPNext",
+            "url": "https://erpnext.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/frappe/erpnext",
+            "website": "https://erpnext.com/",
+            "docs": [
+              "https://docs.frappe.io/erpnext/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "ERPNext business resource planning application with persistent sites and uploaded files. The image expects a completed Frappe site setup and external database and cache services for a production installation.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/erpnext/default/template.toml",
+            "compose": "/files/erpnext/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "erpnext"
+    },
+    {
+      "name": "File Browser",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Web file manager for uploading, editing, previewing and sharing files from a private workspace.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "File Browser",
+            "url": "https://github.com/filebrowser"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/filebrowser/filebrowser",
+            "website": "https://filebrowser.org/",
+            "docs": [
+              "https://filebrowser.org/installation"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "File Browser is a web file manager for uploading, editing, previewing and sharing files. The template persists the file tree, configuration and File Browser database in separate volumes. Create an administrator account and review the default access policy during the first-run setup.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/file-browser/default/template.toml",
+            "compose": "/files/file-browser/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "file-browser"
+    },
+    {
       "name": "Firefly III",
       "logo": "/images/firefly-iii/logo.webp",
       "variants": [
@@ -465,6 +1403,153 @@ const data = {
       "slug": "firefly-iii"
     },
     {
+      "name": "Flowise",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Visual language-model builder with persistent flows and credentials.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Flowise",
+            "url": "https://flowiseai.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FlowiseAI/Flowise",
+            "website": "https://flowiseai.com/",
+            "docs": [
+              "https://docs.flowiseai.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Flowise visual builder for language-model applications with persistent flows and credentials. Configure model provider keys securely after deployment and protect the editor with authentication.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/flowise/default/template.toml",
+            "compose": "/files/flowise/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MariaDB",
+          "shortDescription": "Flowise with mariadb persistence for flows and credentials.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Flowise",
+            "url": "https://flowiseai.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FlowiseAI/Flowise",
+            "website": "https://flowiseai.com/",
+            "docs": [
+              "https://docs.flowiseai.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Flowise visual AI builder using a dedicated mariadb database. Flowise data and the database persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "mariadb",
+          "files": {
+            "config": "/files/flowise/mariadb/template.toml",
+            "compose": "/files/flowise/mariadb/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Flowise with mysql persistence for flows and credentials.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Flowise",
+            "url": "https://flowiseai.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FlowiseAI/Flowise",
+            "website": "https://flowiseai.com/",
+            "docs": [
+              "https://docs.flowiseai.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Flowise visual AI builder using a dedicated mysql database. Flowise data and the database persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/flowise/mysql/template.toml",
+            "compose": "/files/flowise/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Flowise with postgres persistence for flows and credentials.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Flowise",
+            "url": "https://flowiseai.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FlowiseAI/Flowise",
+            "website": "https://flowiseai.com/",
+            "docs": [
+              "https://docs.flowiseai.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Flowise visual AI builder using a dedicated postgres database. Flowise data and the database persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/flowise/postgresql/template.toml",
+            "compose": "/files/flowise/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "flowise"
+    },
+    {
       "name": "Forgejo",
       "logo": "/images/forgejo/logo.webp",
       "variants": [
@@ -540,6 +1625,118 @@ const data = {
         }
       ],
       "slug": "forgejo"
+    },
+    {
+      "name": "FreshRSS",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Personal RSS reader with persistent feeds and configuration.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "FreshRSS",
+            "url": "https://freshrss.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FreshRSS/FreshRSS",
+            "website": "https://freshrss.org/",
+            "docs": [
+              "https://freshrss.github.io/FreshRSS/en/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "FreshRSS personal feed reader with persistent feeds, users and configuration. Complete the web installer and configure the update scheduler after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/freshrss/default/template.toml",
+            "compose": "/files/freshrss/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "FreshRSS with MySQL persistence and automated first setup.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "FreshRSS",
+            "url": "https://freshrss.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FreshRSS/FreshRSS",
+            "website": "https://freshrss.org/",
+            "docs": [
+              "https://freshrss.github.io/FreshRSS/en/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "FreshRSS RSS reader using a dedicated MySQL database. The database, feeds and extensions persist in volumes; the generated admin credentials are available in the template configuration.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/freshrss/mysql/template.toml",
+            "compose": "/files/freshrss/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "FreshRSS with PostgreSQL persistence and automated first setup.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "FreshRSS",
+            "url": "https://freshrss.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/FreshRSS/FreshRSS",
+            "website": "https://freshrss.org/",
+            "docs": [
+              "https://freshrss.github.io/FreshRSS/en/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "FreshRSS RSS reader using a dedicated PostgreSQL database. The database, feeds and extensions persist in volumes; the generated admin credentials are available in the template configuration.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/freshrss/postgresql/template.toml",
+            "compose": "/files/freshrss/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "freshrss"
     },
     {
       "name": "Garage S3",
@@ -738,6 +1935,48 @@ const data = {
       "slug": "gitea"
     },
     {
+      "name": "GitLab CE",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted GitLab with persistent repositories and CI data.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "GitLab CE",
+            "url": "https://about.gitlab.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://gitlab.com/gitlab-org/gitlab",
+            "website": "https://about.gitlab.com/",
+            "docs": [
+              "https://docs.gitlab.com/install/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "GitLab Community Edition with persistent repositories, issues, CI data and configuration. GitLab is resource intensive; configure the external URL and reserve sufficient memory before first start.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/gitlab-ce/default/template.toml",
+            "compose": "/files/gitlab-ce/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "gitlab-ce"
+    },
+    {
       "name": "Grafana",
       "logo": "/images/grafana/logo.webp",
       "variants": [
@@ -813,6 +2052,83 @@ const data = {
         }
       ],
       "slug": "grafana"
+    },
+    {
+      "name": "Headscale",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted mesh VPN coordination server with persistent state.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Headscale",
+            "url": "https://headscale.net/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/juanfont/headscale",
+            "website": "https://headscale.net/",
+            "docs": [
+              "https://headscale.net/stable/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state. Configure DNS, routes and client registration according to the deployment environment before connecting nodes.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/headscale/default/template.toml",
+            "compose": "/files/headscale/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Headscale with the legacy PostgreSQL database backend.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "Headscale",
+            "url": "https://headscale.net/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/juanfont/headscale",
+            "website": "https://headscale.net/",
+            "docs": [
+              "https://headscale.net/stable/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. The database and Headscale state persist in volumes; the project recommends SQLite for new installations.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/headscale/postgresql/template.toml",
+            "compose": "/files/headscale/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "headscale"
     },
     {
       "name": "Homarr",
@@ -932,6 +2248,48 @@ const data = {
         }
       ],
       "slug": "home-assistant"
+    },
+    {
+      "name": "Homebridge",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Homebridge smart-home bridge with persistent plugins and configuration.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Homebridge",
+            "url": "https://homebridge.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/homebridge/homebridge",
+            "website": "https://homebridge.io/",
+            "docs": [
+              "https://github.com/homebridge/homebridge/wiki"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Homebridge server for exposing smart-home accessories through plugins. Configuration, cached accessories and installed plugins persist in the data volume; host devices may require extra access.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/homebridge/default/template.toml",
+            "compose": "/files/homebridge/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "homebridge"
     },
     {
       "name": "Homepage",
@@ -1166,6 +2524,90 @@ const data = {
       "slug": "jellyfin"
     },
     {
+      "name": "Jenkins",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Jenkins automation server with persistent jobs and plugins.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Jenkins",
+            "url": "https://www.jenkins.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/jenkinsci/jenkins",
+            "website": "https://www.jenkins.io/",
+            "docs": [
+              "https://www.jenkins.io/doc/book/installing/docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Jenkins automation server with persistent jobs, plugins and build configuration. The initial administrator password is shown in the first container logs and build agents must be configured separately.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/jenkins/default/template.toml",
+            "compose": "/files/jenkins/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "jenkins"
+    },
+    {
+      "name": "Jitsi Meet",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Jitsi Meet web frontend with persistent configuration.",
+          "category": {
+            "name": "Communication",
+            "icon": "message-circle",
+            "description": "Chat, calls, forums and the bots and bridges that connect a team or a community.",
+            "slug": "communication"
+          },
+          "developedBy": {
+            "label": "Jitsi Meet",
+            "url": "https://jitsi.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/jitsi/docker-jitsi-meet",
+            "website": "https://jitsi.org/",
+            "docs": [
+              "https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Jitsi Meet web frontend with persistent web configuration. A complete meeting deployment also needs the official Prosody, Jicofo, bridge and recording services and their shared configuration.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/jitsi-meet/default/template.toml",
+            "compose": "/files/jitsi-meet/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "jitsi-meet"
+    },
+    {
       "name": "Joplin",
       "logo": "/images/joplin/logo.webp",
       "variants": [
@@ -1243,6 +2685,482 @@ const data = {
       "slug": "joplin"
     },
     {
+      "name": "Keycloak",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Keycloak identity management with PostgreSQL persistence.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Keycloak",
+            "url": "https://www.keycloak.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/keycloak/keycloak",
+            "website": "https://www.keycloak.org/",
+            "docs": [
+              "https://www.keycloak.org/documentation"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Keycloak identity and access management server with a PostgreSQL database. Set the bootstrap administrator credentials and configure the public hostname before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/keycloak/default/template.toml",
+            "compose": "/files/keycloak/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MariaDB",
+          "shortDescription": "Keycloak with mariadb persistence and proxy-aware defaults.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Keycloak",
+            "url": "https://www.keycloak.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/keycloak/keycloak",
+            "website": "https://www.keycloak.org/",
+            "docs": [
+              "https://www.keycloak.org/documentation"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Keycloak identity management using a dedicated mariadb database. The database and Keycloak state persist in volumes; change the generated bootstrap administrator password after first login.",
+          "logo": null,
+          "images": [],
+          "slug": "mariadb",
+          "files": {
+            "config": "/files/keycloak/mariadb/template.toml",
+            "compose": "/files/keycloak/mariadb/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Keycloak with mysql persistence and proxy-aware defaults.",
+          "category": {
+            "name": "Security",
+            "icon": "shield",
+            "description": "Identity providers, single sign-on, password vaults and secret management.",
+            "slug": "security"
+          },
+          "developedBy": {
+            "label": "Keycloak",
+            "url": "https://www.keycloak.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/keycloak/keycloak",
+            "website": "https://www.keycloak.org/",
+            "docs": [
+              "https://www.keycloak.org/documentation"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Keycloak identity management using a dedicated mysql database. The database and Keycloak state persist in volumes; change the generated bootstrap administrator password after first login.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/keycloak/mysql/template.toml",
+            "compose": "/files/keycloak/mysql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "keycloak"
+    },
+    {
+      "name": "Langflow",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Visual AI workflow builder with persistent projects and settings.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Langflow",
+            "url": "https://www.langflow.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/langflow-ai/langflow",
+            "website": "https://www.langflow.org/",
+            "docs": [
+              "https://docs.langflow.org/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Langflow visual authoring environment for AI workflows with persistent projects and settings. Configure an authentication secret and model provider credentials before sharing the UI.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/langflow/default/template.toml",
+            "compose": "/files/langflow/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Langflow with PostgreSQL persistence for production workloads.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Langflow",
+            "url": "https://www.langflow.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/langflow-ai/langflow",
+            "website": "https://www.langflow.org/",
+            "docs": [
+              "https://docs.langflow.org/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Langflow visual AI workflow builder using PostgreSQL for flows, history and settings. The database and Langflow data persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/langflow/postgresql/template.toml",
+            "compose": "/files/langflow/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "langflow"
+    },
+    {
+      "name": "LibreChat",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Multi-provider AI chat interface with persistent uploads.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "LibreChat",
+            "url": "https://www.librechat.ai/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/danny-avila/LibreChat",
+            "website": "https://www.librechat.ai/",
+            "docs": [
+              "https://www.librechat.ai/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "LibreChat multi-provider AI chat interface with persistent uploads. Configure at least one model provider and the required MongoDB and authentication settings before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/librechat/default/template.toml",
+            "compose": "/files/librechat/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "librechat"
+    },
+    {
+      "name": "Linkwarden",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Collaborative bookmark manager with persistent links and archives.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Linkwarden",
+            "url": "https://linkwarden.app/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/linkwarden/linkwarden",
+            "website": "https://linkwarden.app/",
+            "docs": [
+              "https://docs.linkwarden.app/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Linkwarden collaborative bookmark manager with persistent link metadata and archived resources. Configure the generated database and authentication secrets before inviting users.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/linkwarden/default/template.toml",
+            "compose": "/files/linkwarden/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "linkwarden"
+    },
+    {
+      "name": "LiteLLM",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "OpenAI-compatible proxy for routing language-model requests.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "LiteLLM",
+            "url": "https://www.litellm.ai/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/BerriAI/litellm",
+            "website": "https://www.litellm.ai/",
+            "docs": [
+              "https://docs.litellm.ai/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "LiteLLM proxy for routing requests to OpenAI-compatible language-model providers. Add provider credentials and model configuration to the materialized config before exposing the endpoint.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/litellm/default/template.toml",
+            "compose": "/files/litellm/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "litellm"
+    },
+    {
+      "name": "Matomo",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted web analytics with persistent reports and configuration.",
+          "category": {
+            "name": "Analytics",
+            "icon": "chart-line",
+            "description": "Product, web and business analytics, from privacy-first page counters to full dashboards.",
+            "slug": "analytics"
+          },
+          "developedBy": {
+            "label": "Matomo",
+            "url": "https://matomo.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/matomo-org/matomo",
+            "website": "https://matomo.org/",
+            "docs": [
+              "https://matomo.org/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Matomo web analytics platform with persistent plugins, configuration and reports. Complete the installer and configure a supported database and mail transport before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/matomo/default/template.toml",
+            "compose": "/files/matomo/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "matomo"
+    },
+    {
+      "name": "Mattermost",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Team collaboration server with persistent files and PostgreSQL.",
+          "category": {
+            "name": "Communication",
+            "icon": "message-circle",
+            "description": "Chat, calls, forums and the bots and bridges that connect a team or a community.",
+            "slug": "communication"
+          },
+          "developedBy": {
+            "label": "Mattermost",
+            "url": "https://mattermost.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/mattermost/mattermost",
+            "website": "https://mattermost.com/",
+            "docs": [
+              "https://docs.mattermost.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Mattermost team collaboration server with persistent files and PostgreSQL-backed application data. Configure the public site URL, mail delivery and first administrator after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/mattermost/default/template.toml",
+            "compose": "/files/mattermost/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "mattermost"
+    },
+    {
+      "name": "Mealie",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Recipe manager and meal planner with persistent data.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Mealie",
+            "url": "https://mealie.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/mealie-recipes/mealie",
+            "website": "https://mealie.io/",
+            "docs": [
+              "https://docs.mealie.io/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Mealie recipe manager and meal planner with persistent recipes, users and settings. Complete the first administrator setup and configure imports after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/mealie/default/template.toml",
+            "compose": "/files/mealie/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Mealie with PostgreSQL persistence for larger installations.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Mealie",
+            "url": "https://mealie.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/mealie-recipes/mealie",
+            "website": "https://mealie.io/",
+            "docs": [
+              "https://docs.mealie.io/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Mealie recipe manager using PostgreSQL for application data. The database and Mealie data persist in volumes; complete the first administrator setup after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/mealie/postgresql/template.toml",
+            "compose": "/files/mealie/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "mealie"
+    },
+    {
       "name": "Meilisearch",
       "logo": "/images/meilisearch/logo.webp",
       "variants": [
@@ -1283,6 +3201,118 @@ const data = {
         }
       ],
       "slug": "meilisearch"
+    },
+    {
+      "name": "Memos",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Lightweight Markdown note-taking and knowledge base for private or shared memos.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Memos",
+            "url": "https://github.com/usememos"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/usememos/memos",
+            "website": "https://usememos.com/",
+            "docs": [
+              "https://usememos.com/docs/deploy/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Memos is a lightweight Markdown note-taking and knowledge base application for private or shared notes. This single-container variant uses SQLite and persists the database and local assets in `/var/opt/memos`. The generated domain is configured as the instance URL.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/memos/default/template.toml",
+            "compose": "/files/memos/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Memos with mysql persistence for larger or managed deployments.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Memos",
+            "url": "https://github.com/usememos"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/usememos/memos",
+            "website": "https://usememos.com/",
+            "docs": [
+              "https://usememos.com/docs/deploy/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Memos note-taking service using a dedicated mysql database. Database data and local assets persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/memos/mysql/template.toml",
+            "compose": "/files/memos/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Memos with postgres persistence for larger or managed deployments.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Memos",
+            "url": "https://github.com/usememos"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/usememos/memos",
+            "website": "https://usememos.com/",
+            "docs": [
+              "https://usememos.com/docs/deploy/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Memos note-taking service using a dedicated postgres database. Database data and local assets persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/memos/postgresql/template.toml",
+            "compose": "/files/memos/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "memos"
     },
     {
       "name": "Metabase",
@@ -1479,6 +3509,90 @@ const data = {
         }
       ],
       "slug": "n8n"
+    },
+    {
+      "name": "Navidrome",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Navidrome music server with persistent indexes and playlists.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Navidrome",
+            "url": "https://www.navidrome.org/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/navidrome/navidrome",
+            "website": "https://www.navidrome.org/",
+            "docs": [
+              "https://www.navidrome.org/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Navidrome music server with persistent indexes, playlists and settings. Mount a music library on the host after deployment and point Navidrome to it through its configuration.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/navidrome/default/template.toml",
+            "compose": "/files/navidrome/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "navidrome"
+    },
+    {
+      "name": "Netdata",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Real-time monitoring dashboard with persistent metrics history.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Netdata",
+            "url": "https://www.netdata.cloud/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/netdata/netdata",
+            "website": "https://www.netdata.cloud/",
+            "docs": [
+              "https://learn.netdata.cloud/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Netdata real-time host and application monitoring dashboard with persistent metrics history. Full host visibility requires read-only access to host proc, sys and Docker data.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/netdata/default/template.toml",
+            "compose": "/files/netdata/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "netdata"
     },
     {
       "name": "Nextcloud",
@@ -1747,6 +3861,314 @@ const data = {
       "slug": "nocodb"
     },
     {
+      "name": "Node-RED",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Low-code programming tool for connecting hardware, APIs and online services with visual flows.",
+          "category": {
+            "name": "Automation",
+            "icon": "workflow",
+            "description": "Workflow builders, schedulers and low-code tools that wire your services together.",
+            "slug": "automation"
+          },
+          "developedBy": {
+            "label": "Node-RED",
+            "url": "https://github.com/node-red"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/node-red/node-red",
+            "website": "https://nodered.org/",
+            "docs": [
+              "https://nodered.org/docs/getting-started/docker"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Node-RED is a visual flow editor for connecting hardware, APIs and online services. The template persists flows, credentials, installed nodes and runtime configuration in the `/data` volume. Set a credential secret before using sensitive flows and review the generated instance security after the first login.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/node-red/default/template.toml",
+            "compose": "/files/node-red/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "node-red"
+    },
+    {
+      "name": "ntfy",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted publish-subscribe notification server.",
+          "category": {
+            "name": "Communication",
+            "icon": "message-circle",
+            "description": "Chat, calls, forums and the bots and bridges that connect a team or a community.",
+            "slug": "communication"
+          },
+          "developedBy": {
+            "label": "ntfy",
+            "url": "https://ntfy.sh/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/binwiederhier/ntfy",
+            "website": "https://ntfy.sh/",
+            "docs": [
+              "https://docs.ntfy.sh/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "ntfy publish and subscribe notification server with persistent message cache. Configure authentication, access control and base URL in the server configuration before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/ntfy/default/template.toml",
+            "compose": "/files/ntfy/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "ntfy with PostgreSQL persistence for messages, users and access control.",
+          "category": {
+            "name": "Communication",
+            "icon": "message-circle",
+            "description": "Chat, calls, forums and the bots and bridges that connect a team or a community.",
+            "slug": "communication"
+          },
+          "developedBy": {
+            "label": "ntfy",
+            "url": "https://ntfy.sh/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/binwiederhier/ntfy",
+            "website": "https://ntfy.sh/",
+            "docs": [
+              "https://docs.ntfy.sh/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "ntfy notification server using PostgreSQL for message cache, users, access control and web push data. PostgreSQL and local attachments persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/ntfy/postgresql/template.toml",
+            "compose": "/files/ntfy/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "ntfy"
+    },
+    {
+      "name": "Odoo",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Odoo business management with persistent filestore and PostgreSQL.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Odoo",
+            "url": "https://www.odoo.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/odoo/odoo",
+            "website": "https://www.odoo.com/",
+            "docs": [
+              "https://www.odoo.com/documentation/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Odoo business management suite with persistent filestore and a PostgreSQL database. Complete the initial database setup and configure outgoing mail after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/odoo/default/template.toml",
+            "compose": "/files/odoo/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "odoo"
+    },
+    {
+      "name": "Ollama",
+      "logo": null,
+      "variants": [
+        {
+          "name": "AMD GPU",
+          "shortDescription": "Ollama using AMD GPU acceleration for local models.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Ollama",
+            "url": "https://ollama.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/ollama/ollama",
+            "website": "https://ollama.com/",
+            "docs": [
+              "https://docs.ollama.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Ollama local model server using AMD GPU acceleration. This variant requires a Linux host with a supported AMD GPU, ROCm and access to `/dev/kfd` and `/dev/dri`; downloaded models persist in a volume.",
+          "logo": null,
+          "images": [],
+          "slug": "amd-gpu",
+          "files": {
+            "config": "/files/ollama/amd-gpu/template.toml",
+            "compose": "/files/ollama/amd-gpu/docker-compose.yml"
+          }
+        },
+        {
+          "name": "Default",
+          "shortDescription": "Local language model server with persistent downloaded models.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Ollama",
+            "url": "https://ollama.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/ollama/ollama",
+            "website": "https://ollama.com/",
+            "docs": [
+              "https://docs.ollama.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Ollama local model server with persistent downloaded models. Pull models from the API after deployment; GPU acceleration requires compatible host devices and runtime access.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/ollama/default/template.toml",
+            "compose": "/files/ollama/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "NVIDIA GPU",
+          "shortDescription": "Ollama using NVIDIA GPU acceleration for local models.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Ollama",
+            "url": "https://ollama.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/ollama/ollama",
+            "website": "https://ollama.com/",
+            "docs": [
+              "https://docs.ollama.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Ollama local model server using NVIDIA GPU acceleration. This variant requires an NVIDIA GPU, driver and NVIDIA Container Toolkit; downloaded models persist in a volume.",
+          "logo": null,
+          "images": [],
+          "slug": "nvidia-gpu",
+          "files": {
+            "config": "/files/ollama/nvidia-gpu/template.toml",
+            "compose": "/files/ollama/nvidia-gpu/docker-compose.yml"
+          }
+        },
+        {
+          "name": "Vulkan",
+          "shortDescription": "Ollama using Vulkan acceleration for local models.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "Ollama",
+            "url": "https://ollama.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/ollama/ollama",
+            "website": "https://ollama.com/",
+            "docs": [
+              "https://docs.ollama.com/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Ollama local model server using Vulkan acceleration. This variant requires a Linux host with the required GPU devices available at `/dev/kfd` and `/dev/dri`; downloaded models persist in a volume.",
+          "logo": null,
+          "images": [],
+          "slug": "vulkan",
+          "files": {
+            "config": "/files/ollama/vulkan/template.toml",
+            "compose": "/files/ollama/vulkan/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "ollama"
+    },
+    {
       "name": "Open WebUI",
       "logo": "/images/open-webui/logo.webp",
       "variants": [
@@ -1822,6 +4244,90 @@ const data = {
         }
       ],
       "slug": "open-webui"
+    },
+    {
+      "name": "OpenHands",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "AI software-development workspace with persistent project data.",
+          "category": {
+            "name": "AI",
+            "icon": "sparkles",
+            "description": "Local language models, chat interfaces, vector stores and the tooling built around them.",
+            "slug": "ai"
+          },
+          "developedBy": {
+            "label": "OpenHands",
+            "url": "https://www.all-hands.dev/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/All-Hands-AI/OpenHands",
+            "website": "https://www.all-hands.dev/",
+            "docs": [
+              "https://docs.all-hands.dev/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "OpenHands web interface for AI-assisted software development with persistent workspace data. Running coding agents may require Docker socket access and additional runtime configuration.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/openhands/default/template.toml",
+            "compose": "/files/openhands/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "openhands"
+    },
+    {
+      "name": "Outline",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Team knowledge base and wiki with fast search, Markdown editing and shared documentation.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Outline",
+            "url": "https://github.com/outline"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/outline/outline",
+            "website": "https://www.getoutline.com/",
+            "docs": [
+              "https://docs.getoutline.com/s/hosting/doc/docker-7pfeLP5a8t"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Outline is a collaborative knowledge base for writing and sharing team documentation. This variant includes PostgreSQL, Redis and a local OpenID Connect provider, and persists documents, database data and Redis state. Configure an external SMTP provider and replace the initial identity-provider password before using it for a public workspace.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/outline/default/template.toml",
+            "compose": "/files/outline/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "outline"
     },
     {
       "name": "Paperless-ngx",
@@ -1936,6 +4442,83 @@ const data = {
       "slug": "paperless-ngx"
     },
     {
+      "name": "PhotoPrism",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted photo manager that automatically tags, organizes and searches your library.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "PhotoPrism",
+            "url": "https://github.com/photoprism"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/photoprism/photoprism",
+            "website": "https://www.photoprism.app/",
+            "docs": [
+              "https://docs.photoprism.app/getting-started/docker-compose/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "PhotoPrism is a self-hosted photo and video library with indexing, search and automatic classification. This variant includes MariaDB and persists originals, thumbnails, metadata and database data. The generated domain is used as the public URL and an initial administrator password is generated automatically; allow at least 4 GB of swap for indexing larger libraries.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/photoprism/default/template.toml",
+            "compose": "/files/photoprism/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "SQLite",
+          "shortDescription": "PhotoPrism with its built-in SQLite database and persistent photo storage.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "PhotoPrism",
+            "url": "https://github.com/photoprism"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/photoprism/photoprism",
+            "website": "https://www.photoprism.app/",
+            "docs": [
+              "https://docs.photoprism.app/getting-started/docker-compose/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "PhotoPrism photo and video library using its built-in SQLite database. Originals, indexed metadata, thumbnails and the SQLite database persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "sqlite",
+          "files": {
+            "config": "/files/photoprism/sqlite/template.toml",
+            "compose": "/files/photoprism/sqlite/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "photoprism"
+    },
+    {
       "name": "Pi-hole",
       "logo": "/images/pi-hole/logo.webp",
       "variants": [
@@ -2013,6 +4596,48 @@ const data = {
       "slug": "pi-hole"
     },
     {
+      "name": "Plane",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Project management workspace for issues, sprints, roadmaps and team collaboration.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "Plane",
+            "url": "https://github.com/makeplane"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/makeplane/plane",
+            "website": "https://plane.so/",
+            "docs": [
+              "https://developers.plane.so/self-hosting/methods/docker-compose"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Plane is a project management workspace for issues, cycles, modules and roadmaps. This variant runs the application, background workers, PostgreSQL, Valkey, RabbitMQ and MinIO and persists project data, uploaded files and service state. The bundled stack needs at least 2 vCPUs and 4 GB RAM; configure email and any optional integrations after setup.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/plane/default/template.toml",
+            "compose": "/files/plane/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "plane"
+    },
+    {
       "name": "Plausible",
       "logo": "/images/plausible/logo.webp",
       "variants": [
@@ -2053,6 +4678,48 @@ const data = {
         }
       ],
       "slug": "plausible"
+    },
+    {
+      "name": "PocketBase",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "PocketBase backend with persistent embedded SQLite storage.",
+          "category": {
+            "name": "Database",
+            "icon": "database",
+            "description": "Relational, document and key-value stores, plus the tools to browse and manage them.",
+            "slug": "database"
+          },
+          "developedBy": {
+            "label": "PocketBase",
+            "url": "https://pocketbase.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/pocketbase/pocketbase",
+            "website": "https://pocketbase.io/",
+            "docs": [
+              "https://pocketbase.io/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "PocketBase backend with an embedded SQLite database and persistent uploaded files. Create the first administrator through the built-in setup page before using the API.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/pocketbase/default/template.toml",
+            "compose": "/files/pocketbase/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "pocketbase"
     },
     {
       "name": "Portainer",
@@ -2137,6 +4804,48 @@ const data = {
         }
       ],
       "slug": "posthog"
+    },
+    {
+      "name": "Prometheus",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Prometheus metrics server with persistent time-series data.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Prometheus",
+            "url": "https://prometheus.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/prometheus/prometheus",
+            "website": "https://prometheus.io/",
+            "docs": [
+              "https://prometheus.io/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Prometheus metrics server with persistent time-series data and a minimal scrape configuration. Add scrape targets and retention settings to the materialized configuration before use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/prometheus/default/template.toml",
+            "compose": "/files/prometheus/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "prometheus"
     },
     {
       "name": "qBittorrent",
@@ -2258,6 +4967,90 @@ const data = {
       "slug": "qdrant"
     },
     {
+      "name": "Radarr",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Movie management and download automation with persistent configuration.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Radarr",
+            "url": "https://radarr.video/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/Radarr/Radarr",
+            "website": "https://radarr.video/",
+            "docs": [
+              "https://wiki.servarr.com/radarr"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Radarr movie management and download automation with persistent configuration. Connect download clients and mount media and downloads directories after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/radarr/default/template.toml",
+            "compose": "/files/radarr/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "radarr"
+    },
+    {
+      "name": "RSSHub",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Feed generator for creating RSS feeds from supported services.",
+          "category": {
+            "name": "Productivity",
+            "icon": "list-todo",
+            "description": "Notes, tasks, calendars, wikis and the shared workspaces a team plans its work in.",
+            "slug": "productivity"
+          },
+          "developedBy": {
+            "label": "RSSHub",
+            "url": "https://docs.rsshub.app/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/DIYgod/RSSHub",
+            "website": "https://docs.rsshub.app/",
+            "docs": [
+              "https://docs.rsshub.app/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "RSSHub feed generator for turning supported websites and services into RSS feeds. Routes may depend on external APIs, credentials or anti-bot conditions and are not a general web UI.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/rsshub/default/template.toml",
+            "compose": "/files/rsshub/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "rsshub"
+    },
+    {
       "name": "RustDesk",
       "logo": "/images/rustdesk/logo.webp",
       "variants": [
@@ -2300,6 +5093,195 @@ const data = {
       "slug": "rustdesk"
     },
     {
+      "name": "Scrypted",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Scrypted automation platform with persistent plugin state.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Scrypted",
+            "url": "https://scrypted.app/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/koush/scrypted",
+            "website": "https://scrypted.app/",
+            "docs": [
+              "https://docs.scrypted.app/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Scrypted home-automation platform with persistent plugin state and configuration. Camera, USB and hardware integrations can require host device permissions beyond the template.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/scrypted/default/template.toml",
+            "compose": "/files/scrypted/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "NVIDIA Legacy",
+          "shortDescription": "Scrypted with legacy NVIDIA acceleration for video processing.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Scrypted",
+            "url": "https://scrypted.app/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/koush/scrypted",
+            "website": "https://scrypted.app/",
+            "docs": [
+              "https://docs.scrypted.app/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Scrypted camera platform using the official legacy NVIDIA image for accelerated transcoding and detection. The host must provide CUDA, cuDNN and the NVIDIA container runtime; Scrypted state persists in a volume.",
+          "logo": null,
+          "images": [],
+          "slug": "nvidia-legacy",
+          "files": {
+            "config": "/files/scrypted/nvidia-legacy/template.toml",
+            "compose": "/files/scrypted/nvidia-legacy/docker-compose.yml"
+          }
+        },
+        {
+          "name": "NVIDIA",
+          "shortDescription": "Scrypted with NVIDIA acceleration for video processing.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Scrypted",
+            "url": "https://scrypted.app/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/koush/scrypted",
+            "website": "https://scrypted.app/",
+            "docs": [
+              "https://docs.scrypted.app/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Scrypted camera platform using the official NVIDIA image for accelerated transcoding and detection. The host must provide CUDA, cuDNN and the NVIDIA container runtime; Scrypted state persists in a volume.",
+          "logo": null,
+          "images": [],
+          "slug": "nvidia",
+          "files": {
+            "config": "/files/scrypted/nvidia/template.toml",
+            "compose": "/files/scrypted/nvidia/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "scrypted"
+    },
+    {
+      "name": "Seafile",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted file synchronization with persistent libraries and configuration.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "Seafile",
+            "url": "https://www.seafile.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/haiwen/seafile",
+            "website": "https://www.seafile.com/",
+            "docs": [
+              "https://manual.seafile.com/latest/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Seafile file synchronization server with persistent libraries and configuration. The first start initializes the admin account; configure the public hostname and mail settings before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/seafile/default/template.toml",
+            "compose": "/files/seafile/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MariaDB",
+          "shortDescription": "Seafile Community Edition with MariaDB and persistent file storage.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "Seafile",
+            "url": "https://www.seafile.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/haiwen/seafile",
+            "website": "https://www.seafile.com/",
+            "docs": [
+              "https://manual.seafile.com/latest/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Seafile Community Edition with the MariaDB and memcached services required by the container deployment. Libraries, configuration, logs and database data persist in volumes; review the generated hostname and administrator settings before deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "mariadb",
+          "files": {
+            "config": "/files/seafile/mariadb/template.toml",
+            "compose": "/files/seafile/mariadb/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "seafile"
+    },
+    {
       "name": "SeaweedFS",
       "logo": "/images/seaweedfs/logo.webp",
       "variants": [
@@ -2340,6 +5322,286 @@ const data = {
         }
       ],
       "slug": "seaweedfs"
+    },
+    {
+      "name": "SigNoz",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "OpenTelemetry observability interface for traces and metrics.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "SigNoz",
+            "url": "https://signoz.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/SigNoz/signoz",
+            "website": "https://signoz.io/",
+            "docs": [
+              "https://signoz.io/docs/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "SigNoz observability interface for traces, metrics and logs with persistent local data. The official production deployment includes ClickHouse and OpenTelemetry collectors; add those services for a complete stack.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/signoz/default/template.toml",
+            "compose": "/files/signoz/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "signoz"
+    },
+    {
+      "name": "Sonarr",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Series management and download automation with persistent configuration.",
+          "category": {
+            "name": "Media",
+            "icon": "clapperboard",
+            "description": "Movie, music, photo and ebook libraries, plus the downloaders and players around them.",
+            "slug": "media"
+          },
+          "developedBy": {
+            "label": "Sonarr",
+            "url": "https://sonarr.tv/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/Sonarr/Sonarr",
+            "website": "https://sonarr.tv/",
+            "docs": [
+              "https://wiki.servarr.com/sonarr"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Sonarr series management and download automation with persistent configuration. Connect download clients and mount media and downloads directories after deployment.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/sonarr/default/template.toml",
+            "compose": "/files/sonarr/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "sonarr"
+    },
+    {
+      "name": "Stirling PDF",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Web PDF toolkit with persistent settings and user data.",
+          "category": {
+            "name": "Other",
+            "icon": "package",
+            "description": "Everything else worth self-hosting: games, utilities and the odd one-off tool.",
+            "slug": "other"
+          },
+          "developedBy": {
+            "label": "Stirling PDF",
+            "url": "https://stirlingtools.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/Stirling-Tools/Stirling-PDF",
+            "website": "https://stirlingtools.com/",
+            "docs": [
+              "https://github.com/Stirling-Tools/Stirling-PDF/wiki"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Stirling PDF web application for common document transformations with persistent settings and user data. Review optional OCR and conversion dependencies for advanced workflows.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/stirling-pdf/default/template.toml",
+            "compose": "/files/stirling-pdf/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "stirling-pdf"
+    },
+    {
+      "name": "Strapi",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Strapi headless CMS with PostgreSQL and persistent media uploads.",
+          "category": {
+            "name": "CMS",
+            "icon": "layout-template",
+            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
+            "slug": "cms"
+          },
+          "developedBy": {
+            "label": "Strapi",
+            "url": "https://strapi.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/strapi/strapi",
+            "website": "https://strapi.io/",
+            "docs": [
+              "https://docs.strapi.io/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Strapi headless CMS with PostgreSQL and persistent media uploads. Complete the administrator setup in the first-run interface and configure API and admin secrets before production use.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/strapi/default/template.toml",
+            "compose": "/files/strapi/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Strapi with MySQL persistence and persistent media uploads.",
+          "category": {
+            "name": "CMS",
+            "icon": "layout-template",
+            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
+            "slug": "cms"
+          },
+          "developedBy": {
+            "label": "Strapi",
+            "url": "https://strapi.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/strapi/strapi",
+            "website": "https://strapi.io/",
+            "docs": [
+              "https://docs.strapi.io/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Strapi headless CMS using a dedicated MySQL database. The database and uploaded media persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/strapi/mysql/template.toml",
+            "compose": "/files/strapi/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "SQLite",
+          "shortDescription": "Strapi with its built-in SQLite database and persistent media uploads.",
+          "category": {
+            "name": "CMS",
+            "icon": "layout-template",
+            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
+            "slug": "cms"
+          },
+          "developedBy": {
+            "label": "Strapi",
+            "url": "https://strapi.io/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/strapi/strapi",
+            "website": "https://strapi.io/",
+            "docs": [
+              "https://docs.strapi.io/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Strapi headless CMS using its built-in SQLite database. The database and uploaded media persist in volumes.",
+          "logo": null,
+          "images": [],
+          "slug": "sqlite",
+          "files": {
+            "config": "/files/strapi/sqlite/template.toml",
+            "compose": "/files/strapi/sqlite/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "strapi"
+    },
+    {
+      "name": "Supabase",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Supabase Studio interface for a self-hosted Supabase stack.",
+          "category": {
+            "name": "Development",
+            "icon": "code",
+            "description": "Git hosting, CI, registries, API tooling and the rest of a developer's own stack.",
+            "slug": "development"
+          },
+          "developedBy": {
+            "label": "Supabase",
+            "url": "https://supabase.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/supabase/supabase",
+            "website": "https://supabase.com/",
+            "docs": [
+              "https://supabase.com/docs/guides/self-hosting"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Supabase Studio interface for managing a self-hosted Supabase project. The complete Supabase stack requires the official Compose bundle with its database, API, authentication, storage and realtime services.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/supabase/default/template.toml",
+            "compose": "/files/supabase/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "supabase"
     },
     {
       "name": "Syncthing",
@@ -2663,6 +5925,48 @@ const data = {
       "slug": "vikunja"
     },
     {
+      "name": "WG-Easy",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "WireGuard management UI with persistent peer configuration.",
+          "category": {
+            "name": "Networking",
+            "icon": "network",
+            "description": "Proxies, VPNs, DNS, tunnels and the gateways that put your services on the internet.",
+            "slug": "networking"
+          },
+          "developedBy": {
+            "label": "WG-Easy",
+            "url": "https://wg-easy.github.io/wg-easy/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/wg-easy/wg-easy",
+            "website": "https://wg-easy.github.io/wg-easy/",
+            "docs": [
+              "https://wg-easy.github.io/wg-easy/"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "WG-Easy WireGuard management UI with persistent peer configuration. The host must provide WireGuard kernel support and network capabilities; set the admin password before exposing the UI.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/wg-easy/default/template.toml",
+            "compose": "/files/wg-easy/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "wg-easy"
+    },
+    {
       "name": "WordPress",
       "logo": "/images/wordpress/logo.webp",
       "variants": [
@@ -2703,10 +6007,122 @@ const data = {
         }
       ],
       "slug": "wordpress"
+    },
+    {
+      "name": "Zabbix",
+      "logo": null,
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Zabbix monitoring appliance with a persistent bundled database.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Zabbix",
+            "url": "https://www.zabbix.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/zabbix/zabbix",
+            "website": "https://www.zabbix.com/",
+            "docs": [
+              "https://www.zabbix.com/documentation/current/en/manual"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Zabbix appliance with a bundled monitoring server and web interface. Add monitored hosts and agents after the initial administrator setup; larger installations should use the official split database stack.",
+          "logo": null,
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/zabbix/default/template.toml",
+            "compose": "/files/zabbix/default/docker-compose.yml"
+          }
+        },
+        {
+          "name": "MySQL",
+          "shortDescription": "Zabbix server, web interface and mysql database in separate containers.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Zabbix",
+            "url": "https://www.zabbix.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/zabbix/zabbix",
+            "website": "https://www.zabbix.com/",
+            "docs": [
+              "https://www.zabbix.com/documentation/current/en/manual"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Zabbix monitoring stack with its official server and Nginx web interface backed by mysql. The database persists in a volume; allow the initial schema setup to finish before logging in.",
+          "logo": null,
+          "images": [],
+          "slug": "mysql",
+          "files": {
+            "config": "/files/zabbix/mysql/template.toml",
+            "compose": "/files/zabbix/mysql/docker-compose.yml"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "shortDescription": "Zabbix server, web interface and postgres database in separate containers.",
+          "category": {
+            "name": "Monitoring",
+            "icon": "activity",
+            "description": "Uptime checks, metrics, logs, traces and alerting for everything you already run.",
+            "slug": "monitoring"
+          },
+          "developedBy": {
+            "label": "Zabbix",
+            "url": "https://www.zabbix.com/"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/zabbix/zabbix",
+            "website": "https://www.zabbix.com/",
+            "docs": [
+              "https://www.zabbix.com/documentation/current/en/manual"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
+          "description": "Zabbix monitoring stack with its official server and Nginx web interface backed by postgres. The database persists in a volume; allow the initial schema setup to finish before logging in.",
+          "logo": null,
+          "images": [],
+          "slug": "postgresql",
+          "files": {
+            "config": "/files/zabbix/postgresql/template.toml",
+            "compose": "/files/zabbix/postgresql/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "zabbix"
     }
   ]
 } as const satisfies { categories: readonly Category[]; templates: readonly Template[] };
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3eda15b17f2ba88324ed6625e874e00cff12b94c8a9468fbf40dc5b638c1aa7b";
+export const version = "b4d35c2f7d659eee8e0d8e0236070ed6229e3047703c441e98a9d599e2ab712d";

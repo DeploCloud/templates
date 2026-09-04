@@ -1,0 +1,1 @@
+SigNoz observability interface for traces, metrics and logs with persistent local data. The official production deployment includes ClickHouse and OpenTelemetry collectors; add those services for a complete stack.

@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "erpnext"
+port = 8000
+host = "${domain}"

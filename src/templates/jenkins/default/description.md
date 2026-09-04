@@ -1,0 +1,1 @@
+Jenkins automation server with persistent jobs, plugins and build configuration. The initial administrator password is shown in the first container logs and build agents must be configured separately.

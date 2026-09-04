@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "pocketbase"
+port = 8090
+host = "${domain}"

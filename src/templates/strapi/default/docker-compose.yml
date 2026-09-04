@@ -1,0 +1,40 @@
+services:
+  strapi:
+    image: strapi/strapi:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 1337
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      APP_KEYS: ${APP_KEYS}
+      JWT_SECRET: ${JWT_SECRET}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - strapi-uploads:/opt/app/public/uploads
+
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi -d strapi"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - strapi-database:/var/lib/postgresql
+
+volumes:
+  strapi-uploads: {}
+  strapi-database: {}

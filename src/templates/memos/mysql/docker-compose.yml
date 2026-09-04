@@ -1,0 +1,41 @@
+services:
+  memos:
+    image: neosmemo/memos:stable
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 5230
+    environment:
+      MEMOS_PORT: ${MEMOS_PORT}
+      MEMOS_INSTANCE_URL: ${MEMOS_INSTANCE_URL}
+      MEMOS_DATA: /var/opt/memos
+      MEMOS_DRIVER: mysql
+      MEMOS_DSN: ${MEMOS_DSN}
+    volumes:
+      - memos-data:/var/opt/memos
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: memos
+      MYSQL_USER: memos
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p${DB_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - memos-database:/var/lib/mysql
+
+volumes:
+  memos-data: {}
+  memos-database: {}

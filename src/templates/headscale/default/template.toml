@@ -1,0 +1,16 @@
+[config]
+
+[[config.domains]]
+serviceName = "headscale"
+port = 8080
+host = "${domain}"
+[[config.mounts]]
+filePath = "config.yaml"
+content = """server_url: https://${domain}
+listen_addr: 0.0.0.0:8080
+metrics_listen_addr: 0.0.0.0:9090
+database:
+  type: sqlite
+  sqlite:
+    path: /var/lib/headscale/db.sqlite
+"""

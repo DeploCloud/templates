@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "ollama"
+port = 11434
+host = "${domain}"
+
+[config.env]
+OLLAMA_HOST = "0.0.0.0:11434"
+OLLAMA_VULKAN = "1"

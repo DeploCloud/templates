@@ -1,0 +1,12 @@
+services:
+  ntfy:
+    image: binwiederhier/ntfy:latest
+    restart: unless-stopped
+    expose:
+      - 80
+    command: serve
+    volumes:
+      - ntfy-cache:/var/cache/ntfy
+
+volumes:
+  ntfy-cache: {}

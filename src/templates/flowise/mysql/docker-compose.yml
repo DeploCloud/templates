@@ -1,0 +1,43 @@
+services:
+  flowise:
+    image: flowiseai/flowise:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 3000
+    environment:
+      PORT: ${PORT}
+      DATABASE_TYPE: mysql
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: flowise
+      DATABASE_USER: flowise
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - flowise-data:/root/.flowise
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: flowise
+      MYSQL_USER: flowise
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p${DB_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - flowise-database:/var/lib/mysql
+
+volumes:
+  flowise-data: {}
+  flowise-database: {}

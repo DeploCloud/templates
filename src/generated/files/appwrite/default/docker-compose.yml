@@ -1,0 +1,11 @@
+services:
+  appwrite:
+    image: appwrite/appwrite:latest
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - appwrite-storage:/storage
+
+volumes:
+  appwrite-storage: {}

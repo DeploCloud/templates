@@ -1,0 +1,35 @@
+services:
+  langflow:
+    image: langflowai/langflow:latest
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - 7860
+    environment:
+      LANGFLOW_HOST: ${LANGFLOW_HOST}
+      LANGFLOW_PORT: ${LANGFLOW_PORT}
+      LANGFLOW_AUTO_LOGIN: ${LANGFLOW_AUTO_LOGIN}
+      LANGFLOW_DATABASE_URL: ${LANGFLOW_DATABASE_URL}
+    volumes:
+      - langflow-data:/app/data
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: langflow
+      POSTGRES_USER: langflow
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U langflow -d langflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  langflow-data: {}
+  postgres-data: {}

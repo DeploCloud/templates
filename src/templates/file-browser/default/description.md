@@ -1,0 +1,1 @@
+File Browser is a web file manager for uploading, editing, previewing and sharing files. The template persists the file tree, configuration and File Browser database in separate volumes. Create an administrator account and review the default access policy during the first-run setup.

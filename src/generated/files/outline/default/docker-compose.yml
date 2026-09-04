@@ -1,0 +1,72 @@
+services:
+  outline:
+    image: docker.getoutline.com/outlinewiki/outline:latest
+    restart: unless-stopped
+    expose:
+      - 3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      dex:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      URL: ${OUTLINE_URL}
+      PORT: 3000
+      FORCE_HTTPS: "false"
+      SECRET_KEY: ${OUTLINE_SECRET_KEY}
+      UTILS_SECRET: ${OUTLINE_UTILS_SECRET}
+      DATABASE_URL: postgres://outline:${OUTLINE_POSTGRES_PASSWORD}@postgres:5432/outline
+      PGSSLMODE: disable
+      REDIS_URL: redis://redis:6379
+      OIDC_CLIENT_ID: outline
+      OIDC_CLIENT_SECRET: ${OUTLINE_OIDC_CLIENT_SECRET}
+      OIDC_AUTH_URI: http://dex:5556/auth
+      OIDC_TOKEN_URI: http://dex:5556/token
+      OIDC_USERINFO_URI: http://dex:5556/userinfo
+      FILE_STORAGE: local
+      FILE_STORAGE_LOCAL_ROOT_DIR: /var/lib/outline/data
+      PROXY_HEADERS_TRUSTED: "true"
+    volumes:
+      - outline-data:/var/lib/outline/data
+
+  dex:
+    image: ghcr.io/dexidp/dex:v2.37.0
+    restart: unless-stopped
+    command: ["dex", "serve", "/etc/dex/config.yaml"]
+    volumes:
+      - ./dex/config.yaml:/etc/dex/config.yaml:ro
+
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: outline
+      POSTGRES_USER: outline
+      POSTGRES_PASSWORD: ${OUTLINE_POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U outline -d outline"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - outline-postgres:/var/lib/postgresql
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - outline-redis:/data
+
+volumes:
+  outline-data: {}
+  outline-postgres: {}
+  outline-redis: {}

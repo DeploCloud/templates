@@ -1,0 +1,13 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      GITLAB_OMNIBUS_CONFIG: ${GITLAB_OMNIBUS_CONFIG}
+    volumes:
+      - gitlab-data:/var/opt/gitlab
+
+volumes:
+  gitlab-data: {}

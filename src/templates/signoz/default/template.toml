@@ -1,0 +1,6 @@
+[config]
+
+[[config.domains]]
+serviceName = "signoz"
+port = 8080
+host = "${domain}"

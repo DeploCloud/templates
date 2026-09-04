@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+app_secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "docmost"
+port = 3000
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_SECRET = "${app_secret}"
+DATABASE_URL = "postgresql://docmost:${db_password}@db:5432/docmost"
+REDIS_URL = "redis://redis:6379"
+POSTGRES_PASSWORD = "${db_password}"

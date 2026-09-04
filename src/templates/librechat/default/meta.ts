@@ -1,0 +1,21 @@
+import type { TemplateVariantRaw } from "../../../schemas";
+
+export default {
+  name: "Default",
+  shortDescription: "Multi-provider AI chat interface with persistent uploads.",
+  category: {
+    name: "AI",
+    icon: "sparkles",
+    description:
+      "Local language models, chat interfaces, vector stores and the tooling built around them.",
+  },
+  developedBy: { label: "LibreChat", url: "https://www.librechat.ai/" },
+  submittedBy: { label: "Deplo", url: "https://github.com/DeploCloud" },
+  links: {
+    github: "https://github.com/danny-avila/LibreChat",
+    website: "https://www.librechat.ai/",
+    docs: ["https://www.librechat.ai/docs/"],
+  },
+  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  createdAt: new Date("2026-09-05T00:00:00.000Z"),
+} satisfies TemplateVariantRaw;

@@ -1,0 +1,11 @@
+[config]
+
+[[config.domains]]
+serviceName = "langflow"
+port = 7860
+host = "${domain}"
+
+[config.env]
+LANGFLOW_HOST = "0.0.0.0"
+LANGFLOW_PORT = "7860"
+LANGFLOW_AUTO_LOGIN = "false"

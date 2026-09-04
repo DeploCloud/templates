@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "memos"
+port = 5230
+host = "${domain}"
+
+[config.env]
+MEMOS_PORT = "5230"
+MEMOS_INSTANCE_URL = "https://${domain}"
+MEMOS_DSN = "memos:${db_password}@tcp(db:3306)/memos?charset=utf8mb4&parseTime=True&loc=Local"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"

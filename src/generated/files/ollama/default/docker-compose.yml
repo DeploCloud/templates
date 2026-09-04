@@ -1,0 +1,13 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    expose:
+      - 11434
+    environment:
+      OLLAMA_HOST: ${OLLAMA_HOST}
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  ollama-data: {}

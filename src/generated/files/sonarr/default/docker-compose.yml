@@ -1,0 +1,15 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+    expose:
+      - 8989
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - sonarr-config:/config
+
+volumes:
+  sonarr-config: {}

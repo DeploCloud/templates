@@ -1,0 +1,13 @@
+[variables]
+password_hash = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "wg-easy"
+port = 51821
+host = "${domain}"
+
+[config.env]
+PORT = "51821"
+INSECURE = "false"
+PASSWORD_HASH = "${password_hash}"

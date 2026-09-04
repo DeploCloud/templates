@@ -1,0 +1,9 @@
+[config]
+
+[[config.domains]]
+serviceName = "homebridge"
+port = 8581
+host = "${domain}"
+
+[config.env]
+HOMEBRIDGE_CONFIG_UI_PORT = "8581"

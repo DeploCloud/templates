@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "langflow"
+port = 7860
+host = "${domain}"
+
+[config.env]
+LANGFLOW_HOST = "0.0.0.0"
+LANGFLOW_PORT = "7860"
+LANGFLOW_AUTO_LOGIN = "false"
+LANGFLOW_DATABASE_URL = "postgresql://langflow:${db_password}@postgres:5432/langflow"
+DB_PASSWORD = "${db_password}"

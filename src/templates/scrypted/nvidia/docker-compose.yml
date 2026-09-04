@@ -1,0 +1,18 @@
+services:
+  scrypted:
+    image: ghcr.io/koush/scrypted:nvidia
+    restart: unless-stopped
+    expose:
+      - 10443
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - scrypted-data:/server/volume
+
+volumes:
+  scrypted-data: {}

@@ -1,0 +1,42 @@
+services:
+  matomo:
+    image: matomo:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - 80
+    environment:
+      MATOMO_DATABASE_ADAPTER: ${MATOMO_DATABASE_ADAPTER}
+      MATOMO_DATABASE_HOST: ${MATOMO_DATABASE_HOST}
+      MATOMO_DATABASE_DBNAME: ${MATOMO_DATABASE_DBNAME}
+      MATOMO_DATABASE_USERNAME: ${MATOMO_DATABASE_USERNAME}
+      MATOMO_DATABASE_PASSWORD: ${MATOMO_DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - matomo-data:/var/www/html
+
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: matomo
+      MARIADB_USER: matomo
+      MARIADB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mariadb-admin ping -h localhost -u root -p${MYSQL_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - matomo-database:/var/lib/mysql
+
+volumes:
+  matomo-data: {}
+  matomo-database: {}

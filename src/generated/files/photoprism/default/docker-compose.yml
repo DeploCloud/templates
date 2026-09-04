@@ -1,0 +1,68 @@
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    restart: unless-stopped
+    stop_grace_period: 15s
+    expose:
+      - 2342
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    environment:
+      PHOTOPRISM_ADMIN_USER: admin
+      PHOTOPRISM_ADMIN_PASSWORD: ${PHOTOPRISM_ADMIN_PASSWORD}
+      PHOTOPRISM_AUTH_MODE: password
+      PHOTOPRISM_SITE_URL: ${PHOTOPRISM_SITE_URL}
+      PHOTOPRISM_DISABLE_TLS: "true"
+      PHOTOPRISM_DEFAULT_TLS: "false"
+      PHOTOPRISM_DATABASE_DRIVER: mysql
+      PHOTOPRISM_DATABASE_SERVER: mariadb:3306
+      PHOTOPRISM_DATABASE_NAME: photoprism
+      PHOTOPRISM_DATABASE_USER: photoprism
+      PHOTOPRISM_DATABASE_PASSWORD: ${PHOTOPRISM_DATABASE_PASSWORD}
+      PHOTOPRISM_INIT: "https tensorflow"
+      PHOTOPRISM_HTTP_COMPRESSION: gzip
+      PHOTOPRISM_READONLY: "false"
+      PHOTOPRISM_BACKUP_ALBUMS: "true"
+      PHOTOPRISM_BACKUP_DATABASE: "true"
+      PHOTOPRISM_BACKUP_SCHEDULE: daily
+      PHOTOPRISM_INDEX_SCHEDULE: ""
+      PHOTOPRISM_AUTO_INDEX: 300
+      PHOTOPRISM_AUTO_IMPORT: -1
+    volumes:
+      - photoprism-originals:/photoprism/originals
+      - photoprism-storage:/photoprism/storage
+
+  mariadb:
+    image: mariadb:12.3
+    restart: unless-stopped
+    stop_grace_period: 15s
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    environment:
+      MARIADB_AUTO_UPGRADE: "1"
+      MARIADB_INITDB_SKIP_TZINFO: "1"
+      MARIADB_DATABASE: photoprism
+      MARIADB_USER: photoprism
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mariadb-admin ping -h localhost -u root -p${MARIADB_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - photoprism-database:/var/lib/mysql
+
+volumes:
+  photoprism-originals: {}
+  photoprism-storage: {}
+  photoprism-database: {}

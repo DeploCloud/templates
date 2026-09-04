@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config.env]
+PHOTOPRISM_ADMIN_PASSWORD = "${admin_password}"
+PHOTOPRISM_SITE_URL = "https://${domain}/"
+PHOTOPRISM_DATABASE_PASSWORD = "${db_password}"
+MARIADB_PASSWORD = "${db_password}"
+MARIADB_ROOT_PASSWORD = "${db_root_password}"
+
+[[config.domains]]
+serviceName = "photoprism"
+port = 2_342
+host = "${domain}"
