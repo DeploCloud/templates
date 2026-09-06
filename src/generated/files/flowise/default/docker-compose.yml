@@ -1,7 +1,22 @@
 services:
+  flowise-init:
+    image: flowiseai/flowise:latest
+    restart: "no"
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - chown -R 1000:1000 /home/node/.flowise
+    volumes:
+      - flowise-data:/home/node/.flowise
+
   flowise:
     image: flowiseai/flowise:latest
     restart: unless-stopped
+    depends_on:
+      flowise-init:
+        condition: service_completed_successfully
     expose:
       - 3000
     environment:
