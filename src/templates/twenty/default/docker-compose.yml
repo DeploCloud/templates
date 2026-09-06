@@ -22,6 +22,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:3000/healthz || exit 1"]
+      start_period: 120s
       interval: 5s
       timeout: 5s
       retries: 20
