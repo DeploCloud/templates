@@ -2595,7 +2595,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Jitsi Meet web frontend with persistent web configuration. A complete meeting deployment also needs the official Prosody, Jicofo, bridge and recording services and their shared configuration.",
+          "description": "Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services. The server must expose UDP port 10000 and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic.",
           "logo": "/images/jitsi-meet/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "8bffea31cb0f027dfc482f1c06ca75c09c800fbbb620bff6d78357349ee33ec5";
+export const version = "85d81dc3cb914076f61099e3b8fd20e16f966f94cf9db9df0592396f89ea1bf2";
