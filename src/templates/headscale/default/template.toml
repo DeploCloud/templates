@@ -20,6 +20,11 @@ dns:
   nameservers:
     global:
       - 1.1.1.1
+derp:
+  server:
+    enabled: false
+  urls:
+    - https://controlplane.tailscale.com/derpmap/default
 database:
   type: sqlite
   sqlite:
