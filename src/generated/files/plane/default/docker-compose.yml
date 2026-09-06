@@ -122,6 +122,9 @@ services:
       - api
       - space
     env_file: .env
+    environment:
+      BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
+      FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
     expose:
       - 80
 
