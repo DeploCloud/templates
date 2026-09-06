@@ -17,6 +17,7 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
       KC_HTTP_ENABLED: ${KC_HTTP_ENABLED}
       KC_PROXY_HEADERS: ${KC_PROXY_HEADERS}
+      KC_HOSTNAME: ${KC_HOSTNAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - keycloak-data:/opt/keycloak/data
