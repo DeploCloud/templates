@@ -2083,7 +2083,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state. Configure DNS, routes and client registration according to the deployment environment before connecting nodes.",
+          "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state. MagicDNS is disabled by default because enabling it requires a separate FQDN for `base_domain`; configure DNS, routes and client registration according to the deployment environment before connecting nodes.",
           "logo": "/images/headscale/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2118,7 +2118,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. The database and Headscale state persist in volumes; the project recommends SQLite for new installations.",
+          "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. MagicDNS is disabled by default because enabling it requires a separate FQDN for `base_domain`; the database and Headscale state persist in volumes.",
           "logo": "/images/headscale/postgresql/logo.webp",
           "images": [],
           "slug": "postgresql",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "2b01fc12a3d72e21d3866421ca1bb394e2ae71f439da26a8a793c67acb7376fc";
+export const version = "b57fca86ba503750713942881e7514025f7b67310000199d6854a9ebdcec8e64";
