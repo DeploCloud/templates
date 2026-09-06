@@ -5,6 +5,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     expose:
       - 9000
     environment:
@@ -13,6 +15,8 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: ${AUTHENTIK_POSTGRESQL__NAME}
       AUTHENTIK_POSTGRESQL__USER: ${AUTHENTIK_POSTGRESQL__USER}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${AUTHENTIK_POSTGRESQL__PASSWORD}
+      AUTHENTIK_REDIS__HOST: ${AUTHENTIK_REDIS__HOST}
+      AUTHENTIK_REDIS__PORT: ${AUTHENTIK_REDIS__PORT}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - authentik-media:/media
@@ -32,6 +36,13 @@ services:
     volumes:
       - authentik-database:/var/lib/postgresql
 
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    volumes:
+      - authentik-redis:/data
+
 volumes:
   authentik-media: {}
   authentik-database: {}
+  authentik-redis: {}
