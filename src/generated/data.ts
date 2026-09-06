@@ -5591,7 +5591,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Supabase Studio interface for managing a self-hosted Supabase project. The complete Supabase stack requires the official Compose bundle with its database, API, authentication, storage and realtime services.",
+          "description": "Complete self-hosted Supabase deployment based on the official Docker stack, including Studio, Envoy API gateway, Auth, REST, Realtime, Storage, image transformation, database metadata, Edge Functions, PostgreSQL and Supavisor. Deplo generates the deployment credentials. The host needs at least 4 GB RAM and the database ports 5432 and 6543 are published for Supabase clients.",
           "logo": "/images/supabase/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "85d81dc3cb914076f61099e3b8fd20e16f966f94cf9db9df0592396f89ea1bf2";
+export const version = "84a0059c3083187f1fee1de753f0d525c1bc99d8035d9ddec2be92387c8d6994";
