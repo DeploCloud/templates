@@ -6,4 +6,4 @@ port = 80
 host = "${domain}"
 
 [config.env]
-GITLAB_OMNIBUS_CONFIG = "external_url 'https://${domain}'"
+GITLAB_OMNIBUS_CONFIG = "external_url 'https://${domain}'; gitlab_rails['nginx']['listen_port'] = 80; gitlab_rails['nginx']['listen_https'] = false; letsencrypt['enable'] = false"
