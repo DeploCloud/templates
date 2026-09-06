@@ -5234,7 +5234,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Seafile file synchronization server with persistent libraries and configuration. The first start initializes the admin account; configure the public hostname and mail settings before production use.",
+          "description": "Seafile Community Edition with MariaDB, Redis, persistent libraries and configuration. The first start initializes the admin account; configure mail settings before production use.",
           "logo": "/images/seafile/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -5269,7 +5269,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Seafile Community Edition with the MariaDB and memcached services required by the container deployment. Libraries, configuration, logs and database data persist in volumes; review the generated hostname and administrator settings before deployment.",
+          "description": "Seafile Community Edition with the MariaDB and Redis services required by the container deployment. Libraries, configuration, logs and database data persist in volumes; review the generated hostname and administrator settings before deployment.",
           "logo": "/images/seafile/mariadb/logo.webp",
           "images": [],
           "slug": "mariadb",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "7174ac1a9b199102edcf996f7d9476e2e62149a6ad44525c538cdcbe9371f40b";
+export const version = "3b179da476c828710a94415edcd2b21da869626abbdc4fbaac79deb9dc6ee4b1";
