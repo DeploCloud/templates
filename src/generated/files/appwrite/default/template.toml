@@ -205,7 +205,7 @@ _APP_VCS_WEBHOOK_URL = "https://${domain}/v1"
 _APP_WEBHOOK_MAX_FAILED_ATTEMPTS = "10"
 
 [[config.domains]]
-serviceName = "traefik"
+serviceName = "appwrite-traefik"
 port = 80
 host = "${domain}"
 
