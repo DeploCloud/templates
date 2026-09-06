@@ -4685,7 +4685,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "PocketBase backend with persistent embedded SQLite storage.",
+          "shortDescription": "PocketBase backend with automatic admin setup and persistent storage.",
           "category": {
             "name": "Database",
             "icon": "database",
@@ -4707,9 +4707,9 @@ const data = {
               "https://pocketbase.io/docs/"
             ]
           },
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "PocketBase backend with an embedded SQLite database and persistent uploaded files. Create the first administrator through the built-in setup page before using the API.",
+          "description": "PocketBase backend with embedded SQLite storage and persistent uploaded files. The generated administrator credentials are configured automatically on first start; the API is available on port 8090 and the admin panel under `/_/`.",
           "logo": "/images/pocketbase/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d4764541dd9710e38cd5e40fe43791e4a3cb150f6bf12aea29dbbcdde8581cd0";
+export const version = "c353d46a27b59ae828cf774143eede6b652a96e4b1e1a5049a8cfd269e92ea42";
