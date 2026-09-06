@@ -3,7 +3,7 @@ import type { TemplateVariantRaw } from "../../../schemas";
 export default {
   name: "Default",
   shortDescription:
-    "Zabbix monitoring appliance with a persistent bundled database.",
+    "Recommended Zabbix stack with server, Nginx web interface and MySQL.",
   category: {
     name: "Monitoring",
     icon: "activity",

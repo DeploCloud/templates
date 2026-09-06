@@ -6014,7 +6014,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "Zabbix monitoring appliance with a persistent bundled database.",
+          "shortDescription": "Recommended Zabbix stack with server, Nginx web interface and MySQL.",
           "category": {
             "name": "Monitoring",
             "icon": "activity",
@@ -6038,7 +6038,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Zabbix appliance with a bundled monitoring server and web interface. Add monitored hosts and agents after the initial administrator setup; larger installations should use the official split database stack.",
+          "description": "Recommended Zabbix deployment following the official default Compose setup: Zabbix server, Nginx web interface and MySQL in separate containers. The database persists in a volume; allow the initial schema setup to finish before logging in. Choose the PostgreSQL variant if you prefer PostgreSQL.",
           "logo": "/images/zabbix/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "06abdd8ec8d69a33d2154ef167d90cb9c64519a2ba053471491c40d48eb98848";
+export const version = "21f9379c04d80a3966e3f391b6fc4727dbe91c2cb7ed09eb38d5f31a29c72b94";
