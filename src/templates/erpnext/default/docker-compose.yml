@@ -72,9 +72,7 @@ services:
         if [ -d "sites/frontend" ]; then
           echo "Site frontend already exists, skipping creation";
         else
-          bench new-site --mariadb-user-host-login-scope='%' --admin-password="$$ADMIN_PASSWORD"
-            --db-root-username=root --db-root-password="$$DB_PASSWORD" --install-app erpnext
-            --set-default frontend;
+          bench new-site --mariadb-user-host-login-scope='%' --admin-password="$$ADMIN_PASSWORD" --db-root-username=root --db-root-password="$$DB_PASSWORD" --install-app erpnext --set-default frontend;
         fi;
     environment:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
