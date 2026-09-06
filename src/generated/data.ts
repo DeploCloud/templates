@@ -1247,7 +1247,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "ERPNext application image with persistent Frappe sites and files.",
+          "shortDescription": "Complete ERPNext stack with database, Redis and automatic setup.",
           "category": {
             "name": "Productivity",
             "icon": "list-todo",
@@ -1269,9 +1269,9 @@ const data = {
               "https://docs.frappe.io/erpnext/"
             ]
           },
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "ERPNext business resource planning application with persistent sites and uploaded files. The image expects a completed Frappe site setup and external database and cache services for a production installation.",
+          "description": "Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis, frontend, workers, scheduler, websocket, persistent sites and automatic first-site creation. The generated admin password is available in the app environment variables; the first deployment may take several minutes while the site is initialized.",
           "logo": "/images/erpnext/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "2ef997068f2f0ff375684632f42097773c94242c8035adec134cf4a882444b74";
+export const version = "d4764541dd9710e38cd5e40fe43791e4a3cb150f6bf12aea29dbbcdde8581cd0";

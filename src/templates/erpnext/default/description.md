@@ -1,1 +1,1 @@
-ERPNext business resource planning application with persistent sites and uploaded files. The image expects a completed Frappe site setup and external database and cache services for a production installation.
+Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis, frontend, workers, scheduler, websocket, persistent sites and automatic first-site creation. The generated admin password is available in the app environment variables; the first deployment may take several minutes while the site is initialized.
