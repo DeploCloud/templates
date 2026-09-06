@@ -4,6 +4,9 @@ services:
     restart: unless-stopped
     expose:
       - 3080
+    depends_on:
+      mongo:
+        condition: service_started
     environment:
       HOST: ${HOST}
       PORT: ${PORT}
@@ -13,5 +16,12 @@ services:
     volumes:
       - librechat-uploads:/app/uploads
 
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    volumes:
+      - librechat-mongo:/data/db
+
 volumes:
   librechat-uploads: {}
+  librechat-mongo: {}
