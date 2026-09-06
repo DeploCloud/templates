@@ -9,6 +9,12 @@ services:
       - 3000
     environment:
       PORT: ${PORT}
+      DATABASE_PATH: ${DATABASE_PATH}
+      SECRETKEY_STORAGE_TYPE: ${SECRETKEY_STORAGE_TYPE}
+      SECRETKEY_PATH: ${SECRETKEY_PATH}
+      LOG_PATH: ${LOG_PATH}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      BLOB_STORAGE_PATH: ${BLOB_STORAGE_PATH}
       DATABASE_TYPE: mysql
       DATABASE_HOST: db
       DATABASE_PORT: 3306
@@ -16,7 +22,7 @@ services:
       DATABASE_USER: flowise
       DATABASE_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - flowise-data:/root/.flowise
+      - flowise-data:/home/node/.flowise
 
   db:
     image: mysql:8.4

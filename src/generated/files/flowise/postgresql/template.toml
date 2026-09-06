@@ -10,6 +10,12 @@ host = "${domain}"
 
 [config.env]
 PORT = "3000"
+DATABASE_PATH = "/home/node/.flowise"
+SECRETKEY_STORAGE_TYPE = "local"
+SECRETKEY_PATH = "/home/node/.flowise"
+LOG_PATH = "/home/node/.flowise/logs"
+STORAGE_TYPE = "local"
+BLOB_STORAGE_PATH = "/home/node/.flowise/storage"
 DATABASE_TYPE = "postgres"
 DATABASE_HOST = "db"
 DATABASE_PORT = "5432"

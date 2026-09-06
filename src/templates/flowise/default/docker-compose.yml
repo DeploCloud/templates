@@ -7,8 +7,13 @@ services:
     environment:
       PORT: ${PORT}
       DATABASE_PATH: ${DATABASE_PATH}
+      SECRETKEY_STORAGE_TYPE: ${SECRETKEY_STORAGE_TYPE}
+      SECRETKEY_PATH: ${SECRETKEY_PATH}
+      LOG_PATH: ${LOG_PATH}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      BLOB_STORAGE_PATH: ${BLOB_STORAGE_PATH}
     volumes:
-      - flowise-data:/root/.flowise
+      - flowise-data:/home/node/.flowise
 
 volumes:
   flowise-data: {}
