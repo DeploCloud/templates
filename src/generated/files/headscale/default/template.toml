@@ -9,6 +9,13 @@ filePath = "config.yaml"
 content = """server_url: https://${domain}
 listen_addr: 0.0.0.0:8080
 metrics_listen_addr: 0.0.0.0:9090
+noise:
+  private_key_path: /var/lib/headscale/noise_private.key
+dns:
+  override_local_dns: false
+  nameservers:
+    global:
+      - 1.1.1.1
 database:
   type: sqlite
   sqlite:
