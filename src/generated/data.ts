@@ -340,7 +340,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Appwrite backend platform with persistent storage for projects and uploaded files. Appwrite normally uses its complete multi-service Compose bundle; add the required databases, queues and workers for a production installation.",
+          "description": "Appwrite's official self-hosted Compose stack with Traefik, the API, console, workers, PostgreSQL, MongoDB, Redis, ClickHouse and the function runtime. Application data and uploaded files persist in named volumes. The official runtime and router require access to the host Docker socket, so deployment needs Deplo's host-volume permission. Configure SMTP and any custom function/site domains after deployment.",
           "logo": "/images/appwrite/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "84a0059c3083187f1fee1de753f0d525c1bc99d8035d9ddec2be92387c8d6994";
+export const version = "131524189fb05f0efd2408c7dea6b18d43601675cd405f57b977f5eb8354fb9c";
