@@ -3,7 +3,7 @@ import type { TemplateVariantRaw } from "../../../schemas";
 export default {
   name: "Default",
   shortDescription:
-    "PocketBase backend with persistent embedded SQLite storage.",
+    "PocketBase backend with automatic admin setup and persistent storage.",
   category: {
     name: "Database",
     icon: "database",
@@ -17,6 +17,6 @@ export default {
     website: "https://pocketbase.io/",
     docs: ["https://pocketbase.io/docs/"],
   },
-  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  lastUpdate: new Date("2026-09-06T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

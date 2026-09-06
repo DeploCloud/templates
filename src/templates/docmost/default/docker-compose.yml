@@ -1,6 +1,6 @@
 services:
   docmost:
-    image: ghcr.io/docmost/docmost:latest
+    image: docmost/docmost:latest
     restart: unless-stopped
     depends_on:
       db:

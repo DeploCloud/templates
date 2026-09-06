@@ -3,7 +3,7 @@ services:
     image: ghcr.io/koush/scrypted:latest
     restart: unless-stopped
     expose:
-      - 10443
+      - 11080
     volumes:
       - scrypted-data:/server/volume
 

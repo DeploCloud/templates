@@ -340,7 +340,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Appwrite backend platform with persistent storage for projects and uploaded files. Appwrite normally uses its complete multi-service Compose bundle; add the required databases, queues and workers for a production installation.",
+          "description": "Appwrite's official self-hosted Compose stack with Traefik, the API, console, workers, PostgreSQL, MongoDB, Redis, ClickHouse and the function runtime. Application data and uploaded files persist in named volumes. The official runtime and router require access to the host Docker socket, so deployment needs Deplo's host-volume permission. Configure SMTP and any custom function/site domains after deployment.",
           "logo": "/images/appwrite/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -788,7 +788,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. Provide a tunnel token after deployment; this connector does not expose a web UI or an HTTP application port.",
+          "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. Create the tunnel in Cloudflare first and set its non-empty token in `TUNNEL_TOKEN` before starting the app; an empty token makes `cloudflared` exit with `flag needs an argument: -token`. This connector has no web UI or HTTP application port and must be verified from the Cloudflare Tunnel status.",
           "logo": "/images/cloudflared/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -1026,7 +1026,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Discourse is a forum platform for community discussions, mailing lists and chat-style conversations. This variant bundles the application with PostgreSQL and Redis and persists forum content, configuration and database data. Configure SMTP after setup before enabling email-dependent features.",
+          "description": "Compose-based Discourse deployment with PostgreSQL, Redis and the Discourse web application, following the Dokploy template. Forum data, PostgreSQL, Redis and the shared Discourse storage persist in named volumes. Configure SMTP after deployment before enabling email-dependent features.",
           "logo": "/images/discourse/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -1247,7 +1247,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "ERPNext application image with persistent Frappe sites and files.",
+          "shortDescription": "Complete ERPNext stack with database, Redis and automatic setup.",
           "category": {
             "name": "Productivity",
             "icon": "list-todo",
@@ -1269,9 +1269,9 @@ const data = {
               "https://docs.frappe.io/erpnext/"
             ]
           },
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "ERPNext business resource planning application with persistent sites and uploaded files. The image expects a completed Frappe site setup and external database and cache services for a production installation.",
+          "description": "Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis, frontend, workers, scheduler, websocket, persistent sites and automatic first-site creation. The generated admin password is available in the app environment variables; the first deployment may take several minutes while the site is initialized.",
           "logo": "/images/erpnext/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2083,7 +2083,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state. Configure DNS, routes and client registration according to the deployment environment before connecting nodes.",
+          "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state. MagicDNS is disabled by default because enabling it requires a separate FQDN for `base_domain`; configure DNS, routes and client registration according to the deployment environment before connecting nodes.",
           "logo": "/images/headscale/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -2118,7 +2118,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. The database and Headscale state persist in volumes; the project recommends SQLite for new installations.",
+          "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. MagicDNS is disabled by default because enabling it requires a separate FQDN for `base_domain`; the database and Headscale state persist in volumes.",
           "logo": "/images/headscale/postgresql/logo.webp",
           "images": [],
           "slug": "postgresql",
@@ -2595,7 +2595,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Jitsi Meet web frontend with persistent web configuration. A complete meeting deployment also needs the official Prosody, Jicofo, bridge and recording services and their shared configuration.",
+          "description": "Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services. The server must expose UDP port 10000 and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic.",
           "logo": "/images/jitsi-meet/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -4685,7 +4685,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "PocketBase backend with persistent embedded SQLite storage.",
+          "shortDescription": "PocketBase backend with automatic admin setup and persistent storage.",
           "category": {
             "name": "Database",
             "icon": "database",
@@ -4707,9 +4707,9 @@ const data = {
               "https://pocketbase.io/docs/"
             ]
           },
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "PocketBase backend with an embedded SQLite database and persistent uploaded files. Create the first administrator through the built-in setup page before using the API.",
+          "description": "PocketBase backend with embedded SQLite storage and persistent uploaded files. The generated administrator credentials are configured automatically on first start; the API is available on port 8090 and the admin panel under `/_/`.",
           "logo": "/images/pocketbase/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -5234,7 +5234,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Seafile file synchronization server with persistent libraries and configuration. The first start initializes the admin account; configure the public hostname and mail settings before production use.",
+          "description": "Seafile Community Edition with MariaDB, Redis, persistent libraries and configuration. The first start initializes the admin account; configure mail settings before production use.",
           "logo": "/images/seafile/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -5269,7 +5269,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Seafile Community Edition with the MariaDB and memcached services required by the container deployment. Libraries, configuration, logs and database data persist in volumes; review the generated hostname and administrator settings before deployment.",
+          "description": "Seafile Community Edition with the MariaDB and Redis services required by the container deployment. Libraries, configuration, logs and database data persist in volumes; review the generated hostname and administrator settings before deployment.",
           "logo": "/images/seafile/mariadb/logo.webp",
           "images": [],
           "slug": "mariadb",
@@ -5455,7 +5455,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "Strapi headless CMS with PostgreSQL and persistent media uploads.",
+          "shortDescription": "Strapi headless CMS with PostgreSQL and persistent application data.",
           "category": {
             "name": "CMS",
             "icon": "layout-template",
@@ -5479,83 +5479,13 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Strapi headless CMS with PostgreSQL and persistent media uploads. Complete the administrator setup in the first-run interface and configure API and admin secrets before production use.",
+          "description": "Strapi headless CMS with PostgreSQL and persistent application data, using a prebuilt Strapi 5 production image. Complete the administrator setup in the first-run interface.",
           "logo": "/images/strapi/default/logo.webp",
           "images": [],
           "slug": "default",
           "files": {
             "config": "/files/strapi/default/template.toml",
             "compose": "/files/strapi/default/docker-compose.yml"
-          }
-        },
-        {
-          "name": "MySQL",
-          "shortDescription": "Strapi with MySQL persistence and persistent media uploads.",
-          "category": {
-            "name": "CMS",
-            "icon": "layout-template",
-            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
-            "slug": "cms"
-          },
-          "developedBy": {
-            "label": "Strapi",
-            "url": "https://strapi.io/"
-          },
-          "submittedBy": {
-            "label": "Deplo",
-            "url": "https://github.com/DeploCloud"
-          },
-          "links": {
-            "github": "https://github.com/strapi/strapi",
-            "website": "https://strapi.io/",
-            "docs": [
-              "https://docs.strapi.io/"
-            ]
-          },
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
-          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Strapi headless CMS using a dedicated MySQL database. The database and uploaded media persist in volumes.",
-          "logo": "/images/strapi/mysql/logo.webp",
-          "images": [],
-          "slug": "mysql",
-          "files": {
-            "config": "/files/strapi/mysql/template.toml",
-            "compose": "/files/strapi/mysql/docker-compose.yml"
-          }
-        },
-        {
-          "name": "SQLite",
-          "shortDescription": "Strapi with its built-in SQLite database and persistent media uploads.",
-          "category": {
-            "name": "CMS",
-            "icon": "layout-template",
-            "description": "Blogs, sites, headless content APIs and the storefronts built on top of them.",
-            "slug": "cms"
-          },
-          "developedBy": {
-            "label": "Strapi",
-            "url": "https://strapi.io/"
-          },
-          "submittedBy": {
-            "label": "Deplo",
-            "url": "https://github.com/DeploCloud"
-          },
-          "links": {
-            "github": "https://github.com/strapi/strapi",
-            "website": "https://strapi.io/",
-            "docs": [
-              "https://docs.strapi.io/"
-            ]
-          },
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
-          "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Strapi headless CMS using its built-in SQLite database. The database and uploaded media persist in volumes.",
-          "logo": "/images/strapi/sqlite/logo.webp",
-          "images": [],
-          "slug": "sqlite",
-          "files": {
-            "config": "/files/strapi/sqlite/template.toml",
-            "compose": "/files/strapi/sqlite/docker-compose.yml"
           }
         }
       ],
@@ -5591,7 +5521,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Supabase Studio interface for managing a self-hosted Supabase project. The complete Supabase stack requires the official Compose bundle with its database, API, authentication, storage and realtime services.",
+          "description": "Complete self-hosted Supabase deployment based on the official Docker stack, including Studio, Envoy API gateway, Auth, REST, Realtime, Storage, image transformation, database metadata, Edge Functions, PostgreSQL and Supavisor. Deplo generates the deployment credentials. The host needs at least 4 GB RAM and the database ports 5432 and 6543 are published for Supabase clients.",
           "logo": "/images/supabase/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6014,7 +5944,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "Zabbix monitoring appliance with a persistent bundled database.",
+          "shortDescription": "Recommended Zabbix stack with server, Nginx web interface and MySQL.",
           "category": {
             "name": "Monitoring",
             "icon": "activity",
@@ -6038,7 +5968,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Zabbix appliance with a bundled monitoring server and web interface. Add monitored hosts and agents after the initial administrator setup; larger installations should use the official split database stack.",
+          "description": "Recommended Zabbix deployment following the official default Compose setup: Zabbix server, Nginx web interface and MySQL in separate containers. The database persists in a volume; allow the initial schema setup to finish before logging in. Choose the PostgreSQL variant if you prefer PostgreSQL.",
           "logo": "/images/zabbix/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6055,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "b4d35c2f7d659eee8e0d8e0236070ed6229e3047703c441e98a9d599e2ab712d";
+export const version = "7daf5072a0ff2a670b8fdaeac106e85a54f647df2141dabeb725dcd5528c9d0b";

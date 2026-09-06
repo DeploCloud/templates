@@ -1,1 +1,1 @@
-Jitsi Meet web frontend with persistent web configuration. A complete meeting deployment also needs the official Prosody, Jicofo, bridge and recording services and their shared configuration.
+Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services. The server must expose UDP port 10000 and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic.

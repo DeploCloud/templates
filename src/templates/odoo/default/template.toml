@@ -8,7 +8,5 @@ port = 8069
 host = "${domain}"
 
 [config.env]
-HOST = "db"
-USER = "odoo"
-PASSWORD = "${db_password}"
+DB_PASSWORD = "${db_password}"
 POSTGRES_PASSWORD = "${db_password}"

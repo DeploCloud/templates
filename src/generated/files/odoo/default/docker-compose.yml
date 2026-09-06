@@ -5,13 +5,14 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    command:
+      - odoo
+      - --db_host=db
+      - --db_port=5432
+      - --db_user=odoo
+      - --db_password=${DB_PASSWORD}
     expose:
       - 8069
-    environment:
-      HOST: ${HOST}
-      USER: ${USER}
-      PASSWORD: ${PASSWORD}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - odoo-data:/var/lib/odoo
 

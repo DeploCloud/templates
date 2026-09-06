@@ -1,6 +1,6 @@
 services:
   strapi:
-    image: strapi/strapi:latest
+    image: elestio/strapi-production:v5.33.0
     restart: unless-stopped
     depends_on:
       db:
@@ -8,17 +8,30 @@ services:
     expose:
       - 1337
     environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT}
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: production
+      STRAPI_TELEMETRY_DISABLED: true
+      STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE: en
+      FAST_REFRESH: true
       JWT_SECRET: ${JWT_SECRET}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
     volumes:
-      - strapi-uploads:/opt/app/public/uploads
+      - strapi-data:/srv/app
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:1337"]
+      start_period: 10s
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   db:
     image: postgres:18-alpine
@@ -36,5 +49,5 @@ services:
       - strapi-database:/var/lib/postgresql
 
 volumes:
-  strapi-uploads: {}
+  strapi-data: {}
   strapi-database: {}

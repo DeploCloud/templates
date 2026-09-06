@@ -2,6 +2,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     restart: unless-stopped
+    command: start
     depends_on:
       db:
         condition: service_healthy
@@ -16,6 +17,7 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
       KC_HTTP_ENABLED: ${KC_HTTP_ENABLED}
       KC_PROXY_HEADERS: ${KC_PROXY_HEADERS}
+      KC_HOSTNAME: ${KC_HOSTNAME}
     volumes:
       - keycloak-data:/opt/keycloak/data
 

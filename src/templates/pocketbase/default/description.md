@@ -1,1 +1,1 @@
-PocketBase backend with an embedded SQLite database and persistent uploaded files. Create the first administrator through the built-in setup page before using the API.
+PocketBase backend with embedded SQLite storage and persistent uploaded files. The generated administrator credentials are configured automatically on first start; the API is available on port 8090 and the admin panel under `/_/`.

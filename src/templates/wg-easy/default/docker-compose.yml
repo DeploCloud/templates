@@ -8,6 +8,7 @@ services:
       PORT: ${PORT}
       INSECURE: ${INSECURE}
       PASSWORD_HASH: ${PASSWORD_HASH}
+      WG_HOST: ${WG_HOST}
     volumes:
       - wg-easy-data:/etc/wireguard
 

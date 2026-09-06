@@ -2,5 +2,5 @@
 
 [[config.domains]]
 serviceName = "scrypted"
-port = 10443
+port = 11080
 host = "${domain}"

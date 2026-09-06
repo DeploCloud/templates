@@ -1,1 +1,1 @@
-Strapi headless CMS with PostgreSQL and persistent media uploads. Complete the administrator setup in the first-run interface and configure API and admin secrets before production use.
+Strapi headless CMS with PostgreSQL and persistent application data, using a prebuilt Strapi 5 production image. Complete the administrator setup in the first-run interface.

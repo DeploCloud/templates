@@ -1,1 +1,1 @@
-Zabbix appliance with a bundled monitoring server and web interface. Add monitored hosts and agents after the initial administrator setup; larger installations should use the official split database stack.
+Recommended Zabbix deployment following the official default Compose setup: Zabbix server, Nginx web interface and MySQL in separate containers. The database persists in a volume; allow the initial schema setup to finish before logging in. Choose the PostgreSQL variant if you prefer PostgreSQL.

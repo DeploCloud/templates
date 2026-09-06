@@ -1,11 +1,16 @@
 services:
   pocketbase:
-    image: ghcr.io/pocketbase/pocketbase:latest
+    image: adrianmusante/pocketbase:latest
     restart: unless-stopped
     expose:
       - 8090
+    environment:
+      - POCKETBASE_ADMIN_EMAIL=${ADMIN_EMAIL}
+      - POCKETBASE_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - POCKETBASE_ADMIN_UPSERT=true
+      - POCKETBASE_PORT_NUMBER=8090
     volumes:
-      - pocketbase-data:/pb/pb_data
+      - pocketbase-data:/pocketbase
 
 volumes:
   pocketbase-data: {}
