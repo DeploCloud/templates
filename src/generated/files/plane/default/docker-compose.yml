@@ -1,6 +1,6 @@
 services:
   web:
-    image: makeplane/plane-frontend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-frontend:v0.27.1
     command: node web/server.js web
     depends_on:
       - api
@@ -8,7 +8,7 @@ services:
     env_file: .env
 
   space:
-    image: makeplane/plane-space:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-space:v0.27.1
     command: node space/server.js space
     depends_on:
       - api
@@ -17,7 +17,7 @@ services:
     env_file: .env
 
   admin:
-    image: makeplane/plane-admin:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-admin:v0.27.1
     command: node admin/server.js admin
     depends_on:
       - api
@@ -25,7 +25,7 @@ services:
     env_file: .env
 
   live:
-    image: makeplane/plane-live:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-live:v0.27.1
     command: node live/dist/server.js live
     depends_on:
       - api
@@ -33,7 +33,7 @@ services:
     env_file: .env
 
   api:
-    image: makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
     command: ./bin/docker-entrypoint-api.sh
     depends_on:
       - plane-db
@@ -44,7 +44,7 @@ services:
       - plane-api-logs:/code/plane/logs
 
   worker:
-    image: makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
     command: ./bin/docker-entrypoint-worker.sh
     depends_on:
       - api
@@ -56,7 +56,7 @@ services:
       - plane-worker-logs:/code/plane/logs
 
   beat-worker:
-    image: makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
     command: ./bin/docker-entrypoint-beat.sh
     depends_on:
       - api
@@ -68,7 +68,7 @@ services:
       - plane-beat-logs:/code/plane/logs
 
   migrator:
-    image: makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
     command: ./bin/docker-entrypoint-migrator.sh
     depends_on:
       - plane-db
@@ -78,7 +78,7 @@ services:
       - plane-migrator-logs:/code/plane/logs
 
   plane-db:
-    image: postgres:17-alpine
+    image: postgres:15.7-alpine
     command: postgres -c max_connections=1000
     environment:
       POSTGRES_DB: plane
@@ -116,7 +116,7 @@ services:
       - plane-uploads:/export
 
   proxy:
-    image: makeplane/plane-proxy:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-proxy:v0.27.1
     depends_on:
       - web
       - api
