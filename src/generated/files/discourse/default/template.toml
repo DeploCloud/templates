@@ -1,13 +1,16 @@
 [variables]
+main_domain = "${domain}"
+admin_email = "${email}"
 postgres_password = "${password:32}"
 redis_password = "${password:32}"
 
 [config.env]
-DISCOURSE_HOST = "${domain}"
+DISCOURSE_HOST = "${main_domain}"
+DISCOURSE_ADMIN_EMAIL = "${admin_email}"
 POSTGRES_PASSWORD = "${postgres_password}"
 REDIS_PASSWORD = "${redis_password}"
 
 [[config.domains]]
 serviceName = "discourse-app"
-port = 3_000
-host = "${domain}"
+port = 80
+host = "${main_domain}"

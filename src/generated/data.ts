@@ -1026,7 +1026,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Discourse is a forum platform for community discussions, mailing lists and chat-style conversations. This variant bundles the application with PostgreSQL and Redis and persists forum content, configuration and database data. Configure SMTP after setup before enabling email-dependent features.",
+          "description": "Compose-based Discourse deployment with PostgreSQL, Redis and the Discourse web application, following the Dokploy template. Forum data, PostgreSQL, Redis and the shared Discourse storage persist in named volumes. Configure SMTP after deployment before enabling email-dependent features.",
           "logo": "/images/discourse/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "131524189fb05f0efd2408c7dea6b18d43601675cd405f57b977f5eb8354fb9c";
+export const version = "06abdd8ec8d69a33d2154ef167d90cb9c64519a2ba053471491c40d48eb98848";
