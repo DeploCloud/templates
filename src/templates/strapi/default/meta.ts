@@ -3,7 +3,7 @@ import type { TemplateVariantRaw } from "../../../schemas";
 export default {
   name: "Default",
   shortDescription:
-    "Strapi headless CMS with PostgreSQL and persistent media uploads.",
+    "Strapi headless CMS with PostgreSQL and persistent application data.",
   category: {
     name: "CMS",
     icon: "layout-template",

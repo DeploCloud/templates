@@ -1,1 +1,0 @@
-Strapi headless CMS with MySQL and persistent project and media data. Strapi does not publish an official container image, so this variant uses the community-maintained image listed in the official Docker documentation. Complete the administrator setup in the first-run interface; build a project-specific image for production deployments.
