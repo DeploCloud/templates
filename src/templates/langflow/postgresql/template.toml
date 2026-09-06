@@ -1,5 +1,6 @@
 [variables]
 db_password = "${password:32}"
+superuser_password = "${password:32}"
 [config]
 
 [[config.domains]]
@@ -11,5 +12,6 @@ host = "${domain}"
 LANGFLOW_HOST = "0.0.0.0"
 LANGFLOW_PORT = "7860"
 LANGFLOW_AUTO_LOGIN = "false"
+LANGFLOW_SUPERUSER_PASSWORD = "${superuser_password}"
 LANGFLOW_DATABASE_URL = "postgresql://langflow:${db_password}@postgres:5432/langflow"
 DB_PASSWORD = "${db_password}"
