@@ -3,7 +3,7 @@ services:
     image: ghcr.io/koush/scrypted:nvidia
     restart: unless-stopped
     expose:
-      - 10443
+      - 11080
     deploy:
       resources:
         reservations:
