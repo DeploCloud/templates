@@ -1,18 +1,27 @@
 services:
   strapi:
-    image: strapi/strapi:latest
+    image: naskio/strapi:latest
     restart: unless-stopped
     expose:
       - 1337
     environment:
       DATABASE_CLIENT: sqlite
-      DATABASE_FILENAME: /opt/app/.tmp/data.db
+      DATABASE_FILENAME: ${DATABASE_FILENAME}
+      HOST: ${HOST}
+      PORT: ${PORT}
+      NODE_ENV: ${NODE_ENV}
       APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
       JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
     volumes:
-      - strapi-database:/opt/app/.tmp
-      - strapi-uploads:/opt/app/public/uploads
+      - strapi-app:/srv/app
+      - strapi-database:/srv/app/.tmp
+      - strapi-uploads:/srv/app/public/uploads
 
 volumes:
+  strapi-app: {}
   strapi-database: {}
   strapi-uploads: {}

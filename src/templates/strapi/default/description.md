@@ -1,1 +1,1 @@
-Strapi headless CMS with PostgreSQL and persistent media uploads. Complete the administrator setup in the first-run interface and configure API and admin secrets before production use.
+Strapi headless CMS with PostgreSQL and persistent project and media data. Strapi does not publish an official container image, so this variant uses the community-maintained image listed in the official Docker documentation. Complete the administrator setup in the first-run interface; build a project-specific image for production deployments.

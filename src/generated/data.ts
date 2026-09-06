@@ -5479,7 +5479,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Strapi headless CMS with PostgreSQL and persistent media uploads. Complete the administrator setup in the first-run interface and configure API and admin secrets before production use.",
+          "description": "Strapi headless CMS with PostgreSQL and persistent project and media data. Strapi does not publish an official container image, so this variant uses the community-maintained image listed in the official Docker documentation. Complete the administrator setup in the first-run interface; build a project-specific image for production deployments.",
           "logo": "/images/strapi/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -5514,7 +5514,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Strapi headless CMS using a dedicated MySQL database. The database and uploaded media persist in volumes.",
+          "description": "Strapi headless CMS with MySQL and persistent project and media data. Strapi does not publish an official container image, so this variant uses the community-maintained image listed in the official Docker documentation. Complete the administrator setup in the first-run interface; build a project-specific image for production deployments.",
           "logo": "/images/strapi/mysql/logo.webp",
           "images": [],
           "slug": "mysql",
@@ -5549,7 +5549,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Strapi headless CMS using its built-in SQLite database. The database and uploaded media persist in volumes.",
+          "description": "Strapi headless CMS with SQLite and persistent project, database and media data. Strapi does not publish an official container image, so this variant uses the community-maintained image listed in the official Docker documentation. Complete the administrator setup in the first-run interface; build a project-specific image for production deployments.",
           "logo": "/images/strapi/sqlite/logo.webp",
           "images": [],
           "slug": "sqlite",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "1dc38e88f7932019524904d6057d48c860a1865b724394207ef4aade70c689d8";
+export const version = "490e627afa859773a12d9d13a5e465d01fce00f923cddde39b29928f9af8881c";

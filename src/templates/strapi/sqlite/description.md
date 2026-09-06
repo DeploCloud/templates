@@ -1,1 +1,1 @@
-Strapi headless CMS using its built-in SQLite database. The database and uploaded media persist in volumes.
+Strapi headless CMS with SQLite and persistent project, database and media data. Strapi does not publish an official container image, so this variant uses the community-maintained image listed in the official Docker documentation. Complete the administrator setup in the first-run interface; build a project-specific image for production deployments.
