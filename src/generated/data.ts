@@ -788,7 +788,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
-          "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. Provide a tunnel token after deployment; this connector does not expose a web UI or an HTTP application port.",
+          "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. Create the tunnel in Cloudflare first and set its non-empty token in `TUNNEL_TOKEN` before starting the app; an empty token makes `cloudflared` exit with `flag needs an argument: -token`. This connector has no web UI or HTTP application port and must be verified from the Cloudflare Tunnel status.",
           "logo": "/images/cloudflared/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6125,4 +6125,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "b4d35c2f7d659eee8e0d8e0236070ed6229e3047703c441e98a9d599e2ab712d";
+export const version = "a60621ca3cb4379adb430e419e1b2682be282c262e1da10f084a49b53fb8ab04";
