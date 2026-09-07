@@ -1,0 +1,18 @@
+[variables]
+admin_email = "${email}"
+admin_password = "${password:32}"
+
+[config]
+
+[config.env]
+ADMIN_EMAIL = "${admin_email}"
+ADMIN_PASSWORD = "${admin_password}"
+
+[[config.domains]]
+serviceName = "pocketbase"
+port = 8090
+host = "${domain}"
+
+[[config.mounts]]
+name = "pocketbase-data"
+mountPath = "/pocketbase"

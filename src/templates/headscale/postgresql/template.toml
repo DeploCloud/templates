@@ -1,0 +1,42 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "headscale"
+port = 8080
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """server_url: https://${domain}
+listen_addr: 0.0.0.0:8080
+metrics_listen_addr: 0.0.0.0:9090
+noise:
+  private_key_path: /var/lib/headscale/noise_private.key
+prefixes:
+  v4: 100.64.0.0/10
+  v6: fd7a:115c:a1e0::/48
+dns:
+  magic_dns: false
+  override_local_dns: false
+  nameservers:
+    global:
+      - 1.1.1.1
+derp:
+  server:
+    enabled: false
+  urls:
+    - https://controlplane.tailscale.com/derpmap/default
+database:
+  type: postgres
+  postgres:
+    host: headscale-db
+    port: 5432
+    name: headscale
+    user: headscale
+    pass: ${db_password}
+"""

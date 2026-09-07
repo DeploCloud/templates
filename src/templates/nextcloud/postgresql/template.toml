@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+trusted_proxies = "10.0.0.0/8 172.16.0.0/12"
+
+[config]
+env = [
+  "POSTGRES_PASSWORD=${db_password}",
+  "NEXTCLOUD_TRUSTED_DOMAINS=${domain}",
+  "TRUSTED_PROXIES=${trusted_proxies}",
+]
+
+[[config.domains]]
+serviceName = "nextcloud"
+port = 80
+host = "${domain}"

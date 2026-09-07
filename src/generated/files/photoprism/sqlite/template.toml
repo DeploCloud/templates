@@ -1,0 +1,12 @@
+[variables]
+admin_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "photoprism"
+port = 2342
+host = "${domain}"
+
+[config.env]
+PHOTOPRISM_ADMIN_PASSWORD = "${admin_password}"
+PHOTOPRISM_SITE_URL = "https://${domain}/"

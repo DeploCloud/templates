@@ -1,0 +1,12 @@
+[variables]
+timezone = "Europe/Rome"
+
+[config]
+
+[[config.domains]]
+serviceName = "app"
+port = 81
+host = "${domain}"
+
+[config.env]
+TZ = "${timezone}"

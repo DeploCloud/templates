@@ -1,0 +1,22 @@
+[variables]
+jwt_secret = "${hash:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vikunja"
+port = 3_456
+host = "${domain}"
+
+[config.env]
+VIKUNJA_SERVICE_JWTSECRET = "${jwt_secret}"
+VIKUNJA_SERVICE_PUBLICURL = "https://${domain}/"
+VIKUNJA_DATABASE_TYPE = "postgres"
+VIKUNJA_DATABASE_HOST = "vikunja-db"
+VIKUNJA_DATABASE_PORT = "5432"
+VIKUNJA_DATABASE_USER = "vikunja"
+VIKUNJA_DATABASE_PASSWORD = "${db_password}"
+VIKUNJA_DATABASE_DATABASE = "vikunja"
+VIKUNJA_DATABASE_SSLMODE = "disable"

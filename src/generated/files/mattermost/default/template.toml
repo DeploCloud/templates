@@ -1,0 +1,14 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "mattermost"
+port = 8065
+host = "${domain}"
+
+[config.env]
+MM_SERVICESETTINGS_SITEURL = "https://${domain}"
+MM_SQLSETTINGS_DRIVERNAME = "postgres"
+MM_SQLSETTINGS_DATASOURCE = "postgres://mattermost:${db_password}@db:5432/mattermost?sslmode=disable&connect_timeout=10"
+POSTGRES_PASSWORD = "${db_password}"

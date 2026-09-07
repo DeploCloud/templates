@@ -1,0 +1,38 @@
+[variables]
+jicofo_auth_password = "${password:32}"
+jvb_auth_password = "${password:32}"
+jicofo_component_secret = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "jitsi-web"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+ENABLE_AUTH = "0"
+ENABLE_GUESTS = "1"
+AUTH_TYPE = "internal"
+DISABLE_HTTPS = "1"
+ENABLE_HTTP_REDIRECT = "0"
+ENABLE_LETSENCRYPT = "0"
+PUBLIC_URL = "https://${domain}"
+TZ = "UTC"
+CONFIG = "./jitsi-config"
+XMPP_DOMAIN = "meet.jitsi"
+XMPP_AUTH_DOMAIN = "auth.meet.jitsi"
+XMPP_MUC_DOMAIN = "muc.meet.jitsi"
+XMPP_INTERNAL_MUC_DOMAIN = "internal-muc.meet.jitsi"
+XMPP_GUEST_DOMAIN = "guest.meet.jitsi"
+XMPP_RECORDER_DOMAIN = "recorder.meet.jitsi"
+XMPP_SERVER = "jitsi-prosody"
+XMPP_PORT = "5222"
+JICOFO_AUTH_USER = "focus"
+JICOFO_AUTH_PASSWORD = "${jicofo_auth_password}"
+JICOFO_COMPONENT_SECRET = "${jicofo_component_secret}"
+JVB_AUTH_USER = "jvb"
+JVB_AUTH_PASSWORD = "${jvb_auth_password}"
+JVB_BREWERY_MUC = "jvbbrewery"
+JVB_PORT = "10000"
+JVB_ADVERTISE_IPS = "${domain}"

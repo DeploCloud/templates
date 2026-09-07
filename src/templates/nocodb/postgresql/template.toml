@@ -1,0 +1,19 @@
+[variables]
+db_user = "nocodb"
+db_password = "${password:32}"
+db_name = "nocodb"
+jwt_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "nocodb"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRES_USER = "${db_user}"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "${db_name}"
+NC_AUTH_JWT_SECRET = "${jwt_secret}"
+NC_SITE_URL = "https://${domain}"

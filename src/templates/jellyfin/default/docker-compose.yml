@@ -1,0 +1,19 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.11.11
+    expose:
+      - 8096
+    volumes:
+      - config:/config
+      - cache:/cache
+      - media:/media
+    restart: unless-stopped
+    environment:
+      - JELLYFIN_PublishedServerUrl=https://${JELLYFIN_HOST}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  config:
+  cache:
+  media:

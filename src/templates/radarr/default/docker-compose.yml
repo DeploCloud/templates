@@ -1,0 +1,15 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:version-3.0.1.4259
+    restart: unless-stopped
+    expose:
+      - 7878
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - radarr-config:/config
+
+volumes:
+  radarr-config: {}

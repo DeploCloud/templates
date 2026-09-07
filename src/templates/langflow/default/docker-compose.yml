@@ -1,0 +1,16 @@
+services:
+  langflow:
+    image: langflowai/langflow:1.12.0
+    restart: unless-stopped
+    expose:
+      - 7860
+    environment:
+      LANGFLOW_HOST: ${LANGFLOW_HOST}
+      LANGFLOW_PORT: ${LANGFLOW_PORT}
+      LANGFLOW_AUTO_LOGIN: ${LANGFLOW_AUTO_LOGIN}
+      LANGFLOW_SUPERUSER_PASSWORD: ${LANGFLOW_SUPERUSER_PASSWORD}
+    volumes:
+      - langflow-data:/app/data
+
+volumes:
+  langflow-data: {}

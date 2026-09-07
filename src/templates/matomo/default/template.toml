@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "matomo"
+port = 80
+host = "${domain}"
+
+[config.env]
+MATOMO_DATABASE_ADAPTER = "MYSQLI"
+MATOMO_DATABASE_HOST = "db"
+MATOMO_DATABASE_DBNAME = "matomo"
+MATOMO_DATABASE_USERNAME = "matomo"
+MATOMO_DATABASE_PASSWORD = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${db_password}"

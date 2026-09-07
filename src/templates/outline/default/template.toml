@@ -1,0 +1,47 @@
+[variables]
+secret_key = "${hash:64}"
+utils_secret = "${base64:32}"
+client_secret = "${base64:32}"
+postgres_password = "${password:32}"
+
+[config.env]
+OUTLINE_URL = "https://${domain}"
+OUTLINE_SECRET_KEY = "${secret_key}"
+OUTLINE_UTILS_SECRET = "${utils_secret}"
+OUTLINE_OIDC_CLIENT_SECRET = "${client_secret}"
+OUTLINE_POSTGRES_PASSWORD = "${postgres_password}"
+
+[[config.domains]]
+serviceName = "outline"
+port = 3_000
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "dex/config.yaml"
+content = """issuer: http://dex:5556
+
+web:
+  http: 0.0.0.0:5556
+
+storage:
+  type: memory
+
+enablePasswordDB: true
+
+oauth2:
+  skipApprovalScreen: true
+  alwaysShowLoginScreen: false
+
+staticPasswords:
+  - email: "admin@example.com"
+    hash: "$2y$10$jsRWHw54uxTUIfhjgUrB9u8HSzPk7TUuQri9sXZrKzRXcScvwYor."
+    username: "admin"
+    userID: "1"
+
+staticClients:
+  - id: "outline"
+    redirectURIs:
+      - https://${domain}/auth/oidc.callback
+    name: "Outline"
+    secret: "${client_secret}"
+"""

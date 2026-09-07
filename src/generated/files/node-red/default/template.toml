@@ -1,0 +1,11 @@
+[variables]
+credential_secret = "${password:32}"
+
+[config.env]
+TZ = "Europe/Rome"
+NODE_RED_CREDENTIAL_SECRET = "${credential_secret}"
+
+[[config.domains]]
+serviceName = "node-red"
+port = 1_880
+host = "${domain}"

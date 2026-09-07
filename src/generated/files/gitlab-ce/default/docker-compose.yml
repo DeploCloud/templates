@@ -1,0 +1,17 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:19.3.1-ce.0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      GITLAB_OMNIBUS_CONFIG: ${GITLAB_OMNIBUS_CONFIG}
+    volumes:
+      - gitlab-config:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
+
+volumes:
+  gitlab-config: {}
+  gitlab-logs: {}
+  gitlab-data: {}

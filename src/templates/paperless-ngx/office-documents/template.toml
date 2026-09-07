@@ -1,0 +1,24 @@
+[variables]
+secret_key = "${hash:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "paperless-webserver"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+PAPERLESS_SECRET_KEY = "${secret_key}"
+PAPERLESS_URL = "https://${domain}"
+PAPERLESS_REDIS = "redis://paperless-broker:6379"
+PAPERLESS_DBENGINE = "postgresql"
+PAPERLESS_DBHOST = "paperless-db"
+PAPERLESS_DBNAME = "paperless"
+PAPERLESS_DBUSER = "paperless"
+PAPERLESS_DBPASS = "${db_password}"
+PAPERLESS_TIKA_ENABLED = "1"
+PAPERLESS_TIKA_ENDPOINT = "http://paperless-tika:9998"
+PAPERLESS_TIKA_GOTENBERG_ENDPOINT = "http://paperless-gotenberg:3000"

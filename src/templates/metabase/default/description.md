@@ -1,0 +1,1 @@
+Metabase is an open-source business intelligence dashboard for querying data and building charts. The template uses PostgreSQL for durable application metadata instead of the embedded H2 database intended for local demos.
