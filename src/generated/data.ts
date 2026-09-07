@@ -5093,6 +5093,48 @@ const data = {
       "slug": "rustdesk"
     },
     {
+      "name": "Rybbit",
+      "logo": "/images/rybbit/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Privacy-friendly web analytics with sessions, funnels and replay.",
+          "category": {
+            "name": "Analytics",
+            "icon": "chart-line",
+            "description": "Product, web and business analytics, from privacy-first page counters to full dashboards.",
+            "slug": "analytics"
+          },
+          "developedBy": {
+            "label": "Rybbit",
+            "url": "https://github.com/rybbit-io"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/rybbit-io/rybbit",
+            "website": "https://rybbit.com/",
+            "docs": [
+              "https://rybbit.com/docs/self-hosting"
+            ]
+          },
+          "lastUpdate": new Date("2026-09-07T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-07T00:00:00.000Z"),
+          "description": "Rybbit is a privacy-friendly web analytics platform with dashboards, session\nreplays, funnels and custom events.\n\nThe template includes the client, backend, PostgreSQL, ClickHouse and Redis.\nAll application data persists in volumes; create the first administrator at\nthe generated domain after deployment.",
+          "logo": "/images/rybbit/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/rybbit/default/template.toml",
+            "compose": "/files/rybbit/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "rybbit"
+    },
+    {
       "name": "Scrypted",
       "logo": "/images/scrypted/logo.webp",
       "variants": [
@@ -6055,4 +6097,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "238db4426ace0c4ea6fa462c4edf80d713e96dedb23cdf12a22d418243f6af9d";
+export const version = "1c788429bf55af3c321081b1796a1ad306f65b6280c1e2deaad4d08f4596f463";
