@@ -1,6 +1,6 @@
 services:
   portainer:
-    image: portainer/portainer-ce:sts
+    image: portainer/portainer-ce:2.45.0
     restart: always
     expose:
       - 9000

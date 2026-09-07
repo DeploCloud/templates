@@ -1,6 +1,6 @@
 services:
   zabbix-server:
-    image: zabbix/zabbix-server-mysql:alpine-7.4-latest
+    image: zabbix/zabbix-server-mysql:alpine-7.4.14
     restart: unless-stopped
     depends_on:
       zabbix-db:
@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4-latest
+    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4.14
     restart: unless-stopped
     depends_on:
       zabbix-server:

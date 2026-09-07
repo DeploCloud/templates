@@ -1,6 +1,6 @@
 services:
   navidrome:
-    image: deluan/navidrome:latest
+    image: deluan/navidrome:0.63.2
     restart: unless-stopped
     expose:
       - 4533

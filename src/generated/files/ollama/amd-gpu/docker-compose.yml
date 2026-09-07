@@ -1,6 +1,6 @@
 services:
   ollama:
-    image: ollama/ollama:rocm
+    image: ollama/ollama:0.33.3
     restart: unless-stopped
     expose:
       - 11434

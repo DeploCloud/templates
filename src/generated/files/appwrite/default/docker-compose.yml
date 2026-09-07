@@ -38,7 +38,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     healthcheck:
       test:
         - CMD-SHELL
@@ -288,7 +288,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -357,7 +357,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -522,7 +522,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -576,7 +576,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -613,7 +613,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -701,7 +701,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -754,7 +754,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     volumes:
@@ -855,7 +855,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     volumes:
@@ -918,7 +918,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     volumes:
@@ -982,7 +982,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1029,7 +1029,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1070,7 +1070,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1115,7 +1115,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1161,7 +1161,7 @@ services:
         max-file: "5"
         max-size: 10m
     restart: unless-stopped
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1204,7 +1204,7 @@ services:
         max-file: "5"
         max-size: 10m
     restart: unless-stopped
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     volumes:
@@ -1265,7 +1265,7 @@ services:
         max-file: "5"
         max-size: 10m
     restart: unless-stopped
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     volumes:
@@ -1325,7 +1325,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1373,7 +1373,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1416,7 +1416,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1456,7 +1456,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:
@@ -1495,7 +1495,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-latest}
+    image: ${_APP_IMAGE:-appwrite/appwrite}:${_APP_VERSION:-2.0.0}
     networks:
       - appwrite
     depends_on:

@@ -1,6 +1,6 @@
 services:
   joplin:
-    image: joplin/server:latest
+    image: joplin/server:3.7.1
     restart: unless-stopped
     expose:
       - 22300

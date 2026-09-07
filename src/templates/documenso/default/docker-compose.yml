@@ -1,6 +1,6 @@
 services:
   documenso:
-    image: docker.io/documenso/documenso:latest
+    image: docker.io/documenso/documenso:v2.17.0
     restart: unless-stopped
     depends_on:
       db:

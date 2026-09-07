@@ -1,6 +1,6 @@
 services:
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:alpine-7.4-latest
+    image: zabbix/zabbix-server-pgsql:alpine-7.4.14
     restart: unless-stopped
     depends_on:
       zabbix-db:
@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.4-latest
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.4.14
     restart: unless-stopped
     depends_on:
       zabbix-server:

@@ -1,6 +1,6 @@
 services:
   signoz:
-    image: signoz/signoz:latest
+    image: signoz/signoz:v0.140.0
     restart: unless-stopped
     depends_on:
       clickhouse:

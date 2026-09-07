@@ -1,6 +1,6 @@
 services:
   jitsi-web:
-    image: ghcr.io/jitsi/web:stable
+    image: ghcr.io/jitsi/web:web-1.0.9326-1
     restart: unless-stopped
     expose:
       - 8000
@@ -29,7 +29,7 @@ services:
       - meet-jitsi
 
   jitsi-prosody:
-    image: ghcr.io/jitsi/prosody:stable
+    image: ghcr.io/jitsi/prosody:prosody-13.0.6
     restart: unless-stopped
     expose:
       - 5222
@@ -62,7 +62,7 @@ services:
       - meet-jitsi
 
   jitsi-jicofo:
-    image: ghcr.io/jitsi/jicofo:stable
+    image: ghcr.io/jitsi/jicofo:jicofo-1.0-1204-1
     restart: unless-stopped
     expose:
       - 8888
@@ -89,7 +89,7 @@ services:
       - meet-jitsi
 
   jitsi-jvb:
-    image: ghcr.io/jitsi/jvb:stable
+    image: ghcr.io/jitsi/jvb:jvb-2.3-317-g8b31b0769-1
     restart: unless-stopped
     ports:
       - "10000:10000/udp"

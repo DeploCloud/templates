@@ -1,6 +1,6 @@
 services:
   authelia:
-    image: docker.io/authelia/authelia:latest
+    image: docker.io/authelia/authelia:4.39.22
     restart: unless-stopped
     depends_on:
       authelia-redis:

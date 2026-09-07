@@ -1,6 +1,6 @@
 services:
   bookstack:
-    image: solidnerd/bookstack:latest
+    image: solidnerd/bookstack:26.5.4
     restart: unless-stopped
     depends_on:
       db:

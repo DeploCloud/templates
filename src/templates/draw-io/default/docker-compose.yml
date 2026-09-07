@@ -1,6 +1,6 @@
 services:
   drawio:
-    image: jgraph/drawio:latest
+    image: jgraph/drawio:31.4.4
     restart: unless-stopped
     expose:
       - 8080

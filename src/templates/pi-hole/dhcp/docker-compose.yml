@@ -1,6 +1,6 @@
 services:
   pihole:
-    image: pihole/pihole:latest
+    image: pihole/pihole:2026.07.2
     restart: unless-stopped
     expose:
       - 80

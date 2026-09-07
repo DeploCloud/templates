@@ -1,6 +1,6 @@
 services:
   gitlab:
-    image: gitlab/gitlab-ce:latest
+    image: gitlab/gitlab-ce:19.3.1-ce.0
     restart: unless-stopped
     expose:
       - 80

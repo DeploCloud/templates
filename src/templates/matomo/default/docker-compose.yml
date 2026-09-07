@@ -1,6 +1,6 @@
 services:
   matomo:
-    image: matomo:latest
+    image: matomo:5.13.0
     restart: unless-stopped
     depends_on:
       db:

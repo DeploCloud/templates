@@ -1,6 +1,6 @@
 services:
   netdata:
-    image: netdata/netdata:stable
+    image: netdata/netdata:v2.11.0
     restart: unless-stopped
     expose:
       - 19999
