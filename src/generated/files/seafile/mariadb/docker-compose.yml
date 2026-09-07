@@ -1,6 +1,6 @@
 services:
   seafile:
-    image: seafileltd/seafile-mc:13.0-latest
+    image: seafileltd/seafile-mc:13.0.25
     restart: unless-stopped
     depends_on:
       db:

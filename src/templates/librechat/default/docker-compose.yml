@@ -1,6 +1,6 @@
 services:
   librechat:
-    image: ghcr.io/danny-avila/librechat:latest
+    image: ghcr.io/danny-avila/librechat:v0.8.7
     restart: unless-stopped
     expose:
       - 3080

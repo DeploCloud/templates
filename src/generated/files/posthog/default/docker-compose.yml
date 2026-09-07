@@ -469,7 +469,7 @@ services:
 
   # Rust event capture endpoint (/e, /batch, /capture, /i/v0)
   capture:
-    image: ghcr.io/posthog/posthog/capture:master
+    image: ghcr.io/posthog/posthog/capture:sha-47ba09a
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -496,7 +496,7 @@ services:
 
   # Rust capture endpoint for session recordings (/s)
   replay-capture:
-    image: ghcr.io/posthog/posthog/capture:master
+    image: ghcr.io/posthog/posthog/capture:sha-47ba09a
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -513,7 +513,7 @@ services:
 
   # Rust feature flag evaluation service (/flags)
   feature-flags:
-    image: ghcr.io/posthog/posthog/feature-flags:master
+    image: ghcr.io/posthog/posthog/feature-flags:sha-c5762a3
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -539,7 +539,7 @@ services:
 
   # Rust hypercache server (/array remote config + /surveys)
   hypercache-server:
-    image: ghcr.io/posthog/posthog/hypercache-server:master
+    image: ghcr.io/posthog/posthog/hypercache-server:sha-b8ea285
     restart: unless-stopped
     logging: *default-logging
     depends_on:
@@ -552,7 +552,7 @@ services:
 
   # Live events stream (/livestream)
   livestream:
-    image: ghcr.io/posthog/posthog/livestream:master
+    image: ghcr.io/posthog/posthog/livestream:sha-30660d0
     restart: unless-stopped
     logging: *default-logging
     depends_on:

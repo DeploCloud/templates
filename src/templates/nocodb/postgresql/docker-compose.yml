@@ -1,6 +1,6 @@
 services:
   nocodb:
-    image: nocodb/nocodb:latest
+    image: nocodb/nocodb:2026.08.2
     restart: unless-stopped
     expose:
       - 8080
@@ -30,7 +30,7 @@ services:
       start_period: 30s
 
   worker:
-    image: nocodb/nocodb:latest
+    image: nocodb/nocodb:2026.08.2
     restart: unless-stopped
     environment:
       NC_DB: "pg://db:5432?u=${POSTGRES_USER}&p=${POSTGRES_PASSWORD}&d=${POSTGRES_DB}"

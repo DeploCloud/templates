@@ -1,6 +1,6 @@
 services:
   directus:
-    image: directus/directus:latest
+    image: directus/directus:12.3.1
     restart: unless-stopped
     depends_on:
       db:

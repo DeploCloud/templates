@@ -1,6 +1,6 @@
 services:
   rsshub:
-    image: diygod/rsshub:latest
+    image: diygod/rsshub:2026-09-07
     restart: unless-stopped
     expose:
       - 1200

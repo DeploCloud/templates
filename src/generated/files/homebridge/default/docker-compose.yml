@@ -1,6 +1,6 @@
 services:
   homebridge:
-    image: homebridge/homebridge:latest
+    image: homebridge/homebridge:2026-09-02
     restart: unless-stopped
     expose:
       - 8581

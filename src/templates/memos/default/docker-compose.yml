@@ -1,6 +1,6 @@
 services:
   memos:
-    image: neosmemo/memos:stable
+    image: neosmemo/memos:0.30.0
     restart: unless-stopped
     expose:
       - 5230

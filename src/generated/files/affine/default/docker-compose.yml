@@ -1,6 +1,6 @@
 services:
   affine:
-    image: ghcr.io/toeverything/affine:stable@sha256:b649f5ce2384ffdf13c23bccf81d759e15973d59d0b0058af65d895a84373099
+    image: ghcr.io/toeverything/affine:v0.27.4
     restart: unless-stopped
     expose:
       - 3010
@@ -20,7 +20,7 @@ services:
         condition: service_healthy
 
   affine-migration:
-    image: ghcr.io/toeverything/affine:stable@sha256:b649f5ce2384ffdf13c23bccf81d759e15973d59d0b0058af65d895a84373099
+    image: ghcr.io/toeverything/affine:v0.27.4
     restart: "no"
     command: ["sh", "-c", "node ./scripts/self-host-predeploy.js"]
     environment:

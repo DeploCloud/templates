@@ -1,6 +1,6 @@
 services:
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:libtorrentv1
+    image: lscr.io/linuxserver/qbittorrent:version-14.3.5.99202106151345-7374-667d4e421ubuntu20.04.1
     restart: unless-stopped
     expose:
       - 8080
