@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+[[config.mounts]]
+filePath = "config.json"
+content = """
+{
+  "server": {
+    "name": "AFFiNE Self Hosted Server",
+    "externalUrl": "https://${domain}"
+  },
+  "indexer": {
+    "enabled": true,
+    "provider.type": "embedded"
+  }
+}
+"""
+
+[[config.domains]]
+serviceName = "affine"
+port = 3_010
+host = "${domain}"
+
+[config.env]
+AFFINE_DB_PASSWORD = "${db_password}"
+DATABASE_URL = "postgresql://affine:${db_password}@affine-db:5432/affine"
+REDIS_SERVER_HOST = "affine-redis"
+REDIS_SERVER_PORT = "6379"

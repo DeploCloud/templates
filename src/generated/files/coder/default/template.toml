@@ -1,0 +1,15 @@
+[variables]
+postgres_password = "${password:32}"
+
+[config.env]
+CODER_ACCESS_URL = "https://${domain}"
+CODER_HTTP_ADDRESS = "0.0.0.0:7080"
+CODER_PG_CONNECTION_URL = "postgresql://coder:${postgres_password}@coder-db:5432/coder?sslmode=disable"
+POSTGRES_USER = "coder"
+POSTGRES_PASSWORD = "${postgres_password}"
+POSTGRES_DB = "coder"
+
+[[config.domains]]
+serviceName = "coder"
+port = 7_080
+host = "${domain}"

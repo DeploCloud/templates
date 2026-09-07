@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+encryption_key = "${hash:64}"
+app_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "twenty-server"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PG_DATABASE_URL = "postgresql://twenty:${db_password}@twenty-db:5432/twenty"
+TWENTY_DB_PASSWORD = "${db_password}"
+REDIS_URL = "redis://twenty-redis:6379"
+SERVER_URL = "https://${domain}"
+STORAGE_TYPE = "local"
+STORAGE_LOCAL_PATH = "/app/.local-storage"
+ENCRYPTION_KEY = "${encryption_key}"
+FALLBACK_ENCRYPTION_KEY = "${encryption_key}"
+APP_SECRET = "${app_secret}"

@@ -1,0 +1,1 @@
+draw.io is a browser-based diagramming and whiteboarding application for flowcharts, architecture diagrams and wireframes. The self-contained image includes the editor and its optional export integration; the editor itself does not require an application database. Use the offline URL option when diagrams must not contact external storage providers.

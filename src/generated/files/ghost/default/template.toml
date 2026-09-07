@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "ghost"
+port = 2_368
+host = "${domain}"
+
+[config.env]
+GHOST_HOST = "${domain}"
+GHOST_DB_PASSWORD = "${db_password}"
+GHOST_DB_ROOT_PASSWORD = "${db_root_password}"

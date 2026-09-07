@@ -1,0 +1,45 @@
+[variables]
+timezone = "Europe/Rome"
+
+[config]
+
+[[config.domains]]
+serviceName = "homeassistant"
+port = 8_123
+host = "${domain}"
+
+[config.env]
+TZ = "${timezone}"
+
+[[config.mounts]]
+filePath = "configuration.yaml"
+content = """default_config:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.16.0.0/12
+    - 10.0.0.0/8
+"""
+
+[[config.mounts]]
+filePath = "automations.yaml"
+content = """[]
+"""
+
+[[config.mounts]]
+filePath = "scripts.yaml"
+content = """{}
+"""
+
+[[config.mounts]]
+filePath = "scenes.yaml"
+content = """[]
+"""

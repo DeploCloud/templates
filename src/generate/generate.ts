@@ -300,15 +300,15 @@ export async function generate() {
             ?.replace(/\.[^.]+$/, "")
             .toLowerCase() === "logo",
       );
-      if (!logo && !fallbackLogo)
-        throw new Error(
-          `${directory}/${variant.slug}: missing logo; add a template logo or a variant logo.`,
-        );
-      variant.logo = `/images/${template.slug}/${variant.slug}/logo.webp`;
-      jobs.push({
-        source: logo ?? fallbackLogo!,
-        destination: `${outputImages}/logo.webp`,
-      });
+      const variantLogo = logo ?? fallbackLogo;
+      variant.logo = variantLogo
+        ? `/images/${template.slug}/${variant.slug}/logo.webp`
+        : null;
+      if (variantLogo)
+        jobs.push({
+          source: variantLogo,
+          destination: `${outputImages}/logo.webp`,
+        });
       for (const [index, image] of (
         await sourceImages(`${variantSource}/images`)
       ).entries()) {

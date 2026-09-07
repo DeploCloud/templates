@@ -1,0 +1,63 @@
+services:
+  flowise-init:
+    image: flowiseai/flowise:3.0.13
+    restart: "no"
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - chown -R 1000:1000 /home/node/.flowise
+    volumes:
+      - flowise-data:/home/node/.flowise
+
+  flowise:
+    image: flowiseai/flowise:3.0.13
+    restart: unless-stopped
+    depends_on:
+      flowise-init:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+    expose:
+      - 3000
+    environment:
+      PORT: ${PORT}
+      DATABASE_PATH: ${DATABASE_PATH}
+      SECRETKEY_STORAGE_TYPE: ${SECRETKEY_STORAGE_TYPE}
+      SECRETKEY_PATH: ${SECRETKEY_PATH}
+      LOG_PATH: ${LOG_PATH}
+      STORAGE_TYPE: ${STORAGE_TYPE}
+      BLOB_STORAGE_PATH: ${BLOB_STORAGE_PATH}
+      DATABASE_TYPE: mariadb
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_NAME: flowise
+      DATABASE_USER: flowise
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - flowise-data:/home/node/.flowise
+
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: flowise
+      MARIADB_USER: flowise
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mariadb-admin ping -h localhost -u root -p${DB_ROOT_PASSWORD}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - flowise-database:/var/lib/mysql
+
+volumes:
+  flowise-data: {}
+  flowise-database: {}

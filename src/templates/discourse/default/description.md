@@ -1,0 +1,1 @@
+Compose-based Discourse deployment with PostgreSQL, Redis and the Discourse web application, following the Dokploy template. Forum data, PostgreSQL, Redis and the shared Discourse storage persist in named volumes. Configure SMTP after deployment before enabling email-dependent features.

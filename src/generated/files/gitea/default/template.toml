@@ -1,0 +1,16 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gitea"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+USER_UID = "1000"
+USER_GID = "1000"
+GITEA__database__DB_TYPE = "sqlite3"
+GITEA__database__PATH = "/data/gitea/gitea.db"
+GITEA__server__ROOT_URL = "https://${domain}/"
+GITEA__server__DOMAIN = "${domain}"
+GITEA__server__DISABLE_SSH = "true"

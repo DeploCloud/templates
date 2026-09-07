@@ -1,0 +1,11 @@
+[config]
+
+[[config.domains]]
+serviceName = "radarr"
+port = 7878
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Europe/Rome"

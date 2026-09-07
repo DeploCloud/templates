@@ -1,0 +1,13 @@
+[variables]
+jwt_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "nocodb"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+NC_AUTH_JWT_SECRET = "${jwt_secret}"
+NC_SITE_URL = "https://${domain}"

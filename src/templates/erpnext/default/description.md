@@ -1,0 +1,1 @@
+Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis, frontend, workers, scheduler, websocket, persistent sites and automatic first-site creation. The generated admin password is available in the app environment variables; the first deployment may take several minutes while the site is initialized.

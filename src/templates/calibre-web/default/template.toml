@@ -1,0 +1,11 @@
+[config]
+
+[[config.domains]]
+serviceName = "calibre-web"
+port = 8083
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Europe/Rome"

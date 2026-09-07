@@ -1,0 +1,15 @@
+[variables]
+master_key = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "litellm"
+port = 4000
+host = "${domain}"
+
+[config.env]
+LITELLM_MASTER_KEY = "${master_key}"
+[[config.mounts]]
+filePath = "config.yaml"
+content = """model_list: []
+"""

@@ -11,6 +11,12 @@ has why it lives outside the control plane.
   deployed service only runs `bun run start`. Regenerate and commit in the same change.
 - `category.name` must match a category in `src/categories.ts`.
 
+## Descriptions
+
+`description.md` is user-facing Markdown: keep it as a concise description without a title or
+documentation-style sections, explain what the template deploys and what persists, and document any
+manual setup required before or after deployment.
+
 ## Comments
 
 Few and short. **Hard cap about 3 lines per block.** No file-header essays, no design narratives.

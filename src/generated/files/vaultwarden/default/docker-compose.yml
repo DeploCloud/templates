@@ -1,0 +1,14 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.36.0
+    restart: always
+    expose:
+      - 80
+    environment:
+      DOMAIN: ${DOMAIN}
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED}
+    volumes:
+      - vaultwarden:/data
+
+volumes:
+  vaultwarden:

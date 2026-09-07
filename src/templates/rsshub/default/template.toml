@@ -1,0 +1,9 @@
+[config]
+
+[[config.domains]]
+serviceName = "rsshub"
+port = 1200
+host = "${domain}"
+
+[config.env]
+NODE_ENV = "production"

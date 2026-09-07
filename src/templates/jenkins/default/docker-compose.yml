@@ -1,0 +1,11 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - jenkins-data:/var/jenkins_home
+
+volumes:
+  jenkins-data: {}

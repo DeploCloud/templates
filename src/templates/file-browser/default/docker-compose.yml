@@ -1,0 +1,15 @@
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.63.23
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - filebrowser-data:/srv
+      - filebrowser-database:/database
+      - filebrowser-config:/config
+
+volumes:
+  filebrowser-data: {}
+  filebrowser-database: {}
+  filebrowser-config: {}

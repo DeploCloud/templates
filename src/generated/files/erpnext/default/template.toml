@@ -1,0 +1,14 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:32}"
+
+[config]
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+ADMIN_PASSWORD = "${admin_password}"
+
+[[config.domains]]
+serviceName = "frontend"
+port = 8080
+host = "${domain}"

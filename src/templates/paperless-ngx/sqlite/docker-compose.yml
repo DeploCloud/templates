@@ -1,0 +1,37 @@
+services:
+  paperless-webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.1.0
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
+      PAPERLESS_URL: ${PAPERLESS_URL}
+      PAPERLESS_REDIS: ${PAPERLESS_REDIS}
+      PAPERLESS_DBENGINE: ${PAPERLESS_DBENGINE}
+    volumes:
+      - paperless-data:/usr/src/paperless/data
+      - paperless-media:/usr/src/paperless/media
+      - paperless-export:/usr/src/paperless/export
+      - paperless-consume:/usr/src/paperless/consume
+    depends_on:
+      paperless-broker:
+        condition: service_healthy
+
+  paperless-broker:
+    image: valkey/valkey:9.1.1-alpine3.24
+    restart: unless-stopped
+    volumes:
+      - paperless-redis:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  paperless-data: {}
+  paperless-media: {}
+  paperless-export: {}
+  paperless-consume: {}
+  paperless-redis: {}

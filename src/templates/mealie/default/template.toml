@@ -1,0 +1,10 @@
+[config]
+
+[[config.domains]]
+serviceName = "mealie"
+port = 9000
+host = "${domain}"
+
+[config.env]
+ALLOW_SIGNUP = "false"
+TZ = "Europe/Rome"

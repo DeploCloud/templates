@@ -1,0 +1,16 @@
+services:
+  pocketbase:
+    image: adrianmusante/pocketbase:0.40.2
+    restart: unless-stopped
+    expose:
+      - 8090
+    environment:
+      - POCKETBASE_ADMIN_EMAIL=${ADMIN_EMAIL}
+      - POCKETBASE_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - POCKETBASE_ADMIN_UPSERT=true
+      - POCKETBASE_PORT_NUMBER=8090
+    volumes:
+      - pocketbase-data:/pocketbase
+
+volumes:
+  pocketbase-data: {}

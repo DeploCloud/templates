@@ -1,0 +1,16 @@
+[variables]
+timezone = "Europe/Rome"
+db_password = "${password:32}"
+root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "app"
+port = 81
+host = "${domain}"
+
+[config.env]
+TZ = "${timezone}"
+DB_MYSQL_PASSWORD = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${root_password}"

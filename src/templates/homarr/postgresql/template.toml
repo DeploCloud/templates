@@ -1,0 +1,18 @@
+[variables]
+secret_encryption_key = "${hash:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "homarr"
+port = 7_575
+host = "${domain}"
+
+[config.env]
+SECRET_ENCRYPTION_KEY = "${secret_encryption_key}"
+DB_DRIVER = "node-postgres"
+DB_DIALECT = "postgresql"
+DB_URL = "postgresql://homarr:${db_password}@homarr-db:5432/homarr"
+DB_PASSWORD = "${db_password}"

@@ -1,0 +1,16 @@
+[variables]
+uid = "1000"
+gid = "1000"
+timezone = "Europe/Rome"
+
+[config]
+
+[[config.domains]]
+serviceName = "qbittorrent"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PUID = "${uid}"
+PGID = "${gid}"
+TZ = "${timezone}"

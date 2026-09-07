@@ -1,0 +1,28 @@
+[variables]
+db_name = "wordpress"
+db_user = "wordpress"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "wordpress"
+port = 80
+host = "${domain}"
+
+[config.env]
+WORDPRESS_DB_NAME = "${db_name}"
+WORDPRESS_DB_USER = "${db_user}"
+WORDPRESS_DB_PASSWORD = "${db_password}"
+WORDPRESS_DB_ROOT_PASSWORD = "${db_root_password}"
+WORDPRESS_DEBUG = "0"
+
+[[config.mounts]]
+filePath = "uploads.ini"
+content = """upload_max_filesize = 64M
+post_max_size = 64M
+memory_limit = 256M
+max_execution_time = 300
+max_input_vars = 3000
+"""

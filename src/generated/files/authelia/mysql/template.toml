@@ -1,0 +1,83 @@
+[variables]
+jwt_secret = "${password:64}"
+session_secret = "${password:64}"
+storage_encryption_key = "${password:64}"
+redis_password = "${password:32}"
+mysql_password = "${password:32}"
+mysql_root_password = "${password:32}"
+[config]
+
+[[config.domains]]
+serviceName = "authelia"
+port = 9091
+host = "${domain}"
+
+[config.env]
+AUTHELIA_JWT_SECRET = "${jwt_secret}"
+AUTHELIA_SESSION_SECRET = "${session_secret}"
+AUTHELIA_STORAGE_ENCRYPTION_KEY = "${storage_encryption_key}"
+AUTHELIA_REDIS_PASSWORD = "${redis_password}"
+AUTHELIA_STORAGE_MYSQL_PASSWORD = "${mysql_password}"
+AUTHELIA_STORAGE_MYSQL_ROOT_PASSWORD = "${mysql_root_password}"
+
+[[config.mounts]]
+filePath = "configuration.yml"
+content = """server:
+  address: 'tcp://0.0.0.0:9091'
+
+log:
+  level: info
+
+theme: auto
+
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+
+identity_validation:
+  reset_password:
+    jwt_secret: ${jwt_secret}
+
+session:
+  name: authelia_session
+  domain: ${domain}
+  same_site: lax
+  secret: ${session_secret}
+  expiration: 1h
+  inactivity: 5m
+  redis:
+    host: authelia-redis
+    port: 6379
+    password: ${redis_password}
+
+storage:
+  encryption_key: ${storage_encryption_key}
+  mysql:
+    address: tcp://authelia-db:3306
+    database: authelia
+    username: authelia
+    password: ${mysql_password}
+
+notifier:
+  disable_startup_check: true
+  filesystem:
+    filename: /config/notification.txt
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain: ${domain}
+      policy: one_factor
+"""
+
+[[config.mounts]]
+filePath = "users_database.yml"
+content = """users:
+  admin:
+    disabled: false
+    displayname: "Authelia Admin"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$170PGJ1MskQyxfFknfBPFQ$VqD1/pqC3fBHo+Zk58bC2xQm1ltOFTr0w2wx93vJgC4"
+    email: admin@example.com
+    groups:
+      - admins
+"""

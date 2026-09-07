@@ -1,0 +1,27 @@
+services:
+  librechat:
+    image: ghcr.io/danny-avila/librechat:v0.8.7
+    restart: unless-stopped
+    expose:
+      - 3080
+    depends_on:
+      mongo:
+        condition: service_started
+    environment:
+      HOST: ${HOST}
+      PORT: ${PORT}
+      MONGO_URI: ${MONGO_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - librechat-uploads:/app/uploads
+
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    volumes:
+      - librechat-mongo:/data/db
+
+volumes:
+  librechat-uploads: {}
+  librechat-mongo: {}

@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+nextauth_secret = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "linkwarden"
+port = 3000
+host = "${domain}"
+
+[config.env]
+DATABASE_URL = "postgresql://linkwarden:${db_password}@db:5432/linkwarden"
+NEXTAUTH_URL = "https://${domain}"
+NEXTAUTH_SECRET = "${nextauth_secret}"
+POSTGRES_PASSWORD = "${db_password}"

@@ -1,0 +1,15 @@
+services:
+  meilisearch:
+    image: getmeili/meilisearch:v1.53.1
+    restart: unless-stopped
+    expose:
+      - 7700
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_ENV: ${MEILI_ENV}
+      MEILI_NO_ANALYTICS: ${MEILI_NO_ANALYTICS}
+    volumes:
+      - meilisearch-data:/meili_data
+
+volumes:
+  meilisearch-data: {}

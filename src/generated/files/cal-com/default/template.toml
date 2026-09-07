@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+nextauth_secret = "${password:64}"
+encryption_key = "${password:64}"
+[config]
+
+[[config.domains]]
+serviceName = "calcom"
+port = 3000
+host = "${domain}"
+
+[config.env]
+NEXT_PUBLIC_WEBAPP_URL = "https://${domain}"
+NEXTAUTH_URL = "https://${domain}"
+NEXTAUTH_SECRET = "${nextauth_secret}"
+CALENDSO_ENCRYPTION_KEY = "${encryption_key}"
+DATABASE_URL = "postgresql://calcom:${db_password}@db:5432/calcom"
+POSTGRES_PASSWORD = "${db_password}"
