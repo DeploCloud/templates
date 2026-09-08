@@ -1,12 +1,12 @@
-# Garage S3 con Web UI
+# Garage S3 with Web UI
 
-**Garage** è uno storage a oggetti compatibile con **Amazon S3**, pensato per il self-hosting e la distribuzione tra più macchine.
+**Garage** is S3-compatible object storage designed for self-hosting and distribution across multiple machines.
 
-Questa versione aggiunge una **Web UI** per gestire più facilmente:
+This variant adds a **Web UI** for easier management of:
 
-- bucket e contenuti;
-- chiavi di accesso;
-- configurazione dello storage;
-- operazioni quotidiane di amministrazione.
+- buckets and contents;
+- access keys;
+- storage configuration;
+- day-to-day administration.
 
-Scopri di più sul [sito ufficiale di Garage](https://garagehq.deuxfleurs.fr).
+Learn more on the [official Garage website](https://garagehq.deuxfleurs.fr).

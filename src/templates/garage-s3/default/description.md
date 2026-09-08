@@ -1,12 +1,12 @@
 # Garage S3
 
-**Garage** è uno storage a oggetti compatibile con **Amazon S3**, progettato per essere eseguito in autonomia su una o più macchine.
+**Garage** is S3-compatible object storage designed to run self-hosted across one or more machines.
 
-La versione **Base** include il servizio essenziale per:
+The **Base** variant includes the core service for:
 
-- creare bucket S3;
-- gestire chiavi e permessi di accesso;
-- distribuire i dati tra più nodi;
-- mantenere lo storage operativo senza dipendere da un singolo server.
+- creating S3 buckets;
+- managing access keys and permissions;
+- distributing data across multiple nodes;
+- keeping storage operational without relying on a single server.
 
-Per maggiori informazioni, visita la [documentazione ufficiale di Garage](https://garagehq.deuxfleurs.fr).
+For more information, visit the [official Garage documentation](https://garagehq.deuxfleurs.fr).
