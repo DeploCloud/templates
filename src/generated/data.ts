@@ -1768,7 +1768,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
-          "description": "# Garage S3\n\n**Garage** è uno storage a oggetti compatibile con **Amazon S3**, progettato per essere eseguito in autonomia su una o più macchine.\n\nLa versione **Base** include il servizio essenziale per:\n\n- creare bucket S3;\n- gestire chiavi e permessi di accesso;\n- distribuire i dati tra più nodi;\n- mantenere lo storage operativo senza dipendere da un singolo server.\n\nPer maggiori informazioni, visita la [documentazione ufficiale di Garage](https://garagehq.deuxfleurs.fr).",
+          "description": "# Garage S3\n\n**Garage** is S3-compatible object storage designed to run self-hosted across one or more machines.\n\nThe **Base** variant includes the core service for:\n\n- creating S3 buckets;\n- managing access keys and permissions;\n- distributing data across multiple nodes;\n- keeping storage operational without relying on a single server.\n\nFor more information, visit the [official Garage documentation](https://garagehq.deuxfleurs.fr).",
           "logo": "/images/garage-s3/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -1803,7 +1803,7 @@ const data = {
           },
           "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
-          "description": "# Garage S3 con Web UI\n\n**Garage** è uno storage a oggetti compatibile con **Amazon S3**, pensato per il self-hosting e la distribuzione tra più macchine.\n\nQuesta versione aggiunge una **Web UI** per gestire più facilmente:\n\n- bucket e contenuti;\n- chiavi di accesso;\n- configurazione dello storage;\n- operazioni quotidiane di amministrazione.\n\nScopri di più sul [sito ufficiale di Garage](https://garagehq.deuxfleurs.fr).",
+          "description": "# Garage S3 with Web UI\n\n**Garage** is S3-compatible object storage designed for self-hosting and distribution across multiple machines.\n\nThis variant adds a **Web UI** for easier management of:\n\n- buckets and contents;\n- access keys;\n- storage configuration;\n- day-to-day administration.\n\nLearn more on the [official Garage website](https://garagehq.deuxfleurs.fr).",
           "logo": "/images/garage-s3/web-ui/logo.webp",
           "images": [],
           "slug": "web-ui",
@@ -6097,4 +6097,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "1c788429bf55af3c321081b1796a1ad306f65b6280c1e2deaad4d08f4596f463";
+export const version = "2c6c0762c6ae9c14961e287cc6402aee15eedce7058933fe831d8b8a57934772";
