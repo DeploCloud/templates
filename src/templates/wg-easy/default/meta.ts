@@ -17,6 +17,17 @@ export default {
     website: "https://wg-easy.github.io/wg-easy/",
     docs: ["https://wg-easy.github.io/wg-easy/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "The host must provide WireGuard kernel support and the required network capabilities.",
+    },
+    {
+      type: "warning",
+      message: "Set and change the admin password before exposing the UI.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

@@ -17,6 +17,14 @@ export default {
     website: "https://immich.app/",
     docs: ["https://docs.immich.app/FAQ/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "At least 6 GB RAM is recommended; this variant disables machine learning for 4 GB hosts.",
+      link: "https://docs.immich.app/install/requirements/",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

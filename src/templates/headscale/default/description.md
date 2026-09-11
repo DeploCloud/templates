@@ -1,1 +1,1 @@
-Headscale coordination server for self-hosted mesh VPN clients with persistent state. MagicDNS is disabled by default because enabling it requires a separate FQDN for `base_domain`; configure DNS, routes and client registration according to the deployment environment before connecting nodes.
+Headscale coordination server for self-hosted mesh VPN clients with persistent state.

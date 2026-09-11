@@ -20,6 +20,13 @@ export default {
       "https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/",
     ],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "This variant requires a Linux host with a compatible GPU, installed drivers and /dev/dri access.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

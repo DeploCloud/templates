@@ -17,6 +17,13 @@ export default {
     website: "https://www.portainer.io/",
     docs: ["https://docs.portainer.io/start/install-ce/server/docker/linux"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "This template needs host Docker socket access to manage containers.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

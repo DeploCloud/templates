@@ -17,6 +17,13 @@ export default {
     website: "https://www.netdata.cloud/",
     docs: ["https://learn.netdata.cloud/docs/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Full host visibility requires read-only access to host proc, sys and Docker data.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

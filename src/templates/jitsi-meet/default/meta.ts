@@ -18,6 +18,13 @@ export default {
       "https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker/",
     ],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "UDP port 10000 must be reachable and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

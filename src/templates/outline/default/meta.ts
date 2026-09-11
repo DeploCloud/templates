@@ -17,6 +17,13 @@ export default {
     website: "https://www.getoutline.com/",
     docs: ["https://docs.getoutline.com/s/hosting/doc/docker-7pfeLP5a8t"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Configure an external SMTP provider and replace the initial identity-provider password before using a public workspace.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

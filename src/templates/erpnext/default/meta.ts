@@ -17,6 +17,13 @@ export default {
     website: "https://erpnext.com/",
     docs: ["https://docs.frappe.io/erpnext/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "The first deployment can take several minutes while the site is initialized.",
+    },
+  ],
   lastUpdate: new Date("2026-09-06T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

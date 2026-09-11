@@ -1,1 +1,3 @@
-Complete self-hosted Supabase deployment based on the official Docker stack, including Studio, Envoy API gateway, Auth, REST, Realtime, Storage, image transformation, database metadata, Edge Functions, PostgreSQL and Supavisor. Deplo generates the deployment credentials. The host needs at least 4 GB RAM and the database ports 5432 and 6543 are published for Supabase clients.
+Complete self-hosted Supabase deployment based on the official Docker stack, including Studio, Envoy
+API gateway, Auth, REST, Realtime, Storage, image transformation, database metadata, Edge Functions,
+PostgreSQL and Supavisor. Deplo generates the deployment credentials.

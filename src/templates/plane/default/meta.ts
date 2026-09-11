@@ -17,6 +17,12 @@ export default {
     website: "https://plane.so/",
     docs: ["https://developers.plane.so/self-hosting/methods/docker-compose"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message: "The bundled stack needs at least 2 vCPUs and 4 GB RAM.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

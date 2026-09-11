@@ -17,6 +17,13 @@ export default {
     website: "https://syncthing.net/",
     docs: ["https://docs.syncthing.net/users/faq.html"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Direct synchronization needs Syncthing's standard TCP and UDP discovery ports available on the server.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

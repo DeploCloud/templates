@@ -17,6 +17,13 @@ export default {
     website: "https://posthog.com/",
     docs: ["https://posthog.com/docs/self-host/deploy/hobby"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "The stack needs at least 8 GB RAM and can take several minutes to initialize.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

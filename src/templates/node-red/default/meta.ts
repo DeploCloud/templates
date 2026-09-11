@@ -17,6 +17,12 @@ export default {
     website: "https://nodered.org/",
     docs: ["https://nodered.org/docs/getting-started/docker"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message: "A credential secret is required for sensitive flows.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

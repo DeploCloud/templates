@@ -16,6 +16,12 @@ export default {
     website: "https://cal.com/",
     docs: ["https://cal.com/docs"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message: "Email delivery requires an SMTP provider.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

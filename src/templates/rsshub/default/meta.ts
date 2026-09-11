@@ -17,6 +17,13 @@ export default {
     website: "https://docs.rsshub.app/",
     docs: ["https://docs.rsshub.app/"],
   },
+  alerts: [
+    {
+      type: "info",
+      message:
+        "Individual routes may require external APIs, credentials or anti-bot configuration.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

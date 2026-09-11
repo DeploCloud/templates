@@ -17,6 +17,13 @@ export default {
     website: "https://rustdesk.com/",
     docs: ["https://rustdesk.com/docs/en/self-host/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "Open the official RustDesk rendezvous and relay TCP/UDP ports on the host; this service is not routed through the web domain.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

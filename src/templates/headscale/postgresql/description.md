@@ -1,1 +1,2 @@
-Headscale mesh VPN coordination server using its supported PostgreSQL backend. MagicDNS is disabled by default because enabling it requires a separate FQDN for `base_domain`; the database and Headscale state persist in volumes.
+Headscale mesh VPN coordination server using its supported PostgreSQL backend. The database and
+Headscale state persist in volumes.

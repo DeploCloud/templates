@@ -17,6 +17,13 @@ export default {
     website: "https://www.photoprism.app/",
     docs: ["https://docs.photoprism.app/getting-started/docker-compose/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Allow at least 4 GB of swap for indexing larger libraries and change the generated administrator password.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

@@ -78,6 +78,14 @@ const templateLinksSchema = z
     "At least one project link is required.",
   );
 
+const templateAlertSchema = z
+  .object({
+    type: z.enum(["info", "warning", "destructive"]),
+    message: z.string().trim().min(1).max(2_000),
+    link: httpsUrlSchema.optional(),
+  })
+  .strict();
+
 export const templateRawSchema = z
   .object({
     name: nameSchema,
@@ -92,6 +100,7 @@ export const templateVariantRawSchema = z
     developedBy: linkSchema,
     submittedBy: linkSchema,
     links: templateLinksSchema,
+    alerts: z.array(templateAlertSchema).default([]),
     lastUpdate: z.date(),
     createdAt: z.date(),
   })

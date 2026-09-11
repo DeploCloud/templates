@@ -17,6 +17,13 @@ export default {
     website: "https://joplinapp.org/",
     docs: ["https://hub.docker.com/r/joplin/server"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "This SQLite variant is intended for evaluation or small personal deployments; change the default admin login.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

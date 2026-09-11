@@ -17,6 +17,13 @@ export default {
     website: "https://www.qbittorrent.org/",
     docs: ["https://docs.linuxserver.io/images/docker-qbittorrent/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "TCP and UDP port 6881 are published for incoming peer connections and must be reachable.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

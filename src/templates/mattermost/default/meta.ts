@@ -17,6 +17,12 @@ export default {
     website: "https://mattermost.com/",
     docs: ["https://docs.mattermost.com/"],
   },
+  alerts: [
+    {
+      type: "info",
+      message: "Email notifications require an SMTP provider.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

@@ -17,6 +17,12 @@ export default {
     website: "https://www.discourse.org/",
     docs: ["https://meta.discourse.org/"],
   },
+  alerts: [
+    {
+      type: "info",
+      message: "Email-dependent features require an SMTP provider.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
