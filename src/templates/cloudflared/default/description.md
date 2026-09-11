@@ -1,1 +1,2 @@
-Cloudflare Tunnel connector for publishing private services through an existing tunnel. Create the tunnel in Cloudflare first and set its non-empty token in `TUNNEL_TOKEN` before starting the app; an empty token makes `cloudflared` exit with `flag needs an argument: -token`. This connector has no web UI or HTTP application port and must be verified from the Cloudflare Tunnel status.
+Cloudflare Tunnel connector for publishing private services through an existing tunnel. This
+connector has no web UI or HTTP application port.

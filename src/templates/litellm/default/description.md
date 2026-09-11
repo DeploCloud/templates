@@ -1,1 +1,2 @@
-LiteLLM proxy for routing requests to OpenAI-compatible language-model providers. Add provider credentials and model configuration to the materialized config before exposing the endpoint.
+LiteLLM proxy for routing requests to OpenAI-compatible language-model providers. Provider
+configuration is stored in the materialized config.

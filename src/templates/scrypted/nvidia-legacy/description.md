@@ -1,1 +1,2 @@
-Scrypted camera platform using the official legacy NVIDIA image for accelerated transcoding and detection. The host must provide CUDA, cuDNN and the NVIDIA container runtime; Scrypted state persists in a volume.
+Scrypted camera platform using the official legacy NVIDIA image for accelerated transcoding and
+detection. Scrypted state persists in a volume.

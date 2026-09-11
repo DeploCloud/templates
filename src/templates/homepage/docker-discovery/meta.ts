@@ -17,6 +17,13 @@ export default {
     website: "https://gethomepage.dev/",
     docs: ["https://gethomepage.dev/configs/docker/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "This variant requires read-only host Docker socket access through a restricted proxy; enable Deplo host-volume permission.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

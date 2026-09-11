@@ -1,1 +1,1 @@
-Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services. The server must expose UDP port 10000 and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic.
+Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services.

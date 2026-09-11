@@ -20,6 +20,13 @@ export default {
     website: "https://adguard.com/en/adguard-home/overview.html",
     docs: ["https://github.com/AdguardTeam/AdGuardHome/wiki/Docker"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

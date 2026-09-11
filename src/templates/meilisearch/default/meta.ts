@@ -17,6 +17,13 @@ export default {
     website: "https://www.meilisearch.com/",
     docs: ["https://www.meilisearch.com/docs/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Use the generated master key for API requests; this template exposes an API, not a browser UI.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

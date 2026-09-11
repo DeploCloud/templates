@@ -17,6 +17,13 @@ export default {
     website: "https://min.io/",
     docs: ["https://min.io/docs/minio/container/index.html"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "This is a single-node, single-drive deployment for small workloads and evaluation.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

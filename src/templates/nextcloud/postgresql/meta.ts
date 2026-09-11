@@ -19,6 +19,13 @@ export default {
       "https://docs.nextcloud.com/server/latest/admin_manual/installation/installation_wizard.html",
     ],
   },
+  alerts: [
+    {
+      type: "info",
+      message: "The deployment domain must be listed in trusted_domains.",
+      link: "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

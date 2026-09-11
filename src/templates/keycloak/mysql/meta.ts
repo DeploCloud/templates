@@ -16,6 +16,13 @@ export default {
     website: "https://www.keycloak.org/",
     docs: ["https://www.keycloak.org/documentation"],
   },
+  alerts: [
+    {
+      type: "info",
+      message:
+        "Change the generated bootstrap administrator password after first login.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

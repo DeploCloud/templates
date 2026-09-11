@@ -16,6 +16,13 @@ export default {
     website: "https://www.authelia.com/",
     docs: ["https://www.authelia.com/integration/deployment/docker/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Replace the seeded administrator password before protecting production apps.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

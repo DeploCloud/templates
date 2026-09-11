@@ -17,6 +17,12 @@ export default {
     website: "https://pi-hole.net/",
     docs: ["https://docs.pi-hole.net/docker/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message: "TCP and UDP port 53 and UDP port 67 must be free on the host.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

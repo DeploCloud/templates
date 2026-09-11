@@ -20,6 +20,13 @@ export default {
     website: "https://docs.paperless-ngx.com/",
     docs: ["https://docs.paperless-ngx.com/setup/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "SQLite is intended for a personal archive; use the PostgreSQL variant for several users or high ingest concurrency.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

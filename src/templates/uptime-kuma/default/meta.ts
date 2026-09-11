@@ -17,6 +17,13 @@ export default {
     website: "https://uptime.kuma.pet/",
     docs: ["https://github.com/louislam/uptime-kuma/wiki"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "This variant uses Docker socket access for container monitoring.",
+    },
+  ],
   lastUpdate: new Date("2026-08-25T00:00:00.000Z"),
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

@@ -17,6 +17,13 @@ export default {
     website: "https://www.litellm.ai/",
     docs: ["https://docs.litellm.ai/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Provider credentials and model configuration are required before exposing the endpoint.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

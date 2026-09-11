@@ -16,6 +16,13 @@ export default {
     github: "https://github.com/dani-garcia/vaultwarden",
     docs: ["https://github.com/dani-garcia/vaultwarden/wiki"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "HTTPS is required before connecting password-manager clients; use the generated secure domain.",
+    },
+  ],
   lastUpdate: new Date("2026-08-25T00:00:00.000Z"),
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

@@ -16,6 +16,13 @@ export default {
     website: "https://ntfy.sh/",
     docs: ["https://docs.ntfy.sh/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Configure authentication, access control and the base URL before production use.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

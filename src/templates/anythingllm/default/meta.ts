@@ -17,6 +17,13 @@ export default {
     website: "https://anythingllm.com/",
     docs: ["https://docs.anythingllm.com/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "A model provider and secure authentication are required for production use.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

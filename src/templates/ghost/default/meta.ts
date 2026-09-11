@@ -17,6 +17,18 @@ export default {
     website: "https://ghost.org/",
     docs: ["https://ghost.org/docs/config/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "The configured production URL must be served securely; enable HTTPS for the generated domain.",
+      link: "https://ghost.org/docs/config/",
+    },
+    {
+      type: "warning",
+      message: "Change the initial administrator password after setup.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

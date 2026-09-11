@@ -16,6 +16,13 @@ export default {
     website: "https://ollama.com/",
     docs: ["https://docs.ollama.com/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "This variant requires an NVIDIA GPU, a compatible driver and NVIDIA Container Toolkit.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

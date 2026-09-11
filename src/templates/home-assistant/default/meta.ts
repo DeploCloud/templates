@@ -20,6 +20,13 @@ export default {
     website: "https://www.home-assistant.io/",
     docs: ["https://www.home-assistant.io/installation/linux/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Bluetooth and other hardware integrations may require additional host device access.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

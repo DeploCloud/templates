@@ -17,6 +17,13 @@ export default {
     website: "https://www.langflow.org/",
     docs: ["https://docs.langflow.org/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "An authentication secret and model provider credentials are required before sharing the UI.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

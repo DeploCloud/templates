@@ -17,6 +17,13 @@ export default {
     website: "https://about.gitlab.com/",
     docs: ["https://docs.gitlab.com/install/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "The stack is resource intensive; an external URL and sufficient memory are required.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

@@ -17,6 +17,13 @@ export default {
     website: "https://about.gitea.com/",
     docs: ["https://docs.gitea.com/installation/install-with-docker/"],
   },
+  alerts: [
+    {
+      type: "info",
+      message:
+        "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

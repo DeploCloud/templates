@@ -17,6 +17,13 @@ export default {
     website: "https://qdrant.tech/",
     docs: ["https://qdrant.tech/documentation/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "Use the generated API key on every client request before exposing this service.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

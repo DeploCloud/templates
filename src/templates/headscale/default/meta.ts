@@ -17,6 +17,13 @@ export default {
     website: "https://headscale.net/",
     docs: ["https://headscale.net/stable/"],
   },
+  alerts: [
+    {
+      type: "info",
+      message:
+        "MagicDNS is disabled; enabling it requires a separate FQDN for base_domain.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

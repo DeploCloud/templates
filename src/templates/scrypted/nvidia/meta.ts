@@ -16,6 +16,13 @@ export default {
     website: "https://scrypted.app/",
     docs: ["https://docs.scrypted.app/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "This variant requires CUDA, cuDNN and the NVIDIA container runtime on the host.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

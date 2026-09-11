@@ -16,6 +16,13 @@ export default {
     website: "https://www.librechat.ai/",
     docs: ["https://www.librechat.ai/docs/"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "A model provider, MongoDB and authentication are required for production use.",
+    },
+  ],
   lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

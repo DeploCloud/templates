@@ -17,6 +17,13 @@ export default {
     website: "https://www.chatwoot.com/",
     docs: ["https://developers.chatwoot.com/self-hosted/deployment/docker"],
   },
+  alerts: [
+    {
+      type: "warning",
+      message:
+        "This stack needs at least 4 GB of RAM and should be served behind HTTPS before production use.",
+    },
+  ],
   lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

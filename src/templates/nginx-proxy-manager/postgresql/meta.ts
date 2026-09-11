@@ -20,6 +20,13 @@ export default {
     website: "https://nginxproxymanager.com/",
     docs: ["https://nginxproxymanager.com/setup/"],
   },
+  alerts: [
+    {
+      type: "destructive",
+      message:
+        "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic.",
+    },
+  ],
   lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
