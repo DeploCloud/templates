@@ -17,6 +17,6 @@ export default {
     website: "https://rybbit.com/",
     docs: ["https://rybbit.com/docs/self-hosting"],
   },
-  lastUpdate: new Date("2026-09-07T00:00:00.000Z"),
+  lastUpdate: new Date("2026-09-12T00:00:00.000Z"),
   createdAt: new Date("2026-09-07T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
