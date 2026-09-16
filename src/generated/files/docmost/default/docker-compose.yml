@@ -1,6 +1,6 @@
 services:
   docmost:
-    image: docmost/docmost:0.95.0
+    image: docmost/docmost:0.96
     restart: unless-stopped
     depends_on:
       db:
