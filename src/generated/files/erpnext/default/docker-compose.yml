@@ -1,6 +1,6 @@
 services:
   backend:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: unless-stopped
     volumes:
       - sites:/home/frappe/frappe-bench/sites
@@ -15,7 +15,7 @@ services:
         condition: service_completed_successfully
 
   configurator:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: "no"
     entrypoint:
       - bash
@@ -47,7 +47,7 @@ services:
         condition: service_started
 
   create-site:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: "no"
     entrypoint:
       - bash
@@ -105,7 +105,7 @@ services:
       - db-data:/var/lib/mysql
 
   frontend:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: unless-stopped
     command:
       - nginx-entrypoint.sh
@@ -128,7 +128,7 @@ services:
       - websocket
 
   queue-long:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: unless-stopped
     command:
       - bench
@@ -146,7 +146,7 @@ services:
         condition: service_completed_successfully
 
   queue-short:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: unless-stopped
     command:
       - bench
@@ -174,7 +174,7 @@ services:
       - redis-queue-data:/data
 
   scheduler:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: unless-stopped
     command:
       - bench
@@ -187,7 +187,7 @@ services:
         condition: service_completed_successfully
 
   websocket:
-    image: frappe/erpnext:v16.34.1
+    image: frappe/erpnext:v16.34.2
     restart: unless-stopped
     command:
       - node
