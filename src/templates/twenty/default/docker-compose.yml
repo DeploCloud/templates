@@ -1,6 +1,6 @@
 services:
   twenty-server:
-    image: twentycrm/twenty:v2.37.0
+    image: twentycrm/twenty:v2.40.2
     restart: unless-stopped
     expose:
       - 3000
@@ -28,7 +28,7 @@ services:
       retries: 20
 
   twenty-worker:
-    image: twentycrm/twenty:v2.37.0
+    image: twentycrm/twenty:v2.40.2
     restart: unless-stopped
     command: ["yarn", "worker:prod"]
     environment:
