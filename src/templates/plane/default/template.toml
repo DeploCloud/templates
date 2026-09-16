@@ -36,7 +36,7 @@ host = "${domain}"
 
 [[config.mounts]]
 filePath = ".env"
-content = """APP_RELEASE=v0.27.1
+content = """APP_RELEASE=v1.4.2
 WEB_URL=https://${domain}
 POSTGRES_USER=plane
 POSTGRES_PASSWORD=${db_password}
