@@ -1,6 +1,6 @@
 services:
   freshrss:
-    image: freshrss/freshrss:1.29.1
+    image: freshrss/freshrss:1.30.0
     restart: unless-stopped
     expose:
       - 80
