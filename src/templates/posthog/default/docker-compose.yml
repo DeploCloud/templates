@@ -577,7 +577,7 @@ services:
 
   # Caddy routes the public domain to the app and internal services.
   proxy:
-    image: caddy:2.10-alpine
+    image: caddy:2.11.4-alpine
     restart: unless-stopped
     logging: *default-logging
     depends_on:
