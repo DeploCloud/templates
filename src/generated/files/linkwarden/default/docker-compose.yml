@@ -1,6 +1,6 @@
 services:
   linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:v2.16.2
+    image: ghcr.io/linkwarden/linkwarden:v2.16.3
     restart: unless-stopped
     depends_on:
       db:
