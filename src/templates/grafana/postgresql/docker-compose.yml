@@ -1,6 +1,6 @@
 services:
   grafana:
-    image: grafana/grafana-enterprise:12.4.9
+    image: grafana/grafana-enterprise:13.2.2
     restart: unless-stopped
     expose:
       - 3000

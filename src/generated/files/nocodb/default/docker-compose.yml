@@ -1,6 +1,6 @@
 services:
   nocodb:
-    image: nocodb/nocodb:2026.08.2
+    image: nocodb/nocodb:2026.09.0
     restart: unless-stopped
     expose:
       - 8080

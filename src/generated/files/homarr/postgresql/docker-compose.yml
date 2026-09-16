@@ -1,6 +1,6 @@
 services:
   homarr:
-    image: ghcr.io/homarr-labs/homarr:v1.76.2
+    image: ghcr.io/homarr-labs/homarr:v1.77.1
     restart: unless-stopped
     expose:
       - 7575

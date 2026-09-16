@@ -1,6 +1,6 @@
 services:
   langflow:
-    image: langflowai/langflow:1.12.0
+    image: langflowai/langflow:1.12.2
     restart: unless-stopped
     expose:
       - 7860

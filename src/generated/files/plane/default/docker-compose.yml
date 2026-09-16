@@ -1,6 +1,6 @@
 services:
   web:
-    image: artifacts.plane.so/makeplane/plane-frontend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-frontend:v1.4.2
     command: node web/server.js web
     depends_on:
       - api
@@ -8,7 +8,7 @@ services:
     env_file: .env
 
   space:
-    image: artifacts.plane.so/makeplane/plane-space:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-space:v1.4.2
     command: node space/server.js space
     depends_on:
       - api
@@ -17,7 +17,7 @@ services:
     env_file: .env
 
   admin:
-    image: artifacts.plane.so/makeplane/plane-admin:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-admin:v1.4.2
     command: node admin/server.js admin
     depends_on:
       - api
@@ -25,7 +25,7 @@ services:
     env_file: .env
 
   live:
-    image: artifacts.plane.so/makeplane/plane-live:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-live:v1.4.2
     command: node live/dist/server.js live
     depends_on:
       - api
@@ -33,7 +33,7 @@ services:
     env_file: .env
 
   api:
-    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v1.4.2
     command: ./bin/docker-entrypoint-api.sh
     depends_on:
       - plane-db
@@ -44,7 +44,7 @@ services:
       - plane-api-logs:/code/plane/logs
 
   worker:
-    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v1.4.2
     command: ./bin/docker-entrypoint-worker.sh
     depends_on:
       - api
@@ -56,7 +56,7 @@ services:
       - plane-worker-logs:/code/plane/logs
 
   beat-worker:
-    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v1.4.2
     command: ./bin/docker-entrypoint-beat.sh
     depends_on:
       - api
@@ -68,7 +68,7 @@ services:
       - plane-beat-logs:/code/plane/logs
 
   migrator:
-    image: artifacts.plane.so/makeplane/plane-backend:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-backend:v1.4.2
     command: ./bin/docker-entrypoint-migrator.sh
     depends_on:
       - plane-db
@@ -116,7 +116,7 @@ services:
       - plane-uploads:/export
 
   proxy:
-    image: artifacts.plane.so/makeplane/plane-proxy:v0.27.1
+    image: artifacts.plane.so/makeplane/plane-proxy:v1.4.2
     depends_on:
       - web
       - api

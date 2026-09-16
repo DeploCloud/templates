@@ -1,6 +1,6 @@
 services:
   authelia:
-    image: docker.io/authelia/authelia:4.39.22
+    image: docker.io/authelia/authelia:4.39.27
     restart: unless-stopped
     expose:
       - 9091
