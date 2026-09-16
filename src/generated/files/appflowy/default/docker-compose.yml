@@ -1,6 +1,6 @@
 services:
   appflowy-gateway:
-    image: nginx:1.30.4-alpine
+    image: nginx:1.31.6-alpine
     restart: unless-stopped
     expose:
       - 80
