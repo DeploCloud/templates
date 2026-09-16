@@ -1,6 +1,6 @@
 services:
   nextcloud:
-    image: nextcloud:33.0.6
+    image: nextcloud:34.0.4
     restart: always
     expose:
       - 80
@@ -23,7 +23,7 @@ services:
         condition: service_started
 
   nextcloud-cron:
-    image: nextcloud:33.0.6
+    image: nextcloud:34.0.4
     restart: always
     volumes:
       - nextcloud_data:/var/www/html
