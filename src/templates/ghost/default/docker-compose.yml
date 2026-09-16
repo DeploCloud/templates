@@ -1,6 +1,6 @@
 services:
   ghost:
-    image: ghost:6-alpine
+    image: ghost:6.64.0-alpine
     restart: unless-stopped
     expose:
       - 2368
