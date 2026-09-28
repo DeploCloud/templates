@@ -22,6 +22,7 @@ port = 80
 host = "link.${domain}"
 
 [config.env]
+AUTH_INTERNAL_BASE_URL = "http://auth:8000"
 RELOOP_VERSION = "latest"
 RELOOP_DOMAIN = "${domain}"
 RELOOP_TRACKING_HOST = "link.${domain}"
@@ -44,6 +45,8 @@ PREFERENCES_SECRET = "${preferences_secret}"
 WEBHOOK_ENCRYPTION_KEY = "${webhook_key}"
 WORKBENCH_USER = "admin"
 WORKBENCH_PASS = "${workbench_password}"
+DISABLE_SIGNUP = "false"
+DISABLE_ORG_CREATION = "false"
 SETUP_MODE = "true"
 ADMIN_SETUP_KEY = "${admin_setup_key}"
 BASE_URL = "https://${domain}"
@@ -79,65 +82,6 @@ SMTP_SECURE = "false"
 [[config.mounts]]
 filePath = "admin-setup.key"
 content = "${admin_setup_key}"
-
-[[config.mounts]]
-filePath = ".env"
-content = """
-RELOOP_VERSION=latest
-RELOOP_DOMAIN=${domain}
-RELOOP_TRACKING_HOST=link.${domain}
-RELOOP_INBOUND_HOST=inbound.${domain}
-RELOOP_ADMIN_EMAIL=${email}
-RELOOP_HTTPS=true
-RELOOP_EXTERNAL_PROXY=yes
-RELOOP_PROXY_PORT=80
-RELOOP_SITE_ADDRESS=http://${domain}
-RELOOP_TRACKING_SITE_ADDRESS=http://link.${domain}
-RELOOP_ACME_EMAIL=${email}
-NODE_ENV=production
-SELF_HOSTED=true
-APP_NAME=Reloop
-BASE_URL=https://${domain}
-AUTH_INTERNAL_BASE_URL=http://auth:8000
-HOST_DOMAIN=${domain}
-TRACKING_DOMAIN=link.${domain}
-TRACKING_BASE_URL=https://link.${domain}
-INBOUND_HOSTNAME=inbound.${domain}
-SMTP_HOSTNAME=${domain}
-DKIM_SELECTOR=reloop
-POSTGRES_DB=reloop
-POSTGRES_USER=reloop
-POSTGRES_PASSWORD=${postgres_password}
-PG_URL=postgresql://reloop:${postgres_password}@postgres:5432/reloop
-REDIS_PASSWORD=${redis_password}
-REDIS_URL=redis://:${redis_password}@redis:6379
-NATS_URL=nats://nats:4222
-BETTER_AUTH_SECRET=${auth_secret}
-RELOOP_INTERNAL_SECRET=${internal_secret}
-TRACKING_SECRET=${tracking_secret}
-PREFERENCES_SECRET=${preferences_secret}
-WEBHOOK_ENCRYPTION_KEY=${webhook_key}
-SETUP_MODE=true
-ADMIN_SETUP_KEY_FILE=/run/reloop/admin-setup.key
-RELOOP_ENV_FILE=/run/reloop/.env
-WORKBENCH_USER=admin
-WORKBENCH_PASS=${workbench_password}
-DISABLE_SIGNUP=false
-DISABLE_ORG_CREATION=false
-KUMOMTA_MIN_FREE_SPACE=5%
-KUMOMTA_MIN_FREE_INODES=0
-KUMOMTA_RSPAMD_URL=http://spam:11333/checkv2
-KUMOMTA_CHECK_RECIPIENT_URL=http://domain:8011/api/domain
-KUMOMTA_WEBHOOK_URL=http://domain:8011/api/domain
-RSPAMD_REDIS_SERVERS=redis:6379
-RSPAMD_REDIS_PASSWORD=${redis_password}
-DNS_RESOLVERS=8.8.8.8,8.8.4.4
-SMTP_HOST=
-SMTP_PORT=587
-SMTP_USER=
-SMTP_PASSWORD=
-SMTP_SECURE=false
-"""
 
 [[config.mounts]]
 filePath = "Caddyfile"
