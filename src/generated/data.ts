@@ -5522,12 +5522,12 @@ const data = {
             },
             {
               "type": "info",
-              "message": "Configure an outbound SMTP server in the deployment environment to send sign-in codes and invitations."
+              "message": "Configure SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and SMTP_SECURE, or set RELOOP_API_KEY and a verified RELOOP_SENDER_DOMAIN to send sign-in codes and invitations."
             }
           ],
           "lastUpdate": new Date("2026-09-28T00:00:00.000Z"),
           "createdAt": new Date("2026-09-28T00:00:00.000Z"),
-          "description": "Reloop is an open-source email platform for transactional email, campaigns, inbound mail, templates, contacts and delivery analytics.\n\nThe stack includes PostgreSQL, Redis, NATS and persistent mail queues. Add DNS records for the main, `link` and `inbound` hostnames, then configure SPF, DKIM, DMARC and MX records in the dashboard before using email delivery. Configure an outbound SMTP server in the deployment environment to send sign-in codes and invitations. Create the first administrator at `/dashboard/setup` using the generated `ADMIN_SETUP_KEY` from the deployment environment.",
+          "description": "Reloop is an open-source email platform for transactional email, campaigns, inbound mail, templates, contacts and delivery analytics.\n\nThe stack includes PostgreSQL, Redis, NATS and persistent mail queues. Add DNS records for the main, `link` and `inbound` hostnames, then configure SPF, DKIM, DMARC and MX records in the dashboard before using email delivery. For sign-in codes and invitations, configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` and `SMTP_SECURE`, or set `RELOOP_API_KEY` and a verified `RELOOP_SENDER_DOMAIN`. Create the first administrator at `/dashboard/setup` using the generated `ADMIN_SETUP_KEY` from the deployment environment.",
           "logo": "/images/reloop/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "28346a4365e2c18e9ca49e978a49ac846b56af8242f1596a3f316bb94313f05f";
+export const version = "465883eaad4e16cfd5488d083c7dfda459f796cd36b9d3e79fa865f55eb11429";

@@ -15,11 +15,16 @@ x-infra-ready: &infra-ready
   nats:
     condition: service_healthy
 
+x-backend-depends: &backend-depends
+  <<: *infra-ready
+  migrate:
+    condition: service_completed_successfully
+
 x-backend: &backend
   restart: unless-stopped
   env_file:
     - .env
-  depends_on: *infra-ready
+  depends_on: *backend-depends
   dns:
     - 1.1.1.1
     - 8.8.8.8
@@ -309,8 +314,7 @@ services:
 
   migrate:
     image: reloopsh/be-auth:${RELOOP_VERSION}
-    profiles:
-      - tools
+    restart: "no"
     working_dir: /app/packages/db
     entrypoint: ["/app/node_modules/.bin/drizzle-kit"]
     command: ["push", "--force"]
