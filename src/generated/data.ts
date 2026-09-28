@@ -4170,6 +4170,7 @@ const data = {
               "https://www.nocodb.com/docs/self-hosting/environment-variables"
             ]
           },
+          "alerts": [],
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "NocoDB turns a local SQLite database into a browser-based workspace for tables, views and APIs.\nThis lightweight variant persists its application data and is suited to evaluation or small\nworkloads; use the PostgreSQL variant for a production-shaped deployment.",
@@ -4205,6 +4206,7 @@ const data = {
               "https://www.nocodb.com/docs/self-hosting/installation/quickstart"
             ]
           },
+          "alerts": [],
           "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "NocoDB with bundled PostgreSQL, Redis and a background worker for a production-shaped deployment.\nApplication data, attachments, the database and the job queue persist on named volumes. The\ngenerated HTTPS domain is used for callbacks and shared links.",
@@ -5482,6 +5484,62 @@ const data = {
       "slug": "radarr"
     },
     {
+      "name": "Reloop",
+      "logo": "/images/reloop/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Self-hosted email platform for transactional mail, campaigns, inbound email and delivery analytics.",
+          "category": {
+            "name": "Email",
+            "icon": "mail",
+            "description": "Mail servers, transactional senders, newsletters and the inboxes to read them in.",
+            "slug": "email"
+          },
+          "developedBy": {
+            "label": "Reloop Labs",
+            "url": "https://github.com/reloop-labs"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/reloop-labs/reloop",
+            "website": "https://reloop.sh",
+            "docs": [
+              "https://reloop.sh/docs/self-host"
+            ]
+          },
+          "alerts": [
+            {
+              "type": "warning",
+              "message": "Before sending or receiving mail, point link and inbound subdomains to this server and configure the required SPF, DKIM, DMARC and MX records. SMTP also requires ports 25, 465 and 587 to be reachable."
+            },
+            {
+              "type": "info",
+              "message": "After deployment, create the first administrator at /dashboard/setup using the generated ADMIN_SETUP_KEY from the deployment environment."
+            },
+            {
+              "type": "info",
+              "message": "Configure an outbound SMTP server in the deployment environment to send sign-in codes and invitations."
+            }
+          ],
+          "lastUpdate": new Date("2026-09-28T00:00:00.000Z"),
+          "createdAt": new Date("2026-09-28T00:00:00.000Z"),
+          "description": "Reloop is an open-source email platform for transactional email, campaigns, inbound mail, templates, contacts and delivery analytics.\n\nThe stack includes PostgreSQL, Redis, NATS and persistent mail queues. Add DNS records for the main, `link` and `inbound` hostnames, then configure SPF, DKIM, DMARC and MX records in the dashboard before using email delivery. Configure an outbound SMTP server in the deployment environment to send sign-in codes and invitations. Create the first administrator at `/dashboard/setup` using the generated `ADMIN_SETUP_KEY` from the deployment environment.",
+          "logo": "/images/reloop/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/reloop/default/template.toml",
+            "compose": "/files/reloop/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "reloop"
+    },
+    {
       "name": "RSSHub",
       "logo": "/images/rsshub/logo.webp",
       "variants": [
@@ -5606,7 +5664,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-07T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-09-12T00:00:00.000Z"),
           "createdAt": new Date("2026-09-07T00:00:00.000Z"),
           "description": "Rybbit is a privacy-friendly web analytics platform with dashboards, session replays, funnels and\ncustom events. The template includes the client, backend, PostgreSQL, ClickHouse and Redis. All\napplication data persists in volumes.",
           "logo": "/images/rybbit/default/logo.webp",
@@ -6661,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "335ea535422348cbcca1c2868f13053a33891fc271e43306fe45edcef92fd142";
+export const version = "daf503e73f85e5d816b99811afdf3153f058e1829a67247fefe9c99238431675";
