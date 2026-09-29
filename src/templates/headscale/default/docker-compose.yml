@@ -1,6 +1,6 @@
 services:
   headscale:
-    image: headscale/headscale:0.29.3
+    image: headscale/headscale:0.29.4
     restart: unless-stopped
     expose:
       - 8080
