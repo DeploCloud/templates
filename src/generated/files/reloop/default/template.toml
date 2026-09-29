@@ -23,7 +23,6 @@ host = "link.${domain}"
 
 [config.env]
 AUTH_INTERNAL_BASE_URL = "http://auth:8000"
-RELOOP_VERSION = "latest"
 RELOOP_DOMAIN = "${domain}"
 RELOOP_TRACKING_HOST = "link.${domain}"
 RELOOP_INBOUND_HOST = "inbound.${domain}"
