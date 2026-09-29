@@ -1,6 +1,6 @@
 services:
   strapi:
-    image: elestio/strapi-production:v5.53.0
+    image: elestio/strapi-production:v5.55.1
     restart: unless-stopped
     depends_on:
       db:
