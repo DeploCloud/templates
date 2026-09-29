@@ -3662,54 +3662,6 @@ const data = {
       "slug": "metabase"
     },
     {
-      "name": "MinIO",
-      "logo": "/images/minio/logo.webp",
-      "variants": [
-        {
-          "name": "Default",
-          "shortDescription": "Single-node S3-compatible object storage with a built-in Console and persistent local data volume.",
-          "category": {
-            "name": "Storage",
-            "icon": "hard-drive",
-            "description": "Object storage, file sync, backups and the shares and drives behind them.",
-            "slug": "storage"
-          },
-          "developedBy": {
-            "label": "MinIO",
-            "url": "https://github.com/minio"
-          },
-          "submittedBy": {
-            "label": "Deplo",
-            "url": "https://github.com/DeploCloud"
-          },
-          "links": {
-            "github": "https://github.com/minio/minio",
-            "website": "https://min.io/",
-            "docs": [
-              "https://min.io/docs/minio/container/index.html"
-            ]
-          },
-          "alerts": [
-            {
-              "type": "warning",
-              "message": "This is a single-node, single-drive deployment for small workloads and evaluation."
-            }
-          ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
-          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "MinIO provides an S3-compatible API and an embedded web Console. This template is a single-node, single-drive deployment for small workloads and evaluation; it does not provide the redundancy of a multi-node cluster.",
-          "logo": "/images/minio/default/logo.webp",
-          "images": [],
-          "slug": "default",
-          "files": {
-            "config": "/files/minio/default/template.toml",
-            "compose": "/files/minio/default/docker-compose.yml"
-          }
-        }
-      ],
-      "slug": "minio"
-    },
-    {
       "name": "n8n",
       "logo": "/images/n8n/logo.webp",
       "variants": [
@@ -5984,6 +5936,54 @@ const data = {
       "slug": "signoz"
     },
     {
+      "name": "SILO (formerly MinIO)",
+      "logo": "/images/silo-formerly-minio/logo.webp",
+      "variants": [
+        {
+          "name": "Default",
+          "shortDescription": "Single-node S3-compatible object storage with a built-in Console and persistent local data volume.",
+          "category": {
+            "name": "Storage",
+            "icon": "hard-drive",
+            "description": "Object storage, file sync, backups and the shares and drives behind them.",
+            "slug": "storage"
+          },
+          "developedBy": {
+            "label": "PGSTY",
+            "url": "https://github.com/pgsty/silo"
+          },
+          "submittedBy": {
+            "label": "Deplo",
+            "url": "https://github.com/DeploCloud"
+          },
+          "links": {
+            "github": "https://github.com/pgsty/silo",
+            "website": "https://silo.pgsty.com/",
+            "docs": [
+              "https://silo.pgsty.com/download/"
+            ]
+          },
+          "alerts": [
+            {
+              "type": "warning",
+              "message": "This is a single-node, single-drive deployment for small workloads and evaluation."
+            }
+          ],
+          "lastUpdate": new Date("2026-09-29T00:00:00.000Z"),
+          "createdAt": new Date("2026-08-29T00:00:00.000Z"),
+          "description": "SILO provides an S3-compatible API and an embedded web Console. This template is a single-node, single-drive deployment for small workloads and evaluation; it does not provide the redundancy of a multi-node cluster.",
+          "logo": "/images/silo-formerly-minio/default/logo.webp",
+          "images": [],
+          "slug": "default",
+          "files": {
+            "config": "/files/silo-formerly-minio/default/template.toml",
+            "compose": "/files/silo-formerly-minio/default/docker-compose.yml"
+          }
+        }
+      ],
+      "slug": "silo-formerly-minio"
+    },
+    {
       "name": "Sonarr",
       "logo": "/images/sonarr/logo.webp",
       "variants": [
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a25f39e668009c20814e3f963959c8c21162c04d08b24c34270824a18bbfeb81";
+export const version = "6e884d81354cc9e24554350f3f5998c24744314570e5d38b3d77ec08b2c96f07";

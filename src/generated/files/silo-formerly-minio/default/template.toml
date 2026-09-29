@@ -7,13 +7,13 @@ console_domain = "console.${domain}"
 mounts = []
 
 [[config.domains]]
-serviceName = "minio"
+serviceName = "silo"
 port = 9_000
 host = "${domain}"
 primary = true
 
 [[config.domains]]
-serviceName = "minio"
+serviceName = "silo"
 port = 9_001
 host = "${console_domain}"
 

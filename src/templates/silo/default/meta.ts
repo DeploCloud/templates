@@ -10,12 +10,12 @@ export default {
     description:
       "Object storage, file sync, backups and the shares and drives behind them.",
   },
-  developedBy: { label: "MinIO", url: "https://github.com/minio" },
+  developedBy: { label: "PGSTY", url: "https://github.com/pgsty/silo" },
   submittedBy: { label: "Deplo", url: "https://github.com/DeploCloud" },
   links: {
-    github: "https://github.com/minio/minio",
-    website: "https://min.io/",
-    docs: ["https://min.io/docs/minio/container/index.html"],
+    github: "https://github.com/pgsty/silo",
+    website: "https://silo.pgsty.com/",
+    docs: ["https://silo.pgsty.com/download/"],
   },
   alerts: [
     {
@@ -24,6 +24,6 @@ export default {
         "This is a single-node, single-drive deployment for small workloads and evaluation.",
     },
   ],
-  lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
+  lastUpdate: new Date("2026-09-29T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
