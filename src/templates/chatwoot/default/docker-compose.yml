@@ -1,6 +1,6 @@
 services:
   chatwoot:
-    image: chatwoot/chatwoot:v4.17.1
+    image: chatwoot/chatwoot:v4.18.0
     restart: unless-stopped
     entrypoint: docker/entrypoints/rails.sh
     command:
@@ -31,7 +31,7 @@ services:
         condition: service_healthy
 
   chatwoot-worker:
-    image: chatwoot/chatwoot:v4.17.1
+    image: chatwoot/chatwoot:v4.18.0
     restart: unless-stopped
     command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
