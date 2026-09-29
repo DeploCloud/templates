@@ -81,7 +81,7 @@ SMTP_SECURE = "false"
 
 [[config.mounts]]
 filePath = "admin-setup.key"
-content = "${admin_setup_key}"
+content = """${admin_setup_key}"""
 
 [[config.mounts]]
 filePath = "Caddyfile"
