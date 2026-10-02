@@ -7,7 +7,7 @@ import {
   slugSchema,
   templateListQuerySchema,
 } from "./schemas";
-import { listCategories, listTemplates, paginate } from "./listing";
+import { listCategories, listTemplates } from "./listing";
 
 const generatedDirectory = `${import.meta.dir}/generated`;
 
@@ -53,7 +53,7 @@ const server = Bun.serve({
     "/status": withRateLimit(() => json({ status: "ok" })),
     "/templates": withRateLimit((request) =>
       validatedQuery(request, templateListQuerySchema, (query) =>
-        json(paginate(listTemplates(query), query)),
+        json({ data: listTemplates(query) }),
       ),
     ),
     "/templates/:templateSlug": withRateLimit((request) => {
@@ -64,7 +64,7 @@ const server = Bun.serve({
     }),
     "/categories": withRateLimit((request) =>
       validatedQuery(request, categoryListQuerySchema, (query) =>
-        json(paginate(listCategories(query), query)),
+        json({ data: listCategories(query) }),
       ),
     ),
     "/categories/:slug": withRateLimit((request) => {
