@@ -13,7 +13,7 @@ import type {
   Template,
   TemplateRaw,
   TemplateVariant,
-  TemplateVariantRaw,
+  TemplateVariantRawOutput,
 } from "../schemas";
 import { normalizeString, slugify } from "../utils/strings";
 
@@ -67,7 +67,7 @@ function normalizeCategory(category: CategoryRaw): GeneratedCategory {
 
 function normalizeVariant(
   templateSlug: string,
-  variant: TemplateVariantRaw,
+  variant: TemplateVariantRawOutput,
   description: string,
   category: GeneratedCategory,
 ): GeneratedVariant {
@@ -209,7 +209,7 @@ export async function generate() {
       const variantDirectory = variantMetaFile.split("/")[0]!;
       const variantPath = `${templateDirectory}/${variantDirectory}`;
       const descriptionPath = `${variantPath}/description.md`;
-      let rawVariant: TemplateVariantRaw;
+      let rawVariant: TemplateVariantRawOutput;
       try {
         rawVariant = templateVariantRawSchema.parse(
           (await import(`${variantPath}/meta.ts`)).default,
