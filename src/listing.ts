@@ -51,14 +51,3 @@ export function listCategories(query: CategoryListQuery) {
     (left, right) => direction * compare(left[query.sort], right[query.sort]),
   );
 }
-
-export function paginate<T>(
-  items: readonly T[],
-  { page, limit }: Pick<TemplateListQuery, "page" | "limit">,
-) {
-  const total = items.length;
-  return {
-    data: items.slice((page - 1) * limit, page * limit),
-    pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
-  };
-}
