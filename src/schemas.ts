@@ -16,11 +16,11 @@ const listQuerySchema = z.strictObject({
 
 export const templateListQuerySchema = listQuerySchema.extend({
   category: slugSchema.optional(),
-  sort: z.enum(["name"]).default("name"),
+  sort: z.enum(["name", "createdAt", "lastUpdated"]).default("name"),
 });
 
 export const categoryListQuerySchema = listQuerySchema.extend({
-  sort: z.enum(["name"]).default("name"),
+  sort: z.enum(["name", "description"]).default("name"),
 });
 
 export const imageUrlSchema = z
