@@ -70,6 +70,8 @@ GET /categories?search=&sort=&order=  GET /categories/:slug
 ```
 
 `GET /templates` returns every matching template in `{ data: Template[] }`.
+Templates can be sorted by `name`, `createdAt` (oldest variant date), or
+`lastUpdated` (newest variant date); categories by `name` or `description`.
 `GET /categories` returns every matching category in `{ data: Category[] }`.
 
 Read-only. Rate limited per client: 120 JSON requests and 600 asset requests a
