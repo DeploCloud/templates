@@ -188,7 +188,10 @@ export type Link = z.infer<typeof linkSchema>;
 export type CategoryRaw = z.infer<typeof categoryRawSchema>;
 export type Category = z.infer<typeof categorySchema>;
 export type TemplateRaw = z.infer<typeof templateRawSchema>;
-export type TemplateVariantRaw = z.infer<typeof templateVariantRawSchema>;
+export type TemplateVariantRaw = z.input<typeof templateVariantRawSchema>;
+export type TemplateVariantRawOutput = z.output<
+  typeof templateVariantRawSchema
+>;
 export type TemplateVariant = z.infer<typeof templateVariantSchema>;
 export type Template = z.infer<typeof templateSchema>;
 export type TemplateListQuery = z.infer<typeof templateListQuerySchema>;
