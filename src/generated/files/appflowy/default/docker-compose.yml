@@ -1,6 +1,6 @@
 services:
   appflowy-gateway:
-    image: nginx:1.31.6-alpine
+    image: nginx:1.31.6-alpine@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2
     restart: unless-stopped
     expose:
       - 80
@@ -11,217 +11,269 @@ services:
       - appflowy-cloud
       - gotrue
       - admin-frontend
-
   postgres:
-    image: pgvector/pgvector:0.8.6-pg16
+    image: pgvector/pgvector:0.8.6-pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b
     restart: unless-stopped
     environment:
       POSTGRES_USER: appflowy
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: appflowy
     volumes:
       - appflowy-postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "appflowy", "-d", "appflowy"]
+      test:
+        - CMD
+        - pg_isready
+        - "-U"
+        - appflowy
+        - "-d"
+        - appflowy
       interval: 5s
       timeout: 5s
       retries: 12
-
   redis:
-    image: redis:7.4.11-alpine
+    image: redis:7.4.11-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     restart: unless-stopped
     volumes:
       - appflowy-redis:/data
-
   minio:
-    image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    image: appflowyinc/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
     restart: unless-stopped
-    command: server /data --console-address ":9001"
+    command: 'server /data --console-address ":9001"'
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test:
+        - CMD
+        - curl
+        - "-f"
+        - http://localhost:9000/minio/health/live
       interval: 30s
       timeout: 20s
       retries: 3
     volumes:
       - appflowy-minio:/data
-
   gotrue:
-    image: appflowyinc/gotrue:0.18.3
+    image: appflowyinc/gotrue:latest@sha256:74b60212c3e6a044555badb9085870708f806e54e422096fb8c4b7025133d1ba
     restart: unless-stopped
     expose:
       - 9999
     environment:
       GOTRUE_DB_DRIVER: postgres
-      GOTRUE_DATABASE_URL: ${GOTRUE_DATABASE_URL}
-      DATABASE_URL: ${GOTRUE_DATABASE_URL}
+      GOTRUE_DATABASE_URL: "${GOTRUE_DATABASE_URL}"
+      DATABASE_URL: "${GOTRUE_DATABASE_URL}"
       GOTRUE_DB_NAMESPACE: auth
       GOTRUE_SITE_URL: appflowy-flutter://
       GOTRUE_URI_ALLOW_LIST: "**"
-      GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
+      GOTRUE_JWT_SECRET: "${GOTRUE_JWT_SECRET}"
       GOTRUE_JWT_EXP: "604800"
       GOTRUE_JWT_ADMIN_GROUP_NAME: supabase_admin
-      GOTRUE_ADMIN_EMAIL: ${GOTRUE_ADMIN_EMAIL}
-      GOTRUE_ADMIN_PASSWORD: ${GOTRUE_ADMIN_PASSWORD}
+      GOTRUE_ADMIN_EMAIL: "${GOTRUE_ADMIN_EMAIL}"
+      GOTRUE_ADMIN_PASSWORD: "${GOTRUE_ADMIN_PASSWORD}"
       GOTRUE_MAILER_AUTOCONFIRM: "true"
       GOTRUE_DISABLE_SIGNUP: "false"
-      API_EXTERNAL_URL: ${API_EXTERNAL_URL}
+      API_EXTERNAL_URL: "${API_EXTERNAL_URL}"
       PORT: "9999"
     depends_on:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: "curl --fail http://127.0.0.1:9999/health || exit 1"
+      test: curl --fail http://127.0.0.1:9999/health || exit 1
       interval: 5s
       timeout: 5s
       retries: 12
       start_period: 40s
-
   appflowy-cloud:
-    image: appflowyinc/appflowy_cloud:0.18.3
+    image: appflowyinc/appflowy_cloud:latest@sha256:427a47426a92ea6944296c666642dd86893729a5cc4bcf853169c9b805e91be1
     restart: unless-stopped
     expose:
       - 8000
     environment:
       APPFLOWY_ENVIRONMENT: production
-      APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
-      APPFLOWY_WEB_URL: ${APPFLOWY_BASE_URL}
-      APPFLOWY_WEBSOCKET_BASE_URL: ${APPFLOWY_WEBSOCKET_BASE_URL}
-      APPFLOWY_ADMIN_FRONTEND_PATH_PREFIX: ${ADMIN_FRONTEND_PATH_PREFIX}
-      APPFLOWY_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
-      APPFLOWY_REDIS_URI: ${APPFLOWY_REDIS_URI}
-      APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
+      APPFLOWY_BASE_URL: "${APPFLOWY_BASE_URL}"
+      APPFLOWY_WEB_URL: "${APPFLOWY_BASE_URL}"
+      APPFLOWY_WEBSOCKET_BASE_URL: "${APPFLOWY_WEBSOCKET_BASE_URL}"
+      APPFLOWY_ADMIN_FRONTEND_PATH_PREFIX: "${ADMIN_FRONTEND_PATH_PREFIX}"
+      APPFLOWY_DATABASE_URL: "${APPFLOWY_DATABASE_URL}"
+      APPFLOWY_REDIS_URI: "${APPFLOWY_REDIS_URI}"
+      APPFLOWY_GOTRUE_JWT_SECRET: "${GOTRUE_JWT_SECRET}"
       APPFLOWY_GOTRUE_BASE_URL: http://gotrue:9999
       APPFLOWY_S3_USE_MINIO: "true"
       APPFLOWY_S3_CREATE_BUCKET: "true"
-      APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
-      APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
-      APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
-      APPFLOWY_S3_REGION: ${APPFLOWY_S3_REGION}
-      APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
-      APPFLOWY_S3_PRESIGNED_URL_ENDPOINT: ${APPFLOWY_S3_PRESIGNED_URL_ENDPOINT}
-      APPFLOWY_SEARCH_SERVICE_URL: ${APPFLOWY_SEARCH_SERVICE_URL}
-      AI_ENABLED: ${AI_ENABLED}
-      AI_SERVER_HOST: ${AI_SERVER_HOST}
-      AI_SERVER_PORT: ${AI_SERVER_PORT}
+      APPFLOWY_S3_ACCESS_KEY: "${APPFLOWY_S3_ACCESS_KEY}"
+      APPFLOWY_S3_SECRET_KEY: "${APPFLOWY_S3_SECRET_KEY}"
+      APPFLOWY_S3_BUCKET: "${APPFLOWY_S3_BUCKET}"
+      APPFLOWY_S3_REGION: "${APPFLOWY_S3_REGION}"
+      APPFLOWY_S3_MINIO_URL: "${APPFLOWY_S3_MINIO_URL}"
+      APPFLOWY_S3_PRESIGNED_URL_ENDPOINT: "${APPFLOWY_S3_PRESIGNED_URL_ENDPOINT}"
+      APPFLOWY_SEARCH_SERVICE_URL: "${APPFLOWY_SEARCH_SERVICE_URL}"
+      AI_ENABLED: "${AI_ENABLED}"
+      AI_SERVER_HOST: "${AI_SERVER_HOST}"
+      AI_SERVER_PORT: "${AI_SERVER_PORT}"
+      RUST_LOG: "${RUST_LOG:-info}"
+      APPFLOWY_MAILER_SMTP_HOST: "${APPFLOWY_MAILER_SMTP_HOST}"
+      APPFLOWY_MAILER_SMTP_PORT: "${APPFLOWY_MAILER_SMTP_PORT}"
+      APPFLOWY_MAILER_SMTP_USERNAME: "${APPFLOWY_MAILER_SMTP_USERNAME}"
+      APPFLOWY_MAILER_SMTP_EMAIL: "${APPFLOWY_MAILER_SMTP_EMAIL}"
+      APPFLOWY_MAILER_SMTP_PASSWORD: "${APPFLOWY_MAILER_SMTP_PASSWORD}"
+      APPFLOWY_MAILER_SMTP_TLS_KIND: "${APPFLOWY_MAILER_SMTP_TLS_KIND}"
+      APPFLOWY_ACCESS_CONTROL: "${APPFLOWY_ACCESS_CONTROL}"
+      APPFLOWY_DATABASE_MAX_CONNECTIONS: "${APPFLOWY_DATABASE_MAX_CONNECTIONS}"
+      AI_OPENAI_API_KEY: "${AI_OPENAI_API_KEY}"
+      ASSEMBLYAI_API_KEY: "${ASSEMBLYAI_API_KEY}"
+      ASSEMBLYAI_API_BASE: "${ASSEMBLYAI_API_BASE}"
+      ASSEMBLYAI_STREAMING_API_BASE: "${ASSEMBLYAI_STREAMING_API_BASE}"
+      APPFLOWY_SEARCH_REQUEST_TIMEOUT_SECS: "${APPFLOWY_SEARCH_REQUEST_TIMEOUT_SECS:-10}"
+      SIGNUP_WHITELIST_ENABLED: "${SIGNUP_WHITELIST_ENABLED:-false}"
+      GUEST_INVITES_REQUIRE_ADMIN_APPROVAL: "${GUEST_INVITES_REQUIRE_ADMIN_APPROVAL:-false}"
     depends_on:
       gotrue:
         condition: service_healthy
+      minio:
+        condition: service_healthy
     healthcheck:
-      test: "curl --fail http://127.0.0.1:8000/api/health || exit 1"
+      test: curl --fail http://127.0.0.1:8000/api/health || exit 1
       interval: 5s
       timeout: 5s
       retries: 12
-
   appflowy-worker:
-    image: appflowyinc/appflowy_worker:0.18.3
+    image: appflowyinc/appflowy_worker:latest@sha256:5f1f4167d520a5756f3f4b3d4774a1d83a2c6d495c336a284104476ef340aed0
     restart: unless-stopped
     environment:
       APPFLOWY_ENVIRONMENT: production
-      APPFLOWY_WORKER_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
+      APPFLOWY_WORKER_DATABASE_URL: "${APPFLOWY_DATABASE_URL}"
       APPFLOWY_WORKER_DATABASE_NAME: appflowy
-      APPFLOWY_WORKER_REDIS_URL: ${APPFLOWY_REDIS_URI}
+      APPFLOWY_WORKER_REDIS_URL: "${APPFLOWY_REDIS_URI}"
       APPFLOWY_S3_USE_MINIO: "true"
-      APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
-      APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
-      APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
-      APPFLOWY_S3_REGION: ${APPFLOWY_S3_REGION}
-      APPFLOWY_S3_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
+      APPFLOWY_S3_ACCESS_KEY: "${APPFLOWY_S3_ACCESS_KEY}"
+      APPFLOWY_S3_SECRET_KEY: "${APPFLOWY_S3_SECRET_KEY}"
+      APPFLOWY_S3_BUCKET: "${APPFLOWY_S3_BUCKET}"
+      APPFLOWY_S3_REGION: "${APPFLOWY_S3_REGION}"
+      APPFLOWY_S3_MINIO_URL: "${APPFLOWY_S3_MINIO_URL}"
+      RUST_LOG: "${RUST_LOG:-info}"
+      APPFLOWY_WORKER_ENVIRONMENT: production
+      APPFLOWY_WORKER_IMPORT_TICK_INTERVAL: "30"
+      APPFLOWY_MAILER_SMTP_HOST: "${APPFLOWY_MAILER_SMTP_HOST}"
+      APPFLOWY_MAILER_SMTP_PORT: "${APPFLOWY_MAILER_SMTP_PORT}"
+      APPFLOWY_MAILER_SMTP_USERNAME: "${APPFLOWY_MAILER_SMTP_USERNAME}"
+      APPFLOWY_MAILER_SMTP_EMAIL: "${APPFLOWY_MAILER_SMTP_EMAIL}"
+      APPFLOWY_MAILER_SMTP_PASSWORD: "${APPFLOWY_MAILER_SMTP_PASSWORD}"
+      APPFLOWY_MAILER_SMTP_TLS_KIND: "${APPFLOWY_MAILER_SMTP_TLS_KIND}"
     depends_on:
       postgres:
         condition: service_healthy
       appflowy-cloud:
         condition: service_healthy
-
   appflowy-search:
-    image: appflowyinc/appflowy_search:0.18.1
+    image: appflowyinc/appflowy_search:latest@sha256:7732af4dd05866565d8cece0782e946db4f5a4a70f9d68917a8bd4ea9df85a83
     restart: unless-stopped
     expose:
       - 4002
     environment:
-      APPFLOWY_SEARCH_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
-      APPFLOWY_SEARCH_REDIS_URL: ${APPFLOWY_REDIS_URI}
-      APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
+      APPFLOWY_SEARCH_DATABASE_URL: "${APPFLOWY_DATABASE_URL}"
+      APPFLOWY_SEARCH_REDIS_URL: "${APPFLOWY_REDIS_URI}"
+      APPFLOWY_GOTRUE_JWT_SECRET: "${GOTRUE_JWT_SECRET}"
       APPFLOWY_SEARCH_HOST: "[::]"
       APPFLOWY_SEARCH_PORT: "4002"
+      RUST_LOG: "${RUST_LOG:-info}"
+      AI_OPENAI_API_KEY: "${AI_OPENAI_API_KEY}"
+      AZURE_OPENAI_API_KEY: "${AZURE_OPENAI_API_KEY:-}"
+      AZURE_OPENAI_ENDPOINT: "${AZURE_OPENAI_ENDPOINT:-}"
+      AZURE_OPENAI_API_VERSION: "${AZURE_OPENAI_API_VERSION:-}"
+      APPFLOWY_S3_USE_MINIO: "${APPFLOWY_S3_USE_MINIO}"
+      APPFLOWY_S3_MINIO_URL: "${APPFLOWY_S3_MINIO_URL}"
+      APPFLOWY_S3_ACCESS_KEY: "${APPFLOWY_S3_ACCESS_KEY}"
+      APPFLOWY_S3_SECRET_KEY: "${APPFLOWY_S3_SECRET_KEY}"
+      APPFLOWY_S3_REGION: "${APPFLOWY_S3_REGION}"
+      APPFLOWY_BACKGROUND_INDEXER_ENABLED: "true"
+      APPFLOWY_KEYWORD_SEARCH_ENABLED: "${APPFLOWY_KEYWORD_SEARCH_ENABLED:-true}"
+      APPFLOWY_KEYWORD_WORKER_ENABLED: "true"
+      APPFLOWY_KEYWORD_INDEX_MAP_SIZE_BYTES: "${APPFLOWY_KEYWORD_INDEX_MAP_SIZE_BYTES:-2147483648}"
+      APPFLOWY_S3_BUCKET: "${APPFLOWY_S3_BUCKET}"
     depends_on:
       postgres:
+        condition: service_healthy
+      minio:
         condition: service_healthy
     healthcheck:
       test:
         - CMD
         - bash
-        - -ec
-        - |
-          exec 3<>/dev/tcp/127.0.0.1/$${APPFLOWY_SEARCH_PORT:-4002}
-          printf 'GET /health HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n' >&3
-          read -r _ status _ <&3
-          [ "$$status" = 200 ]
+        - "-ec"
+        - "exec 3<>/dev/tcp/127.0.0.1/$${APPFLOWY_SEARCH_PORT:-4002}\nprintf 'GET /health HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3\nread -r _ status _ <&3\n[ \"$$status\" = 200 ]\n"
       interval: 5s
       timeout: 5s
       retries: 12
       start_period: 40s
-
+    volumes:
+      - appflowy-keyword-index:/var/lib/appflowy/keyword_index
   appflowy-ai:
-    image: appflowyinc/appflowy_ai:0.17.7
+    image: appflowyinc/appflowy_ai:latest@sha256:78c578af2f2391375dcf5bf43ac41bd9217baf2e8c75361c72d823205f72cb90
     restart: unless-stopped
     expose:
       - 5001
     environment:
-      AI_SERVER_PORT: ${AI_SERVER_PORT}
-      OPENAI_API_KEY: ${AI_OPENAI_API_KEY}
-      AI_DATABASE_URL: ${APPFLOWY_DATABASE_URL}
-      AI_REDIS_URL: ${APPFLOWY_REDIS_URI}
+      AI_SERVER_PORT: "${AI_SERVER_PORT}"
+      OPENAI_API_KEY: "${AI_OPENAI_API_KEY}"
+      AI_DATABASE_URL: "${APPFLOWY_DATABASE_URL}"
+      AI_REDIS_URL: "${APPFLOWY_REDIS_URI}"
       AI_USE_MINIO: "true"
-      APPFLOWY_S3_ACCESS_KEY: ${APPFLOWY_S3_ACCESS_KEY}
-      APPFLOWY_S3_SECRET_KEY: ${APPFLOWY_S3_SECRET_KEY}
-      APPFLOWY_S3_BUCKET: ${APPFLOWY_S3_BUCKET}
-      AI_MINIO_URL: ${APPFLOWY_S3_MINIO_URL}
-      AI_APPFLOWY_HOST: ${APPFLOWY_BASE_URL}
-      APPFLOWY_GOTRUE_JWT_SECRET: ${GOTRUE_JWT_SECRET}
+      APPFLOWY_S3_ACCESS_KEY: "${APPFLOWY_S3_ACCESS_KEY}"
+      APPFLOWY_S3_SECRET_KEY: "${APPFLOWY_S3_SECRET_KEY}"
+      APPFLOWY_S3_BUCKET: "${APPFLOWY_S3_BUCKET}"
+      AI_MINIO_URL: "${APPFLOWY_S3_MINIO_URL}"
+      AI_APPFLOWY_HOST: "${APPFLOWY_BASE_URL}"
+      APPFLOWY_GOTRUE_JWT_SECRET: "${GOTRUE_JWT_SECRET}"
+      DEFAULT_AI_MODEL: gpt-4.1-mini
+      DEFAULT_AI_COMPLETION_MODEL: gpt-4.1-mini
+      AZURE_OPENAI_API_KEY: "${AZURE_OPENAI_API_KEY:-}"
+      AZURE_OPENAI_ENDPOINT: "${AZURE_OPENAI_ENDPOINT:-}"
+      AZURE_OPENAI_API_VERSION: "${AZURE_OPENAI_API_VERSION:-}"
+      APPFLOWY_S3_REGION: "${APPFLOWY_S3_REGION}"
     depends_on:
       postgres:
         condition: service_healthy
       appflowy-cloud:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      test:
+        - CMD
+        - curl
+        - "-f"
+        - http://localhost:5001/health
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
-
   admin-frontend:
-    image: appflowyinc/admin_frontend:0.17.13
+    image: appflowyinc/admin_frontend:latest@sha256:96a470e4fe315d492d09643db7269b2b982080f7c5381d9a93b90a16245f6168
     restart: unless-stopped
     expose:
       - 3000
     environment:
       APPFLOWY_GOTRUE_BASE_URL: http://gotrue:9999
-      ADMIN_FRONTEND_PATH_PREFIX: ${ADMIN_FRONTEND_PATH_PREFIX}
-      APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
+      ADMIN_FRONTEND_PATH_PREFIX: "${ADMIN_FRONTEND_PATH_PREFIX}"
+      APPFLOWY_BASE_URL: "${APPFLOWY_BASE_URL}"
     depends_on:
       gotrue:
         condition: service_healthy
       appflowy-cloud:
         condition: service_healthy
-
   appflowy-web:
-    image: appflowyinc/appflowy_web:0.17.1
+    image: appflowyinc/appflowy_web:latest@sha256:326eb9956fc32cc659e8812cca79c08c5c544287401a217f259805c4fc19f0b0
     restart: unless-stopped
     expose:
       - 80
     environment:
-      APPFLOWY_BASE_URL: ${APPFLOWY_BASE_URL}
-      APPFLOWY_GOTRUE_BASE_URL: ${APPFLOWY_BASE_URL}/gotrue
-      APPFLOWY_WS_BASE_URL: ${APPFLOWY_WEBSOCKET_BASE_URL}
+      APPFLOWY_BASE_URL: "${APPFLOWY_BASE_URL}"
+      APPFLOWY_GOTRUE_BASE_URL: "${APPFLOWY_BASE_URL}/gotrue"
+      APPFLOWY_WS_BASE_URL: "${APPFLOWY_WEBSOCKET_BASE_URL}"
     depends_on:
       appflowy-cloud:
         condition: service_healthy
-
 volumes:
   appflowy-postgres: {}
   appflowy-redis: {}
   appflowy-minio: {}
+  appflowy-keyword-index: {}
