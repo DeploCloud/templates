@@ -1,6 +1,6 @@
 services:
   strapi:
-    image: elestio/strapi-production:v5.55.1
+    image: elestio/strapi-production:v5.57.0@sha256:d98bb855fe23e7fafe87f94f4ba21e9ba7536ad45ce5b4ae2d2fce881d11db9a
     restart: unless-stopped
     depends_on:
       db:
@@ -34,7 +34,7 @@ services:
       retries: 5
 
   db:
-    image: postgres:18-alpine
+    image: postgres:17.11-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     restart: unless-stopped
     environment:
       POSTGRES_DB: strapi
@@ -46,7 +46,7 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - strapi-database:/var/lib/postgresql
+      - strapi-database:/var/lib/postgresql/data
 
 volumes:
   strapi-data: {}
