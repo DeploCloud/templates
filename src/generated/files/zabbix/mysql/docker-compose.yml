@@ -1,6 +1,6 @@
 services:
   zabbix-server:
-    image: zabbix/zabbix-server-mysql:alpine-7.4.14
+    image: zabbix/zabbix-server-mysql:alpine-7.4.15@sha256:ab81fc2301f3aa4c2cac617f943dd2fc91e0e76d0bf0b6f1d386e027b8608efb
     restart: unless-stopped
     depends_on:
       zabbix-db:
@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4.14
+    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4.15@sha256:d5df1afe94dd8a328c9a0a779064c8d08a620d727dcf02ff76aa73c3f918a7c1
     restart: unless-stopped
     depends_on:
       zabbix-server:
@@ -32,7 +32,7 @@ services:
       PHP_TZ: Europe/Rome
 
   zabbix-db:
-    image: mysql:8.0
+    image: mysql:8.4-oracle@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70
     restart: unless-stopped
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --log-bin-trust-function-creators=1
     environment:
