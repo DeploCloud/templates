@@ -715,7 +715,7 @@ const data = {
               "message": "Email delivery requires an SMTP provider."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Cal.com scheduling application with persistent PostgreSQL data.",
           "logo": "/images/cal-com/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "dc99cc316ae2e7df57655226731015096228ba225f7e5ba06df70819b347847b";
+export const version = "e82416faa2a54b9ca064f28f2f1ce274c4775f41fd2f91f1455e24767ce24eeb";
