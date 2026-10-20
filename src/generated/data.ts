@@ -5421,7 +5421,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Radarr movie management and download automation with persistent configuration.",
           "logo": "/images/radarr/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "574c8430044f055a0077f05d9b9b7db104d65805b3910dfd55a6549469cff7b5";
+export const version = "59c98e95348ba22814942f7c99393bf57b842a2b011aa7db28fab81543bda0e6";
