@@ -945,7 +945,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "CrowdSec collaborative security engine with persistent decisions and local configuration. It is an API and security component rather than a general-purpose web UI; connect a bouncer or reverse proxy separately.",
           "logo": "/images/crowdsec/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "bfce546adbfc5b4be40de1f6c2113ab649a6e4fd8b81e6251e0e793863bfc242";
+export const version = "027777fffb2a8cb92a85db1b6535d23c19a86311d385333dfdc069fb31453236";
