@@ -5022,7 +5022,7 @@ const data = {
               "message": "The bundled stack needs at least 2 vCPUs and 4 GB RAM."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Plane is a project management workspace for issues, cycles, modules and roadmaps. This variant runs\nthe application, background workers, PostgreSQL, Valkey, RabbitMQ and MinIO and persists project\ndata, uploaded files and service state.",
           "logo": "/images/plane/default/logo.webp",
@@ -6725,4 +6725,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "1fab8707f7b70ccc26bd87bdf6d15922d1eb04d4ea2cfb7da3b818da0bcbd626";
+export const version = "952e898b88ad1fe9dc29570c11a091fae3556704c3a4adcb8041dd04347e1301";

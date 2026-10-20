@@ -1,10 +1,14 @@
 [variables]
+live_server_secret = "${password:64}"
 db_password = "${password:32}"
 minio_password = "${password:32}"
 rabbitmq_password = "${password:32}"
 secret_key = "${base64:48}"
 
 [config.env]
+LIVE_SERVER_SECRET_KEY = "${live_server_secret}"
+APP_DOMAIN = "${domain}"
+SITE_ADDRESS = ":80"
 APP_RELEASE = "v1.4.2"
 WEB_URL = "https://${domain}"
 POSTGRES_USER = "plane"
