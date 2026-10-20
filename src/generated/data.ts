@@ -4718,7 +4718,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Paperless-ngx turns scanned documents into an indexed online archive. This recommended deployment\nuses PostgreSQL for metadata, Valkey as the task broker and persistent data, media, export and\nconsume directories. The webserver is kept private to the stack and exposed through the generated\ndomain.",
           "logo": "/images/paperless-ngx/default/logo.webp",
@@ -4754,7 +4754,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This variant adds the official Gotenberg and Apache Tika services to Paperless-ngx. It keeps the\nPostgreSQL and Valkey foundation of the default deployment while enabling text extraction and PDF\nconversion for office documents and email attachments.",
           "logo": "/images/paperless-ngx/office-documents/logo.webp",
@@ -4795,7 +4795,7 @@ const data = {
               "message": "SQLite is intended for a personal archive; use the PostgreSQL variant for several users or high ingest concurrency."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This lightweight Paperless-ngx variant keeps metadata in SQLite while retaining the documented\nValkey broker and persistent document directories. It is convenient for a personal archive; use\nthe PostgreSQL variant when several users or high ingest concurrency are expected.",
           "logo": "/images/paperless-ngx/sqlite/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d4f5b6eb6b2bd3ffe480779adaaf9714d2dc6a0f76adde15f5593c56571e2d4d";
+export const version = "f2ae15c3f02b951d19b6d6a9f46fcfeb3a73bde7a7aac377499fbf874dae685f";
