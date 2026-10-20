@@ -1278,7 +1278,7 @@ const data = {
               "message": "Mail delivery must be configured for sending documents."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Documenso document signing application with persistent local files and PostgreSQL metadata.",
           "logo": "/images/documenso/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "221c665b1eeaf8a3bbb4718b09e170671dc4361ca2ea0631818fa12ff01b44e2";
+export const version = "5ffd0df1dc898a9d26434ce9dde7d179aea35d12a2c61d7c10ca47eaada6520a";
