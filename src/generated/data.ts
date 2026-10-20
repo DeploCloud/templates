@@ -2262,7 +2262,7 @@ const data = {
               "message": "MagicDNS is disabled; enabling it requires a separate FQDN for base_domain."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state.",
           "logo": "/images/headscale/default/logo.webp",
@@ -2303,7 +2303,7 @@ const data = {
               "message": "MagicDNS is disabled; enabling it requires a separate FQDN for base_domain."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. The database and\nHeadscale state persist in volumes.",
           "logo": "/images/headscale/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "ba8a091f3580eff6ccdcd75a79ad8381538755246a2afd9e674e570657a33efb";
+export const version = "5836d92a6a2036bc4b6f59a5ded447e6ab228825d26ad0bdb23a821de67f9e63";

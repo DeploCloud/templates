@@ -1,6 +1,6 @@
 services:
   headscale:
-    image: headscale/headscale:0.29.4
+    image: headscale/headscale:0.29.5@sha256:780ed2f9e85719a2211277433f2c8afb45105d0d25031949a6848a485f9e216d
     restart: unless-stopped
     expose:
       - 8080
