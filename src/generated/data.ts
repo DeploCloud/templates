@@ -3223,7 +3223,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Linkwarden collaborative bookmark manager with persistent link metadata and archived resources.",
           "logo": "/images/linkwarden/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "7bc2497bd346af88792b693f0b85c36c9fa14b29f199ff34d922d21fa2724f75";
+export const version = "88f339d528028ad3baa164c270b33e106af34f06efdb546bca8ca0d68c491fd4";
