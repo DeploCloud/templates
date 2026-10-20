@@ -6146,7 +6146,7 @@ const data = {
               "message": "The stack needs at least 4 GB RAM; database ports 5432 and 6543 are published on the host."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete self-hosted Supabase deployment based on the official Docker stack, including Studio, Envoy\nAPI gateway, Auth, REST, Realtime, Storage, image transformation, database metadata, Edge Functions,\nPostgreSQL and Supavisor. Deplo generates the deployment credentials.",
           "logo": "/images/supabase/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d7e16362d328493afb20fa38802318cfad7a8604e1068bcda928a5898decad02";
+export const version = "4e362b31c7b4e87c4614883917a92eca0e091077fbae1aa4d12424c942168e99";

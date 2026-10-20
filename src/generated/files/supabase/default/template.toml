@@ -77,7 +77,7 @@ POOLER_DB_POOL_SIZE = "5"
 
 [[config.mounts]]
 filePath = "volumes/api/envoy/cds.yaml"
-content = """
+content = '''
 resources:
   - '@type': type.googleapis.com/envoy.config.cluster.v3.Cluster
     name: auth
@@ -301,11 +301,11 @@ resources:
           max_connections: 10000
           max_pending_requests: 10000
           max_requests: 10000
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/api/envoy/docker-entrypoint.sh"
-content = """
+content = '''
 #!/bin/sh
 set -e
 
@@ -340,11 +340,11 @@ echo "Starting Envoy..."
 
 # Start Envoy
 exec envoy -c /etc/envoy/envoy.yaml "$@"
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/api/envoy/envoy.yaml"
-content = """
+content = '''
 dynamic_resources:
   cds_config:
     path_config_source:
@@ -372,11 +372,11 @@ admin:
     socket_address:
       address: 127.0.0.1
       port_value: 9901
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/api/envoy/lds.template.yaml"
-content = """
+content = '''
 resources:
   - '@type': type.googleapis.com/envoy.config.listener.v3.Listener
     name: supabase
@@ -1467,60 +1467,60 @@ resources:
                   typed_config:
                     '@type': >-
                       type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/_supabase.sql"
-content = """
+content = '''
 \set pguser `echo "$POSTGRES_USER"`
 
 CREATE DATABASE _supabase WITH OWNER :pguser;
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/jwt.sql"
-content = """
+content = '''
 \set jwt_secret `echo "$JWT_SECRET"`
 \set jwt_exp `echo "$JWT_EXP"`
 
 ALTER DATABASE postgres SET "app.settings.jwt_secret" TO :'jwt_secret';
 ALTER DATABASE postgres SET "app.settings.jwt_exp" TO :'jwt_exp';
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/logs.sql"
-content = """
+content = '''
 \set pguser `echo "$POSTGRES_USER"`
 
 \c _supabase
 create schema if not exists _analytics;
 alter schema _analytics owner to :pguser;
 \c postgres
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/pooler.sql"
-content = """
+content = '''
 \set pguser `echo "$POSTGRES_USER"`
 
 \c _supabase
 create schema if not exists _supavisor;
 alter schema _supavisor owner to :pguser;
 \c postgres
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/realtime.sql"
-content = """
+content = '''
 \set pguser `echo "$POSTGRES_USER"`
 
 create schema if not exists _realtime;
 alter schema _realtime owner to :pguser;
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/roles.sql"
-content = """
+content = '''
 -- NOTE: change to your own passwords for production environments
 \set pgpass `echo "$POSTGRES_PASSWORD"`
 
@@ -1529,11 +1529,11 @@ ALTER USER pgbouncer WITH PASSWORD :'pgpass';
 ALTER USER supabase_auth_admin WITH PASSWORD :'pgpass';
 ALTER USER supabase_functions_admin WITH PASSWORD :'pgpass';
 ALTER USER supabase_storage_admin WITH PASSWORD :'pgpass';
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/db/webhooks.sql"
-content = """
+content = '''
 BEGIN;
   -- Create pg_net extension
   CREATE EXTENSION IF NOT EXISTS pg_net SCHEMA extensions;
@@ -1742,11 +1742,11 @@ BEGIN;
   REVOKE ALL ON FUNCTION supabase_functions.http_request() FROM PUBLIC;
   GRANT EXECUTE ON FUNCTION supabase_functions.http_request() TO postgres, anon, authenticated, service_role;
 COMMIT;
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/pooler/pooler.exs"
-content = """
+content = '''
 {:ok, _} = Application.ensure_all_started(:supavisor)
 
 {:ok, version} =
@@ -1777,11 +1777,11 @@ params = %{
 if !Supavisor.Tenants.get_tenant_by_external_id(params["external_id"]) do
   {:ok, _} = Supavisor.Tenants.create_tenant(params)
 end
-"""
+'''
 
 [[config.mounts]]
 filePath = "volumes/functions/main/index.ts"
-content = """
+content = '''
 import * as jose from 'jsr:@panva/jose@6'
 
 console.log('main function started')
@@ -1954,4 +1954,4 @@ Deno.serve(async (req: Request) => {
     })
   }
 })
-"""
+'''
