@@ -274,7 +274,7 @@ const data = {
               "message": "A model provider and secure authentication are required for production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "AnythingLLM workspace for chatting with documents and language models, with persistent workspaces and\nembeddings.",
           "logo": "/images/anythingllm/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "32c2f7f00338edc3ee087cf1d5edcbb3a1d984de4a055a1de6909d03b3ddb723";
+export const version = "febb594e8bd45366a3fd1869c74646ffa3d76bc2183b5db78b03b7dea07fb83f";
