@@ -1,6 +1,6 @@
 services:
   jitsi-web:
-    image: ghcr.io/jitsi/web:web-1.0.9326-1
+    image: ghcr.io/jitsi/web:stable-11248@sha256:615d9882b7bc2bc0b648fb48c153ce2b9c503f37a15e6aaf4f1c8e40f5cf8ca4
     restart: unless-stopped
     expose:
       - 8000
@@ -29,7 +29,7 @@ services:
       - meet-jitsi
 
   jitsi-prosody:
-    image: ghcr.io/jitsi/prosody:prosody-13.0.6
+    image: ghcr.io/jitsi/prosody:stable-11248@sha256:a7a58090d93412f7ecd6692330631519833b2e8c8b06ff433089fb54b7149bb2
     restart: unless-stopped
     expose:
       - 5222
@@ -62,7 +62,7 @@ services:
       - meet-jitsi
 
   jitsi-jicofo:
-    image: ghcr.io/jitsi/jicofo:jicofo-1.0-1204-1
+    image: ghcr.io/jitsi/jicofo:stable-11248@sha256:c4c1ad331d4d942bc433e5452d75c25758dab7058e3fe07b970ced54cb7f5e47
     restart: unless-stopped
     expose:
       - 8888
@@ -89,7 +89,7 @@ services:
       - meet-jitsi
 
   jitsi-jvb:
-    image: ghcr.io/jitsi/jvb:jvb-2.3-317-g8b31b0769-1
+    image: ghcr.io/jitsi/jvb:stable-11248@sha256:55cf534aa12931c524835269475c1ea63e5e884a43540f9b318378fd080a335c
     restart: unless-stopped
     ports:
       - "10000:10000/udp"

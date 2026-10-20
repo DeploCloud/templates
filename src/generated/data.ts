@@ -2829,7 +2829,7 @@ const data = {
               "message": "UDP port 10000 must be reachable and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services.",
           "logo": "/images/jitsi-meet/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d0741e1f30d4a403484dc4a608b80bc7740c4bd0691e085a7f5b381330ecc203";
+export const version = "87321e7150ffc40045ec7790b0936f69102e2e4f04f1f9d765c7e6a611fa9293";
