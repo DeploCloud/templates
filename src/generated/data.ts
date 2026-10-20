@@ -2478,7 +2478,7 @@ const data = {
               "message": "Plugins that use host hardware may require additional device access."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Homebridge server for exposing smart-home accessories through plugins. Configuration, cached\naccessories and installed plugins persist in the data volume.",
           "logo": "/images/homebridge/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "51600b2f131c3a49f5300b288505a818a25c71802afc39a0d87e7cd864e269a3";
+export const version = "918a6bc0a14f1a6e800d317f9b34407d9f87eae6ee3849ebc00d40a950c86abb";
