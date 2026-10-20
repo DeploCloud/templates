@@ -1909,7 +1909,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
           "description": "Garage is S3-compatible object storage designed to run self-hosted across one or more machines. The\nBase variant includes the core service and persistent storage.",
           "logo": "/images/garage-s3/default/logo.webp",
@@ -1945,7 +1945,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
           "description": "Garage is S3-compatible object storage designed for self-hosting and distribution across multiple\nmachines. This variant adds a web UI for storage administration.",
           "logo": "/images/garage-s3/web-ui/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "f525a10cf9b68ead788287f9f43b2c58ba16a371ee017607f8b0d9dc973776a7";
+export const version = "84805e9bcfa63c6e67d9e652943790c80ed7b0887e12b9c1772d54e204451b49";
