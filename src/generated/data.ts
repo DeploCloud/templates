@@ -5477,7 +5477,7 @@ const data = {
               "message": "Configure SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and SMTP_SECURE, or set RELOOP_API_KEY and a verified RELOOP_SENDER_DOMAIN to send sign-in codes and invitations."
             }
           ],
-          "lastUpdate": new Date("2026-09-28T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-28T00:00:00.000Z"),
           "description": "Reloop is an open-source email platform for transactional email, campaigns, inbound mail, templates, contacts and delivery analytics.\n\nThe stack includes PostgreSQL, Redis, NATS and persistent mail queues. Add DNS records for the main, `link` and `inbound` hostnames, then configure SPF, DKIM, DMARC and MX records in the dashboard before using email delivery. For sign-in codes and invitations, configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` and `SMTP_SECURE`, or set `RELOOP_API_KEY` and a verified `RELOOP_SENDER_DOMAIN`. Create the first administrator at `/dashboard/setup` using the generated `ADMIN_SETUP_KEY` from the deployment environment.",
           "logo": "/images/reloop/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "59c98e95348ba22814942f7c99393bf57b842a2b011aa7db28fab81543bda0e6";
+export const version = "d0d3a81b413dd9c181048d59df0ae955d8ce598b37984ab07797335584a3792f";
