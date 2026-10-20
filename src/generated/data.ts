@@ -1412,7 +1412,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "File Browser is a web file manager for uploading, editing, previewing and sharing files. The\ntemplate persists the file tree, configuration and File Browser database in separate volumes.",
           "logo": "/images/file-browser/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3a331a99502b43f1c9d27ed8cba215a5d5f37442149a868fa0e25698cd8123dd";
+export const version = "f775bccefd0c489a323a003821e8d47b7fd967b67b295cb5257273f0fbb7dfb2";
