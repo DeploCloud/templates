@@ -1,6 +1,6 @@
 services:
   discourse-db:
-    image: pgvector/pgvector:pg16
+    image: pgvector/pgvector:pg18@sha256:2358fcba361ed2233a5ed81b5fe4ca779ccb304120ce531a3bf51c0ed7e2bc11
     volumes:
       - discourse-postgresql-data:/var/lib/postgresql/data
     environment:
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   discourse-redis:
-    image: redis:7-alpine
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     volumes:
       - discourse-redis-data:/data
     command: redis-server --requirepass ${REDIS_PASSWORD}
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   discourse-app:
-    image: discourse/discourse:2026.7.3
+    image: discourse/discourse:2026.7.3@sha256:71e56fb5cfdf6e23c8ce71a1218528ee618910f3b7dd04e1770803ecf462f115
     volumes:
       - discourse-data:/shared
     depends_on:

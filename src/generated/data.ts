@@ -1108,7 +1108,7 @@ const data = {
               "message": "Email-dependent features require an SMTP provider."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Compose-based Discourse deployment with PostgreSQL, Redis and the Discourse web application. Forum\ndata, PostgreSQL, Redis and the shared Discourse storage persist in named volumes.",
           "logo": "/images/discourse/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5dbbc56d07c5b4686e47aaf8185b4c62025d1ba783b0c38c5ff8f5230e0bd9e7";
+export const version = "a5cf69737232e3ebf0f500447d2de706cba99391d7b44119a00c1a78ec60e3f6";
