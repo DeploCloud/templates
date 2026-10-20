@@ -3811,7 +3811,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Navidrome music server with persistent indexes, playlists and settings.",
           "logo": "/images/navidrome/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "8f1391a26fa80c1198c45d710e310bb18da90300026cb8177e2f46388b30705f";
+export const version = "115e98d01bb65219c1c7a7f8d0fd9a7a2621cc4337335c8dc0b70b9ff1dcda5a";
