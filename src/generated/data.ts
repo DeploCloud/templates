@@ -2046,7 +2046,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Gitea is a lightweight Git service for repositories, issues, pull requests and actions. This variant stores all application data, including its SQLite database, in one persistent volume for a small installation.",
           "logo": "/images/gitea/default/logo.webp",
@@ -2087,7 +2087,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Gitea is a lightweight Git service for repositories, issues, pull requests and actions. This variant includes PostgreSQL for installations that need a separate relational database and a more scalable application store.",
           "logo": "/images/gitea/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "08055f484b68a05d93f728f3bed7abe6a8815b894ca06ace11b91f1d5a510429";
+export const version = "a53fa3ace198c3942e181d4857064b20df15bb0d253e0c2a92fb323fa5d5fc68";
