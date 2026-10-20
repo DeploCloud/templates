@@ -2430,7 +2430,7 @@ const data = {
               "message": "Bluetooth and other hardware integrations may require additional host device access."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Home Assistant Container is a self-hosted home automation hub. The configuration and automation\nfiles are materialized by the template, while the rest of `/config` stays on a persistent volume.",
           "logo": "/images/home-assistant/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "46c76d9e9514b320cd0e9861b9e6eb1f7b988c8c58f096cd9eb04ad0bf9fbc80";
+export const version = "51600b2f131c3a49f5300b288505a818a25c71802afc39a0d87e7cd864e269a3";
