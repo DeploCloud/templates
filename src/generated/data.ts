@@ -3489,7 +3489,7 @@ const data = {
               "message": "Use the generated master key for API requests; this template exposes an API, not a browser UI."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Meilisearch is a fast, typo-tolerant search engine for application search experiences. This template\nexposes the protected HTTP API, enables production mode and persists indexes.",
           "logo": "/images/meilisearch/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "4bb476af9d9284c4a716ea9c60216d32e32c8c3af02f0d6eb224b1389d285974";
+export const version = "479219b8cec125c1481d612429f2e414c263ff823fd072b425ef88e2d4d50e51";
