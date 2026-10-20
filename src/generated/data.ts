@@ -5202,9 +5202,14 @@ const data = {
             {
               "type": "warning",
               "message": "The stack needs at least 8 GB RAM and can take several minutes to initialize."
+            },
+            {
+              "type": "warning",
+              "message": "SeaweedFS uses new storage volumes. Existing MinIO objects require the upstream storage migration before they are accessible.",
+              "link": "https://github.com/PostHog/posthog/blob/74e8ce2ddab8f45058423fddf7c779582311120d/bin/migrate-storage-hobby"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "PostHog is a product analytics platform with event capture, feature flags, session replay and\nexperiments. This variant follows the official Hobby Docker deployment and bundles the supporting\ndatabases, queues and object storage in one stack.",
           "logo": "/images/posthog/default/logo.webp",
@@ -6725,4 +6730,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "952e898b88ad1fe9dc29570c11a091fae3556704c3a4adcb8041dd04347e1301";
+export const version = "72b6b891aa653cf49c5e1a2703b4eb0d96ad36c96d533f82c41612d509ae101d";
