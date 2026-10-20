@@ -1,6 +1,6 @@
 services:
   twenty-server:
-    image: twentycrm/twenty:v2.40.2
+    image: twentycrm/twenty:v2.49.0@sha256:80e1b33b0b4b9dc292e776c64c320be2ae9467677ce639ba9bde1cffca68a3b0
     restart: unless-stopped
     expose:
       - 3000
@@ -28,7 +28,7 @@ services:
       retries: 20
 
   twenty-worker:
-    image: twentycrm/twenty:v2.40.2
+    image: twentycrm/twenty:v2.49.0@sha256:80e1b33b0b4b9dc292e776c64c320be2ae9467677ce639ba9bde1cffca68a3b0
     restart: unless-stopped
     command: ["yarn", "worker:prod"]
     environment:
@@ -51,14 +51,14 @@ services:
         condition: service_healthy
 
   twenty-db:
-    image: postgres:18.6-alpine
+    image: postgres:16@sha256:ca0bd484cb98bf4b24eb1010e73fb3fcbd6714d240fbc1a10eea5b7dbecb641d
     restart: unless-stopped
     environment:
       POSTGRES_USER: twenty
       POSTGRES_PASSWORD: ${TWENTY_DB_PASSWORD}
       POSTGRES_DB: twenty
     volumes:
-      - twenty-postgres:/var/lib/postgresql
+      - twenty-postgres:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U twenty -d twenty"]
       interval: 5s
@@ -66,7 +66,7 @@ services:
       retries: 20
 
   twenty-redis:
-    image: redis:7.4.11-alpine
+    image: redis:latest@sha256:2c2dff791878316e3b083188be0d578423b24813cdda5de0e80ea4f7b3e6bfd6
     restart: unless-stopped
     volumes:
       - twenty-redis:/data

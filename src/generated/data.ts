@@ -6237,7 +6237,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template uses\nthe documented self-hosted layout: an API server, background worker, PostgreSQL database and Redis.\nFiles are stored on a persistent local volume and the application is exposed through the generated\ndomain.",
           "logo": "/images/twenty/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "13515a64246af2b4c8d9474039efb3b8181873b2750e74b58db63af50db631b9";
+export const version = "fd946c462f1d029044630f7ad998d69de5731aee5aaa7a9d57f4cced4574107e";
