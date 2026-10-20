@@ -6194,7 +6194,7 @@ const data = {
               "message": "Direct synchronization needs Syncthing's standard TCP and UDP discovery ports available on the server."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Syncthing keeps selected folders synchronized between trusted devices without a central cloud\nserver. The configuration and default sync directory are persistent.",
           "logo": "/images/syncthing/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "4e362b31c7b4e87c4614883917a92eca0e091077fbae1aa4d12424c942168e99";
+export const version = "13515a64246af2b4c8d9474039efb3b8181873b2750e74b58db63af50db631b9";
