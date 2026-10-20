@@ -2696,7 +2696,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Jellyfin is a self-hosted media server for organizing and streaming personal movies, shows, music\nand photos. The template persists the server configuration, cache and media library.",
           "logo": "/images/jellyfin/default/logo.webp",
@@ -2738,7 +2738,7 @@ const data = {
               "message": "This variant requires a Linux host with a compatible GPU, installed drivers and /dev/dri access."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Jellyfin is a self-hosted media server for organizing and streaming personal movies, shows, music\nand photos. This variant exposes `/dev/dri` from the host for hardware-accelerated transcoding and\npersists the server configuration, cache and media library.",
           "logo": "/images/jellyfin/hardware-acceleration/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "dca6095ff1001cb56a4832b307263cf744cfb031c23d5ad473c117de04595046";
+export const version = "425db5da53136b340556e1762462b56c300bc002ac0f59f54fbac77e3e8236d6";
