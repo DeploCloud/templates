@@ -4339,7 +4339,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Odoo business management suite with persistent filestore and a PostgreSQL database.",
           "logo": "/images/odoo/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "09018c7559a3e971123dd13ee2e23fd229fcf9f2027dbd993aada3f60ef17d7d";
+export const version = "f26899252397234b2d3d5398e2c49d3b08d509dbb3ac49b1eef1ac5631283b8c";
