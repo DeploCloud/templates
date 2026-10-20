@@ -6328,7 +6328,7 @@ const data = {
               "message": "This variant uses Docker socket access for container monitoring."
             }
           ],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Uptime Kuma monitors websites and services and sends alerts when checks fail. The template persists\nmonitor definitions, history and notification settings.",
           "logo": "/images/uptime-kuma/default/logo.webp",
@@ -6364,7 +6364,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Uptime Kuma monitors websites and services and sends alerts when checks fail. This variant persists\nmonitor definitions and history without access to the Docker socket.",
           "logo": "/images/uptime-kuma/standalone/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "07263c3cf0012ef52d2c2f156c7908313990c5cd01d3b8cc861207c1b3e8bd05";
+export const version = "738764e5a7b3a8fbbed569786e76d9f66630bbe525aab7310ea20984aa7b3d78";
