@@ -5969,7 +5969,7 @@ const data = {
               "message": "This is a single-node, single-drive deployment for small workloads and evaluation."
             }
           ],
-          "lastUpdate": new Date("2026-09-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "SILO provides an S3-compatible API and an embedded web Console. This template is a single-node, single-drive deployment for small workloads and evaluation; it does not provide the redundancy of a multi-node cluster.",
           "logo": "/images/silo-formerly-minio/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3be66bd5aac18bb504bf11b50033a8174cc4dbd37f55e59f464f1795a62105a1";
+export const version = "dff4fa569de97f94f92d120406bb571fb9679e8e95aa086d9514fd81a465aacc";
