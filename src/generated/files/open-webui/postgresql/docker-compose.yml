@@ -1,6 +1,6 @@
 services:
   open-webui:
-    image: ghcr.io/open-webui/open-webui:v0.11.1
+    image: ghcr.io/open-webui/open-webui:v0.12.3@sha256:a537bbe1e6b428820f52ed4a029d7fff97062e24d5cf32c365fba36fd0542def
     restart: unless-stopped
     expose:
       - 8080
@@ -16,7 +16,7 @@ services:
         condition: service_healthy
 
   open-webui-db:
-    image: postgres:18.6-alpine
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
     restart: unless-stopped
     environment:
       POSTGRES_USER: openwebui

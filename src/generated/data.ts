@@ -4548,7 +4548,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Open WebUI is a self-hosted chat interface for local language models and OpenAI-compatible APIs.\nThe template persists users, conversations and application settings.",
           "logo": "/images/open-webui/default/logo.webp",
@@ -4584,7 +4584,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Open WebUI is a self-hosted chat interface for local language models and OpenAI-compatible APIs.\nThis variant keeps application data in the persistent volume and stores database-backed state in the\nincluded PostgreSQL service.",
           "logo": "/images/open-webui/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d8be706890fd72985f2c3ec250968ee748f6104eceb33b0c6a425a0a1e995f05";
+export const version = "b1e18d6ef9d38a19fd84f3ce20ac0df466cf9a860974a201de40519c78cd9ff2";
