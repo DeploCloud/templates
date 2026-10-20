@@ -6454,7 +6454,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Vikunja is a self-hosted task and project manager. The default deployment follows the simple Docker\ninstallation with SQLite, a persistent database and a separate files volume.",
           "logo": "/images/vikunja/default/logo.webp",
@@ -6490,7 +6490,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This Vikunja variant uses the documented PostgreSQL deployment for installations with more users\nor concurrent activity. The application and database are separate services, with persistent volumes\nfor both task attachments and PostgreSQL data.",
           "logo": "/images/vikunja/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "41411cd758d96fafbc3745cf9c72481aab105f50201d8b38540f07b1adc5b3fe";
+export const version = "a427c885facc279bb72c4f70c8341efff9a67063894515f7763f778db107757d";
