@@ -1,6 +1,6 @@
 services:
   pihole:
-    image: pihole/pihole:2026.07.2
+    image: pihole/pihole:2026.10.0@sha256:d34134716fc32038b052a8674c7c6879e0ff21f0e6d8af345166fffa2c27c113
     restart: unless-stopped
     expose:
       - 80

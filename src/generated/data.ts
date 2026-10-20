@@ -4927,7 +4927,7 @@ const data = {
               "message": "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and DNS\ndata are persistent, and the web interface is exposed through the generated domain.",
           "logo": "/images/pi-hole/default/logo.webp",
@@ -4968,7 +4968,7 @@ const data = {
               "message": "TCP and UDP port 53 and UDP port 67 must be free on the host."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Pi-hole with its optional DHCP server capability. Its configuration and DNS data are persistent.",
           "logo": "/images/pi-hole/dhcp/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "146ff519bf69aa6cb70a4e389443b6cd099cee4b8a9e90af4f0630ae008937cc";
+export const version = "e89bce5380aad5132b212385f3539d737a5b545588c1c69c394e7db8f2611b22";
