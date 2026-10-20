@@ -4843,7 +4843,7 @@ const data = {
               "message": "Allow at least 4 GB of swap for indexing larger libraries and change the generated administrator password."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "PhotoPrism is a self-hosted photo and video library with indexing, search and automatic\nclassification. This variant includes MariaDB and persists originals, thumbnails, metadata and\ndatabase data.",
           "logo": "/images/photoprism/default/logo.webp",
@@ -4879,7 +4879,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "PhotoPrism photo and video library using its built-in SQLite database. Originals, indexed metadata, thumbnails and the SQLite database persist in volumes.",
           "logo": "/images/photoprism/sqlite/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "f2ae15c3f02b951d19b6d6a9f46fcfeb3a73bde7a7aac377499fbf874dae685f";
+export const version = "146ff519bf69aa6cb70a4e389443b6cd099cee4b8a9e90af4f0630ae008937cc";
