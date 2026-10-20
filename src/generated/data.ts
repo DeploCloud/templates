@@ -5616,7 +5616,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-12T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-07T00:00:00.000Z"),
           "description": "Rybbit is a privacy-friendly web analytics platform with dashboards, session replays, funnels and\ncustom events. The template includes the client, backend, PostgreSQL, ClickHouse and Redis. All\napplication data persists in volumes.",
           "logo": "/images/rybbit/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "9fe256ea24860c61b0defa79fc6cab40be15b1cbec2bdeb34bc2d46aa5934ac3";
+export const version = "5990f28bdde1075d03c70ff1b8c7736f07ecddbd54d426d807ed22efb0637d03";

@@ -1,6 +1,6 @@
 services:
   clickhouse:
-    image: clickhouse/clickhouse-server:26.3.17.4
+    image: clickhouse/clickhouse-server:26.3.17.4@sha256:85c434814ac8905e5648027ce926f74ab067edd6aadbccb6c0c165cd3571ea49
     restart: unless-stopped
     healthcheck:
       test:
@@ -28,7 +28,7 @@ services:
       - ./clickhouse/user-settings.xml:/etc/clickhouse-server/users.d/user-settings.xml:ro
 
   postgres:
-    image: postgres:17.4
+    image: postgres:17.4@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
@@ -44,7 +44,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   redis:
-    image: redis:8.6.4-alpine
+    image: redis:8.6.4-alpine@sha256:2cc044fc5a07c9b701f8f1255a309ae9ad7856e694ac03513bf3648c01e40763
     restart: unless-stopped
     command:
       - redis-server
@@ -74,7 +74,7 @@ services:
       - redis-data:/data
 
   backend:
-    image: ghcr.io/rybbit-io/rybbit-backend:v2.9.1
+    image: ghcr.io/rybbit-io/rybbit-backend:latest@sha256:e0d1b397e33c4c848b98c64b60366ea861523de5db4ba9df32ffdc57e6b81ec7
     restart: unless-stopped
 
     command:
@@ -128,7 +128,7 @@ services:
       start_period: 60s
 
   client:
-    image: ghcr.io/rybbit-io/rybbit-client:v2.9.1
+    image: ghcr.io/rybbit-io/rybbit-client:latest@sha256:9a3bbb2e837adee35be2f75d42464f9ef7b406bfde6b8eab9c9ba8acc77e6264
     restart: unless-stopped
     expose:
       - 3002
