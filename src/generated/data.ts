@@ -581,7 +581,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authentik identity provider with persistent media and PostgreSQL-backed configuration.",
           "logo": "/images/authentik/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "01b11e04e0cef021915f2f6f8a308fd90e3ca31ecf76ec00e26f565841918dfc";
+export const version = "29a0e3ff7b1b2d6605eed4394b861dce2c558c79cda77aa60ad6bfa8d85b591a";
