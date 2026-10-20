@@ -183,7 +183,7 @@ const data = {
               "message": "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "AdGuard Home is a network-wide DNS server that blocks advertisements and trackers. This template\nkeeps its work and configuration directories on persistent volumes, so redeploying the stack does\nnot reset the service. The web administration interface is exposed through the generated domain.",
           "logo": "/images/adguard-home/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "2f95fd31ae51a6d995397ef018f5321194a829ca5737a1bc6925b364e281d3df";
+export const version = "a8da41e7bbbc5d35b250fba97466b441a223e6b60a2d5c758a431ada5ad02cc2";
