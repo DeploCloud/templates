@@ -1,6 +1,6 @@
 services:
   authelia:
-    image: docker.io/authelia/authelia:4.39.28
+    image: authelia/authelia:4.39.28@sha256:bd97cff4fcbf715b5ff1f9ae286afbe6033afce385302520b0368122d43a6f54
     restart: unless-stopped
     depends_on:
       authelia-redis:
@@ -17,7 +17,7 @@ services:
       - ./users_database.yml:/config/users_database.yml:ro
 
   authelia-redis:
-    image: redis:7-alpine
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     restart: unless-stopped
     command: redis-server --save 60 1 --loglevel warning --requirepass ${AUTHELIA_REDIS_PASSWORD}
     healthcheck:

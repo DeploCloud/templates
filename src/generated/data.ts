@@ -456,7 +456,7 @@ const data = {
               "message": "Replace the seeded administrator password before protecting production apps."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authelia is an authentication portal that adds single sign-on and multi-factor authentication in\nfront of web applications. This variant includes Authelia, Redis and PostgreSQL and persists\nconfiguration, sessions and identity data.",
           "logo": "/images/authelia/default/logo.webp",
@@ -497,7 +497,7 @@ const data = {
               "message": "Replace the seeded administrator password before protecting production apps."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authelia authentication gateway using mysql for persistent storage and Redis for sessions.\nConfiguration, users and storage persist in volumes.",
           "logo": "/images/authelia/mysql/logo.webp",
@@ -538,7 +538,7 @@ const data = {
               "message": "Replace the seeded administrator password before protecting production apps."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authelia authentication gateway using sqlite for persistent storage and Redis for sessions.\nConfiguration, users and storage persist in volumes.",
           "logo": "/images/authelia/sqlite/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "ad4316d523e88149a66499d08251cd3876de3b51226c9cf5a1ddc4818bde13fa";
+export const version = "01b11e04e0cef021915f2f6f8a308fd90e3ca31ecf76ec00e26f565841918dfc";
