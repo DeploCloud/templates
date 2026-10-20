@@ -1369,7 +1369,7 @@ const data = {
               "message": "The first deployment can take several minutes while the site is initialized."
             }
           ],
-          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis,\nfrontend, workers, scheduler, websocket and persistent sites.",
           "logo": "/images/erpnext/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "b79632e1f3654dc00eca1bee0eb7556ceb6dcab34fd64a8ad5140fa6d9efad92";
+export const version = "3a331a99502b43f1c9d27ed8cba215a5d5f37442149a868fa0e25698cd8123dd";
