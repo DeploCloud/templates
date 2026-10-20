@@ -1710,7 +1710,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Forgejo is a community-driven Git forge for repositories, issues, pull requests and code review. This variant uses the built-in SQLite database and stores the complete server state in one persistent volume.",
           "logo": "/images/forgejo/default/logo.webp",
@@ -1751,7 +1751,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Forgejo is a community-driven Git forge for repositories, issues, pull requests and code review. This variant includes PostgreSQL for installations that need a separate relational database and a more scalable application store.",
           "logo": "/images/forgejo/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "1aeab47c65e14569134707178259caf1dad90f779d89be44bdd63e6b0d7fa05e";
+export const version = "f5e3ac1a3ce677aca65c463fc26d19e1980fd13194642a6730043767789f6768";
