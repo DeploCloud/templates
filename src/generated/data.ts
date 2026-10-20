@@ -2961,7 +2961,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Keycloak identity and access management server with a PostgreSQL database.",
           "logo": "/images/keycloak/default/logo.webp",
@@ -3002,7 +3002,7 @@ const data = {
               "message": "Change the generated bootstrap administrator password after first login."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Keycloak identity management using a dedicated mariadb database. The database and Keycloak state\npersist in volumes.",
           "logo": "/images/keycloak/mariadb/logo.webp",
@@ -3043,7 +3043,7 @@ const data = {
               "message": "Change the generated bootstrap administrator password after first login."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Keycloak identity management using a dedicated mysql database. The database and Keycloak state\npersist in volumes.",
           "logo": "/images/keycloak/mysql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "9bb882a21b0ed2ad98a914e03ac787ba11bf33f08e305816e562bab2928d22ad";
+export const version = "e17417c245313983dd983c7782652d8466d475dd4c5922e6c0aafb2e5c33a134";
