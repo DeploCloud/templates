@@ -758,7 +758,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Calibre-Web ebook library and reading interface with persistent configuration.",
           "logo": "/images/calibre-web/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "e82416faa2a54b9ca064f28f2f1ce274c4775f41fd2f91f1455e24767ce24eeb";
+export const version = "4a04f5d2586764c9c18c0a30734177c74e0028112b71f99f743c3721c4a88f65";
