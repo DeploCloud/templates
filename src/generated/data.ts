@@ -5573,7 +5573,7 @@ const data = {
               "message": "Open the official RustDesk rendezvous and relay TCP/UDP ports on the host; this service is not routed through the web domain."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "RustDesk is a self-hosted remote desktop server. Its rendezvous and relay protocols use raw TCP and\nUDP ports, with persistent state for the server.",
           "logo": "/images/rustdesk/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "68d63a6db09a7053c9550238f9dbf604a654447203f90794e7f7ddd1fd731e17";
+export const version = "9fe256ea24860c61b0defa79fc6cab40be15b1cbec2bdeb34bc2d46aa5934ac3";
