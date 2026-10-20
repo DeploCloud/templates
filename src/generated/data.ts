@@ -3405,7 +3405,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Mealie recipe manager and meal planner with persistent recipes, users and settings.",
           "logo": "/images/mealie/default/logo.webp",
@@ -3441,7 +3441,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Mealie recipe manager using PostgreSQL for application data. The database and Mealie data persist in\nvolumes.",
           "logo": "/images/mealie/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "4d3075c4ec114f60a77ec1675658faf04f67e82013e037596f50766400b9b8d1";
+export const version = "4bb476af9d9284c4a716ea9c60216d32e32c8c3af02f0d6eb224b1389d285974";
