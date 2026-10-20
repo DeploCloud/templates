@@ -135,7 +135,7 @@ const data = {
               "link": "https://actualbudget.org/docs/troubleshooting/shared-array-buffer/"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume.",
           "logo": "/images/actual-budget/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "69fddac3000306b8440856a5b31db0ab7477875c32801fcb5104d38dc05e7f15";
+export const version = "2f95fd31ae51a6d995397ef018f5321194a829ca5737a1bc6925b364e281d3df";
