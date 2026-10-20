@@ -5873,7 +5873,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "SeaweedFS is a distributed file and object store. The official mini mode starts a compact single-node\ndeployment with an S3 endpoint, master UI and Filer UI.",
           "logo": "/images/seaweedfs/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "700e4f45a075bbc0bb1371d6d47477b4a44fc6dbd66686384e2c2c5ac94d439a";
+export const version = "6f92e249423bb93c1f2af03fdc180d77d057b8563996970eac9c955d822126d9";
