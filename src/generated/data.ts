@@ -1230,7 +1230,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Docmost collaborative wiki and knowledge base with persistent attachments, PostgreSQL and Redis.",
           "logo": "/images/docmost/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "aa734465aed7bfc9babc1d0f1be341e9bbf58a2af7d7634677b042498caa2d01";
+export const version = "221c665b1eeaf8a3bbb4718b09e170671dc4361ca2ea0631818fa12ff01b44e2";
