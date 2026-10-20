@@ -2521,7 +2521,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets.\nThis default variant keeps its configuration in a persistent volume and does not require access to\nthe server Docker socket.",
           "logo": "/images/homepage/default/logo.webp",
@@ -2562,7 +2562,7 @@ const data = {
               "message": "This variant requires read-only host Docker socket access through a restricted proxy; enable Deplo host-volume permission."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets.\nThis variant adds a restricted Docker socket proxy so containers carrying Homepage labels can be\ndiscovered automatically. The proxy allows read-only container, service and task inspection, while\nthe Homepage configuration remains in a persistent volume.",
           "logo": "/images/homepage/docker-discovery/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "918a6bc0a14f1a6e800d317f9b34407d9f87eae6ee3849ebc00d40a950c86abb";
+export const version = "14be94e3491469247795218e9bb52797bce9bcbd59f2d3f47e9894efbd674498";
