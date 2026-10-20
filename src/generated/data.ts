@@ -2178,7 +2178,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Grafana provides dashboards, visualizations and alerting for metrics, logs and other observability\ndata sources. The template persists dashboards, users and Grafana configuration.",
           "logo": "/images/grafana/default/logo.webp",
@@ -2214,7 +2214,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "# Grafana with PostgreSQL\n\nGrafana provides dashboards, visualizations and alerting for metrics, logs and\nother observability data sources.\n\nThis variant stores Grafana users, dashboards and settings in the included\nPostgreSQL database instead of the default SQLite store.",
           "logo": "/images/grafana/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "f5866b878090d5420123a8ee46231c2a4bcd4cdd92d0a49a7a4c5fa411a57267";
+export const version = "ba8a091f3580eff6ccdcd75a79ad8381538755246a2afd9e674e570657a33efb";
