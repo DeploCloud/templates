@@ -624,7 +624,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Beszel lightweight server monitoring hub with persistent users, monitored systems and history.",
           "logo": "/images/beszel/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "29a0e3ff7b1b2d6605eed4394b861dce2c558c79cda77aa60ad6bfa8d85b591a";
+export const version = "fd0f138975fb66d0fdd557f2d93f44a2779b61ae60aabc9709337d9358f35ce1";
