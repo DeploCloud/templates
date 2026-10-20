@@ -408,7 +408,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Audiobookshelf server for organizing and streaming audiobooks and podcasts. Configuration, metadata\nand progress persist in dedicated volumes.",
           "logo": "/images/audiobookshelf/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "7856d105af84a0b6c7d1c0cf7231ce094ec02760f9f1d5658166b764176f09fd";
+export const version = "ad4316d523e88149a66499d08251cd3876de3b51226c9cf5a1ddc4818bde13fa";
