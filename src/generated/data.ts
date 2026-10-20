@@ -4610,7 +4610,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "AI software-development workspace with persistent project data.",
+          "shortDescription": "OpenHands Agent Canvas with authenticated access and persistent projects, settings and conversations.",
           "category": {
             "name": "AI",
             "icon": "sparkles",
@@ -4619,21 +4619,30 @@ const data = {
           },
           "developedBy": {
             "label": "OpenHands",
-            "url": "https://www.all-hands.dev/"
+            "url": "https://openhands.dev/"
           },
           "submittedBy": {
             "label": "Deplo",
             "url": "https://github.com/DeploCloud"
           },
           "links": {
-            "github": "https://github.com/All-Hands-AI/OpenHands",
-            "website": "https://www.all-hands.dev/",
+            "github": "https://github.com/OpenHands/OpenHands",
+            "website": "https://openhands.dev/",
             "docs": [
-              "https://docs.all-hands.dev/"
+              "https://github.com/OpenHands/OpenHands/blob/v1.28.1/docs/SELF_HOSTING.md"
             ]
           },
-          "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "alerts": [
+            {
+              "type": "info",
+              "message": "Open /canvas and enter LOCAL_BACKEND_API_KEY from the template environment. Configure an LLM provider before starting an agent."
+            },
+            {
+              "type": "warning",
+              "message": "Agents can modify the mounted project and state volumes. Share this instance only with trusted users. Legacy OpenHands data is not migrated automatically."
+            }
+          ],
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "OpenHands web interface for AI-assisted software development with persistent workspace data.",
           "logo": "/images/openhands/default/logo.webp",
@@ -6730,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "72b6b891aa653cf49c5e1a2703b4eb0d96ad36c96d533f82c41612d509ae101d";
+export const version = "5e8a8a7ffc243922f4f2535bcd5210bb0ad3ad97ac9bc631f90e7aa2f0ca96ef";

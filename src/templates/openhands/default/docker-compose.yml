@@ -1,11 +1,30 @@
 services:
   openhands:
-    image: ghcr.io/all-hands-ai/openhands:0.9.1
+    image: ghcr.io/openhands/agent-canvas:1.28.1@sha256:f121177b48330361c4fb608e342d76847411720eb270a110b01a22bea0dd8cfb
     restart: unless-stopped
     expose:
-      - 3000
+      - 8000
+    working_dir: /projects
+    environment:
+      LOCAL_BACKEND_API_KEY: ${LOCAL_BACKEND_API_KEY}
+      OH_SESSION_API_KEYS_0: ${LOCAL_BACKEND_API_KEY}
+      OH_SECRET_KEY: ${OH_SECRET_KEY}
+      AGENT_CANVAS_ALLOW_LAN_SESSION_KEY: "false"
+      AUTOMATION_BASE_URL: ${AUTOMATION_BASE_URL}
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:8000/ready', {headers: {'X-Session-API-Key': process.env.LOCAL_BACKEND_API_KEY}}).then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
     volumes:
-      - openhands-data:/openhands
+      - openhands-state:/home/openhands/.openhands
+      - openhands-projects:/projects
 
 volumes:
-  openhands-data: {}
+  openhands-state: {}
+  openhands-projects: {}

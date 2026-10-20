@@ -1,6 +1,15 @@
+[variables]
+backend_api_key = "${password:64}"
+settings_secret = "${hash:64}"
+
 [config]
 
 [[config.domains]]
 serviceName = "openhands"
-port = 3000
+port = 8000
 host = "${domain}"
+
+[config.env]
+LOCAL_BACKEND_API_KEY = "${backend_api_key}"
+OH_SECRET_KEY = "${settings_secret}"
+AUTOMATION_BASE_URL = "https://${domain}"
