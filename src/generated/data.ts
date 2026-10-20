@@ -3180,7 +3180,7 @@ const data = {
               "message": "A model provider, MongoDB and authentication are required for production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "LibreChat multi-provider AI chat interface with persistent uploads, MongoDB and authentication\nservices.",
           "logo": "/images/librechat/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "8fd84f74b37f1b6598aae363c83059fd759a4e234a44d9c4157b86cb3927072c";
+export const version = "7bc2497bd346af88792b693f0b85c36c9fa14b29f199ff34d922d21fa2724f75";

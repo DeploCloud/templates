@@ -1,6 +1,6 @@
 services:
   librechat:
-    image: ghcr.io/danny-avila/librechat:v0.8.7
+    image: ghcr.io/danny-avila/librechat:v0.8.7@sha256:c5db3331b845e1f289f8d04c0c77936c4bbe372f76730a804abc1c37e44d23a9
     restart: unless-stopped
     expose:
       - 3080
@@ -17,7 +17,7 @@ services:
       - librechat-uploads:/app/uploads
 
   mongo:
-    image: mongo:8
+    image: mongo:8.0.20@sha256:098862b1339f031900ca66cf8fef799e616d6324fa41b9a263f2ec899552c1ef
     restart: unless-stopped
     volumes:
       - librechat-mongo:/data/db
