@@ -3998,7 +3998,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates, and the admin UI is exposed\nthrough the generated domain.",
           "logo": "/images/nginx-proxy-manager/default/logo.webp",
@@ -4039,7 +4039,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists. The\nconfiguration and database state persist in volumes, and the admin UI is exposed through the\ngenerated domain.",
           "logo": "/images/nginx-proxy-manager/mariadb/logo.webp",
@@ -4080,7 +4080,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists. The\nconfiguration and database state persist in volumes, and the admin UI is exposed through the\ngenerated domain.",
           "logo": "/images/nginx-proxy-manager/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "f93b76a14f98c597b04b825f7073e6c97c3683127d383a1e9ff61b11c2ec840b";
+export const version = "5d9caf4de189867dfce1fc82b00005336deaaacd6249240be73e5414875a8c98";

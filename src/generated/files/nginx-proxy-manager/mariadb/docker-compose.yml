@@ -1,6 +1,6 @@
 services:
   app:
-    image: jc21/nginx-proxy-manager:2.16.0
+    image: jc21/nginx-proxy-manager:2.16.0@sha256:4393e642e233e5efd5adeb7f10918d4aaea71c9ed875b94190273fc8e87f9594
     restart: unless-stopped
     expose:
       - 81
@@ -22,7 +22,7 @@ services:
         condition: service_healthy
 
   db:
-    image: linuxserver/mariadb:version-11.8.8
+    image: linuxserver/mariadb:version-11.8.8-r0@sha256:ba1b875720113e3fd1dbc2c5a52b7efa0b32cbf722e99003643c91e2cb99ec53
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

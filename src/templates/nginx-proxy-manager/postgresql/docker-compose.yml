@@ -1,6 +1,6 @@
 services:
   app:
-    image: jc21/nginx-proxy-manager:2.16.0
+    image: jc21/nginx-proxy-manager:2.16.0@sha256:4393e642e233e5efd5adeb7f10918d4aaea71c9ed875b94190273fc8e87f9594
     restart: unless-stopped
     expose:
       - 81
@@ -22,7 +22,7 @@ services:
         condition: service_healthy
 
   db:
-    image: postgres:17
+    image: postgres:17@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3
     restart: unless-stopped
     environment:
       POSTGRES_USER: npm
