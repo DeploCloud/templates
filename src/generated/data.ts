@@ -3314,7 +3314,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Matomo web analytics platform with persistent plugins, configuration and reports.",
           "logo": "/images/matomo/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "524af4c589e84072f427ec6cb99461d2172a992e32934d75eb3952e2d1d40beb";
+export const version = "005a9015e70c0cff0084d94e0056b2ea1da2d9d46182865249ff8b856633ef09";
