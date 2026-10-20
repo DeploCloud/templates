@@ -4255,7 +4255,7 @@ const data = {
               "message": "Configure authentication, access control and the base URL before production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "ntfy publish and subscribe notification server with persistent message cache.",
           "logo": "/images/ntfy/default/logo.webp",
@@ -4296,7 +4296,7 @@ const data = {
               "message": "Configure authentication, access control and the base URL before production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "ntfy notification server using PostgreSQL for message cache, users, access control and web push data. PostgreSQL and local attachments persist in volumes.",
           "logo": "/images/ntfy/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3c2d91373293207b7263ed9e59de2986f78c85cc2c5aa1d2f6ce79da5f800ae3";
+export const version = "09018c7559a3e971123dd13ee2e23fd229fcf9f2027dbd993aada3f60ef17d7d";
