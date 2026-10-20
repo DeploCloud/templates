@@ -2346,7 +2346,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homarr is a self-hosted home dashboard for organizing services, links and widgets. The default variant uses the built-in SQLite database, which is simple to back up and needs no companion service.",
           "logo": "/images/homarr/default/logo.webp",
@@ -2382,7 +2382,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homarr is a self-hosted home dashboard for organizing services, links and widgets. This variant stores its application data in the included PostgreSQL service for installations that need an external relational database.",
           "logo": "/images/homarr/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5836d92a6a2036bc4b6f59a5ded447e6ab228825d26ad0bdb23a821de67f9e63";
+export const version = "46c76d9e9514b320cd0e9861b9e6eb1f7b988c8c58f096cd9eb04ad0bf9fbc80";
