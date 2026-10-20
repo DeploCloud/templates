@@ -6012,7 +6012,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Sonarr series management and download automation with persistent configuration.",
           "logo": "/images/sonarr/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "dff4fa569de97f94f92d120406bb571fb9679e8e95aa086d9514fd81a465aacc";
+export const version = "bb0b46124fe97644751c13edb3f9f9973a49916de16bccf21cc35c3404d4c4ec";
