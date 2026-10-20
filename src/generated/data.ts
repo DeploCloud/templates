@@ -4675,7 +4675,7 @@ const data = {
               "message": "Configure an external SMTP provider and replace the initial identity-provider password before using a public workspace."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Outline is a collaborative knowledge base for writing and sharing team documentation. This variant\nincludes PostgreSQL, Redis and a local OpenID Connect provider, and persists documents, database data\nand Redis state.",
           "logo": "/images/outline/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "b1e18d6ef9d38a19fd84f3ce20ac0df466cf9a860974a201de40519c78cd9ff2";
+export const version = "d4f5b6eb6b2bd3ffe480779adaaf9714d2dc6a0f76adde15f5593c56571e2d4d";

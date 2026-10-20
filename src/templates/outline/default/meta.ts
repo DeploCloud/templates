@@ -24,6 +24,6 @@ export default {
         "Configure an external SMTP provider and replace the initial identity-provider password before using a public workspace.",
     },
   ],
-  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
