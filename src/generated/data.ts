@@ -2781,7 +2781,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Jenkins automation server with persistent jobs, plugins and build configuration.",
           "logo": "/images/jenkins/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "425db5da53136b340556e1762462b56c300bc002ac0f59f54fbac77e3e8236d6";
+export const version = "d0741e1f30d4a403484dc4a608b80bc7740c4bd0691e085a7f5b381330ecc203";
