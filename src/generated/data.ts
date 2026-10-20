@@ -4123,7 +4123,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "NocoDB turns a local SQLite database into a browser-based workspace for tables, views and APIs.\nThis lightweight variant persists its application data and is suited to evaluation or small\nworkloads; use the PostgreSQL variant for a production-shaped deployment.",
           "logo": "/images/nocodb/default/logo.webp",
@@ -4159,7 +4159,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "NocoDB with bundled PostgreSQL, Redis and a background worker for a production-shaped deployment.\nApplication data, attachments, the database and the job queue persist on named volumes. The\ngenerated HTTPS domain is used for callbacks and shared links.",
           "logo": "/images/nocodb/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5d9caf4de189867dfce1fc82b00005336deaaacd6249240be73e5414875a8c98";
+export const version = "2296ac75378ec113100961916a6524d03a70b810534c9a118d689ddf40dd953f";
