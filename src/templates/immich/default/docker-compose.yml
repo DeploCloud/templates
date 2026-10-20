@@ -1,6 +1,6 @@
 services:
   immich-server:
-    image: ghcr.io/immich-app/immich-server:v3.0.2
+    image: ghcr.io/immich-app/immich-server:v3.3.3@sha256:bae7664ff3aa4c2c1fcbdcdd86b40b105643c5f861f3e6a770fc760089f25862
     volumes:
       - immich-library:/data
       - /etc/localtime:/etc/localtime:ro
@@ -24,7 +24,7 @@ services:
       disable: false
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v3.0.2
+    image: ghcr.io/immich-app/immich-machine-learning:v3.3.3@sha256:73915f07e1f4289ba45b174c58443db74cef47ddf502613f475fc5e52458ea42
     volumes:
       - immich-model-cache:/cache
     restart: unless-stopped
@@ -32,7 +32,7 @@ services:
       disable: false
 
   immich-redis:
-    image: valkey/valkey:9.1.1-alpine
+    image: docker.io/valkey/valkey:9@sha256:c123e3715db63d06d4ad6964884037aa0d5d4d703939b9929954112889708e1d
     volumes:
       - immich-redis-data:/data
     healthcheck:
@@ -43,7 +43,7 @@ services:
     restart: unless-stopped
 
   immich-database:
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     volumes:
       - immich-postgres:/var/lib/postgresql/data
     environment:
