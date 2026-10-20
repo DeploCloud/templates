@@ -5102,7 +5102,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "PocketBase backend with embedded SQLite storage and persistent uploaded files. The API and admin panel\nare exposed by the generated deployment.",
           "logo": "/images/pocketbase/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "7b30558b286d075a498ae65b674b721a3120bd3f74a1a105218a5a7f1fd3b1ec";
+export const version = "e200a536da69a241e5bdab5ca5e8eb57cd5d946da479f0bdfd5c143442f941fa";
