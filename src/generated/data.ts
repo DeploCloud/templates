@@ -902,7 +902,7 @@ const data = {
               "message": "Docker-based workspaces require a Linux host and host Docker socket access."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Coder is a self-hosted cloud development environment for provisioning remote workspaces. This\nvariant includes Coder and PostgreSQL and persists application state in the database.",
           "logo": "/images/coder/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "36100cdbdea17dcd49f34613b7097196eca42c74e96bd57f8d3ba958b6661a52";
+export const version = "bfce546adbfc5b4be40de1f6c2113ab649a6e4fd8b81e6251e0e793863bfc242";
