@@ -3532,7 +3532,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Memos is a lightweight Markdown note-taking and knowledge base application for private or shared notes. This single-container variant uses SQLite and persists the database and local assets in `/var/opt/memos`. The generated domain is configured as the instance URL.",
           "logo": "/images/memos/default/logo.webp",
@@ -3568,7 +3568,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Memos note-taking service using a dedicated mysql database. Database data and local assets persist in volumes.",
           "logo": "/images/memos/mysql/logo.webp",
@@ -3604,7 +3604,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Memos note-taking service using a dedicated postgres database. Database data and local assets persist in volumes.",
           "logo": "/images/memos/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "479219b8cec125c1481d612429f2e414c263ff823fd072b425ef88e2d4d50e51";
+export const version = "b859103a99fcc69d77e7b8163ddfb33b3cb6d5d65da24c79f27de42380ec6384";
