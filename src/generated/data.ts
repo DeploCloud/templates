@@ -1321,7 +1321,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "draw.io is a browser-based diagramming and whiteboarding application for flowcharts, architecture\ndiagrams and wireframes. The self-contained image includes the editor and its optional export\nintegration; the editor itself does not require an application database.",
           "logo": "/images/draw-io/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5ffd0df1dc898a9d26434ce9dde7d179aea35d12a2c61d7c10ca47eaada6520a";
+export const version = "b79632e1f3654dc00eca1bee0eb7556ceb6dcab34fd64a8ad5140fa6d9efad92";
