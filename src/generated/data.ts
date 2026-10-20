@@ -6542,7 +6542,7 @@ const data = {
               "message": "Set and change the admin password before exposing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "WG-Easy WireGuard management UI with persistent peer configuration.",
           "logo": "/images/wg-easy/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a427c885facc279bb72c4f70c8341efff9a67063894515f7763f778db107757d";
+export const version = "8150b4ce974375355355cd93c0ec3751e6f4d234981090d6c16adbf43e1c1d4b";
