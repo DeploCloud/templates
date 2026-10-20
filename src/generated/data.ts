@@ -2877,7 +2877,7 @@ const data = {
               "message": "This SQLite variant is intended for evaluation or small personal deployments; change the default admin login."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Joplin Server synchronizes notes, notebooks and attachments between Joplin clients. This evaluation\nvariant uses the server's built-in SQLite database and persists its data directory.",
           "logo": "/images/joplin/default/logo.webp",
@@ -2918,7 +2918,7 @@ const data = {
               "message": "Use a separate non-admin sync user for synchronization."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Joplin Server with PostgreSQL for a production-shaped deployment. The database is persistent and\nthe server is routed through the generated domain.",
           "logo": "/images/joplin/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "87321e7150ffc40045ec7790b0936f69102e2e4f04f1f9d765c7e6a611fa9293";
+export const version = "9bb882a21b0ed2ad98a914e03ac787ba11bf33f08e305816e562bab2928d22ad";

@@ -24,6 +24,6 @@ export default {
         "This SQLite variant is intended for evaluation or small personal deployments; change the default admin login.",
     },
   ],
-  lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
