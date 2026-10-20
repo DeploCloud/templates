@@ -2135,7 +2135,7 @@ const data = {
               "message": "The stack is resource intensive; an external URL and sufficient memory are required."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "GitLab Community Edition with persistent repositories, issues, CI data and configuration.",
           "logo": "/images/gitlab-ce/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a53fa3ace198c3942e181d4857064b20df15bb0d253e0c2a92fb323fa5d5fc68";
+export const version = "f5866b878090d5420123a8ee46231c2a4bcd4cdd92d0a49a7a4c5fa411a57267";
