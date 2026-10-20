@@ -1151,7 +1151,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-26T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-26T00:00:00.000Z"),
           "description": "Diun watches Docker images and reports when newer versions are available in their registries. This\nvariant monitors the local Docker host, keeps notification state in a persistent volume and has no\nweb interface or public domain.",
           "logo": "/images/diun/default/logo.webp",
@@ -1187,7 +1187,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Diun watches Docker images and reports when newer versions are available in their registries. This\nvariant also enables Diun's Prometheus-compatible `/metrics` endpoint and exposes it through the\ngenerated domain for a metrics scraper. Notification state persists in a volume.",
           "logo": "/images/diun/with-metrics/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a5cf69737232e3ebf0f500447d2de706cba99391d7b44119a00c1a78ec60e3f6";
+export const version = "aa734465aed7bfc9babc1d0f1be341e9bbf58a2af7d7634677b042498caa2d01";
