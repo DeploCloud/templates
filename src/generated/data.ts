@@ -1455,7 +1455,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Firefly III is a self-hosted personal finance manager for transactions, budgets, bills and reports.\nThis template follows the official Docker layout with the Firefly application, MariaDB and a\nscheduled cron worker. Uploads and database data are persistent.",
           "logo": "/images/firefly-iii/default/logo.webp",
@@ -1491,7 +1491,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This variant swaps Firefly III's database for PostgreSQL while retaining the official application\nand cron services, with persistent volumes for uploads and database data.",
           "logo": "/images/firefly-iii/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "f775bccefd0c489a323a003821e8d47b7fd967b67b295cb5257273f0fbb7dfb2";
+export const version = "b6a2c9bc9aabf9beb8ebd18cd4fe789a7d67031c21ffb6baf0ea351fd6957646";
