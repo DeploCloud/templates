@@ -5525,7 +5525,7 @@ const data = {
               "message": "Individual routes may require external APIs, credentials or anti-bot configuration."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "RSSHub feed generator for turning supported websites and services into RSS feeds. It is a route-based\nservice rather than a general web UI.",
           "logo": "/images/rsshub/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d0d3a81b413dd9c181048d59df0ae955d8ce598b37984ab07797335584a3792f";
+export const version = "68d63a6db09a7053c9550238f9dbf604a654447203f90794e7f7ddd1fd731e17";
