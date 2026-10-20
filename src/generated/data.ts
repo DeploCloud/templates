@@ -5289,7 +5289,7 @@ const data = {
               "message": "TCP and UDP port 6881 are published for incoming peer connections and must be reachable."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "qBittorrent is a BitTorrent client with a browser-based web UI. Its settings and download directory\nare persistent, and the web UI is exposed through the generated domain.",
           "logo": "/images/qbittorrent/default/logo.webp",
@@ -5330,7 +5330,7 @@ const data = {
               "message": "TCP and UDP port 6881 are published for incoming peer connections and must be reachable."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "qBittorrent using the libtorrent v1 build for compatibility with peers or workloads that need that\ntorrent library. Settings and downloads persist.",
           "logo": "/images/qbittorrent/libtorrent-v1/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "0603b839c914c7a5a6798a667e9563b5d1e6eb046d1518a2c2df7d8a86f9e5f3";
+export const version = "9ac9df7755635b5310c7c0e8604a6630093417cd7e71a1b8ecbd49e0c2933be6";
