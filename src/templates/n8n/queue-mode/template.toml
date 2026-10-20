@@ -1,4 +1,5 @@
 [variables]
+task_runner_token = "${password:64}"
 db_password = "${password:32}"
 encryption_key = "${hash:64}"
 
@@ -24,3 +25,5 @@ GENERIC_TIMEZONE = "Europe/Berlin"
 EXECUTIONS_MODE = "queue"
 QUEUE_BULL_REDIS_HOST = "n8n-redis"
 QUEUE_BULL_REDIS_PORT = "6379"
+
+N8N_RUNNERS_AUTH_TOKEN = "${task_runner_token}"
