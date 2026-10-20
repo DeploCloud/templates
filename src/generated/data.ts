@@ -5664,7 +5664,7 @@ const data = {
               "message": "Camera, USB and other hardware integrations may require additional host device permissions."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Scrypted home-automation platform with persistent plugin state and configuration.",
           "logo": "/images/scrypted/default/logo.webp",
@@ -5705,7 +5705,7 @@ const data = {
               "message": "This variant requires CUDA, cuDNN and the NVIDIA container runtime on the host."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Scrypted camera platform using the official legacy NVIDIA image for accelerated transcoding and\ndetection. Scrypted state persists in a volume.",
           "logo": "/images/scrypted/nvidia-legacy/logo.webp",
@@ -5746,7 +5746,7 @@ const data = {
               "message": "This variant requires CUDA, cuDNN and the NVIDIA container runtime on the host."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Scrypted camera platform using the official NVIDIA image for accelerated transcoding and detection.\nScrypted state persists in a volume.",
           "logo": "/images/scrypted/nvidia/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5990f28bdde1075d03c70ff1b8c7736f07ecddbd54d426d807ed22efb0637d03";
+export const version = "c0cb91a7327dde08459e74a3d0a9c14963d945e2a368579ecaa1b9fe4e96d666";
