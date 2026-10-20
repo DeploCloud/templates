@@ -5059,7 +5059,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "# Plausible\n\nPlausible is a privacy-friendly web analytics platform with a simple dashboard\nfor understanding website traffic.\n\nThe template includes the application, PostgreSQL and ClickHouse storage.",
           "logo": "/images/plausible/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "e89bce5380aad5132b212385f3539d737a5b545588c1c69c394e7db8f2611b22";
+export const version = "7b30558b286d075a498ae65b674b721a3120bd3f74a1a105218a5a7f1fd3b1ec";
