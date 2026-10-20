@@ -5378,7 +5378,7 @@ const data = {
               "message": "Use the generated API key on every client request before exposing this service."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Qdrant is a vector database for embeddings, similarity search and AI applications. This single-node\ndeployment persists collections on a named volume.",
           "logo": "/images/qdrant/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "9ac9df7755635b5310c7c0e8604a6630093417cd7e71a1b8ecbd49e0c2933be6";
+export const version = "574c8430044f055a0077f05d9b9b7db104d65805b3910dfd55a6549469cff7b5";
