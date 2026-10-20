@@ -988,7 +988,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform and API with persistent uploads backed by PostgreSQL.",
           "logo": "/images/directus/default/logo.webp",
@@ -1024,7 +1024,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform using a dedicated MySQL database. The database and uploaded assets persist in volumes.",
           "logo": "/images/directus/mysql/logo.webp",
@@ -1060,7 +1060,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform using the built-in SQLite database. The database file, uploaded assets and generated configuration persist in volumes.",
           "logo": "/images/directus/sqlite/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "027777fffb2a8cb92a85db1b6535d23c19a86311d385333dfdc069fb31453236";
+export const version = "5dbbc56d07c5b4686e47aaf8185b4c62025d1ba783b0c38c5ff8f5230e0bd9e7";
