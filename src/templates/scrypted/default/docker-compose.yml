@@ -1,6 +1,6 @@
 services:
   scrypted:
-    image: ghcr.io/koush/scrypted:18-jammy-full-v0.94.4
+    image: ghcr.io/koush/scrypted:v0.147.0-noble-full@sha256:e78b4fcecdd6c61acaaf22b50ccef303c738da58cc0be57afdb116521df52296
     restart: unless-stopped
     expose:
       - 11080

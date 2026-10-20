@@ -1,6 +1,6 @@
 services:
   plausible_db:
-    image: postgres:16.15-alpine
+    image: postgres:16.15-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
     restart: always
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -8,7 +8,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
   plausible_events_db:
-    image: clickhouse/clickhouse-server:24.12-alpine
+    image: clickhouse/clickhouse-server:24.12-alpine@sha256:cd450891db46cc6ffe313ca2b0fb7dbfb897a6873ca74a724cbe050a2cf62621
     restart: always
     volumes:
       - event-data:/var/lib/clickhouse
@@ -23,7 +23,7 @@ services:
       CLICKHOUSE_SKIP_USER_SETUP: "1"
 
   plausible:
-    image: ghcr.io/plausible/community-edition:v3.2.1
+    image: ghcr.io/plausible/community-edition:v3.2.1@sha256:33e60bfb40f2df5da00f8753b76fad04f67dba3abe6d73eb516e440e3fb62985
     restart: always
     command: sh -c "/entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
     depends_on:

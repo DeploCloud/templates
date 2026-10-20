@@ -25,6 +25,6 @@ export default {
         "UDP port 10000 must be reachable and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic.",
     },
   ],
-  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

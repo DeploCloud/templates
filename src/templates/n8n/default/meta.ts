@@ -17,6 +17,6 @@ export default {
     website: "https://n8n.io/",
     docs: ["https://docs.n8n.io/"],
   },
-  lastUpdate: new Date("2026-08-25T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

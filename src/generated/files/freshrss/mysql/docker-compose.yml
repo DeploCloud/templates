@@ -1,6 +1,6 @@
 services:
   freshrss:
-    image: freshrss/freshrss:1.30.0
+    image: freshrss/freshrss:1.30.1@sha256:48b63b9bc3d042a1301c32971b01af8841c7f059b452589c5bf77f475ba44c61
     restart: unless-stopped
     depends_on:
       freshrss-db:
@@ -30,7 +30,7 @@ services:
       - freshrss-extensions:/var/www/FreshRSS/extensions
 
   freshrss-db:
-    image: mysql:8.4
+    image: mysql:8.4@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: freshrss

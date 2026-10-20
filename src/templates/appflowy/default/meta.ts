@@ -13,12 +13,20 @@ export default {
   developedBy: { label: "AppFlowy", url: "https://appflowy.io/" },
   submittedBy: { label: "Deplo", url: "https://github.com/DeploCloud" },
   links: {
-    github: "https://github.com/AppFlowy-IO/AppFlowy-Cloud",
+    github: "https://github.com/AppFlowy-IO/AppFlowy-SelfHost-Commercial",
     website: "https://appflowy.io/",
     docs: [
       "https://docs.appflowy.io/docs/documentation/appflowy-cloud/deployment",
     ],
   },
-  lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
+  alerts: [
+    {
+      type: "info",
+      message:
+        "This template uses AppFlowy's commercial self-hosted distribution. The Free Tier includes one user seat.",
+      link: "https://github.com/AppFlowy-IO/AppFlowy-SelfHost-Commercial#appflowy-self-hosted-free-tier",
+    },
+  ],
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

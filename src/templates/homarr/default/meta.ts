@@ -17,6 +17,6 @@ export default {
     website: "https://homarr.dev/",
     docs: ["https://homarr.dev/docs/getting-started/installation/docker/"],
   },
-  lastUpdate: new Date("2026-08-29T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

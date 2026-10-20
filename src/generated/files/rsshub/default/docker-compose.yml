@@ -1,6 +1,6 @@
 services:
   rsshub:
-    image: diygod/rsshub:2026-09-07
+    image: diygod/rsshub:2026-10-19@sha256:c387b7e12436028ff89e26aeefad6b9d17ed8f38aa8b245cad2421fde937c21a
     restart: unless-stopped
     expose:
       - 1200

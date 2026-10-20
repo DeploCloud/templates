@@ -1,30 +1,30 @@
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n:1.114.4
+    image: docker.n8n.io/n8nio/n8n:2.43.8@sha256:a18edcf018198b33b5488fb47ededafe11e0b10d28f65b9535b7c447c9ce3b2c
     restart: always
     expose:
       - 5678
     environment:
-      DB_TYPE: ${DB_TYPE}
-      DB_POSTGRESDB_HOST: ${DB_POSTGRESDB_HOST}
-      DB_POSTGRESDB_PORT: ${DB_POSTGRESDB_PORT}
-      DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
-      DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
-      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
-      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
-      N8N_HOST: ${N8N_HOST}
-      N8N_PORT: ${N8N_PORT}
+      DB_TYPE: "${DB_TYPE}"
+      DB_POSTGRESDB_HOST: "${DB_POSTGRESDB_HOST}"
+      DB_POSTGRESDB_PORT: "${DB_POSTGRESDB_PORT}"
+      DB_POSTGRESDB_DATABASE: "${DB_POSTGRESDB_DATABASE}"
+      DB_POSTGRESDB_USER: "${DB_POSTGRESDB_USER}"
+      DB_POSTGRESDB_PASSWORD: "${DB_POSTGRESDB_PASSWORD}"
+      N8N_ENCRYPTION_KEY: "${N8N_ENCRYPTION_KEY}"
+      N8N_HOST: "${N8N_HOST}"
+      N8N_PORT: "${N8N_PORT}"
       N8N_PROTOCOL: http
       NODE_ENV: production
-      WEBHOOK_URL: https://${N8N_HOST}/
-      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      WEBHOOK_URL: "https://${N8N_HOST}/"
+      GENERIC_TIMEZONE: "${GENERIC_TIMEZONE}"
       N8N_SECURE_COOKIE: "true"
       N8N_PROXY_HOPS: "1"
-      N8N_RUNNERS_ENABLED: "true"
       QUEUE_HEALTH_CHECK_ACTIVE: "true"
-      EXECUTIONS_MODE: ${EXECUTIONS_MODE}
-      QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
-      QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
+      EXECUTIONS_MODE: "${EXECUTIONS_MODE}"
+      QUEUE_BULL_REDIS_HOST: "${QUEUE_BULL_REDIS_HOST}"
+      QUEUE_BULL_REDIS_PORT: "${QUEUE_BULL_REDIS_PORT}"
+      OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS: "true"
     volumes:
       - n8n_data:/home/node/.n8n
     depends_on:
@@ -34,33 +34,32 @@ services:
         condition: service_healthy
     healthcheck:
       test:
-        [
-          "CMD-SHELL",
-          "wget --spider -q http://127.0.0.1:5678/healthz || exit 1",
-        ]
+        - CMD-SHELL
+        - wget --spider -q http://127.0.0.1:5678/healthz || exit 1
       interval: 5s
       timeout: 5s
       retries: 20
       start_period: 30s
-
   n8n-worker:
-    image: docker.n8n.io/n8nio/n8n:1.114.4
+    image: docker.n8n.io/n8nio/n8n:2.43.8@sha256:a18edcf018198b33b5488fb47ededafe11e0b10d28f65b9535b7c447c9ce3b2c
     restart: always
     command: worker
     environment:
-      DB_TYPE: ${DB_TYPE}
-      DB_POSTGRESDB_HOST: ${DB_POSTGRESDB_HOST}
-      DB_POSTGRESDB_PORT: ${DB_POSTGRESDB_PORT}
-      DB_POSTGRESDB_DATABASE: ${DB_POSTGRESDB_DATABASE}
-      DB_POSTGRESDB_USER: ${DB_POSTGRESDB_USER}
-      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
-      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+      DB_TYPE: "${DB_TYPE}"
+      DB_POSTGRESDB_HOST: "${DB_POSTGRESDB_HOST}"
+      DB_POSTGRESDB_PORT: "${DB_POSTGRESDB_PORT}"
+      DB_POSTGRESDB_DATABASE: "${DB_POSTGRESDB_DATABASE}"
+      DB_POSTGRESDB_USER: "${DB_POSTGRESDB_USER}"
+      DB_POSTGRESDB_PASSWORD: "${DB_POSTGRESDB_PASSWORD}"
+      N8N_ENCRYPTION_KEY: "${N8N_ENCRYPTION_KEY}"
       NODE_ENV: production
-      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
-      N8N_RUNNERS_ENABLED: "true"
-      EXECUTIONS_MODE: ${EXECUTIONS_MODE}
-      QUEUE_BULL_REDIS_HOST: ${QUEUE_BULL_REDIS_HOST}
-      QUEUE_BULL_REDIS_PORT: ${QUEUE_BULL_REDIS_PORT}
+      GENERIC_TIMEZONE: "${GENERIC_TIMEZONE}"
+      EXECUTIONS_MODE: "${EXECUTIONS_MODE}"
+      QUEUE_BULL_REDIS_HOST: "${QUEUE_BULL_REDIS_HOST}"
+      QUEUE_BULL_REDIS_PORT: "${QUEUE_BULL_REDIS_PORT}"
+      N8N_RUNNERS_MODE: external
+      N8N_RUNNERS_BROKER_LISTEN_ADDRESS: 0.0.0.0
+      N8N_RUNNERS_AUTH_TOKEN: "${N8N_RUNNERS_AUTH_TOKEN}"
     depends_on:
       n8n:
         condition: service_healthy
@@ -68,33 +67,50 @@ services:
         condition: service_healthy
       n8n-redis:
         condition: service_healthy
-
   n8n-db:
-    image: postgres:18.6-alpine
+    image: postgres:18@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336
     restart: always
     environment:
       POSTGRES_USER: n8n
-      POSTGRES_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
+      POSTGRES_PASSWORD: "${DB_POSTGRESDB_PASSWORD}"
       POSTGRES_DB: n8n
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U n8n -d n8n"]
+      test:
+        - CMD-SHELL
+        - pg_isready -U n8n -d n8n
       interval: 5s
       timeout: 5s
       retries: 20
     volumes:
       - n8n-postgres:/var/lib/postgresql
-
   n8n-redis:
-    image: redis:7.4.11-alpine
+    image: redis:7.4.11-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     restart: always
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test:
+        - CMD
+        - redis-cli
+        - ping
       interval: 5s
       timeout: 5s
       retries: 20
     volumes:
       - n8n-redis:/data
-
+  n8n-runners:
+    image: n8nio/runners:2.43.8@sha256:d86fc414c241561fc00bcad1f8d16e9af7288fd321cdc7b4a9854260f617287c
+    restart: always
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      N8N_RUNNERS_TASK_BROKER_URI: http://n8n-worker:5679
+      N8N_RUNNERS_AUTH_TOKEN: "${N8N_RUNNERS_AUTH_TOKEN}"
+    depends_on:
+      - n8n-worker
 volumes:
   n8n_data: {}
   n8n-postgres: {}

@@ -1,4 +1,5 @@
 [variables]
+task_runner_token = "${password:64}"
 db_password = "${password:32}"
 encryption_key = "${hash:64}"
 
@@ -21,3 +22,5 @@ N8N_ENCRYPTION_KEY = "${encryption_key}"
 N8N_HOST = "${domain}"
 N8N_PORT = "5678"
 GENERIC_TIMEZONE = "Europe/Berlin"
+
+N8N_RUNNERS_AUTH_TOKEN = "${task_runner_token}"

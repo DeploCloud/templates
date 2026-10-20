@@ -1,6 +1,6 @@
 services:
   nocodb:
-    image: nocodb/nocodb:2026.09.0
+    image: nocodb/nocodb:2026.09.1@sha256:27d2fd14670db892ac721849d4f071edce47e386a1e74c921a0162644b9c213d
     restart: unless-stopped
     expose:
       - 8080
@@ -30,7 +30,7 @@ services:
       start_period: 30s
 
   worker:
-    image: nocodb/nocodb:2026.09.0
+    image: nocodb/nocodb:2026.09.1@sha256:27d2fd14670db892ac721849d4f071edce47e386a1e74c921a0162644b9c213d
     restart: unless-stopped
     environment:
       NC_DB: "pg://db:5432?u=${POSTGRES_USER}&p=${POSTGRES_PASSWORD}&d=${POSTGRES_DB}"
@@ -46,7 +46,7 @@ services:
       - nocodb-data:/usr/app/data
 
   db:
-    image: postgres:17.10
+    image: postgres:17.10@sha256:7958605b474b3d264a969cb3a123d6aa00ad1e1fe9da8a69984dabb704d93317
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -61,7 +61,7 @@ services:
       retries: 10
 
   redis:
-    image: redis:7
+    image: redis:7@sha256:4fa24486b8bcca8eec45ee0eb166edc674795e53a2b53d1a9ef263eecebaac85
     restart: unless-stopped
     volumes:
       - nocodb-redis:/data

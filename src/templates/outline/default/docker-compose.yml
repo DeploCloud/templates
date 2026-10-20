@@ -1,6 +1,6 @@
 services:
   outline:
-    image: docker.getoutline.com/outlinewiki/outline:1.10.1
+    image: outlinewiki/outline:1.11.0@sha256:08ee9ffdb847e1bd35ded30ee832090dd06a7f93f67422687db59e70bc7f5393
     restart: unless-stopped
     expose:
       - 3000
@@ -33,14 +33,14 @@ services:
       - outline-data:/var/lib/outline/data
 
   dex:
-    image: ghcr.io/dexidp/dex:v2.37.0
+    image: ghcr.io/dexidp/dex:v2.37.0@sha256:f579d00721b0d842328c43a562f50343c54b0048ef2d58d6b54e750c21fc7938
     restart: unless-stopped
     command: ["dex", "serve", "/etc/dex/config.yaml"]
     volumes:
       - ./dex/config.yaml:/etc/dex/config.yaml:ro
 
   postgres:
-    image: postgres:18-alpine
+    image: postgres:latest@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336
     restart: unless-stopped
     environment:
       POSTGRES_DB: outline
@@ -55,7 +55,7 @@ services:
       - outline-postgres:/var/lib/postgresql
 
   redis:
-    image: redis:7-alpine
+    image: redis:latest@sha256:2c2dff791878316e3b083188be0d578423b24813cdda5de0e80ea4f7b3e6bfd6
     restart: unless-stopped
     command: redis-server --appendonly yes
     healthcheck:

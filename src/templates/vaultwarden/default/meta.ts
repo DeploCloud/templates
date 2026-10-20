@@ -23,6 +23,6 @@ export default {
         "HTTPS is required before connecting password-manager clients; use the generated secure domain.",
     },
   ],
-  lastUpdate: new Date("2026-08-25T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-25T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

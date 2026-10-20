@@ -1,6 +1,6 @@
 services:
   hbbs:
-    image: rustdesk/rustdesk-server:1.1.16
+    image: rustdesk/rustdesk-server:1.1.16@sha256:8ecdab65deb7c84652a626380e31d11a8f1fbafd97916d57f95c20628f943c00
     restart: unless-stopped
     command: hbbs -r ${RUSTDESK_RELAY_HOST}:21117
     ports:
@@ -14,7 +14,7 @@ services:
       - hbbr
 
   hbbr:
-    image: rustdesk/rustdesk-server:1.1.16
+    image: rustdesk/rustdesk-server:1.1.16@sha256:8ecdab65deb7c84652a626380e31d11a8f1fbafd97916d57f95c20628f943c00
     restart: unless-stopped
     command: hbbr
     ports:

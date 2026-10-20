@@ -1,6 +1,6 @@
 services:
   affine:
-    image: ghcr.io/toeverything/affine:v0.27.4
+    image: ghcr.io/toeverything/affine:0.27.4@sha256:b649f5ce2384ffdf13c23bccf81d759e15973d59d0b0058af65d895a84373099
     restart: unless-stopped
     expose:
       - 3010
@@ -20,7 +20,7 @@ services:
         condition: service_healthy
 
   affine-migration:
-    image: ghcr.io/toeverything/affine:v0.27.4
+    image: ghcr.io/toeverything/affine:0.27.4@sha256:b649f5ce2384ffdf13c23bccf81d759e15973d59d0b0058af65d895a84373099
     restart: "no"
     command: ["sh", "-c", "node ./scripts/self-host-predeploy.js"]
     environment:
@@ -34,7 +34,7 @@ services:
         condition: service_healthy
 
   affine-redis:
-    image: redis:7.4.11-alpine
+    image: redis:latest@sha256:2c2dff791878316e3b083188be0d578423b24813cdda5de0e80ea4f7b3e6bfd6
     restart: unless-stopped
     volumes:
       - affine-redis:/data
@@ -45,7 +45,7 @@ services:
       retries: 20
 
   affine-db:
-    image: pgvector/pgvector:0.8.6-pg16
+    image: pgvector/pgvector:pg16@sha256:7b822b0aac60967beb1ea5e576b8602c94c300a157d187f385ae3e0da199b90a
     restart: unless-stopped
     environment:
       POSTGRES_USER: affine

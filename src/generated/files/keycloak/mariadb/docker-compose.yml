@@ -1,6 +1,6 @@
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak:26.7.3
+    image: quay.io/keycloak/keycloak:26.8.1@sha256:79c623a22abacf3fe6c00a5fb30f5b7843d717b234033b80995891c06116d244
     restart: unless-stopped
     command: start
     depends_on:
@@ -22,7 +22,7 @@ services:
       - keycloak-data:/opt/keycloak/data
 
   db:
-    image: mariadb:11
+    image: mariadb:11@sha256:f16d7a344413e519dff518f27bdb221388f84b0d274c97c4fb5f2cb0dc1b34fa
     restart: unless-stopped
     environment:
       MARIADB_DATABASE: keycloak

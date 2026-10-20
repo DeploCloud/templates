@@ -34,6 +34,6 @@ export default {
         "Configure SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and SMTP_SECURE, or set RELOOP_API_KEY and a verified RELOOP_SENDER_DOMAIN to send sign-in codes and invitations.",
     },
   ],
-  lastUpdate: new Date("2026-09-28T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-09-28T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

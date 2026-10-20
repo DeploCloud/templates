@@ -1,6 +1,6 @@
 services:
   signoz:
-    image: signoz/signoz:v0.142.0
+    image: signoz/signoz:v0.146.0@sha256:cd3ca6950df3b3681b4629c1b2cea4d3bcd5fece57445a3ec2a1a20466ab14ca
     restart: unless-stopped
     depends_on:
       clickhouse:
@@ -17,7 +17,7 @@ services:
       - signoz-data:/var/lib/signoz
 
   clickhouse:
-    image: clickhouse/clickhouse-server:25.5.6
+    image: clickhouse/clickhouse-server:25.5.6@sha256:4536143e22dc9bddb217c7e610f6b7ed5e6efd8fefdbc61acdeadb5d8022213a
     restart: unless-stopped
     expose:
       - 9000

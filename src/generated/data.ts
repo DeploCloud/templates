@@ -135,7 +135,7 @@ const data = {
               "link": "https://actualbudget.org/docs/troubleshooting/shared-array-buffer/"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Actual Budget is a local-first personal finance application focused on envelope budgeting. The\nofficial server image stores encrypted account data under `/data`; this template keeps that\ndirectory on a persistent volume.",
           "logo": "/images/actual-budget/default/logo.webp",
@@ -183,7 +183,7 @@ const data = {
               "message": "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "AdGuard Home is a network-wide DNS server that blocks advertisements and trackers. This template\nkeeps its work and configuration directories on persistent volumes, so redeploying the stack does\nnot reset the service. The web administration interface is exposed through the generated domain.",
           "logo": "/images/adguard-home/default/logo.webp",
@@ -226,7 +226,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "AFFiNE is a privacy-first collaborative workspace for documents, whiteboards and knowledge\nmanagement. The official self-host layout is used here with a migration job, the AFFiNE server,\nRedis and PostgreSQL. Storage and configuration survive redeploys, and the server is routed through\nthe supplied domain.",
           "logo": "/images/affine/default/logo.webp",
@@ -274,7 +274,7 @@ const data = {
               "message": "A model provider and secure authentication are required for production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "AnythingLLM workspace for chatting with documents and language models, with persistent workspaces and\nembeddings.",
           "logo": "/images/anythingllm/default/logo.webp",
@@ -310,14 +310,20 @@ const data = {
             "url": "https://github.com/DeploCloud"
           },
           "links": {
-            "github": "https://github.com/AppFlowy-IO/AppFlowy-Cloud",
+            "github": "https://github.com/AppFlowy-IO/AppFlowy-SelfHost-Commercial",
             "website": "https://appflowy.io/",
             "docs": [
               "https://docs.appflowy.io/docs/documentation/appflowy-cloud/deployment"
             ]
           },
-          "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "alerts": [
+            {
+              "type": "info",
+              "message": "This template uses AppFlowy's commercial self-hosted distribution. The Free Tier includes one user seat.",
+              "link": "https://github.com/AppFlowy-IO/AppFlowy-SelfHost-Commercial#appflowy-self-hosted-free-tier"
+            }
+          ],
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "AppFlowy Cloud is a collaborative workspace with the official web, API, authentication, search,\nAI, worker and administration services. This template keeps the upstream service boundaries and\nadds an internal Nginx gateway for path-based routing, with PostgreSQL, Redis and MinIO data on\npersistent volumes.",
           "logo": "/images/appflowy/default/logo.webp",
@@ -365,7 +371,7 @@ const data = {
               "message": "The Appwrite runtime and router need host Docker socket access; enable Deplo host-volume permission."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Appwrite's official self-hosted Compose stack with Traefik, the API, console, workers, PostgreSQL,\nMongoDB, Redis, ClickHouse and the function runtime. Application data and uploaded files persist in\nnamed volumes.",
           "logo": "/images/appwrite/default/logo.webp",
@@ -408,7 +414,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Audiobookshelf server for organizing and streaming audiobooks and podcasts. Configuration, metadata\nand progress persist in dedicated volumes.",
           "logo": "/images/audiobookshelf/default/logo.webp",
@@ -456,7 +462,7 @@ const data = {
               "message": "Replace the seeded administrator password before protecting production apps."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authelia is an authentication portal that adds single sign-on and multi-factor authentication in\nfront of web applications. This variant includes Authelia, Redis and PostgreSQL and persists\nconfiguration, sessions and identity data.",
           "logo": "/images/authelia/default/logo.webp",
@@ -497,7 +503,7 @@ const data = {
               "message": "Replace the seeded administrator password before protecting production apps."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authelia authentication gateway using mysql for persistent storage and Redis for sessions.\nConfiguration, users and storage persist in volumes.",
           "logo": "/images/authelia/mysql/logo.webp",
@@ -538,7 +544,7 @@ const data = {
               "message": "Replace the seeded administrator password before protecting production apps."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authelia authentication gateway using sqlite for persistent storage and Redis for sessions.\nConfiguration, users and storage persist in volumes.",
           "logo": "/images/authelia/sqlite/logo.webp",
@@ -581,7 +587,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Authentik identity provider with persistent media and PostgreSQL-backed configuration.",
           "logo": "/images/authentik/default/logo.webp",
@@ -624,7 +630,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Beszel lightweight server monitoring hub with persistent users, monitored systems and history.",
           "logo": "/images/beszel/default/logo.webp",
@@ -667,7 +673,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "BookStack documentation platform with persistent configuration and a MariaDB database.",
           "logo": "/images/bookstack/default/logo.webp",
@@ -715,7 +721,7 @@ const data = {
               "message": "Email delivery requires an SMTP provider."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Cal.com scheduling application with persistent PostgreSQL data.",
           "logo": "/images/cal-com/default/logo.webp",
@@ -758,7 +764,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Calibre-Web ebook library and reading interface with persistent configuration.",
           "logo": "/images/calibre-web/default/logo.webp",
@@ -806,7 +812,7 @@ const data = {
               "message": "This stack needs at least 4 GB of RAM and should be served behind HTTPS before production use."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Chatwoot is an open-source customer communication platform for live chat, email and social\nchannels. This template follows the production Docker layout with separate Rails and Sidekiq\nprocesses, PostgreSQL with pgvector, Redis and persistent Active Storage.",
           "logo": "/images/chatwoot/default/logo.webp",
@@ -854,7 +860,7 @@ const data = {
               "message": "Create the tunnel first and set a non-empty TUNNEL_TOKEN before starting the connector."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. This\nconnector has no web UI or HTTP application port.",
           "logo": "/images/cloudflared/default/logo.webp",
@@ -902,7 +908,7 @@ const data = {
               "message": "Docker-based workspaces require a Linux host and host Docker socket access."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Coder is a self-hosted cloud development environment for provisioning remote workspaces. This\nvariant includes Coder and PostgreSQL and persists application state in the database.",
           "logo": "/images/coder/default/logo.webp",
@@ -945,7 +951,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "CrowdSec collaborative security engine with persistent decisions and local configuration. It is an API and security component rather than a general-purpose web UI; connect a bouncer or reverse proxy separately.",
           "logo": "/images/crowdsec/default/logo.webp",
@@ -988,7 +994,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform and API with persistent uploads backed by PostgreSQL.",
           "logo": "/images/directus/default/logo.webp",
@@ -1024,7 +1030,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform using a dedicated MySQL database. The database and uploaded assets persist in volumes.",
           "logo": "/images/directus/mysql/logo.webp",
@@ -1060,7 +1066,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform using the built-in SQLite database. The database file, uploaded assets and generated configuration persist in volumes.",
           "logo": "/images/directus/sqlite/logo.webp",
@@ -1108,7 +1114,7 @@ const data = {
               "message": "Email-dependent features require an SMTP provider."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Compose-based Discourse deployment with PostgreSQL, Redis and the Discourse web application. Forum\ndata, PostgreSQL, Redis and the shared Discourse storage persist in named volumes.",
           "logo": "/images/discourse/default/logo.webp",
@@ -1151,7 +1157,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-26T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-26T00:00:00.000Z"),
           "description": "Diun watches Docker images and reports when newer versions are available in their registries. This\nvariant monitors the local Docker host, keeps notification state in a persistent volume and has no\nweb interface or public domain.",
           "logo": "/images/diun/default/logo.webp",
@@ -1187,7 +1193,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Diun watches Docker images and reports when newer versions are available in their registries. This\nvariant also enables Diun's Prometheus-compatible `/metrics` endpoint and exposes it through the\ngenerated domain for a metrics scraper. Notification state persists in a volume.",
           "logo": "/images/diun/with-metrics/logo.webp",
@@ -1230,7 +1236,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Docmost collaborative wiki and knowledge base with persistent attachments, PostgreSQL and Redis.",
           "logo": "/images/docmost/default/logo.webp",
@@ -1278,7 +1284,7 @@ const data = {
               "message": "Mail delivery must be configured for sending documents."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Documenso document signing application with persistent local files and PostgreSQL metadata.",
           "logo": "/images/documenso/default/logo.webp",
@@ -1321,7 +1327,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "draw.io is a browser-based diagramming and whiteboarding application for flowcharts, architecture\ndiagrams and wireframes. The self-contained image includes the editor and its optional export\nintegration; the editor itself does not require an application database.",
           "logo": "/images/draw-io/default/logo.webp",
@@ -1369,7 +1375,7 @@ const data = {
               "message": "The first deployment can take several minutes while the site is initialized."
             }
           ],
-          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis,\nfrontend, workers, scheduler, websocket and persistent sites.",
           "logo": "/images/erpnext/default/logo.webp",
@@ -1412,7 +1418,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "File Browser is a web file manager for uploading, editing, previewing and sharing files. The\ntemplate persists the file tree, configuration and File Browser database in separate volumes.",
           "logo": "/images/file-browser/default/logo.webp",
@@ -1455,7 +1461,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Firefly III is a self-hosted personal finance manager for transactions, budgets, bills and reports.\nThis template follows the official Docker layout with the Firefly application, MariaDB and a\nscheduled cron worker. Uploads and database data are persistent.",
           "logo": "/images/firefly-iii/default/logo.webp",
@@ -1491,7 +1497,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This variant swaps Firefly III's database for PostgreSQL while retaining the official application\nand cron services, with persistent volumes for uploads and database data.",
           "logo": "/images/firefly-iii/postgresql/logo.webp",
@@ -1539,7 +1545,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual builder for language-model applications with persistent flows and credentials.",
           "logo": "/images/flowise/default/logo.webp",
@@ -1580,7 +1586,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual AI builder using a dedicated mariadb database. Flowise data and the database persist in volumes.",
           "logo": "/images/flowise/mariadb/logo.webp",
@@ -1621,7 +1627,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual AI builder using a dedicated mysql database. Flowise data and the database persist in volumes.",
           "logo": "/images/flowise/mysql/logo.webp",
@@ -1662,7 +1668,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual AI builder using a dedicated postgres database. Flowise data and the database persist in volumes.",
           "logo": "/images/flowise/postgresql/logo.webp",
@@ -1710,7 +1716,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Forgejo is a community-driven Git forge for repositories, issues, pull requests and code review. This variant uses the built-in SQLite database and stores the complete server state in one persistent volume.",
           "logo": "/images/forgejo/default/logo.webp",
@@ -1751,7 +1757,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Forgejo is a community-driven Git forge for repositories, issues, pull requests and code review. This variant includes PostgreSQL for installations that need a separate relational database and a more scalable application store.",
           "logo": "/images/forgejo/postgresql/logo.webp",
@@ -1794,7 +1800,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "FreshRSS personal feed reader with persistent feeds, users and configuration.",
           "logo": "/images/freshrss/default/logo.webp",
@@ -1830,7 +1836,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "FreshRSS RSS reader using a dedicated MySQL database. The database, feeds and extensions persist in\nvolumes.",
           "logo": "/images/freshrss/mysql/logo.webp",
@@ -1866,7 +1872,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "FreshRSS RSS reader using a dedicated PostgreSQL database. The database, feeds and extensions persist\nin volumes.",
           "logo": "/images/freshrss/postgresql/logo.webp",
@@ -1909,7 +1915,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
           "description": "Garage is S3-compatible object storage designed to run self-hosted across one or more machines. The\nBase variant includes the core service and persistent storage.",
           "logo": "/images/garage-s3/default/logo.webp",
@@ -1945,7 +1951,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-14T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-14T00:00:00.000Z"),
           "description": "Garage is S3-compatible object storage designed for self-hosting and distribution across multiple\nmachines. This variant adds a web UI for storage administration.",
           "logo": "/images/garage-s3/web-ui/logo.webp",
@@ -1998,7 +2004,7 @@ const data = {
               "message": "Change the initial administrator password after setup."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Ghost is a publishing platform for blogs, newsletters and memberships. This template runs Ghost\nwith MySQL and persists both publication content and database data.",
           "logo": "/images/ghost/default/logo.webp",
@@ -2046,7 +2052,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Gitea is a lightweight Git service for repositories, issues, pull requests and actions. This variant stores all application data, including its SQLite database, in one persistent volume for a small installation.",
           "logo": "/images/gitea/default/logo.webp",
@@ -2087,7 +2093,7 @@ const data = {
               "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Gitea is a lightweight Git service for repositories, issues, pull requests and actions. This variant includes PostgreSQL for installations that need a separate relational database and a more scalable application store.",
           "logo": "/images/gitea/postgresql/logo.webp",
@@ -2135,7 +2141,7 @@ const data = {
               "message": "The stack is resource intensive; an external URL and sufficient memory are required."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "GitLab Community Edition with persistent repositories, issues, CI data and configuration.",
           "logo": "/images/gitlab-ce/default/logo.webp",
@@ -2178,7 +2184,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Grafana provides dashboards, visualizations and alerting for metrics, logs and other observability\ndata sources. The template persists dashboards, users and Grafana configuration.",
           "logo": "/images/grafana/default/logo.webp",
@@ -2214,7 +2220,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "# Grafana with PostgreSQL\n\nGrafana provides dashboards, visualizations and alerting for metrics, logs and\nother observability data sources.\n\nThis variant stores Grafana users, dashboards and settings in the included\nPostgreSQL database instead of the default SQLite store.",
           "logo": "/images/grafana/postgresql/logo.webp",
@@ -2262,7 +2268,7 @@ const data = {
               "message": "MagicDNS is disabled; enabling it requires a separate FQDN for base_domain."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Headscale coordination server for self-hosted mesh VPN clients with persistent state.",
           "logo": "/images/headscale/default/logo.webp",
@@ -2303,7 +2309,7 @@ const data = {
               "message": "MagicDNS is disabled; enabling it requires a separate FQDN for base_domain."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Headscale mesh VPN coordination server using its supported PostgreSQL backend. The database and\nHeadscale state persist in volumes.",
           "logo": "/images/headscale/postgresql/logo.webp",
@@ -2346,7 +2352,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homarr is a self-hosted home dashboard for organizing services, links and widgets. The default variant uses the built-in SQLite database, which is simple to back up and needs no companion service.",
           "logo": "/images/homarr/default/logo.webp",
@@ -2382,7 +2388,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homarr is a self-hosted home dashboard for organizing services, links and widgets. This variant stores its application data in the included PostgreSQL service for installations that need an external relational database.",
           "logo": "/images/homarr/postgresql/logo.webp",
@@ -2430,7 +2436,7 @@ const data = {
               "message": "Bluetooth and other hardware integrations may require additional host device access."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Home Assistant Container is a self-hosted home automation hub. The configuration and automation\nfiles are materialized by the template, while the rest of `/config` stays on a persistent volume.",
           "logo": "/images/home-assistant/default/logo.webp",
@@ -2478,7 +2484,7 @@ const data = {
               "message": "Plugins that use host hardware may require additional device access."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Homebridge server for exposing smart-home accessories through plugins. Configuration, cached\naccessories and installed plugins persist in the data volume.",
           "logo": "/images/homebridge/default/logo.webp",
@@ -2521,7 +2527,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets.\nThis default variant keeps its configuration in a persistent volume and does not require access to\nthe server Docker socket.",
           "logo": "/images/homepage/default/logo.webp",
@@ -2562,7 +2568,7 @@ const data = {
               "message": "This variant requires read-only host Docker socket access through a restricted proxy; enable Deplo host-volume permission."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homepage is a configurable dashboard for bookmarks, service links, status checks and API widgets.\nThis variant adds a restricted Docker socket proxy so containers carrying Homepage labels can be\ndiscovered automatically. The proxy allows read-only container, service and task inspection, while\nthe Homepage configuration remains in a persistent volume.",
           "logo": "/images/homepage/docker-discovery/logo.webp",
@@ -2611,7 +2617,7 @@ const data = {
               "link": "https://docs.immich.app/install/requirements/"
             }
           ],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Immich is a self-hosted photo and video backup platform with mobile upload, search and library\nmanagement. This template includes the server, machine-learning worker, Redis-compatible cache and\nvector-enabled PostgreSQL database.",
           "logo": "/images/immich/default/logo.webp",
@@ -2653,7 +2659,7 @@ const data = {
               "link": "https://docs.immich.app/install/requirements/"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Immich is a self-hosted photo and video backup platform with mobile upload, search and library\nmanagement. This variant keeps the server, Redis-compatible cache and vector-enabled PostgreSQL\ndatabase, but omits the machine-learning service.",
           "logo": "/images/immich/no-machine-learning/logo.webp",
@@ -2696,7 +2702,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Jellyfin is a self-hosted media server for organizing and streaming personal movies, shows, music\nand photos. The template persists the server configuration, cache and media library.",
           "logo": "/images/jellyfin/default/logo.webp",
@@ -2738,7 +2744,7 @@ const data = {
               "message": "This variant requires a Linux host with a compatible GPU, installed drivers and /dev/dri access."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Jellyfin is a self-hosted media server for organizing and streaming personal movies, shows, music\nand photos. This variant exposes `/dev/dri` from the host for hardware-accelerated transcoding and\npersists the server configuration, cache and media library.",
           "logo": "/images/jellyfin/hardware-acceleration/logo.webp",
@@ -2781,7 +2787,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Jenkins automation server with persistent jobs, plugins and build configuration.",
           "logo": "/images/jenkins/default/logo.webp",
@@ -2829,7 +2835,7 @@ const data = {
               "message": "UDP port 10000 must be reachable and JVB_ADVERTISE_IPS must resolve to the host's public address for media traffic."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete Jitsi Meet deployment with the official web, Prosody, Jicofo and JVB services.",
           "logo": "/images/jitsi-meet/default/logo.webp",
@@ -2877,7 +2883,7 @@ const data = {
               "message": "This SQLite variant is intended for evaluation or small personal deployments; change the default admin login."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Joplin Server synchronizes notes, notebooks and attachments between Joplin clients. This evaluation\nvariant uses the server's built-in SQLite database and persists its data directory.",
           "logo": "/images/joplin/default/logo.webp",
@@ -2918,7 +2924,7 @@ const data = {
               "message": "Use a separate non-admin sync user for synchronization."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Joplin Server with PostgreSQL for a production-shaped deployment. The database is persistent and\nthe server is routed through the generated domain.",
           "logo": "/images/joplin/postgresql/logo.webp",
@@ -2961,7 +2967,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Keycloak identity and access management server with a PostgreSQL database.",
           "logo": "/images/keycloak/default/logo.webp",
@@ -3002,7 +3008,7 @@ const data = {
               "message": "Change the generated bootstrap administrator password after first login."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Keycloak identity management using a dedicated mariadb database. The database and Keycloak state\npersist in volumes.",
           "logo": "/images/keycloak/mariadb/logo.webp",
@@ -3043,7 +3049,7 @@ const data = {
               "message": "Change the generated bootstrap administrator password after first login."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Keycloak identity management using a dedicated mysql database. The database and Keycloak state\npersist in volumes.",
           "logo": "/images/keycloak/mysql/logo.webp",
@@ -3091,7 +3097,7 @@ const data = {
               "message": "An authentication secret and model provider credentials are required before sharing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Langflow visual authoring environment for AI workflows with persistent projects and settings.",
           "logo": "/images/langflow/default/logo.webp",
@@ -3132,7 +3138,7 @@ const data = {
               "message": "An authentication secret and model provider credentials are required before sharing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Langflow visual AI workflow builder using PostgreSQL for flows, history and settings. The database and Langflow data persist in volumes.",
           "logo": "/images/langflow/postgresql/logo.webp",
@@ -3180,7 +3186,7 @@ const data = {
               "message": "A model provider, MongoDB and authentication are required for production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "LibreChat multi-provider AI chat interface with persistent uploads, MongoDB and authentication\nservices.",
           "logo": "/images/librechat/default/logo.webp",
@@ -3223,7 +3229,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Linkwarden collaborative bookmark manager with persistent link metadata and archived resources.",
           "logo": "/images/linkwarden/default/logo.webp",
@@ -3271,7 +3277,7 @@ const data = {
               "message": "Provider credentials and model configuration are required before exposing the endpoint."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "LiteLLM proxy for routing requests to OpenAI-compatible language-model providers. Provider\nconfiguration is stored in the materialized config.",
           "logo": "/images/litellm/default/logo.webp",
@@ -3314,7 +3320,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Matomo web analytics platform with persistent plugins, configuration and reports.",
           "logo": "/images/matomo/default/logo.webp",
@@ -3362,7 +3368,7 @@ const data = {
               "message": "Email notifications require an SMTP provider."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Mattermost team collaboration server with persistent files and PostgreSQL-backed application data.",
           "logo": "/images/mattermost/default/logo.webp",
@@ -3405,7 +3411,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Mealie recipe manager and meal planner with persistent recipes, users and settings.",
           "logo": "/images/mealie/default/logo.webp",
@@ -3441,7 +3447,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Mealie recipe manager using PostgreSQL for application data. The database and Mealie data persist in\nvolumes.",
           "logo": "/images/mealie/postgresql/logo.webp",
@@ -3489,7 +3495,7 @@ const data = {
               "message": "Use the generated master key for API requests; this template exposes an API, not a browser UI."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Meilisearch is a fast, typo-tolerant search engine for application search experiences. This template\nexposes the protected HTTP API, enables production mode and persists indexes.",
           "logo": "/images/meilisearch/default/logo.webp",
@@ -3532,7 +3538,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Memos is a lightweight Markdown note-taking and knowledge base application for private or shared notes. This single-container variant uses SQLite and persists the database and local assets in `/var/opt/memos`. The generated domain is configured as the instance URL.",
           "logo": "/images/memos/default/logo.webp",
@@ -3568,7 +3574,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Memos note-taking service using a dedicated mysql database. Database data and local assets persist in volumes.",
           "logo": "/images/memos/mysql/logo.webp",
@@ -3604,7 +3610,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Memos note-taking service using a dedicated postgres database. Database data and local assets persist in volumes.",
           "logo": "/images/memos/postgresql/logo.webp",
@@ -3647,7 +3653,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Metabase is an open-source business intelligence dashboard for querying data and building charts. The template uses PostgreSQL for durable application metadata instead of the embedded H2 database intended for local demos.",
           "logo": "/images/metabase/default/logo.webp",
@@ -3690,7 +3696,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "n8n is a visual workflow automation platform for connecting applications and APIs. This template\nincludes the n8n service and persistent storage for its workflows, credentials and execution data.",
           "logo": "/images/n8n/default/logo.webp",
@@ -3726,7 +3732,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "# n8n with PostgreSQL\n\nn8n is a visual workflow automation platform for connecting applications and APIs.\n\nThis variant stores workflows, credentials and execution data in the included\nPostgreSQL service instead of the default SQLite database.",
           "logo": "/images/n8n/postgresql/logo.webp",
@@ -3768,7 +3774,7 @@ const data = {
               "link": "https://docs.n8n.io/hosting/scaling/queue-mode/"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "# n8n Queue mode\n\nn8n is a visual workflow automation platform for connecting applications and APIs.\n\nThis variant runs n8n in queue mode with PostgreSQL for state, Redis for the\nexecution queue and a dedicated worker for background executions.",
           "logo": "/images/n8n/queue-mode/logo.webp",
@@ -3811,7 +3817,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Navidrome music server with persistent indexes, playlists and settings.",
           "logo": "/images/navidrome/default/logo.webp",
@@ -3859,7 +3865,7 @@ const data = {
               "message": "Full host visibility requires read-only access to host proc, sys and Docker data."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Netdata real-time host and application monitoring dashboard with persistent metrics history.",
           "logo": "/images/netdata/default/logo.webp",
@@ -3908,7 +3914,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a MariaDB database, Redis and a cron worker.",
           "logo": "/images/nextcloud/default/logo.webp",
@@ -3950,7 +3956,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a PostgreSQL database, Redis and a cron worker.",
           "logo": "/images/nextcloud/postgresql/logo.webp",
@@ -3998,7 +4004,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager provides a web UI for reverse proxies, redirects, streams and free TLS\ncertificates. This SQLite variant persists proxy data and certificates, and the admin UI is exposed\nthrough the generated domain.",
           "logo": "/images/nginx-proxy-manager/default/logo.webp",
@@ -4039,7 +4045,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists. The\nconfiguration and database state persist in volumes, and the admin UI is exposed through the\ngenerated domain.",
           "logo": "/images/nginx-proxy-manager/mariadb/logo.webp",
@@ -4080,7 +4086,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager with PostgreSQL storage for proxy hosts, certificates and access lists. The\nconfiguration and database state persist in volumes, and the admin UI is exposed through the\ngenerated domain.",
           "logo": "/images/nginx-proxy-manager/postgresql/logo.webp",
@@ -4123,7 +4129,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "NocoDB turns a local SQLite database into a browser-based workspace for tables, views and APIs.\nThis lightweight variant persists its application data and is suited to evaluation or small\nworkloads; use the PostgreSQL variant for a production-shaped deployment.",
           "logo": "/images/nocodb/default/logo.webp",
@@ -4159,7 +4165,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "NocoDB with bundled PostgreSQL, Redis and a background worker for a production-shaped deployment.\nApplication data, attachments, the database and the job queue persist on named volumes. The\ngenerated HTTPS domain is used for callbacks and shared links.",
           "logo": "/images/nocodb/postgresql/logo.webp",
@@ -4207,7 +4213,7 @@ const data = {
               "message": "A credential secret is required for sensitive flows."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Node-RED is a visual flow editor for connecting hardware, APIs and online services. The template\npersists flows, credentials, installed nodes and runtime configuration in the `/data` volume.",
           "logo": "/images/node-red/default/logo.webp",
@@ -4255,7 +4261,7 @@ const data = {
               "message": "Configure authentication, access control and the base URL before production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "ntfy publish and subscribe notification server with persistent message cache.",
           "logo": "/images/ntfy/default/logo.webp",
@@ -4296,7 +4302,7 @@ const data = {
               "message": "Configure authentication, access control and the base URL before production use."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "ntfy notification server using PostgreSQL for message cache, users, access control and web push data. PostgreSQL and local attachments persist in volumes.",
           "logo": "/images/ntfy/postgresql/logo.webp",
@@ -4339,7 +4345,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Odoo business management suite with persistent filestore and a PostgreSQL database.",
           "logo": "/images/odoo/default/logo.webp",
@@ -4387,7 +4393,7 @@ const data = {
               "message": "This variant requires a Linux host with a supported AMD GPU, ROCm and /dev/kfd and /dev/dri access."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using AMD GPU acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/amd-gpu/logo.webp",
@@ -4423,7 +4429,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server with persistent downloaded models.",
           "logo": "/images/ollama/default/logo.webp",
@@ -4464,7 +4470,7 @@ const data = {
               "message": "This variant requires an NVIDIA GPU, a compatible driver and NVIDIA Container Toolkit."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using NVIDIA GPU acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/nvidia-gpu/logo.webp",
@@ -4505,7 +4511,7 @@ const data = {
               "message": "This variant requires a Linux host with the required GPU devices available at /dev/kfd and /dev/dri."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using Vulkan acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/vulkan/logo.webp",
@@ -4548,7 +4554,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Open WebUI is a self-hosted chat interface for local language models and OpenAI-compatible APIs.\nThe template persists users, conversations and application settings.",
           "logo": "/images/open-webui/default/logo.webp",
@@ -4584,7 +4590,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Open WebUI is a self-hosted chat interface for local language models and OpenAI-compatible APIs.\nThis variant keeps application data in the persistent volume and stores database-backed state in the\nincluded PostgreSQL service.",
           "logo": "/images/open-webui/postgresql/logo.webp",
@@ -4604,7 +4610,7 @@ const data = {
       "variants": [
         {
           "name": "Default",
-          "shortDescription": "AI software-development workspace with persistent project data.",
+          "shortDescription": "OpenHands Agent Canvas with authenticated access and persistent projects, settings and conversations.",
           "category": {
             "name": "AI",
             "icon": "sparkles",
@@ -4613,21 +4619,30 @@ const data = {
           },
           "developedBy": {
             "label": "OpenHands",
-            "url": "https://www.all-hands.dev/"
+            "url": "https://openhands.dev/"
           },
           "submittedBy": {
             "label": "Deplo",
             "url": "https://github.com/DeploCloud"
           },
           "links": {
-            "github": "https://github.com/All-Hands-AI/OpenHands",
-            "website": "https://www.all-hands.dev/",
+            "github": "https://github.com/OpenHands/OpenHands",
+            "website": "https://openhands.dev/",
             "docs": [
-              "https://docs.all-hands.dev/"
+              "https://github.com/OpenHands/OpenHands/blob/v1.28.1/docs/SELF_HOSTING.md"
             ]
           },
-          "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "alerts": [
+            {
+              "type": "info",
+              "message": "Open /canvas and enter LOCAL_BACKEND_API_KEY from the template environment. Configure an LLM provider before starting an agent."
+            },
+            {
+              "type": "warning",
+              "message": "Agents can modify the mounted project and state volumes. Share this instance only with trusted users. Legacy OpenHands data is not migrated automatically."
+            }
+          ],
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "OpenHands web interface for AI-assisted software development with persistent workspace data.",
           "logo": "/images/openhands/default/logo.webp",
@@ -4675,7 +4690,7 @@ const data = {
               "message": "Configure an external SMTP provider and replace the initial identity-provider password before using a public workspace."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Outline is a collaborative knowledge base for writing and sharing team documentation. This variant\nincludes PostgreSQL, Redis and a local OpenID Connect provider, and persists documents, database data\nand Redis state.",
           "logo": "/images/outline/default/logo.webp",
@@ -4718,7 +4733,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Paperless-ngx turns scanned documents into an indexed online archive. This recommended deployment\nuses PostgreSQL for metadata, Valkey as the task broker and persistent data, media, export and\nconsume directories. The webserver is kept private to the stack and exposed through the generated\ndomain.",
           "logo": "/images/paperless-ngx/default/logo.webp",
@@ -4754,7 +4769,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This variant adds the official Gotenberg and Apache Tika services to Paperless-ngx. It keeps the\nPostgreSQL and Valkey foundation of the default deployment while enabling text extraction and PDF\nconversion for office documents and email attachments.",
           "logo": "/images/paperless-ngx/office-documents/logo.webp",
@@ -4795,7 +4810,7 @@ const data = {
               "message": "SQLite is intended for a personal archive; use the PostgreSQL variant for several users or high ingest concurrency."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This lightweight Paperless-ngx variant keeps metadata in SQLite while retaining the documented\nValkey broker and persistent document directories. It is convenient for a personal archive; use\nthe PostgreSQL variant when several users or high ingest concurrency are expected.",
           "logo": "/images/paperless-ngx/sqlite/logo.webp",
@@ -4843,7 +4858,7 @@ const data = {
               "message": "Allow at least 4 GB of swap for indexing larger libraries and change the generated administrator password."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "PhotoPrism is a self-hosted photo and video library with indexing, search and automatic\nclassification. This variant includes MariaDB and persists originals, thumbnails, metadata and\ndatabase data.",
           "logo": "/images/photoprism/default/logo.webp",
@@ -4879,7 +4894,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "PhotoPrism photo and video library using its built-in SQLite database. Originals, indexed metadata, thumbnails and the SQLite database persist in volumes.",
           "logo": "/images/photoprism/sqlite/logo.webp",
@@ -4927,7 +4942,7 @@ const data = {
               "message": "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Pi-hole is a network-wide DNS filter with a web administration interface. Its configuration and DNS\ndata are persistent, and the web interface is exposed through the generated domain.",
           "logo": "/images/pi-hole/default/logo.webp",
@@ -4968,7 +4983,7 @@ const data = {
               "message": "TCP and UDP port 53 and UDP port 67 must be free on the host."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Pi-hole with its optional DHCP server capability. Its configuration and DNS data are persistent.",
           "logo": "/images/pi-hole/dhcp/logo.webp",
@@ -5016,7 +5031,7 @@ const data = {
               "message": "The bundled stack needs at least 2 vCPUs and 4 GB RAM."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Plane is a project management workspace for issues, cycles, modules and roadmaps. This variant runs\nthe application, background workers, PostgreSQL, Valkey, RabbitMQ and MinIO and persists project\ndata, uploaded files and service state.",
           "logo": "/images/plane/default/logo.webp",
@@ -5059,7 +5074,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "# Plausible\n\nPlausible is a privacy-friendly web analytics platform with a simple dashboard\nfor understanding website traffic.\n\nThe template includes the application, PostgreSQL and ClickHouse storage.",
           "logo": "/images/plausible/default/logo.webp",
@@ -5102,7 +5117,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-06T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "PocketBase backend with embedded SQLite storage and persistent uploaded files. The API and admin panel\nare exposed by the generated deployment.",
           "logo": "/images/pocketbase/default/logo.webp",
@@ -5150,7 +5165,7 @@ const data = {
               "message": "This template needs host Docker socket access to manage containers."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Portainer CE provides a web interface for managing Docker environments. Its database is kept on a\npersistent volume.",
           "logo": "/images/portainer/default/logo.webp",
@@ -5196,9 +5211,14 @@ const data = {
             {
               "type": "warning",
               "message": "The stack needs at least 8 GB RAM and can take several minutes to initialize."
+            },
+            {
+              "type": "warning",
+              "message": "SeaweedFS uses new storage volumes. Existing MinIO objects require the upstream storage migration before they are accessible.",
+              "link": "https://github.com/PostHog/posthog/blob/74e8ce2ddab8f45058423fddf7c779582311120d/bin/migrate-storage-hobby"
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "PostHog is a product analytics platform with event capture, feature flags, session replay and\nexperiments. This variant follows the official Hobby Docker deployment and bundles the supporting\ndatabases, queues and object storage in one stack.",
           "logo": "/images/posthog/default/logo.webp",
@@ -5241,7 +5261,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Prometheus metrics server with persistent time-series data and a minimal scrape configuration.",
           "logo": "/images/prometheus/default/logo.webp",
@@ -5289,7 +5309,7 @@ const data = {
               "message": "TCP and UDP port 6881 are published for incoming peer connections and must be reachable."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "qBittorrent is a BitTorrent client with a browser-based web UI. Its settings and download directory\nare persistent, and the web UI is exposed through the generated domain.",
           "logo": "/images/qbittorrent/default/logo.webp",
@@ -5330,7 +5350,7 @@ const data = {
               "message": "TCP and UDP port 6881 are published for incoming peer connections and must be reachable."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "qBittorrent using the libtorrent v1 build for compatibility with peers or workloads that need that\ntorrent library. Settings and downloads persist.",
           "logo": "/images/qbittorrent/libtorrent-v1/logo.webp",
@@ -5378,7 +5398,7 @@ const data = {
               "message": "Use the generated API key on every client request before exposing this service."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Qdrant is a vector database for embeddings, similarity search and AI applications. This single-node\ndeployment persists collections on a named volume.",
           "logo": "/images/qdrant/default/logo.webp",
@@ -5421,7 +5441,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Radarr movie management and download automation with persistent configuration.",
           "logo": "/images/radarr/default/logo.webp",
@@ -5477,7 +5497,7 @@ const data = {
               "message": "Configure SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and SMTP_SECURE, or set RELOOP_API_KEY and a verified RELOOP_SENDER_DOMAIN to send sign-in codes and invitations."
             }
           ],
-          "lastUpdate": new Date("2026-09-28T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-28T00:00:00.000Z"),
           "description": "Reloop is an open-source email platform for transactional email, campaigns, inbound mail, templates, contacts and delivery analytics.\n\nThe stack includes PostgreSQL, Redis, NATS and persistent mail queues. Add DNS records for the main, `link` and `inbound` hostnames, then configure SPF, DKIM, DMARC and MX records in the dashboard before using email delivery. For sign-in codes and invitations, configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` and `SMTP_SECURE`, or set `RELOOP_API_KEY` and a verified `RELOOP_SENDER_DOMAIN`. Create the first administrator at `/dashboard/setup` using the generated `ADMIN_SETUP_KEY` from the deployment environment.",
           "logo": "/images/reloop/default/logo.webp",
@@ -5525,7 +5545,7 @@ const data = {
               "message": "Individual routes may require external APIs, credentials or anti-bot configuration."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "RSSHub feed generator for turning supported websites and services into RSS feeds. It is a route-based\nservice rather than a general web UI.",
           "logo": "/images/rsshub/default/logo.webp",
@@ -5573,7 +5593,7 @@ const data = {
               "message": "Open the official RustDesk rendezvous and relay TCP/UDP ports on the host; this service is not routed through the web domain."
             }
           ],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "RustDesk is a self-hosted remote desktop server. Its rendezvous and relay protocols use raw TCP and\nUDP ports, with persistent state for the server.",
           "logo": "/images/rustdesk/default/logo.webp",
@@ -5616,7 +5636,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-12T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-07T00:00:00.000Z"),
           "description": "Rybbit is a privacy-friendly web analytics platform with dashboards, session replays, funnels and\ncustom events. The template includes the client, backend, PostgreSQL, ClickHouse and Redis. All\napplication data persists in volumes.",
           "logo": "/images/rybbit/default/logo.webp",
@@ -5664,7 +5684,7 @@ const data = {
               "message": "Camera, USB and other hardware integrations may require additional host device permissions."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Scrypted home-automation platform with persistent plugin state and configuration.",
           "logo": "/images/scrypted/default/logo.webp",
@@ -5705,7 +5725,7 @@ const data = {
               "message": "This variant requires CUDA, cuDNN and the NVIDIA container runtime on the host."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Scrypted camera platform using the official legacy NVIDIA image for accelerated transcoding and\ndetection. Scrypted state persists in a volume.",
           "logo": "/images/scrypted/nvidia-legacy/logo.webp",
@@ -5746,7 +5766,7 @@ const data = {
               "message": "This variant requires CUDA, cuDNN and the NVIDIA container runtime on the host."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Scrypted camera platform using the official NVIDIA image for accelerated transcoding and detection.\nScrypted state persists in a volume.",
           "logo": "/images/scrypted/nvidia/logo.webp",
@@ -5794,7 +5814,7 @@ const data = {
               "message": "Mail delivery is required for account notifications and password recovery."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Seafile Community Edition with MariaDB, Redis, persistent libraries and configuration.",
           "logo": "/images/seafile/default/logo.webp",
@@ -5830,7 +5850,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Seafile Community Edition with the MariaDB and Redis services required by the container deployment.\nLibraries, configuration, logs and database data persist in volumes.",
           "logo": "/images/seafile/mariadb/logo.webp",
@@ -5873,7 +5893,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "SeaweedFS is a distributed file and object store. The official mini mode starts a compact single-node\ndeployment with an S3 endpoint, master UI and Filer UI.",
           "logo": "/images/seaweedfs/default/logo.webp",
@@ -5921,7 +5941,7 @@ const data = {
               "message": "A complete production deployment also requires ClickHouse and OpenTelemetry collectors."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "SigNoz observability interface for traces, metrics and logs with persistent local data.",
           "logo": "/images/signoz/default/logo.webp",
@@ -5969,7 +5989,7 @@ const data = {
               "message": "This is a single-node, single-drive deployment for small workloads and evaluation."
             }
           ],
-          "lastUpdate": new Date("2026-09-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "SILO provides an S3-compatible API and an embedded web Console. This template is a single-node, single-drive deployment for small workloads and evaluation; it does not provide the redundancy of a multi-node cluster.",
           "logo": "/images/silo-formerly-minio/default/logo.webp",
@@ -6012,7 +6032,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Sonarr series management and download automation with persistent configuration.",
           "logo": "/images/sonarr/default/logo.webp",
@@ -6055,7 +6075,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Stirling PDF web application for common document transformations with persistent settings and user data.",
           "logo": "/images/stirling-pdf/default/logo.webp",
@@ -6098,7 +6118,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Strapi headless CMS with PostgreSQL and persistent application data, using a prebuilt Strapi 5\nproduction image.",
           "logo": "/images/strapi/default/logo.webp",
@@ -6146,7 +6166,7 @@ const data = {
               "message": "The stack needs at least 4 GB RAM; database ports 5432 and 6543 are published on the host."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete self-hosted Supabase deployment based on the official Docker stack, including Studio, Envoy\nAPI gateway, Auth, REST, Realtime, Storage, image transformation, database metadata, Edge Functions,\nPostgreSQL and Supavisor. Deplo generates the deployment credentials.",
           "logo": "/images/supabase/default/logo.webp",
@@ -6194,7 +6214,7 @@ const data = {
               "message": "Direct synchronization needs Syncthing's standard TCP and UDP discovery ports available on the server."
             }
           ],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Syncthing keeps selected folders synchronized between trusted devices without a central cloud\nserver. The configuration and default sync directory are persistent.",
           "logo": "/images/syncthing/default/logo.webp",
@@ -6237,7 +6257,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template uses\nthe documented self-hosted layout: an API server, background worker, PostgreSQL database and Redis.\nFiles are stored on a persistent local volume and the application is exposed through the generated\ndomain.",
           "logo": "/images/twenty/default/logo.webp",
@@ -6280,7 +6300,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "# Umami\n\nUmami is a fast, privacy-focused web analytics dashboard for tracking website\nvisits without invasive profiling.\n\nThe template includes the Umami service and a persistent PostgreSQL database.",
           "logo": "/images/umami/default/logo.webp",
@@ -6328,7 +6348,7 @@ const data = {
               "message": "This variant uses Docker socket access for container monitoring."
             }
           ],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Uptime Kuma monitors websites and services and sends alerts when checks fail. The template persists\nmonitor definitions, history and notification settings.",
           "logo": "/images/uptime-kuma/default/logo.webp",
@@ -6364,7 +6384,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Uptime Kuma monitors websites and services and sends alerts when checks fail. This variant persists\nmonitor definitions and history without access to the Docker socket.",
           "logo": "/images/uptime-kuma/standalone/logo.webp",
@@ -6411,7 +6431,7 @@ const data = {
               "message": "HTTPS is required before connecting password-manager clients; use the generated secure domain."
             }
           ],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Vaultwarden is a lightweight self-hosted password manager server written in Rust. The template keeps\nvault data in a persistent volume and exposes the web service through the generated domain.",
           "logo": "/images/vaultwarden/default/logo.webp",
@@ -6454,7 +6474,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Vikunja is a self-hosted task and project manager. The default deployment follows the simple Docker\ninstallation with SQLite, a persistent database and a separate files volume.",
           "logo": "/images/vikunja/default/logo.webp",
@@ -6490,7 +6510,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This Vikunja variant uses the documented PostgreSQL deployment for installations with more users\nor concurrent activity. The application and database are separate services, with persistent volumes\nfor both task attachments and PostgreSQL data.",
           "logo": "/images/vikunja/postgresql/logo.webp",
@@ -6542,7 +6562,7 @@ const data = {
               "message": "Set and change the admin password before exposing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "WG-Easy WireGuard management UI with persistent peer configuration.",
           "logo": "/images/wg-easy/default/logo.webp",
@@ -6585,7 +6605,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "WordPress is a web publishing and content management platform. The Apache image runs with a\npersistent application volume and a bundled MySQL database; uploads and installed plugins survive\nredeploys.",
           "logo": "/images/wordpress/default/logo.webp",
@@ -6628,7 +6648,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Recommended Zabbix deployment following the official default Compose setup: Zabbix server, Nginx web interface and MySQL in separate containers. The database persists in a volume. Choose the PostgreSQL variant if you prefer PostgreSQL.",
           "logo": "/images/zabbix/default/logo.webp",
@@ -6664,7 +6684,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Zabbix monitoring stack with its official server and Nginx web interface backed by mysql. The database persists in a volume.",
           "logo": "/images/zabbix/mysql/logo.webp",
@@ -6700,7 +6720,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Zabbix monitoring stack with its official server and Nginx web interface backed by postgres. The database persists in a volume.",
           "logo": "/images/zabbix/postgresql/logo.webp",
@@ -6719,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "5f2539cb356b76804b988a2e4d69c5b11b211962e85811116ed552d96ee22d3a";
+export const version = "5e8a8a7ffc243922f4f2535bcd5210bb0ad3ad97ac9bc631f90e7aa2f0ca96ef";

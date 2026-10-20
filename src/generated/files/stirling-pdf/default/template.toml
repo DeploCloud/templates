@@ -1,3 +1,6 @@
+[variables]
+admin_password = "${password:32}"
+
 [config]
 
 [[config.domains]]
@@ -6,5 +9,7 @@ port = 8080
 host = "${domain}"
 
 [config.env]
-DOCKER_ENABLE_SECURITY = "true"
+SECURITY_ENABLELOGIN = "true"
 SYSTEM_DEFAULTLOCALE = "en-US"
+SECURITY_INITIALLOGIN_USERNAME = "admin"
+SECURITY_INITIALLOGIN_PASSWORD = "${admin_password}"

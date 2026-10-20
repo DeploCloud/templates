@@ -1,6 +1,6 @@
 services:
   ollama:
-    image: ollama/ollama:0.33.3
+    image: ollama/ollama:0.40.6@sha256:265409e1d931028a8f7d5a32bcbafddd7bffbc6cc629d77efe9560adf692a5e7
     restart: unless-stopped
     expose:
       - 11434

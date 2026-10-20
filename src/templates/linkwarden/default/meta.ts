@@ -17,6 +17,6 @@ export default {
     website: "https://linkwarden.app/",
     docs: ["https://docs.linkwarden.app/"],
   },
-  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

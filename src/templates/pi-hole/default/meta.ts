@@ -24,6 +24,6 @@ export default {
         "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server.",
     },
   ],
-  lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

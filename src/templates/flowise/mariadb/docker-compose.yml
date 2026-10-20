@@ -1,6 +1,6 @@
 services:
   flowise-init:
-    image: flowiseai/flowise:3.0.13
+    image: flowiseai/flowise:3.1.4@sha256:3922767afb52a5777759fd8b28a3c9eee864daea96018a791f2429eae2a76571
     restart: "no"
     user: "0:0"
     entrypoint:
@@ -12,7 +12,7 @@ services:
       - flowise-data:/home/node/.flowise
 
   flowise:
-    image: flowiseai/flowise:3.0.13
+    image: flowiseai/flowise:3.1.4@sha256:3922767afb52a5777759fd8b28a3c9eee864daea96018a791f2429eae2a76571
     restart: unless-stopped
     depends_on:
       flowise-init:
@@ -39,7 +39,7 @@ services:
       - flowise-data:/home/node/.flowise
 
   db:
-    image: mariadb:11
+    image: mariadb:11@sha256:f16d7a344413e519dff518f27bdb221388f84b0d274c97c4fb5f2cb0dc1b34fa
     restart: unless-stopped
     environment:
       MARIADB_DATABASE: flowise

@@ -1,6 +1,6 @@
 services:
   gitlab:
-    image: gitlab/gitlab-ce:19.3.2-ce.0
+    image: gitlab/gitlab-ce:19.5.0-ce.0@sha256:6cde3a3fc33c8261310422c570da962a987bc1e8a08489a03cb7017d3cf452fc
     restart: unless-stopped
     expose:
       - 80

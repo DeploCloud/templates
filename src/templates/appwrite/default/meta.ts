@@ -24,6 +24,6 @@ export default {
         "The Appwrite runtime and router need host Docker socket access; enable Deplo host-volume permission.",
     },
   ],
-  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

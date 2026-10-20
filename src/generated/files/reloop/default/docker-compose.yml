@@ -42,7 +42,7 @@ x-frontend: &frontend
 
 services:
   postgres:
-    image: postgres@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     container_name: reloop-postgres
     restart: unless-stopped
     environment:
@@ -62,7 +62,7 @@ services:
     <<: *logging
 
   redis:
-    image: redis@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     container_name: reloop-redis
     restart: unless-stopped
     command:
@@ -92,7 +92,7 @@ services:
     <<: *logging
 
   nats:
-    image: nats@sha256:b83efabe3e7def1e0a4a31ec6e078999bb17c80363f881df35edc70fcb6bb927
+    image: nats:2.10-alpine@sha256:b83efabe3e7def1e0a4a31ec6e078999bb17c80363f881df35edc70fcb6bb927
     container_name: reloop-nats
     restart: unless-stopped
     command: ["-js", "-sd", "/data", "-m", "8222"]
@@ -109,7 +109,7 @@ services:
     <<: *logging
 
   proxy:
-    image: caddy@sha256:6aeddd44c3078b0f9a35206472a11420648a79c184603ef95957d0a20044cb2b
+    image: caddy:2-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
     container_name: reloop-proxy
     restart: unless-stopped
     env_file:
@@ -135,7 +135,7 @@ services:
 
   auth:
     <<: *backend
-    image: reloopsh/be-auth@sha256:de157dbd7a74514f2519db1cfd436aa7f5f98f8a3ac56893b2b465b88c1ed588
+    image: reloopsh/be-auth:latest@sha256:ec27e41b0d5a8936681b5ef5757ca5e9e265667340f679f3b52d140f747155cb
     container_name: reloop-auth
     environment:
       PORT: 8000
@@ -145,35 +145,35 @@ services:
 
   domain:
     <<: *backend
-    image: reloopsh/be-domain@sha256:9b62e4e8826f60400c5f3cac6e63a377b3cf5f2763dfa146fb9c2cb30bbcad59
+    image: reloopsh/be-domain:latest@sha256:c53debdeb8cfec67dd3282f0ec2c4529458875af7b46ca0958bcd94610b308da
     container_name: reloop-domain
     environment:
       PORT: 8011
 
   api-key:
     <<: *backend
-    image: reloopsh/be-api-key@sha256:535f9837d39acdd7e155a14752b1ab6e3cbef06331cf26634577ff82a0156572
+    image: reloopsh/be-api-key:latest@sha256:bc6b9648afa546f7ca2478179f1e3dca434ce0e16aa03024ce9904ee78d9e567
     container_name: reloop-api-key
     environment:
       PORT: 8012
 
   webhook:
     <<: *backend
-    image: reloopsh/be-webhook@sha256:644a6b79756f57c045c8572c42bee6dfb6b31663ee08d21f2565cead4dfc1ca9
+    image: reloopsh/be-webhook:latest@sha256:b394e8fae6b7b61861c6d0af49b33a55ae612d06b98ed3ea669e369ea337b7cb
     container_name: reloop-webhook
     environment:
       PORT: 8013
 
   contacts:
     <<: *backend
-    image: reloopsh/be-contacts@sha256:43da0b373e2777fdc7af97d92fdb916320a27e2ffdea61df69bca477722b2dfa
+    image: reloopsh/be-contacts:latest@sha256:adbccf8ba13b5221a07c5a3d7de1bed66081549f03366ea2d8d5447cf3fc1bbb
     container_name: reloop-contacts
     environment:
       PORT: 8014
 
   mail:
     <<: *backend
-    image: reloopsh/be-mail@sha256:0231070e83b9e40d3e1c865ca0f9c67d8e5a154c4f12a682fedd69fa0102ac50
+    image: reloopsh/be-mail:latest@sha256:9828c8ba025e71f58e7af1d728790cae6d82dc812c6d9f7a9ddfe3bb03c5fe06
     container_name: reloop-mail
     environment:
       PORT: 8015
@@ -181,21 +181,21 @@ services:
 
   logs:
     <<: *backend
-    image: reloopsh/be-logs@sha256:ad38ab5d93a3af671d6ac7344daba1bdadd84ac1a10123e694d98801bfa01545
+    image: reloopsh/be-logs:latest@sha256:ff5acd51732b2c22e01d02e56d489cbbfc302d5a5ca052d0b48f58f231109534
     container_name: reloop-logs
     environment:
       PORT: 8016
 
   workflow:
     <<: *backend
-    image: reloopsh/be-workflow@sha256:a2bf13906f5dafb93068fcb4cd9ee2bea0a00f3de952afb7b62cd75b9c4fc001
+    image: reloopsh/be-workflow:latest@sha256:47e76a6ffe509c9818d9259c712052521910cc780e5086564d426265e1e29b2f
     container_name: reloop-workflow
     environment:
       PORT: 8017
 
   upload:
     <<: *backend
-    image: reloopsh/be-upload@sha256:22632cbbc686fa0c766a0ecd316b4bdeb3097fe5652d3b8e183133ff8055a299
+    image: reloopsh/be-upload:latest@sha256:bfb32f1aba04381d8bdbc079655e2c0bb7eb7df3eb424fecd8f4b8ef25764563
     container_name: reloop-upload
     profiles:
       - storage
@@ -204,34 +204,34 @@ services:
 
   template:
     <<: *backend
-    image: reloopsh/be-template@sha256:b6c9c02f8e0489bd86330312e797f5773156e6ca92c04e6e2f4fc51f25728e25
+    image: reloopsh/be-template:latest@sha256:d6e99a60e571c533a6d25fc1e303d67eadd0a7a8a9eae334cea4f5a21f696539
     container_name: reloop-template
     environment:
       PORT: 8019
 
   campaigns:
     <<: *backend
-    image: reloopsh/be-campaigns@sha256:446287b0dc88f77ca5ac12199bda637e1e2216a38a47e281be161dba4fea3624
+    image: reloopsh/be-campaigns:latest@sha256:bfcd8b1ec465f4d0d43bbb6b906076b40616dd9062a2f3368959dab3675c7eb9
     container_name: reloop-campaigns
     environment:
       PORT: 8027
 
   inbox:
     <<: *backend
-    image: reloopsh/be-inbox@sha256:5174f629bf7d2c3da0818a2ef44a779213cd456ce4e85f6ae6cf24ac909b064c
+    image: reloopsh/be-inbox:latest@sha256:504475e6399b95b7d48958634900c010dd12a8873b7ce0c1d26117f0202b5e6c
     container_name: reloop-inbox
     environment:
       PORT: 8028
 
   email:
     <<: *backend
-    image: reloopsh/be-email@sha256:6931a0cebb8247ddbe1ba9a6b46d6eb477df06d9cfebeef3a139374077691778
+    image: reloopsh/be-email:latest@sha256:23064cf03b01fd8fe8a4a7aab6b8c980e548a14a227e2b63af5fb2ee70277eac
     container_name: reloop-email
     environment:
       PORT: 8022
 
   spam:
-    image: reloopsh/be-spam@sha256:4fcd262354ddb11ed67d8ce8f4b5f08b274f22a8da6987233fb1486d9150a540
+    image: reloopsh/be-spam:latest@sha256:67805ce497b5f047e9044b4f1050d1771062e26cf5aa09106adace1da855045a
     container_name: reloop-spam
     restart: unless-stopped
     environment:
@@ -247,7 +247,7 @@ services:
     <<: *logging
 
   smtp:
-    image: reloopsh/be-smtp@sha256:9980dbea67a5c7eb55ee1e7d591734c0b967fdda8178e9b260ba4e7f859031b0
+    image: reloopsh/be-smtp:latest@sha256:049416803aa46acb3ae7be543e2159285a00f41bbdbc6a7504cdf5e062fc217b
     container_name: reloop-smtp
     restart: unless-stopped
     env_file:
@@ -270,7 +270,7 @@ services:
     <<: *logging
 
   inbound:
-    image: reloopsh/be-inbound@sha256:28c6ca80d51d3c83319ddc3c00b370668a1779af134a2c60e7daedd23e7691fc
+    image: reloopsh/be-inbound:latest@sha256:648f9b5550d06608fab70976903bf57905439ca9adcdb6d923c47dc4a82f9348
     container_name: reloop-inbound
     restart: unless-stopped
     env_file:
@@ -296,7 +296,7 @@ services:
 
   dashboard:
     <<: *frontend
-    image: reloopsh/fe-dashboard@sha256:a1a6bcf83ed3c995611269e2b13fa9535adde84c21fd65aff76694fd08eab903
+    image: reloopsh/fe-dashboard:latest@sha256:4fa5e4fbc04cd035a04ff522bcaf28d27d2858dd0b09b9823557fb72d3d36aee
     container_name: reloop-dashboard
     environment:
       NODE_ENV: production
@@ -304,7 +304,7 @@ services:
 
   links:
     <<: *frontend
-    image: reloopsh/fe-links@sha256:de1a8465a1e66fb1d0ea09882ed7550c0d11e0c6289c43a708b6ab903d090b4e
+    image: reloopsh/fe-links:latest@sha256:fe3d4eeb1a629a3943f5a72bfa6468648596d5347b43c9600362a900d9b81d7d
     container_name: reloop-links
     environment:
       NODE_ENV: production
@@ -313,7 +313,7 @@ services:
       INTERNAL_MAIL_API_URL: http://mail:8015/api/mail
 
   migrate:
-    image: reloopsh/be-auth@sha256:de157dbd7a74514f2519db1cfd436aa7f5f98f8a3ac56893b2b465b88c1ed588
+    image: reloopsh/be-auth:latest@sha256:ec27e41b0d5a8936681b5ef5757ca5e9e265667340f679f3b52d140f747155cb
     restart: "no"
     working_dir: /app/packages/db
     entrypoint: ["/app/node_modules/.bin/drizzle-kit"]
@@ -326,6 +326,17 @@ services:
     networks:
       - reloop
     <<: *logging
+
+  mcp:
+    image: reloopsh/be-mcp:latest@sha256:7c3dcfc6830886d252228038176fed583f64e41db2198a284d810babcb31eb9e
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "8029"
+      RELOOP_BASE_URL: "${BASE_URL}"
+    networks:
+      - reloop
 
 networks:
   reloop:

@@ -1,6 +1,6 @@
 services:
   calcom:
-    image: calcom/cal.com:v6.2.0
+    image: calcom/cal.com:v6.2.0@sha256:ace3bb1219fb7306585ab9f4d94d41af7ee064c343db0498173436bbe857bd49
     restart: unless-stopped
     depends_on:
       db:
@@ -20,7 +20,7 @@ services:
       - calcom-data:/calcom
 
   db:
-    image: postgres:18-alpine
+    image: postgres:latest@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336
     restart: unless-stopped
     environment:
       POSTGRES_DB: calcom

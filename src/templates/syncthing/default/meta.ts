@@ -24,6 +24,6 @@ export default {
         "Direct synchronization needs Syncthing's standard TCP and UDP discovery ports available on the server.",
     },
   ],
-  lastUpdate: new Date("2026-08-31T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

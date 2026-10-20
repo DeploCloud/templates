@@ -1,6 +1,6 @@
 services:
   studio:
-    image: supabase/studio:2026.08.03-sha-022b374
+    image: supabase/studio:2026.10.12-sha-3699278@sha256:948770ec467f00e6ae34c35018ef7cb23d7b30eb806b42c2cc0d7bcfdcf8a7a8
     restart: unless-stopped
     healthcheck:
       test:
@@ -42,7 +42,7 @@ services:
       - ./volumes/functions:/app/edge-functions:ro
 
   api-gw:
-    image: envoyproxy/envoy:v1.39.0
+    image: envoyproxy/envoy:v1.39.1@sha256:57e14a549d7bd43c8d3f6d03e8cfa653e037d4b38e133acd9b54f38c524401b4
     restart: unless-stopped
     expose:
       - 8000
@@ -64,6 +64,7 @@ services:
       SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
       SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY}
       SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY}
+      SUPABASE_PUBLIC_URL: ${SUPABASE_PUBLIC_URL}
       ANON_KEY_ASYMMETRIC: ${ANON_KEY_ASYMMETRIC}
       SERVICE_ROLE_KEY_ASYMMETRIC: ${SERVICE_ROLE_KEY_ASYMMETRIC}
       DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
@@ -76,7 +77,7 @@ services:
           - kong
 
   auth:
-    image: supabase/gotrue:v2.189.0
+    image: supabase/gotrue:v2.197.0@sha256:1736a63078f5922b198c4cbe50f80ab9a2d3b54fe8b7b6cfb2e9dc5dbbc12c6b
     restart: unless-stopped
     healthcheck:
       test:
@@ -126,7 +127,7 @@ services:
       GOTRUE_SMS_AUTOCONFIRM: ${ENABLE_PHONE_AUTOCONFIRM}
 
   rest:
-    image: postgrest/postgrest:v14.12
+    image: postgrest/postgrest:v14.18@sha256:c7cd7e265a85b05248abf53f4473fcec7e327c282d0bd0cf60f1551996d09fcf
     restart: unless-stopped
     depends_on:
       db:
@@ -151,7 +152,7 @@ services:
     command: ["postgrest"]
 
   realtime:
-    image: supabase/realtime:v2.102.3
+    image: supabase/realtime:v2.143.3@sha256:768b559241dd234c4e8852c5c0f504e598b80f1df2ad4dd78d5486fbed2f17a2
     restart: unless-stopped
     depends_on:
       db:
@@ -191,7 +192,7 @@ services:
           - realtime-dev.supabase-realtime
 
   storage:
-    image: supabase/storage-api:v1.60.4
+    image: supabase/storage-api:v1.81.0@sha256:98ffec5d0678803783c30e404c27f4ec65e97efbe014088f2a86b4b8b54b9f54
     restart: unless-stopped
     depends_on:
       db:
@@ -236,7 +237,7 @@ services:
       - supabase-storage:/var/lib/storage
 
   imgproxy:
-    image: darthsim/imgproxy:v3.30.1
+    image: darthsim/imgproxy:v3.31.4@sha256:73c5dda13199745b0d2d00e4149d4a589c5b2e205dbf335ca05eca8276b54712
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "imgproxy", "health"]
@@ -253,7 +254,7 @@ services:
       - supabase-storage:/var/lib/storage
 
   meta:
-    image: supabase/postgres-meta:v0.96.6
+    image: supabase/postgres-meta:v0.100.0@sha256:145325b7e39f8ef4931d6e8cfd3f6f4d655de09d72a2ccc96d9513542c2202bd
     restart: unless-stopped
     depends_on:
       db:
@@ -268,7 +269,7 @@ services:
       CRYPTO_KEY: ${PG_META_CRYPTO_KEY}
 
   functions:
-    image: supabase/edge-runtime:v1.74.0
+    image: supabase/edge-runtime:v1.77.4@sha256:ad45164b7548bf5820ed7be714789c17ac2865edce79a09cfb4c3756c3d365a8
     restart: unless-stopped
     depends_on:
       api-gw:
@@ -288,13 +289,20 @@ services:
       SUPABASE_SECRET_KEYS: '{"default":"${SUPABASE_SECRET_KEY}"}'
       SUPABASE_DB_URL: postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       VERIFY_JWT: ${FUNCTIONS_VERIFY_JWT}
-    command: ["start", "--main-service", "/home/deno/functions/main"]
+    command:
+      [
+        "start",
+        "--user-worker-request-idle-timeout",
+        "150000",
+        "--main-service",
+        "/home/deno/functions/main",
+      ]
     volumes:
       - ./volumes/functions:/home/deno/functions
       - deno-cache:/root/.cache/deno
 
   db:
-    image: supabase/postgres:17.6.1.136
+    image: supabase/postgres:17.6.1.136@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00
     restart: unless-stopped
     volumes:
       - ./volumes/db/realtime.sql:/docker-entrypoint-initdb.d/migrations/99-realtime.sql:ro
@@ -331,7 +339,7 @@ services:
       ]
 
   supavisor:
-    image: supabase/supavisor:2.9.5
+    image: supabase/supavisor:2.9.13@sha256:07f1a6098ffc04b80263bca4eb5c3e7bd2e03dfd1fc465aa108d7329000a1a4e
     restart: unless-stopped
     ports:
       - "${POSTGRES_PORT}:5432"

@@ -2,6 +2,11 @@
 main_domain = "${domain}"
 secret_key = "${password:64}"
 salt_keys = "${hash:32}"
+object_storage_access_key = "${hash:32}"
+object_storage_secret_key = "${password:64}"
+internal_api_secret = "${password:64}"
+internal_request_token = "${password:64}"
+browserless_secret = "${password:64}"
 
 [config]
 [[config.domains]]
@@ -11,17 +16,17 @@ host = "${main_domain}"
 path = "/"
 
 [config.env]
-# PostHog stopped publishing tagged releases; images are pinned to a tested
-# master commit. POSTHOG_VERSION is both the posthog/posthog image tag and the
-# git ref used to fetch the matching ClickHouse configuration.
-POSTHOG_VERSION = "1e7b36ebe0da38a738fed250d175809a899ef422"
-POSTHOG_NODE_VERSION = "sha-82ea668"
-# Set to https://<your-domain> after enabling HTTPS on the domain
-POSTHOG_SITE_URL = "http://${main_domain}"
-# Set to "true" once the domain uses HTTPS (marks session/CSRF cookies Secure)
-POSTHOG_SECURE_COOKIES = "false"
+# The application image and downloaded assets use the same upstream commit.
+POSTHOG_VERSION = "74e8ce2ddab8f45058423fddf7c779582311120d"
+POSTHOG_SITE_URL = "https://${main_domain}"
+POSTHOG_SECURE_COOKIES = "true"
 POSTHOG_SECRET_KEY = "${secret_key}"
 POSTHOG_ENCRYPTION_SALT_KEYS = "${salt_keys}"
+POSTHOG_OBJECT_STORAGE_ACCESS_KEY = "${object_storage_access_key}"
+POSTHOG_OBJECT_STORAGE_SECRET_KEY = "${object_storage_secret_key}"
+POSTHOG_INTERNAL_API_SECRET = "${internal_api_secret}"
+POSTHOG_INTERNAL_REQUEST_TOKEN = "${internal_request_token}"
+POSTHOG_BROWSERLESS_SECRET = "${browserless_secret}"
 
 [[config.mounts]]
 filePath = "db-init/create-extra-dbs.sh"
@@ -71,3 +76,52 @@ consumers:
 mmdb:
     path: 'GeoLite2-City.mmdb'
 """
+
+[[config.mounts]]
+filePath = "kafka/topics.txt"
+content = '''
+clickhouse_ai_events_json
+clickhouse_app_metrics
+clickhouse_app_metrics2
+clickhouse_billing_usage_records
+clickhouse_document_embeddings
+clickhouse_error_tracking_fingerprint_issue_state
+clickhouse_error_tracking_issue_fingerprint
+clickhouse_events_json
+clickhouse_flag_evaluations
+clickhouse_groups
+clickhouse_heatmap_events
+clickhouse_hog_invocation_results
+clickhouse_ingestion_events_duplicates
+clickhouse_ingestion_warnings
+clickhouse_logs
+clickhouse_message_assets
+clickhouse_metrics
+clickhouse_performance_events
+clickhouse_person
+clickhouse_person_distinct_id
+clickhouse_person_override
+clickhouse_person_unique_id
+clickhouse_precalculated_person_properties
+clickhouse_prefiltered_events
+clickhouse_property_values
+clickhouse_session_replay_events
+clickhouse_session_replay_features
+clickhouse_tophog
+clickhouse_traces
+cohort_membership_changed
+distinct_id_usage_events_json
+document_embedding_results
+document_embeddings_input
+error_tracking_ingestion_notifications
+events_dead_letter_queue
+events_plugin_ingestion_ai
+events_plugin_ingestion_async
+events_plugin_ingestion_dlq
+events_plugin_ingestion_overflow
+heatmaps_ingestion
+ingestion-clientwarnings-main-1
+log_entries
+plugin_log_entries
+realtime_only_events_json
+'''

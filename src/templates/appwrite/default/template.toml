@@ -9,6 +9,9 @@ db_root_password = "${password:32}"
 
 [config.env]
 _APP_ENV = "production"
+_APP_AUTOGRAVITY_HOST = "http://appwrite-autogravity:8080"
+_APP_COMPUTE_BUILD_SIZE_LIMIT = "2000000000"
+_APP_MQTT_REPLAY_DEPTH = "5"
 _APP_EDITION = "self-hosted"
 _APP_LOCALE = "en"
 _APP_OPENSSL_KEY_V1 = "${openssl_key}"
@@ -16,6 +19,7 @@ _APP_NOTIFICATIONS_TRACKING_SECRET = "${notifications_secret}"
 _APP_RULES_FORMAT = "md5"
 _APP_SYSTEM_RESPONSE_FORMAT = ""
 _APP_TRUSTED_HEADERS = "x-forwarded-for"
+_APP_TRUSTED_PROXIES = "127.0.0.1,::1,10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16"
 _APP_WORKER_PER_CORE = "6"
 _APP_WORKERS_NUM = "1"
 _APP_WORKER_MAX_COROUTINES = "1"
@@ -32,12 +36,14 @@ _APP_DOMAIN_TARGET_CAA = ""
 _APP_DOMAIN_TARGET_CNAME = ""
 _APP_CUSTOM_DOMAIN_DENY_LIST = ""
 _APP_DNS = ""
+_APP_DNS_EXTERNAL = "127.0.0.11"
 _APP_OPTIONS_FORCE_HTTPS = "disabled"
 _APP_OPTIONS_ROUTER_FORCE_HTTPS = "disabled"
 _APP_OPTIONS_ROUTER_PROTECTION = "disabled"
 _APP_OPTIONS_ABUSE = "disabled"
 _APP_OPTIONS_ABUSE_INCREASED_LIMIT_PROJECTS = "increased-limit-project"
 _APP_CONSOLE_DOMAIN = "${domain}"
+_APP_CONSOLE_URL = "https://${domain}"
 _APP_CONSOLE_HOSTNAMES = "${domain}"
 _APP_CONSOLE_SCHEMA = "appwriteio"
 _APP_CONSOLE_SESSION_ALERTS = "enabled"
@@ -154,12 +160,10 @@ _APP_MAINTENANCE_RETENTION_AUDIT_CONSOLE = "15778800"
 _APP_MAINTENANCE_RETENTION_CACHE = "2592000"
 _APP_MAINTENANCE_RETENTION_EXECUTION = "1209600"
 _APP_MAINTENANCE_RETENTION_SCHEDULES = "86400"
-_APP_MAINTENANCE_RETENTION_USAGE_HOURLY = "8640000"
 _APP_USAGE_STATS = "enabled"
 _APP_USAGE_PASS = "appwrite"
 _APP_CONNECTIONS_DB_USAGE = "http://appwrite:appwrite@clickhouse:8123/appwrite"
 _APP_POOL_SIZE_USAGE = "2"
-_APP_EXECUTIONS_DUAL_WRITE = "enabled"
 _APP_CONNECTIONS_DB_EXECUTIONS = "http://appwrite:appwrite@clickhouse:8123/appwrite"
 _APP_POOL_SIZE_EXECUTIONS = "2"
 _APP_MAINTENANCE_RETENTION_USAGE_TTL = "180"
@@ -172,7 +176,6 @@ _APP_GRAPHQL_INTROSPECTION = "enabled"
 _APP_GRAPHQL_MAX_BATCH_SIZE = "10"
 _APP_GRAPHQL_MAX_COMPLEXITY = "250"
 _APP_GRAPHQL_MAX_DEPTH = "4"
-_APP_ASSISTANT_OPENAI_API_KEY = ""
 _APP_LOGGING_CONFIG = ""
 _APP_LOGGING_FORMAT = "pretty"
 _APP_MIGRATION_HOST = "appwrite"
@@ -211,10 +214,11 @@ host = "${domain}"
 
 [[config.mounts]]
 filePath = "mongo-init.js"
-content = """// mongo-init.js
+content = '''
+// mongo-init.js
 
 // Switch to the admin database
-const adminDb = db.getSiblingDB('admin');
+const adminDb = db.getSiblingDB("admin");
 
 // Get username and password from environment variables
 const username = process.env.MONGO_INITDB_USERNAME;
@@ -222,17 +226,19 @@ const password = process.env.MONGO_INITDB_PASSWORD;
 const database = process.env.MONGO_INITDB_DATABASE;
 
 // Create the user
-adminDb.createUser({
-  user: username,
-  pwd: password,
-  roles: [
-    { role: 'readWrite', db: database }
-  ]
-});"""
+if (adminDb.getUser(username) === null) {
+  adminDb.createUser({
+    user: username,
+    pwd: password,
+    roles: [{ role: "readWrite", db: database }],
+  });
+}
+'''
 
 [[config.mounts]]
 filePath = "mongo-entrypoint.sh"
-content = """#!/bin/bash
+content = '''
+#!/bin/bash
 set -e
 
 # Fix keyfile permissions if mounted from volume
@@ -247,7 +253,129 @@ fi
 chmod 400 "$KEYFILE_PATH"
 chown mongodb:mongodb "$KEYFILE_PATH" 2>/dev/null || chown 999:999 "$KEYFILE_PATH"
 
+# The standard entrypoint initialises an empty data directory with a second mongod
+INIT_MARKER=/data/db/.appwrite-initialised
+
+if [ ! -e "$INIT_MARKER" ]; then
+  INIT_PORT=27018
+
+  echo "Initialising MongoDB data directory..."
+  find -L /data/db \! -user mongodb -exec chown mongodb '{}' +
+  export MONGO_INITDB_DATABASE="${MONGO_INITDB_DATABASE:-test}"
+
+  gosu mongodb mongod --dbpath /data/db --bind_ip 127.0.0.1 --port "$INIT_PORT" &
+  INIT_SERVER=$!
+
+  READY=
+  for _ in $(seq 1 30); do
+    if mongosh --host 127.0.0.1 --port "$INIT_PORT" --quiet --eval 'quit(0)' > /dev/null 2>&1; then
+      READY=1
+      break
+    fi
+    if ! kill -0 "$INIT_SERVER" 2>/dev/null; then
+      break
+    fi
+    sleep 1
+  done
+
+  if [ -z "$READY" ]; then
+    echo "MongoDB did not accept connections for initialisation" >&2
+    exit 1
+  fi
+
+  mongosh --host 127.0.0.1 --port "$INIT_PORT" --quiet admin --eval '
+    const username = process.env.MONGO_INITDB_ROOT_USERNAME;
+
+    if (db.getUser(username) === null) {
+      db.createUser({
+        user: username,
+        pwd: process.env.MONGO_INITDB_ROOT_PASSWORD,
+        roles: [{ role: "root", db: "admin" }]
+      });
+    }
+  '
+  mongosh --host 127.0.0.1 --port "$INIT_PORT" --quiet "$MONGO_INITDB_DATABASE" /mongo-init.js
+
+  touch "$INIT_MARKER"
+
+  kill -TERM "$INIT_SERVER"
+  wait "$INIT_SERVER"
+  echo "MongoDB data directory initialised."
+fi
+
 # Use MongoDB's standard entrypoint with our command
 exec docker-entrypoint.sh mongod --replSet rs0 --bind_ip_all --auth --keyFile "$KEYFILE_PATH"
+'''
 
-"""
+
+[[config.mounts]]
+filePath = "clickhouse-init.sh"
+content = '''
+#!/bin/bash
+# The ClickHouse entrypoint sources this file, so a subshell keeps these options out of it.
+(
+  set -euo pipefail
+
+  client() {
+    clickhouse-client --host 127.0.0.1 --user "$CLICKHOUSE_USER" --password "$CLICKHOUSE_PASSWORD" "$@"
+  }
+
+  # Flushing replaces log tables whose definition changed, keeping each old table as <log>_<N>.
+  client --query 'SYSTEM FLUSH LOGS'
+
+  # Tables left behind never expire on their own: take the TTL of the log that
+  # replaced this one, or a week when the log is no longer written at all.
+  # The named logs must match the ones clickhouse-config.xml removes: a log that
+  # is still written gets replaced on the next restart if its TTL is altered here.
+  client --format TSVRaw <<'SQL' | client --multiquery
+SELECT concat('ALTER TABLE system.', stale.name, ' MODIFY TTL ', if(active.name = '', 'event_date + INTERVAL 7 DAY DELETE', splitByString(' SETTINGS ', splitByString(' TTL ', active.engine_full)[2])[1]), ';')
+FROM (
+  SELECT name, splitByChar('_', name)[-1] AS suffix, arrayStringConcat(arrayPopBack(splitByChar('_', name)), '_') AS log
+  FROM system.tables
+  WHERE database = 'system'
+    AND position(engine_full, ' TTL ') = 0
+    AND endsWith(engine, 'MergeTree')
+    AND name IN (SELECT table FROM system.columns WHERE database = 'system' AND name = 'event_date' AND type = 'Date')
+) AS stale
+LEFT JOIN system.tables AS active
+  ON active.database = 'system'
+  AND active.name = stale.log
+  AND position(active.engine_full, ' TTL ') > 0
+WHERE (endsWith(stale.log, '_log') AND toUInt64OrNull(stale.suffix) IS NOT NULL)
+  OR stale.name IN ('asynchronous_metric_log', 'metric_log', 'histogram_metric_log', 'query_metric_log', 'processors_profile_log', 'trace_log', 'text_log')
+SQL
+)
+'''
+
+
+[[config.mounts]]
+filePath = "clickhouse-config.xml"
+content = '''
+<?xml version="1.0"?>
+
+<clickhouse>
+    <!-- The metric, trace and profile logs sample the server every second whether
+         or not Appwrite serves traffic, and nothing reads them back, so their
+         writes and the merges behind them are pure overhead. -->
+    <asynchronous_metric_log remove="1"/>
+    <metric_log remove="1"/>
+    <histogram_metric_log remove="1"/>
+    <query_metric_log remove="1"/>
+    <processors_profile_log remove="1"/>
+    <trace_log remove="1"/>
+    <!-- text_log repeats the server log the container already writes. -->
+    <text_log remove="1"/>
+
+    <!-- Kept for debugging, capped so they cannot fill the volume. -->
+    <asynchronous_insert_log><ttl>event_date + INTERVAL 3 DAY DELETE</ttl></asynchronous_insert_log>
+    <query_log><ttl>event_date + INTERVAL 7 DAY DELETE</ttl></query_log>
+    <query_views_log><ttl>event_date + INTERVAL 7 DAY DELETE</ttl></query_views_log>
+    <query_thread_log><ttl>event_date + INTERVAL 7 DAY DELETE</ttl></query_thread_log>
+    <part_log><ttl>event_date + INTERVAL 7 DAY DELETE</ttl></part_log>
+    <background_schedule_pool_log><ttl>event_date + INTERVAL 7 DAY DELETE</ttl></background_schedule_pool_log>
+
+    <!-- Longer, so it still covers a report that reaches us late. crash_log is
+         deliberately left alone: it is tiny and worth keeping. -->
+    <error_log><ttl>event_date + INTERVAL 14 DAY DELETE</ttl></error_log>
+</clickhouse>
+'''
