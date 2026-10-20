@@ -6585,7 +6585,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-31T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "WordPress is a web publishing and content management platform. The Apache image runs with a\npersistent application volume and a bundled MySQL database; uploads and installed plugins survive\nredeploys.",
           "logo": "/images/wordpress/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "8150b4ce974375355355cd93c0ec3751e6f4d234981090d6c16adbf43e1c1d4b";
+export const version = "a819b69b69b26ba59c1399cc0d9ad5b88b8c0b7dde078a30088e684e4adc17d3";
