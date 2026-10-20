@@ -226,7 +226,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-08-29T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "AFFiNE is a privacy-first collaborative workspace for documents, whiteboards and knowledge\nmanagement. The official self-host layout is used here with a migration job, the AFFiNE server,\nRedis and PostgreSQL. Storage and configuration survive redeploys, and the server is routed through\nthe supplied domain.",
           "logo": "/images/affine/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a8da41e7bbbc5d35b250fba97466b441a223e6b60a2d5c758a431ada5ad02cc2";
+export const version = "32c2f7f00338edc3ee087cf1d5edcbb3a1d984de4a055a1de6909d03b3ddb723";
