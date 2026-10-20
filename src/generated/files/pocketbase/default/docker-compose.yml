@@ -1,6 +1,6 @@
 services:
   pocketbase:
-    image: adrianmusante/pocketbase:0.40.4
+    image: adrianmusante/pocketbase:0.40.5@sha256:bbf907dc8c874d3e8fe1e591e8595f933b460a467e11474b9da47ec03dad54fc
     restart: unless-stopped
     expose:
       - 8090

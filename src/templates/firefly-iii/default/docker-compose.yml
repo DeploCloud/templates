@@ -1,6 +1,6 @@
 services:
   firefly-app:
-    image: fireflyiii/core:version-6.6.6
+    image: fireflyiii/core:version-6.7.9@sha256:a2b53539338d1cd04d341b229c3806cb178cf64c72459060e3ed34bec4167bd8
     restart: unless-stopped
     expose:
       - 8080
@@ -24,7 +24,7 @@ services:
         condition: service_healthy
 
   firefly-db:
-    image: mariadb:11.8.9
+    image: mariadb:lts@sha256:99c125f103f5d081ebbc9ffe064e63daf7f688ac33a5f7f29af2d7260a96debf
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: firefly
@@ -40,7 +40,7 @@ services:
       retries: 20
 
   firefly-cron:
-    image: alpine:3.24.1
+    image: alpine:latest@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
     restart: unless-stopped
     environment:
       STATIC_CRON_TOKEN: ${STATIC_CRON_TOKEN}

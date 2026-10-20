@@ -1,6 +1,6 @@
 services:
   vikunja:
-    image: vikunja/vikunja:2.6
+    image: vikunja/vikunja:2.7@sha256:e2204a1c1c6a81e833c2b3a5442be182ca2335b54c2e7e37578cc3fe12a27cfc
     user: "0:0"
     restart: unless-stopped
     expose:
@@ -22,7 +22,7 @@ services:
         condition: service_healthy
 
   vikunja-db:
-    image: postgres:18.6-alpine
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
     restart: unless-stopped
     environment:
       POSTGRES_USER: vikunja

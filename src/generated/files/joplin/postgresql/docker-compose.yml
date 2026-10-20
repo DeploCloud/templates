@@ -1,6 +1,6 @@
 services:
   joplin:
-    image: joplin/server:3.7.2
+    image: joplin/server:3.7.2@sha256:3f7b852959aac38da10e3a451823bf149cbae6e74d8258db5b6e6e7f0db50c26
     restart: unless-stopped
     expose:
       - 22300
@@ -18,7 +18,7 @@ services:
         condition: service_healthy
 
   joplin-db:
-    image: postgres:16-alpine
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
     restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

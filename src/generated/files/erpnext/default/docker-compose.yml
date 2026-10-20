@@ -1,6 +1,6 @@
 services:
   backend:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: unless-stopped
     volumes:
       - sites:/home/frappe/frappe-bench/sites
@@ -15,7 +15,7 @@ services:
         condition: service_completed_successfully
 
   configurator:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: "no"
     entrypoint:
       - bash
@@ -47,7 +47,7 @@ services:
         condition: service_started
 
   create-site:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: "no"
     entrypoint:
       - bash
@@ -85,7 +85,7 @@ services:
         condition: service_completed_successfully
 
   db:
-    image: mariadb:10.6
+    image: mariadb:11.8@sha256:f16d7a344413e519dff518f27bdb221388f84b0d274c97c4fb5f2cb0dc1b34fa
     restart: unless-stopped
     command:
       - --character-set-server=utf8mb4
@@ -105,7 +105,7 @@ services:
       - db-data:/var/lib/mysql
 
   frontend:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: unless-stopped
     command:
       - nginx-entrypoint.sh
@@ -128,7 +128,7 @@ services:
       - websocket
 
   queue-long:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: unless-stopped
     command:
       - bench
@@ -146,7 +146,7 @@ services:
         condition: service_completed_successfully
 
   queue-short:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: unless-stopped
     command:
       - bench
@@ -164,17 +164,17 @@ services:
         condition: service_completed_successfully
 
   redis-cache:
-    image: redis:6.2-alpine
+    image: redis:8.6-alpine@sha256:ac2da09bc822f325a9f68f533120b86fa39c1b8db46b3aa7c1bbea7fdfd4fcba
     restart: unless-stopped
 
   redis-queue:
-    image: redis:6.2-alpine
+    image: redis:8.6-alpine@sha256:ac2da09bc822f325a9f68f533120b86fa39c1b8db46b3aa7c1bbea7fdfd4fcba
     restart: unless-stopped
     volumes:
       - redis-queue-data:/data
 
   scheduler:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: unless-stopped
     command:
       - bench
@@ -187,7 +187,7 @@ services:
         condition: service_completed_successfully
 
   websocket:
-    image: frappe/erpnext:v16.34.2
+    image: frappe/erpnext:v16.51.1@sha256:349b7f27a6db471f9e5c91afe9064a8e94ff619aaa8c6032683998e06da79e6a
     restart: unless-stopped
     command:
       - node

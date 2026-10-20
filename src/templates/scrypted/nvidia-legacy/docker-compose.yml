@@ -1,6 +1,6 @@
 services:
   scrypted:
-    image: ghcr.io/koush/scrypted:18-jammy-full-v0.94.4
+    image: ghcr.io/koush/scrypted:v0.147.0-noble-nvidia-legacy@sha256:11df23c5cb89599a5fe16ad73093363a9fef2ae90aa205baffdd19e08cab5ab3
     restart: unless-stopped
     expose:
       - 11080

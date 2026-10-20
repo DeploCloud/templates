@@ -1,6 +1,6 @@
 services:
   freshrss:
-    image: freshrss/freshrss:1.30.0
+    image: freshrss/freshrss:1.30.1@sha256:48b63b9bc3d042a1301c32971b01af8841c7f059b452589c5bf77f475ba44c61
     restart: unless-stopped
     depends_on:
       freshrss-db:
@@ -30,7 +30,7 @@ services:
       - freshrss-extensions:/var/www/FreshRSS/extensions
 
   freshrss-db:
-    image: postgres:17-alpine
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     restart: unless-stopped
     environment:
       POSTGRES_DB: freshrss

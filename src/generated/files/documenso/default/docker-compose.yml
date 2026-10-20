@@ -1,6 +1,6 @@
 services:
   documenso:
-    image: docker.io/documenso/documenso:v2.18.0
+    image: documenso/documenso:v2.21.0@sha256:d9985f66c19c59128f64b1439f057683da0110deb0e518655b97f06e3141f173
     restart: unless-stopped
     depends_on:
       db:
@@ -18,7 +18,7 @@ services:
       - documenso-storage:/opt/documenso/storage
 
   db:
-    image: postgres:18-alpine
+    image: postgres:15@sha256:c961aa287d8698297cb26cdfadfbe9fd2cbaf77e53cfffe9636e8d8a1e4d842c
     restart: unless-stopped
     environment:
       POSTGRES_DB: documenso
@@ -30,7 +30,7 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - documenso-database:/var/lib/postgresql
+      - documenso-database:/var/lib/postgresql/data
 
 volumes:
   documenso-storage: {}

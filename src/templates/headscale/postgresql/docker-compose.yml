@@ -1,6 +1,6 @@
 services:
   headscale:
-    image: headscale/headscale:0.29.3
+    image: headscale/headscale:0.29.5@sha256:780ed2f9e85719a2211277433f2c8afb45105d0d25031949a6848a485f9e216d
     restart: unless-stopped
     depends_on:
       headscale-db:
@@ -13,7 +13,7 @@ services:
       - ./config.yaml:/etc/headscale/config.yaml:ro
 
   headscale-db:
-    image: postgres:17-alpine
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     restart: unless-stopped
     environment:
       POSTGRES_DB: headscale

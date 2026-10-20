@@ -1,6 +1,6 @@
 services:
   nextcloud:
-    image: nextcloud:34.0.4
+    image: nextcloud:35.0.2@sha256:a588aa5353703b44106a6129adaaf7bf22521b7a4754f9f529b3228d6aa390c5
     restart: always
     expose:
       - 80
@@ -23,7 +23,7 @@ services:
         condition: service_started
 
   nextcloud-cron:
-    image: nextcloud:34.0.4
+    image: nextcloud:35.0.2@sha256:a588aa5353703b44106a6129adaaf7bf22521b7a4754f9f529b3228d6aa390c5
     restart: always
     volumes:
       - nextcloud_data:/var/www/html
@@ -35,7 +35,7 @@ services:
         condition: service_started
 
   nextcloud-db:
-    image: postgres:18.6-alpine
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
     restart: always
     volumes:
       - nextcloud-postgres:/var/lib/postgresql
@@ -50,7 +50,7 @@ services:
       retries: 20
 
   nextcloud-redis:
-    image: redis:7.4.11-alpine
+    image: redis:7.4.11-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
     restart: always
 
 volumes:

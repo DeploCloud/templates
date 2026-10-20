@@ -1,6 +1,6 @@
 services:
   linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:v2.16.3
+    image: ghcr.io/linkwarden/linkwarden:v2.16.3@sha256:0664c28a039bda8ffa6663389e8536b2fc717219e329f85b83faca7efed3b144
     restart: unless-stopped
     depends_on:
       db:
@@ -16,7 +16,7 @@ services:
       - linkwarden-data:/data
 
   db:
-    image: postgres:18-alpine
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
     restart: unless-stopped
     environment:
       POSTGRES_DB: linkwarden
@@ -28,7 +28,7 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - linkwarden-database:/var/lib/postgresql
+      - linkwarden-database:/var/lib/postgresql/data
 
 volumes:
   linkwarden-data: {}

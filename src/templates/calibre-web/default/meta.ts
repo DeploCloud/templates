@@ -19,6 +19,6 @@ export default {
     website: "https://github.com/janeczku/calibre-web",
     docs: ["https://docs.linuxserver.io/images/docker-calibre-web/"],
   },
-  lastUpdate: new Date("2026-09-05T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

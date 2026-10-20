@@ -1,6 +1,6 @@
 services:
   homebridge:
-    image: homebridge/homebridge:2026-09-02
+    image: homebridge/homebridge:2026-10-16@sha256:d2370beb6a0208d3f20f869288bc070b5cc34d86b52a5872311ce2bcff02a670
     restart: unless-stopped
     expose:
       - 8581

@@ -17,6 +17,6 @@ export default {
     website: "https://garagehq.deuxfleurs.fr",
     docs: ["https://garagehq.deuxfleurs.fr/documentation/quick-start/"],
   },
-  lastUpdate: new Date("2026-08-14T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
   createdAt: new Date("2026-08-14T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
