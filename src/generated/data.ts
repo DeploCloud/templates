@@ -6411,7 +6411,7 @@ const data = {
               "message": "HTTPS is required before connecting password-manager clients; use the generated secure domain."
             }
           ],
-          "lastUpdate": new Date("2026-08-25T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Vaultwarden is a lightweight self-hosted password manager server written in Rust. The template keeps\nvault data in a persistent volume and exposes the web service through the generated domain.",
           "logo": "/images/vaultwarden/default/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "738764e5a7b3a8fbbed569786e76d9f66630bbe525aab7310ea20984aa7b3d78";
+export const version = "41411cd758d96fafbc3745cf9c72481aab105f50201d8b38540f07b1adc5b3fe";
