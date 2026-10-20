@@ -1539,7 +1539,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual builder for language-model applications with persistent flows and credentials.",
           "logo": "/images/flowise/default/logo.webp",
@@ -1580,7 +1580,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual AI builder using a dedicated mariadb database. Flowise data and the database persist in volumes.",
           "logo": "/images/flowise/mariadb/logo.webp",
@@ -1621,7 +1621,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual AI builder using a dedicated mysql database. Flowise data and the database persist in volumes.",
           "logo": "/images/flowise/mysql/logo.webp",
@@ -1662,7 +1662,7 @@ const data = {
               "message": "Model provider credentials and authentication are required before exposing the editor."
             }
           ],
-          "lastUpdate": new Date("2026-09-05T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Flowise visual AI builder using a dedicated postgres database. Flowise data and the database persist in volumes.",
           "logo": "/images/flowise/postgresql/logo.webp",
@@ -6719,4 +6719,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "b6a2c9bc9aabf9beb8ebd18cd4fe789a7d67031c21ffb6baf0ea351fd6957646";
+export const version = "1aeab47c65e14569134707178259caf1dad90f779d89be44bdd63e6b0d7fa05e";
