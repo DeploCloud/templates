@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
 
   discourse-app:
-    image: discourse/discourse:2026.7.3@sha256:71e56fb5cfdf6e23c8ce71a1218528ee618910f3b7dd04e1770803ecf462f115
+    image: discourse/discourse:2026.7.3@sha256:cfd2c48a1bd3277959c4f714f0b39422be9c980b60abdd2a011b9a1362166eee
     volumes:
       - discourse-data:/shared
     depends_on:
