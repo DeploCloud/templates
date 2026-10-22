@@ -673,7 +673,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "BookStack documentation platform with persistent configuration and a MariaDB database.",
           "logo": "/images/bookstack/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "ac024177700ac26b28291eb88bbee73460f3cf9ca2f3c6fcd6967fe251d8c535";
+export const version = "05b088874ee4716ca1e224a58075175398bcc264e05e332a117d217734d28c01";
