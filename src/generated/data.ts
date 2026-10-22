@@ -4393,7 +4393,7 @@ const data = {
               "message": "This variant requires a Linux host with a supported AMD GPU, ROCm and /dev/kfd and /dev/dri access."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using AMD GPU acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/amd-gpu/logo.webp",
@@ -4429,7 +4429,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server with persistent downloaded models.",
           "logo": "/images/ollama/default/logo.webp",
@@ -4470,7 +4470,7 @@ const data = {
               "message": "This variant requires an NVIDIA GPU, a compatible driver and NVIDIA Container Toolkit."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using NVIDIA GPU acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/nvidia-gpu/logo.webp",
@@ -4511,7 +4511,7 @@ const data = {
               "message": "This variant requires a Linux host with the required GPU devices available at /dev/kfd and /dev/dri."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using Vulkan acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/vulkan/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "12152c0ea5714bf6b3dbe9c242b18e9548ab01bf0922dc83390d73fafb68cd18";
+export const version = "a3d051c4ea95900613ca2475b5112456b1aa83a965e4d5821a2c6a1e382b62fd";
