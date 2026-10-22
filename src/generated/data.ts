@@ -5261,7 +5261,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Prometheus metrics server with persistent time-series data and a minimal scrape configuration.",
           "logo": "/images/prometheus/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "7c0e5533185c7e65a1bfc860b04aaa0c20de7ef397e3752669364f561bce32d7";
+export const version = "0a7108e0a43c0ebc3b63bb1ccc1718d5243f8f4bddc4288a1b555f43226b18ff";
