@@ -1,6 +1,6 @@
 services:
   bookstack:
-    image: solidnerd/bookstack:26.9.1@sha256:6d3117ccebff012bf222eff9cacd4940a2b145e7fb2dd7db63b50cd2d6c04fe2
+    image: solidnerd/bookstack:26.9.2@sha256:6fb7869fa642900637429c10057fe89f6c256047aff1010242343686b200d1d5
     restart: unless-stopped
     depends_on:
       db:
@@ -16,7 +16,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - bookstack-config:/config
+      - bookstack-uploads:/var/www/bookstack/public/uploads
+      - bookstack-storage-uploads:/var/www/bookstack/storage/uploads
 
   db:
     image: mariadb:11@sha256:f16d7a344413e519dff518f27bdb221388f84b0d274c97c4fb5f2cb0dc1b34fa
@@ -41,3 +42,5 @@ services:
 volumes:
   bookstack-config: {}
   bookstack-database: {}
+  bookstack-uploads: {}
+  bookstack-storage-uploads: {}

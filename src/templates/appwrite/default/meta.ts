@@ -21,9 +21,14 @@ export default {
     {
       type: "warning",
       message:
+        "Upgrading from Appwrite 2.5 requires a backup and the official database migration: https://github.com/appwrite/appwrite/releases/tag/2.6.0",
+    },
+    {
+      type: "warning",
+      message:
         "The Appwrite runtime and router need host Docker socket access; enable Deplo host-volume permission.",
     },
   ],
-  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-22T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

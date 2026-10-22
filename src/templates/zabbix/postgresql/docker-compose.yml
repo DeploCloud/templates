@@ -1,6 +1,6 @@
 services:
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:alpine-7.4.15@sha256:777870429c94636f2396fd414a259080d167926552543c31b20ae9d0c9f2847f
+    image: zabbix/zabbix-server-pgsql:alpine-7.4.16@sha256:546f7cae8f04b287ab4ffd3cc81193f2ea99f2da1d0564217b65d93438f44454
     restart: unless-stopped
     depends_on:
       zabbix-db:
@@ -14,7 +14,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.4.15@sha256:8c139abe303577c1dc49983f81d272ec832835c370912a681f2695803f342be0
+    image: zabbix/zabbix-web-nginx-pgsql:alpine-7.4.16@sha256:898f28064ef8fdac969da0088663b27e2a66c28e5f865ebaf642839106e65fde
     restart: unless-stopped
     depends_on:
       zabbix-server:
