@@ -3277,7 +3277,7 @@ const data = {
               "message": "Provider credentials and model configuration are required before exposing the endpoint."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "LiteLLM proxy for routing requests to OpenAI-compatible language-model providers. Provider\nconfiguration is stored in the materialized config.",
           "logo": "/images/litellm/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "d9b5236629df06cb05894bc54c36139e542f70ee9dc7fc57cd6855c024d3c523";
+export const version = "61caa65546f702b1cc1489be5f4d73d70fb1b3f7803d2f936ad572929f701a3e";
