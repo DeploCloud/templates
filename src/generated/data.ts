@@ -368,10 +368,14 @@ const data = {
           "alerts": [
             {
               "type": "warning",
+              "message": "Upgrading from Appwrite 2.5 requires a backup and the official database migration: https://github.com/appwrite/appwrite/releases/tag/2.6.0"
+            },
+            {
+              "type": "warning",
               "message": "The Appwrite runtime and router need host Docker socket access; enable Deplo host-volume permission."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Appwrite's official self-hosted Compose stack with Traefik, the API, console, workers, PostgreSQL,\nMongoDB, Redis, ClickHouse and the function runtime. Application data and uploaded files persist in\nnamed volumes.",
           "logo": "/images/appwrite/default/logo.webp",
@@ -6739,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "19d8d662ae7a31d393515f2b9fcc2e6a81c07be9188388abe8abe1ddfceca7d8";
+export const version = "92c2cf517d42d510f92b0b4224846f577f89e34be988178e5e8c867e1ba4e38a";

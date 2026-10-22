@@ -42,11 +42,11 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     healthcheck:
       test:
         - CMD-SHELL
-        - 'curl -fsS -o /dev/null -H "Host: $${_APP_DOMAIN:-localhost}" http://localhost/v1/health/version'
+        - 'test -f /tmp/.appwrite-ready && curl -fsS -o /dev/null -H "Host: ${_APP_DOMAIN:-localhost}" http://localhost/v1/health/version'
       interval: 5s
       timeout: 5s
       retries: 12
@@ -79,6 +79,7 @@ services:
       - "${_APP_DB_HOST:-postgresql}"
       - appwrite-geo
       - appwrite-autogravity
+      - appwrite-exiftool
     environment:
       - _APP_DNS_EXTERNAL
       - _APP_ALLOWED_INTERNAL_ADDRESSES
@@ -168,6 +169,7 @@ services:
       - _APP_STORAGE_LIMIT
       - _APP_STORAGE_PREVIEW_LIMIT
       - _APP_AUTOGRAVITY_HOST
+      - _APP_EXIFTOOL_HOST
       - _APP_STORAGE_ANTIVIRUS
       - _APP_STORAGE_ANTIVIRUS_HOST
       - _APP_STORAGE_ANTIVIRUS_PORT
@@ -177,6 +179,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -245,6 +248,10 @@ services:
       - _APP_VCS_BITBUCKET_WEBHOOK_SECRET
       - _APP_VCS_ORIGIN_CLIENT_ID
       - _APP_VCS_ORIGIN_PRIVATE_KEY
+      - _APP_VCS_ENTIRE_PLUGIN
+      - _APP_VCS_ENTIRE_PRIVATE_KEY
+      - _APP_VCS_ENTIRE_ISSUER
+      - _APP_VCS_ENTIRE_ENDPOINT
       - _APP_VCS_WEBHOOK_URL
       - _APP_MIGRATIONS_FIREBASE_CLIENT_ID
       - _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
@@ -269,12 +276,13 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/new:1.2.74-self-hosted@sha256:b16ee4e5c19c697ac209888a7a5a7eec29c18873d46a64c691f7f0b5f6334dc5
+    image: appwrite/new:1.2.97-self-hosted@sha256:9bd23a4f255578fb7c7a4405fe0af5d8057e6d770b21098527066acd3b9f1dde
     restart: unless-stopped
     networks:
       - appwrite
     environment:
       - VITE_CONSOLE_PROFILE=self-hosted
+      - "VITE_APPWRITE_VERSION=${_APP_VERSION:-}"
       - APPWRITE_ENDPOINT_SAME_ORIGIN=true
     labels:
       - traefik.enable=true
@@ -295,7 +303,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     restart: unless-stopped
     labels:
       - traefik.enable=true
@@ -365,7 +373,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -395,9 +403,10 @@ services:
       - _APP_MAINTENANCE_RETENTION_USAGE_TTL
       - _APP_STATS_USAGE_QUEUE_NAME
       - _APP_STATS_RESOURCES_QUEUE_NAME
+      - _APP_MAINTENANCE_QUEUE_NAME
       - _APP_STATS_RESOURCES_INTERVAL
       - _APP_WORKERS_NUM=1
-      - _APP_WORKER_MAX_COROUTINES=78
+      - _APP_WORKER_MAX_COROUTINES=79
       - _APP_WORKER_PER_CORE
       - _APP_OPENSSL_KEY_V1
       - _APP_EMAIL_SECURITY
@@ -450,6 +459,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -495,6 +505,10 @@ services:
       - _APP_VCS_BITBUCKET_WEBHOOK_SECRET
       - _APP_VCS_ORIGIN_CLIENT_ID
       - _APP_VCS_ORIGIN_PRIVATE_KEY
+      - _APP_VCS_ENTIRE_PLUGIN
+      - _APP_VCS_ENTIRE_PRIVATE_KEY
+      - _APP_VCS_ENTIRE_ISSUER
+      - _APP_VCS_ENTIRE_ENDPOINT
       - _APP_VCS_WEBHOOK_URL
       - _APP_BUILDS_VOLUME
       - _APP_JOBS_HOST
@@ -530,7 +544,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -547,6 +561,7 @@ services:
       - _APP_MAINTENANCE_RETENTION_USAGE_TTL
       - _APP_STATS_USAGE_QUEUE_NAME
       - _APP_STATS_RESOURCES_QUEUE_NAME
+      - _APP_MAINTENANCE_QUEUE_NAME
       - _APP_STATS_RESOURCES_INTERVAL
       - _APP_LOGGING_FORMAT
       - _APP_WORKER_MAX_COROUTINES=8
@@ -571,6 +586,7 @@ services:
       - _APP_DB_PASS
       - _APP_DATABASE_SHARED_TABLES
       - _APP_FUNCTIONS_SCHEDULE_SPREAD
+      - _APP_MAINTENANCE_INACTIVE_INTERVAL
   appwrite-worker-webhooks:
     profiles:
       - separate
@@ -580,7 +596,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -622,7 +638,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -676,6 +692,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -709,7 +726,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -762,7 +779,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     volumes:
@@ -809,6 +826,10 @@ services:
       - _APP_VCS_BITBUCKET_WEBHOOK_SECRET
       - _APP_VCS_ORIGIN_CLIENT_ID
       - _APP_VCS_ORIGIN_PRIVATE_KEY
+      - _APP_VCS_ENTIRE_PLUGIN
+      - _APP_VCS_ENTIRE_PRIVATE_KEY
+      - _APP_VCS_ENTIRE_ISSUER
+      - _APP_VCS_ENTIRE_ENDPOINT
       - _APP_VCS_WEBHOOK_URL
       - _APP_FUNCTIONS_TIMEOUT
       - _APP_SITES_TIMEOUT
@@ -830,6 +851,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -864,7 +886,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     volumes:
@@ -886,6 +908,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -934,7 +957,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     volumes:
@@ -971,6 +994,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -998,7 +1022,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1045,7 +1069,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1084,7 +1108,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1129,7 +1153,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1175,7 +1199,7 @@ services:
         max-file: "5"
         max-size: 10m
     restart: unless-stopped
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1218,7 +1242,7 @@ services:
         max-file: "5"
         max-size: 10m
     restart: unless-stopped
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     volumes:
@@ -1254,6 +1278,7 @@ services:
       - _APP_STORAGE_S3_REGION
       - _APP_STORAGE_S3_BUCKET
       - _APP_STORAGE_S3_ENDPOINT
+      - _APP_STORAGE_S3_PATH_STYLE
       - _APP_STORAGE_DO_SPACES_ACCESS_KEY
       - _APP_STORAGE_DO_SPACES_SECRET
       - _APP_STORAGE_DO_SPACES_REGION
@@ -1281,7 +1306,7 @@ services:
         max-file: "5"
         max-size: 10m
     restart: unless-stopped
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     volumes:
@@ -1343,7 +1368,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1390,7 +1415,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1433,7 +1458,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1473,7 +1498,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1512,7 +1537,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     networks:
       - appwrite
     depends_on:
@@ -1641,7 +1666,7 @@ services:
     # One image carrying every orchestrator control plane. Appwrite drives the
     # jobs plane today; the per-plane images exist for Kubernetes, where each
     # scales, fails and gets RBAC on its own.
-    image: ghcr.io/open-runtimes/orchestrator/orchestrator:2.2.2@sha256:b6bd08b2c01b3e10dc4181ffc80f22663b919a19dda6637efb5382f7a08971fb
+    image: ghcr.io/open-runtimes/orchestrator/orchestrator:2.2.4@sha256:bd70ebf43f0ae093ec835c10ce170d21079bfc37ea04de2d28b5472473af86bb
     restart: unless-stopped
     user: root
     networks:
@@ -1760,6 +1785,7 @@ services:
       start_period: 10s
     command:
       - postgres
+    shm_size: 1g
   appwrite-embedding:
     image: appwrite/embedding:0.3.1@sha256:8384a58584ad108cb6b785d23e1639f4f7531361526c8d80bfd23719663a9b73
     profiles:
@@ -1805,7 +1831,7 @@ services:
       options:
         max-file: "5"
         max-size: 10m
-    image: appwrite/appwrite:2.5.0@sha256:00bf6b9a0be885e10388dba6dd934a873518efce62b3b5ed6d535026747365c4
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     restart: unless-stopped
     healthcheck:
       test:
@@ -1891,6 +1917,69 @@ services:
     restart: unless-stopped
     networks:
       - appwrite
+  appwrite-exiftool:
+    image: ghcr.io/appwrite/exiftool:0.1.0@sha256:a98f14cab0fb9ce3ec3daf34c24258243838ccb5925c028e3d9dc236ac208bfa
+    restart: unless-stopped
+    networks:
+      - appwrite
+
+  appwrite-task-scheduler-maintenance:
+    profiles:
+      - separate
+    extends:
+      service: appwrite-task-scheduler
+    entrypoint: schedule-maintenance
+
+  appwrite-worker-maintenance:
+    profiles:
+      - separate
+    entrypoint: worker-maintenance
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: "5"
+        max-size: 10m
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+      - "${_APP_DB_HOST:-postgresql}"
+    environment:
+      - _APP_ENV
+      - _APP_WORKERS_NUM=1
+      - _APP_WORKER_MAX_COROUTINES=1
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_ADAPTER
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_DB_ADAPTER_VECTORSDB
+      - _APP_DB_HOST_VECTORSDB
+      - _APP_DB_PORT_VECTORSDB
+      - _APP_DB_SCHEMA_VECTORSDB
+      - _APP_DB_USER_VECTORSDB
+      - _APP_DB_PASS_VECTORSDB
+      - _APP_DB_ADAPTER_DOCUMENTSDB
+      - _APP_DB_HOST_DOCUMENTSDB
+      - _APP_DB_PORT_DOCUMENTSDB
+      - _APP_DB_SCHEMA_DOCUMENTSDB
+      - _APP_DB_USER_DOCUMENTSDB
+      - _APP_DB_PASS_DOCUMENTSDB
+      - _APP_CONNECTIONS_DATABASE_DOCUMENTSDB
+      - _APP_CONNECTIONS_DATABASE_VECTORSDB
+      - _APP_LOGGING_CONFIG
+      - _APP_LOGGING_FORMAT
+      - _APP_DATABASE_SHARED_TABLES
+      - _APP_MAINTENANCE_QUEUE_NAME
 networks:
   gateway:
     name: gateway
