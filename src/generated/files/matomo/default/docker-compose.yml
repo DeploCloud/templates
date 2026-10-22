@@ -1,6 +1,6 @@
 services:
   matomo:
-    image: matomo:latest@sha256:1e00192627025a9eb9108858a0d2fcedb495958adf8ee12cd2b2e4ec306efae4
+    image: matomo:latest@sha256:40680f8e7ab659c55659dd69e069e261825ef1d4a0bfd881b52714536c935b6e
     restart: unless-stopped
     depends_on:
       db:
