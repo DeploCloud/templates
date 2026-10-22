@@ -6118,7 +6118,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Strapi headless CMS with PostgreSQL and persistent application data, using a prebuilt Strapi 5\nproduction image.",
           "logo": "/images/strapi/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "beb6ced1e9795f6d896c5d1f6bcbd7537c4cc890129bcb8b0c267e20b4be0e34";
+export const version = "8d1f417f7a9c53b1e37358e475df66c88e2e3b8cdeeba077d778814409e266f6";
