@@ -3914,7 +3914,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a MariaDB database, Redis and a cron worker.",
           "logo": "/images/nextcloud/default/logo.webp",
@@ -3956,7 +3956,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a PostgreSQL database, Redis and a cron worker.",
           "logo": "/images/nextcloud/postgresql/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "a574f509189c9d0157174fa1f1f6748a7efd9e4081bbb3c4bcf7ba7017627c20";
+export const version = "f6254fc8b43b735e40c1612ec075cbdd67072a57d48f91520fff95255d07858b";

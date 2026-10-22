@@ -1,6 +1,6 @@
 services:
   nextcloud:
-    image: nextcloud:35.0.2@sha256:a588aa5353703b44106a6129adaaf7bf22521b7a4754f9f529b3228d6aa390c5
+    image: nextcloud:35.0.2@sha256:301e07b7f661c122752cc2c01b76f15036a156f2b6d794c76621b7d0a6bb8a50
     restart: always
     expose:
       - 80
@@ -21,7 +21,7 @@ services:
       - nextcloud_redis
 
   nextcloud_cron:
-    image: nextcloud:35.0.2@sha256:a588aa5353703b44106a6129adaaf7bf22521b7a4754f9f529b3228d6aa390c5
+    image: nextcloud:35.0.2@sha256:301e07b7f661c122752cc2c01b76f15036a156f2b6d794c76621b7d0a6bb8a50
     restart: always
     volumes:
       - nextcloud_data:/var/www/html
