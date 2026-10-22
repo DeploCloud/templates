@@ -30,7 +30,18 @@ export function listTemplates(query: TemplateListQuery) {
         ].some((value) => value.toLocaleLowerCase().includes(search))),
   );
 
-  const value = (template: (typeof templates)[number]) => template.name;
+  const value = (template: (typeof templates)[number]) => {
+    if (query.sort === "name") return template.name;
+
+    const dateKey = query.sort === "createdAt" ? "createdAt" : "lastUpdate";
+    return template.variants
+      .map((variant) => variant[dateKey])
+      .reduce((earliestOrLatest, date) => {
+        if (query.sort === "createdAt")
+          return date < earliestOrLatest ? date : earliestOrLatest;
+        return date > earliestOrLatest ? date : earliestOrLatest;
+      });
+  };
   const direction = query.order === "asc" ? 1 : -1;
   return items.toSorted(
     (left, right) => direction * compare(value(left), value(right)),
@@ -50,15 +61,4 @@ export function listCategories(query: CategoryListQuery) {
   return items.toSorted(
     (left, right) => direction * compare(left[query.sort], right[query.sort]),
   );
-}
-
-export function paginate<T>(
-  items: readonly T[],
-  { page, limit }: Pick<TemplateListQuery, "page" | "limit">,
-) {
-  const total = items.length;
-  return {
-    data: items.slice((page - 1) * limit, page * limit),
-    pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
-  };
 }
