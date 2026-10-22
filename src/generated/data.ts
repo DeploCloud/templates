@@ -323,7 +323,7 @@ const data = {
               "link": "https://github.com/AppFlowy-IO/AppFlowy-SelfHost-Commercial#appflowy-self-hosted-free-tier"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "AppFlowy Cloud is a collaborative workspace with the official web, API, authentication, search,\nAI, worker and administration services. This template keeps the upstream service boundaries and\nadds an internal Nginx gateway for path-based routing, with PostgreSQL, Redis and MinIO data on\npersistent volumes.",
           "logo": "/images/appflowy/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "00c0083c01d574bb72c331daa465408adbcedff8b6b7d7ca5d0e066b49fb0861";
+export const version = "828eb20249712fbf1831272e3604a0a6e3b2a1ce9b2becdcd14691dea6a97c4d";
