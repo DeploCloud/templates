@@ -860,7 +860,7 @@ const data = {
               "message": "Create the tunnel first and set a non-empty TUNNEL_TOKEN before starting the connector."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Cloudflare Tunnel connector for publishing private services through an existing tunnel. This\nconnector has no web UI or HTTP application port.",
           "logo": "/images/cloudflared/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "ce239caff9665bff05659faf4149b4da971404b7cc47ffa1a978082d9eb87cba";
+export const version = "a584f158a3987b6e9d6835db8222677735dc094158f5de7789da1f84dd59992d";
