@@ -6075,7 +6075,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Stirling PDF web application for common document transformations with persistent settings and user data.",
           "logo": "/images/stirling-pdf/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "0a7108e0a43c0ebc3b63bb1ccc1718d5243f8f4bddc4288a1b555f43226b18ff";
+export const version = "f45cd5efe905345fe78b9f4616c413e5a866a306bd4944914c90a5130f3905b2";
