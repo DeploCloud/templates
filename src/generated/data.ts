@@ -5941,7 +5941,7 @@ const data = {
               "message": "A complete production deployment also requires ClickHouse and OpenTelemetry collectors."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "SigNoz observability interface for traces, metrics and logs with persistent local data.",
           "logo": "/images/signoz/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "e646e3abb16a5819a2c12577c181d12e99517d81a5c973e26494cda1c105515e";
+export const version = "3ede23a32f7990f5fbe8fcf9799f5dfbbd509ded72e0c449f95e3a4ac53e650d";

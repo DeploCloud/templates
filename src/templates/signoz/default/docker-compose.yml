@@ -1,34 +1,133 @@
 services:
-  signoz:
-    image: signoz/signoz:v0.146.0@sha256:cd3ca6950df3b3681b4629c1b2cea4d3bcd5fece57445a3ec2a1a20466ab14ca
+  otel-collector:
+    command:
+      - "-c"
+      - "/signoz-otel-collector migrate sync check &&\n/signoz-otel-collector --config=/etc/otel-collector-config.yaml --manager-config=/etc/opamp-config.yaml --copy-path=/var/tmp/collector-config.yaml\n"
+    entrypoint:
+      - /bin/sh
+    environment:
+      - SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN=tcp://clickhouse:9000
+      - SIGNOZ_OTEL_COLLECTOR_TIMEOUT=10m
+      - LOW_CARDINAL_EXCEPTION_GROUPING=false
+    image: signoz/signoz-otel-collector:latest@sha256:b08671f56f3164c7781a740cc2af12c0739435faf49cd2ddc8a50d7238b81170
+    ports:
+      - 4317:4317
+      - 4318:4318
     restart: unless-stopped
+    volumes:
+      - ./ingester/ingester.yaml:/etc/otel-collector-config.yaml:ro
+      - ./ingester/opamp.yaml:/etc/opamp-config.yaml:ro
+    depends_on:
+      signoz:
+        condition: service_healthy
+      schema-migrator:
+        condition: service_completed_successfully
+  signoz:
+    environment:
+      SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN: "${SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN}"
+      SIGNOZ_SQLSTORE_SQLITE_PATH: "${SIGNOZ_SQLSTORE_SQLITE_PATH}"
+      SIGNOZ_TELEMETRYSTORE_PROVIDER: "${SIGNOZ_TELEMETRYSTORE_PROVIDER}"
+      SIGNOZ_ALERTMANAGER_PROVIDER: "${SIGNOZ_ALERTMANAGER_PROVIDER}"
+      SIGNOZ_TOKENIZER_JWT_SECRET: "${SIGNOZ_TOKENIZER_JWT_SECRET}"
+      SIGNOZ_SQLSTORE_PROVIDER: sqlite
+    healthcheck:
+      interval: 30s
+      retries: 3
+      start_period: 60s
+      test:
+        - CMD
+        - wget
+        - "--spider"
+        - "-q"
+        - http://localhost:8080/api/v1/health
+      timeout: 10s
+    image: signoz/signoz:v0.147.0@sha256:f60a66839f466a4433c8e807ccaaae8c91d70be06ca1c95dba5389648796c51b
+    restart: unless-stopped
+    expose:
+      - 8080
+      - 4320
+    volumes:
+      - signoz-data:/var/lib/signoz
     depends_on:
       clickhouse:
         condition: service_healthy
-    expose:
-      - 8080
-    environment:
-      SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN: ${SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN}
-      SIGNOZ_SQLSTORE_SQLITE_PATH: ${SIGNOZ_SQLSTORE_SQLITE_PATH}
-      SIGNOZ_TELEMETRYSTORE_PROVIDER: ${SIGNOZ_TELEMETRYSTORE_PROVIDER}
-      SIGNOZ_ALERTMANAGER_PROVIDER: ${SIGNOZ_ALERTMANAGER_PROVIDER}
-      SIGNOZ_TOKENIZER_JWT_SECRET: ${SIGNOZ_TOKENIZER_JWT_SECRET}
-    volumes:
-      - signoz-data:/var/lib/signoz
-
-  clickhouse:
-    image: clickhouse/clickhouse-server:25.5.6@sha256:4536143e22dc9bddb217c7e610f6b7ed5e6efd8fefdbc61acdeadb5d8022213a
-    restart: unless-stopped
-    expose:
-      - 9000
+      schema-migrator:
+        condition: service_completed_successfully
+  clickhouse-keeper:
+    entrypoint:
+      - /usr/bin/clickhouse-keeper
+      - "--config-file=/etc/clickhouse-keeper/keeper.yaml"
     healthcheck:
-      test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      test:
+        - CMD
+        - clickhouse-keeper-client
+        - "-h"
+        - localhost
+        - "-p"
+        - "9181"
+        - "-q"
+        - ls
+      timeout: 10s
+    image: clickhouse/clickhouse-keeper:25.12.5@sha256:525b8b0f93ccb371131c46f22a066ea43d33d74aba314203e8044609945d8524
+    restart: unless-stopped
+    volumes:
+      - clickhouse-keeper-data:/var/lib/clickhouse-keeper
+      - ./telemetrykeeper/clickhousekeeper/keeper-0.yaml:/etc/clickhouse-keeper/keeper.yaml:ro
+  clickhouse:
+    depends_on:
+      clickhouse-keeper:
+        condition: service_healthy
+      clickhouse-user-scripts:
+        condition: service_completed_successfully
+    environment:
+      - CLICKHOUSE_SKIP_USER_SETUP=1
+      - CLICKHOUSE_CONFIG=/etc/clickhouse-server/config-0-0.yaml
+    healthcheck:
+      interval: 30s
+      retries: 3
+      start_period: 40s
+      test:
+        - CMD
+        - wget
+        - "--spider"
+        - "-q"
+        - http://localhost:8123/ping
+      timeout: 10s
+    image: clickhouse/clickhouse-server:25.12.5@sha256:cacf32d6884291dc2ff5e0156a97f46fc53ff7c929a7906d114e268a929dfd3a
+    restart: unless-stopped
     volumes:
       - clickhouse-data:/var/lib/clickhouse
-
+      - clickhouse-user-scripts:/var/lib/clickhouse/user_scripts:ro
+      - ./telemetrystore/clickhouse/config-0-0.yaml:/etc/clickhouse-server/config-0-0.yaml:ro
+      - ./telemetrystore/clickhouse/functions.yaml:/etc/clickhouse-server/functions.yaml:ro
+  clickhouse-user-scripts:
+    command:
+      - bash
+      - "-c"
+      - "version=\"v0.0.1\"\nnode_os=$$(uname -s | tr '[:upper:]' '[:lower:]')\nnode_arch=$$(uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)\necho \"Fetching histogram-binary for $${node_os}/$${node_arch}\"\ncd /tmp\nwget -O histogram-quantile.tar.gz \"https://github.com/SigNoz/signoz/releases/download/histogram-quantile%2F$${version}/histogram-quantile_$${node_os}_$${node_arch}.tar.gz\"\ntar -xvzf histogram-quantile.tar.gz\nmv histogram-quantile /var/lib/clickhouse/user_scripts/histogramQuantile"
+    image: clickhouse/clickhouse-server:25.12.5@sha256:cacf32d6884291dc2ff5e0156a97f46fc53ff7c929a7906d114e268a929dfd3a
+    restart: on-failure
+    volumes:
+      - clickhouse-user-scripts:/var/lib/clickhouse/user_scripts
+  schema-migrator:
+    command:
+      - "-c"
+      - "/signoz-otel-collector migrate ready &&\n/signoz-otel-collector migrate bootstrap &&\n/signoz-otel-collector migrate sync up &&\n/signoz-otel-collector migrate async up\n"
+    entrypoint:
+      - /bin/sh
+    environment:
+      - SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN=tcp://clickhouse:9000
+      - SIGNOZ_OTEL_COLLECTOR_TIMEOUT=10m
+    image: signoz/signoz-otel-collector:latest@sha256:b08671f56f3164c7781a740cc2af12c0739435faf49cd2ddc8a50d7238b81170
+    restart: "no"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
 volumes:
   signoz-data: {}
   clickhouse-data: {}
+  clickhouse-keeper-data: {}
+  clickhouse-user-scripts: {}
