@@ -5814,7 +5814,7 @@ const data = {
               "message": "Mail delivery is required for account notifications and password recovery."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Seafile Community Edition with MariaDB, Redis, persistent libraries and configuration.",
           "logo": "/images/seafile/default/logo.webp",
@@ -5850,7 +5850,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Seafile Community Edition with the MariaDB and Redis services required by the container deployment.\nLibraries, configuration, logs and database data persist in volumes.",
           "logo": "/images/seafile/mariadb/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3ec7f9b7906d62ffaf802e5b2abe7f98b9a36cef4e59584cb918a98879e3da4a";
+export const version = "beb6ced1e9795f6d896c5d1f6bcbd7537c4cc890129bcb8b0c267e20b4be0e34";
