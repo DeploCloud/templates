@@ -6648,7 +6648,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Recommended Zabbix deployment following the official default Compose setup: Zabbix server, Nginx web interface and MySQL in separate containers. The database persists in a volume. Choose the PostgreSQL variant if you prefer PostgreSQL.",
           "logo": "/images/zabbix/default/logo.webp",
@@ -6684,7 +6684,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Zabbix monitoring stack with its official server and Nginx web interface backed by mysql. The database persists in a volume.",
           "logo": "/images/zabbix/mysql/logo.webp",
@@ -6720,7 +6720,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Zabbix monitoring stack with its official server and Nginx web interface backed by postgres. The database persists in a volume.",
           "logo": "/images/zabbix/postgresql/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "9a38018acc8dfc33532ad87b2dae34b9a7e905212f86aec532f2d1bd10c9ef84";
+export const version = "ac024177700ac26b28291eb88bbee73460f3cf9ca2f3c6fcd6967fe251d8c535";
