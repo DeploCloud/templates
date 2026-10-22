@@ -4213,7 +4213,7 @@ const data = {
               "message": "A credential secret is required for sensitive flows."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Node-RED is a visual flow editor for connecting hardware, APIs and online services. The template\npersists flows, credentials, installed nodes and runtime configuration in the `/data` volume.",
           "logo": "/images/node-red/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "582412e4c67fdd4891fd06c2f7751ed08a0df051effcd5bddef22e0ff8d72ab8";
+export const version = "12152c0ea5714bf6b3dbe9c242b18e9548ab01bf0922dc83390d73fafb68cd18";
