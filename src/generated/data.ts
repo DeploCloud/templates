@@ -4045,7 +4045,7 @@ const data = {
               "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Nginx Proxy Manager with MariaDB storage for proxy hosts, certificates and access lists. The\nconfiguration and database state persist in volumes, and the admin UI is exposed through the\ngenerated domain.",
           "logo": "/images/nginx-proxy-manager/mariadb/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "828eb20249712fbf1831272e3604a0a6e3b2a1ce9b2becdcd14691dea6a97c4d";
+export const version = "3ec7f9b7906d62ffaf802e5b2abe7f98b9a36cef4e59584cb918a98879e3da4a";
