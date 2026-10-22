@@ -13,3 +13,311 @@ SIGNOZ_SQLSTORE_SQLITE_PATH = "/var/lib/signoz/signoz.db"
 SIGNOZ_TELEMETRYSTORE_PROVIDER = "clickhouse"
 SIGNOZ_ALERTMANAGER_PROVIDER = "signoz"
 SIGNOZ_TOKENIZER_JWT_SECRET = "${jwt_secret}"
+
+[[config.mounts]]
+filePath = "ingester/ingester.yaml"
+content = '''
+connectors:
+  signozmeter:
+    dimensions:
+    - name: service.name
+    - name: deployment.environment
+    - name: host.name
+    metrics_flush_interval: 1h
+exporters:
+  clickhouselogsexporter:
+    dsn: tcp://clickhouse:9000/signoz_logs
+    sending_queue:
+      enabled: false
+    timeout: 45s
+    use_new_schema: true
+  clickhousetraces:
+    datasource: tcp://clickhouse:9000/signoz_traces
+    low_cardinal_exception_grouping: ${env:LOW_CARDINAL_EXCEPTION_GROUPING}
+    sending_queue:
+      enabled: false
+    timeout: 45s
+    use_new_schema: true
+  metadataexporter:
+    cache:
+      provider: in_memory
+    dsn: tcp://clickhouse:9000/signoz_metadata
+    enabled: true
+    timeout: 45s
+  signozclickhousemeter:
+    dsn: tcp://clickhouse:9000/signoz_meter
+    sending_queue:
+      enabled: false
+    timeout: 45s
+  signozclickhousemetrics:
+    dsn: tcp://clickhouse:9000/signoz_metrics
+    sending_queue:
+      enabled: false
+    timeout: 45s
+extensions:
+  pprof:
+    endpoint: 0.0.0.0:1777
+  signoz_health_check:
+    endpoint: 0.0.0.0:13133
+processors:
+  batch:
+    send_batch_max_size: 55000
+    send_batch_size: 50000
+    timeout: 5s
+  batch/meter:
+    send_batch_max_size: 25000
+    send_batch_size: 20000
+    timeout: 5s
+  signozllmpricing:
+    attrs:
+      cache_read: gen_ai.usage.cache_read.input_tokens
+      cache_write: gen_ai.usage.cache_creation.input_tokens
+      in: gen_ai.usage.input_tokens
+      model: gen_ai.request.model
+      out: gen_ai.usage.output_tokens
+    default_pricing:
+      rules: []
+    output_attrs:
+      cache_read: signoz.gen_ai.usage.cache_read.input_tokens.cost
+      cache_write: signoz.gen_ai.usage.cache_write.input_tokens.cost
+      in: signoz.gen_ai.usage.input_tokens.cost
+      out: signoz.gen_ai.usage.output_tokens.cost
+      total: signoz.gen_ai.usage.tokens.cost
+  signozspanmapper:
+    groups: []
+  signozspanmetrics/delta:
+    aggregation_temporality: AGGREGATION_TEMPORALITY_DELTA
+    dimensions:
+    - default: default
+      name: service.namespace
+    - default: default
+      name: deployment.environment
+    - name: signoz.collector.id
+    - name: service.version
+    dimensions_cache_size: 100000
+    enable_exp_histogram: true
+    latency_histogram_buckets:
+    - 100us
+    - 1ms
+    - 2ms
+    - 6ms
+    - 10ms
+    - 50ms
+    - 100ms
+    - 250ms
+    - 500ms
+    - 1000ms
+    - 1400ms
+    - 2000ms
+    - 5s
+    - 10s
+    - 20s
+    - 40s
+    - 60s
+    metrics_exporter: signozclickhousemetrics
+    metrics_flush_interval: 60s
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+service:
+  extensions:
+  - signoz_health_check
+  - pprof
+  pipelines:
+    logs:
+      exporters:
+      - clickhouselogsexporter
+      - signozmeter
+      - metadataexporter
+      processors:
+      - batch
+      receivers:
+      - otlp
+    metrics:
+      exporters:
+      - signozclickhousemetrics
+      - signozmeter
+      - metadataexporter
+      processors:
+      - batch
+      receivers:
+      - otlp
+    metrics/meter:
+      exporters:
+      - signozclickhousemeter
+      processors:
+      - batch/meter
+      receivers:
+      - signozmeter
+    traces:
+      exporters:
+      - clickhousetraces
+      - signozmeter
+      - metadataexporter
+      processors:
+      - signozspanmetrics/delta
+      - signozspanmapper
+      - signozllmpricing
+      - batch
+      receivers:
+      - otlp
+  telemetry:
+    logs:
+      encoding: json
+'''
+
+[[config.mounts]]
+filePath = "ingester/opamp.yaml"
+content = '''
+server_endpoint: ws://signoz:4320/v1/opamp
+'''
+
+[[config.mounts]]
+filePath = "telemetrykeeper/clickhousekeeper/keeper-0.yaml"
+content = '''
+keeper_server:
+  coordination_settings:
+    force_sync: false
+    operation_timeout_ms: 10000
+    raft_logs_level: warning
+    session_timeout_ms: 30000
+    snapshot_distance: 100000
+    snapshots_to_keep: 3
+  four_letter_word_white_list: '*'
+  log_storage_path: /var/lib/clickhouse-keeper/coordination/log
+  raft_configuration:
+    server:
+    - hostname: clickhouse-keeper
+      id: 0
+      port: 9234
+  server_id: 0
+  snapshot_storage_path: /var/lib/clickhouse-keeper/coordination/snapshots
+  tcp_port: 9181
+listen_host: 0.0.0.0
+logger:
+  console: true
+  level: information
+'''
+
+[[config.mounts]]
+filePath = "telemetrystore/clickhouse/config-0-0.yaml"
+content = '''
+asynchronous_metric_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+dictionaries_config: '*_dictionary.xml'
+display_name: cluster
+distributed_ddl:
+  path: /clickhouse/task_queue/ddl
+error_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+format_schema_path: /var/lib/clickhouse/format_schemas/
+http_port: 8123
+interserver_http_port: 9009
+latency_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+listen_host: 0.0.0.0
+logger:
+  console: 1
+  count: 10
+  formatting:
+    type: console
+  level: information
+  size: 1000M
+macros:
+  replica: "00"
+  shard: "00"
+metric_log:
+  flush_interval_milliseconds: 30000
+  ttl: event_date + INTERVAL 1 DAY DELETE
+part_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+path: /var/lib/clickhouse/
+processors_profile_log:
+  flush_interval_milliseconds: 30000
+  ttl: event_date + INTERVAL 1 DAY DELETE
+profiles:
+  default:
+    allow_simdjson: 0
+    load_balancing: random
+    log_queries: 1
+query_log:
+  flush_interval_milliseconds: 30000
+  partition_by: toYYYYMM(event_date)
+  ttl: event_date + INTERVAL 1 DAY DELETE
+query_metric_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+query_thread_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+query_views_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+quotas:
+  default:
+    interval:
+      duration: 3600
+      errors: 0
+      execution_time: 0
+      queries: 0
+      read_rows: 0
+      result_rows: 0
+remote_servers:
+  cluster:
+    shard:
+    - replica:
+      - host: clickhouse
+        port: 9000
+session_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+tcp_port: 9000
+text_log:
+  flush_interval_milliseconds: 30000
+  ttl: event_date + INTERVAL 1 DAY DELETE
+tmp_path: /var/lib/clickhouse/tmp/
+trace_log:
+  flush_interval_milliseconds: 30000
+  ttl: event_date + INTERVAL 1 DAY DELETE
+user_defined_executable_functions_config: '*functions.yaml'
+user_directories:
+  users_xml:
+    path: config-0-0.yaml
+user_files_path: /var/lib/clickhouse/user_files/
+user_scripts_path: /var/lib/clickhouse/user_scripts/
+users:
+  default:
+    access_management: 1
+    named_collection_control: 1
+    networks:
+      ip: ::/0
+    password: ""
+    profile: default
+    quota: default
+    show_named_collection: 1
+    show_named_collection_secrets: 1
+zookeeper:
+  node:
+  - host: clickhouse-keeper
+    port: 9181
+zookeeper_log:
+  ttl: event_date + INTERVAL 1 DAY DELETE
+'''
+
+[[config.mounts]]
+filePath = "telemetrystore/clickhouse/functions.yaml"
+content = '''
+functions:
+  argument:
+  - name: buckets
+    type: Array(Float64)
+  - name: counts
+    type: Array(Float64)
+  - name: quantile
+    type: Float64
+  command: ./histogramQuantile
+  format: CSV
+  name: histogramQuantile
+  return_type: Float64
+  type: executable
+'''

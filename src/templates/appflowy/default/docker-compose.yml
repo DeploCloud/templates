@@ -1,6 +1,6 @@
 services:
   appflowy-gateway:
-    image: nginx:1.31.6-alpine@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2
+    image: nginx:1.31.8-alpine@sha256:e2d97c2b8c016f12c2f1a27d095685063b2f281c4edf2babfde6001cf4fb77a8
     restart: unless-stopped
     expose:
       - 80
@@ -12,7 +12,7 @@ services:
       - gotrue
       - admin-frontend
   postgres:
-    image: pgvector/pgvector:0.8.6-pg16@sha256:ccc6e83d6e35e931dc7c5def2022729d5a6c370318d099181995567ff1fb4d6b
+    image: pgvector/pgvector:0.8.7-pg16@sha256:7b822b0aac60967beb1ea5e576b8602c94c300a157d187f385ae3e0da199b90a
     restart: unless-stopped
     environment:
       POSTGRES_USER: appflowy
@@ -85,7 +85,7 @@ services:
       retries: 12
       start_period: 40s
   appflowy-cloud:
-    image: appflowyinc/appflowy_cloud:latest@sha256:427a47426a92ea6944296c666642dd86893729a5cc4bcf853169c9b805e91be1
+    image: appflowyinc/appflowy_cloud:latest@sha256:739ab51324f10eb55818122145c9d69eca76c9f63266812e97f117a39412af16
     restart: unless-stopped
     expose:
       - 8000
@@ -138,7 +138,7 @@ services:
       timeout: 5s
       retries: 12
   appflowy-worker:
-    image: appflowyinc/appflowy_worker:latest@sha256:5f1f4167d520a5756f3f4b3d4774a1d83a2c6d495c336a284104476ef340aed0
+    image: appflowyinc/appflowy_worker:latest@sha256:7584caa84d78988cdf9d0b57c13372614b353350f80faadd9301a0fbbe510d76
     restart: unless-stopped
     environment:
       APPFLOWY_ENVIRONMENT: production
@@ -166,7 +166,7 @@ services:
       appflowy-cloud:
         condition: service_healthy
   appflowy-search:
-    image: appflowyinc/appflowy_search:latest@sha256:7732af4dd05866565d8cece0782e946db4f5a4a70f9d68917a8bd4ea9df85a83
+    image: appflowyinc/appflowy_search:latest@sha256:f44ad6e55e8e2cf1f862e0e8cf32ec4370e3bdc67000cc66a6d4c4cc9695466d
     restart: unless-stopped
     expose:
       - 4002
@@ -261,7 +261,7 @@ services:
       appflowy-cloud:
         condition: service_healthy
   appflowy-web:
-    image: appflowyinc/appflowy_web:latest@sha256:326eb9956fc32cc659e8812cca79c08c5c544287401a217f259805c4fc19f0b0
+    image: appflowyinc/appflowy_web:latest@sha256:e63aa16b86af769b88d8a36a2dc74ed97628946a947c654a0e31116dfa2adc6b
     restart: unless-stopped
     expose:
       - 80

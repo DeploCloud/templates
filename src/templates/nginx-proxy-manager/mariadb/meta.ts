@@ -27,6 +27,6 @@ export default {
         "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic.",
     },
   ],
-  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-22T00:00:00.000Z"),
   createdAt: new Date("2026-08-31T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

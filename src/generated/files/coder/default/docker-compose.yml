@@ -1,6 +1,6 @@
 services:
   coder:
-    image: ghcr.io/coder/coder:v2.37.4@sha256:48e36bcb1a4c78a99973ac63a9710f2d705d5cac51d86131e88a9942515a6839
+    image: ghcr.io/coder/coder:v2.37.5@sha256:8dbbe96893fb728ca38ae35f48d6e60abaf37df8d1ae695b3728f51c5c655fcd
     restart: unless-stopped
     expose:
       - 7080

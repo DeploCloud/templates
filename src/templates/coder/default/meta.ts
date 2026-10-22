@@ -24,6 +24,6 @@ export default {
         "Docker-based workspaces require a Linux host and host Docker socket access.",
     },
   ],
-  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-22T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
