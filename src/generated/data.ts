@@ -1800,7 +1800,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "FreshRSS personal feed reader with persistent feeds, users and configuration.",
           "logo": "/images/freshrss/default/logo.webp",
@@ -1836,7 +1836,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "FreshRSS RSS reader using a dedicated MySQL database. The database, feeds and extensions persist in\nvolumes.",
           "logo": "/images/freshrss/mysql/logo.webp",
@@ -1872,7 +1872,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "FreshRSS RSS reader using a dedicated PostgreSQL database. The database, feeds and extensions persist\nin volumes.",
           "logo": "/images/freshrss/postgresql/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "05b088874ee4716ca1e224a58075175398bcc264e05e332a117d217734d28c01";
+export const version = "19d8d662ae7a31d393515f2b9fcc2e6a81c07be9188388abe8abe1ddfceca7d8";
