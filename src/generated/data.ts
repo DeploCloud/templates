@@ -3696,7 +3696,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "n8n is a visual workflow automation platform for connecting applications and APIs. This template\nincludes the n8n service and persistent storage for its workflows, credentials and execution data.",
           "logo": "/images/n8n/default/logo.webp",
@@ -3732,7 +3732,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "# n8n with PostgreSQL\n\nn8n is a visual workflow automation platform for connecting applications and APIs.\n\nThis variant stores workflows, credentials and execution data in the included\nPostgreSQL service instead of the default SQLite database.",
           "logo": "/images/n8n/postgresql/logo.webp",
@@ -3774,7 +3774,7 @@ const data = {
               "link": "https://docs.n8n.io/hosting/scaling/queue-mode/"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "# n8n Queue mode\n\nn8n is a visual workflow automation platform for connecting applications and APIs.\n\nThis variant runs n8n in queue mode with PostgreSQL for state, Redis for the\nexecution queue and a dedicated worker for background executions.",
           "logo": "/images/n8n/queue-mode/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "f9f698f9612e2a7d5b46d7affb57526d9eb3785834973cd9cf5b9ad8ef4f484c";
+export const version = "582412e4c67fdd4891fd06c2f7751ed08a0df051effcd5bddef22e0ff8d72ab8";
