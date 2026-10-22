@@ -3368,7 +3368,7 @@ const data = {
               "message": "Email notifications require an SMTP provider."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Mattermost team collaboration server with persistent files and PostgreSQL-backed application data.",
           "logo": "/images/mattermost/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "61caa65546f702b1cc1489be5f4d73d70fb1b3f7803d2f936ad572929f701a3e";
+export const version = "f9f698f9612e2a7d5b46d7affb57526d9eb3785834973cd9cf5b9ad8ef4f484c";
