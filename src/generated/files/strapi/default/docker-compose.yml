@@ -1,6 +1,6 @@
 services:
   strapi:
-    image: elestio/strapi-production:v5.57.0@sha256:d98bb855fe23e7fafe87f94f4ba21e9ba7536ad45ce5b4ae2d2fce881d11db9a
+    image: elestio/strapi-production:v5.59.0@sha256:d66a39856073201687ffb45bd2caff097117194faa9743508062443238ed8012
     restart: unless-stopped
     depends_on:
       db:
@@ -25,7 +25,7 @@ services:
       TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
       ENCRYPTION_KEY: ${ENCRYPTION_KEY}
     volumes:
-      - strapi-data:/srv/app
+      - strapi-data:/opt/app/public/uploads
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:1337"]
       start_period: 10s

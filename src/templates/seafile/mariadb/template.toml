@@ -26,3 +26,5 @@ TIME_ZONE = "Etc/UTC"
 DB_PASSWORD = "${db_password}"
 DB_ROOT_PASSWORD = "${db_root_password}"
 JWT_PRIVATE_KEY = "${jwt_key}"
+
+CSRF_TRUSTED_ORIGINS = "https://${domain}"

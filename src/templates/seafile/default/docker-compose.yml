@@ -1,6 +1,6 @@
 services:
   seafile:
-    image: seafileltd/seafile-mc:13.0-latest@sha256:b0c90832126bf432db908449f1bb450211e6bbf75a2193bab3399e2a9636eccf
+    image: seafileltd/seafile-mc:14.0-latest@sha256:75d8b88e8bfaa54099082aec0e99ff1a962bd364bfc21da34125fa66998f0861
     restart: unless-stopped
     depends_on:
       db:
@@ -25,6 +25,11 @@ services:
       TIME_ZONE: ${TIME_ZONE}
       JWT_PRIVATE_KEY: ${JWT_PRIVATE_KEY}
       CACHE_PROVIDER: ${CACHE_PROVIDER}
+      ENABLE_SEADOC: "false"
+      ENABLE_NOTIFICATION_SERVER: "false"
+      ENABLE_METADATA_MANAGEMENT: "False"
+      ENABLE_SEAFILE_AI: "false"
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
