@@ -2004,7 +2004,7 @@ const data = {
               "message": "Change the initial administrator password after setup."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Ghost is a publishing platform for blogs, newsletters and memberships. This template runs Ghost\nwith MySQL and persists both publication content and database data.",
           "logo": "/images/ghost/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "61ecb224ed889800fbe2282b2116b20c7c4d3ebc179057ec9040235522e3f1bf";
+export const version = "5e7df6fe8de2aa11e3d9cdb9a1bb7206b1357ade666cf698f79e06f31b803b73";
