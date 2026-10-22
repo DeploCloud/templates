@@ -1,6 +1,6 @@
 services:
   zabbix-server:
-    image: zabbix/zabbix-server-mysql:alpine-7.4.15@sha256:ab81fc2301f3aa4c2cac617f943dd2fc91e0e76d0bf0b6f1d386e027b8608efb
+    image: zabbix/zabbix-server-mysql:alpine-7.4.16@sha256:911763cc016d7c3d3e2c085a08e82333e6c74813fb42da2fe058a7fc91865aa8
     restart: unless-stopped
     depends_on:
       zabbix-db:
@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
 
   zabbix-web:
-    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4.15@sha256:d5df1afe94dd8a328c9a0a779064c8d08a620d727dcf02ff76aa73c3f918a7c1
+    image: zabbix/zabbix-web-nginx-mysql:alpine-7.4.16@sha256:5f060c3b3696a24d9946d445a0e0a5f77d38afb16047bdfad67f46a8bdba2c26
     restart: unless-stopped
     depends_on:
       zabbix-server:
