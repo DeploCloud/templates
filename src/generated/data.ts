@@ -5165,7 +5165,7 @@ const data = {
               "message": "This template needs host Docker socket access to manage containers."
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
           "createdAt": new Date("2026-08-31T00:00:00.000Z"),
           "description": "Portainer CE provides a web interface for managing Docker environments. Its database is kept on a\npersistent volume.",
           "logo": "/images/portainer/default/logo.webp",
@@ -6739,4 +6739,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "9bc1cfffef6e1f80bdd07c89da463964551528ac74a3624c20fbe712282bad14";
+export const version = "7c0e5533185c7e65a1bfc860b04aaa0c20de7ef397e3752669364f561bce32d7";
