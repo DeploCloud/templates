@@ -1,6 +1,6 @@
 services:
   directus:
-    image: directus/directus:12.5.0@sha256:7de5d6898b955dab1672619aed590035dcade4f8d7396d913e55543e114d1331
+    image: directus/directus:12.5.1@sha256:ef6fc027605ea659a972356e0c35fd7f88b02118b0b3a322dafbec3cc709fdab
     restart: unless-stopped
     depends_on:
       db:
@@ -20,7 +20,7 @@ services:
       - directus-uploads:/directus/uploads
 
   db:
-    image: postgres:18-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    image: postgres:18-alpine@sha256:898c60cb390d1085bc97bdd6a1ae968757421df394b071848b52b1c09c89d6a5
     restart: unless-stopped
     environment:
       POSTGRES_DB: directus

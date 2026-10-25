@@ -816,7 +816,7 @@ const data = {
               "message": "This stack needs at least 4 GB of RAM and should be served behind HTTPS before production use."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Chatwoot is an open-source customer communication platform for live chat, email and social\nchannels. This template follows the production Docker layout with separate Rails and Sidekiq\nprocesses, PostgreSQL with pgvector, Redis and persistent Active Storage.",
           "logo": "/images/chatwoot/default/logo.webp",
@@ -912,7 +912,7 @@ const data = {
               "message": "Docker-based workspaces require a Linux host and host Docker socket access."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Coder is a self-hosted cloud development environment for provisioning remote workspaces. This\nvariant includes Coder and PostgreSQL and persists application state in the database.",
           "logo": "/images/coder/default/logo.webp",
@@ -998,7 +998,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform and API with persistent uploads backed by PostgreSQL.",
           "logo": "/images/directus/default/logo.webp",
@@ -1034,7 +1034,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform using a dedicated MySQL database. The database and uploaded assets persist in volumes.",
           "logo": "/images/directus/mysql/logo.webp",
@@ -1070,7 +1070,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Directus data platform using the built-in SQLite database. The database file, uploaded assets and generated configuration persist in volumes.",
           "logo": "/images/directus/sqlite/logo.webp",
@@ -1379,7 +1379,7 @@ const data = {
               "message": "The first deployment can take several minutes while the site is initialized."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Complete ERPNext stack based on the official Frappe Docker setup, including MariaDB, Redis,\nfrontend, workers, scheduler, websocket and persistent sites.",
           "logo": "/images/erpnext/default/logo.webp",
@@ -2356,7 +2356,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homarr is a self-hosted home dashboard for organizing services, links and widgets. The default variant uses the built-in SQLite database, which is simple to back up and needs no companion service.",
           "logo": "/images/homarr/default/logo.webp",
@@ -2392,7 +2392,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Homarr is a self-hosted home dashboard for organizing services, links and widgets. This variant stores its application data in the included PostgreSQL service for installations that need an external relational database.",
           "logo": "/images/homarr/postgresql/logo.webp",
@@ -2621,7 +2621,7 @@ const data = {
               "link": "https://docs.immich.app/install/requirements/"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Immich is a self-hosted photo and video backup platform with mobile upload, search and library\nmanagement. This template includes the server, machine-learning worker, Redis-compatible cache and\nvector-enabled PostgreSQL database.",
           "logo": "/images/immich/default/logo.webp",
@@ -2663,7 +2663,7 @@ const data = {
               "link": "https://docs.immich.app/install/requirements/"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Immich is a self-hosted photo and video backup platform with mobile upload, search and library\nmanagement. This variant keeps the server, Redis-compatible cache and vector-enabled PostgreSQL\ndatabase, but omits the machine-learning service.",
           "logo": "/images/immich/no-machine-learning/logo.webp",
@@ -3101,7 +3101,7 @@ const data = {
               "message": "An authentication secret and model provider credentials are required before sharing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Langflow visual authoring environment for AI workflows with persistent projects and settings.",
           "logo": "/images/langflow/default/logo.webp",
@@ -3142,7 +3142,7 @@ const data = {
               "message": "An authentication secret and model provider credentials are required before sharing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Langflow visual AI workflow builder using PostgreSQL for flows, history and settings. The database and Langflow data persist in volumes.",
           "logo": "/images/langflow/postgresql/logo.webp",
@@ -3281,7 +3281,7 @@ const data = {
               "message": "Provider credentials and model configuration are required before exposing the endpoint."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "LiteLLM proxy for routing requests to OpenAI-compatible language-model providers. Provider\nconfiguration is stored in the materialized config.",
           "logo": "/images/litellm/default/logo.webp",
@@ -3324,7 +3324,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Matomo web analytics platform with persistent plugins, configuration and reports.",
           "logo": "/images/matomo/default/logo.webp",
@@ -3918,7 +3918,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a MariaDB database, Redis and a cron worker.",
           "logo": "/images/nextcloud/default/logo.webp",
@@ -3960,7 +3960,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a PostgreSQL database, Redis and a cron worker.",
           "logo": "/images/nextcloud/postgresql/logo.webp",
@@ -4397,7 +4397,7 @@ const data = {
               "message": "This variant requires a Linux host with a supported AMD GPU, ROCm and /dev/kfd and /dev/dri access."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using AMD GPU acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/amd-gpu/logo.webp",
@@ -4433,7 +4433,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server with persistent downloaded models.",
           "logo": "/images/ollama/default/logo.webp",
@@ -4474,7 +4474,7 @@ const data = {
               "message": "This variant requires an NVIDIA GPU, a compatible driver and NVIDIA Container Toolkit."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using NVIDIA GPU acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/nvidia-gpu/logo.webp",
@@ -4515,7 +4515,7 @@ const data = {
               "message": "This variant requires a Linux host with the required GPU devices available at /dev/kfd and /dev/dri."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Ollama local model server using Vulkan acceleration. Downloaded models persist in a volume.",
           "logo": "/images/ollama/vulkan/logo.webp",
@@ -4737,7 +4737,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Paperless-ngx turns scanned documents into an indexed online archive. This recommended deployment\nuses PostgreSQL for metadata, Valkey as the task broker and persistent data, media, export and\nconsume directories. The webserver is kept private to the stack and exposed through the generated\ndomain.",
           "logo": "/images/paperless-ngx/default/logo.webp",
@@ -4773,7 +4773,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This variant adds the official Gotenberg and Apache Tika services to Paperless-ngx. It keeps the\nPostgreSQL and Valkey foundation of the default deployment while enabling text extraction and PDF\nconversion for office documents and email attachments.",
           "logo": "/images/paperless-ngx/office-documents/logo.webp",
@@ -4814,7 +4814,7 @@ const data = {
               "message": "SQLite is intended for a personal archive; use the PostgreSQL variant for several users or high ingest concurrency."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "This lightweight Paperless-ngx variant keeps metadata in SQLite while retaining the documented\nValkey broker and persistent document directories. It is convenient for a personal archive; use\nthe PostgreSQL variant when several users or high ingest concurrency are expected.",
           "logo": "/images/paperless-ngx/sqlite/logo.webp",
@@ -6261,9 +6261,9 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template uses\nthe documented self-hosted layout: an API server, background worker, PostgreSQL database and Redis.\nFiles are stored on a persistent local volume and the application is exposed through the generated\ndomain.",
+          "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template uses\nthe documented self-hosted layout: an API server, background worker, PostgreSQL database and Redis.\nFiles are stored on a persistent local volume and the application is exposed through the generated\ndomain.\n\nAfter upgrading an existing instance to v2.51.0, run `docker compose exec twenty-server yarn command:prod upgrade:2-51:migrate-rich-text-to-tiptap` once to migrate stored rich-text records.",
           "logo": "/images/twenty/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "92c2cf517d42d510f92b0b4224846f577f89e34be988178e5e8c867e1ba4e38a";
+export const version = "9b9af22bec17442db52d545ce4163398cf20bdc6d48016abe72fd026320640c9";

@@ -1,6 +1,6 @@
 services:
   langflow:
-    image: langflowai/langflow:1.12.7@sha256:d2df4bb593c49ce385a3862d74278cf119bb9c7672ba69ee6e727530911a12f9
+    image: langflowai/langflow:1.13.0@sha256:ff2716e017f4a4bbb9e83556bf66c3d5d70a1d3eb7cffd893312600ba84e303f
     restart: unless-stopped
     depends_on:
       postgres:
@@ -17,7 +17,7 @@ services:
       - langflow-data:/app/data
 
   postgres:
-    image: postgres:16-trixie@sha256:ca0bd484cb98bf4b24eb1010e73fb3fcbd6714d240fbc1a10eea5b7dbecb641d
+    image: postgres:16-trixie@sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97
     restart: unless-stopped
     environment:
       POSTGRES_DB: langflow

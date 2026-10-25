@@ -61,18 +61,13 @@ bun run dev        # serves it on :3000
 ## Endpoints
 
 ```
-GET /status                 GET /templates?search=&category=&sort=&order=
+GET /status                 GET /templates?page=&limit=&search=&category=&sort=&order=
 GET /version                GET /templates/:templateSlug
-GET /categories?search=&sort=&order=  GET /categories/:slug
+                            GET /categories        GET /categories/:slug
                             GET /images/:templateSlug/:file
                             GET /images/:templateSlug/:variantSlug/:file
                             GET /files/:templateSlug/:variantSlug/:file
 ```
-
-`GET /templates` returns every matching template in `{ data: Template[] }`.
-Templates can be sorted by `name`, `createdAt` (oldest variant date), or
-`lastUpdated` (newest variant date); categories by `name` or `description`.
-`GET /categories` returns every matching category in `{ data: Category[] }`.
 
 Read-only. Rate limited per client: 120 JSON requests and 600 asset requests a
 minute. Behind a reverse proxy, set `TRUSTED_PROXY_HEADER` to the header it sets

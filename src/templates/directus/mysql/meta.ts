@@ -16,6 +16,6 @@ export default {
     website: "https://directus.io/",
     docs: ["https://docs.directus.io/self-hosted/quickstart.html"],
   },
-  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-25T00:00:00.000Z"),
   createdAt: new Date("2026-09-05T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
