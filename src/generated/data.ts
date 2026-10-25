@@ -3101,7 +3101,7 @@ const data = {
               "message": "An authentication secret and model provider credentials are required before sharing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Langflow visual authoring environment for AI workflows with persistent projects and settings.",
           "logo": "/images/langflow/default/logo.webp",
@@ -3142,7 +3142,7 @@ const data = {
               "message": "An authentication secret and model provider credentials are required before sharing the UI."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Langflow visual AI workflow builder using PostgreSQL for flows, history and settings. The database and Langflow data persist in volumes.",
           "logo": "/images/langflow/postgresql/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "3009d31362878d6051ab6685230e9bd1180eec2590f5cf67c344b1994146a3d6";
+export const version = "17d7006da680180b4b6c200fb925415a9e5be31e33364a7361ccdaa601d6ffe9";
