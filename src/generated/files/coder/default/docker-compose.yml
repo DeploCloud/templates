@@ -1,6 +1,6 @@
 services:
   coder:
-    image: ghcr.io/coder/coder:v2.37.5@sha256:8dbbe96893fb728ca38ae35f48d6e60abaf37df8d1ae695b3728f51c5c655fcd
+    image: ghcr.io/coder/coder:v2.37.6@sha256:b86d7c539bb9fad43dcf6f86131eb149b0d0a72ae5403762b36e2e00dc01f12b
     restart: unless-stopped
     expose:
       - 7080
@@ -15,7 +15,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   coder-db:
-    image: postgres:17@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3
+    image: postgres:17@sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe
     restart: unless-stopped
     environment:
       POSTGRES_DB: coder

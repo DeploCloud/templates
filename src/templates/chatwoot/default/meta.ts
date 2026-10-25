@@ -24,6 +24,6 @@ export default {
         "This stack needs at least 4 GB of RAM and should be served behind HTTPS before production use.",
     },
   ],
-  lastUpdate: new Date("2026-10-22T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-25T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;

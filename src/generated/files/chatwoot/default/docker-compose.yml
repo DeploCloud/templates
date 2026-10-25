@@ -1,6 +1,6 @@
 services:
   chatwoot:
-    image: chatwoot/chatwoot:v4.19.0@sha256:e91ca2f134aeed8dbb0ebc69a2ed640192516fbb7da2908a1c3d791498126d4b
+    image: chatwoot/chatwoot:v4.19.1@sha256:a0d571a3a2f78f4fa4b1d7c21a53309c0184068d6021b3664ab37788faef04c1
     restart: unless-stopped
     entrypoint: docker/entrypoints/rails.sh
     command:
@@ -31,7 +31,7 @@ services:
         condition: service_healthy
 
   chatwoot-worker:
-    image: chatwoot/chatwoot:v4.19.0@sha256:e91ca2f134aeed8dbb0ebc69a2ed640192516fbb7da2908a1c3d791498126d4b
+    image: chatwoot/chatwoot:v4.19.1@sha256:a0d571a3a2f78f4fa4b1d7c21a53309c0184068d6021b3664ab37788faef04c1
     restart: unless-stopped
     command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
@@ -69,7 +69,7 @@ services:
       retries: 20
 
   chatwoot-redis:
-    image: redis:alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
+    image: redis:alpine@sha256:0bf6577d7774e592b29d093e3ac9390eb91e13d72c21e506afce736de5e0eeb0
     restart: unless-stopped
     command: redis-server --requirepass ${REDIS_PASSWORD}
     environment:
