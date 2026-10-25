@@ -816,7 +816,7 @@ const data = {
               "message": "This stack needs at least 4 GB of RAM and should be served behind HTTPS before production use."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Chatwoot is an open-source customer communication platform for live chat, email and social\nchannels. This template follows the production Docker layout with separate Rails and Sidekiq\nprocesses, PostgreSQL with pgvector, Redis and persistent Active Storage.",
           "logo": "/images/chatwoot/default/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "8ed9fb89661604e84605639d0470c7c0f40c38714b1f76e9c85c07951a0660d7";
+export const version = "5f0fe07e2aaece1fd01aa4ea24c7aec4f6fef3cbd233eeb5478fd29ec599b576";
