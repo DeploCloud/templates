@@ -6261,9 +6261,9 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
-          "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template uses\nthe documented self-hosted layout: an API server, background worker, PostgreSQL database and Redis.\nFiles are stored on a persistent local volume and the application is exposed through the generated\ndomain.",
+          "description": "Twenty is an open-source CRM for managing companies, people and sales workflows. This template uses\nthe documented self-hosted layout: an API server, background worker, PostgreSQL database and Redis.\nFiles are stored on a persistent local volume and the application is exposed through the generated\ndomain.\n\nAfter upgrading an existing instance to v2.51.0, run `docker compose exec twenty-server yarn command:prod upgrade:2-51:migrate-rich-text-to-tiptap` once to migrate stored rich-text records.",
           "logo": "/images/twenty/default/logo.webp",
           "images": [],
           "slug": "default",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "55cc06307b865b6799f842f34825c7a7786ba459329529363561593e00688fb1";
+export const version = "9b9af22bec17442db52d545ce4163398cf20bdc6d48016abe72fd026320640c9";
