@@ -3324,7 +3324,7 @@ const data = {
             ]
           },
           "alerts": [],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Matomo web analytics platform with persistent plugins, configuration and reports.",
           "logo": "/images/matomo/default/logo.webp",
@@ -3918,7 +3918,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a MariaDB database, Redis and a cron worker.",
           "logo": "/images/nextcloud/default/logo.webp",
@@ -3960,7 +3960,7 @@ const data = {
               "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Nextcloud provides private file storage, synchronization and collaboration tools for teams and\npersonal data. This template includes the web app, a PostgreSQL database, Redis and a cron worker.",
           "logo": "/images/nextcloud/postgresql/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "92c2cf517d42d510f92b0b4224846f577f89e34be988178e5e8c867e1ba4e38a";
+export const version = "ce6984761028afeff4d917d0e42dbf7460219720521d5c907d4a2dadda98f2dc";
