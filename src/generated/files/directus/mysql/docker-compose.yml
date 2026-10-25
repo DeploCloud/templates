@@ -1,6 +1,6 @@
 services:
   directus:
-    image: directus/directus:12.5.0@sha256:7de5d6898b955dab1672619aed590035dcade4f8d7396d913e55543e114d1331
+    image: directus/directus:12.5.1@sha256:ef6fc027605ea659a972356e0c35fd7f88b02118b0b3a322dafbec3cc709fdab
     restart: unless-stopped
     depends_on:
       db:
@@ -19,7 +19,7 @@ services:
       - directus-uploads:/directus/uploads
 
   db:
-    image: mysql:8.4@sha256:24989179f58856db763f418010c1169fecc944e3ec1ea7e921572d83eb070f70
+    image: mysql:8.4@sha256:76f0358884cb92d9a086d24e5671c38048d3fef40f2588703d73eb55392d6b69
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: directus
