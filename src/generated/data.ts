@@ -2621,7 +2621,7 @@ const data = {
               "link": "https://docs.immich.app/install/requirements/"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-25T00:00:00.000Z"),
           "description": "Immich is a self-hosted photo and video backup platform with mobile upload, search and library\nmanagement. This template includes the server, machine-learning worker, Redis-compatible cache and\nvector-enabled PostgreSQL database.",
           "logo": "/images/immich/default/logo.webp",
@@ -2663,7 +2663,7 @@ const data = {
               "link": "https://docs.immich.app/install/requirements/"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-25T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "Immich is a self-hosted photo and video backup platform with mobile upload, search and library\nmanagement. This variant keeps the server, Redis-compatible cache and vector-enabled PostgreSQL\ndatabase, but omits the machine-learning service.",
           "logo": "/images/immich/no-machine-learning/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "ce6984761028afeff4d917d0e42dbf7460219720521d5c907d4a2dadda98f2dc";
+export const version = "d2c863b8293c9b8fe751f965ce37e0d68eda18ef80436067d18127806da1cfa1";
