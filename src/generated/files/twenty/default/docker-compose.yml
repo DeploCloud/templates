@@ -1,6 +1,6 @@
 services:
   twenty-server:
-    image: twentycrm/twenty:v2.50.1@sha256:6398458f42b760312aa59c4ade78cbaaa62063a0817e42cb21c66628fc310b3f
+    image: twentycrm/twenty:v2.51.0@sha256:91793759486e63768b28cc7bebe6c06d73f5a604cdb8cc7d7b54f862542714be
     restart: unless-stopped
     expose:
       - 3000
@@ -28,7 +28,7 @@ services:
       retries: 20
 
   twenty-worker:
-    image: twentycrm/twenty:v2.50.1@sha256:6398458f42b760312aa59c4ade78cbaaa62063a0817e42cb21c66628fc310b3f
+    image: twentycrm/twenty:v2.51.0@sha256:91793759486e63768b28cc7bebe6c06d73f5a604cdb8cc7d7b54f862542714be
     restart: unless-stopped
     command: ["yarn", "worker:prod"]
     environment:
@@ -51,7 +51,7 @@ services:
         condition: service_healthy
 
   twenty-db:
-    image: postgres:16@sha256:ca0bd484cb98bf4b24eb1010e73fb3fcbd6714d240fbc1a10eea5b7dbecb641d
+    image: postgres:16@sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97
     restart: unless-stopped
     environment:
       POSTGRES_USER: twenty
@@ -66,7 +66,7 @@ services:
       retries: 20
 
   twenty-redis:
-    image: redis:latest@sha256:2c2dff791878316e3b083188be0d578423b24813cdda5de0e80ea4f7b3e6bfd6
+    image: redis:8@sha256:97ec88159e6d7cfb5ddef9015386087d58a912de80112f06ebdfa78fa5989901
     restart: unless-stopped
     volumes:
       - twenty-redis:/data
