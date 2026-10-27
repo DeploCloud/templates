@@ -5208,7 +5208,7 @@ const data = {
             "github": "https://github.com/PostHog/posthog",
             "website": "https://posthog.com/",
             "docs": [
-              "https://posthog.com/docs/self-host/deploy/hobby"
+              "https://posthog.com/docs/self-host"
             ]
           },
           "alerts": [
@@ -5222,7 +5222,7 @@ const data = {
               "link": "https://github.com/PostHog/posthog/blob/74e8ce2ddab8f45058423fddf7c779582311120d/bin/migrate-storage-hobby"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-27T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "PostHog is a product analytics platform with event capture, feature flags, session replay and\nexperiments. This variant follows the official Hobby Docker deployment and bundles the supporting\ndatabases, queues and object storage in one stack.",
           "logo": "/images/posthog/default/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "b356ff12f29b366bfbd82b577099793cb38142d3225bb49f264601ebee7440b1";
+export const version = "f5cf9ca2427e727728ca249161ff0af589f6164c8edb51abe80eff7bb915112d";

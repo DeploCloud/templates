@@ -49,7 +49,7 @@ done
 
 [[config.mounts]]
 filePath = "livestream/configs.yml"
-content = '''
+content = """
 debug: false
 kafka:
     brokers: 'kafka:9092'
@@ -75,11 +75,11 @@ consumers:
         enabled: false
 mmdb:
     path: 'GeoLite2-City.mmdb'
-'''
+"""
 
 [[config.mounts]]
 filePath = "kafka/topics.txt"
-content = '''
+content = """
 clickhouse_ai_events_json
 clickhouse_app_metrics
 clickhouse_app_metrics2
@@ -124,11 +124,11 @@ ingestion-clientwarnings-main-1
 log_entries
 plugin_log_entries
 realtime_only_events_json
-'''
+"""
 
 [[config.mounts]]
 filePath = "temporal/dynamicconfig/development-sql.yaml"
-content = '''
+content = """
 limit.maxIDLength:
     - value: 255
       constraints: {}
@@ -138,4 +138,4 @@ system.forceSearchAttributesCacheRefreshOnRead:
 system.visibilityDisableOrderByClause:
     - value: false
       constraints: {}
-'''
+"""
