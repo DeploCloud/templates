@@ -8,7 +8,7 @@ gotrue_jwt_secret = "${hash:64}"
 [config]
 [[config.mounts]]
 filePath = "nginx.conf"
-content = '''
+content = """
 events {
     worker_connections 1024;
 }
@@ -272,7 +272,7 @@ http {
     }
 
 }
-'''
+"""
 
 [[config.domains]]
 serviceName = "appflowy-gateway"

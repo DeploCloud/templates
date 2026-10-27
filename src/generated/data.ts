@@ -372,10 +372,10 @@ const data = {
             },
             {
               "type": "warning",
-              "message": "The Appwrite runtime and router need host Docker socket access; enable Deplo host-volume permission."
+              "message": "The Appwrite runtime needs host Docker socket access; enable Deplo host-volume permission."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-27T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Appwrite's official self-hosted Compose stack with Traefik, the API, console, workers, PostgreSQL,\nMongoDB, Redis, ClickHouse and the function runtime. Application data and uploaded files persist in\nnamed volumes.",
           "logo": "/images/appwrite/default/logo.webp",
@@ -5208,7 +5208,7 @@ const data = {
             "github": "https://github.com/PostHog/posthog",
             "website": "https://posthog.com/",
             "docs": [
-              "https://posthog.com/docs/self-host/deploy/hobby"
+              "https://posthog.com/docs/self-host"
             ]
           },
           "alerts": [
@@ -5222,7 +5222,7 @@ const data = {
               "link": "https://github.com/PostHog/posthog/blob/74e8ce2ddab8f45058423fddf7c779582311120d/bin/migrate-storage-hobby"
             }
           ],
-          "lastUpdate": new Date("2026-10-20T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-27T00:00:00.000Z"),
           "createdAt": new Date("2026-08-29T00:00:00.000Z"),
           "description": "PostHog is a product analytics platform with event capture, feature flags, session replay and\nexperiments. This variant follows the official Hobby Docker deployment and bundles the supporting\ndatabases, queues and object storage in one stack.",
           "logo": "/images/posthog/default/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "9b9af22bec17442db52d545ce4163398cf20bdc6d48016abe72fd026320640c9";
+export const version = "f5cf9ca2427e727728ca249161ff0af589f6164c8edb51abe80eff7bb915112d";
