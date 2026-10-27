@@ -31,4 +31,14 @@ Where a feature has a docs page, one link replaces the explanation:
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
 `type(scope): imperative lowercase summary`. **Title 50 characters or fewer, no trailing period.**
 Body only when the why does not fit the title, 2-3 lines at most. Commit straight to `main`; never
-create a branch. A new template is `feat(templates): add <name>`.
+create a branch.
+
+- For a single template, use `type(templates/<slug>): <summary>`, including additions and fixes.
+- Use `type(templates): <summary>` only for catalog-wide or multiple-template changes.
+- Template version and image updates always use exactly:
+  `chore(templates/<slug>): bump <old> to <new>`.
+- Name the concrete change in the title, such as `move routes to file` or `pin image digest`.
+  Avoid vague outcomes such as `restore template deployment`, `fix template` or `update template`.
+- Keep the source and regenerated catalog files in the same commit.
+
+Examples: `fix(templates/appwrite): move routes to file` and `feat(templates/memos): add template`.
