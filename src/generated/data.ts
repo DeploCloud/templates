@@ -372,10 +372,10 @@ const data = {
             },
             {
               "type": "warning",
-              "message": "The Appwrite runtime and router need host Docker socket access; enable Deplo host-volume permission."
+              "message": "The Appwrite runtime needs host Docker socket access; enable Deplo host-volume permission."
             }
           ],
-          "lastUpdate": new Date("2026-10-22T00:00:00.000Z"),
+          "lastUpdate": new Date("2026-10-27T00:00:00.000Z"),
           "createdAt": new Date("2026-09-05T00:00:00.000Z"),
           "description": "Appwrite's official self-hosted Compose stack with Traefik, the API, console, workers, PostgreSQL,\nMongoDB, Redis, ClickHouse and the function runtime. Application data and uploaded files persist in\nnamed volumes.",
           "logo": "/images/appwrite/default/logo.webp",
@@ -6743,4 +6743,4 @@ const data = {
 
 export const categories: readonly Category[] = data.categories;
 export const templates: readonly Template[] = data.templates;
-export const version = "983fb2cccd874cfaf2c46bfc07aad71c176b2f113261aed8d4917250d7c0a917";
+export const version = "b356ff12f29b366bfbd82b577099793cb38142d3225bb49f264601ebee7440b1";
