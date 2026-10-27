@@ -388,3 +388,71 @@ content = '''
     <error_log><ttl>event_date + INTERVAL 14 DAY DELETE</ttl></error_log>
 </clickhouse>
 '''
+
+[[config.mounts]]
+filePath = "traefik-routes.yml"
+content = """
+http:
+  routers:
+    appwrite_api_http:
+      entryPoints: [appwrite_web]
+      rule: 'PathPrefix(`/`)'
+      service: appwrite_api
+    appwrite_api_https:
+      entryPoints: [appwrite_websecure]
+      rule: 'PathPrefix(`/`)'
+      service: appwrite_api
+      tls: {}
+    appwrite_console_http:
+      entryPoints: [appwrite_web]
+      rule: '(Host(`{{ env "_APP_DOMAIN" }}`) || Host(`{{ env "_APP_CONSOLE_DOMAIN" }}`)) && !PathPrefix(`/v1`) && !PathPrefix(`/.well-known`) && !HeaderRegexp(`x-appwrite-hostname`, `.+`)'
+      service: appwrite_console
+    appwrite_console_https:
+      entryPoints: [appwrite_websecure]
+      rule: '(Host(`{{ env "_APP_DOMAIN" }}`) || Host(`{{ env "_APP_CONSOLE_DOMAIN" }}`)) && !PathPrefix(`/v1`) && !PathPrefix(`/.well-known`) && !HeaderRegexp(`x-appwrite-hostname`, `.+`)'
+      service: appwrite_console
+      tls: {}
+    appwrite_realtime_ws:
+      entryPoints: [appwrite_web]
+      rule: 'PathPrefix(`/v1/realtime`)'
+      service: appwrite_realtime
+    appwrite_realtime_wss:
+      entryPoints: [appwrite_websecure]
+      rule: 'PathPrefix(`/v1/realtime`)'
+      service: appwrite_realtime
+      tls: {}
+    appwrite_mqtt_ws:
+      entryPoints: [appwrite_mqtt_ws]
+      rule: 'PathPrefix(`/`)'
+      service: appwrite_mqtt_ws
+      tls: {}
+  services:
+    appwrite_api:
+      loadBalancer:
+        servers:
+          - url: http://appwrite:80
+    appwrite_console:
+      loadBalancer:
+        servers:
+          - url: http://appwrite-console:3000
+    appwrite_realtime:
+      loadBalancer:
+        servers:
+          - url: http://appwrite-realtime:80
+    appwrite_mqtt_ws:
+      loadBalancer:
+        servers:
+          - url: http://appwrite-mqtt:8083
+tcp:
+  routers:
+    appwrite_mqtt:
+      entryPoints: [appwrite_mqtt]
+      rule: 'HostSNI(`*`)'
+      service: appwrite_mqtt
+      tls: {}
+  services:
+    appwrite_mqtt:
+      loadBalancer:
+        servers:
+          - address: appwrite-mqtt:1883
+"""

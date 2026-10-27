@@ -15,9 +15,6 @@ services:
     command:
       - "--providers.file.directory=/storage/config"
       - "--providers.file.watch=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedByDefault=false"
-      - "--providers.docker.constraints=Label(`traefik.constraint-label-stack`,`appwrite`)"
       - "--entrypoints.appwrite_web.address=:80"
       - "--entrypoints.appwrite_websecure.address=:443"
       - "--entrypoints.appwrite_mqtt.address=:8883"
@@ -28,9 +25,12 @@ services:
       - "8883"
       - "8084"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - appwrite-config:/storage/config:ro
+      - ./traefik-routes.yml:/storage/config/deplo-routes.yml:ro
       - appwrite-certificates:/storage/certificates:ro
+    environment:
+      - _APP_DOMAIN=${_APP_DOMAIN:-localhost}
+      - _APP_CONSOLE_DOMAIN=${_APP_CONSOLE_DOMAIN:-localhost}
     depends_on:
       - appwrite
     networks:
@@ -53,18 +53,6 @@ services:
       start_period: 120s
     networks:
       - appwrite
-    labels:
-      - traefik.enable=true
-      - traefik.constraint-label-stack=appwrite
-      - traefik.docker.network=appwrite
-      - traefik.http.services.appwrite_api.loadbalancer.server.port=80
-      - traefik.http.routers.appwrite_api_http.entrypoints=appwrite_web
-      - traefik.http.routers.appwrite_api_http.rule=PathPrefix(`/`)
-      - traefik.http.routers.appwrite_api_http.service=appwrite_api
-      - traefik.http.routers.appwrite_api_https.entrypoints=appwrite_websecure
-      - traefik.http.routers.appwrite_api_https.rule=PathPrefix(`/`)
-      - traefik.http.routers.appwrite_api_https.service=appwrite_api
-      - traefik.http.routers.appwrite_api_https.tls=true
     volumes:
       - appwrite-uploads:/storage/uploads:rw
       - appwrite-imports:/storage/imports:rw
@@ -284,18 +272,6 @@ services:
       - VITE_CONSOLE_PROFILE=self-hosted
       - "VITE_APPWRITE_VERSION=${_APP_VERSION:-}"
       - APPWRITE_ENDPOINT_SAME_ORIGIN=true
-    labels:
-      - traefik.enable=true
-      - traefik.constraint-label-stack=appwrite
-      - traefik.docker.network=appwrite
-      - traefik.http.services.appwrite_console.loadbalancer.server.port=3000
-      - traefik.http.routers.appwrite_console_http.entrypoints=appwrite_web
-      - traefik.http.routers.appwrite_console_http.rule=(Host(`${_APP_DOMAIN:-localhost}`) || Host(`${_APP_CONSOLE_DOMAIN:-localhost}`)) && !PathPrefix(`/v1`) && !PathPrefix(`/.well-known`) && !HeaderRegexp(`x-appwrite-hostname`, `.+`)
-      - traefik.http.routers.appwrite_console_http.service=appwrite_console
-      - traefik.http.routers.appwrite_console_https.entrypoints=appwrite_websecure
-      - traefik.http.routers.appwrite_console_https.rule=(Host(`${_APP_DOMAIN:-localhost}`) || Host(`${_APP_CONSOLE_DOMAIN:-localhost}`)) && !PathPrefix(`/v1`) && !PathPrefix(`/.well-known`) && !HeaderRegexp(`x-appwrite-hostname`, `.+`)
-      - traefik.http.routers.appwrite_console_https.service=appwrite_console
-      - traefik.http.routers.appwrite_console_https.tls=true
   appwrite-realtime:
     entrypoint: realtime
     logging:
@@ -305,18 +281,6 @@ services:
         max-size: 10m
     image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     restart: unless-stopped
-    labels:
-      - traefik.enable=true
-      - traefik.constraint-label-stack=appwrite
-      - traefik.docker.network=appwrite
-      - traefik.http.services.appwrite_realtime.loadbalancer.server.port=80
-      - traefik.http.routers.appwrite_realtime_ws.entrypoints=appwrite_web
-      - traefik.http.routers.appwrite_realtime_ws.rule=PathPrefix(`/v1/realtime`)
-      - traefik.http.routers.appwrite_realtime_ws.service=appwrite_realtime
-      - traefik.http.routers.appwrite_realtime_wss.entrypoints=appwrite_websecure
-      - traefik.http.routers.appwrite_realtime_wss.rule=PathPrefix(`/v1/realtime`)
-      - traefik.http.routers.appwrite_realtime_wss.service=appwrite_realtime
-      - traefik.http.routers.appwrite_realtime_wss.tls=true
     networks:
       - appwrite
     depends_on:
@@ -1843,20 +1807,6 @@ services:
       timeout: 5s
       retries: 20
       start_period: 20s
-    labels:
-      - traefik.enable=true
-      - traefik.constraint-label-stack=appwrite
-      - traefik.docker.network=appwrite
-      - traefik.tcp.routers.appwrite_mqtt.entrypoints=appwrite_mqtt
-      - "traefik.tcp.routers.appwrite_mqtt.rule=HostSNI(`*`)"
-      - traefik.tcp.routers.appwrite_mqtt.tls=true
-      - traefik.tcp.routers.appwrite_mqtt.service=appwrite_mqtt
-      - traefik.tcp.services.appwrite_mqtt.loadbalancer.server.port=1883
-      - traefik.http.routers.appwrite_mqtt_ws.entrypoints=appwrite_mqtt_ws
-      - "traefik.http.routers.appwrite_mqtt_ws.rule=PathPrefix(`/`)"
-      - traefik.http.routers.appwrite_mqtt_ws.service=appwrite_mqtt_ws
-      - traefik.http.routers.appwrite_mqtt_ws.tls=true
-      - traefik.http.services.appwrite_mqtt_ws.loadbalancer.server.port=8083
     networks:
       - appwrite
     environment:
@@ -1890,6 +1840,7 @@ services:
       - _APP_MQTT_MAX_PACKET_SIZE
 
   appwrite-worker-stats-usage:
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     profiles:
       - separate
     extends:
@@ -1897,6 +1848,7 @@ services:
     entrypoint: worker-stats-usage
 
   appwrite-worker-stats-resources:
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     profiles:
       - separate
     extends:
@@ -1904,6 +1856,7 @@ services:
     entrypoint: worker-stats-resources
 
   appwrite-task-stats-resources:
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     profiles:
       - separate
     extends:
@@ -1924,6 +1877,7 @@ services:
       - appwrite
 
   appwrite-task-scheduler-maintenance:
+    image: appwrite/appwrite:2.6.1@sha256:1e8dda54b5908874a95d49044f41603de4c4933b8b21ee7de09126f7af56f904
     profiles:
       - separate
     extends:

@@ -6,6 +6,13 @@ services:
       - 80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - nginx -t && wget -q -O /dev/null http://127.0.0.1:8080/stub_status
+      interval: 5s
+      timeout: 5s
+      retries: 12
     depends_on:
       - appflowy-web
       - appflowy-cloud
@@ -192,6 +199,8 @@ services:
       APPFLOWY_KEYWORD_INDEX_MAP_SIZE_BYTES: "${APPFLOWY_KEYWORD_INDEX_MAP_SIZE_BYTES:-2147483648}"
       APPFLOWY_S3_BUCKET: "${APPFLOWY_S3_BUCKET}"
     depends_on:
+      appflowy-cloud:
+        condition: service_healthy
       postgres:
         condition: service_healthy
       minio:

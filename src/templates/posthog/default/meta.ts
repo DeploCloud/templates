@@ -15,7 +15,7 @@ export default {
   links: {
     github: "https://github.com/PostHog/posthog",
     website: "https://posthog.com/",
-    docs: ["https://posthog.com/docs/self-host/deploy/hobby"],
+    docs: ["https://posthog.com/docs/self-host"],
   },
   alerts: [
     {
@@ -30,6 +30,6 @@ export default {
       link: "https://github.com/PostHog/posthog/blob/74e8ce2ddab8f45058423fddf7c779582311120d/bin/migrate-storage-hobby",
     },
   ],
-  lastUpdate: new Date("2026-10-20T00:00:00.000Z"),
+  lastUpdate: new Date("2026-10-27T00:00:00.000Z"),
   createdAt: new Date("2026-08-29T00:00:00.000Z"),
 } satisfies TemplateVariantRaw;
