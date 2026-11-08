@@ -1,0 +1,16 @@
+{
+  "name": "MySQL",
+  "shortDescription": "Directus with MySQL persistence and persistent uploads.",
+  "category": "development",
+  "developedBy": {
+    "label": "Directus",
+    "url": "https://directus.io/"
+  },
+  "links": {
+    "github": "https://github.com/directus/directus",
+    "website": "https://directus.io/",
+    "docs": [
+      "https://docs.directus.io/self-hosted/quickstart.html"
+    ]
+  }
+}

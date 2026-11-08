@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Complete ERPNext stack with database, Redis and automatic setup.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ERPNext",
+    "url": "https://erpnext.com/"
+  },
+  "links": {
+    "github": "https://github.com/frappe/erpnext",
+    "website": "https://erpnext.com/",
+    "docs": [
+      "https://docs.frappe.io/erpnext/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first deployment can take several minutes while the site is initialized."
+    }
+  ]
+}

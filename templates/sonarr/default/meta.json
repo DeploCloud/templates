@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Series management and download automation with persistent configuration.",
+  "category": "media",
+  "developedBy": {
+    "label": "Sonarr",
+    "url": "https://sonarr.tv/"
+  },
+  "links": {
+    "github": "https://github.com/Sonarr/Sonarr",
+    "website": "https://sonarr.tv/",
+    "docs": [
+      "https://wiki.servarr.com/sonarr"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted photo manager that automatically tags, organizes and searches your library.",
+  "category": "media",
+  "developedBy": {
+    "label": "PhotoPrism",
+    "url": "https://github.com/photoprism"
+  },
+  "links": {
+    "github": "https://github.com/photoprism/photoprism",
+    "website": "https://www.photoprism.app/",
+    "docs": [
+      "https://docs.photoprism.app/getting-started/docker-compose/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Allow at least 4 GB of swap for indexing larger libraries and change the generated administrator password."
+    }
+  ]
+}

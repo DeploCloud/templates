@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Ghost publishing platform with MySQL, persistent content and HTTPS public URLs.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Ghost",
+    "url": "https://github.com/TryGhost"
+  },
+  "links": {
+    "github": "https://github.com/TryGhost/Ghost",
+    "website": "https://ghost.org/",
+    "docs": [
+      "https://ghost.org/docs/config/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "The configured production URL must be served securely; enable HTTPS for the generated domain.",
+      "link": "https://ghost.org/docs/config/"
+    },
+    {
+      "type": "warning",
+      "message": "Change the initial administrator password after setup."
+    }
+  ]
+}

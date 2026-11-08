@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative security engine with persistent decisions and configuration.",
+  "category": "security",
+  "developedBy": {
+    "label": "CrowdSec",
+    "url": "https://www.crowdsec.net/"
+  },
+  "links": {
+    "github": "https://github.com/crowdsecurity/crowdsec",
+    "website": "https://www.crowdsec.net/",
+    "docs": [
+      "https://docs.crowdsec.net/"
+    ]
+  }
+}

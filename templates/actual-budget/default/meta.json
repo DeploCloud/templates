@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Private budgeting server with a persistent data directory and HTTPS access.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Actual Budget",
+    "url": "https://actualbudget.org/"
+  },
+  "links": {
+    "github": "https://github.com/actualbudget/actual",
+    "website": "https://actualbudget.org/",
+    "docs": [
+      "https://actualbudget.org/docs/install/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the generated HTTP URL will not work in supported browsers.",
+      "link": "https://actualbudget.org/docs/troubleshooting/shared-array-buffer/"
+    }
+  ]
+}

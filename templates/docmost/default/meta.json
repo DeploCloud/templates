@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative wiki with persistent attachments and PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Docmost",
+    "url": "https://docmost.com/"
+  },
+  "links": {
+    "github": "https://github.com/docmost/docmost",
+    "website": "https://docmost.com/",
+    "docs": [
+      "https://docmost.com/docs/"
+    ]
+  }
+}

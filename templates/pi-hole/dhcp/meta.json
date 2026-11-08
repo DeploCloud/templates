@@ -1,0 +1,22 @@
+{
+  "name": "DHCP",
+  "shortDescription": "Pi-hole DNS filtering with the optional DHCP server port and required network capability.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Pi-hole",
+    "url": "https://github.com/pi-hole"
+  },
+  "links": {
+    "github": "https://github.com/pi-hole/docker-pi-hole",
+    "website": "https://pi-hole.net/",
+    "docs": [
+      "https://docs.pi-hole.net/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "TCP and UDP port 53 and UDP port 67 must be free on the host."
+    }
+  ]
+}

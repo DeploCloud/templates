@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node distributed file and object store using the official mini mode with a protected S3 API.",
+  "category": "storage",
+  "developedBy": {
+    "label": "SeaweedFS",
+    "url": "https://github.com/seaweedfs"
+  },
+  "links": {
+    "github": "https://github.com/seaweedfs/seaweedfs",
+    "website": "https://seaweedfs.com/",
+    "docs": [
+      "https://github.com/seaweedfs/seaweedfs/wiki"
+    ]
+  }
+}

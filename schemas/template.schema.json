@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Template metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "description": "Display name of the template family. Its slug is derived from this name."
+    }
+  }
+}

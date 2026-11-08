@@ -1,0 +1,16 @@
+{
+  "name": "SQLite",
+  "shortDescription": "PhotoPrism with its built-in SQLite database and persistent photo storage.",
+  "category": "media",
+  "developedBy": {
+    "label": "PhotoPrism",
+    "url": "https://github.com/photoprism"
+  },
+  "links": {
+    "github": "https://github.com/photoprism/photoprism",
+    "website": "https://www.photoprism.app/",
+    "docs": [
+      "https://docs.photoprism.app/getting-started/docker-compose/"
+    ]
+  }
+}

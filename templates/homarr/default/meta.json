@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted home dashboard for organizing services, links and widgets with a zero-setup SQLite database.",
+  "category": "other",
+  "developedBy": {
+    "label": "Homarr",
+    "url": "https://github.com/homarr-labs"
+  },
+  "links": {
+    "github": "https://github.com/homarr-labs/homarr",
+    "website": "https://homarr.dev/",
+    "docs": [
+      "https://homarr.dev/docs/getting-started/installation/docker/"
+    ]
+  }
+}

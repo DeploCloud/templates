@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source business intelligence dashboard backed by PostgreSQL for durable application data.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Metabase",
+    "url": "https://github.com/metabase"
+  },
+  "links": {
+    "github": "https://github.com/metabase/metabase",
+    "website": "https://www.metabase.com/",
+    "docs": [
+      "https://www.metabase.com/docs/latest/"
+    ]
+  }
+}

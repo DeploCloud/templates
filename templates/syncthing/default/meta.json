@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Peer-to-peer file synchronization with a persistent configuration and sync directory.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Syncthing",
+    "url": "https://github.com/syncthing"
+  },
+  "links": {
+    "github": "https://github.com/syncthing/syncthing",
+    "website": "https://syncthing.net/",
+    "docs": [
+      "https://docs.syncthing.net/users/faq.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Direct synchronization needs Syncthing's standard TCP and UDP discovery ports available on the server."
+    }
+  ]
+}

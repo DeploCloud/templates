@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative bookmark manager with persistent links and archives.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Linkwarden",
+    "url": "https://linkwarden.app/"
+  },
+  "links": {
+    "github": "https://github.com/linkwarden/linkwarden",
+    "website": "https://linkwarden.app/",
+    "docs": [
+      "https://docs.linkwarden.app/"
+    ]
+  }
+}

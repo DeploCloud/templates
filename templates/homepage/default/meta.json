@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Customizable self-hosted dashboard for links, bookmarks, service status and widgets without host access.",
+  "category": "other",
+  "developedBy": {
+    "label": "Homepage",
+    "url": "https://github.com/gethomepage"
+  },
+  "links": {
+    "github": "https://github.com/gethomepage/homepage",
+    "website": "https://gethomepage.dev/",
+    "docs": [
+      "https://gethomepage.dev/installation/"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Jenkins automation server with persistent jobs and plugins.",
+  "category": "development",
+  "developedBy": {
+    "label": "Jenkins",
+    "url": "https://www.jenkins.io/"
+  },
+  "links": {
+    "github": "https://github.com/jenkinsci/jenkins",
+    "website": "https://www.jenkins.io/",
+    "docs": [
+      "https://www.jenkins.io/doc/book/installing/docker/"
+    ]
+  }
+}

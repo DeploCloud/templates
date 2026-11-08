@@ -1,0 +1,22 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Joplin note synchronization server backed by a persistent PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Joplin",
+    "url": "https://github.com/laurent22"
+  },
+  "links": {
+    "github": "https://github.com/laurent22/joplin",
+    "website": "https://joplinapp.org/",
+    "docs": [
+      "https://github.com/laurent22/joplin/blob/dev/packages/server/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Use a separate non-admin sync user for synchronization."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "With Metrics",
+  "shortDescription": "Docker image update notifier with a Prometheus-compatible metrics endpoint.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Diun",
+    "url": "https://github.com/crazy-max"
+  },
+  "links": {
+    "github": "https://github.com/crazy-max/diun",
+    "website": "https://crazymax.dev/diun/",
+    "docs": [
+      "https://crazymax.dev/diun/"
+    ]
+  }
+}

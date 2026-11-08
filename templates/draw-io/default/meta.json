@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based diagramming and whiteboarding tool for flowcharts, maps and wireframes.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "draw.io",
+    "url": "https://github.com/jgraph"
+  },
+  "links": {
+    "github": "https://github.com/jgraph/drawio",
+    "website": "https://www.drawio.com/",
+    "docs": [
+      "https://www.drawio.com/doc/"
+    ]
+  }
+}

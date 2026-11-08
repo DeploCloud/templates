@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Supabase Studio interface for a self-hosted Supabase stack.",
+  "category": "development",
+  "developedBy": {
+    "label": "Supabase",
+    "url": "https://supabase.com/"
+  },
+  "links": {
+    "github": "https://github.com/supabase/supabase",
+    "website": "https://supabase.com/",
+    "docs": [
+      "https://supabase.com/docs/guides/self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The stack needs at least 4 GB RAM; database ports 5432 and 6543 are published on the host."
+    }
+  ]
+}

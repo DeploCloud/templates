@@ -1,6 +1,0 @@
-[config]
-
-[[config.domains]]
-serviceName = "netdata"
-port = 19999
-host = "${domain}"

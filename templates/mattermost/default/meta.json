@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Team collaboration server with persistent files and PostgreSQL.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Mattermost",
+    "url": "https://mattermost.com/"
+  },
+  "links": {
+    "github": "https://github.com/mattermost/mattermost",
+    "website": "https://mattermost.com/",
+    "docs": [
+      "https://docs.mattermost.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Email notifications require an SMTP provider."
+    }
+  ]
+}

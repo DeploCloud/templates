@@ -1,0 +1,22 @@
+{
+  "name": "Docker Discovery",
+  "shortDescription": "Homepage dashboard with read-only Docker container discovery through a restricted socket proxy.",
+  "category": "other",
+  "developedBy": {
+    "label": "Homepage",
+    "url": "https://github.com/gethomepage"
+  },
+  "links": {
+    "github": "https://github.com/gethomepage/homepage",
+    "website": "https://gethomepage.dev/",
+    "docs": [
+      "https://gethomepage.dev/configs/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This variant requires read-only host Docker socket access through a restricted proxy; enable Deplo host-volume permission."
+    }
+  ]
+}

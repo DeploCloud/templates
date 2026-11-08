@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Web file manager for uploading, editing, previewing and sharing files from a private workspace.",
+  "category": "storage",
+  "developedBy": {
+    "label": "File Browser",
+    "url": "https://github.com/filebrowser"
+  },
+  "links": {
+    "github": "https://github.com/filebrowser/filebrowser",
+    "website": "https://filebrowser.org/",
+    "docs": [
+      "https://filebrowser.org/installation"
+    ]
+  }
+}

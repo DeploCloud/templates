@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "WireGuard management UI with persistent peer configuration.",
+  "category": "networking",
+  "developedBy": {
+    "label": "WG-Easy",
+    "url": "https://wg-easy.github.io/wg-easy/"
+  },
+  "links": {
+    "github": "https://github.com/wg-easy/wg-easy",
+    "website": "https://wg-easy.github.io/wg-easy/",
+    "docs": [
+      "https://wg-easy.github.io/wg-easy/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "The host must provide WireGuard kernel support and the required network capabilities."
+    },
+    {
+      "type": "warning",
+      "message": "Set and change the admin password before exposing the UI."
+    }
+  ]
+}

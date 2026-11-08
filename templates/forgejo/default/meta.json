@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Community-driven self-hosted Git forge with repositories, issues, pull requests and SQLite storage.",
+  "category": "development",
+  "developedBy": {
+    "label": "Forgejo",
+    "url": "https://codeberg.org/forgejo"
+  },
+  "links": {
+    "github": "https://codeberg.org/forgejo/forgejo",
+    "website": "https://forgejo.org/",
+    "docs": [
+      "https://forgejo.org/docs/latest/admin/installation/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
+    }
+  ]
+}

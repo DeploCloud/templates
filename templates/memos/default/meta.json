@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight Markdown note-taking and knowledge base for private or shared memos.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Memos",
+    "url": "https://github.com/usememos"
+  },
+  "links": {
+    "github": "https://github.com/usememos/memos",
+    "website": "https://usememos.com/",
+    "docs": [
+      "https://usememos.com/docs/deploy/docker"
+    ]
+  }
+}

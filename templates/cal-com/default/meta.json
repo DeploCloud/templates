@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Scheduling application with persistent PostgreSQL data.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Cal.com",
+    "url": "https://cal.com/"
+  },
+  "links": {
+    "github": "https://github.com/calcom/cal.com",
+    "website": "https://cal.com/",
+    "docs": [
+      "https://cal.com/docs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Email delivery requires an SMTP provider."
+    }
+  ]
+}

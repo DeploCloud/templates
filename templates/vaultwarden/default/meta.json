@@ -1,0 +1,21 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted password manager server with persistent encrypted vault data.",
+  "category": "security",
+  "developedBy": {
+    "label": "Vaultwarden",
+    "url": "https://github.com/dani-garcia"
+  },
+  "links": {
+    "github": "https://github.com/dani-garcia/vaultwarden",
+    "docs": [
+      "https://github.com/dani-garcia/vaultwarden/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required before connecting password-manager clients; use the generated secure domain."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Standalone",
+  "shortDescription": "Uptime Kuma monitoring without Docker socket access for a smaller privilege surface.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Uptime Kuma",
+    "url": "https://github.com/louislam"
+  },
+  "links": {
+    "github": "https://github.com/louislam/uptime-kuma",
+    "website": "https://uptime.kuma.pet/",
+    "docs": [
+      "https://github.com/louislam/uptime-kuma/wiki"
+    ]
+  }
+}

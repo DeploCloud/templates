@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal RSS reader with persistent feeds and configuration.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "FreshRSS",
+    "url": "https://freshrss.org/"
+  },
+  "links": {
+    "github": "https://github.com/FreshRSS/FreshRSS",
+    "website": "https://freshrss.org/",
+    "docs": [
+      "https://freshrss.github.io/FreshRSS/en/"
+    ]
+  }
+}

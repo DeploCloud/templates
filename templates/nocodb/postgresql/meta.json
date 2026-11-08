@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "NocoDB with bundled PostgreSQL, Redis and a persistent background worker.",
+  "category": "database",
+  "developedBy": {
+    "label": "NocoDB",
+    "url": "https://github.com/nocodb"
+  },
+  "links": {
+    "github": "https://github.com/nocodb/nocodb",
+    "website": "https://www.nocodb.com/",
+    "docs": [
+      "https://www.nocodb.com/docs/self-hosting/installation/quickstart"
+    ]
+  }
+}

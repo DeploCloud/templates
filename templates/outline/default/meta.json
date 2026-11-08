@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Team knowledge base and wiki with fast search, Markdown editing and shared documentation.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Outline",
+    "url": "https://github.com/outline"
+  },
+  "links": {
+    "github": "https://github.com/outline/outline",
+    "website": "https://www.getoutline.com/",
+    "docs": [
+      "https://docs.getoutline.com/s/hosting/doc/docker-7pfeLP5a8t"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Configure an external SMTP provider and replace the initial identity-provider password before using a public workspace."
+    }
+  ]
+}

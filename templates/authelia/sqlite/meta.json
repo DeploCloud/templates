@@ -1,0 +1,22 @@
+{
+  "name": "SQLite",
+  "shortDescription": "Authelia using sqlite storage with Redis-backed sessions.",
+  "category": "security",
+  "developedBy": {
+    "label": "Authelia",
+    "url": "https://github.com/authelia"
+  },
+  "links": {
+    "github": "https://github.com/authelia/authelia",
+    "website": "https://www.authelia.com/",
+    "docs": [
+      "https://www.authelia.com/integration/deployment/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Replace the seeded administrator password before protecting production apps."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Cloudflare Tunnel connector for publishing private services.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Cloudflared",
+    "url": "https://www.cloudflare.com/products/tunnel/"
+  },
+  "links": {
+    "github": "https://github.com/cloudflare/cloudflared",
+    "website": "https://www.cloudflare.com/products/tunnel/",
+    "docs": [
+      "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "Create the tunnel first and set a non-empty TUNNEL_TOKEN before starting the connector."
+    }
+  ]
+}

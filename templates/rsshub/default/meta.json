@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Feed generator for creating RSS feeds from supported services.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "RSSHub",
+    "url": "https://docs.rsshub.app/"
+  },
+  "links": {
+    "github": "https://github.com/DIYgod/RSSHub",
+    "website": "https://docs.rsshub.app/",
+    "docs": [
+      "https://docs.rsshub.app/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Individual routes may require external APIs, credentials or anti-bot configuration."
+    }
+  ]
+}

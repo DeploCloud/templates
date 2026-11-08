@@ -1,6 +1,0 @@
-[config]
-
-[[config.domains]]
-serviceName = "beszel"
-port = 8090
-host = "${domain}"

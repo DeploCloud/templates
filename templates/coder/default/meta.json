@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted cloud development environment for remote workspaces on your infrastructure.",
+  "category": "development",
+  "developedBy": {
+    "label": "Coder",
+    "url": "https://github.com/coder"
+  },
+  "links": {
+    "github": "https://github.com/coder/coder",
+    "website": "https://coder.com/",
+    "docs": [
+      "https://coder.com/docs/install/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "Docker-based workspaces require a Linux host and host Docker socket access."
+    }
+  ]
+}

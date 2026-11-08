@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Template variant metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "shortDescription",
+    "category",
+    "developedBy",
+    "links"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80,
+      "pattern": "^\\S(?:[\\s\\S]*\\S)?$",
+      "description": "Variant display name. Every family must have a variant named Default."
+    },
+    "shortDescription": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 240,
+      "pattern": "^\\S[\\s\\S]*\\S$",
+      "description": "Short description of what this variant deploys."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "database",
+        "ai",
+        "monitoring",
+        "analytics",
+        "media",
+        "communication",
+        "email",
+        "cms",
+        "productivity",
+        "automation",
+        "development",
+        "security",
+        "storage",
+        "networking",
+        "finance",
+        "other"
+      ],
+      "description": "Template category. Choose one of the allowed values."
+    },
+    "developedBy": {
+      "$ref": "#/definitions/link",
+      "description": "Original software developer."
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "github": {
+          "$ref": "#/definitions/httpsUrl"
+        },
+        "website": {
+          "$ref": "#/definitions/httpsUrl"
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/httpsUrl"
+          }
+        }
+      }
+    },
+    "alerts": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "message"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "info",
+              "warning",
+              "destructive"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "link": {
+            "$ref": "#/definitions/httpsUrl"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "httpsUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "maxLength": 2048
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "url"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80,
+          "pattern": "^\\S(?:[\\s\\S]*\\S)?$"
+        },
+        "url": {
+          "$ref": "#/definitions/httpsUrl"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-friendly self-hosted web analytics with a lightweight dashboard.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Plausible",
+    "url": "https://github.com/plausible"
+  },
+  "links": {
+    "github": "https://github.com/plausible/plausible",
+    "website": "https://plausible.io/",
+    "docs": [
+      "https://plausible.io/docs"
+    ]
+  }
+}

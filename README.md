@@ -1,18 +1,17 @@
-# templates
+# Templates
 
-The one-click template catalog Deplo deploys from. Deplo reads it over HTTP, so
-a new template goes live without a Deplo release.
+Template definitions, metadata and assets for Deplo.
 
 ## Adding a template
 
 Each template owns only its name. Every deployable variant owns its metadata and assets:
 
 ```text
-src/templates/<template>/
-├── meta.ts
+templates/<template>/
+├── meta.json
 ├── logo.png                  # optional template logo/fallback
 └── <variant>/
-    ├── meta.ts
+    ├── meta.json
     ├── description.md
     ├── logo.png              # optional
     ├── images/               # optional screenshots
@@ -20,12 +19,48 @@ src/templates/<template>/
     └── template.toml
 ```
 
-The template `meta.ts` exports a `TemplateRaw`; each variant `meta.ts` exports a
-`TemplateVariantRaw`. Template and variant slugs are derived from their names
-and must be unique in their respective scope. `category.name` has to match one
-of the categories in `src/categories.ts`. Every template must include a variant
+Template and variant slugs are derived from their names and must be unique in
+their respective scope. `category` must be one of the identifiers allowed by
+`schemas/variant.schema.json`. Every template must include a variant
 named `Default` (slug `default`), which is the store's canonical variant.
 `links.docs` is an array of HTTPS URLs.
+
+### Metadata examples
+
+`templates/actual-budget/meta.json`
+
+```json
+{
+  "name": "Actual Budget"
+}
+```
+
+`templates/actual-budget/default/meta.json`
+
+```json
+{
+  "name": "Default",
+  "shortDescription": "Private budgeting server with a persistent data directory and HTTPS access.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Actual Budget",
+    "url": "https://actualbudget.org/"
+  },
+  "links": {
+    "website": "https://actualbudget.org/"
+  }
+}
+```
+
+See the [family schema](schemas/template.schema.json) and
+[variant schema](schemas/variant.schema.json) for the allowed fields.
+Open a pull request with the template files and assets you changed.
+
+### Descriptions
+
+Keep `description.md` concise and omit titles and documentation-style sections.
+Explain what the variant deploys, what data persists, and any manual setup
+required before or after deployment.
 
 ### Routed services
 
@@ -49,29 +84,24 @@ path = "/api"             # optional: same host, different path
 `path` with no `host` of its own means the app's own address at that path -
 which is how a stack that only takes one base URL routes its UI and its API.
 
-Then:
+## Validate templates locally
+
+Run the bundled validator from the repository root:
 
 ```sh
-bun run generate   # validates everything and writes src/generated/
-bun run dev        # serves it on :3000
+./validate
 ```
 
-`src/generated/` is committed: the deployed service only runs `bun run start`.
+On Windows, run:
 
-## Endpoints
-
-```
-GET /status                 GET /templates?page=&limit=&search=&category=&sort=&order=
-GET /version                GET /templates/:templateSlug
-                            GET /categories        GET /categories/:slug
-                            GET /images/:templateSlug/:file
-                            GET /images/:templateSlug/:variantSlug/:file
-                            GET /files/:templateSlug/:variantSlug/:file
+```powershell
+.\validate.cmd
 ```
 
-Read-only. Rate limited per client: 120 JSON requests and 600 asset requests a
-minute. Behind a reverse proxy, set `TRUSTED_PROXY_HEADER` to the header it sets
-(`cf-connecting-ip` behind Cloudflare) or every client shares one bucket.
+The launcher selects the binary for your platform and checks the templates in
+this checkout. macOS, Linux and Windows are supported on x64 and ARM64.
+Pass a directory as the first argument to validate a different set of templates.
+The [third-party notices](bin/THIRD_PARTY_NOTICES.txt) are bundled with the executables.
 
 ## License
 

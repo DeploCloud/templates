@@ -1,18 +1,11 @@
-## New template
+## Summary
 
-<!-- One line: what this template deploys. -->
+<!-- Name the template and variants affected. Explain what they deploy or what changed. -->
 
-### Files
+## Validation
 
-- [ ] `src/templates/<template>/meta.ts`, with the template name
-- [ ] `src/templates/<template>/default/meta.ts`
-- [ ] `src/templates/<template>/default/description.md`
-- [ ] `src/templates/<template>/default/docker-compose.yml`
-- [ ] `src/templates/<template>/default/template.toml`, one `[[config.domains]]` per routed service
-- [ ] Optional: `logo.png`, screenshots in `images/`
-- [ ] `bun run generate`, with `src/generated/` committed
+- [ ] The bundled validator passed (`./validate` on macOS and Linux, or `.\validate.cmd` on Windows).
 
-### Checked
+## Deployment verification
 
-- [ ] Deployed on a Deplo instance, and it starts
-- [ ] Data that has to survive a redeploy sits in a volume
+<!-- List the variants you deployed on Deplo and what you verified, including persistence across redeploys when relevant. If you did not deploy them, say so. -->

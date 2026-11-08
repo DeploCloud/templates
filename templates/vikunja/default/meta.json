@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Vikunja task management with SQLite and persistent files and database storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Vikunja",
+    "url": "https://vikunja.io/"
+  },
+  "links": {
+    "github": "https://github.com/go-vikunja/vikunja",
+    "website": "https://vikunja.io/",
+    "docs": [
+      "https://vikunja.io/docs/installing/"
+    ]
+  }
+}

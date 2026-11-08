@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted chat interface for local language models and OpenAI-compatible APIs.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Open WebUI",
+    "url": "https://github.com/open-webui"
+  },
+  "links": {
+    "github": "https://github.com/open-webui/open-webui",
+    "website": "https://openwebui.com/",
+    "docs": [
+      "https://docs.openwebui.com/"
+    ]
+  }
+}

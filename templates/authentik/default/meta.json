@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Identity provider with persistent media and PostgreSQL configuration.",
+  "category": "security",
+  "developedBy": {
+    "label": "Authentik",
+    "url": "https://goauthentik.io/"
+  },
+  "links": {
+    "github": "https://github.com/goauthentik/authentik",
+    "website": "https://goauthentik.io/",
+    "docs": [
+      "https://docs.goauthentik.io/install-config/install/docker-compose/"
+    ]
+  }
+}

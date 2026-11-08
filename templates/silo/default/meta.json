@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node S3-compatible object storage with a built-in Console and persistent local data volume.",
+  "category": "storage",
+  "developedBy": {
+    "label": "PGSTY",
+    "url": "https://github.com/pgsty/silo"
+  },
+  "links": {
+    "github": "https://github.com/pgsty/silo",
+    "website": "https://silo.pgsty.com/",
+    "docs": [
+      "https://silo.pgsty.com/download/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This is a single-node, single-drive deployment for small workloads and evaluation."
+    }
+  ]
+}

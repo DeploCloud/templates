@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "PocketBase backend with automatic admin setup and persistent storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "PocketBase",
+    "url": "https://pocketbase.io/"
+  },
+  "links": {
+    "github": "https://github.com/pocketbase/pocketbase",
+    "website": "https://pocketbase.io/",
+    "docs": [
+      "https://pocketbase.io/docs/"
+    ]
+  }
+}

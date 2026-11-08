@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web analytics with persistent reports and configuration.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Matomo",
+    "url": "https://matomo.org/"
+  },
+  "links": {
+    "github": "https://github.com/matomo-org/matomo",
+    "website": "https://matomo.org/",
+    "docs": [
+      "https://matomo.org/docs/"
+    ]
+  }
+}

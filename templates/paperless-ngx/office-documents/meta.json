@@ -1,0 +1,16 @@
+{
+  "name": "Office Documents",
+  "shortDescription": "Paperless-ngx with PostgreSQL, Valkey, Gotenberg and Apache Tika for office conversion.",
+  "category": "other",
+  "developedBy": {
+    "label": "Paperless-ngx",
+    "url": "https://github.com/paperless-ngx/paperless-ngx"
+  },
+  "links": {
+    "github": "https://github.com/paperless-ngx/paperless-ngx",
+    "website": "https://docs.paperless-ngx.com/",
+    "docs": [
+      "https://docs.paperless-ngx.com/setup/"
+    ]
+  }
+}

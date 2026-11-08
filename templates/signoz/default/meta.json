@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenTelemetry observability interface for traces and metrics.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "SigNoz",
+    "url": "https://signoz.io/"
+  },
+  "links": {
+    "github": "https://github.com/SigNoz/signoz",
+    "website": "https://signoz.io/",
+    "docs": [
+      "https://signoz.io/docs/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "A complete production deployment also requires ClickHouse and OpenTelemetry collectors."
+    }
+  ]
+}

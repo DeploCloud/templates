@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Grafana dashboards backed by a dedicated PostgreSQL database for persistent production deployments.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Grafana Labs",
+    "url": "https://github.com/grafana"
+  },
+  "links": {
+    "github": "https://github.com/grafana/grafana",
+    "website": "https://grafana.com/",
+    "docs": [
+      "https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "WordPress website with Apache, MySQL and persistent application and database storage.",
+  "category": "cms",
+  "developedBy": {
+    "label": "WordPress",
+    "url": "https://github.com/WordPress"
+  },
+  "links": {
+    "github": "https://github.com/WordPress/WordPress",
+    "website": "https://wordpress.org/",
+    "docs": [
+      "https://wordpress.org/documentation/"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Lightweight self-hosted Git service with repositories, issues, pull requests and PostgreSQL storage.",
+  "category": "development",
+  "developedBy": {
+    "label": "Gitea",
+    "url": "https://github.com/go-gitea"
+  },
+  "links": {
+    "github": "https://github.com/go-gitea/gitea",
+    "website": "https://about.gitea.com/",
+    "docs": [
+      "https://docs.gitea.com/installation/install-with-docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "SSH is disabled in this variant; use the generated web URL for Git operations or configure SSH separately."
+    }
+  ]
+}

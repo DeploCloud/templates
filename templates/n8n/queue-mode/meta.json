@@ -1,0 +1,23 @@
+{
+  "name": "Queue mode",
+  "shortDescription": "n8n queue-mode deployment with PostgreSQL, Redis and a dedicated execution worker.",
+  "category": "automation",
+  "developedBy": {
+    "label": "n8n",
+    "url": "https://github.com/n8n-io"
+  },
+  "links": {
+    "github": "https://github.com/n8n-io/n8n",
+    "website": "https://n8n.io/",
+    "docs": [
+      "https://docs.n8n.io/hosting/scaling/queue-mode/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Size the queue workers and Redis/PostgreSQL services for the expected workload.",
+      "link": "https://docs.n8n.io/hosting/scaling/queue-mode/"
+    }
+  ]
+}
