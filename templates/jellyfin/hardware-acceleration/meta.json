@@ -1,0 +1,23 @@
+{
+  "name": "Hardware Acceleration",
+  "shortDescription": "Jellyfin media server with Linux DRI device access for hardware-accelerated transcoding.",
+  "category": "media",
+  "developedBy": {
+    "label": "Jellyfin",
+    "url": "https://github.com/jellyfin"
+  },
+  "links": {
+    "github": "https://github.com/jellyfin/jellyfin",
+    "website": "https://jellyfin.org/",
+    "docs": [
+      "https://jellyfin.org/docs/general/installation/container/",
+      "https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "This variant requires a Linux host with a compatible GPU, installed drivers and /dev/dri access."
+    }
+  ]
+}

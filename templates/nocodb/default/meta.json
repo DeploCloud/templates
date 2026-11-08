@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight NocoDB workspace using persistent built-in SQLite storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "NocoDB",
+    "url": "https://github.com/nocodb"
+  },
+  "links": {
+    "github": "https://github.com/nocodb/nocodb",
+    "website": "https://www.nocodb.com/",
+    "docs": [
+      "https://www.nocodb.com/docs/self-hosting/environment-variables"
+    ]
+  }
+}

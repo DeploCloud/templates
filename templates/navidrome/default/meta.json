@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Navidrome music server with persistent indexes and playlists.",
+  "category": "media",
+  "developedBy": {
+    "label": "Navidrome",
+    "url": "https://www.navidrome.org/"
+  },
+  "links": {
+    "github": "https://github.com/navidrome/navidrome",
+    "website": "https://www.navidrome.org/",
+    "docs": [
+      "https://www.navidrome.org/docs/"
+    ]
+  }
+}

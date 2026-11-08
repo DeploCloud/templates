@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Web PDF toolkit with persistent settings and user data.",
+  "category": "other",
+  "developedBy": {
+    "label": "Stirling PDF",
+    "url": "https://stirlingtools.com/"
+  },
+  "links": {
+    "github": "https://github.com/Stirling-Tools/Stirling-PDF",
+    "website": "https://stirlingtools.com/",
+    "docs": [
+      "https://github.com/Stirling-Tools/Stirling-PDF/wiki"
+    ]
+  }
+}

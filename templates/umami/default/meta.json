@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Fast, privacy-focused web analytics with a lightweight self-hosted dashboard.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Umami",
+    "url": "https://github.com/umami-software"
+  },
+  "links": {
+    "github": "https://github.com/umami-software/umami",
+    "website": "https://umami.is",
+    "docs": [
+      "https://umami.is/docs"
+    ]
+  }
+}

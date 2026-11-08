@@ -1,7 +1,0 @@
-[config]
-mounts = []
-
-[[config.domains]]
-serviceName = "actual"
-port = 5_006
-host = "${domain}"

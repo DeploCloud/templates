@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "RustDesk ID and relay servers with persistent keys and the official network ports.",
+  "category": "other",
+  "developedBy": {
+    "label": "RustDesk",
+    "url": "https://rustdesk.com/"
+  },
+  "links": {
+    "github": "https://github.com/rustdesk/rustdesk-server",
+    "website": "https://rustdesk.com/",
+    "docs": [
+      "https://rustdesk.com/docs/en/self-host/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "Open the official RustDesk rendezvous and relay TCP/UDP ports on the host; this service is not routed through the web domain."
+    }
+  ]
+}

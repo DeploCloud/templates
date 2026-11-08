@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted Homarr dashboard backed by a dedicated PostgreSQL database for larger installations.",
+  "category": "other",
+  "developedBy": {
+    "label": "Homarr",
+    "url": "https://github.com/homarr-labs"
+  },
+  "links": {
+    "github": "https://github.com/homarr-labs/homarr",
+    "website": "https://homarr.dev/",
+    "docs": [
+      "https://homarr.dev/docs/advanced/environment-variables/"
+    ]
+  }
+}

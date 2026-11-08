@@ -1,0 +1,16 @@
+{
+  "name": "MySQL",
+  "shortDescription": "FreshRSS with MySQL persistence and automated first setup.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "FreshRSS",
+    "url": "https://freshrss.org/"
+  },
+  "links": {
+    "github": "https://github.com/FreshRSS/FreshRSS",
+    "website": "https://freshrss.org/",
+    "docs": [
+      "https://freshrss.github.io/FreshRSS/en/"
+    ]
+  }
+}

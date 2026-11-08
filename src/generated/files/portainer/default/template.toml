@@ -1,6 +1,0 @@
-[config]
-
-[[config.domains]]
-serviceName = "portainer"
-port = 9_000
-host = "${domain}"

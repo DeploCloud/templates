@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-friendly web analytics with sessions, funnels and replay.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Rybbit",
+    "url": "https://github.com/rybbit-io"
+  },
+  "links": {
+    "github": "https://github.com/rybbit-io/rybbit",
+    "website": "https://rybbit.com/",
+    "docs": [
+      "https://rybbit.com/docs/self-hosting"
+    ]
+  }
+}

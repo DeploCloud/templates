@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "AFFiNE collaborative workspace with PostgreSQL, Redis and persistent storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "AFFiNE",
+    "url": "https://affine.pro/"
+  },
+  "links": {
+    "github": "https://github.com/toeverything/AFFiNE",
+    "website": "https://affine.pro/",
+    "docs": [
+      "https://docs.affine.pro/self-host-affine"
+    ]
+  }
+}

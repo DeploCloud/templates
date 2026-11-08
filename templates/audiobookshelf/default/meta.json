@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Audiobook and podcast server with persistent metadata and progress.",
+  "category": "media",
+  "developedBy": {
+    "label": "Audiobookshelf",
+    "url": "https://www.audiobookshelf.org/"
+  },
+  "links": {
+    "github": "https://github.com/advplyr/audiobookshelf",
+    "website": "https://www.audiobookshelf.org/",
+    "docs": [
+      "https://www.audiobookshelf.org/docs/"
+    ]
+  }
+}

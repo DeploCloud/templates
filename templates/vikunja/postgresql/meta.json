@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Vikunja task management backed by an included PostgreSQL database for larger teams.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Vikunja",
+    "url": "https://vikunja.io/"
+  },
+  "links": {
+    "github": "https://github.com/go-vikunja/vikunja",
+    "website": "https://vikunja.io/",
+    "docs": [
+      "https://vikunja.io/docs/full-docker-example/"
+    ]
+  }
+}

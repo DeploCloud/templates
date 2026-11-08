@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Homebridge smart-home bridge with persistent plugins and configuration.",
+  "category": "other",
+  "developedBy": {
+    "label": "Homebridge",
+    "url": "https://homebridge.io/"
+  },
+  "links": {
+    "github": "https://github.com/homebridge/homebridge",
+    "website": "https://homebridge.io/",
+    "docs": [
+      "https://github.com/homebridge/homebridge/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Plugins that use host hardware may require additional device access."
+    }
+  ]
+}

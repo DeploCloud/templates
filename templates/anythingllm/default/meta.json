@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Document chat workspace with persistent data and embeddings.",
+  "category": "ai",
+  "developedBy": {
+    "label": "AnythingLLM",
+    "url": "https://anythingllm.com/"
+  },
+  "links": {
+    "github": "https://github.com/Mintplex-Labs/anything-llm",
+    "website": "https://anythingllm.com/",
+    "docs": [
+      "https://docs.anythingllm.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "A model provider and secure authentication are required for production use."
+    }
+  ]
+}

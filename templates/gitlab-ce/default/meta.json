@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted GitLab with persistent repositories and CI data.",
+  "category": "development",
+  "developedBy": {
+    "label": "GitLab CE",
+    "url": "https://about.gitlab.com/"
+  },
+  "links": {
+    "github": "https://gitlab.com/gitlab-org/gitlab",
+    "website": "https://about.gitlab.com/",
+    "docs": [
+      "https://docs.gitlab.com/install/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The stack is resource intensive; an external URL and sufficient memory are required."
+    }
+  ]
+}

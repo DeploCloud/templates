@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file storage, synchronization and collaboration for teams and personal data.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Nextcloud",
+    "url": "https://github.com/nextcloud"
+  },
+  "links": {
+    "github": "https://github.com/nextcloud/docker",
+    "website": "https://nextcloud.com/",
+    "docs": [
+      "https://docs.nextcloud.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "The deployment domain must be listed in trusted_domains.",
+      "link": "https://docs.nextcloud.com/server/stable/admin_manual/installation/installation_wizard.html"
+    }
+  ]
+}

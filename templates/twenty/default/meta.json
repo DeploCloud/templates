@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Twenty CRM with its API, worker, PostgreSQL and Redis services.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Twenty",
+    "url": "https://twenty.com/"
+  },
+  "links": {
+    "github": "https://github.com/twentyhq/twenty",
+    "website": "https://twenty.com/",
+    "docs": [
+      "https://docs.twenty.com/developers/self-host/capabilities/docker-compose"
+    ]
+  }
+}

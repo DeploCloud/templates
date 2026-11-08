@@ -1,0 +1,22 @@
+{
+  "name": "NVIDIA",
+  "shortDescription": "Scrypted with NVIDIA acceleration for video processing.",
+  "category": "other",
+  "developedBy": {
+    "label": "Scrypted",
+    "url": "https://scrypted.app/"
+  },
+  "links": {
+    "github": "https://github.com/koush/scrypted",
+    "website": "https://scrypted.app/",
+    "docs": [
+      "https://docs.scrypted.app/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "This variant requires CUDA, cuDNN and the NVIDIA container runtime on the host."
+    }
+  ]
+}

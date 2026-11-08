@@ -1,0 +1,22 @@
+{
+  "name": "Vulkan",
+  "shortDescription": "Ollama using Vulkan acceleration for local models.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Ollama",
+    "url": "https://ollama.com/"
+  },
+  "links": {
+    "github": "https://github.com/ollama/ollama",
+    "website": "https://ollama.com/",
+    "docs": [
+      "https://docs.ollama.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "This variant requires a Linux host with the required GPU devices available at /dev/kfd and /dev/dri."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "NVIDIA GPU",
+  "shortDescription": "Ollama using NVIDIA GPU acceleration for local models.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Ollama",
+    "url": "https://ollama.com/"
+  },
+  "links": {
+    "github": "https://github.com/ollama/ollama",
+    "website": "https://ollama.com/",
+    "docs": [
+      "https://docs.ollama.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "This variant requires an NVIDIA GPU, a compatible driver and NVIDIA Container Toolkit."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Odoo business management with persistent filestore and PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Odoo",
+    "url": "https://www.odoo.com/"
+  },
+  "links": {
+    "github": "https://github.com/odoo/odoo",
+    "website": "https://www.odoo.com/",
+    "docs": [
+      "https://www.odoo.com/documentation/"
+    ]
+  }
+}

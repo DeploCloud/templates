@@ -1,6 +1,0 @@
-[config]
-
-[[config.domains]]
-serviceName = "filebrowser"
-port = 80
-host = "${domain}"

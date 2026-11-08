@@ -1,0 +1,22 @@
+{
+  "name": "Libtorrent v1",
+  "shortDescription": "qBittorrent with the libtorrent v1 build and persistent settings and downloads.",
+  "category": "media",
+  "developedBy": {
+    "label": "qBittorrent",
+    "url": "https://github.com/qbittorrent"
+  },
+  "links": {
+    "github": "https://github.com/qbittorrent/qBittorrent",
+    "website": "https://www.qbittorrent.org/",
+    "docs": [
+      "https://docs.linuxserver.io/images/docker-qbittorrent/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "TCP and UDP port 6881 are published for incoming peer connections and must be reachable."
+    }
+  ]
+}

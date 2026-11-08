@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Home automation hub with persistent configuration and a generated HTTPS domain.",
+  "category": "other",
+  "developedBy": {
+    "label": "Home Assistant",
+    "url": "https://github.com/home-assistant/core"
+  },
+  "links": {
+    "github": "https://github.com/home-assistant/core",
+    "website": "https://www.home-assistant.io/",
+    "docs": [
+      "https://www.home-assistant.io/installation/linux/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Bluetooth and other hardware integrations may require additional host device access."
+    }
+  ]
+}

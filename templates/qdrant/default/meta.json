@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Persistent vector database for embeddings, similarity search and AI applications with API-key security.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Qdrant",
+    "url": "https://github.com/qdrant"
+  },
+  "links": {
+    "github": "https://github.com/qdrant/qdrant",
+    "website": "https://qdrant.tech/",
+    "docs": [
+      "https://qdrant.tech/documentation/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Use the generated API key on every client request before exposing this service."
+    }
+  ]
+}

@@ -1,6 +1,0 @@
-[config]
-
-[[config.domains]]
-serviceName = "scrypted"
-port = 11080
-host = "${domain}"

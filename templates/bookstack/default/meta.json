@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "BookStack documentation platform with persistent MariaDB storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "BookStack",
+    "url": "https://www.bookstackapp.com/"
+  },
+  "links": {
+    "github": "https://github.com/BookStackApp/BookStack",
+    "website": "https://www.bookstackapp.com/",
+    "docs": [
+      "https://www.bookstackapp.com/docs/"
+    ]
+  }
+}

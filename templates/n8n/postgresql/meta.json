@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "n8n workflow automation backed by PostgreSQL for a durable production database.",
+  "category": "automation",
+  "developedBy": {
+    "label": "n8n",
+    "url": "https://github.com/n8n-io"
+  },
+  "links": {
+    "github": "https://github.com/n8n-io/n8n",
+    "website": "https://n8n.io/",
+    "docs": [
+      "https://docs.n8n.io/hosting/configuration/supported-databases/"
+    ]
+  }
+}

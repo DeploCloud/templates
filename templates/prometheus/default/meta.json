@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Prometheus metrics server with persistent time-series data.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Prometheus",
+    "url": "https://prometheus.io/"
+  },
+  "links": {
+    "github": "https://github.com/prometheus/prometheus",
+    "website": "https://prometheus.io/",
+    "docs": [
+      "https://prometheus.io/docs/"
+    ]
+  }
+}

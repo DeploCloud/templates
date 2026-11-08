@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Project management workspace for issues, sprints, roadmaps and team collaboration.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Plane",
+    "url": "https://github.com/makeplane"
+  },
+  "links": {
+    "github": "https://github.com/makeplane/plane",
+    "website": "https://plane.so/",
+    "docs": [
+      "https://developers.plane.so/self-hosting/methods/docker-compose"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The bundled stack needs at least 2 vCPUs and 4 GB RAM."
+    }
+  ]
+}

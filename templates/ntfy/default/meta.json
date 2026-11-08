@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted publish-subscribe notification server.",
+  "category": "communication",
+  "developedBy": {
+    "label": "ntfy",
+    "url": "https://ntfy.sh/"
+  },
+  "links": {
+    "github": "https://github.com/binwiederhier/ntfy",
+    "website": "https://ntfy.sh/",
+    "docs": [
+      "https://docs.ntfy.sh/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Configure authentication, access control and the base URL before production use."
+    }
+  ]
+}

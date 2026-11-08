@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Low-code programming tool for connecting hardware, APIs and online services with visual flows.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Node-RED",
+    "url": "https://github.com/node-red"
+  },
+  "links": {
+    "github": "https://github.com/node-red/node-red",
+    "website": "https://nodered.org/",
+    "docs": [
+      "https://nodered.org/docs/getting-started/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "A credential secret is required for sensitive flows."
+    }
+  ]
+}

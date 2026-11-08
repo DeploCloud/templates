@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Complete Chatwoot production stack with Rails, Sidekiq, PostgreSQL and Redis.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Chatwoot",
+    "url": "https://www.chatwoot.com/"
+  },
+  "links": {
+    "github": "https://github.com/chatwoot/chatwoot",
+    "website": "https://www.chatwoot.com/",
+    "docs": [
+      "https://developers.chatwoot.com/self-hosted/deployment/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This stack needs at least 4 GB of RAM and should be served behind HTTPS before production use."
+    }
+  ]
+}

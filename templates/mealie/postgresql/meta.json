@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Mealie with PostgreSQL persistence for larger installations.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Mealie",
+    "url": "https://mealie.io/"
+  },
+  "links": {
+    "github": "https://github.com/mealie-recipes/mealie",
+    "website": "https://mealie.io/",
+    "docs": [
+      "https://docs.mealie.io/"
+    ]
+  }
+}

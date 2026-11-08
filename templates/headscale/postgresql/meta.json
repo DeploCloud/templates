@@ -1,0 +1,22 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Headscale with the legacy PostgreSQL database backend.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Headscale",
+    "url": "https://headscale.net/"
+  },
+  "links": {
+    "github": "https://github.com/juanfont/headscale",
+    "website": "https://headscale.net/",
+    "docs": [
+      "https://headscale.net/stable/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "MagicDNS is disabled; enabling it requires a separate FQDN for base_domain."
+    }
+  ]
+}

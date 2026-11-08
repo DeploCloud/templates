@@ -1,0 +1,22 @@
+{
+  "name": "SQLite",
+  "shortDescription": "Lightweight Paperless-ngx deployment using SQLite, Valkey and persistent document volumes.",
+  "category": "other",
+  "developedBy": {
+    "label": "Paperless-ngx",
+    "url": "https://github.com/paperless-ngx/paperless-ngx"
+  },
+  "links": {
+    "github": "https://github.com/paperless-ngx/paperless-ngx",
+    "website": "https://docs.paperless-ngx.com/",
+    "docs": [
+      "https://docs.paperless-ngx.com/setup/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "SQLite is intended for a personal archive; use the PostgreSQL variant for several users or high ingest concurrency."
+    }
+  ]
+}

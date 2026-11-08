@@ -1,0 +1,22 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Reverse proxy manager backed by PostgreSQL with persistent certificates and admin data.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Nginx Proxy Manager",
+    "url": "https://github.com/NginxProxyManager"
+  },
+  "links": {
+    "github": "https://github.com/NginxProxyManager/nginx-proxy-manager",
+    "website": "https://nginxproxymanager.com/",
+    "docs": [
+      "https://nginxproxymanager.com/setup/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "Host ports 80 and 443 must be free for public HTTP and HTTPS traffic."
+    }
+  ]
+}

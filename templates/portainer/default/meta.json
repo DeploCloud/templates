@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Docker management UI with persistent data and the host socket required for administration.",
+  "category": "development",
+  "developedBy": {
+    "label": "Portainer",
+    "url": "https://github.com/portainer"
+  },
+  "links": {
+    "github": "https://github.com/portainer/portainer",
+    "website": "https://www.portainer.io/",
+    "docs": [
+      "https://docs.portainer.io/start/install-ce/server/docker/linux"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This template needs host Docker socket access to manage containers."
+    }
+  ]
+}

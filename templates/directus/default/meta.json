@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Directus data platform with PostgreSQL and persistent uploads.",
+  "category": "development",
+  "developedBy": {
+    "label": "Directus",
+    "url": "https://directus.io/"
+  },
+  "links": {
+    "github": "https://github.com/directus/directus",
+    "website": "https://directus.io/",
+    "docs": [
+      "https://docs.directus.io/self-hosted/quickstart.html"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Movie management and download automation with persistent configuration.",
+  "category": "media",
+  "developedBy": {
+    "label": "Radarr",
+    "url": "https://radarr.video/"
+  },
+  "links": {
+    "github": "https://github.com/Radarr/Radarr",
+    "website": "https://radarr.video/",
+    "docs": [
+      "https://wiki.servarr.com/radarr"
+    ]
+  }
+}

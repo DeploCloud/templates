@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Open WebUI backed by PostgreSQL for multi-user and higher-concurrency deployments.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Open WebUI",
+    "url": "https://github.com/open-webui"
+  },
+  "links": {
+    "github": "https://github.com/open-webui/open-webui",
+    "website": "https://openwebui.com/",
+    "docs": [
+      "https://docs.openwebui.com/getting-started/advanced-topics/scaling/"
+    ]
+  }
+}

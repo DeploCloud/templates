@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Network-wide DNS filtering with persistent configuration and a generated web domain.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Pi-hole",
+    "url": "https://github.com/pi-hole"
+  },
+  "links": {
+    "github": "https://github.com/pi-hole/docker-pi-hole",
+    "website": "https://pi-hole.net/",
+    "docs": [
+      "https://docs.pi-hole.net/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "TCP and UDP port 53 must be free on the host. Release it from the local resolver or use another server."
+    }
+  ]
+}

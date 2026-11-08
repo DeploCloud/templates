@@ -1,0 +1,16 @@
+{
+  "name": "MySQL",
+  "shortDescription": "Memos with mysql persistence for larger or managed deployments.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Memos",
+    "url": "https://github.com/usememos"
+  },
+  "links": {
+    "github": "https://github.com/usememos/memos",
+    "website": "https://usememos.com/",
+    "docs": [
+      "https://usememos.com/docs/deploy/docker"
+    ]
+  }
+}

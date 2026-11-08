@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight monitoring hub with persistent systems and history.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Beszel",
+    "url": "https://beszel.dev/"
+  },
+  "links": {
+    "github": "https://github.com/henrygd/beszel",
+    "website": "https://beszel.dev/",
+    "docs": [
+      "https://beszel.dev/guide/"
+    ]
+  }
+}

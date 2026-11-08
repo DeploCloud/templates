@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Document signing application with PostgreSQL and persistent files.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Documenso",
+    "url": "https://documenso.com/"
+  },
+  "links": {
+    "github": "https://github.com/documenso/documenso",
+    "website": "https://documenso.com/",
+    "docs": [
+      "https://docs.documenso.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Mail delivery must be configured for sending documents."
+    }
+  ]
+}

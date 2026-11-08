@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Joplin note synchronization server using persistent built-in SQLite storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Joplin",
+    "url": "https://github.com/laurent22"
+  },
+  "links": {
+    "github": "https://github.com/laurent22/joplin",
+    "website": "https://joplinapp.org/",
+    "docs": [
+      "https://hub.docker.com/r/joplin/server"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This SQLite variant is intended for evaluation or small personal deployments; change the default admin login."
+    }
+  ]
+}

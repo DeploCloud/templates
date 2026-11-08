@@ -1,0 +1,16 @@
+{
+  "name": "MariaDB",
+  "shortDescription": "Seafile Community Edition with MariaDB and persistent file storage.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Seafile",
+    "url": "https://www.seafile.com/"
+  },
+  "links": {
+    "github": "https://github.com/haiwen/seafile",
+    "website": "https://www.seafile.com/",
+    "docs": [
+      "https://manual.seafile.com/latest/"
+    ]
+  }
+}

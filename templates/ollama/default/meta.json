@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Local language model server with persistent downloaded models.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Ollama",
+    "url": "https://ollama.com/"
+  },
+  "links": {
+    "github": "https://github.com/ollama/ollama",
+    "website": "https://ollama.com/",
+    "docs": [
+      "https://docs.ollama.com/"
+    ]
+  }
+}

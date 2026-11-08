@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted media server for streaming personal movies, shows, music and photos.",
+  "category": "media",
+  "developedBy": {
+    "label": "Jellyfin",
+    "url": "https://github.com/jellyfin"
+  },
+  "links": {
+    "github": "https://github.com/jellyfin/jellyfin",
+    "website": "https://jellyfin.org/",
+    "docs": [
+      "https://jellyfin.org/docs/"
+    ]
+  }
+}

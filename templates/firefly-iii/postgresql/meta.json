@@ -1,0 +1,16 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Firefly III with PostgreSQL, scheduled tasks and persistent financial data.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Firefly III",
+    "url": "https://firefly-iii.org/"
+  },
+  "links": {
+    "github": "https://github.com/firefly-iii/firefly-iii",
+    "website": "https://firefly-iii.org/",
+    "docs": [
+      "https://www.mintlify.com/firefly-iii/firefly-iii/installation/docker"
+    ]
+  }
+}

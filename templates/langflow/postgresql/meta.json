@@ -1,0 +1,22 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Langflow with PostgreSQL persistence for production workloads.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Langflow",
+    "url": "https://www.langflow.org/"
+  },
+  "links": {
+    "github": "https://github.com/langflow-ai/langflow",
+    "website": "https://www.langflow.org/",
+    "docs": [
+      "https://docs.langflow.org/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "An authentication secret and model provider credentials are required before sharing the UI."
+    }
+  ]
+}

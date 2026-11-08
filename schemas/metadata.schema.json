@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deplo template metadata",
+  "oneOf": [
+    { "$ref": "./template.schema.json" },
+    { "$ref": "./variant.schema.json" }
+  ]
+}

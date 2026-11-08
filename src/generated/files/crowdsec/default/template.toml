@@ -1,4 +1,0 @@
-[config]
-
-[config.env]
-COLLECTIONS = "crowdsecurity/linux"

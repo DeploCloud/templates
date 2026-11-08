@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenAI-compatible proxy for routing language-model requests.",
+  "category": "ai",
+  "developedBy": {
+    "label": "LiteLLM",
+    "url": "https://www.litellm.ai/"
+  },
+  "links": {
+    "github": "https://github.com/BerriAI/litellm",
+    "website": "https://www.litellm.ai/",
+    "docs": [
+      "https://docs.litellm.ai/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Provider credentials and model configuration are required before exposing the endpoint."
+    }
+  ]
+}

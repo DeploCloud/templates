@@ -1,0 +1,22 @@
+{
+  "name": "MySQL",
+  "shortDescription": "Keycloak with mysql persistence and proxy-aware defaults.",
+  "category": "security",
+  "developedBy": {
+    "label": "Keycloak",
+    "url": "https://www.keycloak.org/"
+  },
+  "links": {
+    "github": "https://github.com/keycloak/keycloak",
+    "website": "https://www.keycloak.org/",
+    "docs": [
+      "https://www.keycloak.org/documentation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Change the generated bootstrap administrator password after first login."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file synchronization with persistent libraries and configuration.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Seafile",
+    "url": "https://www.seafile.com/"
+  },
+  "links": {
+    "github": "https://github.com/haiwen/seafile",
+    "website": "https://www.seafile.com/",
+    "docs": [
+      "https://manual.seafile.com/latest/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Mail delivery is required for account notifications and password recovery."
+    }
+  ]
+}

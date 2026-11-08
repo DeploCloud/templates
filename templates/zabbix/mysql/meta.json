@@ -1,0 +1,16 @@
+{
+  "name": "MySQL",
+  "shortDescription": "Zabbix server, web interface and mysql database in separate containers.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Zabbix",
+    "url": "https://www.zabbix.com/"
+  },
+  "links": {
+    "github": "https://github.com/zabbix/zabbix",
+    "website": "https://www.zabbix.com/",
+    "docs": [
+      "https://www.zabbix.com/documentation/current/en/manual"
+    ]
+  }
+}

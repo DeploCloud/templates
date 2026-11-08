@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted uptime monitoring for websites, services and alerting channels.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Uptime Kuma",
+    "url": "https://github.com/louislam"
+  },
+  "links": {
+    "github": "https://github.com/louislam/uptime-kuma",
+    "website": "https://uptime.kuma.pet/",
+    "docs": [
+      "https://github.com/louislam/uptime-kuma/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This variant uses Docker socket access for container monitoring."
+    }
+  ]
+}

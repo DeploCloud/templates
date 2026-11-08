@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Complete self-hosted product analytics and feature flags stack for teams running PostHog on their own server.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "PostHog",
+    "url": "https://github.com/PostHog"
+  },
+  "links": {
+    "github": "https://github.com/PostHog/posthog",
+    "website": "https://posthog.com/",
+    "docs": [
+      "https://posthog.com/docs/self-host"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The stack needs at least 8 GB RAM and can take several minutes to initialize."
+    },
+    {
+      "type": "warning",
+      "message": "SeaweedFS uses new storage volumes. Existing MinIO objects require the upstream storage migration before they are accessible.",
+      "link": "https://github.com/PostHog/posthog/blob/74e8ce2ddab8f45058423fddf7c779582311120d/bin/migrate-storage-hobby"
+    }
+  ]
+}
