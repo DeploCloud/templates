@@ -1,0 +1,29 @@
+name: Validate templates
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate template catalog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out proposed catalog
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: candidate
+          persist-credentials: false
+
+      - name: Check out validator from base commit
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+
+      - name: Validate proposed catalog
+        run: ./base/validate ./candidate/templates
