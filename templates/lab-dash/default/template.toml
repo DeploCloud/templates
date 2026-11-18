@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lab-dash"
+port = 2_022
+host = "${domain}"
+
+[config.env]
+SECRET = "${base64:32}"
