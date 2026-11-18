@@ -1,0 +1,1 @@
+DumbDo is a deliberately simple to-do list app with dark mode, multiple lists and PWA support. This template runs the official image and keeps its JSON data file on a persistent volume mounted at `/app/data`. There is no account system: set `DUMBDO_PIN` to a 4-10 digit PIN after deploying to keep the list private, and set `SINGLE_LIST` to `true` to hide the list selector.
