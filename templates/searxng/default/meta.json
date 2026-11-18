@@ -1,0 +1,18 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-respecting metasearch engine that aggregates results from many search services without tracking or profiling users.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "SearXNG",
+    "url": "https://github.com/searxng"
+  },
+  "links": {
+    "github": "https://github.com/searxng/searxng",
+    "website": "https://docs.searxng.org",
+    "docs": [
+      "https://docs.searxng.org/admin/installation-docker.html",
+      "https://docs.searxng.org/admin/settings/index.html",
+      "https://docs.searxng.org/admin/settings/settings_server.html"
+    ]
+  }
+}
