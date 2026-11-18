@@ -1,0 +1,29 @@
+[variables]
+mongo_password = "${password:32}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "heyform"
+port = 9_157
+host = "${domain}"
+
+[config.env]
+APP_HOMEPAGE_URL = "https://${domain}"
+TRUST_PROXY = "1"
+APP_DISABLE_REGISTRATION = "false"
+VERIFY_USER_EMAIL = "false"
+SESSION_KEY = "${base64:48}"
+FORM_ENCRYPTION_KEY = "${base64:48}"
+INTEGRATION_ENCRYPTION_KEY = "${base64:48}"
+MONGO_USER = "heyform"
+MONGO_PASSWORD = "${mongo_password}"
+REDIS_PASSWORD = "${redis_password}"
+SMTP_FROM = ""
+SMTP_HOST = ""
+SMTP_PORT = "587"
+SMTP_USER = ""
+SMTP_PASSWORD = ""
+SMTP_SECURE = "false"

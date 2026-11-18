@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source conversational form builder for surveys, quizzes and polls, backed by MongoDB and Redis with persistent uploads.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "HeyForm",
+    "url": "https://github.com/heyform"
+  },
+  "links": {
+    "github": "https://github.com/heyform/heyform",
+    "website": "https://heyform.net",
+    "docs": [
+      "https://docs.heyform.net/open-source/self-hosting",
+      "https://docs.heyform.net/open-source/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open to anyone who can reach the URL. Create your account, then set APP_DISABLE_REGISTRATION to true and redeploy; invited collaborators can still join. Email is not sent until you fill in the SMTP_* variables.",
+      "link": "https://docs.heyform.net/open-source/configuration"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: session cookies are marked secure, so logging in over plain HTTP does not work."
+    }
+  ]
+}
