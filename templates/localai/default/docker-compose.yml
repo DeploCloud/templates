@@ -1,0 +1,22 @@
+services:
+  localai:
+    image: localai/localai:v5.0.0@sha256:4ef0d723ccb18cdd653cf7416d548cb6add42d1fcc6459d655d4c9f803d03dea
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      LOCALAI_AUTH: ${LOCALAI_AUTH}
+      LOCALAI_REGISTRATION_MODE: ${LOCALAI_REGISTRATION_MODE}
+      LOCALAI_BASE_URL: ${LOCALAI_BASE_URL}
+      LOCALAI_TRUSTED_PROXIES: ${LOCALAI_TRUSTED_PROXIES}
+    volumes:
+      - localai-models:/models
+      - localai-backends:/backends
+      - localai-configuration:/configuration
+      - localai-data:/data
+
+volumes:
+  localai-models: {}
+  localai-backends: {}
+  localai-configuration: {}
+  localai-data: {}
