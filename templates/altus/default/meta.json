@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Altus desktop client for WhatsApp Web with themes, notifications and multiple accounts, streamed to the browser behind a password with persistent sessions.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Aman Harwara",
+    "url": "https://github.com/amanharwara"
+  },
+  "links": {
+    "github": "https://github.com/amanharwara/altus",
+    "docs": [
+      "https://github.com/amanharwara/altus#readme",
+      "https://docs.linuxserver.io/images/docker-altus/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The app is protected by HTTP basic auth: sign in with the CUSTOM_USER and PASSWORD values from the environment, then link each WhatsApp account by scanning its QR code from your phone. Anyone who signs in gets passwordless sudo inside the container, so keep the password private."
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-altus/"
+    }
+  ]
+}
