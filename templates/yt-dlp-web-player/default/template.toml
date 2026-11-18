@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "yt-dlp-web-player"
+port = 5_000
+host = "${domain}"
