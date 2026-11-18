@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimal self-hosted to-do list with multiple lists, optional PIN protection and file-based JSON storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "DumbWare",
+    "url": "https://github.com/DumbWareio"
+  },
+  "links": {
+    "github": "https://github.com/DumbWareio/DumbDo",
+    "website": "https://dumbware.io/",
+    "docs": [
+      "https://github.com/DumbWareio/DumbDo#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The to-do list is open to anyone with the URL until you set DUMBDO_PIN to a 4-10 digit PIN in the environment and redeploy. The PIN login cookie is marked Secure, so open the app over HTTPS.",
+      "link": "https://github.com/DumbWareio/DumbDo#environment-variables"
+    }
+  ]
+}
