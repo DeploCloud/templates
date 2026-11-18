@@ -1,0 +1,39 @@
+services:
+  searxng:
+    image: ghcr.io/searxng/searxng:2026.11.18-b867c56a5@sha256:6012a064924a032969a2e7989d66971803f126a237a2fb6c62f10ae3d82093e1
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SEARXNG_BASE_URL: ${SEARXNG_BASE_URL}
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+      SEARXNG_VALKEY_URL: valkey://searxng-valkey:6379/0
+    volumes:
+      - searxng-config:/etc/searxng
+      - searxng-data:/var/cache/searxng
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      searxng-valkey:
+        condition: service_healthy
+
+  searxng-valkey:
+    image: valkey/valkey:9.1.3-alpine@sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b
+    restart: unless-stopped
+    command: valkey-server --save 300 1 --save 60 1000 --loglevel warning
+    volumes:
+      - searxng-valkey:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  searxng-config: {}
+  searxng-data: {}
+  searxng-valkey: {}

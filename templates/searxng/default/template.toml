@@ -1,0 +1,14 @@
+[variables]
+secret_key = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "searxng"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SEARXNG_BASE_URL = "https://${domain}/"
+SEARXNG_SECRET = "${secret_key}"
