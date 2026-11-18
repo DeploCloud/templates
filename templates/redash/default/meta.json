@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source tool to query SQL and NoSQL data sources, visualize the results and share dashboards, with PostgreSQL, Redis and background workers.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Redash",
+    "url": "https://github.com/getredash"
+  },
+  "links": {
+    "github": "https://github.com/getredash/redash",
+    "website": "https://redash.io/",
+    "docs": [
+      "https://redash.io/help/open-source/setup",
+      "https://redash.io/help/open-source/admin-guide/env-vars-settings",
+      "https://redash.io/help/open-source/admin-guide/how-to-upgrade"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor fills in the setup form and becomes the admin of the organization."
+    }
+  ]
+}
