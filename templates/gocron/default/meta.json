@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted task scheduler that runs shell commands on cron schedules from a YAML file, with a web UI for run history, logs and manual triggers.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Florian Hoss",
+    "url": "https://github.com/flohoss"
+  },
+  "links": {
+    "github": "https://github.com/flohoss/gocron",
+    "docs": [
+      "https://github.com/flohoss/gocron#configuration",
+      "https://github.com/flohoss/gocron#single-sign-on-oidc"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI and API have no login by default: anyone with the URL can read job logs and trigger jobs. Enable OIDC single sign-on in config.yaml before exposing real jobs.",
+      "link": "https://github.com/flohoss/gocron#single-sign-on-oidc"
+    }
+  ]
+}

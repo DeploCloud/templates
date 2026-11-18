@@ -1,0 +1,18 @@
+services:
+  gocron:
+    image: ghcr.io/flohoss/gocron:v0.14.3@sha256:3297a6ebb4fcfe7ee09173a5a6dbb198a8a53624dc1d274c07b51635f8204172
+    restart: unless-stopped
+    expose:
+      - 8156
+    volumes:
+      - gocron-data:/app/data
+      - ./config.yaml:/app/config/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8156/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  gocron-data: {}
