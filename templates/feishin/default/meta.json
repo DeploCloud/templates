@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Feishin web music player for Navidrome, Jellyfin and OpenSubsonic servers, served as a static web app that keeps no server-side data.",
+  "category": "media",
+  "developedBy": {
+    "label": "jeffvli",
+    "url": "https://github.com/jeffvli"
+  },
+  "links": {
+    "github": "https://github.com/jeffvli/feishin",
+    "website": "https://feishin.vercel.app",
+    "docs": [
+      "https://github.com/jeffvli/feishin#web-and-docker",
+      "https://github.com/jeffvli/feishin/blob/development/docs/ENV_SETTINGS.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Feishin is only a player: it needs an existing Navidrome, Jellyfin or OpenSubsonic server reachable over HTTPS from your browser. Add it under Manage servers on first visit, or preset it with SERVER_URL, SERVER_TYPE and SERVER_NAME.",
+      "link": "https://github.com/jeffvli/feishin#configuration"
+    }
+  ]
+}
