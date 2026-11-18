@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "redash"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+REDASH_HOST = "https://${domain}"
+POSTGRES_PASSWORD = "${db_password}"
+REDASH_DATABASE_URL = "postgresql://redash:${db_password}@redash-db:5432/redash"
+REDASH_REDIS_URL = "redis://redash-redis:6379/0"
+REDASH_COOKIE_SECRET = "${password:64}"
+REDASH_SECRET_KEY = "${password:64}"

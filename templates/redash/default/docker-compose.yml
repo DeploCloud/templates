@@ -1,0 +1,104 @@
+x-redash: &redash
+  image: redash/redash:26.9.0@sha256:fced015dbdb8bf171cbffe73e7841c9331c088b0fbf9542427cf4e72daa7f3c3
+  restart: unless-stopped
+  environment: &redash-env
+    PYTHONUNBUFFERED: "0"
+    REDASH_LOG_LEVEL: INFO
+    REDASH_HOST: ${REDASH_HOST}
+    REDASH_DATABASE_URL: ${REDASH_DATABASE_URL}
+    REDASH_REDIS_URL: ${REDASH_REDIS_URL}
+    REDASH_COOKIE_SECRET: ${REDASH_COOKIE_SECRET}
+    REDASH_SECRET_KEY: ${REDASH_SECRET_KEY}
+    REDASH_ENFORCE_CSRF: "true"
+  depends_on:
+    redash-migrate:
+      condition: service_completed_successfully
+    redash-db:
+      condition: service_healthy
+    redash-redis:
+      condition: service_healthy
+
+services:
+  redash:
+    <<: *redash
+    command: server
+    expose:
+      - 5000
+    environment:
+      <<: *redash-env
+      REDASH_WEB_WORKERS: "4"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:5000/ping || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # Same as upstream "create_db" on first run; applies migrations after an image upgrade.
+  redash-migrate:
+    <<: *redash
+    restart: "no"
+    command: ["bash", "-c", "/app/manage.py database create_tables && /app/manage.py db upgrade"]
+    depends_on:
+      redash-db:
+        condition: service_healthy
+      redash-redis:
+        condition: service_healthy
+
+  redash-scheduler:
+    <<: *redash
+    command: scheduler
+
+  redash-scheduled-worker:
+    <<: *redash
+    command: worker
+    environment:
+      <<: *redash-env
+      QUEUES: scheduled_queries,schemas
+      WORKERS_COUNT: "1"
+
+  redash-adhoc-worker:
+    <<: *redash
+    command: worker
+    environment:
+      <<: *redash-env
+      QUEUES: queries
+      WORKERS_COUNT: "2"
+
+  redash-worker:
+    <<: *redash
+    command: worker
+    environment:
+      <<: *redash-env
+      QUEUES: periodic,emails,default
+      WORKERS_COUNT: "1"
+
+  redash-db:
+    image: postgres:17.12-alpine@sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: redash
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: redash
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redash -d redash"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - redash-postgres:/var/lib/postgresql/data
+
+  redash-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - redash-redis:/data
+
+volumes:
+  redash-postgres: {}
+  redash-redis: {}
