@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI engine with an OpenAI and Anthropic compatible API and a web UI for chat, image, speech and video models, running on CPU.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Ettore Di Giacinto",
+    "url": "https://github.com/mudler"
+  },
+  "links": {
+    "github": "https://github.com/mudler/LocalAI",
+    "website": "https://localai.io",
+    "docs": [
+      "https://localai.io/docs/start/install/containers/",
+      "https://localai.io/docs/administration/authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered in the web UI becomes the administrator. Register it right after deployment; later sign-ups wait for admin approval.",
+      "link": "https://localai.io/docs/administration/authentication/"
+    },
+    {
+      "type": "info",
+      "message": "No model is preinstalled. Install one from the model library in the web UI; models run on CPU and need enough RAM and disk for their size."
+    }
+  ]
+}
