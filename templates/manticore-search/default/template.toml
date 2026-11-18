@@ -1,0 +1,33 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "manticore"
+port = 9_308
+host = "${domain}"
+
+[config.env]
+MANTICORE_ADMIN_USER = "admin"
+MANTICORE_ADMIN_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "manticore-auth.sh"
+content = """#!/bin/bash
+# The image has no auth bootstrap: create the first admin once searchd answers HTTP,
+# so the reload signal is not lost. Later starts find a non-empty auth store and stop.
+(
+  until wget -q -t 1 -T 3 -O /dev/null http://127.0.0.1:9308/ 2>/dev/null || [ $? -ne 4 ]; do sleep 2; done
+  for attempt in $(seq 60); do
+    out=$({ echo "$MANTICORE_ADMIN_USER"; echo "$MANTICORE_ADMIN_PASSWORD"; echo "$MANTICORE_ADMIN_PASSWORD"; } | gosu manticore searchd -c /etc/manticoresearch/manticore.conf.sh --auth-non-interactive 2>&1)
+    case "$out" in
+      *"successfully created"*) echo "auth: admin user $MANTICORE_ADMIN_USER created"; exit 0 ;;
+      *"is not empty"*) exit 0 ;;
+    esac
+    sleep 3
+  done
+  echo "auth: bootstrap failed: $out" >&2
+) &
+exec docker-entrypoint.sh "$@"
+"""

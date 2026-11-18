@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Data exploration and visualization platform to build charts and dashboards and run SQL queries, with PostgreSQL metadata, Redis caching and Celery workers.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://github.com/apache"
+  },
+  "links": {
+    "github": "https://github.com/apache/superset",
+    "website": "https://superset.apache.org/",
+    "docs": [
+      "https://superset.apache.org/admin-docs/installation/docker-compose/",
+      "https://superset.apache.org/admin-docs/configuration/configuring-superset/",
+      "https://superset.apache.org/admin-docs/configuration/async-queries-celery/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the admin account created on first start: the username is ADMIN_USERNAME and the generated password is ADMIN_PASSWORD in the environment settings. Change the password after the first login."
+    }
+  ]
+}

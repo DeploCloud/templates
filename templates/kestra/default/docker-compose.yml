@@ -1,0 +1,55 @@
+services:
+  kestra:
+    image: kestra/kestra:v2.0.11@sha256:149f8477bfd606465255a800b19051d6743e137541aa962aa84700f59414a66b
+    restart: unless-stopped
+    # The image has no /app/storage, so the new volume is root-owned.
+    user: "root"
+    command: server standalone
+    # Kestra waits up to 5 minutes for running tasks on shutdown.
+    stop_grace_period: 6m
+    expose:
+      - 8080
+    volumes:
+      - kestra-data:/app/storage
+    environment:
+      KESTRA_CONFIGURATION: |
+        datasources:
+          postgres:
+            url: jdbc:postgresql://kestra-db:5432/kestra
+            driverClassName: org.postgresql.Driver
+            username: kestra
+            password: "${POSTGRES_PASSWORD}"
+        kestra:
+          repository:
+            type: postgres
+          queue:
+            type: postgres
+          storage:
+            type: local
+            local:
+              base-path: /app/storage
+          encryption:
+            secret-key: "${KESTRA_ENCRYPTION_KEY}"
+          url: "${KESTRA_URL}"
+    depends_on:
+      kestra-db:
+        condition: service_healthy
+
+  kestra-db:
+    image: postgres:18.7@sha256:2ea8630df176ad090ec92136dee850397c5af8781e4bcf2e4162593691c61bbc
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kestra
+      POSTGRES_USER: kestra
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kestra -d kestra"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - kestra-db:/var/lib/postgresql
+
+volumes:
+  kestra-data: {}
+  kestra-db: {}

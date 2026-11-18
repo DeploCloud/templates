@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "linkding"
+port = 9_090
+host = "${domain}"
+
+[config.env]
+LD_SUPERUSER_NAME = "admin"
+LD_SUPERUSER_PASSWORD = "${admin_password}"
+LD_CSRF_TRUSTED_ORIGINS = "https://${domain}"

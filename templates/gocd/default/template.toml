@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gocd"
+port = 8_153
+host = "${domain}"

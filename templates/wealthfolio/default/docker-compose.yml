@@ -1,0 +1,44 @@
+services:
+  wealthfolio-auth:
+    image: php:8.5.12-alpine@sha256:1ff5b45922ab30f418447c6089dbe2eba5f01e0b2742863d0327ac349305d70f
+    restart: "no"
+    # Wealthfolio only accepts an Argon2id hash, so derive it from the generated password
+    command:
+      - php
+      - -r
+      - getenv("WEALTHFOLIO_PASSWORD") or exit(1); file_put_contents("/auth/password-hash", password_hash(getenv("WEALTHFOLIO_PASSWORD"), PASSWORD_ARGON2ID)) or exit(1);
+    environment:
+      WEALTHFOLIO_PASSWORD: ${WEALTHFOLIO_PASSWORD}
+    volumes:
+      - wealthfolio-auth:/auth
+
+  wealthfolio:
+    image: wealthfolio/wealthfolio:3.13.1@sha256:a51bf08440ec3c517b728e4d5a7d9134cc564e1749eec45bd4f0b7f39573336e
+    restart: unless-stopped
+    command:
+      - /bin/sh
+      - -c
+      - export WF_AUTH_PASSWORD_HASH="$$(cat /auth/password-hash)" && exec /usr/local/bin/wealthfolio-server
+    expose:
+      - 8088
+    environment:
+      WF_LISTEN_ADDR: "0.0.0.0:8088"
+      WF_SECRET_KEY: ${WF_SECRET_KEY}
+      WF_CORS_ALLOW_ORIGINS: ${WF_CORS_ALLOW_ORIGINS}
+    volumes:
+      - wealthfolio-data:/data
+      - wealthfolio-auth:/auth:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:8088/api/v1/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      wealthfolio-auth:
+        condition: service_completed_successfully
+        restart: true
+
+volumes:
+  wealthfolio-data: {}
+  wealthfolio-auth: {}

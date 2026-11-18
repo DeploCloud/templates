@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Portable file server with resumable uploads, deduplication, WebDAV, media indexing and thumbnails, private to an admin account.",
+  "category": "storage",
+  "developedBy": {
+    "label": "9001",
+    "url": "https://github.com/9001"
+  },
+  "links": {
+    "github": "https://github.com/9001/copyparty",
+    "website": "https://copyparty.eu",
+    "docs": [
+      "https://github.com/9001/copyparty/blob/hovudstraum/scripts/docker/README.md",
+      "https://github.com/9001/copyparty/blob/hovudstraum/README.md#accounts-and-volumes",
+      "https://copyparty.eu/cli/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated password in COPYPARTY_ADMIN_PASSWORD (account admin). Visitors without it have no access; add users or public folders by editing copyparty.conf.",
+      "link": "https://github.com/9001/copyparty/blob/hovudstraum/README.md#accounts-and-volumes"
+    }
+  ]
+}

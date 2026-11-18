@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Realtime collaborative markdown editor for notes, documents and slides, backed by PostgreSQL with persistent image uploads.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "HackMD",
+    "url": "https://github.com/hackmdio"
+  },
+  "links": {
+    "github": "https://github.com/hackmdio/codimd",
+    "website": "https://hackmd.io/c/codimd-documentation",
+    "docs": [
+      "https://hackmd.io/s/codimd-docker-deployment",
+      "https://hackmd.io/s/codimd-configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Email sign-up is open to anyone who can reach the instance. After creating your accounts, set CMD_ALLOW_EMAIL_REGISTER to false and redeploy.",
+      "link": "https://hackmd.io/s/codimd-configuration"
+    }
+  ]
+}

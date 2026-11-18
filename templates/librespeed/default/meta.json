@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted HTML5 speed test measuring download, upload, ping and jitter, with saved results and a password-protected stats page.",
+  "category": "networking",
+  "developedBy": {
+    "label": "LibreSpeed",
+    "url": "https://github.com/librespeed"
+  },
+  "links": {
+    "github": "https://github.com/librespeed/speedtest",
+    "website": "https://librespeed.org",
+    "docs": [
+      "https://github.com/librespeed/speedtest/blob/master/doc_docker.md",
+      "https://github.com/librespeed/speedtest/blob/master/doc.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Results are logged with the tester's IP address. Set GDPR_EMAIL to the address shown in the privacy policy for data deletion requests before opening the test to the public.",
+      "link": "https://github.com/librespeed/speedtest/blob/master/doc_docker.md#standalone-mode"
+    }
+  ]
+}

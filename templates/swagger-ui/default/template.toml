@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "swagger-ui"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SWAGGER_JSON_URL = "https://petstore3.swagger.io/api/v3/openapi.json"

@@ -1,0 +1,18 @@
+[variables]
+nextauth_secret = "${base64:36}"
+meili_master_key = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "karakeep"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+NEXTAUTH_URL = "https://${domain}"
+NEXTAUTH_SECRET = "${nextauth_secret}"
+MEILI_MASTER_KEY = "${meili_master_key}"
+OPENAI_API_KEY = ""
+DISABLE_SIGNUPS = "false"

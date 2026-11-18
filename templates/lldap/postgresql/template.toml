@@ -1,0 +1,20 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lldap"
+port = 17_170
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+LLDAP_JWT_SECRET = "${password:48}"
+LLDAP_KEY_SEED = "${password:48}"
+LLDAP_LDAP_BASE_DN = "dc=example,dc=com"
+LLDAP_LDAP_USER_PASS = "${admin_password}"
+LLDAP_HTTP_URL = "https://${domain}"
+DB_PASSWORD = "${db_password}"

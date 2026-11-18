@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Hierarchical note-taking server for building a personal knowledge base, with a web UI and sync for the desktop app.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "TriliumNext",
+    "url": "https://github.com/TriliumNext"
+  },
+  "links": {
+    "github": "https://github.com/TriliumNext/Trilium",
+    "website": "https://triliumnotes.org",
+    "docs": [
+      "https://docs.triliumnotes.org/user-guide/setup/server/installation/docker",
+      "https://docs.triliumnotes.org/user-guide/setup/server/reverse-proxy/trusted-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and set the login password: until then, anyone who reaches the URL can set it."
+    }
+  ]
+}

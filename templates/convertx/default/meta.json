@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted online file converter for images, video, audio, documents, e-books and 3D assets, supporting over a thousand formats.",
+  "category": "media",
+  "developedBy": {
+    "label": "C4illin",
+    "url": "https://github.com/C4illin"
+  },
+  "links": {
+    "github": "https://github.com/C4illin/ConvertX",
+    "docs": [
+      "https://github.com/C4illin/ConvertX#deployment",
+      "https://github.com/C4illin/ConvertX#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who opens the site first can register the first account. Create your account right after deployment; further sign-ups stay disabled unless ACCOUNT_REGISTRATION is set to true.",
+      "link": "https://github.com/C4illin/ConvertX#deployment"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the login cookie is marked secure, so signing in fails on a plain HTTP domain.",
+      "link": "https://github.com/C4illin/ConvertX#deployment"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+[variables]
+secret_key = "${hash:64}"
+bootstrap_token = "${hash:32}"
+db_password = "${hash:32}"
+redis_password = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "jumpserver"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${secret_key}"
+BOOTSTRAP_TOKEN = "${bootstrap_token}"
+LOG_LEVEL = "ERROR"
+DOMAINS = "${domain}"
+SITE_URL = "https://${domain}"
+DB_NAME = "jumpserver"
+DB_USER = "jumpserver"
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"

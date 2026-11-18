@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal autonomous AI agent framework with a web UI, persistent memory, projects, a built-in browser and a Linux workspace where agents run code.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Agent Zero",
+    "url": "https://github.com/agent0ai"
+  },
+  "links": {
+    "github": "https://github.com/agent0ai/agent-zero",
+    "website": "https://agent-zero.ai",
+    "docs": [
+      "https://github.com/agent0ai/agent-zero/blob/main/docs/setup/installation.md",
+      "https://github.com/agent0ai/agent-zero/blob/main/docs/setup/vps-deployment.md",
+      "https://github.com/agent0ai/agent-zero/blob/main/docs/guides/onboarding.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated AUTH_PASSWORD from the environment settings. On first use the onboarding wizard asks for a model provider: you need your own API key, AI account or reachable model server.",
+      "link": "https://github.com/agent0ai/agent-zero/blob/main/docs/guides/onboarding.md"
+    }
+  ]
+}

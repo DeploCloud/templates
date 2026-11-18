@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based spreadsheet built in Rust and WebAssembly: formulas, dynamic arrays, tables, pivot tables, charts, conditional formatting and native XLSX, CSV and TSV open and save.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/gridcraft",
+    "website": "https://getartcraft.com/apps/gridcraft",
+    "docs": [
+      "https://github.com/storytold/gridcraft/blob/main/packaging/web/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Workbooks are not stored on the server: the web app runs in the browser and keeps only preferences there. Save or export your workbooks to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the source of the official release tags."
+    }
+  ]
+}

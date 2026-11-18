@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Caddy web server serving a static site from a persistent volume, configured through an editable Caddyfile for file serving, redirects or reverse proxying.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Caddy",
+    "url": "https://github.com/caddyserver"
+  },
+  "links": {
+    "github": "https://github.com/caddyserver/caddy",
+    "website": "https://caddyserver.com",
+    "docs": [
+      "https://caddyserver.com/docs/caddyfile",
+      "https://caddyserver.com/docs/caddyfile/directives/file_server",
+      "https://caddyserver.com/docs/conventions"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Caddy serves its welcome page until you replace the files in the caddy-site volume (/usr/share/caddy) or edit the Caddyfile. Keep the :80 site address: HTTPS is handled in front of the container.",
+      "link": "https://caddyserver.com/docs/caddyfile"
+    }
+  ]
+}

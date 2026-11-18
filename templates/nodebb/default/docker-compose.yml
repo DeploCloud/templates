@@ -1,0 +1,52 @@
+services:
+  nodebb:
+    image: ghcr.io/nodebb/nodebb:4.16.8@sha256:ab6187c7717b95a2223c58143caf1c8354899f1bc8771f971b08e747a94882c1
+    restart: unless-stopped
+    expose:
+      - 4567
+    environment:
+      # see https://docs.nodebb.org/configuring/envvars/
+      NODEBB_INIT_VERB: setup
+      NODEBB_URL: ${NODEBB_URL}
+      NODEBB_DB: postgres
+      NODEBB_DB_HOST: nodebb-db
+      NODEBB_DB_PORT: "5432"
+      NODEBB_DB_USER: nodebb
+      NODEBB_DB_PASSWORD: ${DB_PASSWORD}
+      NODEBB_DB_NAME: nodebb
+      NODEBB_ADMIN_USERNAME: ${NODEBB_ADMIN_USERNAME}
+      NODEBB_ADMIN_EMAIL: ${NODEBB_ADMIN_EMAIL}
+      NODEBB_ADMIN_PASSWORD: ${NODEBB_ADMIN_PASSWORD}
+      url: ${NODEBB_URL}
+      # trust the reverse proxy on the private network so secure session cookies are set
+      trust_proxy: uniquelocal
+    volumes:
+      - nodebb-config:/opt/config
+      - nodebb-build:/usr/src/app/build
+      - nodebb-uploads:/usr/src/app/public/uploads
+      - nodebb-modules:/usr/src/app/node_modules
+    depends_on:
+      nodebb-db:
+        condition: service_healthy
+
+  nodebb-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nodebb
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: nodebb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nodebb -d nodebb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - nodebb-db:/var/lib/postgresql
+
+volumes:
+  nodebb-config: {}
+  nodebb-build: {}
+  nodebb-uploads: {}
+  nodebb-modules: {}
+  nodebb-db: {}

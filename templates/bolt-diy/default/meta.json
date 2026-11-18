@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "AI coding assistant that generates, runs and edits full-stack web apps in the browser with the LLM provider of your choice.",
+  "category": "ai",
+  "developedBy": {
+    "label": "StackBlitz Labs",
+    "url": "https://github.com/stackblitz-labs"
+  },
+  "links": {
+    "github": "https://github.com/stackblitz-labs/bolt.diy",
+    "website": "https://stackblitz-labs.github.io/bolt.diy/",
+    "docs": [
+      "https://stackblitz-labs.github.io/bolt.diy/",
+      "https://github.com/stackblitz-labs/bolt.diy#configuring-api-keys-and-providers",
+      "https://github.com/stackblitz-labs/bolt.diy/blob/main/FAQ.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no built-in login: anyone who can reach the URL can use the app. Each user adds their own LLM provider API keys under Settings > Providers; keys are stored in that browser's cookies.",
+      "link": "https://github.com/stackblitz-labs/bolt.diy#configuring-api-keys-and-providers"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required. The in-browser WebContainer runtime needs a cross-origin isolated secure context and does not start over plain HTTP.",
+      "link": "https://webcontainers.io/guides/browser-support"
+    }
+  ]
+}

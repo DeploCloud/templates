@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Agent memory server with a REST and MCP API plus web control plane, backed by a separate PostgreSQL database with pgvector.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Vectorize",
+    "url": "https://vectorize.io/"
+  },
+  "links": {
+    "github": "https://github.com/vectorize-io/hindsight",
+    "website": "https://hindsight.vectorize.io/",
+    "docs": [
+      "https://hindsight.vectorize.io/developer/installation",
+      "https://hindsight.vectorize.io/developer/storage",
+      "https://hindsight.vectorize.io/developer/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The stack starts with HINDSIGHT_API_LLM_PROVIDER set to none, which only stores and searches raw chunks. Set the provider (for example openai, anthropic, gemini or ollama) and HINDSIGHT_API_LLM_API_KEY, then redeploy, to enable fact extraction and reflect. A cloud provider with an empty key stops the API from starting.",
+      "link": "https://hindsight.vectorize.io/developer/models"
+    },
+    {
+      "type": "warning",
+      "message": "Sign in to the web UI with HINDSIGHT_CP_ACCESS_KEY. API clients use https://<domain> as base URL and MCP clients https://<domain>/mcp/<bank_id>/, both sending HINDSIGHT_API_TENANT_API_KEY as a Bearer token.",
+      "link": "https://hindsight.vectorize.io/developer/mcp-server"
+    }
+  ]
+}

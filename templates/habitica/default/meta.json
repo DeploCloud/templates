@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Habitica habit tracker that turns tasks and goals into a role-playing game, with a MongoDB replica set for storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "HabitRPG",
+    "url": "https://github.com/HabitRPG"
+  },
+  "links": {
+    "github": "https://github.com/HabitRPG/habitica",
+    "website": "https://habitica.com",
+    "docs": [
+      "https://github.com/awinterstein/habitica#readme",
+      "https://habitica.com/static/faq"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Register it right after deployment, then set INVITE_ONLY to true to stop open sign-ups."
+    },
+    {
+      "type": "info",
+      "message": "Password reset and invitation emails need an SMTP server: set EMAIL_SERVER_URL, EMAIL_SERVER_PORT, EMAIL_SERVER_AUTH_USER, EMAIL_SERVER_AUTH_PASSWORD and ADMIN_EMAIL (the sender address). Only plain or STARTTLS ports such as 587 work, not implicit TLS on 465."
+    },
+    {
+      "type": "info",
+      "message": "MongoDB needs a CPU with AVX support on x86_64 servers."
+    }
+  ]
+}

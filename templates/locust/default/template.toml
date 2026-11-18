@@ -1,0 +1,74 @@
+[variables]
+login_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "locust"
+port = 8_089
+host = "${domain}"
+
+[config.env]
+LOGIN_USERNAME = "admin"
+LOGIN_PASSWORD = "${login_password}"
+FLASK_SECRET_KEY = "${secret:64}"
+
+[[config.mounts]]
+filePath = "locustfile.py"
+content = """from locust import HttpUser, between, task
+
+
+class WebsiteUser(HttpUser):
+    wait_time = between(1, 3)
+
+    @task
+    def index(self):
+        self.client.get("/")
+"""
+
+[[config.mounts]]
+filePath = "web_login.py"
+content = """import hmac
+import os
+
+from flask import Blueprint, redirect, request, session, url_for
+from flask_login import UserMixin, login_user
+from locust import events
+
+USERNAME = os.environ["LOGIN_USERNAME"]
+PASSWORD = os.environ["LOGIN_PASSWORD"]
+
+
+class Operator(UserMixin):
+    def get_id(self):
+        return USERNAME
+
+
+def matches(given, expected):
+    return hmac.compare_digest(given.encode(), expected.encode())
+
+
+@events.init.add_listener
+def setup_login(environment, **_kwargs):
+    web_ui = environment.web_ui
+    if not web_ui:
+        return
+    base_path = environment.parsed_options.web_base_path or ""
+    web_ui.app.config["SECRET_KEY"] = os.environ["FLASK_SECRET_KEY"]
+    web_ui.login_manager.user_loader(lambda user_id: Operator() if user_id == USERNAME else None)
+    web_ui.auth_args = {"username_password_callback": base_path + "/login_submit"}
+
+    blueprint = Blueprint("web_login", __name__, url_prefix=base_path or None)
+
+    @blueprint.route("/login_submit", methods=["POST"])
+    def login_submit():
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+        if matches(username, USERNAME) and matches(password, PASSWORD):
+            login_user(Operator())
+            return redirect(url_for("locust.index"))
+        session["auth_error"] = "Invalid username or password"
+        return redirect(url_for("locust.login"))
+
+    web_ui.app.register_blueprint(blueprint)
+"""

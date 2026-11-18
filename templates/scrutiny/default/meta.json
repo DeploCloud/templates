@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Hard drive S.M.A.R.T monitoring hub with historical trends and real-world failure thresholds, fed by collectors on your servers and backed by InfluxDB.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "AnalogJ",
+    "url": "https://github.com/AnalogJ"
+  },
+  "links": {
+    "github": "https://github.com/AnalogJ/scrutiny",
+    "docs": [
+      "https://github.com/AnalogJ/scrutiny#hubspoke-deployment",
+      "https://github.com/AnalogJ/scrutiny/blob/master/docs/TROUBLESHOOTING_DEVICE_COLLECTOR.md",
+      "https://github.com/AnalogJ/scrutiny/blob/master/docs/TROUBLESHOOTING_INFLUXDB.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This deploys the web hub only and the dashboard stays empty until data arrives. Run the Scrutiny collector on every machine whose disks you want to monitor, with COLLECTOR_API_ENDPOINT set to https://<your domain>.",
+      "link": "https://github.com/AnalogJ/scrutiny#hubspoke-deployment"
+    },
+    {
+      "type": "warning",
+      "message": "Scrutiny has no login: anyone who can reach the domain can view the dashboard and post data to its API."
+    }
+  ]
+}

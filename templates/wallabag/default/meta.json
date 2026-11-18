@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Read-it-later service that saves web pages as clean articles to tag, annotate and read in the browser, mobile apps or API, backed by a built-in SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "wallabag",
+    "url": "https://github.com/wallabag"
+  },
+  "links": {
+    "github": "https://github.com/wallabag/wallabag",
+    "website": "https://wallabag.org",
+    "docs": [
+      "https://doc.wallabag.org/admin/parameters/",
+      "https://github.com/wallabag/docker#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates the account wallabag with the password wallabag. Log in and change that password right away from Config > Password.",
+      "link": "https://doc.wallabag.org/user/configuration/password/"
+    }
+  ]
+}

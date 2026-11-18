@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted research notebook for collecting PDFs, web pages, audio and video, chatting with those sources and generating podcasts with the AI provider you choose.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Luis Novo",
+    "url": "https://github.com/lfnovo"
+  },
+  "links": {
+    "github": "https://github.com/lfnovo/open-notebook",
+    "website": "https://www.open-notebook.ai",
+    "docs": [
+      "https://github.com/lfnovo/open-notebook/blob/main/docs/1-INSTALLATION/docker-compose.md",
+      "https://github.com/lfnovo/open-notebook/blob/main/docs/5-CONFIGURATION/environment-reference.md",
+      "https://github.com/lfnovo/open-notebook/blob/main/docs/4-AI-PROVIDERS/index.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated OPEN_NOTEBOOK_PASSWORD value from the environment. Then add an AI provider API key (or a local model server URL) under Manage, Models, with at least one language and one embedding model.",
+      "link": "https://github.com/lfnovo/open-notebook/blob/main/docs/4-AI-PROVIDERS/index.md"
+    }
+  ]
+}

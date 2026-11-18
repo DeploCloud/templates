@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Interactive documentation for OpenAPI and Swagger definitions, with a browser console to explore and try out API operations.",
+  "category": "development",
+  "developedBy": {
+    "label": "SmartBear",
+    "url": "https://github.com/swagger-api"
+  },
+  "links": {
+    "github": "https://github.com/swagger-api/swagger-ui",
+    "website": "https://swagger.io/open-source/swagger-ui/",
+    "docs": [
+      "https://github.com/swagger-api/swagger-ui/blob/main/docs/usage/installation.md#docker",
+      "https://github.com/swagger-api/swagger-ui/blob/main/docs/usage/configuration.md#docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set SWAGGER_JSON_URL to the URL of your own OpenAPI definition; it opens the public Petstore example by default. The API serving the definition must allow CORS from this domain.",
+      "link": "https://github.com/swagger-api/swagger-ui/blob/main/docs/usage/configuration.md#docker"
+    }
+  ]
+}

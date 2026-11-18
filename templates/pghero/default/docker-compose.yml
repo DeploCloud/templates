@@ -1,0 +1,18 @@
+services:
+  pghero:
+    image: ankane/pghero:v4.1.0@sha256:c4860f72eeb7a5fd44e6f1e664414be14910587f077d3daa7851b4df8aa46306
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PGHERO_USERNAME: ${PGHERO_USERNAME}
+      PGHERO_PASSWORD: ${PGHERO_PASSWORD}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      PGHERO_TZ: ${PGHERO_TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s

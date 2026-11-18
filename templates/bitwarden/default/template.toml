@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bitwarden"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+BW_DOMAIN = "${domain}"
+DB_PASSWORD = "${db_password}"
+BW_INSTALLATION_ID = "${uuid}"
+BW_INSTALLATION_KEY = ""
+DISABLE_USER_REGISTRATION = "false"
+ADMIN_EMAILS = ""
+SMTP_FROM = "no-reply@${domain}"
+SMTP_HOST = ""
+SMTP_PORT = "587"
+SMTP_SSL = "false"
+SMTP_STARTTLS = "true"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""

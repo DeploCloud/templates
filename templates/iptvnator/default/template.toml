@@ -1,0 +1,14 @@
+[variables]
+access_token = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "iptvnator"
+port = 80
+host = "${domain}"
+
+[config.env]
+CLIENT_URL = "https://${domain}"
+IPTVNATOR_ACCESS_TOKEN = "${access_token}"

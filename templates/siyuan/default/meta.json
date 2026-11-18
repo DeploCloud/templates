@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal knowledge management app with block-level references, two-way links and Markdown WYSIWYG editing, served as a password-protected web UI.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "SiYuan",
+    "url": "https://github.com/siyuan-note"
+  },
+  "links": {
+    "github": "https://github.com/siyuan-note/siyuan",
+    "website": "https://b3log.org/siyuan/en/",
+    "docs": [
+      "https://github.com/siyuan-note/siyuan#docker-hosting",
+      "https://siyuan-en.b3log.org/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI is locked with a generated lock screen password. Read SIYUAN_ACCESS_AUTH_CODE from the environment variables to sign in."
+    }
+  ]
+}

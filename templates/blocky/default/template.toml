@@ -1,0 +1,37 @@
+[config]
+
+[[config.domains]]
+serviceName = "blocky"
+port = 4_000
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.yml"
+content = """upstreams:
+  init:
+    strategy: fast
+  groups:
+    default:
+      - https://1.1.1.1/dns-query
+      - https://dns.quad9.net/dns-query
+blocking:
+  denylists:
+    ads:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+  clientGroupsBlock:
+    default:
+      - ads
+  loading:
+    strategy: fast
+    downloads:
+      cachePath: /app/cache
+caching:
+  prefetching: true
+pprof:
+  enable: false
+queryLog:
+  type: none
+ports:
+  dns: 53
+  http: 4000
+"""

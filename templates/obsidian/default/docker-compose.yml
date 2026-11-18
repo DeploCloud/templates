@@ -1,0 +1,18 @@
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:v1.15.1-ls153@sha256:de6f29048621ee475bf14a7554eabf4799d83b2181566a4fdc9f58c009d6a1dc
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - obsidian-config:/config
+
+volumes:
+  obsidian-config: {}

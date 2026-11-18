@@ -1,0 +1,37 @@
+services:
+  gocd:
+    image: gocd/gocd-server:v26.1.0@sha256:720d1012b93f740faae8159ee4854194229de05cf7228a46ac0ba64a2aec4460
+    restart: unless-stopped
+    expose:
+      - 8153
+    volumes:
+      - gocd-data:/godata
+      - gocd-home:/home/go
+      - gocd-work:/go-working-dir
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8153/go/api/v1/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 300s
+
+  gocd-agent:
+    image: gocd/gocd-agent-wolfi:v26.1.0@sha256:753b9f696f4517dda535ea1cfde02c60d9e1b99d4c673a9160225e5c849c142e
+    restart: unless-stopped
+    environment:
+      GO_SERVER_URL: http://gocd:8153/go
+    volumes:
+      - gocd-agent-data:/godata
+      - gocd-agent-home:/home/go
+      - gocd-agent-work:/go-working-dir
+    depends_on:
+      gocd:
+        condition: service_healthy
+
+volumes:
+  gocd-data: {}
+  gocd-home: {}
+  gocd-work: {}
+  gocd-agent-data: {}
+  gocd-agent-home: {}
+  gocd-agent-work: {}

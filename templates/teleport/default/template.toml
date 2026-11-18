@@ -1,0 +1,56 @@
+[config]
+
+[[config.domains]]
+serviceName = "teleport-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "teleport.yaml"
+content = """version: v3
+teleport:
+  nodename: teleport
+  data_dir: /var/lib/teleport
+  log:
+    output: stderr
+    severity: INFO
+    format:
+      output: text
+auth_service:
+  enabled: true
+  cluster_name: ${domain}
+  listen_addr: 0.0.0.0:3025
+  proxy_listener_mode: multiplex
+ssh_service:
+  enabled: false
+proxy_service:
+  enabled: true
+  web_listen_addr: 0.0.0.0:3080
+  public_addr: ${domain}:443
+  trust_x_forwarded_for: true
+"""
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """# Teleport only serves TLS, so this hop re-encrypts traffic to its self-signed web listener
+{
+	admin off
+	auto_https off
+	persist_config off
+	servers {
+		trusted_proxies static private_ranges
+		trusted_proxies_strict
+	}
+}
+
+:80 {
+	reverse_proxy https://teleport:3080 {
+		# Teleport rejects a multi-hop X-Forwarded-For list
+		header_up X-Forwarded-For {client_ip}
+		transport http {
+			tls_insecure_skip_verify
+			versions 1.1
+		}
+	}
+}
+"""

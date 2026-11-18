@@ -1,0 +1,36 @@
+services:
+  phpmyadmin:
+    image: phpmyadmin:5.2.3@sha256:e4b3eb5305cd42d21512bb55def2bab52625d56df927ad4ee1864a9354c84d40
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PMA_HOST: phpmyadmin-db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: ${UPLOAD_LIMIT}
+      TZ: ${TZ}
+      HIDE_PHP_VERSION: "true"
+    volumes:
+      - phpmyadmin-sessions:/sessions
+    depends_on:
+      phpmyadmin-db:
+        condition: service_healthy
+
+  phpmyadmin-db:
+    image: mariadb:12.3.3@sha256:4ebbcf100a3ba320766dfa0e1af008df12261301db6ef72798c7650f70794aed
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - phpmyadmin-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  phpmyadmin-sessions: {}
+  phpmyadmin-db: {}

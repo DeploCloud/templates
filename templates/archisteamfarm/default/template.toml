@@ -1,0 +1,13 @@
+[variables]
+ipc_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "archisteamfarm"
+port = 1_242
+host = "${domain}"
+
+[config.env]
+ASF_IPC_PASSWORD = "${ipc_password}"

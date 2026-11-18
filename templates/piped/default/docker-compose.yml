@@ -1,0 +1,76 @@
+services:
+  piped-frontend:
+    image: 1337kavin/piped-frontend:latest@sha256:762a8d18f458a4e74fb581dc01c711e83624142f392132db7f4620fdfddad4f1
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BACKEND_HOSTNAME: ${BACKEND_HOSTNAME}
+      HTTP_MODE: https
+    depends_on:
+      - piped
+
+  piped:
+    image: 1337kavin/piped:latest@sha256:7747e19ee501c0a3afa94dd3d6e982dd4247f1babe03fb515b4a0f0b87f82b2e
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PORT: "8080"
+      HTTP_WORKERS: "2"
+      API_URL: ${API_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      PROXY_PART: ${PROXY_PART}
+      BG_HELPER_URL: http://piped-bg-helper:3000
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+      HIBERNATE__CONNECTION__URL: jdbc:postgresql://piped-db:5432/piped
+      HIBERNATE__CONNECTION__DRIVER_CLASS: org.postgresql.Driver
+      HIBERNATE__DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      HIBERNATE__CONNECTION__USERNAME: piped
+      HIBERNATE__CONNECTION__PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      piped-db:
+        condition: service_healthy
+      piped-bg-helper:
+        condition: service_started
+
+  piped-proxy:
+    image: 1337kavin/piped-proxy:latest@sha256:0f051d3077d03268a7da8861ed651b4cee65e4d053027a15877da674a0b1ddab
+    restart: unless-stopped
+    expose:
+      - 8080
+
+  # Strips forwarded client headers so viewer IPs never reach YouTube
+  piped-proxy-nginx:
+    image: nginx:1.31.9-alpine@sha256:90b6bd2aec278b16b98221d64deb1d6d35d164567f507ab0716e6053878315aa
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./ytproxy.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - piped-proxy
+
+  piped-bg-helper:
+    image: 1337kavin/bg-helper-server:latest@sha256:4d15ef472ab6c3eae86bf0e1ea5ac42f38190cf99e659567824fb936fcbf7a97
+    restart: unless-stopped
+    expose:
+      - 3000
+
+  piped-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: piped
+      POSTGRES_USER: piped
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - piped-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U piped -d piped"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  piped-db-data:

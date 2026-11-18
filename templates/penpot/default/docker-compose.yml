@@ -1,0 +1,120 @@
+services:
+  penpot-frontend:
+    image: penpotapp/frontend:2.19.3@sha256:d22ce9f6f4859adbc726f45965da0d4b083817b0c13ca4a49aa3e927901cccb9
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - penpot-assets:/opt/data/assets
+    environment:
+      PENPOT_FLAGS: ${PENPOT_FLAGS}
+      PENPOT_PUBLIC_URI: ${PENPOT_PUBLIC_URI}
+      PENPOT_ADMIN_CONSOLE_URI: http://penpot-admin-console:3000
+    depends_on:
+      penpot-backend:
+        condition: service_healthy
+      penpot-exporter:
+        condition: service_started
+      penpot-admin-console:
+        condition: service_started
+      penpot-mcp:
+        condition: service_started
+
+  penpot-backend:
+    image: penpotapp/backend:2.19.3@sha256:31ebb4dabd104c2ed3ae736dcf5a6043a0660ddaac7bcd8501c28036fb4b578c
+    restart: unless-stopped
+    volumes:
+      - penpot-assets:/opt/data/assets
+    environment:
+      PENPOT_FLAGS: ${PENPOT_FLAGS}
+      PENPOT_PUBLIC_URI: ${PENPOT_PUBLIC_URI}
+      PENPOT_SECRET_KEY: ${PENPOT_SECRET_KEY}
+      PENPOT_DATABASE_URI: postgresql://penpot-db/penpot
+      PENPOT_DATABASE_USERNAME: penpot
+      PENPOT_DATABASE_PASSWORD: ${PENPOT_DB_PASSWORD}
+      PENPOT_REDIS_URI: redis://penpot-valkey/0
+      PENPOT_ADMIN_CONSOLE_URI: http://penpot-admin-console:3000
+      PENPOT_OBJECTS_STORAGE_BACKEND: fs
+      PENPOT_OBJECTS_STORAGE_FS_DIRECTORY: /opt/data/assets
+      PENPOT_SMTP_DEFAULT_FROM: ${PENPOT_SMTP_DEFAULT_FROM}
+      PENPOT_SMTP_DEFAULT_REPLY_TO: ${PENPOT_SMTP_DEFAULT_REPLY_TO}
+      PENPOT_SMTP_HOST: ${PENPOT_SMTP_HOST}
+      PENPOT_SMTP_PORT: ${PENPOT_SMTP_PORT}
+      PENPOT_SMTP_USERNAME: ${PENPOT_SMTP_USERNAME}
+      PENPOT_SMTP_PASSWORD: ${PENPOT_SMTP_PASSWORD}
+      PENPOT_SMTP_TLS: ${PENPOT_SMTP_TLS}
+      PENPOT_SMTP_SSL: ${PENPOT_SMTP_SSL}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:6060/readyz"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    depends_on:
+      penpot-db:
+        condition: service_healthy
+      penpot-valkey:
+        condition: service_healthy
+
+  penpot-exporter:
+    image: penpotapp/exporter:2.19.3@sha256:1705d70e79f3530b3cee65d0cdbee3c5f44f26d62f5ad43bac7945dce4c7b653
+    restart: unless-stopped
+    environment:
+      PENPOT_FLAGS: ${PENPOT_FLAGS}
+      PENPOT_PUBLIC_URI: ${PENPOT_PUBLIC_URI}
+      PENPOT_SECRET_KEY: ${PENPOT_SECRET_KEY}
+      PENPOT_INTERNAL_URI: http://penpot-frontend:8080
+      PENPOT_REDIS_URI: redis://penpot-valkey/0
+    depends_on:
+      penpot-valkey:
+        condition: service_healthy
+
+  penpot-admin-console:
+    image: penpotapp/admin-console:2.19.3@sha256:27c7ae5d7c061f2e07ddbad393316fa50e3d1d6873f1c5c807740316f29f3715
+    restart: unless-stopped
+    environment:
+      PENPOT_PUBLIC_URI: ${PENPOT_PUBLIC_URI}
+      PENPOT_SECRET_KEY: ${PENPOT_SECRET_KEY}
+      PENPOT_DATABASE_URI: postgresql://penpot-db/penpot
+      PENPOT_DATABASE_USERNAME: penpot
+      PENPOT_DATABASE_PASSWORD: ${PENPOT_DB_PASSWORD}
+      PENPOT_INTERNAL_URI: http://penpot-frontend:8080
+    depends_on:
+      penpot-db:
+        condition: service_healthy
+
+  penpot-mcp:
+    image: penpotapp/mcp:2.19.3@sha256:01ee7620262379c337a9f77e3149d860330d261ffc640d89af60dc8bd45aef94
+    restart: unless-stopped
+
+  penpot-db:
+    image: postgres:17.12@sha256:58b1ad1807d86ca43d0e37fded9f0a899a7ab8763fa9576a63059a52de223e1b
+    restart: unless-stopped
+    stop_signal: SIGINT
+    volumes:
+      - penpot-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_INITDB_ARGS: --data-checksums
+      POSTGRES_DB: penpot
+      POSTGRES_USER: penpot
+      POSTGRES_PASSWORD: ${PENPOT_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U penpot -d penpot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  penpot-valkey:
+    image: valkey/valkey:8.1.11@sha256:8f836008e0986c36adf50da714c7060cf689dbb335f61fe077939d90fa650809
+    restart: unless-stopped
+    environment:
+      VALKEY_EXTRA_FLAGS: --maxmemory 128mb --maxmemory-policy volatile-lfu
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  penpot-assets: {}
+  penpot-db-data: {}

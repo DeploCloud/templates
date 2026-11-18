@@ -1,0 +1,15 @@
+[variables]
+influxdb_password = "${password:32}"
+influxdb_token = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "scrutiny"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+INFLUXDB_PASSWORD = "${influxdb_password}"
+INFLUXDB_TOKEN = "${influxdb_token}"

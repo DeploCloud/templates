@@ -1,0 +1,22 @@
+services:
+  dumbdo:
+    image: dumbwareio/dumbdo:latest@sha256:03a01d15847ba59ed845a3bcf60bba22889e1d27fc9a66ab31ccd7195b52efcc
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - dumbdo-data:/app/data
+    environment:
+      NODE_ENV: production
+      DUMBDO_PIN: ${DUMBDO_PIN}
+      DUMBDO_SITE_TITLE: ${DUMBDO_SITE_TITLE}
+      SINGLE_LIST: ${SINGLE_LIST}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:3000 || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  dumbdo-data: {}

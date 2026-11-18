@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Anti-scraper reverse proxy that challenges browsers with proof-of-work before forwarding them to a bundled static site or any service you point it at.",
+  "category": "security",
+  "developedBy": {
+    "label": "Techaro",
+    "url": "https://techaro.lol/"
+  },
+  "links": {
+    "github": "https://github.com/TecharoHQ/anubis",
+    "website": "https://anubis.techaro.lol/",
+    "docs": [
+      "https://anubis.techaro.lol/docs/admin/installation",
+      "https://anubis.techaro.lol/docs/admin/environments/docker-compose",
+      "https://anubis.techaro.lol/docs/admin/policies"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anubis protects the bundled NGINX welcome page until you replace the files in the anubis-site volume or set TARGET to the internal URL of the service you want to protect.",
+      "link": "https://anubis.techaro.lol/docs/admin/installation"
+    }
+  ]
+}

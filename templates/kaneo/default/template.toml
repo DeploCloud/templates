@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+auth_secret = "${hash:64}"
+notification_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kaneo"
+port = 5_173
+host = "${domain}"
+
+[config.env]
+KANEO_CLIENT_URL = "https://${domain}"
+POSTGRES_DB = "kaneo"
+POSTGRES_USER = "kaneo"
+POSTGRES_PASSWORD = "${db_password}"
+AUTH_SECRET = "${auth_secret}"
+NOTIFICATION_SECRET_ENCRYPTION_KEY = "${notification_key}"
+TRUSTED_PROXIES = "127.0.0.0/8,::1/128,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

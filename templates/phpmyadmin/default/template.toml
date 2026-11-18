@@ -1,0 +1,15 @@
+[variables]
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "phpmyadmin"
+port = 80
+host = "${domain}"
+
+[config.env]
+MARIADB_ROOT_PASSWORD = "${db_root_password}"
+UPLOAD_LIMIT = "256M"
+TZ = "UTC"

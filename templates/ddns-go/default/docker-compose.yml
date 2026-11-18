@@ -1,0 +1,19 @@
+services:
+  ddns-go:
+    image: jeessy/ddns-go:v6.17.9@sha256:17bfd1e05df8fbfdf0a5a2fcd931fef2026e91dd5e3b6377b4590dab2759a28a
+    restart: unless-stopped
+    expose:
+      - 9876
+    environment:
+      TZ: UTC
+    volumes:
+      - ddns-go-data:/root
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:9876/login"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  ddns-go-data: {}

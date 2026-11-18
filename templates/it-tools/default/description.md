@@ -1,0 +1,1 @@
+IT Tools is a collection of developer and IT utilities such as encoders, converters, token and UUID generators, hash functions and network calculators. The official image serves the static web app with nginx on port 80. All tools run in the browser, so the stack is stateless and needs no volumes, accounts or setup.

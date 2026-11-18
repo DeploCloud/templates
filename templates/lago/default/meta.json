@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source usage-based billing and metering: API, web UI, Sidekiq worker, clock, PDF renderer, PostgreSQL and Redis.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Lago",
+    "url": "https://getlago.com/"
+  },
+  "links": {
+    "github": "https://github.com/getlago/lago",
+    "website": "https://getlago.com/",
+    "docs": [
+      "https://getlago.com/docs/guide/lago-self-hosted/docker",
+      "https://getlago.com/docs/api-reference/intro"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Public sign-up is disabled. Sign in with LAGO_ORG_USER_EMAIL and the generated LAGO_ORG_USER_PASSWORD from the environment settings. Set your own email there before the first deploy: the organization and admin user are created only on the first start, and later changes to these values are ignored.",
+      "link": "https://getlago.com/docs/guide/lago-self-hosted/docker"
+    }
+  ]
+}

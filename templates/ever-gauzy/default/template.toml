@@ -1,0 +1,54 @@
+[variables]
+db_password = "${password:32}"
+super_admin_password = "${password:24}"
+admin_password = "${password:24}"
+employee_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ever-gauzy"
+port = 4_200
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "ever-gauzy-api"
+port = 3_000
+host = "${domain}"
+path = "/api"
+
+[[config.domains]]
+serviceName = "ever-gauzy-api"
+port = 3_000
+host = "${domain}"
+path = "/graphql"
+
+[[config.domains]]
+serviceName = "ever-gauzy-api"
+port = 3_000
+host = "${domain}"
+path = "/public"
+
+[[config.domains]]
+serviceName = "ever-gauzy-api"
+port = 3_000
+host = "${domain}"
+path = "/swg"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+DB_NAME = "gauzy"
+DB_USER = "gauzy"
+DB_PASS = "${db_password}"
+JWT_SECRET = "${hash:64}"
+JWT_REFRESH_TOKEN_SECRET = "${hash:64}"
+JWT_VERIFICATION_TOKEN_SECRET = "${hash:64}"
+EXPRESS_SESSION_SECRET = "${hash:64}"
+DEMO_SUPER_ADMIN_EMAIL = "admin@ever.co"
+DEMO_SUPER_ADMIN_PASSWORD = "${super_admin_password}"
+DEMO_ADMIN_PASSWORD = "${admin_password}"
+DEMO_EMPLOYEE_PASSWORD = "${employee_password}"
+APP_USER_REGISTRATION = "false"
+ALLOW_TENANTS_REGISTRATION = "false"

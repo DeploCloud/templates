@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted URL shortener with click statistics, a bookmarklet and an API, backed by a bundled MySQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "YOURLS",
+    "url": "https://github.com/YOURLS"
+  },
+  "links": {
+    "github": "https://github.com/YOURLS/YOURLS",
+    "website": "https://yourls.org",
+    "docs": [
+      "https://yourls.org/docs/guide/install",
+      "https://yourls.org/docs/guide/essentials/configuration",
+      "https://github.com/YOURLS/images/blob/main/images/yourls/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After the first deploy open https://<your-domain>/admin/ and click \"Install YOURLS\" to create the database tables. The root URL shows an error until then. Log in with YOURLS_USER and YOURLS_PASS from the environment."
+    }
+  ]
+}

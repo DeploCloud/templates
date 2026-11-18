@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted IP toolbox: IP and geolocation lookup, WebRTC and DNS leak tests, speed test, MTR, Whois and connectivity checks.",
+  "category": "networking",
+  "developedBy": {
+    "label": "jason5ng32",
+    "url": "https://github.com/jason5ng32"
+  },
+  "links": {
+    "github": "https://github.com/jason5ng32/MyIP",
+    "website": "https://ipcheck.ing",
+    "docs": [
+      "https://docs.ipcheck.ing/developer/getting-started/maxmind-setup",
+      "https://docs.ipcheck.ing/developer/reference/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "IP geolocation and ASN lookups need free MaxMind GeoLite2 credentials. Set MAXMIND_ACCOUNT_ID and MAXMIND_LICENSE_KEY in the environment and redeploy; without them the MaxMind source returns errors.",
+      "link": "https://docs.ipcheck.ing/developer/getting-started/maxmind-setup"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight HTTP file server with directory listing, uploads, folder creation, deletion and archive downloads behind basic auth.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Sven-Hendrik Haase",
+    "url": "https://github.com/svenstaro"
+  },
+  "links": {
+    "github": "https://github.com/svenstaro/miniserve",
+    "docs": [
+      "https://github.com/svenstaro/miniserve#usage",
+      "https://github.com/svenstaro/miniserve#how-to-install"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the user admin and the generated password found in the MINISERVE_AUTH environment variable (format admin:password)."
+    }
+  ]
+}

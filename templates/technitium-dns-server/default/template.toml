@@ -1,0 +1,21 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dns-server"
+port = 5_380
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "dns-server"
+port = 80
+host = "${domain}"
+path = "/dns-query"
+
+[config.env]
+DNS_SERVER_DOMAIN = "${domain}"
+DNS_SERVER_ADMIN_PASSWORD = "${admin_password}"

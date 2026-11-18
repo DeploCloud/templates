@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source screen recording and video sharing platform, with MySQL, S3-compatible storage and an FFmpeg media server.",
+  "category": "media",
+  "developedBy": {
+    "label": "Cap Software",
+    "url": "https://cap.so"
+  },
+  "links": {
+    "github": "https://github.com/CapSoftware/Cap",
+    "website": "https://cap.so",
+    "docs": [
+      "https://cap.so/docs/self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Email is not configured by default, so sign-in codes are printed in the cap service logs. Set RESEND_API_KEY and RESEND_FROM_DOMAIN to send them by email.",
+      "link": "https://cap.so/docs/self-hosting#email-configuration"
+    },
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can create an account. Set CAP_ALLOWED_SIGNUP_DOMAINS to a comma-separated list of your email domains to restrict sign-ups.",
+      "link": "https://cap.so/docs/self-hosting#restricting-who-can-sign-in"
+    }
+  ]
+}

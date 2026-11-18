@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "ONLYOFFICE Document Server: online editors for documents, spreadsheets, presentations and PDF forms with real-time co-editing, for use with Nextcloud, Seafile and other integrations.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ascensio System SIA",
+    "url": "https://www.onlyoffice.com"
+  },
+  "links": {
+    "github": "https://github.com/ONLYOFFICE/DocumentServer",
+    "website": "https://www.onlyoffice.com/docs",
+    "docs": [
+      "https://helpcenter.onlyoffice.com/docs/installation/community/docker/installing/install",
+      "https://github.com/ONLYOFFICE/Docker-DocumentServer",
+      "https://api.onlyoffice.com/docs/docs-api/additional-api/signature"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Document Server has no file storage or user accounts of its own. Connect it from Nextcloud, Seafile or another integration using this domain and the generated JWT_SECRET value.",
+      "link": "https://api.onlyoffice.com/docs/docs-api/additional-api/signature"
+    }
+  ]
+}

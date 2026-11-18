@@ -1,0 +1,64 @@
+services:
+  bookorbit-init:
+    image: ghcr.io/bookorbit/bookorbit:3.9.0@sha256:79cd9c66c990a82944514e3e82d5be5987f21eda96cb37a378ed1484043716fc
+    restart: "no"
+    user: "0:0"
+    # /books starts root-owned; the app writes uploads there as PUID:PGID
+    entrypoint: ["chown", "1000:1000", "/books"]
+    volumes:
+      - bookorbit-books:/books
+
+  bookorbit:
+    image: ghcr.io/bookorbit/bookorbit:3.9.0@sha256:79cd9c66c990a82944514e3e82d5be5987f21eda96cb37a378ed1484043716fc
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      POSTGRES_HOST: bookorbit-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      SETUP_BOOTSTRAP_TOKEN: ${SETUP_BOOTSTRAP_TOKEN}
+      APP_URL: ${APP_URL}
+      CLIENT_URL: ${APP_URL}
+      TZ: ${TZ}
+      PUID: "1000"
+      PGID: "1000"
+      LIBRARY_BROWSE_ROOT: /books
+      EMAIL_ENCRYPTION_KEY: ${EMAIL_ENCRYPTION_KEY}
+      MIGRATION_ENCRYPTION_KEY: ${MIGRATION_ENCRYPTION_KEY}
+      BOOK_REQUEST_ENCRYPTION_KEY: ${BOOK_REQUEST_ENCRYPTION_KEY}
+      AI_ENCRYPTION_KEY: ${AI_ENCRYPTION_KEY}
+    volumes:
+      - bookorbit-books:/books
+      - bookorbit-data:/data
+    depends_on:
+      bookorbit-init:
+        condition: service_completed_successfully
+      bookorbit-db:
+        condition: service_healthy
+
+  bookorbit-db:
+    image: pgvector/pgvector:0.8.7-pg18@sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - bookorbit-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  bookorbit-books: {}
+  bookorbit-data: {}
+  bookorbit-db: {}

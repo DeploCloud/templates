@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Peer-to-peer file transfers in the browser over WebRTC: files go straight from the sender to the recipient and are never stored on the server.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Alex Kern",
+    "url": "https://kern.io"
+  },
+  "links": {
+    "github": "https://github.com/kern/filepizza",
+    "website": "https://file.pizza",
+    "docs": [
+      "https://github.com/kern/filepizza#configuration",
+      "https://github.com/kern/filepizza/blob/main/docs/file-transfer-protocol.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    },
+    {
+      "type": "warning",
+      "message": "Peers are connected through the public PeerJS signaling server (0.peerjs.com) and a public STUN server. No TURN relay is included, so transfers between peers behind strict NAT can fail."
+    }
+  ]
+}

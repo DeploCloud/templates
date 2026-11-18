@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Video conversion server for VERT, built in Rust on FFmpeg, running in CPU software-encoding mode behind HTTPS.",
+  "category": "media",
+  "developedBy": {
+    "label": "VERT",
+    "url": "https://github.com/VERT-sh"
+  },
+  "links": {
+    "github": "https://github.com/VERT-sh/vertd",
+    "website": "https://vert.sh",
+    "docs": [
+      "https://github.com/VERT-sh/vertd/blob/main/docs/DOCKER_SETUP.md",
+      "https://github.com/VERT-sh/vertd/blob/main/docs/GETTING_STARTED.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "vertd is an API with no web UI and no authentication. Open VERT, go to Settings > Video conversion server, set Instance to Custom and enter this app's https URL. Anyone who knows the URL can submit conversions.",
+      "link": "https://github.com/VERT-sh/vertd/blob/main/docs/DOCKER_SETUP.md"
+    },
+    {
+      "type": "info",
+      "message": "No GPU is passed to the container, so videos are encoded on the CPU with software encoders, which is slower than hardware acceleration."
+    }
+  ]
+}

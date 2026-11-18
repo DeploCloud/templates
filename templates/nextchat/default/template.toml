@@ -1,0 +1,15 @@
+[variables]
+access_code = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nextchat"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+OPENAI_API_KEY = ""
+BASE_URL = ""
+CODE = "${access_code}"

@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app that converts e-books into chaptered audiobooks with dozens of TTS engines, optional voice cloning and over 1600 languages, running on CPU.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Drew Thomasson",
+    "url": "https://github.com/DrewThomasson"
+  },
+  "links": {
+    "github": "https://github.com/DrewThomasson/ebook2audiobook",
+    "docs": [
+      "https://github.com/DrewThomasson/ebook2audiobook#docker",
+      "https://github.com/DrewThomasson/ebook2audiobook#hardware-requirements"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web interface has no login: anyone who knows the URL can use it and download the generated audiobooks. Restrict access if the instance is public."
+    },
+    {
+      "type": "info",
+      "message": "This variant runs on CPU only. Modern TTS engines such as XTTSv2 are very slow without a GPU; lighter engines such as YourTTS or Tacotron2 convert faster. Plan for at least 2 GB of RAM (8 GB recommended) and several GB of disk for downloaded models.",
+      "link": "https://github.com/DrewThomasson/ebook2audiobook#hardware-requirements"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+[variables]
+status_domain = "status.${domain}"
+auth_secret = "${base64:48}"
+cron_secret = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openstatus"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "openstatus-status-page"
+port = 3_000
+host = "${status_domain}"
+
+[config.env]
+AUTH_SECRET = "${auth_secret}"
+CRON_SECRET = "${cron_secret}"
+NEXT_PUBLIC_URL = "https://${domain}"
+RESEND_API_KEY = "re_self_hosted_placeholder"

@@ -1,0 +1,34 @@
+services:
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:2026.11.5@sha256:9c74476e3e79b5a1595fd5cf904286eaba3471c10c640aaa9a361a89b41d0882
+    restart: unless-stopped
+    expose:
+      - 18789
+    # Seed the config once (mode, public origin, proxy trust), then start through the image entrypoint so Doctor still runs.
+    command:
+      - sh
+      - -c
+      - |
+        [ -f /home/node/.openclaw/openclaw.json ] || install -m 600 /etc/openclaw/openclaw.json /home/node/.openclaw/openclaw.json
+        exec node /app/docker-entrypoint.mjs node openclaw.mjs gateway --bind lan --port 18789
+    environment:
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN}
+    volumes:
+      - openclaw-state:/home/node/.openclaw
+      - openclaw-auth-secrets:/home/node/.config/openclaw
+      - ./openclaw.json:/etc/openclaw/openclaw.json:ro
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "dist/docker-healthcheck.js"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  openclaw-state: {}
+  openclaw-auth-secrets: {}

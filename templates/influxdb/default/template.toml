@@ -1,0 +1,17 @@
+[variables]
+admin_token = "apiv3_${password:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "influxdb"
+port = 8_181
+host = "${domain}"
+
+[config.env]
+INFLUXDB3_AUTH_TOKEN = "${admin_token}"
+
+[[config.mounts]]
+filePath = "admin-token.json"
+content = """{"token": "${admin_token}", "name": "_admin"}
+"""

@@ -1,0 +1,18 @@
+services:
+  darktable:
+    image: lscr.io/linuxserver/darktable:25.6.2-1-ls233@sha256:35535cd2b8787253981c0946bcde3d6126006ad2475c243982eacfdfecc19ec6
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - darktable-config:/config
+
+volumes:
+  darktable-config: {}

@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted photo gallery that indexes a photo folder into albums, a timeline, places and faces, backed by MariaDB.",
+  "category": "media",
+  "developedBy": {
+    "label": "Photoview",
+    "url": "https://github.com/photoview"
+  },
+  "links": {
+    "github": "https://github.com/photoview/photoview",
+    "website": "https://photoview.github.io/",
+    "docs": [
+      "https://photoview.github.io/en/docs/installation-docker/",
+      "https://photoview.github.io/en/docs/installation-environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin account on the setup page: open the app right after deploying and enter /photos as the photo path."
+    },
+    {
+      "type": "warning",
+      "message": "Photoview has no upload feature. Copy your photos and videos into the photoview-photos volume (mounted read-only at /photos), then run a scan from the settings page."
+    }
+  ]
+}

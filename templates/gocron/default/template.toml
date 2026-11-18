@@ -1,0 +1,63 @@
+[config]
+
+[[config.domains]]
+serviceName = "gocron"
+port = 8_156
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """# GoCron configuration: edit the jobs below and redeploy to apply.
+# Reference: https://github.com/flohoss/gocron#configuration
+time_zone: 'UTC'
+log_level: 'info'
+delete_runs_after_days: 7
+
+db:
+  location: '/app/data'
+  name: 'db.sqlite'
+
+server:
+  address: '0.0.0.0'
+  port: 8156
+  app_url: 'https://${domain}'
+  trusted_proxies: ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16']
+
+# Commands the web UI terminal may run. Every entry is reachable from the UI.
+terminal:
+  allow_all_commands: false
+  allowed_commands:
+    date:
+      allow_all_args: false
+    df:
+      args:
+        - -h
+
+# Uncomment to require an OIDC login for the UI and API.
+# Register https://${domain}/api/auth/callback as the callback URL in your provider.
+# auth:
+#   oidc:
+#     enabled: true
+#     issuer_url: 'https://id.example.com'
+#     client_id: 'gocron'
+#     client_secret: 'change-me'
+#     cookie_secure: true
+
+job_defaults:
+  cron: '0 3 * * 0'
+
+jobs:
+  - name: 'Hello World'
+    cron: '0 5 * * *'
+    envs:
+      - key: GREETING
+        value: 'Hello from GoCron'
+    commands:
+      - echo "$GREETING"
+      - date
+
+  - name: 'Manual Job'
+    disable_cron: true
+    commands:
+      - echo "triggered manually"
+"""

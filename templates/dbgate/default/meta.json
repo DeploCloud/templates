@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based database manager for PostgreSQL, MySQL, MariaDB, SQL Server, MongoDB, Redis, SQLite and more, protected by a login.",
+  "category": "database",
+  "developedBy": {
+    "label": "DbGate",
+    "url": "https://www.dbgate.io"
+  },
+  "links": {
+    "github": "https://github.com/dbgate/dbgate",
+    "website": "https://www.dbgate.io",
+    "docs": [
+      "https://docs.dbgate.io/dbgate/customization/env-variables/index.html",
+      "https://hub.docker.com/r/dbgate/dbgate"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with DBGATE_LOGIN (admin by default) and the generated DBGATE_PASSWORD from the environment variables. Without them DbGate would be open to anyone, so keep both set.",
+      "link": "https://docs.dbgate.io/dbgate/customization/env-variables/index.html"
+    }
+  ]
+}

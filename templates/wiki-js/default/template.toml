@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wiki-js"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_NAME = "wiki"
+DB_USER = "wiki"
+DB_PASS = "${db_password}"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASS = "${admin_password}"

@@ -1,0 +1,28 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Passkey-only OpenID Connect and OAuth 2.0 provider backed by an included PostgreSQL database.",
+  "category": "security",
+  "developedBy": {
+    "label": "Pocket ID",
+    "url": "https://github.com/pocket-id"
+  },
+  "links": {
+    "github": "https://github.com/pocket-id/pocket-id",
+    "website": "https://pocket-id.org",
+    "docs": [
+      "https://pocket-id.org/docs/setup/installation",
+      "https://pocket-id.org/docs/configuration/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After deployment, open /setup on your domain right away to create the admin account and register its passkey. The setup page stays open to anyone until the first account exists.",
+      "link": "https://pocket-id.org/docs/setup/installation"
+    },
+    {
+      "type": "destructive",
+      "message": "Passkeys only work over HTTPS and are bound to the domain in APP_URL. Changing the domain later invalidates every registered passkey."
+    }
+  ]
+}

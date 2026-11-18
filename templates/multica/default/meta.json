@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Project board where humans and AI coding agents share issues, with a Go API, Next.js web app and PostgreSQL.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Multica",
+    "url": "https://github.com/multica-ai"
+  },
+  "links": {
+    "github": "https://github.com/multica-ai/multica",
+    "website": "https://multica.ai",
+    "docs": [
+      "https://multica.ai/docs/self-host-quickstart",
+      "https://multica.ai/docs/environment-variables",
+      "https://multica.ai/docs/auth-setup",
+      "https://github.com/multica-ai/multica/blob/main/SELF_HOSTING_ADVANCED.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-in uses emailed codes. Without SMTP_HOST or RESEND_API_KEY set, the code is printed to the multica-backend logs (look for \"Verification code for\"). Anyone can sign up while ALLOW_SIGNUP is true: set it to false once your accounts exist.",
+      "link": "https://github.com/multica-ai/multica/blob/main/SELF_HOSTING_ADVANCED.md#email-required-for-authentication"
+    },
+    {
+      "type": "warning",
+      "message": "Agents run on your own machines, not on this server: install the multica CLI and an agent CLI there, then run multica setup self-host --server-url https://<your-domain> --app-url https://<your-domain>.",
+      "link": "https://github.com/multica-ai/multica/blob/main/SELF_HOSTING.md#step-3--install-cli--start-daemon"
+    },
+    {
+      "type": "info",
+      "message": "/ws is routed straight to the backend for realtime updates, so a workspace slug that starts with \"ws\" (for example ws-team) will not load. Pick a slug with another prefix."
+    }
+  ]
+}

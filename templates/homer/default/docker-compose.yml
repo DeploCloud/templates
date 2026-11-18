@@ -1,0 +1,14 @@
+services:
+  homer:
+    image: b4bz/homer:v26.11.4@sha256:92032ac8bcb812283bfe93750d0fe6ce52a6010699a0de46fdcbf2164e56a970
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      IPV6_DISABLE: "1"
+    volumes:
+      - homer-assets:/www/assets
+      - ./config.yml:/www/assets/config.yml:ro
+
+volumes:
+  homer-assets: {}

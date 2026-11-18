@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted sync server for Anki flashcards that keeps collections and media in sync across desktop and mobile clients.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ankitects",
+    "url": "https://github.com/ankitects"
+  },
+  "links": {
+    "github": "https://github.com/ankitects/anki",
+    "website": "https://apps.ankiweb.net",
+    "docs": [
+      "https://docs.ankiweb.net/manual/sync-server",
+      "https://github.com/ankitects/anki/tree/main/docs/syncserver"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web interface. In each Anki client set the self-hosted sync server URL to https://<your domain>/ and log in with SYNC_USERNAME and SYNC_PASSWORD from the environment.",
+      "link": "https://docs.ankiweb.net/manual/sync-server#client-setup"
+    }
+  ]
+}

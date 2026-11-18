@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+secret_key = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ctfd"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${secret_key}"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+WORKERS = "1"

@@ -1,0 +1,48 @@
+services:
+  humhub:
+    image: humhub/humhub:1.19.4@sha256:943245ee3e9d234cb9bb5ac8c4c29ac44b45047a77a09596930fe4c63b953e03
+    restart: unless-stopped
+    expose:
+      - 80
+    depends_on:
+      humhub-db:
+        condition: service_healthy
+    volumes:
+      - humhub-data:/data
+    environment:
+      # Plain HTTP: the reverse proxy terminates TLS and sends X-Forwarded-* headers
+      SERVER_NAME: ":80"
+      HUMHUB_WEB_CONFIG__COMPONENTS__REQUEST__TRUSTED_HOSTS: '["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]'
+      HUMHUB_CONFIG__COMPONENTS__DB__DSN: "mysql:host=humhub-db;dbname=humhub"
+      HUMHUB_CONFIG__COMPONENTS__DB__USERNAME: humhub
+      HUMHUB_CONFIG__COMPONENTS__DB__PASSWORD: "${DB_PASSWORD}"
+    healthcheck:
+      test: ["CMD", "/app/bin/humhub-simple-healthcheck.sh"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  humhub-db:
+    image: mariadb:11.8@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - humhub-db:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: humhub
+      MARIADB_USER: humhub
+      MARIADB_PASSWORD: "${DB_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  humhub-data: {}
+  humhub-db: {}

@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Kong Gateway open-source API gateway in DB-less mode, routing traffic from a declarative kong.yml configuration file.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Kong Inc.",
+    "url": "https://konghq.com/"
+  },
+  "links": {
+    "github": "https://github.com/Kong/kong",
+    "website": "https://konghq.com/products/kong-gateway",
+    "docs": [
+      "https://developer.konghq.com/gateway/db-less-mode/",
+      "https://developer.konghq.com/gateway/install/docker/",
+      "https://developer.konghq.com/gateway/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Services, routes and plugins are defined in the kong.yml config file. Edit it and redeploy to change the gateway; the Admin API is read-only in DB-less mode and is not exposed publicly.",
+      "link": "https://developer.konghq.com/gateway/db-less-mode/"
+    }
+  ]
+}

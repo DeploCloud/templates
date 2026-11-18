@@ -1,0 +1,18 @@
+services:
+  zigbee2mqtt:
+    image: ghcr.io/koenkk/zigbee2mqtt:2.14.3@sha256:fb4a6b0f6868ad1cd6a9996479802b2420e599c3463b62bbff8c8cd9a908f43a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      ZIGBEE2MQTT_CONFIG_FRONTEND_ENABLED: ${ZIGBEE2MQTT_CONFIG_FRONTEND_ENABLED}
+      ZIGBEE2MQTT_CONFIG_FRONTEND_AUTH_TOKEN: ${ZIGBEE2MQTT_CONFIG_FRONTEND_AUTH_TOKEN}
+      ZIGBEE2MQTT_CONFIG_FRONTEND_URL: ${ZIGBEE2MQTT_CONFIG_FRONTEND_URL}
+      # The onboarding redirect targets localhost:8080, which is wrong behind the proxy
+      Z2M_ONBOARD_NO_REDIRECT: ${Z2M_ONBOARD_NO_REDIRECT}
+    volumes:
+      - zigbee2mqtt-data:/app/data
+
+volumes:
+  zigbee2mqtt-data: {}

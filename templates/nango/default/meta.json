@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Free self-hosted Nango for API auth and proxy: dashboard, API, Connect UI and PostgreSQL, with the dashboard behind basic auth.",
+  "category": "development",
+  "developedBy": {
+    "label": "Nango",
+    "url": "https://nango.dev"
+  },
+  "links": {
+    "github": "https://github.com/NangoHQ/nango",
+    "website": "https://nango.dev",
+    "docs": [
+      "https://nango.dev/docs/guides/platform/self-hosting/self-hosting",
+      "https://nango.dev/docs/guides/platform/self-hosting/self-managed"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard is protected by basic auth: sign in as NANGO_DASHBOARD_USERNAME with the generated NANGO_DASHBOARD_PASSWORD from the environment variables.",
+      "link": "https://nango.dev/docs/guides/platform/self-hosting/self-managed#securing-the-dashboard"
+    },
+    {
+      "type": "warning",
+      "message": "Connect UI is served on a second host, connect-<your domain>. When you switch to a custom domain, give Connect UI its own hostname too and update NANGO_SERVER_URL and NANGO_PUBLIC_CONNECT_URL to match.",
+      "link": "https://nango.dev/docs/guides/platform/self-hosting/self-managed#connect-ui"
+    },
+    {
+      "type": "info",
+      "message": "The free self-hosted edition covers API auth and proxy only; syncs, tool calls, webhooks and MCP need Nango Cloud or an Enterprise plan.",
+      "link": "https://nango.dev/docs/guides/platform/self-hosting/self-hosting#feature-availability"
+    }
+  ]
+}

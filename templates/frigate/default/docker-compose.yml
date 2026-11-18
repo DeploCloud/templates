@@ -1,0 +1,27 @@
+services:
+  frigate:
+    image: ghcr.io/blakeblackshear/frigate:0.18.2@sha256:fd60f99ffd4eb6c42360ed4e14953e270586f239309ab3983e55b2e97ffac09a
+    restart: unless-stopped
+    stop_grace_period: 30s
+    shm_size: "512mb"
+    # Seed config.yml once (TLS off behind the proxy), then hand over to the image's s6 init.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        [ -f /config/config.yml ] || [ -f /config/config.yaml ] || cp /seed/config.yml /config/config.yml
+        exec /init
+    expose:
+      - 8971
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - frigate-config:/config
+      - frigate-media:/media/frigate
+      - ./config.yml:/seed/config.yml:ro
+    tmpfs:
+      - /tmp/cache:size=1000000000
+
+volumes:
+  frigate-config: {}
+  frigate-media: {}

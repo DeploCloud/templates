@@ -1,0 +1,22 @@
+services:
+  seerr:
+    image: ghcr.io/seerr-team/seerr:v3.5.2@sha256:aadee014b40e28cf9aa4928bc9d1183a6eb08f8c44d543cddc9efdcb16549be2
+    restart: unless-stopped
+    init: true
+    expose:
+      - 5055
+    environment:
+      TZ: "${TZ}"
+      LOG_LEVEL: "${LOG_LEVEL}"
+      PORT: "5055"
+    volumes:
+      - seerr-config:/app/config
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1"]
+      start_period: 20s
+      interval: 15s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  seerr-config: {}

@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "whisperlivekit"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+WLK_API_TOKEN = "${hash:48}"
+WLK_MODEL = "base"
+WLK_LANGUAGE = "auto"

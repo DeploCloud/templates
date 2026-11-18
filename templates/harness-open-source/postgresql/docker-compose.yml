@@ -1,0 +1,40 @@
+services:
+  harness:
+    image: harness/harness:3.3.0@sha256:c1bd76817ad7d2e7d78827653a54c55d4aec87c2777a586ebbad1ed01fc9e83f
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      GITNESS_URL_BASE: ${GITNESS_URL_BASE}
+      GITNESS_URL_REGISTRY: ${GITNESS_URL_REGISTRY}
+      GITNESS_ENCRYPTER_SECRET: ${GITNESS_ENCRYPTER_SECRET}
+      GITNESS_USER_SIGNUP_ENABLED: ${GITNESS_USER_SIGNUP_ENABLED}
+      GITNESS_SSH_ENABLE: ${GITNESS_SSH_ENABLE}
+      GITNESS_GITSPACE_ENABLE: ${GITNESS_GITSPACE_ENABLE}
+      GITNESS_BLOBSTORE_BUCKET: /data/blob
+      GITNESS_DATABASE_DRIVER: postgres
+      GITNESS_DATABASE_DATASOURCE: postgres://harness:${POSTGRES_PASSWORD}@harness-db:5432/harness?sslmode=disable
+    volumes:
+      - harness-data:/data
+    depends_on:
+      harness-db:
+        condition: service_healthy
+
+  harness-db:
+    image: postgres:18.7@sha256:37586cb420551a1d64a424c5d02e93642692499f70919dda80e4bdafbb0a9533
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: harness
+      POSTGRES_USER: harness
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U harness -d harness"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - harness-postgres:/var/lib/postgresql
+
+volumes:
+  harness-data: {}
+  harness-postgres: {}

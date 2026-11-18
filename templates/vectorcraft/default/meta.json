@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based vector illustration app built in Rust and WebAssembly: pen and shape tools, Pathfinder, appearance and effects, type, layers, and SVG, PDF and .ai import and export.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/vectorcraft",
+    "website": "https://getartcraft.com/apps/vectorcraft",
+    "docs": [
+      "https://github.com/storytold/vectorcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/vectorcraft/blob/main/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Artwork is not stored on the server: the editor runs in the browser and keeps only preferences and Data Recovery copies in that browser's local storage. Save or export your files to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image for its web build; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}

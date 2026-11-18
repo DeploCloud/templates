@@ -1,0 +1,25 @@
+services:
+  spotdl:
+    image: spotdl/spotify-downloader:v4.6.0@sha256:e96d433581cb649c39165b812728336bf45cd6ca726aaf35501beb3a027b447d
+    restart: unless-stopped
+    command:
+      - web
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8800"
+      - --keep-alive
+      - --web-use-output-dir
+    expose:
+      - 8800
+    volumes:
+      - spotdl-music:/music
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8800/api/version')"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  spotdl-music: {}

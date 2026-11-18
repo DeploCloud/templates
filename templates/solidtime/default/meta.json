@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source time tracker for freelancers and agencies with projects, clients, billable rates and reports, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "solidtime",
+    "url": "https://www.solidtime.io"
+  },
+  "links": {
+    "github": "https://github.com/solidtime-io/solidtime",
+    "website": "https://www.solidtime.io",
+    "docs": [
+      "https://docs.solidtime.io/self-hosting/guides/docker",
+      "https://docs.solidtime.io/self-hosting/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is off. After the first deploy, open a terminal in the solidtime service and run: php artisan admin:user:create \"Your Name\" \"you@example.com\" --verify-email. It prints the generated password. Add that email to SUPER_ADMINS to unlock the /admin panel. To allow sign-ups instead, set APP_ENABLE_REGISTRATION to on or invite-only.",
+      "link": "https://docs.solidtime.io/self-hosting/guides/docker"
+    },
+    {
+      "type": "warning",
+      "message": "Emails are only written to the log. Set MAIL_MAILER to smtp and fill in the MAIL_* variables to send invitations and password resets.",
+      "link": "https://docs.solidtime.io/self-hosting/configuration"
+    }
+  ]
+}

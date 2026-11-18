@@ -1,0 +1,14 @@
+services:
+  open-meteo:
+    image: ghcr.io/open-meteo/open-meteo:1.8.0@sha256:bf94e8b39761b59a91bd04bb926b3834cad00eaf71f1aa64b2fd17fbe987846a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      REMOTE_DATA_DIRECTORY: ${REMOTE_DATA_DIRECTORY}
+      CACHE_SIZE: ${CACHE_SIZE}
+    volumes:
+      - open-meteo-data:/app/data
+
+volumes:
+  open-meteo-data: {}

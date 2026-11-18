@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Performance dashboard for an existing PostgreSQL database: slow and live queries, unused and suggested indexes, space usage and connections, behind HTTP basic auth.",
+  "category": "database",
+  "developedBy": {
+    "label": "Andrew Kane",
+    "url": "https://github.com/ankane"
+  },
+  "links": {
+    "github": "https://github.com/ankane/pghero",
+    "docs": [
+      "https://github.com/ankane/pghero/blob/master/guides/Docker.md",
+      "https://github.com/ankane/pghero/blob/master/guides/Permissions.md",
+      "https://github.com/ankane/pghero/blob/master/guides/Query-Stats.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "PgHero does not include a database. Set DATABASE_URL to the PostgreSQL server you want to monitor (URL-encode special characters in the user or password); it must be reachable from this deployment. The dashboard is protected by HTTP basic auth with the user admin and the generated PGHERO_PASSWORD.",
+      "link": "https://github.com/ankane/pghero/blob/master/guides/Docker.md"
+    }
+  ]
+}

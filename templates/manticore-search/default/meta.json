@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source search database for full-text, vector and hybrid search with real-time indexing, SQL and a JSON HTTP API.",
+  "category": "database",
+  "developedBy": {
+    "label": "Manticore Software",
+    "url": "https://manticoresearch.com"
+  },
+  "links": {
+    "github": "https://github.com/manticoresoftware/manticoresearch",
+    "website": "https://manticoresearch.com",
+    "docs": [
+      "https://manual.manticoresearch.com/Starting_the_server/Docker",
+      "https://manual.manticoresearch.com/Connecting_to_the_server/HTTP",
+      "https://manual.manticoresearch.com/Security/Authentication_and_authorization"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI: the domain serves the HTTP API with authentication enabled. Use basic auth with MANTICORE_ADMIN_USER and the generated MANTICORE_ADMIN_PASSWORD from the environment variables. The admin is created only on the first start: to change the password later, run SET PASSWORD and then set MANTICORE_ADMIN_PASSWORD to the same value, because the healthcheck signs in with it.",
+      "link": "https://manual.manticoresearch.com/Security/Authentication_and_authorization"
+    }
+  ]
+}

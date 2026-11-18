@@ -1,0 +1,27 @@
+services:
+  filepizza:
+    image: kern/filepizza:1e4d02f@sha256:539482c4f524d175eaf5a937a17a216bac3d86c1ff40b6594037a407cd646450
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      REDIS_URL: ${REDIS_URL}
+    depends_on:
+      filepizza-redis:
+        condition: service_healthy
+
+  filepizza-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - filepizza-redis-data:/data
+
+volumes:
+  filepizza-redis-data: {}

@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source HR and payroll suite on the Frappe Framework, deployed with ERPNext, MariaDB, Redis, background workers and a scheduler.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Frappe Technologies",
+    "url": "https://frappe.io/"
+  },
+  "links": {
+    "github": "https://github.com/frappe/hrms",
+    "website": "https://frappe.io/hr",
+    "docs": [
+      "https://docs.frappe.io/hr/introduction",
+      "https://github.com/frappe/frappe_docker/blob/main/docs/getting-started.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first deployment takes several minutes while the site is created. Log in as Administrator with the generated ADMIN_PASSWORD and complete the setup wizard."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

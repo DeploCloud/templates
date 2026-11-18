@@ -1,0 +1,29 @@
+[variables]
+nats_token = "${password:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "nats"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+NATS_TOKEN = "${nats_token}"
+
+[[config.mounts]]
+filePath = "nats-server.conf"
+content = """port: 4222
+
+# No monitor_port: its /debug/vars page would show the --auth token to the environment network.
+
+jetstream {
+  store_dir: "/data"
+}
+
+# TLS is terminated by the reverse proxy
+websocket {
+  port: 8080
+  no_tls: true
+}
+"""

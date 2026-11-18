@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "reactive-resume"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+POSTGRES_DB = "reactive_resume"
+POSTGRES_USER = "reactive_resume"
+POSTGRES_PASSWORD = "${db_password}"
+AUTH_SECRET = "${hash:64}"
+ENCRYPTION_SECRET = "${hash:64}"
+FLAG_DISABLE_SIGNUPS = "false"

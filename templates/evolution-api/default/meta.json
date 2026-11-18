@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "REST API for WhatsApp messaging over WhatsApp Web or the official Cloud API, with a built-in manager UI, PostgreSQL and Redis.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Evolution Foundation",
+    "url": "https://evolutionfoundation.com.br"
+  },
+  "links": {
+    "github": "https://github.com/evolution-foundation/evolution-api",
+    "website": "https://evolutionfoundation.com.br",
+    "docs": [
+      "https://docs.evolutionfoundation.com.br/en/evolution-api/install/docker",
+      "https://docs.evolutionfoundation.com.br/en/evolution-api/configuration/env",
+      "https://docs.evolutionfoundation.com.br/en/evolution-api/create-instance"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /manager on your domain and sign in with the server URL and the generated AUTHENTICATION_API_KEY from the environment. API requests send the same key in the apikey header. Each WhatsApp number is linked by creating an instance and scanning its QR code with the phone.",
+      "link": "https://docs.evolutionfoundation.com.br/en/evolution-api/create-instance"
+    }
+  ]
+}

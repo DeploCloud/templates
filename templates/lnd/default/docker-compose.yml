@@ -1,0 +1,55 @@
+services:
+  lnd-init:
+    image: lightninglabs/lndinit:v0.1.38-beta-lnd-v0.21.8-beta@sha256:72ca766e4aaa4678ce0beed8b9ccca30c4e5ef4d1f41416dae15c1780eb29b39
+    restart: "no"
+    entrypoint:
+      - /bin/sh
+      - -c
+    # Creates the wallet offline on first start so the unauthenticated wallet RPC is never exposed.
+    command:
+      - |
+        set -e
+        [ -f /root/.lnd/data/chain/bitcoin/mainnet/wallet.db ] && exit 0
+        if [ ! -s /root/.lnd/seed.txt ]; then
+          lndinit gen-seed > /root/.lnd/seed.tmp
+          mv /root/.lnd/seed.tmp /root/.lnd/seed.txt
+        fi
+        lndinit -v init-wallet --file.seed=/root/.lnd/seed.txt --file.wallet-password=/etc/lnd/wallet-password --init-file.output-wallet-dir=/root/.lnd/data/chain/bitcoin/mainnet
+    volumes:
+      - lnd-data:/root/.lnd
+      - ./wallet-password:/etc/lnd/wallet-password:ro
+
+  lnd:
+    image: lightninglabs/lnd:v0.21.8-beta@sha256:f17b2944b1b76396cccbe58feac469b6cefb5f407557ac77f0880f136fb935f9
+    restart: unless-stopped
+    entrypoint:
+      - /bin/sh
+      - -c
+    # Plaintext REST is refused on 0.0.0.0 but allowed on private addresses, so bind each container IP.
+    command:
+      - |
+        set -- --configfile=/etc/lnd/lnd.conf --restlisten=127.0.0.1:8080
+        for ip in $$(ip -4 -o addr show | awk '$$4 !~ /^127\./ { split($$4, a, "/"); print a[1] }'); do
+          set -- "$$@" --restlisten="$$ip:8080"
+        done
+        exec lnd "$$@"
+    expose:
+      - 8080
+    volumes:
+      - lnd-data:/root/.lnd
+      - ./lnd.conf:/etc/lnd/lnd.conf:ro
+      - ./wallet-password:/etc/lnd/wallet-password:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://127.0.0.1:8080/v1/state | grep -q ACTIVE
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      lnd-init:
+        condition: service_completed_successfully
+
+volumes:
+  lnd-data: {}

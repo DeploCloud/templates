@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+internal_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "apache-druid-router"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+DRUID_DB_PASSWORD = "${db_password}"
+DRUID_ADMIN_PASSWORD = "${admin_password}"
+DRUID_INTERNAL_PASSWORD = "${internal_password}"

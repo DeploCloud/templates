@@ -1,0 +1,16 @@
+[variables]
+auth_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "suwayomi"
+port = 4_567
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+AUTH_MODE = "basic_auth"
+AUTH_USERNAME = "admin"
+AUTH_PASSWORD = "${auth_password}"

@@ -1,0 +1,30 @@
+services:
+  apprise:
+    image: caronc/apprise:2.1.0@sha256:bd7dc73b75882326b97d2963b7c3dd2a5e033df27d84c51f0090465d583fb316
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      APPRISE_STATEFUL_MODE: simple
+      APPRISE_WORKER_COUNT: "1"
+      APPRISE_AUTH_REQUIRED: "yes"
+      APPRISE_USER: ${APPRISE_USER}
+      APPRISE_PASSWORD: ${APPRISE_PASSWORD}
+      APPRISE_TRUSTED_ORIGINS: ${APPRISE_TRUSTED_ORIGINS}
+      SECRET_KEY: ${SECRET_KEY}
+      TZ: ${TZ}
+    volumes:
+      - apprise-config:/config
+      - apprise-attach:/attach
+      - apprise-plugin:/plugin
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -u \"$${APPRISE_USER}:$${APPRISE_PASSWORD}\" http://localhost:8000/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  apprise-config: {}
+  apprise-attach: {}
+  apprise-plugin: {}

@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "myip"
+port = 18_966
+host = "${domain}"
+
+[config.env]
+ALLOWED_DOMAINS = "${domain}"
+MAXMIND_ACCOUNT_ID = ""
+MAXMIND_LICENSE_KEY = ""

@@ -1,0 +1,13 @@
+services:
+  trilium:
+    image: triliumnext/trilium:v0.107.0@sha256:739ba0f0488f506549f7c21dc9e792decd99382cc759f01d5ec1abba32e87da8
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TRILIUM_NETWORK_TRUSTEDREVERSEPROXY: "${TRILIUM_NETWORK_TRUSTEDREVERSEPROXY}"
+    volumes:
+      - trilium-data:/home/node/trilium-data
+
+volumes:
+  trilium-data: {}

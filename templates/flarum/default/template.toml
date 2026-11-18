@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flarum"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+FLARUM_BASE_URL = "https://${domain}"
+FLARUM_FORUM_TITLE = "Flarum"
+DB_NAME = "flarum"
+DB_USER = "flarum"
+DB_PASSWORD = "${db_password}"
+REAL_IP_FROM = "0.0.0.0/0"

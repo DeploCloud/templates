@@ -1,0 +1,18 @@
+services:
+  sqlitebrowser:
+    image: lscr.io/linuxserver/sqlitebrowser:3.13.1-r1-ls233@sha256:5a7f74ac3878b14b71891caff746e4c3413fafa51dadd2e1dd9a5157dea59452
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - sqlitebrowser-config:/config
+
+volumes:
+  sqlitebrowser-config: {}

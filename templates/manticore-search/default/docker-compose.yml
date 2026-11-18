@@ -1,0 +1,30 @@
+services:
+  manticore:
+    image: manticoresearch/manticore:29.9.0@sha256:b42044f30fbf2f39c65b9e523e4219667ed3b33b9598d72dfd92833a4c49657e
+    restart: unless-stopped
+    entrypoint: ["bash", "/manticore-auth.sh"]
+    command: ["searchd", "-c", "/etc/manticoresearch/manticore.conf.sh", "--nodetach"]
+    expose:
+      - 9308
+    environment:
+      searchd_auth: "1"
+      MANTICORE_ADMIN_USER: ${MANTICORE_ADMIN_USER}
+      MANTICORE_ADMIN_PASSWORD: ${MANTICORE_ADMIN_PASSWORD}
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - manticore-data:/var/lib/manticore
+      - ./manticore-auth.sh:/manticore-auth.sh:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - MYSQL_PWD="$${MANTICORE_ADMIN_PASSWORD}" mysql -h127.0.0.1 -P9306 -u"$${MANTICORE_ADMIN_USER}" -e "SELECT 1" > /dev/null
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+volumes:
+  manticore-data: {}

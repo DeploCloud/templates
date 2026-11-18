@@ -1,0 +1,21 @@
+services:
+  keeweb:
+    image: ghcr.io/keeweb/keeweb:1.19.0-amd64@sha256:63235ac2656ab9b88f20be19fe721318a63c5015415faf4d3156cf830341b529
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - keeweb-config:/config
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  keeweb-config: {}

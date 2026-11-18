@@ -1,0 +1,42 @@
+services:
+  kaneo:
+    image: ghcr.io/usekaneo/kaneo:2.50.0@sha256:03ad082e33945b9c091266af60c7c88865cb2fab37ff33d91cbbcab626b0094d
+    restart: unless-stopped
+    expose:
+      - 5173
+    environment:
+      KANEO_CLIENT_URL: ${KANEO_CLIENT_URL}
+      POSTGRES_HOST: kaneo-db
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      AUTH_SECRET: ${AUTH_SECRET}
+      NOTIFICATION_SECRET_ENCRYPTION_KEY: ${NOTIFICATION_SECRET_ENCRYPTION_KEY}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+    healthcheck:
+      test: ["CMD", "wget", "-Y", "off", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:5173/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+    depends_on:
+      kaneo-db:
+        condition: service_healthy
+
+  kaneo-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - kaneo-db:/var/lib/postgresql/data
+
+volumes:
+  kaneo-db: {}

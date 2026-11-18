@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "octobot"
+port = 5_001
+host = "${domain}"
+
+[config.env]
+CORS_ALLOWED_ORIGINS = "https://${domain}"

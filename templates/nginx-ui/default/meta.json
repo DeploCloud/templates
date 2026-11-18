@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web interface for managing Nginx sites, configs, certificates and logs, shipped with its own bundled Nginx server.",
+  "category": "networking",
+  "developedBy": {
+    "label": "0xJacky",
+    "url": "https://github.com/0xJacky"
+  },
+  "links": {
+    "github": "https://github.com/0xJacky/nginx-ui",
+    "website": "https://nginxui.com",
+    "docs": [
+      "https://nginxui.com/guide/getting-started.html",
+      "https://nginxui.com/guide/env.html",
+      "https://nginxui.com/guide/config-node.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the password in NGINX_UI_PREDEFINED_USER_PASSWORD, then change it in the panel.",
+      "link": "https://nginxui.com/guide/env.html"
+    }
+  ]
+}

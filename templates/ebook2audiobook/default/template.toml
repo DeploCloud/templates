@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ebook2audiobook"
+port = 7_860
+host = "${domain}"

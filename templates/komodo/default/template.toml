@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "komodo"
+port = 9_120
+host = "${domain}"
+
+[config.env]
+KOMODO_HOST = "https://${domain}"
+KOMODO_DATABASE_USERNAME = "komodo"
+KOMODO_DATABASE_PASSWORD = "${db_password}"
+KOMODO_INIT_ADMIN_USERNAME = "admin"
+KOMODO_INIT_ADMIN_PASSWORD = "${admin_password}"
+KOMODO_JWT_SECRET = "${secret:64}"
+KOMODO_WEBHOOK_SECRET = "${secret:32}"
+TZ = "Etc/UTC"

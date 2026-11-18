@@ -1,0 +1,20 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "etherpad"
+port = 9_001
+host = "${domain}"
+
+[config.env]
+ADMIN_PASSWORD = "${admin_password}"
+DB_NAME = "etherpad"
+DB_USER = "etherpad"
+DB_PASS = "${db_password}"
+PUBLIC_URL = "https://${domain}"
+ADMIN_SECRET = "${secret:48}"
+USER_SECRET = "${secret:48}"

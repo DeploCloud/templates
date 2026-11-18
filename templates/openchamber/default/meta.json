@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web workspace for the OpenCode AI coding agent with chats, diffs, Git and a terminal, protected by a UI password.",
+  "category": "ai",
+  "developedBy": {
+    "label": "OpenChamber",
+    "url": "https://github.com/openchamber"
+  },
+  "links": {
+    "github": "https://github.com/openchamber/openchamber",
+    "website": "https://openchamber.dev/",
+    "docs": [
+      "https://docs.openchamber.dev/quickstart/",
+      "https://docs.openchamber.dev/environment/",
+      "https://docs.openchamber.dev/providers/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated OPENCHAMBER_UI_PASSWORD from the environment variables, then connect an AI model provider with your own API key or account in Settings."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

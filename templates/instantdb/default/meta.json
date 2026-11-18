@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Instant realtime backend with its dashboard, PostgreSQL database and S3-compatible file storage for auth, permissions, storage and presence.",
+  "category": "database",
+  "developedBy": {
+    "label": "Instant",
+    "url": "https://www.instantdb.com"
+  },
+  "links": {
+    "github": "https://github.com/instantdb/instant",
+    "website": "https://www.instantdb.com",
+    "docs": [
+      "https://www.instantdb.com/docs/self-hosting",
+      "https://www.instantdb.com/docs/self-hosting/vps"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Until POSTMARK_TOKEN, SENDGRID_TOKEN or RESEND_TOKEN is set, dashboard login codes are only printed in the instantdb-server logs. By default anyone can sign up to the dashboard and anyone who reaches the API can create temporary apps: set INSTANT_SUPERUSER_EMAIL to your address, then use Deployment Settings to restrict signups and turn off temporary apps.",
+      "link": "https://www.instantdb.com/docs/self-hosting"
+    },
+    {
+      "type": "info",
+      "message": "The dashboard runs on the main domain and the backend API on the api. subdomain. Point your apps and the Instant CLI (INSTANT_CLI_API_URI, INSTANT_CLI_DASH_URI) at those two URLs."
+    }
+  ]
+}

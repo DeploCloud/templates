@@ -1,0 +1,14 @@
+[variables]
+searxng_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "local-deep-research"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+LDR_APP_ALLOW_REGISTRATIONS = "true"
+SEARXNG_SECRET = "${searxng_secret}"

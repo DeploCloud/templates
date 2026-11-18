@@ -1,0 +1,43 @@
+[variables]
+db_password = "${password:32}"
+ui_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "temporal-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "dynamicconfig.yaml"
+content = """
+limit.maxIDLength:
+  - value: 255
+    constraints: {}
+"""
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	basic_auth {
+		{$TEMPORAL_UI_USERNAME} {$TEMPORAL_UI_PASSWORD_HASH}
+	}
+	reverse_proxy temporal-ui:8080
+}
+"""
+
+[config.env]
+DOMAIN = "${domain}"
+POSTGRES_PASSWORD = "${db_password}"
+TEMPORAL_UI_USERNAME = "admin"
+TEMPORAL_UI_PASSWORD = "${ui_password}"

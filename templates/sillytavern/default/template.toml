@@ -1,0 +1,14 @@
+[variables]
+password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sillytavern"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SILLYTAVERN_USERNAME = "admin"
+SILLYTAVERN_PASSWORD = "${password}"

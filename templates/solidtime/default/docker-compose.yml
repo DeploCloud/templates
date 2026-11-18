@@ -1,0 +1,118 @@
+x-solidtime: &solidtime
+  image: solidtime/solidtime:0.22.1@sha256:ea8cbb7aab29646098bcdcf050e6864e421907c6f5c36307a79bd7a6e34587c0
+  restart: unless-stopped
+  volumes:
+    - solidtime-storage:/var/www/html/storage
+  environment: &solidtime-env
+    APP_NAME: solidtime
+    VITE_APP_NAME: solidtime
+    APP_ENV: production
+    APP_DEBUG: "false"
+    APP_URL: ${APP_URL}
+    APP_FORCE_HTTPS: "true"
+    APP_KEY: ${APP_KEY}
+    APP_ENABLE_REGISTRATION: ${APP_ENABLE_REGISTRATION}
+    SUPER_ADMINS: ${SUPER_ADMINS}
+    TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+    LOG_CHANNEL: stderr_daily
+    LOG_LEVEL: info
+    DB_CONNECTION: pgsql
+    DB_HOST: solidtime-db
+    DB_PORT: "5432"
+    DB_SSL_MODE: prefer
+    DB_DATABASE: ${DB_DATABASE}
+    DB_USERNAME: ${DB_USERNAME}
+    DB_PASSWORD: ${DB_PASSWORD}
+    MAIL_MAILER: ${MAIL_MAILER}
+    MAIL_HOST: ${MAIL_HOST}
+    MAIL_PORT: ${MAIL_PORT}
+    MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+    MAIL_USERNAME: ${MAIL_USERNAME}
+    MAIL_PASSWORD: ${MAIL_PASSWORD}
+    MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+    MAIL_FROM_NAME: solidtime
+    QUEUE_CONNECTION: database
+    FILESYSTEM_DISK: local
+    PUBLIC_FILESYSTEM_DISK: public
+    GOTENBERG_URL: http://solidtime-gotenberg:3000
+
+services:
+  solidtime:
+    <<: *solidtime
+    # Passport falls back to key files in storage when the env keys are empty; create them once.
+    entrypoint:
+      - sh
+      - -c
+      - "set -e; [ -f storage/oauth-private.key ] || php artisan passport:keys --no-interaction; exec start-container"
+    expose:
+      - 8000
+    environment:
+      <<: *solidtime-env
+      CONTAINER_MODE: http
+      AUTO_DB_MIGRATE: "true"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8000/health-check/up"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      solidtime-db:
+        condition: service_healthy
+
+  solidtime-scheduler:
+    <<: *solidtime
+    environment:
+      <<: *solidtime-env
+      CONTAINER_MODE: scheduler
+    healthcheck:
+      test: ["CMD", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      solidtime:
+        condition: service_healthy
+
+  solidtime-queue:
+    <<: *solidtime
+    environment:
+      <<: *solidtime-env
+      CONTAINER_MODE: worker
+      WORKER_COMMAND: php /var/www/html/artisan queue:work
+    healthcheck:
+      test: ["CMD", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      solidtime:
+        condition: service_healthy
+
+  solidtime-db:
+    image: postgres:17.12@sha256:b60e90042aa6b8dbecd58e224b3e36114dbf8ad754465264c2476ad58a86e45c
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - solidtime-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  solidtime-gotenberg:
+    image: gotenberg/gotenberg:8.40.0-chromium@sha256:a03fb9f9a7db6e1ff9b798137f3d9f60601ded73fe626b10fa72c920360b0efd
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  solidtime-storage: {}
+  solidtime-db: {}

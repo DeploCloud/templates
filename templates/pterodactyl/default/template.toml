@@ -1,0 +1,23 @@
+[variables]
+app_key = "${password:32}"
+hashids_salt = "${password:20}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pterodactyl"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+APP_TIMEZONE = "UTC"
+APP_SERVICE_AUTHOR = "noreply@${domain}"
+MAIL_FROM_ADDRESS = "noreply@${domain}"
+APP_KEY = "${app_key}"
+HASHIDS_SALT = "${hashids_salt}"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"

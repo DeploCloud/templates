@@ -1,0 +1,52 @@
+[variables]
+secret_key = "${hash:40}"
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "gogs"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+GOGS_SECRET_KEY = "${secret_key}"
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "app.ini"
+content = """BRAND_NAME = Gogs
+RUN_USER = git
+RUN_MODE = prod
+
+[server]
+DOMAIN = ${domain}
+EXTERNAL_URL = https://${domain}/
+HTTP_PORT = 3000
+DISABLE_SSH = true
+
+[repository]
+ROOT = /home/git/gogs-repositories
+
+[database]
+TYPE = postgres
+HOST = gogs-db:5432
+NAME = gogs
+USER = gogs
+PASSWORD = $GOGS_DATABASE_PASSWORD
+SSL_MODE = disable
+
+[security]
+INSTALL_LOCK = true
+SECRET_KEY = $GOGS_SECRET_KEY
+
+[auth]
+DISABLE_REGISTRATION = false
+
+[session]
+PROVIDER = file
+
+[log]
+MODE = console
+LEVEL = Info
+"""

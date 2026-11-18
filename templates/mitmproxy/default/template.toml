@@ -1,0 +1,21 @@
+[variables]
+proxy_domain = "proxy.${domain}"
+web_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mitmproxy"
+port = 8_081
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "mitmproxy"
+port = 8_080
+host = "${proxy_domain}"
+
+[config.env]
+MITM_UPSTREAM = "https://example.com"
+WEB_PASSWORD = "${web_password}"

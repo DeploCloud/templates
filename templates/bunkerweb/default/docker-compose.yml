@@ -1,0 +1,29 @@
+services:
+  bunkerweb:
+    image: bunkerity/bunkerweb-all-in-one:1.6.17@sha256:af2f9ab5e89b2bb3ab344f203ad6b16285d73f31cbb3ebc2e17680043e76cb9b
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - bw-storage:/data
+    # List form: the per-service keys are prefixed with the UI hostname
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
+      - API_WHITELIST_IP=127.0.0.0/8
+      - MULTISITE=yes
+      - SERVE_FILES=no
+      - DISABLE_DEFAULT_SERVER=yes
+      # TLS is terminated in front of BunkerWeb
+      - AUTO_REDIRECT_HTTP_TO_HTTPS=no
+      - USE_REAL_IP=yes
+      - REAL_IP_HEADER=X-Forwarded-For
+      - ${SERVER_NAME}_USE_TEMPLATE=ui
+      - ${SERVER_NAME}_USE_REVERSE_PROXY=yes
+      - ${SERVER_NAME}_REVERSE_PROXY_URL=/
+      - ${SERVER_NAME}_REVERSE_PROXY_HOST=http://127.0.0.1:7000
+      - ${SERVER_NAME}_REVERSE_PROXY_HEADERS=X-Forwarded-Proto https
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+
+volumes:
+  bw-storage: {}

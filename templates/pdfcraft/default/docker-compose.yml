@@ -1,0 +1,6 @@
+services:
+  pdfcraft:
+    image: ghcr.io/mikapst/pdfcraft-web:v0.21.1@sha256:1679cefe5db8a8dbda044928b141bbbd470c05f84b91f5cf09c5f9edf66532d6
+    restart: unless-stopped
+    expose:
+      - 8080

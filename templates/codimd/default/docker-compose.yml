@@ -1,0 +1,39 @@
+services:
+  codimd:
+    image: hackmdio/hackmd:2.6.1@sha256:fba91d815ced9e8ef32f4cf3070ebe0d3c6a3f73ab94c27b3a67230f7799f7af
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      CMD_DB_URL: postgres://codimd:${DB_PASSWORD}@codimd-db:5432/codimd
+      CMD_SESSION_SECRET: ${CMD_SESSION_SECRET}
+      CMD_DOMAIN: ${CMD_DOMAIN}
+      CMD_PROTOCOL_USESSL: "true"
+      CMD_URL_ADDPORT: "false"
+      CMD_USECDN: "false"
+      CMD_ALLOW_EMAIL_REGISTER: ${CMD_ALLOW_EMAIL_REGISTER}
+      CMD_ALLOW_ANONYMOUS: ${CMD_ALLOW_ANONYMOUS}
+    volumes:
+      - codimd-uploads:/home/hackmd/app/public/uploads
+    depends_on:
+      codimd-db:
+        condition: service_healthy
+
+  codimd-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: codimd
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: codimd
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U codimd -d codimd"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - codimd-db:/var/lib/postgresql/data
+
+volumes:
+  codimd-uploads: {}
+  codimd-db: {}

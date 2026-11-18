@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source identity and access management server with OAuth 2.0, OIDC, SAML, CAS, LDAP and SCIM, backed by MySQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "Casdoor",
+    "url": "https://github.com/casdoor"
+  },
+  "links": {
+    "github": "https://github.com/casdoor/casdoor",
+    "website": "https://casdoor.ai",
+    "docs": [
+      "https://casdoor.ai/docs/basic/try-with-docker",
+      "https://casdoor.ai/docs/basic/configuration",
+      "https://casdoor.ai/docs/basic/server-installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with organization built-in, username admin and the password from the CASDOOR_ADMIN_PASSWORD environment variable. It only applies when the database is first created, so change the password in the admin console afterwards.",
+      "link": "https://casdoor.ai/docs/basic/server-installation#sign-in"
+    }
+  ]
+}

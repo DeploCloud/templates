@@ -1,0 +1,26 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted Convex reactive backend with its admin dashboard, storing documents in a bundled PostgreSQL 17 database instead of SQLite.",
+  "category": "database",
+  "developedBy": {
+    "label": "Convex",
+    "url": "https://www.convex.dev"
+  },
+  "links": {
+    "github": "https://github.com/convex/convex-backend",
+    "website": "https://www.convex.dev",
+    "docs": [
+      "https://docs.convex.dev/self-hosting",
+      "https://github.com/convex/convex-backend/blob/main/self-hosted/README.md",
+      "https://github.com/convex/convex-backend/blob/main/self-hosted/advanced/hosting_on_own_infra.md",
+      "https://github.com/convex/convex-backend/blob/main/self-hosted/advanced/postgres_or_mysql.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard asks for an admin key. After the first start, open a terminal in the convex-backend container and run ./generate_admin_key.sh, then use that key on the dashboard login and as CONVEX_SELF_HOSTED_ADMIN_KEY (with CONVEX_SELF_HOSTED_URL set to the api. subdomain) in your project.",
+      "link": "https://github.com/convex/convex-backend/blob/main/self-hosted/README.md"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "seerr"
+port = 5_055
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+LOG_LEVEL = "info"
+DB_USER = "seerr"
+DB_PASS = "${db_password}"
+DB_NAME = "seerr"

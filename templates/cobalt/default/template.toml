@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cobalt"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+API_URL = "https://${domain}/"
+API_PORT = "9000"

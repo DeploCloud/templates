@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "MQTT 5.0 and 3.1.1 broker with a web dashboard, REST API, rule engine and data integrations, with MQTT over WebSocket served on the app domain.",
+  "category": "networking",
+  "developedBy": {
+    "label": "EMQ Technologies",
+    "url": "https://github.com/emqx"
+  },
+  "links": {
+    "github": "https://github.com/emqx/emqx",
+    "website": "https://www.emqx.com",
+    "docs": [
+      "https://docs.emqx.com/en/emqx/latest/deploy/install-docker.html",
+      "https://docs.emqx.com/en/emqx/latest/configuration/configuration.html",
+      "https://docs.emqx.com/en/emqx/latest/access-control/authn/authn.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in to the dashboard as admin with the generated EMQX_DASHBOARD__DEFAULT_PASSWORD. It only seeds the first admin; later changes are made in the dashboard. MQTT clients can connect anonymously until you add an authenticator under Access Control > Authentication.",
+      "link": "https://docs.emqx.com/en/emqx/latest/access-control/authn/authn.html"
+    },
+    {
+      "type": "info",
+      "message": "Only MQTT over WebSocket is routed, at wss://<your domain>/mqtt. Plain MQTT (1883) and MQTT over TLS (8883) are TCP protocols and are not published by this template."
+    },
+    {
+      "type": "info",
+      "message": "EMQX 5.9 and later is licensed under the Business Source License 1.1, which allows production use of a single node; clustering or offering it as a hosted service needs a commercial license.",
+      "link": "https://github.com/emqx/emqx/blob/master/LICENSE"
+    }
+  ]
+}

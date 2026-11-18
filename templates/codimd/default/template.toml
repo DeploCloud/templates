@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "codimd"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+CMD_SESSION_SECRET = "${secret:64}"
+CMD_DOMAIN = "${domain}"
+CMD_ALLOW_EMAIL_REGISTER = "true"
+CMD_ALLOW_ANONYMOUS = "false"

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Q&A platform for community forums, help centers and team knowledge bases, auto-installed with SQLite and a generated admin account.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://www.apache.org/"
+  },
+  "links": {
+    "github": "https://github.com/apache/answer",
+    "website": "https://answer.apache.org/",
+    "docs": [
+      "https://answer.apache.org/docs/installation",
+      "https://answer.apache.org/docs/env"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL (admin@example.com by default) and the generated ADMIN_PASSWORD from the environment variables. Set ADMIN_EMAIL to your own address before the first deploy: the admin account is created only on the first start, and changing its email later needs SMTP for the confirmation link. Email notifications and sign-up verification also need SMTP, configured in the admin panel.",
+      "link": "https://answer.apache.org/docs/env"
+    }
+  ]
+}

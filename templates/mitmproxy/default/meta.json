@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Interactive HTTPS proxy with the mitmweb interface, running as a reverse proxy so you can inspect, modify and replay requests sent to an upstream server.",
+  "category": "development",
+  "developedBy": {
+    "label": "mitmproxy",
+    "url": "https://github.com/mitmproxy"
+  },
+  "links": {
+    "github": "https://github.com/mitmproxy/mitmproxy",
+    "website": "https://mitmproxy.org",
+    "docs": [
+      "https://docs.mitmproxy.org/stable/concepts/modes/#reverse-proxy",
+      "https://docs.mitmproxy.org/stable/concepts/options/#web_password",
+      "https://docs.mitmproxy.org/stable/overview/installation/#docker-images"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set MITM_UPSTREAM to the server you want to inspect (it defaults to https://example.com), then send traffic to the proxy.<domain> address. Log in to the web interface with WEB_PASSWORD from the environment.",
+      "link": "https://docs.mitmproxy.org/stable/concepts/modes/#reverse-proxy"
+    },
+    {
+      "type": "info",
+      "message": "Only reverse proxy mode works here: regular, transparent and WireGuard modes need a raw port that is not routed over HTTPS."
+    }
+  ]
+}

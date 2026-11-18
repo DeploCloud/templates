@@ -1,0 +1,18 @@
+services:
+  orcaslicer:
+    image: lscr.io/linuxserver/orcaslicer:v2.5.1-ls52@sha256:b5c483239fd15771df3ea1bf3f0370e7e219eb98e69274b151b9335fc4acd2c9
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - orcaslicer-config:/config
+
+volumes:
+  orcaslicer-config: {}

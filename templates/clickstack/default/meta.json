@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Observability platform for logs, traces, metrics and session replays, with the ClickStack UI, an OpenTelemetry collector, ClickHouse and MongoDB.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "ClickHouse",
+    "url": "https://clickhouse.com"
+  },
+  "links": {
+    "github": "https://github.com/ClickHouse/ClickStack",
+    "website": "https://clickhouse.com/clickstack",
+    "docs": [
+      "https://clickhouse.com/docs/clickstack/deployment/docker-compose",
+      "https://clickhouse.com/docs/clickstack/managing/production",
+      "https://clickhouse.com/docs/clickstack/ingesting-data/opentelemetry"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign up right after the deploy: the first account owns the team, registration then closes, and until it exists the collector discards incoming data. Send OpenTelemetry data over OTLP/HTTP to https://<domain> (paths under /v1) with the ingestion key from Team Settings > API Keys in the authorization header; the gRPC port 4317 is not published.",
+      "link": "https://clickhouse.com/docs/clickstack/ingesting-data/opentelemetry"
+    }
+  ]
+}

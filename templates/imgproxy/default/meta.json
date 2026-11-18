@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Standalone HTTP server that resizes, crops, converts and optimizes remote images on the fly, with URL signing enabled.",
+  "category": "media",
+  "developedBy": {
+    "label": "imgproxy",
+    "url": "https://imgproxy.net"
+  },
+  "links": {
+    "github": "https://github.com/imgproxy/imgproxy",
+    "website": "https://imgproxy.net",
+    "docs": [
+      "https://docs.imgproxy.net/getting_started",
+      "https://docs.imgproxy.net/usage/processing",
+      "https://docs.imgproxy.net/usage/signing_url",
+      "https://docs.imgproxy.net/configuration/options"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "URL signing is enabled: every request must be signed with the generated IMGPROXY_KEY and IMGPROXY_SALT from the environment variables, otherwise imgproxy rejects it.",
+      "link": "https://docs.imgproxy.net/usage/signing_url"
+    }
+  ]
+}

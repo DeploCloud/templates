@@ -1,0 +1,52 @@
+services:
+  librephotos:
+    image: reallibrephotos/librephotos-unified:1.6.0@sha256:bed9b3ebfa949d1f7d462fd4a02ee3890550de90ca1927120299896405f673e3
+    restart: unless-stopped
+    expose:
+      - 8001
+    environment:
+      SERVE_FRONTEND: "true"
+      DB_BACKEND: postgresql
+      DB_HOST: librephotos-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      NUM_PROXIES: "1"
+    volumes:
+      - librephotos-media:/protected_media
+      - librephotos-logs:/logs
+      - librephotos-photos:/data
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8001/api/healthz/ready')\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15m
+    depends_on:
+      librephotos-db:
+        condition: service_healthy
+
+  librephotos-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    shm_size: 256mb
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - librephotos-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  librephotos-media: {}
+  librephotos-logs: {}
+  librephotos-photos: {}
+  librephotos-postgres: {}

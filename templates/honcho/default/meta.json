@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Memory server for stateful AI agents: a FastAPI API and background deriver that reason over stored messages, backed by PostgreSQL with pgvector and Redis.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Plastic Labs",
+    "url": "https://plasticlabs.ai/"
+  },
+  "links": {
+    "github": "https://github.com/plastic-labs/honcho",
+    "website": "https://honcho.dev/",
+    "docs": [
+      "https://honcho.dev/docs/v3/contributing/self-hosting",
+      "https://honcho.dev/docs/v3/contributing/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set LLM_OPENAI_API_KEY to an OpenAI API key and redeploy: memory extraction, summaries, dialectic chat and embeddings all need it. To use another OpenAI-compatible provider instead, also set the per-feature model and base URL variables described in the configuration docs.",
+      "link": "https://honcho.dev/docs/v3/contributing/configuration#llm-configuration"
+    },
+    {
+      "type": "warning",
+      "message": "JWT authentication is on. Mint an admin token by running python scripts/generate_jwt.py --admin in the honcho container terminal, then pass it as the API key in the SDK or as a Bearer header.",
+      "link": "https://honcho.dev/docs/v3/contributing/self-hosting"
+    }
+  ]
+}

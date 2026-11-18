@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Visual chatbot builder with a separate viewer that serves published bots, backed by PostgreSQL and Redis.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Baptiste Arnaud",
+    "url": "https://github.com/baptisteArno"
+  },
+  "links": {
+    "github": "https://github.com/baptisteArno/typebot.io",
+    "website": "https://typebot.com",
+    "docs": [
+      "https://docs.typebot.com/self-hosting/deploy/docker",
+      "https://docs.typebot.com/self-hosting/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-in needs an auth provider. Add SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD and NEXT_PUBLIC_SMTP_FROM (or an OAuth provider) to the environment, plus ADMIN_EMAIL set to your address for an unlimited workspace, then redeploy. Do not leave any of these keys empty: the app refuses to start on an empty value.",
+      "link": "https://docs.typebot.com/self-hosting/configuration"
+    },
+    {
+      "type": "warning",
+      "message": "Published bots are served on bot.<your-domain>, so that hostname needs a DNS record pointing to this server as well."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Durable task queue and workflow orchestration engine for background jobs and AI agents, with its dashboard, REST API and gRPC engine in one container plus PostgreSQL.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Hatchet",
+    "url": "https://hatchet.run"
+  },
+  "links": {
+    "github": "https://github.com/hatchet-dev/hatchet",
+    "website": "https://hatchet.run",
+    "docs": [
+      "https://docs.hatchet.run/self-hosting/hatchet-lite",
+      "https://docs.hatchet.run/self-hosting/configuration-options",
+      "https://docs.hatchet.run/self-hosting/upgrading-downgrading"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL (admin@example.com by default) and ADMIN_PASSWORD from the environment variables; they are only applied on first start. Public sign-up is off: set SERVER_ALLOW_SIGNUP to true to let invited teammates register.",
+      "link": "https://docs.hatchet.run/self-hosting/configuration-options"
+    },
+    {
+      "type": "warning",
+      "message": "Workers connect over gRPC, which is not published on the domain. Run workers in the same environment, create an API token under Settings > API Tokens and set HATCHET_CLIENT_TOKEN, HATCHET_CLIENT_HOST_PORT=hatchet:7077 and HATCHET_CLIENT_TLS_STRATEGY=none.",
+      "link": "https://docs.hatchet.run/self-hosting/worker-configuration-options"
+    }
+  ]
+}

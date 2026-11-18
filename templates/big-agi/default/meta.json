@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Multi-model AI chat workspace with personas, Beam multi-model answers, voice, image generation and support for most hosted and local LLM providers.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Enrico Ros",
+    "url": "https://github.com/enricoros"
+  },
+  "links": {
+    "github": "https://github.com/enricoros/big-AGI",
+    "website": "https://big-agi.com",
+    "docs": [
+      "https://big-agi.com/docs/self-host",
+      "https://big-agi.com/docs/self-host-configuration",
+      "https://github.com/enricoros/big-AGI/blob/main/docs/environment-variables.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "big-AGI has no built-in login: anyone with the URL can use the instance. Each user adds their own model provider API key in the app settings; only set server-side keys such as OPENAI_API_KEY if you put authentication in front of the app.",
+      "link": "https://big-agi.com/docs/self-host-configuration"
+    }
+  ]
+}

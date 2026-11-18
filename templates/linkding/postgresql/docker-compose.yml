@@ -1,0 +1,40 @@
+services:
+  linkding:
+    image: sissbruecker/linkding:1.47.0@sha256:e35cb50e0581178f245125ffaa909c565416c94c9f22ace305a7d234a4345522
+    restart: unless-stopped
+    expose:
+      - 9090
+    environment:
+      LD_SUPERUSER_NAME: ${LD_SUPERUSER_NAME}
+      LD_SUPERUSER_PASSWORD: ${LD_SUPERUSER_PASSWORD}
+      LD_CSRF_TRUSTED_ORIGINS: ${LD_CSRF_TRUSTED_ORIGINS}
+      LD_DB_ENGINE: postgres
+      LD_DB_HOST: linkding-db
+      LD_DB_PORT: "5432"
+      LD_DB_DATABASE: linkding
+      LD_DB_USER: linkding
+      LD_DB_PASSWORD: ${LD_DB_PASSWORD}
+    volumes:
+      - linkding-data:/etc/linkding/data
+    depends_on:
+      linkding-db:
+        condition: service_healthy
+
+  linkding-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: linkding
+      POSTGRES_USER: linkding
+      POSTGRES_PASSWORD: ${LD_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U linkding -d linkding"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - linkding-db:/var/lib/postgresql
+
+volumes:
+  linkding-data: {}
+  linkding-db: {}

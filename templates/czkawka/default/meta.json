@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Krokiet, the current Czkawka GUI, streamed to the browser to find duplicates, similar images, empty folders and other unneeded files.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Rafał Mikrut",
+    "url": "https://github.com/qarmin"
+  },
+  "links": {
+    "github": "https://github.com/qarmin/czkawka",
+    "docs": [
+      "https://github.com/qarmin/czkawka/blob/master/krokiet/README.md",
+      "https://github.com/qarmin/czkawka/blob/master/instructions/Instruction.md",
+      "https://github.com/jlesage/docker-krokiet"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the WEB_AUTHENTICATION_USERNAME and generated WEB_AUTHENTICATION_PASSWORD values from the environment. Krokiet only scans files inside the container: upload them to /storage with the file manager (folder icon in the web control panel), then add /storage as an included directory.",
+      "link": "https://github.com/jlesage/docker-krokiet#web-file-manager"
+    }
+  ]
+}

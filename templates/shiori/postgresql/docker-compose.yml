@@ -1,0 +1,33 @@
+services:
+  shiori:
+    image: ghcr.io/go-shiori/shiori:v1.8.0@sha256:d3bdfc1b68b8f267a04cf74d73b8a0e1d99ac71c3a9047375e97202f079eb1f6
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SHIORI_HTTP_SECRET_KEY: ${SHIORI_HTTP_SECRET_KEY}
+      SHIORI_DATABASE_URL: postgres://shiori:${DB_PASSWORD}@shiori-db:5432/shiori?sslmode=disable
+    volumes:
+      - shiori-data:/shiori
+    depends_on:
+      shiori-db:
+        condition: service_healthy
+
+  shiori-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: shiori
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: shiori
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shiori -d shiori"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - shiori-postgres:/var/lib/postgresql
+
+volumes:
+  shiori-data: {}
+  shiori-postgres: {}

@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+jwt_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sonarqube"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+POSTGRES_DB = "sonarqube"
+POSTGRES_USER = "sonarqube"
+POSTGRES_PASSWORD = "${db_password}"
+SONAR_AUTH_JWTBASE64HS256SECRET = "${jwt_secret}"

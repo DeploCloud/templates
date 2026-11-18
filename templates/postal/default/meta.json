@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source mail delivery platform for sending transactional and bulk email through an HTTP API and SMTP, with a web interface, delivery tracking and webhooks.",
+  "category": "email",
+  "developedBy": {
+    "label": "Postal",
+    "url": "https://github.com/postalserver"
+  },
+  "links": {
+    "github": "https://github.com/postalserver/postal",
+    "website": "https://docs.postalserver.io",
+    "docs": [
+      "https://docs.postalserver.io/getting-started/prerequisites",
+      "https://docs.postalserver.io/getting-started/installation",
+      "https://docs.postalserver.io/getting-started/dns-configuration",
+      "https://docs.postalserver.io/developer/api",
+      "https://github.com/postalserver/postal/blob/main/doc/config/environment-variables.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL and ADMIN_PASSWORD from the environment settings. The admin account is created only on the first start, so change the password in the web interface afterwards instead of editing the variable."
+    },
+    {
+      "type": "warning",
+      "message": "Only the web interface and HTTP API are public: the SMTP port is not published, so Postal cannot receive inbound mail from the internet. Send through the HTTP API, or over SMTP at postal-smtp:25 from apps in the same environment. Outbound delivery needs port 25 open at your provider and the SPF, DKIM and return path DNS records Postal shows for each domain.",
+      "link": "https://docs.postalserver.io/getting-started/dns-configuration"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

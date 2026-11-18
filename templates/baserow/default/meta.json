@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "No-code database and application builder with a spreadsheet-like interface, run from the all-in-one image with embedded PostgreSQL and Redis on one persistent volume.",
+  "category": "database",
+  "developedBy": {
+    "label": "Baserow",
+    "url": "https://baserow.io"
+  },
+  "links": {
+    "github": "https://github.com/baserow/baserow",
+    "website": "https://baserow.io",
+    "docs": [
+      "https://baserow.io/docs/installation/install-with-docker",
+      "https://baserow.io/docs/installation/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the instance admin. Create it right after deploying, then restrict sign-ups in the admin settings if the instance is private."
+    }
+  ]
+}

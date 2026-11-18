@@ -1,0 +1,59 @@
+[variables]
+admin_password = "${password:24}"
+secret_key = "${hash:86}=="
+
+[config]
+
+[[config.domains]]
+serviceName = "glance"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "glance.yml"
+content = """server:
+  proxied: true
+
+auth:
+  secret-key: "${secret_key}"
+  users:
+    admin:
+      password: "${admin_password}"
+
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+            first-day-of-week: monday
+
+          - type: weather
+            location: London, United Kingdom
+            units: metric
+            hour-format: 24h
+
+      - size: full
+        widgets:
+          - type: group
+            widgets:
+              - type: hacker-news
+              - type: lobsters
+
+          - type: rss
+            limit: 10
+            collapse-after: 5
+            cache: 12h
+            feeds:
+              - url: https://samwho.dev/rss.xml
+              - url: https://ciechanow.ski/atom.xml
+              - url: https://www.joshwcomeau.com/rss.xml
+                title: Josh Comeau
+
+      - size: small
+        widgets:
+          - type: releases
+            cache: 1d
+            repositories:
+              - glanceapp/glance
+"""

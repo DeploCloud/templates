@@ -1,0 +1,29 @@
+{
+  "name": "FerretDB",
+  "shortDescription": "Komodo Core with FerretDB on PostgreSQL as its MongoDB-compatible database, for CPUs that cannot run current MongoDB.",
+  "category": "development",
+  "developedBy": {
+    "label": "Moghtech",
+    "url": "https://github.com/moghtech"
+  },
+  "links": {
+    "github": "https://github.com/moghtech/komodo",
+    "website": "https://komo.do",
+    "docs": [
+      "https://komo.do/docs/setup/ferretdb",
+      "https://komo.do/docs/setup/connect-servers",
+      "https://komo.do/docs/setup/advanced"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated KOMODO_INIT_ADMIN_PASSWORD from the environment variables. The admin account is only created on the first start; change the password later in Komodo, not in the environment."
+    },
+    {
+      "type": "warning",
+      "message": "This template deploys Komodo Core only. To manage a server, create an onboarding key in the UI and install the Periphery agent on that server, pointing it at https://<your-domain>.",
+      "link": "https://komo.do/docs/setup/connect-servers"
+    }
+  ]
+}

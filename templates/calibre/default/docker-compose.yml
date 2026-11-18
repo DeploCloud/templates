@@ -1,0 +1,18 @@
+services:
+  calibre:
+    image: lscr.io/linuxserver/calibre:v9.18.0-ls433@sha256:dbaefbf648b2197bd25d783830b6fbe1be0da8a0cb5d837ddc9973ebc6e6e3d2
+    restart: unless-stopped
+    expose:
+      - 8080
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - calibre-config:/config
+
+volumes:
+  calibre-config: {}

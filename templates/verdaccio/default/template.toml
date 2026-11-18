@@ -1,0 +1,61 @@
+[config]
+
+[[config.domains]]
+serviceName = "verdaccio"
+port = 4_873
+host = "${domain}"
+
+[config.env]
+VERDACCIO_PUBLIC_URL = "https://${domain}"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """# Verdaccio configuration: edit and redeploy to apply.
+# Reference: https://verdaccio.org/docs/configuration
+storage: /verdaccio/storage/data
+plugins: /verdaccio/plugins
+
+web:
+  title: Verdaccio
+
+auth:
+  htpasswd:
+    file: /verdaccio/storage/htpasswd
+    # Anyone can create an account with `npm adduser` until registration is closed.
+    # After creating your accounts, set max_users to -1 and redeploy.
+    # max_users: -1
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+
+# access: $authenticated makes the registry private, $all keeps reads public.
+packages:
+  '@*/*':
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+    proxy: npmjs
+  '**':
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+    proxy: npmjs
+
+server:
+  keepAliveTimeout: 60
+  dotfiles: ignore
+  trustProxy: 'loopback, linklocal, uniquelocal'
+
+middlewares:
+  audit:
+    enabled: true
+
+log:
+  type: stdout
+  format: pretty
+  level: http
+
+i18n:
+  web: en-US
+"""

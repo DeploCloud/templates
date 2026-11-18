@@ -1,0 +1,28 @@
+[variables]
+wallet_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "lnd"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "wallet-password"
+content = """${wallet_password}
+"""
+
+[[config.mounts]]
+filePath = "lnd.conf"
+content = """[Application Options]
+no-rest-tls=true
+wallet-unlock-password-file=/etc/lnd/wallet-password
+
+[Bitcoin]
+bitcoin.mainnet=true
+bitcoin.node=neutrino
+
+[fee]
+fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json
+"""

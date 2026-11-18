@@ -1,0 +1,16 @@
+[variables]
+settings_key = "${password:48}"
+ui_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "duplicati"
+port = 8_200
+host = "${domain}"
+
+[config.env]
+SETTINGS_ENCRYPTION_KEY = "${settings_key}"
+DUPLICATI__WEBSERVICE_PASSWORD = "${ui_password}"
+DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES = "${domain}"

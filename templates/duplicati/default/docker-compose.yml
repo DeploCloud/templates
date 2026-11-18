@@ -1,0 +1,21 @@
+services:
+  duplicati:
+    image: duplicati/duplicati:2.4.1.0@sha256:5df64d95abd79ddaa41897a6c234c956d6de03df767a1b8eb8c5baecf3162bbf
+    restart: unless-stopped
+    expose:
+      - 8200
+    environment:
+      SETTINGS_ENCRYPTION_KEY: ${SETTINGS_ENCRYPTION_KEY}
+      DUPLICATI__WEBSERVICE_PASSWORD: ${DUPLICATI__WEBSERVICE_PASSWORD}
+      DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES: ${DUPLICATI__WEBSERVICE_ALLOWED_HOSTNAMES}
+    volumes:
+      - duplicati-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:8200/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  duplicati-data: {}

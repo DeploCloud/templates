@@ -1,0 +1,74 @@
+[variables]
+mysql_password = "${password:32}"
+vtadmin_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "vitess"
+port = 14_201
+host = "${domain}"
+
+[config.env]
+VITESS_KEYSPACE = "main"
+VITESS_MYSQL_USER = "vitess"
+VITESS_MYSQL_PASSWORD = "${mysql_password}"
+VTADMIN_USER = "admin"
+VTADMIN_PASSWORD = "${vtadmin_password}"
+
+[[config.mounts]]
+filePath = "vtadmin-web.conf"
+content = """
+resolver 127.0.0.11 valid=10s ipv6=off;
+
+server {
+    listen 14201;
+    root /var/www;
+
+    auth_basic "VTAdmin";
+    auth_basic_user_file /tmp/htpasswd;
+
+    location /api/ {
+        set $vtadmin_api http://vitess-vtadmin-api:14200;
+        proxy_pass $vtadmin_api;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_read_timeout 300s;
+    }
+
+    location = /config/config.js {
+        expires off;
+        add_header Cache-Control no-store;
+    }
+
+    location / {
+        try_files $uri /index.html;
+    }
+}
+"""
+
+[[config.mounts]]
+filePath = "config.js"
+content = """
+window.env = {
+    'VITE_VTADMIN_API_ADDRESS': "",
+    'VITE_FETCH_CREDENTIALS': "same-origin",
+    'VITE_ENABLE_EXPERIMENTAL_TABLET_DEBUG_VARS': true,
+    'VITE_BUGSNAG_API_KEY': "",
+    'VITE_DOCUMENT_TITLE': "",
+    'VITE_READONLY_MODE': false,
+};
+"""
+
+[[config.mounts]]
+filePath = "discovery.json"
+content = """
+{
+  "vtctlds": [
+    { "host": { "fqdn": "vitess-vtctld:15000", "hostname": "vitess-vtctld:15999" } }
+  ],
+  "vtgates": [
+    { "host": { "fqdn": "vitess-vtgate:15001", "hostname": "vitess-vtgate:15991" } }
+  ]
+}
+"""

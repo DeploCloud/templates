@@ -1,0 +1,16 @@
+[variables]
+webui_password = "${password:32}"
+api_server_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hermes-webui"
+port = 8_787
+host = "${domain}"
+
+[config.env]
+HERMES_WEBUI_PASSWORD = "${webui_password}"
+HERMES_WEBUI_ALLOWED_ORIGINS = "https://${domain}"
+API_SERVER_KEY = "${api_server_key}"

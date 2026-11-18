@@ -1,0 +1,40 @@
+[variables]
+api_key = "${hash:48}"
+ui_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "steel-browser-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	@no_api_key {
+		not header Steel-Api-Key {$STEEL_API_KEY}
+		not query apiKey={$STEEL_API_KEY}
+	}
+	basic_auth @no_api_key {
+		{$STEEL_UI_USERNAME} {$STEEL_UI_PASSWORD_HASH}
+	}
+	reverse_proxy steel-browser:3000
+}
+"""
+
+[config.env]
+DOMAIN = "${domain}"
+USE_SSL = "true"
+STEEL_API_KEY = "${api_key}"
+STEEL_UI_USERNAME = "admin"
+STEEL_UI_PASSWORD = "${ui_password}"

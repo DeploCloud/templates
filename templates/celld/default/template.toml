@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "celld"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+CELLD_BUCKET = ""
+S3_ENDPOINT = ""
+AWS_REGION = ""
+AWS_ACCESS_KEY_ID = ""
+AWS_SECRET_ACCESS_KEY = ""

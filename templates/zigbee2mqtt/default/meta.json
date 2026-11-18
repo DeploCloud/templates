@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Zigbee to MQTT bridge with a web frontend, using a network-attached Zigbee coordinator and an existing MQTT broker.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Koen Kanters",
+    "url": "https://github.com/Koenkk"
+  },
+  "links": {
+    "github": "https://github.com/Koenkk/zigbee2mqtt",
+    "website": "https://www.zigbee2mqtt.io/",
+    "docs": [
+      "https://www.zigbee2mqtt.io/guide/installation/02_docker.html",
+      "https://www.zigbee2mqtt.io/guide/getting-started/#onboarding",
+      "https://www.zigbee2mqtt.io/guide/configuration/adapter-settings.html",
+      "https://www.zigbee2mqtt.io/guide/configuration/mqtt.html",
+      "https://www.zigbee2mqtt.io/guide/configuration/frontend.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Requires a network-attached Zigbee coordinator reachable from the server (for example tcp://192.168.1.12:6638) and an existing MQTT broker. USB adapters cannot be used.",
+      "link": "https://www.zigbee2mqtt.io/guide/configuration/adapter-settings.html"
+    },
+    {
+      "type": "warning",
+      "message": "The onboarding page is open to anyone until it is submitted, so complete it right after deploying. The frontend then asks for the ZIGBEE2MQTT_CONFIG_FRONTEND_AUTH_TOKEN value.",
+      "link": "https://www.zigbee2mqtt.io/guide/configuration/frontend.html"
+    }
+  ]
+}

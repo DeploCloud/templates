@@ -1,0 +1,25 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Open-source data labeling tool backed by a bundled PostgreSQL database, suited to large projects and many concurrent annotators.",
+  "category": "ai",
+  "developedBy": {
+    "label": "HumanSignal",
+    "url": "https://humansignal.com"
+  },
+  "links": {
+    "github": "https://github.com/HumanSignal/label-studio",
+    "website": "https://labelstud.io",
+    "docs": [
+      "https://labelstud.io/guide/storedata",
+      "https://labelstud.io/guide/install",
+      "https://labelstud.io/guide/signup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the LABEL_STUDIO_USERNAME and LABEL_STUDIO_PASSWORD values from the environment. Public sign-up is disabled; invite other users from the Organization page.",
+      "link": "https://labelstud.io/guide/signup"
+    }
+  ]
+}

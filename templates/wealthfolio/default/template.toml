@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wealthfolio"
+port = 8_088
+host = "${domain}"
+
+[config.env]
+WEALTHFOLIO_PASSWORD = "${password:24}"
+# 32 ASCII characters that are not valid base64 are used as the raw 32-byte key
+WF_SECRET_KEY = "${hash:31}!"
+WF_CORS_ALLOW_ORIGINS = "https://${domain}"

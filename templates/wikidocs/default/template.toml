@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wikidocs"
+port = 3_210
+host = "${domain}"
+
+[config.env]
+MODE = "private"
+SECRET = "${hash:64}"

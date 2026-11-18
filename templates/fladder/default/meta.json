@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Fladder web client for Jellyfin, served by the official rootless nginx image as a static web app with no server-side data.",
+  "category": "media",
+  "developedBy": {
+    "label": "DonutWare",
+    "url": "https://github.com/DonutWare"
+  },
+  "links": {
+    "github": "https://github.com/DonutWare/Fladder",
+    "website": "https://donutware.github.io/Fladder/",
+    "docs": [
+      "https://github.com/DonutWare/Fladder/blob/develop/INSTALL.md#docker",
+      "https://github.com/DonutWare/Fladder/blob/develop/INSTALL.md#web"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Fladder is only a frontend: it needs an existing Jellyfin server reachable over HTTPS from your browser. Enter its URL on the login screen, or preset it for every user with BASE_URL (this hides the server field).",
+      "link": "https://github.com/DonutWare/Fladder/blob/develop/INSTALL.md#docker"
+    }
+  ]
+}

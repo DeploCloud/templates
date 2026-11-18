@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted IPTVnator web player for M3U playlists, Xtream Codes and Stalker portals, with a shared server-side source library.",
+  "category": "media",
+  "developedBy": {
+    "label": "4gray",
+    "url": "https://github.com/4gray"
+  },
+  "links": {
+    "github": "https://github.com/4gray/iptvnator",
+    "website": "https://4gray.github.io/iptvnator/",
+    "docs": [
+      "https://4gray.github.io/iptvnator/download/docker/",
+      "https://github.com/4gray/iptvnator/blob/master/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The app is protected by a generated access token. Copy IPTVNATOR_ACCESS_TOKEN from the environment settings and enter it when the app asks for it, or under Settings > Server.",
+      "link": "https://github.com/4gray/iptvnator/blob/master/docker/README.md#runtime-configuration"
+    }
+  ]
+}

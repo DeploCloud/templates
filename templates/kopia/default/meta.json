@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Kopia backup server with its web UI for encrypted, deduplicated and compressed snapshots to local or cloud repositories.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Kopia",
+    "url": "https://github.com/kopia"
+  },
+  "links": {
+    "github": "https://github.com/kopia/kopia",
+    "website": "https://kopia.io",
+    "docs": [
+      "https://kopia.io/docs/installation/",
+      "https://kopia.io/docs/getting-started/",
+      "https://kopia.io/docs/repositories/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the KOPIA_SERVER_USERNAME and KOPIA_SERVER_PASSWORD environment values. When you create or connect a repository in the web UI, use the generated KOPIA_PASSWORD as the repository password: the server reopens the repository with it after every restart.",
+      "link": "https://kopia.io/docs/installation/"
+    },
+    {
+      "type": "info",
+      "message": "Mounting snapshots as a filesystem is not available, since it needs FUSE and a privileged container. Browsing and restoring snapshots from the web UI works."
+    },
+    {
+      "type": "info",
+      "message": "Other Kopia clients cannot connect to this deployment as a repository server: that mode uses gRPC, which needs TLS on the Kopia server itself, while this template serves plain HTTP behind the HTTPS proxy. Manage snapshots through the web UI instead.",
+      "link": "https://kopia.io/docs/repository-server/"
+    }
+  ]
+}

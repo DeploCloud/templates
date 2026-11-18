@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Document question answering platform that parses uploaded files, indexes them for hybrid keyword and vector search, and answers with cited sources through chat, an agent and a generated wiki.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Tencent",
+    "url": "https://github.com/Tencent"
+  },
+  "links": {
+    "github": "https://github.com/Tencent/WeKnora",
+    "website": "https://weknora.weixin.qq.com",
+    "docs": [
+      "https://weknora.weixin.qq.com/docs/01-getting-started/02-installation",
+      "https://weknora.weixin.qq.com/docs/01-getting-started/03-quickstart",
+      "https://weknora.weixin.qq.com/docs/01-getting-started/04-configuration",
+      "https://weknora.weixin.qq.com/docs/03-features/20-platform-admin"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no default account and public sign-up is open: register your account right after deploying. To make it the system administrator, set WEKNORA_BOOTSTRAP_SYSTEM_ADMIN_EMAIL to its email and redeploy, then restrict registration in Settings or set DISABLE_REGISTRATION to true.",
+      "link": "https://weknora.weixin.qq.com/docs/03-features/20-platform-admin"
+    },
+    {
+      "type": "warning",
+      "message": "WeKnora ships no models. Add a chat model and an embedding model from any OpenAI-compatible API when you create the first knowledge base. To use an Ollama server instead, set OLLAMA_BASE_URL to its address (for example http://ollama.example.com:11434) and redeploy.",
+      "link": "https://weknora.weixin.qq.com/docs/03-features/06-models"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+MoviePilot automates a movie and TV library: subscriptions, resource search, download scheduling, file renaming, metadata scraping and media server refresh. This variant runs the single official container with its built-in SQLite database and in-memory cache, behind the web entry on port 3000.
+
+Settings, the database and logs persist in `/config`, the browser kernel used for site emulation persists in `/moviepilot/.cloakbrowser`, and the `/media` volume holds downloads and the organized library. On the first visit the web UI asks you to create the admin user and API key; afterwards complete site authentication and connect a downloader and media server under Settings.

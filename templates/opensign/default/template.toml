@@ -1,0 +1,58 @@
+[variables]
+master_key = "${password:32}"
+mongo_password = "${hash:32}"
+pass_phrase = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "opensign-proxy"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+MASTER_KEY = "${master_key}"
+MONGO_PASSWORD = "${mongo_password}"
+PASS_PHRASE = "${pass_phrase}"
+SMTP_ENABLE = "false"
+SMTP_HOST = ""
+SMTP_PORT = "465"
+SMTP_USERNAME = ""
+SMTP_USER_EMAIL = ""
+SMTP_PASS = ""
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	handle_path /api/* {
+		reverse_proxy opensign-server:8080
+	}
+	handle {
+		reverse_proxy opensign-client:3000
+	}
+}
+"""
+
+[[config.mounts]]
+filePath = "opensign-start.sh"
+content = """#!/bin/sh
+# Per-deployment self-signed signing certificate; the key persists, the PFX is rebuilt each start.
+set -e
+d=/usr/src/app/certs
+if [ ! -s "$d/signing.key" ]; then
+  openssl req -x509 -newkey rsa:2048 -nodes -days 3650 -subj "/CN=OpenSign" -keyout "$d/signing.key" -out "$d/signing.crt"
+fi
+openssl pkcs12 -export -inkey "$d/signing.key" -in "$d/signing.crt" -out /tmp/signing.pfx -passout env:PASS_PHRASE -keypbe PBE-SHA1-3DES -certpbe PBE-SHA1-3DES -macalg sha1
+PFX_BASE64="$(base64 -w0 /tmp/signing.pfx)"
+export PFX_BASE64
+exec npm start
+"""

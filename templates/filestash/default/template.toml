@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "filestash"
+port = 8_334
+host = "${domain}"
+
+[config.env]
+APPLICATION_URL = "${domain}"

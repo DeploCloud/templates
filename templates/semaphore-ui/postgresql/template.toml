@@ -1,0 +1,23 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+access_key_encryption = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "semaphore"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+SEMAPHORE_DB = "semaphore"
+SEMAPHORE_DB_USER = "semaphore"
+SEMAPHORE_DB_PASS = "${db_password}"
+SEMAPHORE_WEB_ROOT = "https://${domain}"
+SEMAPHORE_ADMIN = "admin"
+SEMAPHORE_ADMIN_NAME = "Admin"
+SEMAPHORE_ADMIN_EMAIL = "admin@localhost"
+SEMAPHORE_ADMIN_PASSWORD = "${admin_password}"
+SEMAPHORE_ACCESS_KEY_ENCRYPTION = "${access_key_encryption}"

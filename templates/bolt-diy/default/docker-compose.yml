@@ -1,0 +1,9 @@
+services:
+  bolt-diy:
+    image: ghcr.io/stackblitz-labs/bolt.diy:v1.0.3@sha256:89f1061e2ffad4f51125c6f931f18a4b2aaec2a1010799ea6b9608f399d7c99e
+    restart: unless-stopped
+    expose:
+      - 5173
+    environment:
+      # vite preview rejects unknown Host headers; allow the routed domain
+      __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS: ${ALLOWED_HOST}

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "CouchDB server preconfigured for the Self-hosted LiveSync Obsidian plugin, syncing vaults across desktop and mobile devices with optional end-to-end encryption.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "vrtmrz",
+    "url": "https://github.com/vrtmrz"
+  },
+  "links": {
+    "github": "https://github.com/vrtmrz/obsidian-livesync",
+    "docs": [
+      "https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/setup_own_server.md",
+      "https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/quick_setup.md",
+      "https://github.com/vrtmrz/obsidian-livesync/blob/main/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web app to open. In the Self-hosted LiveSync plugin, set the URI to https://<your domain>, sign in with COUCHDB_USER and COUCHDB_PASSWORD from the environment, pick a database name (the plugin creates it) and set an end-to-end encryption passphrase. These are CouchDB admin credentials and also unlock the Fauxton console at /_utils.",
+      "link": "https://github.com/vrtmrz/obsidian-livesync/blob/main/docs/quick_setup.md#configure-couchdb-manually-on-the-first-device"
+    }
+  ]
+}

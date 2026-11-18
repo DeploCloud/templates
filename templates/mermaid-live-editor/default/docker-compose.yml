@@ -1,0 +1,6 @@
+services:
+  mermaid-live-editor:
+    image: ghcr.io/mermaid-js/mermaid-live-editor:latest@sha256:34c61d9a8c12b6a4f6d5ae0bceb4a82c811202f4cd0397ffe81ed46ef0823bc6
+    restart: unless-stopped
+    expose:
+      - 8080

@@ -1,0 +1,59 @@
+x-stalwart-image: &stalwart-image stalwartlabs/stalwart:v1.1.1@sha256:5ebdf474b237161742fe4309396af4ae8797c938e8e6eb7e2d4837332c4f9851
+
+services:
+  stalwart:
+    image: *stalwart-image
+    restart: unless-stopped
+    init: true
+    environment:
+      STALWART_HOSTNAME: ${STALWART_HOSTNAME}
+      STALWART_PUBLIC_URL: ${STALWART_PUBLIC_URL}
+      STALWART_RECOVERY_ADMIN: ${STALWART_RECOVERY_ADMIN}
+    expose:
+      - 8080
+    volumes:
+      - stalwart-etc:/etc/stalwart
+      # A provided config.json skips the setup wizard, which cannot run behind a proxy.
+      - ./config.json:/etc/stalwart/config.json:ro
+      - stalwart-data:/var/lib/stalwart
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/healthz/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # One-shot: trust X-Forwarded-For so bans hit the client, and swap the default
+  # file logger (the image has no /var/log/stalwart) for console output.
+  stalwart-init:
+    image: *stalwart-image
+    restart: "no"
+    environment:
+      STALWART_RECOVERY_ADMIN: ${STALWART_RECOVERY_ADMIN}
+    entrypoint: ["sh", "-ec"]
+    command:
+      - |
+        [ -n "$$STALWART_RECOVERY_ADMIN" ] || exit 0
+        U='{"using":["urn:ietf:params:jmap:core","urn:stalwart:jmap"],"methodCalls":['
+        api() {
+          out=$$(curl -fsS -u "$$STALWART_RECOVERY_ADMIN" -H 'Content-Type: application/json' -d "$$U$$1]}" http://stalwart:8080/jmap/)
+          echo "$$out"
+          case "$$out" in *'"notUpdated":{"'*|*'"notCreated":{"'*|*'"notDestroyed":{"'*|*'["error"'*) exit 1 ;; esac
+        }
+        Q='["x:Tracer/query",{"filter":{}},"q"]'
+        R='{"resultOf":"q","name":"x:Tracer/query","path":"/ids"}'
+        api "$$Q"',["x:Tracer/get",{"#ids":'"$$R"'},"g"]'
+        case "$$out" in
+          *'"Stdout"'*) log= ;;
+          *) log=",$$Q"',["x:Tracer/set",{"#destroy":'"$$R"',"create":{"t":{"@type":"Stdout"}}},"t"]' ;;
+        esac
+        api '["x:Http/set",{"update":{"singleton":{"clientIpSource":"xForwardedFor"}}},"h"]'"$$log"',["x:Action/set",{"create":{"r":{"@type":"ReloadSettings"}}},"a"]'
+    healthcheck:
+      disable: true
+    depends_on:
+      stalwart:
+        condition: service_healthy
+
+volumes:
+  stalwart-etc: {}
+  stalwart-data: {}

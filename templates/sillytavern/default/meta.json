@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted LLM chat frontend for roleplay and character chats that connects to OpenAI, Claude, Ollama, KoboldCpp and many other text and image APIs.",
+  "category": "ai",
+  "developedBy": {
+    "label": "SillyTavern",
+    "url": "https://github.com/SillyTavern"
+  },
+  "links": {
+    "github": "https://github.com/SillyTavern/SillyTavern",
+    "website": "https://sillytavern.app",
+    "docs": [
+      "https://docs.sillytavern.app/installation/docker/",
+      "https://docs.sillytavern.app/administration/config-yaml/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The site is protected by HTTP basic authentication: sign in with the SILLYTAVERN_USERNAME and SILLYTAVERN_PASSWORD values from the environment settings.",
+      "link": "https://docs.sillytavern.app/administration/config-yaml/"
+    },
+    {
+      "type": "warning",
+      "message": "SillyTavern ships no language model. Connect it to an external or self-hosted LLM API and enter its key in the API Connections panel."
+    }
+  ]
+}

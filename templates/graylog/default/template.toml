@@ -1,0 +1,30 @@
+[variables]
+admin_password = "${password:24}"
+password_secret = "${password:96}"
+mongo_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "graylog"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+ADMIN_PASSWORD = "${admin_password}"
+GRAYLOG_PASSWORD_SECRET = "${password_secret}"
+GRAYLOG_HTTP_EXTERNAL_URI = "https://${domain}/"
+MONGO_PASSWORD = "${mongo_password}"
+GRAYLOG_SERVER_JAVA_OPTS = "-Xms1g -Xmx1g"
+OPENSEARCH_JAVA_OPTS = "-Xms1g -Xmx1g"
+
+[[config.mounts]]
+filePath = "graylog-start.sh"
+content = """#!/bin/bash
+# Graylog only accepts a SHA-256 of the admin password, so derive it from ADMIN_PASSWORD.
+set -e
+GRAYLOG_ROOT_PASSWORD_SHA2="$(printf '%s' "$ADMIN_PASSWORD" | sha256sum | cut -d ' ' -f1)"
+export GRAYLOG_ROOT_PASSWORD_SHA2
+unset ADMIN_PASSWORD
+exec /docker-entrypoint.sh "$@"
+"""

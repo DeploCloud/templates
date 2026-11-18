@@ -1,0 +1,12 @@
+services:
+  super-productivity:
+    image: johannesjo/super-productivity:v20.0.0@sha256:99004ec9e1996fd7d266a108cdeedfb73adb507587f53ea32361870dae94a261
+    restart: unless-stopped
+    expose:
+      - 80
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

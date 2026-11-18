@@ -1,0 +1,55 @@
+services:
+  healthchecks:
+    image: healthchecks/healthchecks:v5.0.3@sha256:5eb96eb72dc63ac24743f1c0fc4469931155329e05c9781a0809320de0ae479c
+    restart: unless-stopped
+    expose:
+      - 8000
+    # Creates the ADMIN_EMAIL superuser unless that email already has an account
+    command:
+      - bash
+      - -c
+      - ./manage.py migrate && { ./manage.py createsuperuser --email="$$ADMIN_EMAIL" --password="$$ADMIN_PASSWORD" 2>/dev/null || true; } && exec ./run.sh
+    environment:
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DEBUG: "False"
+      SECRET_KEY: ${SECRET_KEY}
+      SITE_ROOT: ${SITE_ROOT}
+      SITE_NAME: ${SITE_NAME}
+      PING_EMAIL_DOMAIN: ${PING_EMAIL_DOMAIN}
+      RP_ID: ${RP_ID}
+      REGISTRATION_OPEN: ${REGISTRATION_OPEN}
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS}
+      DB: postgres
+      DB_HOST: healthchecks-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_PORT: ${EMAIL_PORT}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS}
+    depends_on:
+      healthchecks-db:
+        condition: service_healthy
+
+  healthchecks-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - healthchecks-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  healthchecks-db: {}

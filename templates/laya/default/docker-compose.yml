@@ -1,0 +1,22 @@
+services:
+  laya:
+    image: pikkonmg/laya-system-one:0.4.35-cpu@sha256:3934b4876f43c7af29eee1d6ada598ed6539fb956ba744e7e69df96bc14a06c4
+    restart: unless-stopped
+    init: true
+    expose:
+      - 8000
+    environment:
+      LAYA_API_KEY: ${LAYA_API_KEY}
+      LAYA_PRELOAD: ${LAYA_PRELOAD}
+      LAYA_MODELS: ${LAYA_MODELS}
+    volumes:
+      - laya-data:/data
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10m
+
+volumes:
+  laya-data: {}

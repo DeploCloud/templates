@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based word processor built in Rust and WebAssembly: ribbon, styles, tables, track changes, references, mail merge and .docx open, save and PDF export.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/wordcraft",
+    "website": "https://getartcraft.com/apps/wordcraft",
+    "docs": [
+      "https://github.com/storytold/wordcraft/blob/main/packaging/web/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Documents are not stored on the server: the web app runs in the browser and starts fresh on every visit. Save or export your documents to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}

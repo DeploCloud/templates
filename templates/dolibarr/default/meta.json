@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source ERP and CRM for contacts, quotes, invoices, orders, stock, HR and accounting, backed by MariaDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Dolibarr",
+    "url": "https://github.com/Dolibarr"
+  },
+  "links": {
+    "github": "https://github.com/Dolibarr/dolibarr",
+    "website": "https://www.dolibarr.org",
+    "docs": [
+      "https://github.com/Dolibarr/dolibarr-docker#readme",
+      "https://wiki.dolibarr.org/index.php/User_documentation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated DOLI_ADMIN_PASSWORD value from the environment variables. It is applied only on the first start, which takes a few minutes while the database tables are created; change it later from the user settings."
+    }
+  ]
+}

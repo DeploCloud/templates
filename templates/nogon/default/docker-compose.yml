@@ -1,0 +1,15 @@
+services:
+  nogon:
+    image: ghcr.io/asciimoo/nogon:v0.22.0@sha256:d1b427c7f876e64e6212e000df60d33c2e418b60372582b56cfee719eafd4107
+    restart: unless-stopped
+    expose:
+      - 4433
+    environment:
+      NOGON__SERVER__ADDRESS: ${NOGON__SERVER__ADDRESS}
+      NOGON__SERVER__BASE_URL: ${NOGON__SERVER__BASE_URL}
+      NOGON__APP__ACCESS_TOKEN: ${NOGON__APP__ACCESS_TOKEN}
+    volumes:
+      - nogon-data:/hister/data
+
+volumes:
+  nogon-data: {}

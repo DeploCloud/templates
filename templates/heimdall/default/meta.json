@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Application dashboard and launcher that organizes links to your web apps and self-hosted services, with live stats for supported apps.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "LinuxServer.io",
+    "url": "https://www.linuxserver.io/"
+  },
+  "links": {
+    "github": "https://github.com/linuxserver/Heimdall",
+    "website": "https://heimdall.site/",
+    "docs": [
+      "https://docs.linuxserver.io/images/docker-heimdall/",
+      "https://github.com/linuxserver/Heimdall#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard starts with an admin user that has no password, so anyone with the URL can edit it. Open Users, edit the admin user and set a password right after the first deploy."
+    }
+  ]
+}

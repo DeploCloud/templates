@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "opencloud"
+port = 9_200
+host = "${domain}"
+
+[config.env]
+OC_DOMAIN = "${domain}"
+IDM_ADMIN_PASSWORD = "${admin_password}"
+OC_LOG_LEVEL = "info"

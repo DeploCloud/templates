@@ -1,0 +1,15 @@
+services:
+  grav:
+    image: getgrav/grav:php8.3@sha256:0f3f2341580eb60c7521ec10959512f60a28c4e7b4efa464eb3f7916a775cb3e
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      GRAV_VERSION: ${GRAV_VERSION}
+      GRAV_CONFIG: "true"
+      GRAV_CONFIG__system__http_x_forwarded__protocol: "true"
+    volumes:
+      - grav-site:/var/www/html
+
+volumes:
+  grav-site: {}

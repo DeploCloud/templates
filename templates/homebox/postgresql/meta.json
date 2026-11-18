@@ -1,0 +1,25 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Home inventory and organization system for items, locations, warranties and attachments, backed by a PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "SysAdmins Media",
+    "url": "https://github.com/sysadminsmedia"
+  },
+  "links": {
+    "github": "https://github.com/sysadminsmedia/homebox",
+    "website": "https://homebox.software",
+    "docs": [
+      "https://homebox.software/en/quick-start/configure/database/",
+      "https://homebox.software/en/quick-start/configure/",
+      "https://homebox.software/en/user-guide/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open to anyone who can reach the URL. Register your own account first, then set HBOX_OPTIONS_ALLOW_REGISTRATION to false and redeploy to close sign-ups.",
+      "link": "https://homebox.software/en/quick-start/configure/"
+    }
+  ]
+}

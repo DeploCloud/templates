@@ -1,0 +1,14 @@
+[variables]
+dragonfly_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dragonfly"
+port = 6_379
+host = "${domain}"
+
+[config.env]
+DRAGONFLY_PASSWORD = "${dragonfly_password}"
+DRAGONFLY_THREADS = "2"

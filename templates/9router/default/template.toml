@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "9router"
+port = 20_128
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${hash:64}"
+INITIAL_PASSWORD = "${password:24}"
+API_KEY_SECRET = "${hash:64}"
+MACHINE_ID_SALT = "${hash:32}"
+BASE_URL = "https://${domain}"

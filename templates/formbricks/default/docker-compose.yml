@@ -1,0 +1,216 @@
+x-formbricks-env: &formbricks-env
+  WEBAPP_URL: ${WEBAPP_URL}
+  BETTER_AUTH_URL: ${WEBAPP_URL}
+  DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@formbricks-db:5432/formbricks?schema=public
+  BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+  ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+  CRON_SECRET: ${CRON_SECRET}
+  REDIS_URL: redis://formbricks-redis:6379
+  HUB_API_URL: http://formbricks-hub:8080
+  HUB_API_KEY: ${HUB_API_KEY}
+  CUBEJS_API_URL: http://formbricks-cube:4000
+  CUBEJS_API_SECRET: ${CUBEJS_API_SECRET}
+  CUBEJS_JWT_ISSUER: formbricks-web
+  CUBEJS_JWT_AUDIENCE: formbricks-cube
+  EMAIL_VERIFICATION_DISABLED: "1"
+  PASSWORD_RESET_DISABLED: "1"
+  AUTHZED_ENABLED: "true"
+  AUTHZED_ENDPOINT: formbricks-spicedb:50051
+  AUTHZED_TOKEN: ${AUTHZED_TOKEN}
+  AUTHZED_SYSTEM_KEY: formbricks
+  AUTHZED_INSECURE: "true"
+  AUTHZED_CONSISTENCY: fully_consistent
+
+services:
+  formbricks:
+    image: ghcr.io/formbricks/formbricks:6.2.1@sha256:0da58d1bf3ea86d355d8e682851fdb74b4cb19ed7d7436a82ab069db7ba2b992
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      <<: *formbricks-env
+      SKIP_STARTUP_MIGRATION: "true"
+    volumes:
+      - formbricks-saml:/home/nextjs/apps/web/saml-connection
+    depends_on:
+      formbricks-db:
+        condition: service_healthy
+      formbricks-redis:
+        condition: service_healthy
+      formbricks-cube:
+        condition: service_healthy
+
+  formbricks-migrate:
+    image: ghcr.io/formbricks/formbricks:6.2.1@sha256:0da58d1bf3ea86d355d8e682851fdb74b4cb19ed7d7436a82ab069db7ba2b992
+    restart: "no"
+    entrypoint: ["sh", "-c"]
+    command: ["node /home/nextjs/validate-env.mjs && timeout 300 node packages/database/dist/scripts/apply-migrations.js"]
+    environment: *formbricks-env
+    depends_on:
+      formbricks-db:
+        condition: service_healthy
+
+  formbricks-authzed-init:
+    image: ghcr.io/formbricks/formbricks:6.2.1@sha256:0da58d1bf3ea86d355d8e682851fdb74b4cb19ed7d7436a82ab069db7ba2b992
+    restart: "no"
+    entrypoint: ["formbricks-authzed"]
+    command: ["upgrade", "prepare"]
+    environment: *formbricks-env
+    depends_on:
+      formbricks-migrate:
+        condition: service_completed_successfully
+      formbricks-spicedb:
+        condition: service_healthy
+
+  formbricks-db:
+    image: pgvector/pgvector:0.8.7-pg18@sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782
+    restart: unless-stopped
+    shm_size: 512mb
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: formbricks
+    volumes:
+      - formbricks-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+
+  formbricks-redis:
+    image: valkey/valkey:9.1.4@sha256:3ab0eca823ebbf0fe352476ebac330ac9e5f14b592b9a954eab296d341e81b0e
+    restart: unless-stopped
+    command: valkey-server --appendonly yes --maxmemory-policy noeviction
+    volumes:
+      - formbricks-redis-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+  # Creates the dedicated SpiceDB role and database; idempotent.
+  formbricks-spicedb-bootstrap:
+    image: pgvector/pgvector:0.8.7-pg18@sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782
+    restart: "no"
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        psql "postgresql://postgres:$$POSTGRES_PASSWORD@formbricks-db:5432/postgres?sslmode=disable" -v ON_ERROR_STOP=1 -v pw="$$AUTHZED_DATABASE_PASSWORD" <<'SQL'
+        SELECT 'CREATE ROLE spicedb LOGIN' WHERE NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'spicedb') \gexec
+        SELECT format('ALTER ROLE spicedb WITH LOGIN PASSWORD %L', :'pw') \gexec
+        SELECT 'CREATE DATABASE spicedb OWNER spicedb' WHERE NOT EXISTS (SELECT 1 FROM pg_database WHERE datname = 'spicedb') \gexec
+        SQL
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      AUTHZED_DATABASE_PASSWORD: ${AUTHZED_DATABASE_PASSWORD}
+    depends_on:
+      formbricks-db:
+        condition: service_healthy
+
+  formbricks-spicedb-migrate:
+    image: authzed/spicedb:v1.57.1@sha256:9ea6df2d3cca23ed63aa7205639cf6babaaf1dc9a264ffb1f50c6455658fd6ba
+    restart: "no"
+    command: datastore migrate head
+    environment:
+      SPICEDB_DATASTORE_ENGINE: postgres
+      SPICEDB_DATASTORE_CONN_URI: postgresql://spicedb:${AUTHZED_DATABASE_PASSWORD}@formbricks-db:5432/spicedb?sslmode=disable
+    depends_on:
+      formbricks-spicedb-bootstrap:
+        condition: service_completed_successfully
+
+  formbricks-spicedb:
+    image: authzed/spicedb:v1.57.1@sha256:9ea6df2d3cca23ed63aa7205639cf6babaaf1dc9a264ffb1f50c6455658fd6ba
+    restart: unless-stopped
+    command: serve
+    mem_limit: 512m
+    environment:
+      SPICEDB_DATASTORE_ENGINE: postgres
+      SPICEDB_DATASTORE_CONN_URI: postgresql://spicedb:${AUTHZED_DATABASE_PASSWORD}@formbricks-db:5432/spicedb?sslmode=disable
+      SPICEDB_GRPC_PRESHARED_KEY: ${AUTHZED_TOKEN}
+      SPICEDB_LOG_FORMAT: json
+      SPICEDB_LOG_LEVEL: info
+      SPICEDB_TELEMETRY_ENDPOINT: ""
+    depends_on:
+      formbricks-spicedb-migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/grpc_health_probe", "-addr=localhost:50051"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  formbricks-hub-migrate:
+    image: ghcr.io/formbricks/hub:0.14.3@sha256:63b85da9a0eb4346dd9350cd2bc82e9fe00b195756ad9a4bd50195ba874d10bc
+    restart: "no"
+    entrypoint: ["sh", "-c"]
+    command: ['/usr/local/bin/goose -dir /app/migrations postgres "$$DATABASE_URL" up && /usr/local/bin/river migrate-up --database-url "$$DATABASE_URL"']
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@formbricks-db:5432/formbricks?sslmode=disable
+    depends_on:
+      formbricks-migrate:
+        condition: service_completed_successfully
+
+  formbricks-hub:
+    image: ghcr.io/formbricks/hub:0.14.3@sha256:63b85da9a0eb4346dd9350cd2bc82e9fe00b195756ad9a4bd50195ba874d10bc
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@formbricks-db:5432/formbricks?sslmode=disable
+      API_KEY: ${HUB_API_KEY}
+    depends_on:
+      formbricks-hub-migrate:
+        condition: service_completed_successfully
+
+  formbricks-hub-worker:
+    image: ghcr.io/formbricks/hub:0.14.3@sha256:63b85da9a0eb4346dd9350cd2bc82e9fe00b195756ad9a4bd50195ba874d10bc
+    restart: unless-stopped
+    entrypoint: ["/app/hub-worker"]
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@formbricks-db:5432/formbricks?sslmode=disable
+    depends_on:
+      formbricks-hub-migrate:
+        condition: service_completed_successfully
+
+  formbricks-cube:
+    image: ghcr.io/formbricks/cube:1.8.8-4@sha256:fe245da6970d96d382af84003fb2e05609fa30172ae204aeda427fdef1a65378
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      CUBEJS_DB_TYPE: postgres
+      CUBEJS_DB_HOST: formbricks-db
+      CUBEJS_DB_PORT: "5432"
+      CUBEJS_DB_NAME: formbricks
+      CUBEJS_DB_USER: postgres
+      CUBEJS_DB_PASS: ${POSTGRES_PASSWORD}
+      CUBEJS_API_SECRET: ${CUBEJS_API_SECRET}
+      CUBEJS_JWT_ISSUER: formbricks-web
+      CUBEJS_JWT_AUDIENCE: formbricks-cube
+      CUBEJS_DEFAULT_API_SCOPES: meta,data
+      CUBEJS_EXTERNAL_DEFAULT: "false"
+      CUBEJS_CACHE_AND_QUEUE_DRIVER: memory
+      CUBEJS_DB_QUERY_TIMEOUT: 60s
+    volumes:
+      - ./cube/cube.js:/cube/conf/cube.js:ro
+      - ./cube/schema/FeedbackRecords.js:/cube/conf/model/FeedbackRecords.js:ro
+    depends_on:
+      formbricks-hub-migrate:
+        condition: service_completed_successfully
+      formbricks-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:4000/readyz', (res) => { res.resume(); process.exit(res.statusCode === 200 ? 0 : 1); }).on('error', () => process.exit(1));"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  formbricks-db-data: {}
+  formbricks-redis-data: {}
+  formbricks-saml: {}

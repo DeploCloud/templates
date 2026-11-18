@@ -1,0 +1,13 @@
+[variables]
+auth_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "miniserve"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+MINISERVE_AUTH = "admin:${auth_password}"

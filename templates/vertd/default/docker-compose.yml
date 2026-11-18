@@ -1,0 +1,17 @@
+services:
+  vertd:
+    image: ghcr.io/vert-sh/vertd:sha-9bf1ea2@sha256:40df09f0a103ace50c1852cfee71ef72375908f7f49c9f386b4696092e98a5c9
+    restart: unless-stopped
+    expose:
+      - 24153
+    environment:
+      VERTD_FORCE_GPU: ${VERTD_FORCE_GPU}
+      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES}
+      PUBLIC_URL: ${PUBLIC_URL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      WEBHOOK_URL: ${WEBHOOK_URL}
+    volumes:
+      - vertd-permanent:/app/permanent
+
+volumes:
+  vertd-permanent: {}

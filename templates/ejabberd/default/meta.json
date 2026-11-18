@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "XMPP messaging server with a web admin console, HTTP API, the Converse web client and XMPP over WebSocket and BOSH on the app domain.",
+  "category": "communication",
+  "developedBy": {
+    "label": "ProcessOne",
+    "url": "https://www.process-one.net/"
+  },
+  "links": {
+    "github": "https://github.com/processone/ejabberd",
+    "website": "https://www.ejabberd.im/",
+    "docs": [
+      "https://github.com/processone/ejabberd/blob/master/CONTAINER.md",
+      "https://docs.ejabberd.im/admin/configuration/basic/",
+      "https://docs.ejabberd.im/admin/configuration/modules/#mod_conversejs",
+      "https://docs.ejabberd.im/admin/guide/managing/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web admin as admin@<your domain> with the generated REGISTER_ADMIN_PASSWORD. It only registers the account on the first start; change the password later in the web admin. Public registration is off, so create user accounts in the web admin.",
+      "link": "https://github.com/processone/ejabberd/blob/master/CONTAINER.md#register-admin-account"
+    },
+    {
+      "type": "info",
+      "message": "Only HTTP is routed: the web admin, the HTTP API at /api, Converse at /conversejs and XMPP over WebSocket (wss://<your domain>/websocket) and BOSH (/bosh). Native XMPP client (5222) and federation (5269) ports are TCP and are not published by this template."
+    }
+  ]
+}

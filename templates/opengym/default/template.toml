@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "opengym"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[config.env]
+RP_ID = "${domain}"
+ORIGIN = "https://${domain}"
+RP_NAME = "openGym"
+FIRST_USER_ADMIN = "1"
+INVITE_ONLY = "0"

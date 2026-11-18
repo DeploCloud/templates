@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "URL shortener with custom domains, link statistics, an admin panel and a REST API, backed by a SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "The Devs Network",
+    "url": "https://github.com/thedevs-network"
+  },
+  "links": {
+    "github": "https://github.com/thedevs-network/kutt",
+    "website": "https://kutt.to",
+    "docs": [
+      "https://github.com/thedevs-network/kutt#configuration",
+      "https://docs.kutt.to"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deployment: the first visitor is asked to create the admin account. Public sign-up is off by default; the admin can add users from the admin page. Password reset, email verification and public sign-up need SMTP: set MAIL_ENABLED=true and the MAIL_* variables (and DISALLOW_REGISTRATION=false for sign-up)."
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+services:
+  teslamate:
+    image: teslamate/teslamate:4.5.0@sha256:a285b02171a789cf2af5075502d2ec9034b58a42db777a30ae86aef2d0c12af4
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASS: ${DATABASE_PASS}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_HOST: teslamate-db
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      CHECK_ORIGIN: "true"
+      DISABLE_MQTT: ${DISABLE_MQTT}
+      TZ: ${TZ}
+    volumes:
+      - teslamate-import:/opt/app/import
+    cap_drop:
+      - ALL
+    depends_on:
+      teslamate-db:
+        condition: service_healthy
+
+  teslamate-db:
+    image: postgres:18.7-trixie@sha256:e754b839f447639b7004895f4d8a4bfcb4e9dbe3a1bc035f27f646562a16fd61
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - teslamate-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  teslamate-grafana:
+    image: teslamate/grafana:4.5.0@sha256:598c65f4fbefaccc213d16fde5b86b5e71366bd391c00b28ff64b976e0841dde
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASS: ${DATABASE_PASS}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_HOST: teslamate-db
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_SERVER_ROOT_URL: https://${VIRTUAL_HOST}/grafana
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
+    volumes:
+      - teslamate-grafana:/var/lib/grafana
+    depends_on:
+      teslamate-db:
+        condition: service_healthy
+
+  # TeslaMate has no login of its own; upstream puts it behind basic auth when public
+  teslamate-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TESLAMATE_USERNAME: ${TESLAMATE_USERNAME}
+      TESLAMATE_PASSWORD: ${TESLAMATE_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - export TESLAMATE_PASSWORD_HASH="$$(caddy hash-password --plaintext "$$TESLAMATE_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - teslamate
+      - teslamate-grafana
+
+volumes:
+  teslamate-db: {}
+  teslamate-grafana: {}
+  teslamate-import: {}

@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "phpmyadmin"
+port = 80
+host = "${domain}"
+
+[config.env]
+UPLOAD_LIMIT = "256M"
+TZ = "UTC"

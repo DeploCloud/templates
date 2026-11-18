@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Recipe manager with meal planning, shopping lists and recipe import from websites, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Tandoor Recipes",
+    "url": "https://github.com/TandoorRecipes"
+  },
+  "links": {
+    "github": "https://github.com/TandoorRecipes/recipes",
+    "website": "https://tandoor.dev/",
+    "docs": [
+      "https://docs.tandoor.dev/install/docker/",
+      "https://docs.tandoor.dev/system/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit Tandoor shows a setup page: the first account created there becomes the superuser. Create it right after deployment. The very first start runs database migrations and can take 2-3 minutes.",
+      "link": "https://docs.tandoor.dev/install/docker/"
+    }
+  ]
+}

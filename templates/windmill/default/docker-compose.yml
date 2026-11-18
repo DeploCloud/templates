@@ -1,0 +1,91 @@
+services:
+  windmill-server:
+    image: ghcr.io/windmill-labs/windmill:1.877.0@sha256:5986e5df0c1f2aac5b9c57d0a831e99e606591ca100ea9ddbc82e96c4db90ae8
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      BASE_URL: ${BASE_URL}
+      MODE: server
+    volumes:
+      - windmill-logs:/tmp/windmill/logs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/api/version"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      windmill-db:
+        condition: service_healthy
+
+  windmill-worker:
+    image: ghcr.io/windmill-labs/windmill:1.877.0@sha256:5986e5df0c1f2aac5b9c57d0a831e99e606591ca100ea9ddbc82e96c4db90ae8
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      BASE_URL: ${BASE_URL}
+      MODE: worker
+      WORKER_GROUP: default
+    volumes:
+      - windmill-worker-cache:/tmp/windmill/cache
+      - windmill-logs:/tmp/windmill/logs
+    depends_on:
+      windmill-db:
+        condition: service_healthy
+
+  windmill-worker-native:
+    image: ghcr.io/windmill-labs/windmill:1.877.0@sha256:5986e5df0c1f2aac5b9c57d0a831e99e606591ca100ea9ddbc82e96c4db90ae8
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      BASE_URL: ${BASE_URL}
+      MODE: worker
+      WORKER_GROUP: native
+      NATIVE_MODE: "true"
+      SLEEP_QUEUE: "200"
+    volumes:
+      - windmill-logs:/tmp/windmill/logs
+    depends_on:
+      windmill-db:
+        condition: service_healthy
+
+  windmill-extra:
+    image: ghcr.io/windmill-labs/windmill-extra:1.876.1@sha256:87e9f5090a2f399d2a78ddbc9de25739c44153799da4e680ca7e9c36edfc2b9a
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ENABLE_LSP: "true"
+      ENABLE_MULTIPLAYER: "false"
+      ENABLE_DEBUGGER: "true"
+      ENABLE_NSJAIL: "false"
+      REQUIRE_SIGNED_DEBUG_REQUESTS: "true"
+      WINDMILL_BASE_URL: http://windmill-server:8000
+    volumes:
+      - windmill-lsp-cache:/pyls/.cache
+    depends_on:
+      windmill-server:
+        condition: service_healthy
+
+  windmill-db:
+    image: postgres:18.7@sha256:e754b839f447639b7004895f4d8a4bfcb4e9dbe3a1bc035f27f646562a16fd61
+    restart: unless-stopped
+    shm_size: 1g
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: windmill
+    volumes:
+      - windmill-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d windmill"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  windmill-db: {}
+  windmill-logs: {}
+  windmill-worker-cache: {}
+  windmill-lsp-cache: {}

@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+encryption_key = "${hash:32}"
+auth_secret = "${base64:44}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "infisical"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SITE_URL = "https://${domain}"
+ENCRYPTION_KEY = "${encryption_key}"
+AUTH_SECRET = "${auth_secret}"
+POSTGRES_USER = "infisical"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "infisical"
+TELEMETRY_ENABLED = "false"

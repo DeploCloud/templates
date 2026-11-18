@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+app_db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sparkyfitness"
+port = 80
+host = "${domain}"
+
+[config.env]
+SPARKY_FITNESS_FRONTEND_URL = "https://${domain}"
+SPARKY_FITNESS_DB_NAME = "sparkyfitness_db"
+SPARKY_FITNESS_DB_USER = "sparky"
+SPARKY_FITNESS_DB_PASSWORD = "${db_password}"
+SPARKY_FITNESS_APP_DB_PASSWORD = "${app_db_password}"
+SPARKY_FITNESS_API_ENCRYPTION_KEY = "${hash:64}"
+BETTER_AUTH_SECRET = "${base64:44}"
+SPARKY_FITNESS_DISABLE_SIGNUP = "false"
+TZ = "Etc/UTC"

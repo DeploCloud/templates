@@ -1,0 +1,13 @@
+[variables]
+password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "code-server"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PASSWORD = "${password}"

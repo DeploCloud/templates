@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenID Connect identity provider and OAuth 2.0 server with pluggable connectors, backed by PostgreSQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "Dex",
+    "url": "https://github.com/dexidp"
+  },
+  "links": {
+    "github": "https://github.com/dexidp/dex",
+    "website": "https://dexidp.io",
+    "docs": [
+      "https://dexidp.io/docs/getting-started/",
+      "https://dexidp.io/docs/configuration/storage/",
+      "https://dexidp.io/docs/connectors/",
+      "https://dexidp.io/docs/guides/using-dex/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Dex has no admin console. Register each application under staticClients in config.yaml and redeploy. The built-in password login uses DEX_ADMIN_EMAIL and DEX_ADMIN_PASSWORD from the environment.",
+      "link": "https://dexidp.io/docs/guides/using-dex/"
+    }
+  ]
+}

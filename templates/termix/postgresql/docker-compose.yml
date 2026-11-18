@@ -1,0 +1,34 @@
+services:
+  termix:
+    image: ghcr.io/termix-ssh/termix:26.11.2@sha256:9fe1ff21badf4c85be14fa2129122d87690f9012d3e5a341f46d6bd3b7a8d862
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PORT: "8080"
+      DATABASE_DIALECT: postgres
+      DATABASE_URL: postgres://termix:${DB_PASSWORD}@termix-db:5432/termix
+    volumes:
+      - termix-data:/app/data
+    depends_on:
+      termix-db:
+        condition: service_healthy
+
+  termix-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: termix
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: termix
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U termix -d termix"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - termix-db:/var/lib/postgresql/data
+
+volumes:
+  termix-data: {}
+  termix-db: {}

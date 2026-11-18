@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Steam trading card farming bot for multiple accounts, managed through the built-in ASF-ui web interface and IPC API.",
+  "category": "automation",
+  "developedBy": {
+    "label": "JustArchiNET",
+    "url": "https://github.com/JustArchiNET"
+  },
+  "links": {
+    "github": "https://github.com/JustArchiNET/ArchiSteamFarm",
+    "website": "https://github.com/JustArchiNET/ArchiSteamFarm/wiki",
+    "docs": [
+      "https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Docker",
+      "https://github.com/JustArchiNET/ArchiSteamFarm/wiki/IPC",
+      "https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Configuration",
+      "https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Commands"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "ASF-ui asks for the IPC password on first visit: use the generated ASF_IPC_PASSWORD value. ASF runs headless, so a bot that needs a Steam Guard or 2FA code stops; send the code with the input command in the ASF-ui console (for example input MyBot SteamGuard ABCDE), then start the bot.",
+      "link": "https://github.com/JustArchiNET/ArchiSteamFarm/wiki/IPC"
+    }
+  ]
+}

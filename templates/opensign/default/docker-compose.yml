@@ -1,0 +1,67 @@
+services:
+  opensign-proxy:
+    image: caddy:2.11.9@sha256:4851e54a46b206517c574821bb5cc67f170d2156041e9fbc4c9193b45e84a75b
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - opensign-server
+      - opensign-client
+
+  opensign-client:
+    image: opensign/opensign:main@sha256:c341e31f8946b22340fd79a0daa5b8b94cf9a39ba5021331d16728b08a7dc5bf
+    restart: unless-stopped
+    expose:
+      - 3000
+
+  opensign-server:
+    image: opensign/opensignserver:main@sha256:674fa8393122cb550d5c2fa4ddae5e13989387f27d63db98e6c23272849a551e
+    restart: unless-stopped
+    command: ["sh", "/opensign-start.sh"]
+    expose:
+      - 8080
+    volumes:
+      - ./opensign-start.sh:/opensign-start.sh:ro
+      - opensign-files:/usr/src/app/files
+      - opensign-certs:/usr/src/app/certs
+    environment:
+      NODE_ENV: production
+      APP_ID: opensign
+      PARSE_MOUNT: /app
+      MASTER_KEY: ${MASTER_KEY}
+      MONGODB_URI: mongodb://opensign:${MONGO_PASSWORD}@opensign-db:27017/OpenSignDB?authSource=admin
+      SERVER_URL: https://${DOMAIN}/api/app
+      PUBLIC_URL: https://${DOMAIN}
+      USE_LOCAL: "true"
+      PASS_PHRASE: ${PASS_PHRASE}
+      SMTP_ENABLE: ${SMTP_ENABLE}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_USER_EMAIL: ${SMTP_USER_EMAIL}
+      SMTP_PASS: ${SMTP_PASS}
+    depends_on:
+      opensign-db:
+        condition: service_healthy
+
+  opensign-db:
+    image: mongo:8.0.38@sha256:bdc216e9d5a6ec2cfdac789b5832fdab64cd32055f59885cae918a92de63c361
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: opensign
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - opensign-db:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  opensign-files: {}
+  opensign-certs: {}
+  opensign-db: {}

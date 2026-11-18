@@ -1,0 +1,21 @@
+services:
+  vault:
+    image: hashicorp/vault:2.2.2@sha256:dfa48c2fa2b0099ccb47681ec5c4804bf5aec9d6879ecfee07ad4b92a5427ad6
+    restart: unless-stopped
+    command: server
+    expose:
+      - 8200
+    environment:
+      VAULT_API_ADDR: ${VAULT_API_ADDR}
+      VAULT_ADDR: http://127.0.0.1:8200
+      VAULT_LOCAL_CONFIG: >-
+        {"ui": true, "disable_mlock": true, "cluster_addr": "http://127.0.0.1:8201",
+        "listener": [{"tcp": {"address": "0.0.0.0:8200", "tls_disable": true}}],
+        "storage": {"raft": {"path": "/vault/file", "node_id": "vault-1"}}}
+    volumes:
+      - vault-data:/vault/file
+      - vault-logs:/vault/logs
+
+volumes:
+  vault-data: {}
+  vault-logs: {}

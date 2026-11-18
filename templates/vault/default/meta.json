@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Secrets management server with the web UI and single-node integrated Raft storage on a persistent volume.",
+  "category": "security",
+  "developedBy": {
+    "label": "HashiCorp",
+    "url": "https://github.com/hashicorp"
+  },
+  "links": {
+    "github": "https://github.com/hashicorp/vault",
+    "website": "https://developer.hashicorp.com/vault",
+    "docs": [
+      "https://developer.hashicorp.com/vault/docs",
+      "https://developer.hashicorp.com/vault/docs/configuration/storage/raft",
+      "https://developer.hashicorp.com/vault/docs/concepts/seal"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Vault starts uninitialized and sealed. Open the web UI to initialize it, save the unseal keys and root token somewhere safe, then unseal it. Vault seals itself again after every restart and must be unsealed with the keys before it serves requests.",
+      "link": "https://developer.hashicorp.com/vault/docs/concepts/seal"
+    }
+  ]
+}

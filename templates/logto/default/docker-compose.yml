@@ -1,0 +1,38 @@
+services:
+  logto:
+    image: ghcr.io/logto-io/logto:1.46.0@sha256:d5e208ce705cbcf7c79ddba421216eb65413d0b0531aa658fb22a4ba659be983
+    restart: unless-stopped
+    entrypoint:
+      - sh
+      - -c
+      - npm run cli db seed -- --swe && CI=true npm run alteration deploy latest && npm start
+    expose:
+      - 3001
+      - 3002
+    environment:
+      DB_URL: postgres://logto:${DB_PASSWORD}@logto-db:5432/logto
+      ENDPOINT: ${ENDPOINT}
+      ADMIN_ENDPOINT: ${ADMIN_ENDPOINT}
+      TRUST_PROXY_HEADER: "1"
+      SECRET_VAULT_KEK: ${SECRET_VAULT_KEK}
+    depends_on:
+      logto-db:
+        condition: service_healthy
+
+  logto-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: logto
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: logto
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U logto -d logto"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - logto-db:/var/lib/postgresql/data
+
+volumes:
+  logto-db: {}

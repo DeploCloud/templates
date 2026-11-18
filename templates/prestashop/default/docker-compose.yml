@@ -1,0 +1,49 @@
+services:
+  prestashop:
+    image: prestashop/prestashop:9.2.1-apache@sha256:fb3758bb6d7cb14ff1163029c094af09607ae02727f70dac7eecb4fe0d6f0b01
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - prestashop-app:/var/www/html
+      - ./reverse-proxy.conf:/etc/apache2/conf-enabled/reverse-proxy.conf:ro
+    environment:
+      DB_SERVER: prestashop-db
+      DB_PORT: "3306"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWD: ${DB_PASSWD}
+      DB_PREFIX: ${DB_PREFIX}
+      PS_INSTALL_AUTO: "1"
+      PS_DOMAIN: ${PS_DOMAIN}
+      PS_ENABLE_SSL: ${PS_ENABLE_SSL}
+      PS_TRUSTED_PROXIES: REMOTE_ADDR
+      PS_FOLDER_ADMIN: ${PS_FOLDER_ADMIN}
+      PS_LANGUAGE: ${PS_LANGUAGE}
+      PS_COUNTRY: ${PS_COUNTRY}
+      ADMIN_MAIL: ${ADMIN_MAIL}
+      ADMIN_PASSWD: ${ADMIN_PASSWD}
+    depends_on:
+      prestashop-db:
+        condition: service_healthy
+
+  prestashop-db:
+    image: mariadb:11.4.13@sha256:5e73baf8179b29f115101bb102763a47a017361f3e9792daccba6646c3ab1532
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - prestashop-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  prestashop-app: {}
+  prestashop-db: {}

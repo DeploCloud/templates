@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted gym and body-weight tracker to plan routines, log workouts and see which muscles are trained, with passkey sign-in.",
+  "category": "other",
+  "developedBy": {
+    "label": "Duarte Santos",
+    "url": "https://github.com/DuarteSantos8"
+  },
+  "links": {
+    "github": "https://github.com/DuarteSantos8/openGym",
+    "website": "https://opengym.ch",
+    "docs": [
+      "https://github.com/DuarteSantos8/openGym/blob/main/docs/SELF_HOSTING.md",
+      "https://github.com/DuarteSantos8/openGym/blob/main/docs/FAQ.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first profile created on the instance becomes its admin, and signup stays open: register your own profile before sharing the address, then set INVITE_ONLY=1 if needed.",
+      "link": "https://github.com/DuarteSantos8/openGym/blob/main/docs/SELF_HOSTING.md#4-multiple-users"
+    },
+    {
+      "type": "destructive",
+      "message": "Passkeys only work over HTTPS and are bound to the domain in RP_ID and ORIGIN. Deploy on the final domain: changing it later invalidates every existing passkey.",
+      "link": "https://github.com/DuarteSantos8/openGym/blob/main/docs/SELF_HOSTING.md#2-understand-the-passkey-requirement-important"
+    }
+  ]
+}

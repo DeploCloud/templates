@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tautulli"
+port = 8181
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"

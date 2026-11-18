@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "localai"
+port = 8080
+host = "${domain}"
+
+[config.env]
+LOCALAI_AUTH = "true"
+LOCALAI_REGISTRATION_MODE = "approval"
+LOCALAI_BASE_URL = "https://${domain}"
+LOCALAI_TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

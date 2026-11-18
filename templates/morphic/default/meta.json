@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "AI answer engine with a generative UI, backed by PostgreSQL, Redis and a private SearXNG instance, with built-in multi-user accounts.",
+  "category": "ai",
+  "developedBy": {
+    "label": "miurla",
+    "url": "https://github.com/miurla"
+  },
+  "links": {
+    "github": "https://github.com/miurla/morphic",
+    "website": "https://www.morphic.sh",
+    "docs": [
+      "https://github.com/miurla/morphic/blob/main/docs/DOCKER.md",
+      "https://github.com/miurla/morphic/blob/main/docs/CONFIGURATION.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set at least one AI provider in the environment (OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, OPENAI_COMPATIBLE_API_KEY with OPENAI_COMPATIBLE_API_BASE_URL, AI_GATEWAY_API_KEY or OLLAMA_BASE_URL) and redeploy; without one no model can be selected.",
+      "link": "https://github.com/miurla/morphic/blob/main/docs/CONFIGURATION.md#ai-providers"
+    },
+    {
+      "type": "warning",
+      "message": "The first account created at /auth/sign-up becomes the admin, and sign-up stays open to anyone afterwards. Create it right after deploying, or set BOOTSTRAP_ADMIN_EMAIL first so only that address can claim it; then set AUTH_SIGNUP_MODE to invite and redeploy to require invitations.",
+      "link": "https://github.com/miurla/morphic/blob/main/docs/CONFIGURATION.md#better-auth"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: session cookies are marked secure, so sign-in does not persist on a plain HTTP URL."
+    }
+  ]
+}

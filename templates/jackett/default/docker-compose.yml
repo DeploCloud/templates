@@ -1,0 +1,18 @@
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:v0.24.3081-ls40@sha256:cf4fe17dbd60cdf8f3f7e05a4341c18d2b3ac7b8dfa4ce0b410bb5ee81dd4fdf
+    restart: unless-stopped
+    expose:
+      - 9117
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      AUTO_UPDATE: ${AUTO_UPDATE}
+    volumes:
+      - jackett-config:/config
+      - jackett-downloads:/downloads
+
+volumes:
+  jackett-config: {}
+  jackett-downloads: {}

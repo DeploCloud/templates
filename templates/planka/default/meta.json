@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Kanban board for teams with projects, cards, attachments and real-time updates, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "PLANKA Software GmbH",
+    "url": "https://github.com/plankanban"
+  },
+  "links": {
+    "github": "https://github.com/plankanban/planka",
+    "website": "https://planka.app",
+    "docs": [
+      "https://docs.planka.cloud/docs/installation/docker/production-version",
+      "https://docs.planka.cloud/docs/configuration/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the DEFAULT_ADMIN_EMAIL (or DEFAULT_ADMIN_USERNAME) and DEFAULT_ADMIN_PASSWORD values from the environment. This admin is re-applied from the environment on every start, so change its password there; it cannot be edited or deleted in the UI while DEFAULT_ADMIN_EMAIL is set.",
+      "link": "https://docs.planka.cloud/docs/configuration/environment-variables"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "super-productivity"
+port = 80
+host = "${domain}"

@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rocket-chat"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ROOT_URL = "https://${domain}"

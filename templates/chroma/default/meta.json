@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node Chroma vector database server for embeddings, documents and metadata search, with persistent storage behind a token-protected HTTP API.",
+  "category": "database",
+  "developedBy": {
+    "label": "Chroma",
+    "url": "https://github.com/chroma-core"
+  },
+  "links": {
+    "github": "https://github.com/chroma-core/chroma",
+    "website": "https://www.trychroma.com/",
+    "docs": [
+      "https://docs.trychroma.com/guides/deploy/docker",
+      "https://docs.trychroma.com/guides/deploy/client-server-mode"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI. The Chroma server has no authentication of its own, so every request goes through a gateway that requires the generated CHROMA_TOKEN from the environment settings, sent as Authorization: Bearer <token> or X-Chroma-Token: <token>. In Python: chromadb.HttpClient(host=\"<your-domain>\", port=443, ssl=True, headers={\"Authorization\": \"Bearer <token>\"}).",
+      "link": "https://docs.trychroma.com/guides/deploy/client-server-mode"
+    }
+  ]
+}

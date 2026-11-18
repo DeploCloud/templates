@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Roundcube IMAP webmail client backed by a bundled PostgreSQL database for users, preferences, address books and sessions.",
+  "category": "email",
+  "developedBy": {
+    "label": "Roundcube",
+    "url": "https://roundcube.net"
+  },
+  "links": {
+    "github": "https://github.com/roundcube/roundcubemail",
+    "website": "https://roundcube.net",
+    "docs": [
+      "https://github.com/roundcube/roundcubemail-docker",
+      "https://github.com/roundcube/roundcubemail/wiki/Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Roundcube is only a webmail client and needs an existing mail server. Set ROUNDCUBEMAIL_DEFAULT_HOST and ROUNDCUBEMAIL_SMTP_SERVER to your IMAP and SMTP hosts (prefix tls:// for STARTTLS or ssl:// for implicit TLS) and adjust their ports before logging in. Users sign in with their mailbox credentials.",
+      "link": "https://github.com/roundcube/roundcubemail-docker"
+    }
+  ]
+}

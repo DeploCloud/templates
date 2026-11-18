@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "alist"
+port = 5_244
+host = "${domain}"
+
+[config.env]
+SITE_URL = "https://${domain}"
+ALIST_ADMIN_PASSWORD = "${admin_password}"
+TZ = "UTC"

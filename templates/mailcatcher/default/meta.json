@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Development SMTP server that catches every message sent to it and shows the HTML, plain text, source and attachments in a web UI with a JSON API.",
+  "category": "development",
+  "developedBy": {
+    "label": "Samuel Cochran",
+    "url": "https://github.com/sj26"
+  },
+  "links": {
+    "github": "https://github.com/sj26/mailcatcher",
+    "website": "https://mailcatcher.me",
+    "docs": [
+      "https://github.com/sj26/mailcatcher#command-line-options",
+      "https://github.com/sj26/mailcatcher#api",
+      "https://hub.docker.com/r/sj26/mailcatcher"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "MailCatcher has no login: anyone who can reach the domain can read and delete caught mail. Add a credential under Settings -> Access to put the app behind HTTP basic auth.",
+      "link": "https://deplo.build/docs/guides/networking/domains-and-https#http-basic-auth"
+    },
+    {
+      "type": "info",
+      "message": "Only the web UI is published. The SMTP server is reachable only from apps in the same environment at mailcatcher:1025, with no authentication and no TLS. Messages are kept in memory and are lost on restart."
+    }
+  ]
+}

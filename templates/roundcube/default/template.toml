@@ -1,0 +1,25 @@
+[variables]
+des_key = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "roundcube"
+port = 80
+host = "${domain}"
+
+[config.env]
+ROUNDCUBEMAIL_DES_KEY = "${des_key}"
+ROUNDCUBEMAIL_DEFAULT_HOST = "tls://mail.example.com"
+ROUNDCUBEMAIL_DEFAULT_PORT = "143"
+ROUNDCUBEMAIL_SMTP_SERVER = "tls://mail.example.com"
+ROUNDCUBEMAIL_SMTP_PORT = "587"
+ROUNDCUBEMAIL_PLUGINS = "archive,zipdownload"
+ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE = "5M"
+
+[[config.mounts]]
+filePath = "custom.inc.php"
+content = """<?php
+// TLS ends at the reverse proxy: mark sessions as HTTPS so cookies get the Secure flag.
+$config['use_https'] = true;
+"""

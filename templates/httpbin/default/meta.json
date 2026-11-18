@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "shortDescription": "HTTP request and response service for testing HTTP clients: echoes headers, bodies and IPs, returns chosen status codes, delays, redirects and auth challenges.",
+  "category": "development",
+  "developedBy": {
+    "label": "Postman Labs",
+    "url": "https://github.com/postmanlabs"
+  },
+  "links": {
+    "github": "https://github.com/postmanlabs/httpbin",
+    "website": "https://httpbin.org",
+    "docs": [
+      "https://github.com/postmanlabs/httpbin#readme",
+      "https://github.com/psf/httpbin#readme"
+    ]
+  }
+}

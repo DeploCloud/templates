@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source resume builder with templates, PDF export, public sharing and job application tracking, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Amruth Pillai",
+    "url": "https://github.com/amruthpillai"
+  },
+  "links": {
+    "github": "https://github.com/reactive-resume/reactive-resume",
+    "website": "https://rxresu.me",
+    "docs": [
+      "https://docs.rxresu.me/self-hosting/docker",
+      "https://docs.rxresu.me/self-hosting/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the instance can sign up. Create your own account first, then set FLAG_DISABLE_SIGNUPS to true and redeploy to keep it private. Verification and password reset emails need SMTP_* variables to be added.",
+      "link": "https://docs.rxresu.me/self-hosting/environment-variables"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+services:
+  omni-tools:
+    image: iib0011/omni-tools:0.7.0@sha256:85f0e052a97326396c753e39de0ef74631c0783999ccca81ebc36262903ec9fa
+    restart: unless-stopped
+    expose:
+      - 80

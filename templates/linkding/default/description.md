@@ -1,0 +1,1 @@
+linkding is a self-hosted bookmark manager with tags, search, Markdown notes, bulk editing, a REST API and browser extensions. This variant runs the official image with its built-in SQLite database. The database, the secret key, favicons and preview images persist in the data volume. An admin account is created on first start with the generated LD_SUPERUSER_PASSWORD.

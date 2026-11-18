@@ -1,0 +1,30 @@
+services:
+  gollum:
+    image: gollumwiki/gollum:6.1.0@sha256:05f23e49ba475169ef5d42356428d9762e88c94396fd747b0825bddb628141de
+    restart: unless-stopped
+    command:
+      - --config=/etc/gollum/config.rb
+      - --allow-uploads=dir
+    expose:
+      - 4567
+    environment:
+      GOLLUM_USERNAME: ${GOLLUM_USERNAME}
+      GOLLUM_PASSWORD: ${GOLLUM_PASSWORD}
+    volumes:
+      - gollum-wiki:/wiki
+      - ./config.rb:/etc/gollum/config.rb:ro
+    depends_on:
+      gollum-init:
+        condition: service_completed_successfully
+
+  # /wiki is root-owned in the image, but Gollum runs as www-data (1000).
+  gollum-init:
+    image: gollumwiki/gollum:6.1.0@sha256:05f23e49ba475169ef5d42356428d9762e88c94396fd747b0825bddb628141de
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "1000:1000", "/wiki"]
+    volumes:
+      - gollum-wiki:/wiki
+
+volumes:
+  gollum-wiki: {}

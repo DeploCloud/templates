@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight web dashboard for Network UPS Tools that shows live UPS status, charts and commands for one or more NUT servers.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Brandawg93",
+    "url": "https://github.com/Brandawg93"
+  },
+  "links": {
+    "github": "https://github.com/Brandawg93/PeaNUT",
+    "docs": [
+      "https://github.com/Brandawg93/PeaNUT#environment-variables",
+      "https://github.com/Brandawg93/PeaNUT/wiki/YAML-Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated WEB_PASSWORD from the environment settings. PeaNUT does not include a NUT server: add yours under Settings, and make sure its port (3493 by default) is reachable from this server.",
+      "link": "https://github.com/Brandawg93/PeaNUT#authentication"
+    }
+  ]
+}

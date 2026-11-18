@@ -1,0 +1,13 @@
+services:
+  flame:
+    image: pawelmalak/flame:multiarch2.4.0@sha256:1b54ea03eb880baa2b54b1e9886ce0a36e15f67e2cd24f062e4bfa8db371726d
+    restart: unless-stopped
+    expose:
+      - 5005
+    environment:
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - flame-data:/app/data
+
+volumes:
+  flame-data: {}

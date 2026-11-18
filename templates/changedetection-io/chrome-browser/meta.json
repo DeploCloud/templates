@@ -1,0 +1,24 @@
+{
+  "name": "Chrome Browser",
+  "shortDescription": "Website change detection with a bundled headless Chrome fetcher for JavaScript-heavy pages, screenshots and the Visual Selector.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "dgtlmoon",
+    "url": "https://github.com/dgtlmoon"
+  },
+  "links": {
+    "github": "https://github.com/dgtlmoon/changedetection.io",
+    "website": "https://changedetection.io",
+    "docs": [
+      "https://github.com/dgtlmoon/changedetection.io/wiki/Playwright-content-fetcher",
+      "https://github.com/dgtlmoon/sockpuppetbrowser"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no password by default. Set one under Settings > General right after deploying.",
+      "link": "https://github.com/dgtlmoon/changedetection.io/wiki"
+    }
+  ]
+}

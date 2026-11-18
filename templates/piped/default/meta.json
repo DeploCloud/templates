@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-friendly YouTube frontend with the Piped web app, API backend, video proxy, PoToken helper and a PostgreSQL database for accounts and subscriptions.",
+  "category": "media",
+  "developedBy": {
+    "label": "TeamPiped",
+    "url": "https://github.com/TeamPiped"
+  },
+  "links": {
+    "github": "https://github.com/TeamPiped/Piped",
+    "website": "https://piped.video",
+    "docs": [
+      "https://docs.piped.video/docs/self-hosting/",
+      "https://github.com/TeamPiped/Piped-Docker",
+      "https://github.com/TeamPiped/Piped-Backend/blob/master/config.properties"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The API is served on api.<your domain> and the video proxy on proxy.<your domain>; both subdomains must resolve to this server or videos will not load.",
+      "link": "https://docs.piped.video/docs/self-hosting/"
+    },
+    {
+      "type": "warning",
+      "message": "YouTube tends to block the IP addresses of Piped servers, so playback can stop working. Upstream recommends an IPv6 rotator or routing the backend and proxy through a VPN or HTTP proxy.",
+      "link": "https://docs.piped.video/docs/self-hosting/"
+    },
+    {
+      "type": "info",
+      "message": "Account registration is open to anyone who can reach the instance. Set DISABLE_REGISTRATION to true to close it; subscriptions still work without an account."
+    }
+  ]
+}

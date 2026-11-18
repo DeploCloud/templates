@@ -1,0 +1,36 @@
+[variables]
+cdp_token = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "cloakbrowser-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	@authorized header Authorization "Bearer {$CLOAKBROWSER_TOKEN}"
+	handle @authorized {
+		reverse_proxy cloakbrowser:9222
+	}
+	handle {
+		respond "Unauthorized" 401
+	}
+}
+"""
+
+[config.env]
+CLOAKBROWSER_TOKEN = "${cdp_token}"
+CLOAKBROWSER_LICENSE_KEY = ""
+CLOAKSERVE_IDLE_TIMEOUT = "300"

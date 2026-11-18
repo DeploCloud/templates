@@ -1,0 +1,25 @@
+[variables]
+viewer_domain = "bot.${domain}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "typebot-builder"
+port = 3_000
+host = "${domain}"
+primary = true
+
+# Published bots are served by the viewer on their own hostname
+[[config.domains]]
+serviceName = "typebot-viewer"
+port = 3_000
+host = "${viewer_domain}"
+
+[config.env]
+NEXTAUTH_URL = "https://${domain}"
+NEXT_PUBLIC_VIEWER_URL = "https://${viewer_domain}"
+# Must be exactly 32 characters
+ENCRYPTION_SECRET = "${password:32}"
+DB_PASSWORD = "${db_password}"

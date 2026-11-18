@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source notification infrastructure with a workflow dashboard, REST API, Inbox websocket server and worker for email, SMS, push and chat.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Novu",
+    "url": "https://www.novu.co/"
+  },
+  "links": {
+    "github": "https://github.com/novuhq/novu",
+    "website": "https://www.novu.co/",
+    "docs": [
+      "https://docs.novu.co/community/self-hosting-novu/deploy-with-docker",
+      "https://docs.novu.co/community/self-hosting-novu/overview"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the dashboard can create an account. Sign up first, then set DISABLE_USER_REGISTRATION to true and redeploy to block further sign-ups.",
+      "link": "https://docs.novu.co/community/self-hosting-novu/deploy-with-docker"
+    },
+    {
+      "type": "warning",
+      "message": "Delivery channels need your own provider credentials (SMTP or an email API, SMS, push) added in the dashboard. Triggers with email attachments fail until S3_BUCKET_NAME, S3_REGION, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY point at a bucket. For an S3-compatible service other than Amazon S3, also set S3_LOCAL_STACK to its endpoint.",
+      "link": "https://docs.novu.co/community/self-hosting-novu/deploy-with-docker"
+    }
+  ]
+}

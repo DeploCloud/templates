@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Visual builder to create, deploy and monitor AI agent workflows, with realtime collaboration, PostgreSQL with pgvector, Redis and a background job scheduler.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Sim",
+    "url": "https://github.com/simstudioai"
+  },
+  "links": {
+    "github": "https://github.com/simstudioai/sim",
+    "website": "https://www.sim.ai",
+    "docs": [
+      "https://docs.sim.ai/platform/self-hosting/docker",
+      "https://docs.sim.ai/platform/self-hosting/environment-variables",
+      "https://docs.sim.ai/platform/self-hosting/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open to anyone who can reach the URL. Create your account first, then set DISABLE_REGISTRATION to true and redeploy to block new sign-ups.",
+      "link": "https://docs.sim.ai/platform/self-hosting/authentication"
+    },
+    {
+      "type": "warning",
+      "message": "Agent blocks need an LLM provider API key, entered in each Agent block. No mail provider is configured, so invitations and password resets are not delivered until you add one.",
+      "link": "https://docs.sim.ai/platform/self-hosting/environment-variables"
+    }
+  ]
+}

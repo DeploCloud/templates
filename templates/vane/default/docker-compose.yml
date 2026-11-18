@@ -1,0 +1,20 @@
+services:
+  vane:
+    image: itzcrazykns1337/vane:v1.12.2@sha256:61f2bbf3386ff3df08911fb3de0e1893b04702a4d49ef13fbadbda937b47ab7c
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      # Docker sets HOSTNAME to the container id; Next.js would bind only to that address.
+      HOSTNAME: 0.0.0.0
+    volumes:
+      - vane-data:/home/vane/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  vane-data: {}

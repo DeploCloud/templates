@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Hotel booking website, booking engine and property management system, shipped as the official all-in-one image with Apache, PHP and a bundled MySQL server.",
+  "category": "other",
+  "developedBy": {
+    "label": "QloApps",
+    "url": "https://qloapps.com"
+  },
+  "links": {
+    "github": "https://github.com/Qloapps/QloApps",
+    "website": "https://qloapps.com",
+    "docs": [
+      "https://qloapps.com/qloapps-installation-process/",
+      "https://hub.docker.com/r/webkul/qloapps_docker",
+      "https://docs.qloapps.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Finish the web installer on first visit. On the database step use server 127.0.0.1, database qloapps, login root and the MYSQL_ROOT_PASSWORD value from the environment. The account you create there becomes the back office admin.",
+      "link": "https://qloapps.com/qloapps-installation-process/"
+    },
+    {
+      "type": "warning",
+      "message": "After installing, delete the installer from the qloapps container terminal with: rm -rf /home/qloapps/www/QloApps/install-dev. Until then anyone can rerun it. The back office is served at /admin-dev/."
+    }
+  ]
+}

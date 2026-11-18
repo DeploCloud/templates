@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "languagetool"
+port = 8_010
+host = "${domain}"
+
+[config.env]
+JAVA_XMS = "512m"
+JAVA_XMX = "1g"

@@ -1,0 +1,1 @@
+Excalidraw is a virtual whiteboard for sketching hand-drawn style diagrams, served here as the official static web client behind HTTPS. The server keeps no data: drawings are saved in each browser's local storage or exported to files, so no volume is needed. Upstream notes that a self-hosted instance does not support the sharing and live collaboration features.

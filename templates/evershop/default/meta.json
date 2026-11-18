@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "TypeScript e-commerce platform with a storefront, admin panel and GraphQL API, backed by PostgreSQL.",
+  "category": "other",
+  "developedBy": {
+    "label": "EverShop",
+    "url": "https://github.com/evershopcommerce"
+  },
+  "links": {
+    "github": "https://github.com/evershopcommerce/evershop",
+    "website": "https://evershop.io/",
+    "docs": [
+      "https://evershop.io/docs/development/getting-started/installation-guide",
+      "https://evershop.io/docs/development/deployment/production-checklist",
+      "https://evershop.io/docs/development/knowledge-base/configuration-guide"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No admin account exists after the first start. Open a terminal in the evershop container and run: npm run user:create -- --email \"you@example.com\" --password \"your-password\" --name \"Your Name\", then sign in at /admin. The password must be at least 8 characters.",
+      "link": "https://evershop.io/docs/development/getting-started/installation-guide"
+    }
+  ]
+}

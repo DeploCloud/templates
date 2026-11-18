@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Static homepage for your server that groups your services and bookmarks into searchable cards, configured from a single YAML file.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Homer",
+    "url": "https://github.com/homer-dashboard"
+  },
+  "links": {
+    "github": "https://github.com/homer-dashboard/homer",
+    "website": "https://homer-demo.netlify.app/",
+    "docs": [
+      "https://github.com/homer-dashboard/homer/blob/main/docs/configuration.md",
+      "https://github.com/homer-dashboard/homer/blob/main/docs/customservices.md",
+      "https://github.com/homer-dashboard/homer/blob/main/docs/theming.md",
+      "https://github.com/homer-dashboard/homer/blob/main/docs/troubleshooting.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard is defined in the config.yml config file, which starts with a sample page. Edit it to add your own services and links and redeploy; if the browser still shows the old page, force-reload it.",
+      "link": "https://github.com/homer-dashboard/homer/blob/main/docs/troubleshooting.md"
+    },
+    {
+      "type": "warning",
+      "message": "Homer has no login. The dashboard and its config.yml are readable by anyone who can reach the domain, so keep API keys and other secrets out of config.yml unless the domain is protected."
+    }
+  ]
+}

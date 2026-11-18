@@ -1,0 +1,36 @@
+services:
+  cloakbrowser:
+    # 0.6 is the last line that ships a keyless browser build; 0.7+ will not start without a license key
+    image: cloakhq/cloakbrowser:0.6.5@sha256:d25e539dd029d899734aa6e2a706ccc7fa4014cc5654dc07cb5afcfe1048c4e9
+    restart: unless-stopped
+    command: ["cloakserve"]
+    expose:
+      - 9222
+    environment:
+      CLOAKBROWSER_LICENSE_KEY: ${CLOAKBROWSER_LICENSE_KEY}
+      CLOAKSERVE_IDLE_TIMEOUT: ${CLOAKSERVE_IDLE_TIMEOUT}
+    volumes:
+      - cloakbrowser-data:/root/.cloakbrowser
+    healthcheck:
+      # GET / reports status without launching Chrome, unlike /json/version
+      test: ["CMD", "curl", "-fsS", "http://localhost:9222/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+
+  # cloakserve has no authentication, so the public route goes through this token gate
+  cloakbrowser-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      CLOAKBROWSER_TOKEN: ${CLOAKBROWSER_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - cloakbrowser
+
+volumes:
+  cloakbrowser-data: {}

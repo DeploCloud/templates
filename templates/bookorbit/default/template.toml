@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bookorbit"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+POSTGRES_USER = "bookorbit"
+POSTGRES_DB = "bookorbit"
+POSTGRES_PASSWORD = "${db_password}"
+JWT_SECRET = "${hash:64}"
+SETUP_BOOTSTRAP_TOKEN = "${hash:32}"
+APP_URL = "https://${domain}"
+TZ = "UTC"
+EMAIL_ENCRYPTION_KEY = "${hash:64}"
+MIGRATION_ENCRYPTION_KEY = "${hash:64}"
+BOOK_REQUEST_ENCRYPTION_KEY = "${hash:64}"
+AI_ENCRYPTION_KEY = "${hash:64}"

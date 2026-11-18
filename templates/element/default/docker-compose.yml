@@ -1,0 +1,10 @@
+services:
+  element:
+    image: vectorim/element-web:v1.12.35@sha256:406b48b80153818284a235fa3600b2a5b5b6b0aa0e4ef4896b36d8d3461352f3
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      ELEMENT_WEB_PORT: ${ELEMENT_WEB_PORT}
+    volumes:
+      - ./config.json:/app/config.json:ro

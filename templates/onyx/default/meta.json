@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI chat and enterprise search with connectors, RAG over your documents, OpenSearch indexing and local embedding model servers.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Onyx",
+    "url": "https://onyx.app"
+  },
+  "links": {
+    "github": "https://github.com/onyx-dot-app/onyx",
+    "website": "https://onyx.app",
+    "docs": [
+      "https://docs.onyx.app/deployment/local/docker",
+      "https://docs.onyx.app/deployment/getting_started/resourcing",
+      "https://docs.onyx.app/deployment/authentication/basic",
+      "https://docs.onyx.app/admins/ai_models/overview"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the admin. Sign up right after the deploy, then add an LLM provider (OpenAI, Anthropic, Ollama or another) in the admin panel before chatting.",
+      "link": "https://docs.onyx.app/admins/ai_models/overview"
+    },
+    {
+      "type": "warning",
+      "message": "The full stack needs at least 10 GB of RAM and 4 vCPU. Use the Lite variant on smaller servers.",
+      "link": "https://docs.onyx.app/deployment/getting_started/resourcing"
+    }
+  ]
+}

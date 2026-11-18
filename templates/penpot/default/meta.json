@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source design and prototyping platform with real-time collaboration, PostgreSQL storage, an exporter, the admin console and the MCP server.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Penpot",
+    "url": "https://penpot.app"
+  },
+  "links": {
+    "github": "https://github.com/penpot/penpot",
+    "website": "https://penpot.app",
+    "docs": [
+      "https://help.penpot.app/technical-guide/getting-started/docker/",
+      "https://help.penpot.app/technical-guide/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Public registration is open and email verification is off, so anyone who reaches the URL can sign up. Create your accounts, then add disable-registration to PENPOT_FLAGS. Emails are written to the backend logs until you add enable-smtp to PENPOT_FLAGS and fill in the PENPOT_SMTP_* variables.",
+      "link": "https://help.penpot.app/technical-guide/configuration/#registration-and-authentication"
+    }
+  ]
+}

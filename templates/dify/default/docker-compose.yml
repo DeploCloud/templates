@@ -1,0 +1,383 @@
+x-dify-env: &dify-env
+  CONSOLE_API_URL: https://${DIFY_HOST}
+  CONSOLE_WEB_URL: https://${DIFY_HOST}
+  SERVICE_API_URL: https://${DIFY_HOST}
+  APP_API_URL: https://${DIFY_HOST}
+  APP_WEB_URL: https://${DIFY_HOST}
+  FILES_URL: https://${DIFY_HOST}
+  INTERNAL_FILES_URL: http://dify-api:5001
+  TRIGGER_URL: https://${DIFY_HOST}
+  ENDPOINT_URL_TEMPLATE: https://${DIFY_HOST}/e/{hook_id}
+  CONSOLE_CORS_ALLOW_ORIGINS: https://${DIFY_HOST}
+  SECRET_KEY: ${SECRET_KEY}
+  MIGRATION_ENABLED: "true"
+  SERVER_WORKER_CLASS: gevent
+  GUNICORN_TIMEOUT: "360"
+  CELERY_WORKER_AMOUNT: "4"
+  DB_TYPE: postgresql
+  DB_HOST: dify-db
+  DB_PORT: "5432"
+  DB_USERNAME: postgres
+  DB_PASSWORD: ${DB_PASSWORD}
+  DB_DATABASE: dify
+  REDIS_HOST: dify-redis
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: ${REDIS_PASSWORD}
+  REDIS_KEEPALIVE: "true"
+  CELERY_BROKER_URL: redis://:${REDIS_PASSWORD}@dify-redis:6379/1
+  OPENDAL_FS_ROOT: storage
+  VECTOR_STORE: weaviate
+  WEAVIATE_ENDPOINT: http://dify-weaviate:8080
+  WEAVIATE_GRPC_ENDPOINT: grpc://dify-weaviate:50051
+  WEAVIATE_API_KEY: ${WEAVIATE_API_KEY}
+  CODE_EXECUTION_ENDPOINT: http://dify-sandbox:8194
+  CODE_EXECUTION_API_KEY: ${SANDBOX_API_KEY}
+  SSRF_PROXY_HTTP_URL: http://dify-ssrf-proxy:3128
+  SSRF_PROXY_HTTPS_URL: http://dify-ssrf-proxy:3128
+  PLUGIN_DAEMON_URL: http://dify-plugin-daemon:5002
+  PLUGIN_DAEMON_KEY: ${PLUGIN_DAEMON_KEY}
+  INNER_API_KEY_FOR_PLUGIN: ${PLUGIN_INNER_API_KEY}
+  PLUGIN_MAX_PACKAGE_SIZE: "52428800"
+  AGENT_BACKEND_BASE_URL: http://dify-agent-backend:5050
+  AGENT_BACKEND_API_TOKEN: ${AGENT_API_TOKEN}
+  DIFY_AGENT_API_TOKEN: ${AGENT_API_TOKEN}
+  DEEPEVAL_DISABLE_DOTENV: "1"
+  DEEPEVAL_TELEMETRY_OPT_OUT: "1"
+
+x-dify-api-depends: &dify-api-depends
+  dify-init-permissions:
+    condition: service_completed_successfully
+  dify-db:
+    condition: service_healthy
+  dify-redis:
+    condition: service_healthy
+
+services:
+  dify-nginx:
+    image: nginx:1.30.7-alpine@sha256:bef154735288bc38d99fac41ae63730684bcc661503673a04a0f9bc526ba8598
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - dify-api
+      - dify-web
+
+  dify-init-permissions:
+    image: busybox:1.38.0@sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4
+    restart: "no"
+    command:
+      - sh
+      - -c
+      - |
+        for DIR in /app/api/storage /app/plugin_daemon/storage; do
+          if [ ! -f "$${DIR}/.init_permissions" ]; then
+            chown -R 1001:1001 "$${DIR}" && touch "$${DIR}/.init_permissions" || exit 1
+          fi
+        done
+    volumes:
+      - dify-storage:/app/api/storage
+      - dify-plugin-storage:/app/plugin_daemon/storage
+
+  dify-api:
+    image: langgenius/dify-api:1.20.0@sha256:9acb839cd797532ee2fd7a357c9bca0c15710ace99ceca3702ea990239d5c8b7
+    restart: unless-stopped
+    expose:
+      - 5001
+    environment:
+      <<: *dify-env
+      MODE: api
+      RESPECT_XFORWARD_HEADERS_ENABLED: "true"
+    volumes:
+      - dify-storage:/app/api/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      <<: *dify-api-depends
+      dify-agent-backend:
+        condition: service_started
+    networks:
+      - ssrf_proxy_network
+      - default
+
+  dify-api-websocket:
+    image: langgenius/dify-api:1.20.0@sha256:9acb839cd797532ee2fd7a357c9bca0c15710ace99ceca3702ea990239d5c8b7
+    restart: unless-stopped
+    expose:
+      - 5001
+    environment:
+      <<: *dify-env
+      MODE: api
+      RESPECT_XFORWARD_HEADERS_ENABLED: "true"
+      SERVER_WORKER_AMOUNT: "1"
+      SERVER_WORKER_CLASS: geventwebsocket.gunicorn.workers.GeventWebSocketWorker
+      SERVER_WORKER_CONNECTIONS: "1000"
+    volumes:
+      - dify-storage:/app/api/storage
+    depends_on: *dify-api-depends
+    networks:
+      - ssrf_proxy_network
+      - default
+
+  dify-worker:
+    image: langgenius/dify-api:1.20.0@sha256:9acb839cd797532ee2fd7a357c9bca0c15710ace99ceca3702ea990239d5c8b7
+    restart: unless-stopped
+    environment:
+      <<: *dify-env
+      MODE: worker
+    volumes:
+      - dify-storage:/app/api/storage
+    depends_on:
+      <<: *dify-api-depends
+      dify-agent-backend:
+        condition: service_started
+    networks:
+      - ssrf_proxy_network
+      - default
+
+  dify-worker-beat:
+    image: langgenius/dify-api:1.20.0@sha256:9acb839cd797532ee2fd7a357c9bca0c15710ace99ceca3702ea990239d5c8b7
+    restart: unless-stopped
+    environment:
+      <<: *dify-env
+      MODE: beat
+    depends_on: *dify-api-depends
+    networks:
+      - ssrf_proxy_network
+      - default
+
+  dify-web:
+    image: langgenius/dify-web:1.20.0@sha256:70bfcf68a607a38d65fdc3b84a00386bd76413ffb293e2ab1fe5e6768f6b3efc
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      CONSOLE_API_URL: https://${DIFY_HOST}
+      CONSOLE_WEB_URL: https://${DIFY_HOST}
+      APP_API_URL: https://${DIFY_HOST}
+      SERVER_CONSOLE_API_URL: http://dify-api:5001
+      NEXT_PUBLIC_SOCKET_URL: wss://${DIFY_HOST}
+      MARKETPLACE_API_URL: https://marketplace.dify.ai
+      MARKETPLACE_URL: https://marketplace.dify.ai
+      NEXT_PUBLIC_ENABLE_AGENT_V2: "true"
+      TEXT_GENERATION_TIMEOUT_MS: "60000"
+      LOOP_NODE_MAX_COUNT: "100"
+      MAX_TOOLS_NUM: "10"
+      MAX_PARALLEL_LIMIT: "10"
+      MAX_ITERATIONS_NUM: "99"
+      MAX_TREE_DEPTH: "50"
+      INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH: "4000"
+      TOP_K_MAX_VALUE: "10"
+      ALLOW_EMBED: "false"
+      ALLOW_UNSAFE_DATA_SCHEME: "false"
+
+  dify-db:
+    image: postgres:15.20-alpine@sha256:9c4538c0dce5c926d5e1d9143f7d4a5698b575202ea116810ec831439a5c167b
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=200"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: dify
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - dify-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dify"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  dify-redis:
+    image: redis:6.2.24-alpine@sha256:3f9c6e23ed6bea3b41d0ef709fc164c1a0b7c00d5a21a60e0e9c33ada5496881
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - dify-redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  dify-weaviate:
+    image: semitechnologies/weaviate:1.39.13@sha256:ad2b986bbe4666fbd5302a5ee0cc6c74a048c4c769198d46147ea232d46a2dd8
+    restart: unless-stopped
+    environment:
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      QUERY_DEFAULTS_LIMIT: "25"
+      DEFAULT_VECTORIZER_MODULE: none
+      CLUSTER_HOSTNAME: node1
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "false"
+      AUTHENTICATION_APIKEY_ENABLED: "true"
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: ${WEAVIATE_API_KEY}
+      AUTHENTICATION_APIKEY_USERS: dify
+      AUTHORIZATION_ADMINLIST_ENABLED: "true"
+      AUTHORIZATION_ADMINLIST_USERS: dify
+    volumes:
+      - dify-weaviate-data:/var/lib/weaviate
+
+  dify-sandbox:
+    image: langgenius/dify-sandbox:0.2.15@sha256:750e1111426ef31a9217b81c98cccfb750f17b182af3221102e420afa9f0928e
+    restart: unless-stopped
+    environment:
+      API_KEY: ${SANDBOX_API_KEY}
+      GIN_MODE: release
+      WORKER_TIMEOUT: "15"
+      ENABLE_NETWORK: "true"
+      SANDBOX_PORT: "8194"
+      HTTP_PROXY: http://dify-ssrf-proxy:3128
+      HTTPS_PROXY: http://dify-ssrf-proxy:3128
+    volumes:
+      - dify-sandbox-dependencies:/dependencies
+      - dify-sandbox-conf:/conf
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8194/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ssrf_proxy_network
+
+  dify-ssrf-proxy:
+    image: ubuntu/squid:6.6-24.04_beta@sha256:6a097f68bae708cedbabd6188d68c7e2e7a38cedd05a176e1cc0ba29e3bbe029
+    restart: unless-stopped
+    entrypoint: &squid-entrypoint
+      - bash
+      - -c
+      - |
+        tail -F /var/log/squid/access.log /var/log/squid/cache.log 2>/dev/null &
+        /usr/sbin/squid -Nz -f /etc/squid/squid.conf
+        exec /usr/sbin/squid -f /etc/squid/squid.conf -NYC
+    volumes:
+      - ./squid.conf:/etc/squid/squid.conf:ro
+      - ./squid-common.conf:/etc/squid/dify_common.conf:ro
+    networks:
+      - ssrf_proxy_network
+      - default
+
+  dify-plugin-daemon:
+    image: langgenius/dify-plugin-daemon:0.6.15-local@sha256:14aebd55ff37456dcf4ab8e5a92617eeef767e0e239a13c86083287ee1c1a338
+    restart: unless-stopped
+    environment:
+      DB_HOST: dify-db
+      DB_PORT: "5432"
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: dify_plugin
+      DB_SSL_MODE: disable
+      REDIS_HOST: dify-redis
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      SERVER_PORT: "5002"
+      SERVER_KEY: ${PLUGIN_DAEMON_KEY}
+      DIFY_INNER_API_URL: http://dify-api:5001
+      DIFY_INNER_API_KEY: ${PLUGIN_INNER_API_KEY}
+      PLUGIN_REMOTE_INSTALLING_HOST: 0.0.0.0
+      PLUGIN_REMOTE_INSTALLING_PORT: "5003"
+      PLUGIN_STORAGE_TYPE: local
+      PLUGIN_STORAGE_LOCAL_ROOT: /app/storage
+      PLUGIN_WORKING_PATH: /app/storage/cwd
+      PLUGIN_INSTALLED_PATH: plugin
+      PLUGIN_PACKAGE_CACHE_PATH: plugin_packages
+      PLUGIN_MEDIA_CACHE_PATH: assets
+      FORCE_VERIFYING_SIGNATURE: "true"
+      PYTHON_ENV_INIT_TIMEOUT: "120"
+      PLUGIN_MAX_EXECUTION_TIMEOUT: "600"
+      MAX_PLUGIN_PACKAGE_SIZE: "52428800"
+    volumes:
+      - dify-plugin-storage:/app/storage
+    depends_on:
+      dify-init-permissions:
+        condition: service_completed_successfully
+      dify-db:
+        condition: service_healthy
+      dify-redis:
+        condition: service_healthy
+    networks:
+      - ssrf_proxy_network
+      - default
+
+  dify-agent-backend:
+    image: langgenius/dify-agent-backend:1.20.0@sha256:16bb6ccb40e647436064b1e16d030b668efacdb4c972ed46da6ffa15c2f8318b
+    restart: unless-stopped
+    environment:
+      DIFY_AGENT_API_TOKEN: ${AGENT_API_TOKEN}
+      DIFY_AGENT_REDIS_URL: redis://:${REDIS_PASSWORD}@dify-redis:6379/2
+      DIFY_AGENT_PLUGIN_DAEMON_URL: http://dify-plugin-daemon:5002
+      DIFY_AGENT_PLUGIN_DAEMON_API_KEY: ${PLUGIN_DAEMON_KEY}
+      DIFY_AGENT_INNER_API_URL: http://dify-api:5001
+      DIFY_AGENT_INNER_API_KEY: ${PLUGIN_INNER_API_KEY}
+      DIFY_AGENT_RUNTIME_BACKEND: local
+      DIFY_AGENT_LOCAL_SANDBOX_ENDPOINT: http://dify-agent-sandbox:5004
+      DIFY_AGENT_LOCAL_SANDBOX_AUTH_TOKEN: ${AGENT_SANDBOX_TOKEN}
+      DIFY_AGENT_SANDBOX_FILES_BASE_URL: http://dify-api:5001
+      DIFY_AGENT_STUB_API_BASE_URL: http://dify-agent-backend:5050/agent-stub
+      DIFY_AGENT_SERVER_SECRET_KEY: ${AGENT_SERVER_SECRET_KEY}
+    depends_on:
+      dify-redis:
+        condition: service_healthy
+      dify-plugin-daemon:
+        condition: service_started
+    networks:
+      - default
+      - agent_sandbox_network
+
+  dify-agent-sandbox:
+    image: langgenius/dify-agent-local-sandbox:1.20.0@sha256:06647550dd4c53b18ad73e6e831391e841fae9c8f23e28a48c74e254b8e797a1
+    restart: unless-stopped
+    command: ["shellctl", "serve", "--listen", "0.0.0.0:5004", "--require-auth-token"]
+    environment:
+      SHELLCTL_AUTH_TOKEN: ${AGENT_SANDBOX_TOKEN}
+      HTTP_PROXY: http://dify-agent-ssrf-proxy:3128
+      HTTPS_PROXY: http://dify-agent-ssrf-proxy:3128
+      NO_PROXY: localhost,127.0.0.1
+    volumes:
+      - dify-agent-sandbox-home:/home/dify
+      - dify-agent-sandbox-workspace:/workspace
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5004/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - agent_sandbox_network
+      - local_sandbox_proxy_network
+
+  dify-agent-ssrf-proxy:
+    image: ubuntu/squid:6.6-24.04_beta@sha256:6a097f68bae708cedbabd6188d68c7e2e7a38cedd05a176e1cc0ba29e3bbe029
+    restart: unless-stopped
+    entrypoint: *squid-entrypoint
+    volumes:
+      - ./squid-agent.conf:/etc/squid/squid.conf:ro
+      - ./squid-common.conf:/etc/squid/dify_common.conf:ro
+    networks:
+      - default
+      - local_sandbox_proxy_network
+
+networks:
+  ssrf_proxy_network:
+    internal: true
+  agent_sandbox_network:
+    internal: true
+  local_sandbox_proxy_network:
+    internal: true
+
+volumes:
+  dify-storage: {}
+  dify-plugin-storage: {}
+  dify-db-data: {}
+  dify-redis-data: {}
+  dify-weaviate-data: {}
+  dify-sandbox-dependencies: {}
+  dify-sandbox-conf: {}
+  dify-agent-sandbox-home: {}
+  dify-agent-sandbox-workspace: {}

@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Durable workflow execution server with PostgreSQL persistence and the Temporal Web UI behind basic auth.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Temporal Technologies",
+    "url": "https://temporal.io"
+  },
+  "links": {
+    "github": "https://github.com/temporalio/temporal",
+    "website": "https://temporal.io",
+    "docs": [
+      "https://docs.temporal.io/self-hosted-guide/deployment",
+      "https://docs.temporal.io/references/web-ui-environment-variables",
+      "https://docs.temporal.io/web-ui"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The Web UI is protected by basic auth: user admin, password TEMPORAL_UI_PASSWORD from the environment variables. Workers and SDK clients connect over gRPC, which is not published on the domain; apps in the same environment reach it at temporal:7233. A namespace named default is created on first start.",
+      "link": "https://docs.temporal.io/self-hosted-guide/deployment"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Node.js forum software with real-time discussions, chat, notifications and ActivityPub federation, backed by PostgreSQL with persistent uploads and plugins.",
+  "category": "communication",
+  "developedBy": {
+    "label": "NodeBB",
+    "url": "https://nodebb.org/"
+  },
+  "links": {
+    "github": "https://github.com/NodeBB/NodeBB",
+    "website": "https://nodebb.org/",
+    "docs": [
+      "https://docs.nodebb.org/installing/cloud/docker/",
+      "https://docs.nodebb.org/configuring/envvars/",
+      "https://docs.nodebb.org/configuring/databases/postgres/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start runs the setup, builds the assets and restarts the container once, which takes a few minutes. Sign in with the admin account it creates: the username is NODEBB_ADMIN_USERNAME and the generated password is NODEBB_ADMIN_PASSWORD in the environment settings. Change the admin email in your profile afterwards.",
+      "link": "https://docs.nodebb.org/configuring/envvars/"
+    },
+    {
+      "type": "warning",
+      "message": "Configure an email service under Admin > Settings > Email, otherwise users cannot receive confirmation and password reset emails."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+services:
+  onlyoffice-docs:
+    image: onlyoffice/documentserver:10.0.0.1@sha256:ca17889f10b11141cc6441836aebdd2835cf3e1b49681b2fd6e155c94b7850b3
+    restart: unless-stopped
+    stop_grace_period: 60s
+    expose:
+      - 80
+    environment:
+      JWT_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_HEADER: ${JWT_HEADER}
+      SECURE_LINK_SECRET: ${SECURE_LINK_SECRET}
+    volumes:
+      - onlyoffice-data:/var/www/onlyoffice/Data
+      - onlyoffice-lib:/var/lib/onlyoffice
+      - onlyoffice-logs:/var/log/onlyoffice
+      - onlyoffice-fonts:/usr/share/fonts/truetype/custom
+
+volumes:
+  onlyoffice-data: {}
+  onlyoffice-lib: {}
+  onlyoffice-logs: {}
+  onlyoffice-fonts: {}

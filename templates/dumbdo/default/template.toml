@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dumbdo"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DUMBDO_PIN = ""
+DUMBDO_SITE_TITLE = "DumbDo"
+SINGLE_LIST = "false"

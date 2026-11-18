@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Official Bitwarden lite password manager server with the web vault, a MariaDB database and persistent vault data.",
+  "category": "security",
+  "developedBy": {
+    "label": "Bitwarden",
+    "url": "https://bitwarden.com"
+  },
+  "links": {
+    "github": "https://github.com/bitwarden/server",
+    "website": "https://bitwarden.com",
+    "docs": [
+      "https://bitwarden.com/help/install-and-deploy-lite/",
+      "https://bitwarden.com/help/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "BW_INSTALLATION_ID starts as a random ID so the server can boot, and BW_INSTALLATION_KEY is empty. Generate your own installation ID and key at bitwarden.com/host, set both, then redeploy to enable mobile push notifications and licensed features.",
+      "link": "https://bitwarden.com/host/"
+    },
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the domain can create an account: register yours, then set DISABLE_USER_REGISTRATION to true and redeploy. The System Administrator Portal at /admin signs in by emailed link, so it needs SMTP_HOST, the SMTP credentials and ADMIN_EMAILS.",
+      "link": "https://bitwarden.com/help/admin-portal/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the web vault and clients only work over the generated secure domain."
+    }
+  ]
+}

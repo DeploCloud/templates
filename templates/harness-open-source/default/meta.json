@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted developer platform with Git hosting, pull requests, code review and artifact registries, backed by SQLite.",
+  "category": "development",
+  "developedBy": {
+    "label": "Harness",
+    "url": "https://github.com/harness"
+  },
+  "links": {
+    "github": "https://github.com/harness/harness",
+    "website": "https://www.harness.io/open-source",
+    "docs": [
+      "https://developer.harness.io/open-source/new-to-harness-open-source/quick-start",
+      "https://developer.harness.io/open-source/new-to-harness-open-source/settings"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign up right after deployment: the first account becomes the administrator. Public sign-up closes once that account exists; set GITNESS_USER_SIGNUP_ENABLED to true to let others register.",
+      "link": "https://developer.harness.io/open-source/new-to-harness-open-source/quick-start"
+    },
+    {
+      "type": "info",
+      "message": "Pipelines and Gitspaces need the host Docker socket and are not available in this template. Git over SSH is disabled; clone and push over HTTPS."
+    }
+  ]
+}

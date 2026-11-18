@@ -1,0 +1,25 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Mage data pipeline tool with its orchestration database (triggers, pipeline runs, users) on a bundled PostgreSQL server instead of SQLite.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Mage",
+    "url": "https://github.com/mage-ai"
+  },
+  "links": {
+    "github": "https://github.com/mage-ai/mage-ai",
+    "website": "https://www.mage.ai",
+    "docs": [
+      "https://docs.mage.ai/development/databases/default",
+      "https://docs.mage.ai/production/authentication/overview",
+      "https://docs.mage.ai/development/variables/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the DEFAULT_OWNER_EMAIL and DEFAULT_OWNER_PASSWORD environment variables. They only seed the owner account on first start; change the password later from the Mage user settings.",
+      "link": "https://docs.mage.ai/production/authentication/overview"
+    }
+  ]
+}

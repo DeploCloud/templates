@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight DNS proxy and ad blocker with deny and allow lists, caching and a REST API, answering DNS-over-HTTPS queries on the app domain.",
+  "category": "networking",
+  "developedBy": {
+    "label": "0xERR0R",
+    "url": "https://github.com/0xERR0R"
+  },
+  "links": {
+    "github": "https://github.com/0xERR0R/blocky",
+    "website": "https://0xerr0r.github.io/blocky/",
+    "docs": [
+      "https://0xerr0r.github.io/blocky/latest/configuration/",
+      "https://0xerr0r.github.io/blocky/latest/installation/",
+      "https://0xerr0r.github.io/blocky/latest/interfaces/",
+      "https://0xerr0r.github.io/blocky/latest/network_configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Plain DNS on port 53 is not published. Point clients at https://<your domain>/dns-query as their DNS-over-HTTPS resolver."
+    },
+    {
+      "type": "warning",
+      "message": "Blocky has no login. Anyone who reaches the domain can use it as a DoH resolver and call the REST API under /api, which can disable blocking, flush the cache and refresh the lists."
+    }
+  ]
+}

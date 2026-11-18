@@ -1,0 +1,57 @@
+services:
+  hermes-webui:
+    image: ghcr.io/nesquena/hermes-webui:0.52.679@sha256:df3fa2309f76d7ffd861cb7f812d15ce604fb1422fc3c9298bd7488e45eb2499
+    restart: unless-stopped
+    expose:
+      - 8787
+    depends_on:
+      hermes-webui-agent:
+        condition: service_healthy
+    volumes:
+      - hermes-home:/home/hermeswebui/.hermes
+      - hermes-agent-src:/home/hermeswebui/.hermes/hermes-agent:ro
+      - hermes-workspace:/workspace
+    environment:
+      HERMES_WEBUI_HOST: 0.0.0.0
+      HERMES_WEBUI_PORT: "8787"
+      HERMES_WEBUI_STATE_DIR: /home/hermeswebui/.hermes/webui
+      HERMES_API_URL: http://hermes-webui-agent:8642
+      HERMES_WEBUI_GATEWAY_API_KEY: ${API_SERVER_KEY}
+      HERMES_WEBUI_PASSWORD: ${HERMES_WEBUI_PASSWORD}
+      HERMES_WEBUI_ALLOWED_ORIGINS: ${HERMES_WEBUI_ALLOWED_ORIGINS}
+      HERMES_WEBUI_TRUST_FORWARDED_PROTO: "1"
+      WANTED_UID: "1000"
+      WANTED_GID: "1000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8787/health"]
+      interval: 30s
+      timeout: 8s
+      retries: 5
+      start_period: 600s
+
+  hermes-webui-agent:
+    image: nousresearch/hermes-agent:v0.23.1@sha256:276d44685c65c0cb2a25f190b63c65c8906f9dc76486fb1c05ae71b5826bda08
+    restart: unless-stopped
+    command: ["gateway", "run"]
+    expose:
+      - 8642
+    volumes:
+      - hermes-home:/opt/data
+      - hermes-agent-src:/opt/hermes
+    environment:
+      HERMES_UID: "1000"
+      HERMES_GID: "1000"
+      API_SERVER_ENABLED: "true"
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_KEY: ${API_SERVER_KEY}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8642/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  hermes-home: {}
+  hermes-agent-src: {}
+  hermes-workspace: {}

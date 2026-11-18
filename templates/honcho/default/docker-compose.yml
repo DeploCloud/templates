@@ -1,0 +1,74 @@
+services:
+  honcho:
+    image: ghcr.io/plastic-labs/honcho:v3.6.1@sha256:2ced1a958f14c128ddb05e68deb549f9281681e44595a7a3c34adebf5b432b16
+    restart: unless-stopped
+    entrypoint: ["sh", "docker/entrypoint.sh"]
+    expose:
+      - 8000
+    environment: &honcho-env
+      DB_CONNECTION_URI: ${DB_CONNECTION_URI}
+      CACHE_ENABLED: "true"
+      CACHE_URL: ${CACHE_URL}
+      AUTH_USE_AUTH: ${AUTH_USE_AUTH}
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET}
+      LLM_OPENAI_API_KEY: ${LLM_OPENAI_API_KEY}
+      LOG_LEVEL: ${LOG_LEVEL}
+    healthcheck:
+      test:
+        - CMD
+        - /app/.venv/bin/python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2).read()
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      honcho-db:
+        condition: service_healthy
+      honcho-redis:
+        condition: service_healthy
+
+  honcho-deriver:
+    image: ghcr.io/plastic-labs/honcho:v3.6.1@sha256:2ced1a958f14c128ddb05e68deb549f9281681e44595a7a3c34adebf5b432b16
+    restart: unless-stopped
+    entrypoint: ["/app/.venv/bin/python", "-m", "src.deriver"]
+    environment: *honcho-env
+    depends_on:
+      honcho:
+        condition: service_healthy
+      honcho-db:
+        condition: service_healthy
+      honcho-redis:
+        condition: service_healthy
+
+  honcho-db:
+    image: pgvector/pgvector:0.8.7-pg15@sha256:e0b617fffc06dd37323ee99873c7a8683f19f1dce34633670262b0113ce32638
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=200"]
+    environment:
+      POSTGRES_DB: honcho
+      POSTGRES_USER: honcho
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - honcho-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U honcho -d honcho"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  honcho-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - honcho-redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  honcho-db: {}
+  honcho-redis: {}

@@ -1,0 +1,12 @@
+services:
+  yt-dlp-web-player:
+    image: matszwe02/ytdlp_web_player:v1.3.4@sha256:dc47131d0ddf65bfd2761e34d24bb914164ab0b01b9185f4a0f87b1df124fce1
+    restart: unless-stopped
+    expose:
+      - 5000
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/manifest.json')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

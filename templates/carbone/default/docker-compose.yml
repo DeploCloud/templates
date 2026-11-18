@@ -1,0 +1,21 @@
+services:
+  carbone:
+    image: carbone/carbone-ee:full-5.18.0@sha256:d22dbac862ebb1e40431164eecaea846c7907200ef1a79ebb9bf9b07ff882003
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      CARBONE_BIND: ${CARBONE_BIND}
+      CARBONE_STUDIO: ${CARBONE_STUDIO}
+      CARBONE_STUDIO_USER: ${CARBONE_STUDIO_USER}
+      CARBONE_AUTHENTICATION: ${CARBONE_AUTHENTICATION}
+      CARBONE_LICENSE: ${CARBONE_LICENSE}
+    volumes:
+      - carbone-template:/app/template
+      - carbone-config:/app/config
+      - carbone-database:/app/database
+
+volumes:
+  carbone-template: {}
+  carbone-config: {}
+  carbone-database: {}

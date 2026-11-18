@@ -1,0 +1,14 @@
+[variables]
+sync_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "anki-sync-server"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SYNC_USERNAME = "anki"
+SYNC_PASSWORD = "${sync_password}"

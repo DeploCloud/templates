@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vertd"
+port = 24_153
+host = "${domain}"
+
+[config.env]
+VERTD_FORCE_GPU = "cpu"
+MAX_UPLOAD_BYTES = "2147483648"
+PUBLIC_URL = "https://${domain}"
+ADMIN_PASSWORD = "${admin_password}"
+WEBHOOK_URL = ""

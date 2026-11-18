@@ -1,0 +1,16 @@
+services:
+  wordcraft:
+    image: ghcr.io/mikapst/wordcraft-web:v0.18.1@sha256:4738bb7191d2cfb821fab9462a7a7e955625635440dcd48d3dd2138b6b1b5d9d
+    restart: unless-stopped
+    # The image CMD repeats the pid directive of nginx.conf, so nginx refuses to start;
+    # run the stock nginx command as root (workers still drop to the nginx user).
+    user: root
+    command: ["nginx", "-g", "daemon off;"]
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

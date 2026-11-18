@@ -1,0 +1,68 @@
+services:
+  audiomuse-ai:
+    image: ghcr.io/neptunehub/audiomuse-ai:3.7.2@sha256:e4d28b44eee120a5fc0663022a5cdfc78e8056be7ff6a73441e5bc79ededec1c
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      SERVICE_TYPE: flask
+      TZ: ${TZ}
+      POSTGRES_USER: audiomuse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: audiomusedb
+      POSTGRES_HOST: audiomuse-ai-db
+      POSTGRES_PORT: "5432"
+      ENABLE_PROXY_FIX: "true"
+    volumes:
+      - temp-audio-flask:/app/temp_audio
+      - plugins-flask:/app/plugin/installed
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      audiomuse-ai-db:
+        condition: service_healthy
+
+  audiomuse-ai-worker:
+    image: ghcr.io/neptunehub/audiomuse-ai:3.7.2@sha256:e4d28b44eee120a5fc0663022a5cdfc78e8056be7ff6a73441e5bc79ededec1c
+    restart: unless-stopped
+    environment:
+      SERVICE_TYPE: worker
+      TZ: ${TZ}
+      POSTGRES_USER: audiomuse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: audiomusedb
+      POSTGRES_HOST: audiomuse-ai-db
+      POSTGRES_PORT: "5432"
+    volumes:
+      - temp-audio-worker:/app/temp_audio
+      - plugins-worker:/app/plugin/installed
+    depends_on:
+      audiomuse-ai-db:
+        condition: service_healthy
+
+  audiomuse-ai-db:
+    image: postgres:15.20-alpine@sha256:23799e521dee9265a8b388ecf3bc0f1eaa34b95be67f5a76af4f8f6adb44c720
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      POSTGRES_USER: audiomuse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: audiomusedb
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U audiomuse -d audiomusedb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data: {}
+  temp-audio-flask: {}
+  temp-audio-worker: {}
+  plugins-flask: {}
+  plugins-worker: {}

@@ -1,0 +1,18 @@
+[variables]
+encrypter_secret = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "harness"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+GITNESS_URL_BASE = "https://${domain}"
+GITNESS_URL_REGISTRY = "https://${domain}"
+GITNESS_ENCRYPTER_SECRET = "${encrypter_secret}"
+GITNESS_USER_SIGNUP_ENABLED = "false"
+GITNESS_SSH_ENABLE = "false"
+GITNESS_GITSPACE_ENABLE = "false"

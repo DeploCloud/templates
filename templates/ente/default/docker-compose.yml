@@ -1,0 +1,65 @@
+services:
+  ente-museum:
+    image: ghcr.io/ente/server:c2e571c599222ef6f8349dcc638bf23e0d885e21@sha256:f8c33e9bc1d5b7079dcda51522dd9f4fb28d93bef8655d95be54a978acc43408
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./museum.yaml:/museum.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      ente-db:
+        condition: service_healthy
+      ente-minio:
+        condition: service_healthy
+
+  ente-web:
+    image: ghcr.io/ente/web:ce7e41f9f91a5de65f80663331f0ab00737f18cd@sha256:01d8dfb3495d69d7d32ed962866307e4ae05a8d4ea55b4411afdc0d342f12c16
+    restart: unless-stopped
+    expose:
+      - 3000
+      - 3002
+    environment:
+      ENTE_API_ORIGIN: ${ENTE_API_ORIGIN}
+
+  ente-db:
+    image: postgres:15.20@sha256:f50f7ef237a3a1d54dd85a9331136002bbd4bce1f74d37dd91778fab22c1d418
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ente_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -d ente_db -U pguser"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ente-db:/var/lib/postgresql/data
+
+  ente-minio:
+    image: pgsty/silo:RELEASE.2026-11-12T00-00-00Z@sha256:c20d112390b9a9ce8c11b8af95ad35bcaa62f4759663c09c936cd8d2b511f329
+    restart: unless-stopped
+    # Pre-creating the directory is how a single-drive server gets its bucket on first start
+    command: ["sh", "-c", "mkdir -p /data/b2-eu-cen && exec silo server /data --address :3200"]
+    expose:
+      - 3200
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:3200/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ente-minio:/data
+
+volumes:
+  ente-db: {}
+  ente-minio: {}

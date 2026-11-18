@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI and API for running Ansible, Terraform, OpenTofu and shell tasks, with a built-in SQLite database on a persistent volume.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Semaphore UI",
+    "url": "https://github.com/semaphoreui"
+  },
+  "links": {
+    "github": "https://github.com/semaphoreui/semaphore",
+    "website": "https://semaphoreui.com",
+    "docs": [
+      "https://semaphoreui.com/docs/admin-guide/installation/docker",
+      "https://semaphoreui.com/docs/admin-guide/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated SEMAPHORE_ADMIN_PASSWORD from the environment variables, then change the password in the user settings."
+    }
+  ]
+}

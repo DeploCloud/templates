@@ -1,0 +1,138 @@
+[variables]
+indexer_password = "${password:32}"
+dashboard_password = "${password:32}"
+api_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "wazuh-dashboard"
+port = 5_601
+host = "${domain}"
+
+[config.env]
+INDEXER_PASSWORD = "${indexer_password}"
+DASHBOARD_PASSWORD = "${dashboard_password}"
+API_PASSWORD = "${api_password}-Aa1"
+OPENSEARCH_JAVA_OPTS = "-Xms1g -Xmx1g"
+
+[[config.mounts]]
+filePath = "certs.sh"
+content = """#!/bin/bash
+# Creates the internal TLS certificates once, then drops the CA key.
+set -euo pipefail
+cd /certificates
+if [ -f wazuh-indexer.pem ]; then
+  echo "Certificates already exist"
+  exit 0
+fi
+openssl req -x509 -new -nodes -newkey rsa:2048 -sha256 -days 3650 -subj "/OU=Wazuh/O=Wazuh/L=California" -keyout root-ca.key -out root-ca.pem
+for name in admin wazuh-indexer wazuh-manager; do
+  openssl req -new -nodes -newkey rsa:2048 -subj "/C=US/L=California/O=Wazuh/OU=Wazuh/CN=$name" -keyout "$name-key.pem" -out "$name.csr"
+  cat > ext.cnf <<EOF
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = DNS:$name
+EOF
+  openssl x509 -req -sha256 -days 3650 -in "$name.csr" -CA root-ca.pem -CAkey root-ca.key -CAcreateserial -extfile ext.cnf -out "$name.pem"
+done
+rm -f root-ca.key root-ca.srl ext.cnf ./*.csr
+chmod 444 ./*.pem
+chmod 400 ./*-key.pem
+chown 1000:1000 admin-key.pem wazuh-indexer-key.pem
+chown 999:999 wazuh-manager-key.pem
+"""
+
+[[config.mounts]]
+filePath = "indexer-init.sh"
+content = """#!/bin/bash
+# The security index is seeded from this file on the first start only.
+set -euo pipefail
+bcrypt() {
+  bash /usr/share/wazuh-indexer/plugins/opensearch-security/tools/hash.sh -p "$1" | grep '^[$]2'
+}
+admin_hash=$(bcrypt "$ADMIN_PASSWORD")
+kibanaserver_hash=$(bcrypt "$KIBANASERVER_PASSWORD")
+cat > /usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml <<EOF
+---
+_meta:
+  type: "internalusers"
+  config_version: 2
+
+admin:
+  hash: "$admin_hash"
+  reserved: true
+  backend_roles:
+  - "admin"
+  description: "Admin user"
+
+kibanaserver:
+  hash: "$kibanaserver_hash"
+  reserved: true
+  description: "Dashboard server user"
+EOF
+exec /entrypoint.sh opensearchwrapper
+"""
+
+[[config.mounts]]
+filePath = "manager-indexer.sh"
+content = """# Points vulnerability detection at the bundled indexer and the generated certificates.
+sed -i -e 's|https://0.0.0.0:9200|https://wazuh-indexer:9200|' -e 's|/etc/filebeat/certs/root-ca.pem|/etc/ssl/wazuh/root-ca.pem|' -e 's|/etc/filebeat/certs/filebeat.pem|/etc/ssl/wazuh/wazuh-manager.pem|' -e 's|/etc/filebeat/certs/filebeat-key.pem|/etc/ssl/wazuh/wazuh-manager-key.pem|' /var/ossec/etc/ossec.conf
+"""
+
+[[config.mounts]]
+filePath = "opensearch.yml"
+content = """network.host: "0.0.0.0"
+node.name: "wazuh-indexer"
+cluster.name: "wazuh-cluster"
+path.data: /var/lib/wazuh-indexer
+path.logs: /var/log/wazuh-indexer
+discovery.type: single-node
+compatibility.override_main_response_version: true
+plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/config/wazuh-certs/wazuh-indexer.pem
+plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/config/wazuh-certs/wazuh-indexer-key.pem
+plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/wazuh-certs/root-ca.pem
+plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/config/wazuh-certs/wazuh-indexer.pem
+plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/config/wazuh-certs/wazuh-indexer-key.pem
+plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/wazuh-certs/root-ca.pem
+plugins.security.ssl.http.enabled: true
+plugins.security.ssl.transport.enforce_hostname_verification: false
+plugins.security.ssl.transport.resolve_hostname: false
+plugins.security.ssl.http.enabled_ciphers:
+  - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+  - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+  - "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+  - "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+plugins.security.ssl.http.enabled_protocols:
+  - "TLSv1.2"
+plugins.security.authcz.admin_dn:
+  - "CN=admin,OU=Wazuh,O=Wazuh,L=California,C=US"
+plugins.security.check_snapshot_restore_write_privileges: true
+plugins.security.enable_snapshot_restore_privilege: true
+plugins.security.nodes_dn:
+  - "CN=wazuh-indexer,OU=Wazuh,O=Wazuh,L=California,C=US"
+plugins.security.restapi.roles_enabled:
+  - "all_access"
+  - "security_rest_api_access"
+plugins.security.system_indices.enabled: true
+plugins.security.system_indices.indices: [".opendistro-alerting-config", ".opendistro-alerting-alert*", ".opendistro-anomaly-results*", ".opendistro-anomaly-detector*", ".opendistro-anomaly-checkpoints", ".opendistro-anomaly-detection-state", ".opendistro-reports-*", ".opendistro-notifications-*", ".opendistro-notebooks", ".opensearch-observability", ".opendistro-asynchronous-search-response*", ".replication-metadata-store"]
+plugins.security.allow_default_init_securityindex: true
+cluster.routing.allocation.disk.threshold_enabled: false
+"""
+
+[[config.mounts]]
+filePath = "opensearch_dashboards.yml"
+content = """server.host: 0.0.0.0
+server.port: 5601
+server.ssl.enabled: false
+opensearch.hosts: https://wazuh-indexer:9200
+opensearch.ssl.verificationMode: certificate
+opensearch.ssl.certificateAuthorities: ["/usr/share/wazuh-dashboard/certs/root-ca.pem"]
+opensearch.requestHeadersWhitelist: ["securitytenant","Authorization"]
+opensearch_security.multitenancy.enabled: false
+opensearch_security.readonly_mode.roles: ["kibana_read_only"]
+uiSettings.overrides.defaultRoute: /app/wz-home
+opensearch_security.cookie.ttl: 900000
+opensearch_security.session.ttl: 900000
+opensearch_security.session.keepalive: true
+"""

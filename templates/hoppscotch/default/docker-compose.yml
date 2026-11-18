@@ -1,0 +1,51 @@
+services:
+  hoppscotch:
+    image: hoppscotch/hoppscotch:2026.10.1@sha256:09a50aa1831ff1e39dfe73bf672e2bca45e1e73514d656e9be6a91f561071a53
+    restart: unless-stopped
+    # Migrate before every start. The backend exits on purpose after seeding its config on
+    # first boot, so relaunch once in place (freeing Caddy's port) instead of restarting.
+    command: ["sh", "-c", "pnpm exec prisma migrate deploy || exit 1; node /usr/src/app/aio_run.mjs; pkill -9 -x caddy; pkill -9 -x webapp-server; sleep 1; exec node /usr/src/app/aio_run.mjs"]
+    expose:
+      - 80
+    environment:
+      DATABASE_URL: postgresql://hoppscotch:${DB_PASSWORD}@hoppscotch-db:5432/hoppscotch
+      DATA_ENCRYPTION_KEY: ${DATA_ENCRYPTION_KEY}
+      WHITELISTED_ORIGINS: ${WHITELISTED_ORIGINS}
+      TRUST_PROXY: ${TRUST_PROXY}
+      ENABLE_SUBPATH_BASED_ACCESS: "true"
+      VITE_BASE_URL: ${VITE_BASE_URL}
+      VITE_SHORTCODE_BASE_URL: ${VITE_SHORTCODE_BASE_URL}
+      VITE_ADMIN_URL: ${VITE_ADMIN_URL}
+      VITE_BACKEND_GQL_URL: ${VITE_BACKEND_GQL_URL}
+      VITE_BACKEND_WS_URL: ${VITE_BACKEND_WS_URL}
+      VITE_BACKEND_API_URL: ${VITE_BACKEND_API_URL}
+    volumes:
+      - hoppscotch-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost/backend/ping || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      hoppscotch-db:
+        condition: service_healthy
+
+  hoppscotch-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hoppscotch
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: hoppscotch
+    volumes:
+      - hoppscotch-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hoppscotch -d hoppscotch"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  hoppscotch-data: {}
+  hoppscotch-db: {}

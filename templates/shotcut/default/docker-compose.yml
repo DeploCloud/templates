@@ -1,0 +1,18 @@
+services:
+  shotcut:
+    image: lscr.io/linuxserver/shotcut:v26.11.15-ls151@sha256:e5e3c7a9b3edbbf31a4f63b4f5ed109cb1d4b61a0a2e1a97fad1ecf3c295506c
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - shotcut-config:/config
+
+volumes:
+  shotcut-config: {}

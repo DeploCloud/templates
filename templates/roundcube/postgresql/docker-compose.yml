@@ -1,0 +1,51 @@
+services:
+  roundcube:
+    image: roundcube/roundcubemail:1.7.6-apache@sha256:37a90cb245228080779462fd120db3d64335e1abbec33bda94ca18c9e163881b
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      ROUNDCUBEMAIL_DB_TYPE: pgsql
+      ROUNDCUBEMAIL_DB_HOST: roundcube-db
+      ROUNDCUBEMAIL_DB_PORT: 5432
+      ROUNDCUBEMAIL_DB_NAME: ${ROUNDCUBEMAIL_DB_NAME}
+      ROUNDCUBEMAIL_DB_USER: ${ROUNDCUBEMAIL_DB_USER}
+      ROUNDCUBEMAIL_DB_PASSWORD: ${ROUNDCUBEMAIL_DB_PASSWORD}
+      ROUNDCUBEMAIL_DES_KEY: ${ROUNDCUBEMAIL_DES_KEY}
+      ROUNDCUBEMAIL_DEFAULT_HOST: ${ROUNDCUBEMAIL_DEFAULT_HOST}
+      ROUNDCUBEMAIL_DEFAULT_PORT: ${ROUNDCUBEMAIL_DEFAULT_PORT}
+      ROUNDCUBEMAIL_SMTP_SERVER: ${ROUNDCUBEMAIL_SMTP_SERVER}
+      ROUNDCUBEMAIL_SMTP_PORT: ${ROUNDCUBEMAIL_SMTP_PORT}
+      ROUNDCUBEMAIL_PLUGINS: ${ROUNDCUBEMAIL_PLUGINS}
+      ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE: ${ROUNDCUBEMAIL_UPLOAD_MAX_FILESIZE}
+    volumes:
+      - roundcube-enigma:/var/roundcube/enigma
+      - ./custom.inc.php:/var/roundcube/config/custom.inc.php
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      roundcube-db:
+        condition: service_healthy
+
+  roundcube-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${ROUNDCUBEMAIL_DB_NAME}
+      POSTGRES_USER: ${ROUNDCUBEMAIL_DB_USER}
+      POSTGRES_PASSWORD: ${ROUNDCUBEMAIL_DB_PASSWORD}
+    volumes:
+      - roundcube-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  roundcube-enigma: {}
+  roundcube-postgres: {}

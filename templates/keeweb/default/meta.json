@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based password manager that opens and edits KeePass (.kdbx) databases, served as a static web app by nginx.",
+  "category": "security",
+  "developedBy": {
+    "label": "KeeWeb",
+    "url": "https://github.com/keeweb"
+  },
+  "links": {
+    "github": "https://github.com/keeweb/keeweb",
+    "website": "https://keeweb.info",
+    "docs": [
+      "https://github.com/keeweb/keeweb/tree/docker/keeweb",
+      "https://github.com/keeweb/keeweb/wiki/Configuration",
+      "https://github.com/keeweb/keeweb/wiki/WebDAV-Setup",
+      "https://github.com/keeweb/keeweb/wiki/Dropbox-and-GDrive"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Vaults are not stored on the server. Keep your .kdbx file in browser storage, on a WebDAV server, or on Dropbox, Google Drive or OneDrive after registering your own app keys for this domain.",
+      "link": "https://github.com/keeweb/keeweb/wiki/Dropbox-and-GDrive"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

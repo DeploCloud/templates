@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source semantic layer that serves a data model over REST and GraphQL APIs, with Cube Store caching and a refresh worker.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Cube Dev",
+    "url": "https://cube.dev"
+  },
+  "links": {
+    "github": "https://github.com/cube-js/cube",
+    "website": "https://cube.dev",
+    "docs": [
+      "https://docs.cube.dev/admin/deployment/core",
+      "https://docs.cube.dev/reference/configuration/environment-variables",
+      "https://docs.cube.dev/admin/connect-to-data/data-sources",
+      "https://docs.cube.dev/embedding/authentication/jwt"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Cube runs in production mode without the Playground UI. API requests need a JWT signed with the generated CUBEJS_API_SECRET; point the CUBEJS_DB_* variables at your own database and define cubes and views in the model/model.yml mount.",
+      "link": "https://docs.cube.dev/embedding/authentication/jwt"
+    }
+  ]
+}

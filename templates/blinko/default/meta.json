@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted note-taking app for short card-style notes with Markdown, tags and optional AI search over your notes, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Blinko",
+    "url": "https://github.com/blinkospace"
+  },
+  "links": {
+    "github": "https://github.com/blinkospace/blinko",
+    "website": "https://blinko.space",
+    "docs": [
+      "https://docs.blinko.space/en/install",
+      "https://docs.blinko.space/en/how-to-use/ai/ai-setting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered on the sign-up page becomes the superadmin. Create it right after deployment."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sure"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY = "${hash:64}"
+ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY = "${hash:64}"
+ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT = "${hash:64}"
+APP_DOMAIN = "${domain}"
+POSTGRES_USER = "sure_user"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "sure_production"
+EMAIL_SENDER = "sure@${domain}"
+SMTP_ADDRESS = ""
+SMTP_PORT = "465"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+SMTP_TLS_ENABLED = "true"

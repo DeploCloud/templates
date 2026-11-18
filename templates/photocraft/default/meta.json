@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based image editor built in Rust and WebAssembly: layers, masks, adjustment layers, layer styles, type, vectors, brushes and PSD open and save.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/photocraft",
+    "website": "https://getartcraft.com/apps/photocraft",
+    "docs": [
+      "https://github.com/storytold/photocraft/blob/main/packaging/web/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Images are not stored on the server: the editor runs in the browser and has no autosave. Save or export your work to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}

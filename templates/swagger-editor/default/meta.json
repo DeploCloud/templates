@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based editor for OpenAPI and AsyncAPI definitions with live validation and an interactive documentation preview.",
+  "category": "development",
+  "developedBy": {
+    "label": "SmartBear",
+    "url": "https://github.com/swagger-api"
+  },
+  "links": {
+    "github": "https://github.com/swagger-api/swagger-editor",
+    "website": "https://swagger.io/open-source/swagger-editor/",
+    "docs": [
+      "https://github.com/swagger-api/swagger-editor/blob/main/README.md#docker",
+      "https://swagger.io/docs/open-source-tools/swagger-editor/"
+    ]
+  }
+}

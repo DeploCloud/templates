@@ -1,0 +1,18 @@
+services:
+  retroarch:
+    image: lscr.io/linuxserver/retroarch:1.22.2ppa1.1-1ubuntu24.04.1-ls98@sha256:5c4f3d7dc5f2a85920844369178e6cdad96a7a43c8ae6af1df2ffea680a6011a
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - retroarch-config:/config
+
+volumes:
+  retroarch-config: {}

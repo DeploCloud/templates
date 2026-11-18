@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Headless Chromium service with a token-protected WebSocket endpoint for Puppeteer and Playwright, REST APIs for PDFs, screenshots and scraping, and a built-in debugger.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Browserless",
+    "url": "https://github.com/browserless"
+  },
+  "links": {
+    "github": "https://github.com/browserless/browserless",
+    "website": "https://www.browserless.io",
+    "docs": [
+      "https://docs.browserless.io/enterprise/open-source",
+      "https://docs.browserless.io/enterprise/docker/config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Every request needs the generated TOKEN from the environment settings, as a ?token= query parameter or an Authorization: Bearer header. Connect Puppeteer with browserWSEndpoint \"wss://<your-domain>?token=<token>\" and open the API docs at https://<your-domain>/docs.",
+      "link": "https://docs.browserless.io/enterprise/docker/config"
+    },
+    {
+      "type": "info",
+      "message": "Browserless is dual-licensed under SSPL-1.0 or a commercial license; closed-source commercial or CI use requires the commercial license.",
+      "link": "https://github.com/browserless/browserless/blob/main/LICENSE"
+    }
+  ]
+}

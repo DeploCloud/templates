@@ -1,0 +1,1 @@
+SilverBullet is a Markdown knowledge base and wiki you can extend with Space Lua, served from the official image with Chromium for the Runtime API. The server configuration, accounts and every space's Markdown files live in `/data` on a persistent volume. On first visit a setup wizard creates the administrator account and the first space; finish it straight after deploying.

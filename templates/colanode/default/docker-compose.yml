@@ -1,0 +1,71 @@
+services:
+  colanode:
+    image: ghcr.io/colanode/server:0.4.7@sha256:7006cac874fd5a154425108b9c7e6d6d9d117933c3694820b1a4c28aeb10008c
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      CONFIG: /config.json
+      POSTGRES_URL: postgres://colanode:${POSTGRES_PASSWORD}@colanode-db:5432/colanode
+      REDIS_URL: redis://:${VALKEY_PASSWORD}@colanode-redis:6379/0
+      WEB_DOMAIN: ${COLANODE_DOMAIN}
+      CORS_ORIGIN: https://${COLANODE_DOMAIN}
+    volumes:
+      - colanode-storage:/var/lib/colanode/storage
+      - ./config.json:/config.json:ro
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/config').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      colanode-db:
+        condition: service_healthy
+      colanode-redis:
+        condition: service_healthy
+
+  colanode-web:
+    image: ghcr.io/colanode/web:0.4.7@sha256:bcad696f03eeb03778a2ddf2d0b2a6070c79b6f66ff81e4436b2b9ac3d378a28
+    restart: unless-stopped
+    expose:
+      - 80
+
+  colanode-db:
+    image: pgvector/pgvector:0.8.7-pg17@sha256:b513c48566e4777cd3370451400000c78eda6a08131d68f4c31d4a76f27bd8fd
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: colanode
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: colanode
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U colanode -d colanode"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - colanode-db-data:/var/lib/postgresql/data
+
+  colanode-redis:
+    image: valkey/valkey:8.1.11-alpine@sha256:2602ace2be6569bc2bbb06f873776516ab9089821525be34f4305c67eb9db02a
+    restart: unless-stopped
+    command: ["valkey-server", "--requirepass", "${VALKEY_PASSWORD}"]
+    environment:
+      VALKEY_PASSWORD: ${VALKEY_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli --no-auth-warning -a \"$${VALKEY_PASSWORD}\" ping | grep -q PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - colanode-redis-data:/data
+
+volumes:
+  colanode-storage: {}
+  colanode-db-data: {}
+  colanode-redis-data: {}

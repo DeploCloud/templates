@@ -1,0 +1,146 @@
+[variables]
+database_password = "${password:32}"
+clickhouse_password = "${password:32}"
+valkey_password = "${password:32}"
+
+[config]
+[[config.mounts]]
+filePath = "clickhouse/cluster.xml"
+content = """
+<?xml version="1.0"?>
+<clickhouse>
+    <keeper_server>
+        <tcp_port>9181</tcp_port>
+        <server_id>1</server_id>
+        <log_storage_path>/var/lib/clickhouse/coordination/log</log_storage_path>
+        <snapshot_storage_path>/var/lib/clickhouse/coordination/snapshots</snapshot_storage_path>
+        <coordination_settings>
+            <operation_timeout_ms>10000</operation_timeout_ms>
+            <session_timeout_ms>30000</session_timeout_ms>
+            <raft_logs_level>warning</raft_logs_level>
+        </coordination_settings>
+        <raft_configuration>
+            <server>
+                <id>1</id>
+                <hostname>localhost</hostname>
+                <port>9234</port>
+            </server>
+        </raft_configuration>
+    </keeper_server>
+    <zookeeper>
+        <node>
+            <host>localhost</host>
+            <port>9181</port>
+        </node>
+    </zookeeper>
+    <macros>
+        <shard>01</shard>
+        <replica>replica-1</replica>
+        <cluster>oneuptime</cluster>
+    </macros>
+    <remote_servers>
+        <oneuptime>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>localhost</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </oneuptime>
+    </remote_servers>
+</clickhouse>
+"""
+
+[[config.mounts]]
+filePath = "clickhouse/logger.xml"
+content = """
+<?xml version="1.0"?>
+<clickhouse>
+    <logger>
+        <level>warning</level>
+    </logger>
+</clickhouse>
+"""
+
+[[config.mounts]]
+filePath = "clickhouse/system-log-ttl.xml"
+content = """
+<?xml version="1.0"?>
+<clickhouse>
+    <query_log>
+        <database>system</database>
+        <table>query_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <ttl>event_time + INTERVAL 6 HOUR DELETE</ttl>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </query_log>
+    <trace_log>
+        <database>system</database>
+        <table>trace_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <ttl>event_time + INTERVAL 6 HOUR DELETE</ttl>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </trace_log>
+    <text_log>
+        <database>system</database>
+        <table>text_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <ttl>event_time + INTERVAL 6 HOUR DELETE</ttl>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </text_log>
+    <part_log>
+        <database>system</database>
+        <table>part_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <ttl>event_time + INTERVAL 6 HOUR DELETE</ttl>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </part_log>
+    <metric_log>
+        <database>system</database>
+        <table>metric_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <ttl>event_time + INTERVAL 6 HOUR DELETE</ttl>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </metric_log>
+    <asynchronous_metric_log>
+        <database>system</database>
+        <table>asynchronous_metric_log</table>
+        <partition_by>toYYYYMM(event_date)</partition_by>
+        <ttl>event_time + INTERVAL 6 HOUR DELETE</ttl>
+        <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+    </asynchronous_metric_log>
+    <processors_profile_log remove="1" />
+</clickhouse>
+"""
+
+[[config.mounts]]
+filePath = "clickhouse/distributed-insert-tuning.xml"
+content = """
+<?xml version="1.0"?>
+<clickhouse>
+    <profiles>
+        <default>
+            <distributed_background_insert_batch>1</distributed_background_insert_batch>
+            <distributed_background_insert_split_batch_on_failure>1</distributed_background_insert_split_batch_on_failure>
+            <prefer_localhost_replica>1</prefer_localhost_replica>
+        </default>
+    </profiles>
+</clickhouse>
+"""
+
+[[config.domains]]
+serviceName = "oneuptime"
+port = 7_849
+host = "${domain}"
+
+[config.env]
+HOST = "${domain}"
+ONEUPTIME_SECRET = "${hash:64}"
+ENCRYPTION_SECRET = "${hash:64}"
+REGISTER_PROBE_KEY = "${hash:64}"
+PROBE_KEY = "${hash:64}"
+GLOBAL_RUNNER_KEY = "${hash:64}"
+DATABASE_PASSWORD = "${database_password}"
+CLICKHOUSE_PASSWORD = "${clickhouse_password}"
+VALKEY_PASSWORD = "${valkey_password}"

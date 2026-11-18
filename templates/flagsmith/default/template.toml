@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flagsmith"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DJANGO_SECRET_KEY = "${secret:64}"
+WAREHOUSE_CREDENTIALS_SECRET = "${secret:64}"
+FLAGSMITH_DOMAIN = "${domain}"

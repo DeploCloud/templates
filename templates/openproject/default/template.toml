@@ -1,0 +1,26 @@
+[variables]
+db_password = "${password:32}"
+hocuspocus_secret = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openproject"
+port = 8_080
+host = "${domain}"
+
+[[config.domains]]
+serviceName = "openproject-hocuspocus"
+port = 1_234
+host = "${domain}"
+path = "/hocuspocus"
+
+[config.env]
+OPENPROJECT_HOST__NAME = "${domain}"
+OPENPROJECT_COLLABORATIVE__EDITING__HOCUSPOCUS__URL = "wss://${domain}/hocuspocus"
+HOCUSPOCUS_SECRET = "${hocuspocus_secret}"
+OPENPROJECT_SEED__ADMIN__USER__PASSWORD = "${password:24}"
+SECRET_KEY_BASE = "${password:64}"
+POSTGRES_PASSWORD = "${db_password}"
+DATABASE_URL = "postgres://openproject:${db_password}@openproject-db:5432/openproject?pool=20&encoding=unicode&reconnect=true"

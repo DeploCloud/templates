@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source instant messaging and community chat with servers, channels and direct messages, backed by PostgreSQL, Valkey, NATS, Meilisearch and SeaweedFS.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Fluxer",
+    "url": "https://github.com/fluxerapp"
+  },
+  "links": {
+    "github": "https://github.com/fluxerapp/fluxer",
+    "website": "https://fluxer.com",
+    "docs": [
+      "https://docs.fluxer.com/operator/docker-compose/",
+      "https://docs.fluxer.com/operator/environment/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After the first start, open the site and enter the FLUXER_SETUP_TOKEN value from this app's environment variables in the setup wizard to create the first admin account.",
+      "link": "https://docs.fluxer.com/operator/docker-compose/"
+    },
+    {
+      "type": "info",
+      "message": "Voice and video calls are turned off: the bundled voice server needs public TCP and UDP media ports that an HTTP route cannot carry."
+    }
+  ]
+}

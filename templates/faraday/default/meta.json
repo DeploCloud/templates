@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Vulnerability management platform that imports results from 80+ security scanners into shared workspaces, with PostgreSQL, Redis and Celery workers.",
+  "category": "security",
+  "developedBy": {
+    "label": "Infobyte",
+    "url": "https://github.com/infobyte"
+  },
+  "links": {
+    "github": "https://github.com/infobyte/faraday",
+    "website": "https://faradaysec.com/",
+    "docs": [
+      "https://docs.faradaysec.com/Install-guide-Docker/",
+      "https://docs.faradaysec.com/faraday-server-settings/",
+      "https://docs.faradaysec.com/First-Steps/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username faraday and the FARADAY_PASSWORD value from the environment. It is only applied on the first start; change the password from the web UI afterwards."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

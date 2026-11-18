@@ -1,0 +1,14 @@
+services:
+  feishin:
+    image: ghcr.io/jeffvli/feishin:1.17.0@sha256:6c75a4d3b99065ac245e2eb2b693fde3e5f2a6fe41c9e255da4fcb8948071965
+    restart: unless-stopped
+    expose:
+      - 9180
+    environment:
+      SERVER_NAME: ${SERVER_NAME}
+      SERVER_TYPE: ${SERVER_TYPE}
+      SERVER_URL: ${SERVER_URL}
+      SERVER_LOCK: ${SERVER_LOCK}
+      LEGACY_AUTHENTICATION: ${LEGACY_AUTHENTICATION}
+      REMOTE_URL: ${REMOTE_URL}
+      ANALYTICS_DISABLED: ${ANALYTICS_DISABLED}

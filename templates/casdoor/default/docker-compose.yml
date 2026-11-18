@@ -1,0 +1,40 @@
+services:
+  casdoor:
+    image: casbin/casdoor:4.29.0@sha256:d8fd4f387026e1ffdf887b924c1c74ad5c15e8d3be54fb739b57b2037073a51f
+    restart: unless-stopped
+    # /files (Local File System storage) starts as a root-owned volume; the image gives uid 1000 sudo to fix it
+    entrypoint: ["/bin/sh", "-c", "sudo -n chown casdoor:casdoor /files; exec /server"]
+    expose:
+      - 8000
+    environment:
+      driverName: mysql
+      dataSourceName: "casdoor:${DB_PASSWORD}@tcp(casdoor-db:3306)/"
+      dbName: casdoor
+      origin: "${CASDOOR_ORIGIN}"
+      initAdminPassword: "${CASDOOR_ADMIN_PASSWORD}"
+    volumes:
+      - casdoor-files:/files
+    depends_on:
+      casdoor-db:
+        condition: service_healthy
+
+  casdoor-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: casdoor
+      MYSQL_USER: casdoor
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - casdoor-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}" --silent']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  casdoor-files: {}
+  casdoor-db: {}

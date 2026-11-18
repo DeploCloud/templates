@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "moviepilot"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+APP_DOMAIN = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"

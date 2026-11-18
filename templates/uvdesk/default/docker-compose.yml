@@ -1,0 +1,49 @@
+services:
+  uvdesk:
+    image: untraceablez/uvdesk:1.1.8@sha256:9e0f612c942c4c46b4e6260acff388df93cf33351c87a2cfcd96813868431180
+    restart: unless-stopped
+    expose:
+      - 80
+    # Skip the in-image MySQL server (uvdesk-db is used) and poll IMAP mailboxes, which upstream leaves to cron.
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        gosu uvdesk sed -i "s|^\( *site_url:\).*|\1 '$${UVDESK_SITE_URL}'|" config/packages/uvdesk.yaml
+        gosu uvdesk sed -i "s|^APP_SECRET=.*|APP_SECRET=$${APP_SECRET}|" .env
+        while sleep 300; do
+          emails=$$(sed -n '/imap_server:/,/username:/s/^ *username: *//p' config/packages/uvdesk_mailbox.yaml | tr -d "'\"")
+          [ -z "$$emails" ] || gosu uvdesk php bin/console uvdesk:refresh-mailbox $$emails
+        done &
+        rm -f /var/run/apache2/apache2.pid
+        service apache2 restart && exec tail -F /var/log/apache2/error.log
+    environment:
+      UVDESK_SITE_URL: ${UVDESK_SITE_URL}
+      APP_SECRET: ${APP_SECRET}
+    volumes:
+      - uvdesk-app:/var/www/uvdesk
+      - ./uvdesk-apache.conf:/etc/apache2/conf-enabled/uvdesk-apache.conf:ro
+    depends_on:
+      uvdesk-db:
+        condition: service_healthy
+
+  uvdesk-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - uvdesk-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  uvdesk-app: {}
+  uvdesk-db: {}

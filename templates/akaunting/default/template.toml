@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:20}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "akaunting"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+LOCALE = "en-US"
+DB_NAME = "akaunting"
+DB_USERNAME = "akaunting"
+DB_PASSWORD = "${db_password}"
+DB_PREFIX = "akt_"
+COMPANY_NAME = "My Company"
+COMPANY_EMAIL = "admin@example.com"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"

@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zincsearch"
+port = 4_080
+host = "${domain}"
+
+[config.env]
+ZINC_FIRST_ADMIN_USER = "admin"
+ZINC_FIRST_ADMIN_PASSWORD = "${admin_password}"

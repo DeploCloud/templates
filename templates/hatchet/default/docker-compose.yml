@@ -1,0 +1,52 @@
+services:
+  hatchet:
+    image: ghcr.io/hatchet-dev/hatchet/hatchet-lite:v0.114.2@sha256:a205018e4ec2c35af4df9c86cf1e36d4b74b36ebbc849c3b33ca18815cf22d6b
+    restart: unless-stopped
+    expose:
+      - 8888
+      - 7077
+    environment:
+      DATABASE_URL: postgresql://hatchet:${POSTGRES_PASSWORD}@hatchet-db:5432/hatchet?sslmode=disable
+      SERVER_URL: ${SERVER_URL}
+      SERVER_AUTH_COOKIE_DOMAIN: ${SERVER_AUTH_COOKIE_DOMAIN}
+      SERVER_AUTH_COOKIE_INSECURE: ${SERVER_AUTH_COOKIE_INSECURE}
+      SERVER_AUTH_SET_EMAIL_VERIFIED: ${SERVER_AUTH_SET_EMAIL_VERIFIED}
+      SERVER_ALLOW_SIGNUP: ${SERVER_ALLOW_SIGNUP}
+      SERVER_GRPC_BIND_ADDRESS: 0.0.0.0
+      SERVER_GRPC_PORT: "7077"
+      SERVER_GRPC_INSECURE: "t"
+      SERVER_GRPC_BROADCAST_ADDRESS: ${SERVER_GRPC_BROADCAST_ADDRESS}
+      SERVER_INTERNAL_CLIENT_INTERNAL_GRPC_BROADCAST_ADDRESS: localhost:7077
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      - hatchet-config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8888/api/ready || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
+    depends_on:
+      hatchet-db:
+        condition: service_healthy
+
+  hatchet-db:
+    image: postgres:15.20-alpine@sha256:e18480a22d6e48f4d816a6696769b1ec09ac73a824c5649e49c7d8b684913f3d
+    restart: unless-stopped
+    command: postgres -c max_connections=200
+    environment:
+      POSTGRES_USER: hatchet
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: hatchet
+    volumes:
+      - hatchet-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hatchet -d hatchet"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  hatchet-config: {}
+  hatchet-db: {}

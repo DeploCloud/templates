@@ -1,0 +1,42 @@
+[variables]
+api_domain = "api.${domain}"
+db_password = "${password:32}"
+s3_access_key = "${hash:20}"
+s3_secret_key = "${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "instantdb"
+port = 3_000
+host = "${domain}"
+primary = true
+
+# Download links are presigned path-style URLs on the app domain, so the bucket name is the route
+[[config.domains]]
+serviceName = "instantdb-s3"
+port = 9_000
+host = "${domain}"
+path = "/instant-bucket"
+
+# The backend owns /dash/* API routes, which clash with the dashboard pages, so it gets its own host
+[[config.domains]]
+serviceName = "instantdb-server"
+port = 8_888
+host = "${api_domain}"
+
+[config.env]
+INSTANT_BACKEND_URL = "https://${api_domain}"
+INSTANT_DASHBOARD_URL = "https://${domain}"
+S3_PUBLIC_ENDPOINT = "https://${domain}"
+S3_BUCKET = "instant-bucket"
+DB_PASSWORD = "${db_password}"
+S3_ACCESS_KEY = "${s3_access_key}"
+S3_SECRET_KEY = "${s3_secret_key}"
+JAVA_OPTS = "-Xms2g -Xmx2g"
+INSTANT_SUPERUSER_EMAIL = ""
+EMAIL_SENDER = "noreply@${domain}"
+POSTMARK_TOKEN = ""
+SENDGRID_TOKEN = ""
+RESEND_TOKEN = ""

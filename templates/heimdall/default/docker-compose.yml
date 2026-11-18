@@ -1,0 +1,16 @@
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:v2.8.4-ls374@sha256:8ae83fb0b097e2281e1cfb304ca3efe9be574ddc31933c93a72dd49174b73b91
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      ALLOW_INTERNAL_REQUESTS: ${ALLOW_INTERNAL_REQUESTS}
+    volumes:
+      - heimdall-config:/config
+
+volumes:
+  heimdall-config: {}

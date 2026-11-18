@@ -1,0 +1,20 @@
+services:
+  rss-bridge:
+    image: rssbridge/rss-bridge:2026-09-30@sha256:fbb324d75613b90dad7394c385cee361a31f38e04f1ee9089a4758795b1104c3
+    restart: unless-stopped
+    expose:
+      - 80
+    # Passes any RSSBRIDGE_<section>_<key> setting you add.
+    env_file:
+      - .env
+    environment:
+      RSSBRIDGE_authentication_enable: ${RSSBRIDGE_authentication_enable}
+      RSSBRIDGE_authentication_username: ${RSSBRIDGE_authentication_username}
+      RSSBRIDGE_authentication_password: ${RSSBRIDGE_authentication_password}
+    volumes:
+      - rss-bridge-config:/config
+      - rss-bridge-cache:/app/cache
+
+volumes:
+  rss-bridge-config: {}
+  rss-bridge-cache: {}

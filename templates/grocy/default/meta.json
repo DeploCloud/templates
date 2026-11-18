@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted groceries and household management: stock tracking, shopping lists, recipes, meal plans, chores and batteries, with a REST API.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Bernd Bestel",
+    "url": "https://github.com/berrnd"
+  },
+  "links": {
+    "github": "https://github.com/grocy/grocy",
+    "website": "https://grocy.info",
+    "docs": [
+      "https://github.com/grocy/grocy#how-to-install",
+      "https://github.com/grocy/grocy/blob/master/config-dist.php",
+      "https://hub.docker.com/r/linuxserver/grocy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first login is user admin with password admin. Change that password right after deploying (user menu, top right).",
+      "link": "https://github.com/grocy/grocy#how-to-install"
+    }
+  ]
+}

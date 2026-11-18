@@ -1,0 +1,46 @@
+services:
+  onedev:
+    image: 1dev/server:17.2.2@sha256:453493420089be792ae707c795512a90bfe348417deb71a1dea07d1f31311122
+    restart: unless-stopped
+    expose:
+      - 6610
+    environment:
+      initial_user: ${ONEDEV_ADMIN_USER}
+      initial_password: ${ONEDEV_ADMIN_PASSWORD}
+      initial_email: ${ONEDEV_ADMIN_EMAIL}
+      initial_server_url: ${ONEDEV_SERVER_URL}
+      hibernate_dialect: io.onedev.server.persistence.PostgreSQLDialect
+      hibernate_connection_driver_class: org.postgresql.Driver
+      hibernate_connection_url: jdbc:postgresql://onedev-db:5432/onedev
+      hibernate_connection_username: onedev
+      hibernate_connection_password: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:6610/readyz || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 300s
+    volumes:
+      - onedev-data:/opt/onedev
+    depends_on:
+      onedev-db:
+        condition: service_healthy
+
+  onedev-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: onedev
+      POSTGRES_USER: onedev
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U onedev -d onedev"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - onedev-db:/var/lib/postgresql
+
+volumes:
+  onedev-data: {}
+  onedev-db: {}

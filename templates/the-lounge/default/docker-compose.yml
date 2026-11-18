@@ -1,0 +1,21 @@
+services:
+  the-lounge:
+    image: ghcr.io/thelounge/thelounge:4.5.2@sha256:b19c2ef06efce2a494a7f142e5acba2db3086a591453f25916e204d342e3d194
+    restart: unless-stopped
+    expose:
+      - 9000
+    # Creates the first user only while no user exists, then starts behind the proxy.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        mkdir -p -m 700 "$$THELOUNGE_HOME/users"
+        [ -n "$$(ls -A "$$THELOUNGE_HOME/users")" ] || thelounge add "$$THELOUNGE_USER" --password "$$THELOUNGE_PASSWORD" --save-logs
+        exec thelounge --config reverseProxy=true start
+    environment:
+      THELOUNGE_USER: ${THELOUNGE_USER}
+      THELOUNGE_PASSWORD: ${THELOUNGE_PASSWORD}
+    volumes:
+      - the-lounge-data:/var/opt/thelounge
+
+volumes:
+  the-lounge-data: {}

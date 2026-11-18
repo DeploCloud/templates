@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "MoviePilot media library automation backed by PostgreSQL for the database and Redis for the cache.",
+  "category": "media",
+  "developedBy": {
+    "label": "jxxghp",
+    "url": "https://github.com/jxxghp"
+  },
+  "links": {
+    "github": "https://github.com/jxxghp/MoviePilot",
+    "website": "https://movie-pilot.org",
+    "docs": [
+      "https://wiki.movie-pilot.org/zh/install",
+      "https://wiki.movie-pilot.org/zh/database",
+      "https://wiki.movie-pilot.org/zh/configuration-reference"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit the web UI asks you to create the admin account and API key. Open it right after deploying so nobody else claims the instance.",
+      "link": "https://wiki.movie-pilot.org/zh/quickstart"
+    },
+    {
+      "type": "warning",
+      "message": "Searching and downloading require user authentication with a supported site in the UI and your own downloader; a media server is optional and adds library checks. MoviePilot only organizes files it can see under this stack's /media volume, so downloads must land there.",
+      "link": "https://wiki.movie-pilot.org/zh/directories"
+    }
+  ]
+}

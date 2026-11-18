@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Email and SMTP testing tool that catches outgoing mail from your apps and shows it in a web UI with a REST API, HTML and link checks.",
+  "category": "development",
+  "developedBy": {
+    "label": "Ralph Slooten",
+    "url": "https://github.com/axllent"
+  },
+  "links": {
+    "github": "https://github.com/axllent/mailpit",
+    "website": "https://mailpit.axllent.org",
+    "docs": [
+      "https://mailpit.axllent.org/docs/install/docker/",
+      "https://mailpit.axllent.org/docs/configuration/runtime-options/",
+      "https://mailpit.axllent.org/docs/api-v1/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the MP_UI_PASSWORD value from the environment variables. The same credentials protect the REST API and the HTTP send API."
+    },
+    {
+      "type": "warning",
+      "message": "Only the web UI and API are published. The SMTP server is reachable only from apps in the same environment at mailpit:1025, accepts any credentials and needs no TLS; external apps can submit mail through the HTTP send API instead.",
+      "link": "https://mailpit.axllent.org/docs/api-v1/"
+    }
+  ]
+}

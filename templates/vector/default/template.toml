@@ -1,0 +1,40 @@
+[variables]
+ingest_token = "${password:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "vector"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "vector.yaml"
+content = """# see https://vector.dev/docs/reference/configuration/
+data_dir: /var/lib/vector
+
+# The API has no authentication: keep it on localhost (healthcheck and `vector top`)
+api:
+  enabled: true
+  address: 127.0.0.1:8686
+
+sources:
+  http_in:
+    type: http_server
+    address: 0.0.0.0:8080
+    auth:
+      strategy: bearer
+      token: "${ingest_token}"
+    framing:
+      method: newline_delimited
+    decoding:
+      codec: json
+
+# Replace or extend with real sinks: https://vector.dev/docs/reference/configuration/sinks/
+sinks:
+  stdout:
+    type: console
+    inputs: [http_in]
+    encoding:
+      codec: json
+"""

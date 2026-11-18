@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative self-hosted travel planner with day plans, maps, bookings, budgets, packing lists and journals, synced in real time.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "TREK",
+    "url": "https://github.com/liketrek"
+  },
+  "links": {
+    "github": "https://github.com/liketrek/TREK",
+    "website": "https://liketrek.com",
+    "docs": [
+      "https://github.com/liketrek/TREK/wiki/Install-Docker-Compose",
+      "https://github.com/liketrek/TREK/wiki/Environment-Variables",
+      "https://github.com/liketrek/TREK/wiki/Reverse-Proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin@trek.local with the generated ADMIN_PASSWORD from the environment variables. TREK asks for a new password on the first login. Keep ENCRYPTION_KEY unchanged: stored secrets cannot be decrypted with a different key."
+    }
+  ]
+}

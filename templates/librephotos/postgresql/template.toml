@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "librephotos"
+port = 8_001
+host = "${domain}"
+
+[config.env]
+DB_NAME = "librephotos"
+DB_USER = "librephotos"
+DB_PASS = "${db_password}"
+FRONTEND_BASE_URL = "https://${domain}"
+CSRF_TRUSTED_ORIGINS = "https://${domain}"

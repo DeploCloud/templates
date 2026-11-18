@@ -1,0 +1,27 @@
+services:
+  influxdb:
+    image: influxdb:3.12.2-core@sha256:f349b303abfc33e5be9ab67f475d544c4ef53ed5b3b68267842aedb112756b82
+    restart: unless-stopped
+    expose:
+      - 8181
+    environment:
+      INFLUXDB3_NODE_ID: node0
+      INFLUXDB3_OBJECT_STORE: file
+      INFLUXDB3_DATA_DIR: /var/lib/influxdb3
+      INFLUXDB3_ADMIN_TOKEN_FILE: /etc/influxdb3/admin-token.json
+      INFLUXDB3_DISABLE_AUTHZ: health,ping
+      INFLUXDB3_AUTH_TOKEN: ${INFLUXDB3_AUTH_TOKEN}
+    volumes:
+      - influxdb3-data:/var/lib/influxdb3
+      - influxdb3-plugins:/plugins
+      - ./admin-token.json:/etc/influxdb3/admin-token.json:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8181/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  influxdb3-data: {}
+  influxdb3-plugins: {}

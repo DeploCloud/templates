@@ -1,0 +1,60 @@
+[config]
+
+[[config.domains]]
+serviceName = "jaeger"
+port = 16_686
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "jaeger"
+port = 4_318
+host = "${domain}"
+path = "/v1/traces"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """service:
+  extensions: [jaeger_storage, jaeger_query]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger_storage_exporter]
+  telemetry:
+    resource:
+      service.name: jaeger
+    logs:
+      level: info
+
+extensions:
+  jaeger_query:
+    storage:
+      traces: badger_store
+
+  jaeger_storage:
+    backends:
+      badger_store:
+        badger:
+          directories:
+            keys: /tmp/jaeger/
+            values: /tmp/jaeger/
+          ephemeral: false
+          ttl:
+            spans: 168h
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+
+exporters:
+  jaeger_storage_exporter:
+    trace_storage: badger_store
+"""

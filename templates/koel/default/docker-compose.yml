@@ -1,0 +1,52 @@
+services:
+  koel:
+    image: phanan/koel:9.15.0@sha256:af1ec7daf06d22f6781d9e79716e52048108c21b05adfebccec2e474a29f6fde
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      FORCE_HTTPS: "true"
+      DB_CONNECTION: pgsql
+      DB_HOST: koel-db
+      DB_PORT: "5432"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      # an existing .env makes the entrypoint run koel:init, which seeds the admin account
+      - ./koel.env:/var/www/html/.env:ro
+      - koel-music:/music
+      - koel-images:/var/www/html/storage/app/public/images
+      - koel-search:/var/www/html/storage/search-indexes
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/sw.js || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      koel-db:
+        condition: service_healthy
+
+  koel-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - koel-db:/var/lib/postgresql
+
+volumes:
+  koel-music: {}
+  koel-images: {}
+  koel-search: {}
+  koel-db: {}

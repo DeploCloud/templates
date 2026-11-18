@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+secret_key = "${base64:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "penpot-frontend"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PENPOT_PUBLIC_URI = "https://${domain}"
+PENPOT_SECRET_KEY = "${secret_key}"
+PENPOT_DB_PASSWORD = "${db_password}"
+PENPOT_FLAGS = "disable-email-verification enable-log-emails enable-prepl-server enable-mcp"
+PENPOT_SMTP_DEFAULT_FROM = "no-reply@${domain}"
+PENPOT_SMTP_DEFAULT_REPLY_TO = "no-reply@${domain}"
+PENPOT_SMTP_HOST = ""
+PENPOT_SMTP_PORT = "587"
+PENPOT_SMTP_USERNAME = ""
+PENPOT_SMTP_PASSWORD = ""
+PENPOT_SMTP_TLS = "true"
+PENPOT_SMTP_SSL = "false"

@@ -1,0 +1,134 @@
+x-druid: &druid
+  image: apache/druid:39.0.0@sha256:2e5d57a0a5554f2a3dfbd36ce5cfd571654c3cc27308fa6ff4030ad8e914706c
+  restart: unless-stopped
+  environment:
+    DRUID_SINGLE_NODE_CONF: micro-quickstart
+    DRUID_LOG4J: '<?xml version="1.0" encoding="UTF-8" ?><Configuration status="WARN"><Appenders><Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %p [%t] %c - %m%n"/></Console></Appenders><Loggers><Root level="info"><AppenderRef ref="Console"/></Root></Loggers></Configuration>'
+    druid_extensions_loadList: '["druid-histogram", "druid-datasketches", "druid-lookups-cached-global", "druid-kafka-indexing-service", "postgresql-metadata-storage", "druid-basic-security"]'
+    druid_zk_service_host: apache-druid-zookeeper
+    druid_metadata_storage_host: ""
+    druid_metadata_storage_type: postgresql
+    druid_metadata_storage_connector_connectURI: jdbc:postgresql://apache-druid-db:5432/druid
+    druid_metadata_storage_connector_user: druid
+    druid_metadata_storage_connector_password: ${DRUID_DB_PASSWORD}
+    druid_storage_type: local
+    druid_storage_storageDirectory: /opt/shared/segments
+    druid_indexer_logs_type: file
+    druid_indexer_logs_directory: /opt/shared/indexing-logs
+    druid_indexer_runner_javaOptsArray: '["-server", "-Xmx1g", "-Xms1g", "-XX:MaxDirectMemorySize=3g", "-Duser.timezone=UTC", "-Dfile.encoding=UTF-8", "-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager"]'
+    druid_indexer_fork_property_druid_processing_buffer_sizeBytes: 256MiB
+    druid_processing_numThreads: "2"
+    druid_processing_numMergeBuffers: "2"
+    druid_auth_authenticatorChain: '["MyBasicMetadataAuthenticator"]'
+    druid_auth_authenticator_MyBasicMetadataAuthenticator_type: basic
+    druid_auth_authenticator_MyBasicMetadataAuthenticator_initialAdminPassword: ${DRUID_ADMIN_PASSWORD}
+    druid_auth_authenticator_MyBasicMetadataAuthenticator_initialInternalClientPassword: ${DRUID_INTERNAL_PASSWORD}
+    druid_auth_authenticator_MyBasicMetadataAuthenticator_credentialsValidator_type: metadata
+    druid_auth_authenticator_MyBasicMetadataAuthenticator_skipOnFailure: "false"
+    druid_auth_authenticator_MyBasicMetadataAuthenticator_authorizerName: MyBasicMetadataAuthorizer
+    druid_escalator_type: basic
+    druid_escalator_internalClientUsername: druid_system
+    druid_escalator_internalClientPassword: ${DRUID_INTERNAL_PASSWORD}
+    druid_escalator_authorizerName: MyBasicMetadataAuthorizer
+    druid_auth_authorizers: '["MyBasicMetadataAuthorizer"]'
+    druid_auth_authorizer_MyBasicMetadataAuthorizer_type: basic
+
+services:
+  apache-druid-router:
+    <<: *druid
+    command: ["router"]
+    expose:
+      - 8888
+    volumes:
+      - apache-druid-router-var:/opt/druid/var
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8888/status/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      apache-druid-coordinator:
+        condition: service_healthy
+
+  apache-druid-coordinator:
+    <<: *druid
+    command: ["coordinator"]
+    volumes:
+      - apache-druid-shared:/opt/shared
+      - apache-druid-coordinator-var:/opt/druid/var
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8081/status/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      apache-druid-zookeeper:
+        condition: service_started
+      apache-druid-db:
+        condition: service_healthy
+
+  apache-druid-broker:
+    <<: *druid
+    command: ["broker"]
+    volumes:
+      - apache-druid-broker-var:/opt/druid/var
+    depends_on:
+      apache-druid-coordinator:
+        condition: service_healthy
+
+  apache-druid-historical:
+    <<: *druid
+    command: ["historical"]
+    volumes:
+      - apache-druid-shared:/opt/shared
+      - apache-druid-historical-var:/opt/druid/var
+    depends_on:
+      apache-druid-coordinator:
+        condition: service_healthy
+
+  apache-druid-middlemanager:
+    <<: *druid
+    command: ["middleManager"]
+    volumes:
+      - apache-druid-shared:/opt/shared
+      - apache-druid-middlemanager-var:/opt/druid/var
+    depends_on:
+      apache-druid-coordinator:
+        condition: service_healthy
+
+  apache-druid-zookeeper:
+    image: zookeeper:3.8.8@sha256:be95485f7fccfe8e7845fd5024eb56dd197db4d5a150939ca5e873f0a3bdf45e
+    restart: unless-stopped
+    environment:
+      ZOO_MY_ID: "1"
+    volumes:
+      - apache-druid-zookeeper-data:/data
+      - apache-druid-zookeeper-datalog:/datalog
+
+  apache-druid-db:
+    image: postgres:17.12@sha256:b60e90042aa6b8dbecd58e224b3e36114dbf8ad754465264c2476ad58a86e45c
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: druid
+      POSTGRES_USER: druid
+      POSTGRES_PASSWORD: ${DRUID_DB_PASSWORD}
+    volumes:
+      - apache-druid-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U druid -d druid"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  apache-druid-router-var: {}
+  apache-druid-coordinator-var: {}
+  apache-druid-broker-var: {}
+  apache-druid-historical-var: {}
+  apache-druid-middlemanager-var: {}
+  apache-druid-shared: {}
+  apache-druid-zookeeper-data: {}
+  apache-druid-zookeeper-datalog: {}
+  apache-druid-db: {}

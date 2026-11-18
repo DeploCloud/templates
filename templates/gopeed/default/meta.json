@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted download manager for HTTP, BitTorrent, magnet and ed2k links with a password-protected web UI and REST API.",
+  "category": "media",
+  "developedBy": {
+    "label": "GopeedLab",
+    "url": "https://github.com/GopeedLab"
+  },
+  "links": {
+    "github": "https://github.com/GopeedLab/gopeed",
+    "website": "https://gopeed.com",
+    "docs": [
+      "https://gopeed.com/docs/install#docker",
+      "https://gopeed.com/docs/install#web-configuration",
+      "https://gopeed.com/docs/dev-api"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username gopeed and the generated GOPEED_PASSWORD shown in the environment variables."
+    }
+  ]
+}

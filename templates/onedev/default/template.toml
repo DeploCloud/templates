@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "onedev"
+port = 6_610
+host = "${domain}"
+
+[config.env]
+ONEDEV_ADMIN_USER = "admin"
+ONEDEV_ADMIN_PASSWORD = "${admin_password}"
+ONEDEV_ADMIN_EMAIL = "admin@${domain}"
+ONEDEV_SERVER_URL = "https://${domain}"

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight BitTorrent client running as a daemon with a password-protected web interface and persistent settings and downloads.",
+  "category": "media",
+  "developedBy": {
+    "label": "Transmission Project",
+    "url": "https://transmissionbt.com/"
+  },
+  "links": {
+    "github": "https://github.com/transmission/transmission",
+    "website": "https://transmissionbt.com/",
+    "docs": [
+      "https://github.com/transmission/transmission/blob/main/docs/Web-Interface.md",
+      "https://github.com/transmission/transmission/blob/main/docs/Editing-Configuration-Files.md",
+      "https://docs.linuxserver.io/images/docker-transmission/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated TRANSMISSION_PASS from the environment settings. The peer port is not published, so peers can only be reached through outgoing connections."
+    }
+  ]
+}

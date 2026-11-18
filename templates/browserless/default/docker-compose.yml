@@ -1,0 +1,26 @@
+services:
+  browserless:
+    image: ghcr.io/browserless/chromium:v2.63.2@sha256:7611afcfc02e1040c2f0d03515d086e5be89eaf383e77a2370b690162040758a
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      TOKEN: ${TOKEN}
+      EXTERNAL: ${EXTERNAL}
+      CONCURRENT: ${CONCURRENT}
+      QUEUED: ${QUEUED}
+      TIMEOUT: ${TIMEOUT}
+      METRICS_JSON_PATH: ${METRICS_JSON_PATH}
+    shm_size: 2gb
+    volumes:
+      # Home of the image's blessuser (uid 999); volume copy-up keeps it writable.
+      - browserless-data:/home/blessuser
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null \"http://localhost:3000/active?token=$${TOKEN}\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  browserless-data:

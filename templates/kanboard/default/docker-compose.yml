@@ -1,0 +1,15 @@
+services:
+  kanboard:
+    image: kanboard/kanboard:v1.2.57@sha256:637989624e5362af2b97bfb4be1936fb6b111ea7cbdffea0ae8bd3068dc84125
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - kanboard-data:/var/www/app/data
+      - kanboard-plugins:/var/www/app/plugins
+      - kanboard-ssl:/etc/nginx/ssl
+
+volumes:
+  kanboard-data: {}
+  kanboard-plugins: {}
+  kanboard-ssl: {}

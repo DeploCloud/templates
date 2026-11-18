@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Platform for building LLM apps, agentic workflows and RAG pipelines, with PostgreSQL, Redis, Weaviate, a plugin daemon and code sandboxes.",
+  "category": "ai",
+  "developedBy": {
+    "label": "LangGenius",
+    "url": "https://github.com/langgenius"
+  },
+  "links": {
+    "github": "https://github.com/langgenius/dify",
+    "website": "https://dify.ai/",
+    "docs": [
+      "https://docs.dify.ai/en/self-host/deploy/quick-start/docker-compose",
+      "https://docs.dify.ai/en/self-host/deploy/configuration/environments"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /install right after the first deploy: whoever completes it first creates the admin account. Model providers (OpenAI, Anthropic, Ollama and others) need their own API keys or endpoints, added as plugins in Settings.",
+      "link": "https://docs.dify.ai/en/self-host/deploy/quick-start/docker-compose"
+    }
+  ]
+}

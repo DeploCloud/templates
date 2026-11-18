@@ -1,0 +1,168 @@
+x-oneuptime-env: &oneuptime-env
+  HOST: ${HOST}
+  PROVISION_SSL: "false"
+  HTTP_PROTOCOL: https
+  STATUS_PAGE_CNAME_RECORD: ${HOST}
+  DASHBOARD_CNAME_RECORD: ${HOST}
+  TRUSTED_PROXY_HOPS: "2"
+  LOG_LEVEL: ERROR
+  NODE_ENV: production
+  BILLING_ENABLED: "false"
+  IS_ENTERPRISE_EDITION: "false"
+  DISABLE_TELEMETRY: "true"
+  SERVER_APP_HOSTNAME: oneuptime-app
+  SERVER_HOME_HOSTNAME: home
+  APP_PORT: "3002"
+  HOME_PORT: "1444"
+  ONEUPTIME_SECRET: ${ONEUPTIME_SECRET}
+  ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+  REGISTER_PROBE_KEY: ${REGISTER_PROBE_KEY}
+  GLOBAL_RUNNER_KEY: ${GLOBAL_RUNNER_KEY}
+  DATABASE_HOST: oneuptime-db
+  DATABASE_PORT: "5432"
+  DATABASE_USERNAME: postgres
+  DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+  DATABASE_NAME: oneuptimedb
+  VALKEY_HOST: oneuptime-valkey
+  VALKEY_PORT: "6379"
+  VALKEY_USERNAME: default
+  VALKEY_PASSWORD: ${VALKEY_PASSWORD}
+  VALKEY_DB: "0"
+  CLICKHOUSE_HOST: oneuptime-clickhouse
+  CLICKHOUSE_PORT: "8123"
+  CLICKHOUSE_USER: default
+  CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+  CLICKHOUSE_DATABASE: oneuptime
+
+x-oneuptime-depends: &oneuptime-depends
+  oneuptime-db:
+    condition: service_healthy
+  oneuptime-valkey:
+    condition: service_healthy
+  oneuptime-clickhouse:
+    condition: service_healthy
+
+services:
+  oneuptime:
+    image: oneuptime/nginx:16.0.0@sha256:98535afad97d7280a54ece4fca1053d10eba661384eba4c94bc229f3d20d5e91
+    restart: unless-stopped
+    expose:
+      - 7849
+    environment:
+      <<: *oneuptime-env
+      NGINX_LISTEN_ADDRESS: ""
+      NGINX_LISTEN_OPTIONS: ""
+      NGINX_INGEST_ACCESS_LOG: "on"
+      RUN_DATABASE_MIGRATIONS_ON_BOOT: "false"
+    depends_on:
+      <<: *oneuptime-depends
+
+  oneuptime-app:
+    image: oneuptime/app:16.0.0@sha256:7a319a7ee863913d40ef8c3cddef6ad3e4379861a65e3dd88afc82569b522ac9
+    restart: unless-stopped
+    expose:
+      - 3002
+    environment:
+      <<: *oneuptime-env
+      PORT: "3002"
+      INSTALLED_WITH: docker-compose
+    depends_on:
+      <<: *oneuptime-depends
+
+  oneuptime-probe:
+    image: oneuptime/probe:16.0.0@sha256:da86019a895847cce2decddaa054c08ee1df6e8c6ae1386bfbc79d32dfce7481
+    restart: unless-stopped
+    shm_size: 512m
+    environment:
+      ONEUPTIME_URL: http://oneuptime-app:3002
+      REGISTER_PROBE_KEY: ${REGISTER_PROBE_KEY}
+      PROBE_KEY: ${PROBE_KEY}
+      PROBE_NAME: Probe-1
+      PROBE_DESCRIPTION: Global probe bundled with this instance
+      PROBE_MONITORING_WORKERS: "5"
+      PROBE_MONITOR_FETCH_LIMIT: "10"
+      PROBE_SYNTHETIC_MONITOR_SCRIPT_TIMEOUT_IN_MS: "60000"
+      PROBE_SYNTHETIC_MONITOR_MAX_CONCURRENCY: "4"
+      PROBE_SYNTHETIC_MONITOR_CHROMIUM_SANDBOX_ENABLED: "false"
+      PROBE_CUSTOM_CODE_MONITOR_SCRIPT_TIMEOUT_IN_MS: "60000"
+      BILLING_ENABLED: "false"
+      PORT: "3874"
+      NODE_ENV: production
+      LOG_LEVEL: ERROR
+      DISABLE_TELEMETRY: "true"
+    depends_on:
+      <<: *oneuptime-depends
+      oneuptime-app:
+        condition: service_started
+
+  oneuptime-runner:
+    image: oneuptime/runner:16.0.0@sha256:efcab9c06d8e3b88b10bf5f32064e26f83d9374fcc33600da8335b4df848fcd6
+    restart: unless-stopped
+    environment:
+      ONEUPTIME_URL: http://oneuptime-app:3002
+      ONEUPTIME_RUNNER_ID: 00000000-0000-0000-0000-000000000002
+      ONEUPTIME_RUNNER_KEY: ${GLOBAL_RUNNER_KEY}
+      ONEUPTIME_RUNNER_CONCURRENCY: "4"
+      ONEUPTIME_RUNNER_ENABLE_AI_COMMANDS: "false"
+      PORT: "3877"
+      NODE_ENV: production
+      LOG_LEVEL: ERROR
+      DISABLE_TELEMETRY: "true"
+    depends_on:
+      <<: *oneuptime-depends
+      oneuptime-app:
+        condition: service_started
+
+  oneuptime-db:
+    image: postgres:15.20@sha256:10f9e886f772e9d6484350b043bcf990ead67ae5d9988ddce265d72a299055d5
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: oneuptimedb
+    volumes:
+      - oneuptime-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d oneuptimedb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  oneuptime-valkey:
+    image: valkey/valkey:9.1.4-alpine@sha256:56729e68bdda139cbd3f6a2538683dc3523325fc5711ea1a379938f1b37893f0
+    restart: unless-stopped
+    command: ["valkey-server", "--requirepass", "${VALKEY_PASSWORD}", "--save", "", "--appendonly", "no"]
+    environment:
+      VALKEY_PASSWORD: ${VALKEY_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a \"$$VALKEY_PASSWORD\" --no-auth-warning ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  oneuptime-clickhouse:
+    image: clickhouse/clickhouse-server:26.7.38.18@sha256:503d89887bcc767ad3f00864259f57a6ee842c3ebedc53a62889f5ed6cdc1360
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      CLICKHOUSE_DB: oneuptime
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    volumes:
+      - oneuptime-clickhouse:/var/lib/clickhouse
+      - ./clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml:ro
+      - ./clickhouse/logger.xml:/etc/clickhouse-server/config.d/logger.xml:ro
+      - ./clickhouse/system-log-ttl.xml:/etc/clickhouse-server/config.d/system-log-ttl.xml:ro
+      - ./clickhouse/distributed-insert-tuning.xml:/etc/clickhouse-server/users.d/distributed-insert-tuning.xml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "clickhouse-client --query 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  oneuptime-postgres: {}
+  oneuptime-clickhouse: {}

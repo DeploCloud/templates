@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "apprise"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+APPRISE_USER = "admin"
+APPRISE_PASSWORD = "${admin_password}"
+APPRISE_TRUSTED_ORIGINS = "https://${domain}"
+SECRET_KEY = "${secret:64}"
+TZ = "Etc/UTC"

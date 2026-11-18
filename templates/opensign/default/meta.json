@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source document e-signature platform for preparing PDFs, requesting signatures and keeping audit trails, backed by MongoDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "OpenSign Labs",
+    "url": "https://www.opensignlabs.com"
+  },
+  "links": {
+    "github": "https://github.com/OpenSignLabs/OpenSign",
+    "website": "https://www.opensignlabs.com",
+    "docs": [
+      "https://docs.opensignlabs.com/docs/self-host/docker/run-locally",
+      "https://docs.opensignlabs.com/docs/help/intro"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor is sent to the admin setup page and creates the administrator account, so open the app right after deploying."
+    },
+    {
+      "type": "warning",
+      "message": "Signature requests and signer verification codes are sent by email. Set SMTP_ENABLE to true and fill in the SMTP_* variables, then redeploy."
+    },
+    {
+      "type": "info",
+      "message": "Documents are signed with a self-signed certificate generated on first start, so PDF readers will not show them as trusted. A certificate from an AATL-approved authority is needed for that."
+    }
+  ]
+}
