@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Calibre ebook manager desktop app streamed to the browser, with a persistent library and configuration.",
+  "category": "media",
+  "developedBy": {
+    "label": "Kovid Goyal",
+    "url": "https://github.com/kovidgoyal"
+  },
+  "links": {
+    "github": "https://github.com/kovidgoyal/calibre",
+    "website": "https://calibre-ebook.com",
+    "docs": [
+      "https://manual.calibre-ebook.com/",
+      "https://docs.linuxserver.io/images/docker-calibre/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and the web desktop includes a terminal with sudo inside the container. In the first-run wizard keep the library at /config/Calibre Library so it persists.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-calibre/"
+    }
+  ]
+}
