@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source customer feedback and support platform with feedback boards, roadmap, changelog, support inbox, help center and status page, backed by PostgreSQL and S3 storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Quackback",
+    "url": "https://github.com/QuackbackIO"
+  },
+  "links": {
+    "github": "https://github.com/QuackbackIO/quackback",
+    "website": "https://quackback.io",
+    "docs": [
+      "https://feedback.quackback.io/hc/en/articles/67-docker",
+      "https://github.com/QuackbackIO/quackback/blob/main/deploy/self-hosted/README.md",
+      "https://github.com/QuackbackIO/quackback/blob/main/docs/configuration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created owns the setup and nobody else can sign up until it is finished, so create yours right after deployment. Without email configured, sign-in codes and emails are written to the app logs; set the EMAIL_SMTP_* variables to send real mail.",
+      "link": "https://github.com/QuackbackIO/quackback/blob/main/docs/configuration.md#recovering-setup"
+    }
+  ]
+}

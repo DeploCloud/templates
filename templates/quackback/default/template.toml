@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+storage_password = "${password:32}"
+secret_key = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "quackback"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+SECRET_KEY = "${secret_key}"
+TRUSTED_PROXY_HOPS = "1"
+POSTGRES_USER = "quackback"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "quackback"
+MINIO_ROOT_USER = "quackback"
+MINIO_ROOT_PASSWORD = "${storage_password}"
+S3_BUCKET = "quackback"
+S3_REGION = "us-east-1"
+EMAIL_SMTP_HOST = ""
+EMAIL_SMTP_PORT = "587"
+EMAIL_SMTP_USER = ""
+EMAIL_SMTP_PASS = ""
+EMAIL_FROM = "Quackback <noreply@${domain}>"
