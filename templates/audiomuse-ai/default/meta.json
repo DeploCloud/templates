@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Sonic analysis of your music library to build similarity playlists, clusters and a music map for Navidrome, Jellyfin, Emby, Plex, Lyrion or LMS.",
+  "category": "media",
+  "developedBy": {
+    "label": "NeptuneHub",
+    "url": "https://github.com/NeptuneHub"
+  },
+  "links": {
+    "github": "https://github.com/NeptuneHub/AudioMuse-AI",
+    "website": "https://neptunehub.github.io/AudioMuse-AI/",
+    "docs": [
+      "https://neptunehub.github.io/AudioMuse-AI/DEPLOYMENT/",
+      "https://neptunehub.github.io/AudioMuse-AI/AUTH/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The Setup Wizard opens on the first visit and is reachable without login until it is completed. Open the app right after deploying, connect your existing music server (it must be reachable from this server) and create the admin account.",
+      "link": "https://neptunehub.github.io/AudioMuse-AI/DEPLOYMENT/"
+    },
+    {
+      "type": "info",
+      "message": "Audio analysis runs on the CPU and needs at least 4 cores with AVX2 support (or ARM) and 8 GB of RAM."
+    }
+  ]
+}
