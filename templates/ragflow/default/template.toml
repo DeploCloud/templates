@@ -1,0 +1,24 @@
+[variables]
+mysql_password = "${password:32}"
+elastic_password = "${password:32}"
+minio_password = "${password:32}"
+redis_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ragflow"
+port = 80
+host = "${domain}"
+
+[config.env]
+MYSQL_PASSWORD = "${mysql_password}"
+ELASTIC_PASSWORD = "${elastic_password}"
+MINIO_USER = "rag_flow"
+MINIO_PASSWORD = "${minio_password}"
+REDIS_PASSWORD = "${redis_password}"
+ADMIN_DEFAULT_PASSWORD = "${admin_password}"
+ENABLE_REGISTER = "1"
+MEM_LIMIT = "8073741824"

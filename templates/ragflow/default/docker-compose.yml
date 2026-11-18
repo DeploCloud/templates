@@ -1,0 +1,159 @@
+services:
+  ragflow:
+    image: infiniflow/ragflow:v1.0.0@sha256:ed8dff41a7530ed8fb037fe7479a7c535429d42fa8d00aec28b54bcbc056934d
+    restart: unless-stopped
+    command:
+      - --enable-adminserver
+      - --init-superuser
+    expose:
+      - 80
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+      nproc:
+        soft: 65535
+        hard: 65535
+    environment:
+      DOC_ENGINE: elasticsearch
+      DB_TYPE: mysql
+      ES_HOST: ragflow-es
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      MYSQL_HOST: ragflow-db
+      MYSQL_PORT: "3306"
+      MYSQL_DBNAME: rag_flow
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MINIO_HOST: ragflow-minio
+      MINIO_USER: ${MINIO_USER}
+      MINIO_PASSWORD: ${MINIO_PASSWORD}
+      KVROCKS_HOST: ragflow-kvrocks
+      KVROCKS_PORT: "6379"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      NATS_HOST: ragflow-nats
+      NATS_PORT: "4222"
+      ADMIN_DEFAULT_PASSWORD: ${ADMIN_DEFAULT_PASSWORD}
+      ENABLE_REGISTER: ${ENABLE_REGISTER}
+      DISABLE_PASSWORD_LOGIN: "false"
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: "1"
+    volumes:
+      - ragflow-logs:/ragflow/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/api/v1/system/healthz > /dev/null || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 120s
+    depends_on:
+      ragflow-db:
+        condition: service_healthy
+      ragflow-es:
+        condition: service_healthy
+      ragflow-minio:
+        condition: service_healthy
+      ragflow-kvrocks:
+        condition: service_healthy
+      ragflow-nats:
+        condition: service_started
+
+  ragflow-es:
+    image: elasticsearch:8.11.3@sha256:58a3a280935d830215802322e9a0373faaacdfd646477aa7e718939c2f29292a
+    restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
+    # The image's /tmp is not writable for the elasticsearch user.
+    tmpfs:
+      - /tmp:mode=1777,size=512m
+    environment:
+      node.name: es01
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      bootstrap.memory_lock: "false"
+      discovery.type: single-node
+      xpack.security.enabled: "true"
+      xpack.security.http.ssl.enabled: "false"
+      xpack.security.transport.ssl.enabled: "false"
+      cluster.routing.allocation.disk.watermark.low: 5gb
+      cluster.routing.allocation.disk.watermark.high: 3gb
+      cluster.routing.allocation.disk.watermark.flood_stage: 2gb
+    volumes:
+      - ragflow-es:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200 > /dev/null || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  ragflow-db:
+    image: mysql:8.0.46@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    restart: unless-stopped
+    command:
+      - --max_connections=1000
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+      - --tls_version=TLSv1.2,TLSv1.3
+      - --binlog_expire_logs_seconds=604800
+      - --innodb-buffer-pool-size=1G
+      - --innodb-io-capacity=2000
+      - --innodb-io-capacity-max=4000
+      - --innodb-redo-log-capacity=1G
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: rag_flow
+    volumes:
+      - ragflow-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  ragflow-minio:
+    image: pgsty/silo:RELEASE.2026-08-06T00-00-00Z@sha256:29a498b24669cae1fed11c1a2fb2b3d73c68829a0a9c0b14e71b386671d38fac
+    restart: unless-stopped
+    command: ["server", "--console-address", ":9001", "/data"]
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    volumes:
+      - ragflow-minio:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  ragflow-kvrocks:
+    image: apache/kvrocks:2.16.0@sha256:9e632c317c83c80d92f1c9d22ac6aa9f64d149e1f04ff2af5f15a5768a01c4b7
+    restart: unless-stopped
+    # Kvrocks reads requirepass only from its config file, so render it at startup.
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        printf 'bind 0.0.0.0\nport 6379\ndir /var/lib/kvrocks\nrequirepass %s\n' "$$REDIS_PASSWORD" > /var/lib/kvrocks/kvrocks.conf
+        exec kvrocks -c /var/lib/kvrocks/kvrocks.conf --dir /var/lib/kvrocks
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - ragflow-kvrocks:/var/lib/kvrocks
+    healthcheck:
+      test: ["CMD-SHELL", 'redis-cli -a "$${REDIS_PASSWORD}" ping | grep -q PONG']
+      interval: 10s
+      timeout: 10s
+      retries: 30
+
+  ragflow-nats:
+    image: nats:2.14.2@sha256:bbfbb6c4cdaeb8a2e3ca57d3de30463a66a6c5181f324f3b680bcf858833d377
+    restart: unless-stopped
+    command: ["-js", "-sd", "/data", "--http_port", "8222"]
+    volumes:
+      - ragflow-nats:/data
+
+volumes:
+  ragflow-logs: {}
+  ragflow-es: {}
+  ragflow-mysql: {}
+  ragflow-minio: {}
+  ragflow-kvrocks: {}
+  ragflow-nats: {}
