@@ -1,0 +1,28 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "copyparty"
+port = 3_923
+host = "${domain}"
+
+[config.env]
+COPYPARTY_ADMIN_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "copyparty.conf"
+content = """[global]
+  e2dsa  # index files and folders on startup
+  e2ts  # index media tags
+  hist: /cfg/hists/  # keep the index and thumbnails out of the shared folder
+  xff-src: lan  # trust X-Forwarded-For from the reverse proxy
+  rproxy: -1  # use the client IP seen by the reverse proxy
+
+# the admin account comes from COPYPARTY_ADMIN_PASSWORD
+[/]
+  /w
+  accs:
+    rwmda: admin
+"""
