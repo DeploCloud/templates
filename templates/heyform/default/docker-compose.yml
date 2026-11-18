@@ -1,0 +1,67 @@
+services:
+  heyform:
+    image: heyform/community-edition:v3.0.7@sha256:fc7e73c4f3c8b39af5139e2dcd596ff42be00cc26bdbd809f3382916a897f5aa
+    restart: unless-stopped
+    expose:
+      - 9157
+    environment:
+      APP_HOMEPAGE_URL: ${APP_HOMEPAGE_URL}
+      TRUST_PROXY: ${TRUST_PROXY}
+      APP_DISABLE_REGISTRATION: ${APP_DISABLE_REGISTRATION}
+      VERIFY_USER_EMAIL: ${VERIFY_USER_EMAIL}
+      SESSION_KEY: ${SESSION_KEY}
+      FORM_ENCRYPTION_KEY: ${FORM_ENCRYPTION_KEY}
+      INTEGRATION_ENCRYPTION_KEY: ${INTEGRATION_ENCRYPTION_KEY}
+      MONGO_URI: mongodb://heyform-db:27017/heyform?authSource=admin
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      REDIS_HOST: heyform-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      SMTP_FROM: ${SMTP_FROM}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_SECURE: ${SMTP_SECURE}
+    volumes:
+      - heyform-uploads:/app/packages/server/static/upload
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9157/health/ready >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      heyform-db:
+        condition: service_started
+      heyform-redis:
+        condition: service_healthy
+
+  heyform-db:
+    image: percona/percona-server-mongodb:7.0.48@sha256:4604d889c1c21f17a09626f24ba69f9fe2dce12c58257ffe36718518f03dd6ca
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - heyform-db:/data/db
+
+  heyform-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - heyform-redis:/data
+
+volumes:
+  heyform-uploads: {}
+  heyform-db: {}
+  heyform-redis: {}
