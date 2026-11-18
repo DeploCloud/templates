@@ -1,0 +1,9 @@
+services:
+  fladder:
+    image: ghcr.io/donutware/fladder-rootless:v0.12.0@sha256:0a8e5becb403e71592f49c63c5ddbb1be6767e395ba109efb878d89e0d85c8a6
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      BASE_URL: ${BASE_URL}
+      SEERR_BASE_URL: ${SEERR_BASE_URL}

@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fladder"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+BASE_URL = ""
+SEERR_BASE_URL = ""
