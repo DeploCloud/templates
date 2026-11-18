@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Declarative YAML workflow orchestration platform with a web UI and API, backed by PostgreSQL for flows, executions and queues.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Kestra",
+    "url": "https://github.com/kestra-io"
+  },
+  "links": {
+    "github": "https://github.com/kestra-io/kestra",
+    "website": "https://kestra.io",
+    "docs": [
+      "https://kestra.io/docs/installation/docker-compose",
+      "https://kestra.io/docs/migration-guide/v0.24.0/basic-authentication",
+      "https://kestra.io/docs/task-runners/types/process-task-runner"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visit shows a Setup page where you create the admin login (a valid email address and a password of at least 8 characters with an uppercase letter and a number).",
+      "link": "https://kestra.io/docs/migration-guide/v0.24.0/basic-authentication"
+    },
+    {
+      "type": "warning",
+      "message": "The Docker socket is not mounted, so script tasks (Python, Shell, Node and similar) must set taskRunner type io.kestra.plugin.core.runner.Process; the default Docker task runner is unavailable.",
+      "link": "https://kestra.io/docs/task-runners/types/process-task-runner"
+    },
+    {
+      "type": "info",
+      "message": "Kestra needs at least 2 vCPUs and 4 GiB of memory to run correctly.",
+      "link": "https://kestra.io/docs/installation"
+    }
+  ]
+}
