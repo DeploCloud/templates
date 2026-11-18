@@ -1,0 +1,16 @@
+services:
+  peanut:
+    image: brandawg93/peanut:6.1.2@sha256:b58b9627f77448f25e29f772870ee01f0f5a245c6ad7d6e0d7f620d1bb0fb623
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      WEB_PORT: "8080"
+      WEB_USERNAME: ${WEB_USERNAME}
+      WEB_PASSWORD: ${WEB_PASSWORD}
+      AUTH_SECRET: ${AUTH_SECRET}
+    volumes:
+      - peanut-config:/config
+
+volumes:
+  peanut-config: {}
