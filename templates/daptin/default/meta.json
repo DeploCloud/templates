@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Schema-driven application server with JSON:API, identity, permissions, files and automation, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Daptin",
+    "url": "https://github.com/daptin"
+  },
+  "links": {
+    "github": "https://github.com/daptin/daptin",
+    "website": "https://daptin.github.io/",
+    "docs": [
+      "https://github.com/daptin/daptin/wiki",
+      "https://github.com/daptin/daptin/wiki/First-Admin-Setup",
+      "https://github.com/daptin/daptin/wiki/Production-Deployment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Public signup stays open until someone claims the administrator role. Right after deploying, sign up and run the \"Become Daptin Administrator\" action (become_an_administrator on the world entity) so nobody else can take it; Daptin then restarts by itself.",
+      "link": "https://github.com/daptin/daptin/wiki/First-Admin-Setup"
+    }
+  ]
+}

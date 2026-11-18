@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "daptin"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRES_DB = "daptin"
+POSTGRES_USER = "daptin"
+POSTGRES_PASSWORD = "${db_password}"
+TZ = "UTC"

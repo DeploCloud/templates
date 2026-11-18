@@ -1,0 +1,49 @@
+services:
+  daptin:
+    image: daptin/daptin:v0.13.56@sha256:fbaed49abf0a8989266491b87d131f6b43889ea3beaec7e87a113a0897d0f6ef
+    restart: unless-stopped
+    init: true
+    expose:
+      - 8080
+    environment:
+      DAPTIN_PORT: ":8080"
+      DAPTIN_RUNTIME: release
+      DAPTIN_DB_TYPE: postgres
+      DAPTIN_DB_CONNECTION_STRING: "host=daptin-db port=5432 user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB} sslmode=disable"
+      DAPTIN_LOCAL_STORAGE_PATH: /var/lib/daptin/storage
+      DAPTIN_CACHE_FOLDER: /var/cache/daptin
+      DAPTIN_DISABLE_SMTP: "true"
+      DAPTIN_SHUTDOWN_TIMEOUT: 30s
+      DAPTIN_SHUTDOWN_READINESS_DELAY: 2s
+      TZ: ${TZ}
+    volumes:
+      - daptin-storage:/var/lib/daptin/storage
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8080/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 45s
+    stop_grace_period: 45s
+    depends_on:
+      daptin-db:
+        condition: service_healthy
+  daptin-db:
+    image: postgres:17.12-bookworm@sha256:40865bc877a289da75963d97d72b59633f639fc5af7a4e856bfa3714cae5b536
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    volumes:
+      - daptin-db:/var/lib/postgresql/data
+volumes:
+  daptin-storage: {}
+  daptin-db: {}
