@@ -1,0 +1,15 @@
+[variables]
+api_token = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-design"
+port = 7_456
+host = "${domain}"
+
+[config.env]
+OD_API_TOKEN = "${api_token}"
+OD_ALLOWED_ORIGINS = "https://${domain}"
+OD_PUBLIC_BASE_URL = "https://${domain}"

@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source AI design workspace for generating prototypes, websites, dashboards and slides with your own model provider keys.",
+  "category": "ai",
+  "developedBy": {
+    "label": "OpenDesign",
+    "url": "https://github.com/nexu-io"
+  },
+  "links": {
+    "github": "https://github.com/nexu-io/open-design",
+    "website": "https://open-design.ai",
+    "docs": [
+      "https://github.com/nexu-io/open-design/blob/main/deploy/README.md",
+      "https://github.com/nexu-io/open-design/blob/main/QUICKSTART.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The browser asks for credentials on first visit: sign in with the username open-design and the generated OD_API_TOKEN value from the environment variables as the password.",
+      "link": "https://github.com/nexu-io/open-design/blob/main/deploy/README.md"
+    },
+    {
+      "type": "warning",
+      "message": "The image bundles no agent CLIs. Add an API key for a model provider (OpenAI, Anthropic, Google, Azure or any OpenAI-compatible endpoint) in the settings before generating designs."
+    },
+    {
+      "type": "info",
+      "message": "Connectors such as Composio and GitHub only accept requests from the container itself, so they cannot be set up through the public domain.",
+      "link": "https://github.com/nexu-io/open-design/blob/main/deploy/.env.example"
+    }
+  ]
+}
