@@ -1,0 +1,19 @@
+services:
+  agendav:
+    image: dominikl123/agendav:3.3.1-2@sha256:6e26e09f3e214f1446724d2da211e08b6777e9548664be1ab493972199d2f338
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      AGENDAV_SERVER_NAME: ${AGENDAV_SERVER_NAME}
+      AGENDAV_TITLE: ${AGENDAV_TITLE}
+      AGENDAV_CALDAV_SERVER: ${AGENDAV_CALDAV_SERVER}
+      AGENDAV_TIMEZONE: ${AGENDAV_TIMEZONE}
+      AGENDAV_LANG: ${AGENDAV_LANG}
+      AGENDAV_WEEKSTART: ${AGENDAV_WEEKSTART}
+      AGENDAV_CSRF_SECRET: ${AGENDAV_CSRF_SECRET}
+      AGENDAV_LOG_DIR: /var/www/agendav/var/log/
+    volumes:
+      - agendav-data:/var/agendav
+volumes:
+  agendav-data: {}

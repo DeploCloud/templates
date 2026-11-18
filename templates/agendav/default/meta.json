@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "CalDAV web client with month, week, day and list views for managing personal and shared calendars on an existing CalDAV server.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "AgenDAV",
+    "url": "https://github.com/agendav"
+  },
+  "links": {
+    "github": "https://github.com/agendav/agendav",
+    "website": "https://agendav.readthedocs.io/",
+    "docs": [
+      "https://agendav.readthedocs.io/en/latest/admin/configuration.html",
+      "https://agendav.readthedocs.io/en/latest/admin/installation.html",
+      "https://github.com/dominikl/agendav-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "AgenDAV needs an existing CalDAV server. Set AGENDAV_CALDAV_SERVER to its base URL (for example https://dav.example.com/dav.php/ for Baikal) before logging in; users sign in with their CalDAV credentials. This image authenticates with HTTP Basic, so the CalDAV server must accept it: Baikal defaults to Digest, switch its WebDAV authentication type to Basic.",
+      "link": "https://agendav.readthedocs.io/en/latest/admin/configuration.html"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
