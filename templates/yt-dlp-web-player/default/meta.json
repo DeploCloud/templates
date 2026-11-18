@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web video player that plays videos from any yt-dlp supported site in the browser, with HLS transcoding, SponsorBlock, playlists and an installable PWA.",
+  "category": "media",
+  "developedBy": {
+    "label": "Matszwe02",
+    "url": "https://github.com/Matszwe02"
+  },
+  "links": {
+    "github": "https://github.com/Matszwe02/ytdlp_web_player",
+    "docs": [
+      "https://github.com/Matszwe02/ytdlp_web_player#readme",
+      "https://github.com/Matszwe02/ytdlp_web_player/blob/main/src/example.env"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The player has no built-in authentication: anyone who can reach the URL can make the server fetch and transcode videos. Put it behind access control if the domain is public.",
+      "link": "https://github.com/Matszwe02/ytdlp_web_player#security-notes"
+    }
+  ]
+}
