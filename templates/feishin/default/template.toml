@@ -1,0 +1,16 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "feishin"
+port = 9_180
+host = "${domain}"
+
+[config.env]
+SERVER_NAME = ""
+SERVER_TYPE = ""
+SERVER_URL = ""
+SERVER_LOCK = "false"
+LEGACY_AUTHENTICATION = ""
+REMOTE_URL = ""
+ANALYTICS_DISABLED = "true"
