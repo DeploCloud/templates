@@ -1,0 +1,18 @@
+[variables]
+access_key = "${secret:64}"
+api_key = "${secret:64}"
+admin_key = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "camofox-browser"
+port = 9_377
+host = "${domain}"
+
+[config.env]
+CAMOFOX_ACCESS_KEY = "${access_key}"
+CAMOFOX_API_KEY = "${api_key}"
+CAMOFOX_ADMIN_KEY = "${admin_key}"
+CAMOFOX_CRASH_REPORT_ENABLED = "false"

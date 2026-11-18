@@ -1,0 +1,23 @@
+services:
+  camofox-browser:
+    image: ghcr.io/jo-inc/camofox-browser:1.19.0@sha256:49f8e02f9fb0e191b406845482745efc72f835db06789e3a34e77a6ff1497046
+    restart: unless-stopped
+    expose:
+      - 9377
+    shm_size: 2gb
+    environment:
+      CAMOFOX_ACCESS_KEY: ${CAMOFOX_ACCESS_KEY}
+      CAMOFOX_API_KEY: ${CAMOFOX_API_KEY}
+      CAMOFOX_ADMIN_KEY: ${CAMOFOX_ADMIN_KEY}
+      CAMOFOX_CRASH_REPORT_ENABLED: ${CAMOFOX_CRASH_REPORT_ENABLED}
+    volumes:
+      - camofox-data:/root/.camofox
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9377/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  camofox-data: {}
