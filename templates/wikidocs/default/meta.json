@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Databaseless Markdown wiki with a WYSIWYG editor, page revisions, attachments and a REST API, storing everything as plain files.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Manuel Zavatta",
+    "url": "https://github.com/Zavy86"
+  },
+  "links": {
+    "github": "https://github.com/Zavy86/WikiDocs",
+    "website": "https://www.wikidocs.app",
+    "docs": [
+      "https://github.com/Zavy86/WikiDocs#self-hosted",
+      "https://github.com/Zavy86/WikiDocs/blob/main/ARCHITECTURE.md#runtime-configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The wiki is uninitialized after deployment: the first visitor sets its title and creates the administrator account, so open it right away."
+    },
+    {
+      "type": "warning",
+      "message": "Keep SECRET unchanged after the first start: it hashes account passwords, so changing it locks every user out."
+    }
+  ]
+}

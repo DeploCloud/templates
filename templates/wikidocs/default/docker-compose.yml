@@ -1,0 +1,21 @@
+services:
+  wikidocs:
+    image: zavy86/wikidocs:2.0.5@sha256:d27a0f9550ae27acc4283ea0a802a0b379037dcb95f607088f423ae0aa291f93
+    restart: unless-stopped
+    expose:
+      - 3210
+    environment:
+      MODE: ${MODE}
+      SECRET: ${SECRET}
+    volumes:
+      - wikidocs-datasets:/var/lib/wikidocs/datasets
+    healthcheck:
+      # /api/health answers 501 until the wiki is initialized, so only the UI is probed
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3210/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  wikidocs-datasets: {}
