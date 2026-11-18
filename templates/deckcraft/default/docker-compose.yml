@@ -1,0 +1,16 @@
+services:
+  deckcraft:
+    image: ghcr.io/mikapst/deckcraft-web:v0.18.1@sha256:71cadd3ec9b8a7217232c22d30b661633f1935495b4c80b5f4f2563020b23a5d
+    restart: unless-stopped
+    # The image CMD repeats the pid directive of nginx.conf, so nginx refuses to start;
+    # run the stock nginx command as root (workers still drop to the nginx user).
+    user: root
+    command: ["nginx", "-g", "daemon off;"]
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
