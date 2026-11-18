@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kestra"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+# 32 hex chars are valid base64 and decode to a 24-byte AES key.
+KESTRA_ENCRYPTION_KEY = "${hash:32}"
+KESTRA_URL = "https://${domain}/"
