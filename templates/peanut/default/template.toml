@@ -1,0 +1,16 @@
+[variables]
+web_password = "${password:24}"
+auth_secret = "${base64:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "peanut"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+WEB_USERNAME = "admin"
+WEB_PASSWORD = "${web_password}"
+AUTH_SECRET = "${auth_secret}"
