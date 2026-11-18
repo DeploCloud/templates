@@ -1,0 +1,15 @@
+services:
+  lab-dash:
+    image: ghcr.io/anthonygress/lab-dash:v1.3.8@sha256:d33065810892d53d0587c68e175e48009d96ec468a40cf8b07e90176d819f52a
+    restart: unless-stopped
+    expose:
+      - 2022
+    environment:
+      SECRET: ${SECRET}
+    volumes:
+      - lab-dash-config:/config
+      - lab-dash-uploads:/app/public/uploads
+
+volumes:
+  lab-dash-config: {}
+  lab-dash-uploads: {}

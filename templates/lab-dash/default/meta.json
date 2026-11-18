@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted homelab start page with a drag-and-drop grid of app shortcuts, service health checks and widgets for media, download and DNS tools.",
+  "category": "other",
+  "developedBy": {
+    "label": "Anthony Gress",
+    "url": "https://github.com/AnthonyGress"
+  },
+  "links": {
+    "github": "https://github.com/AnthonyGress/lab-dash",
+    "docs": [
+      "https://github.com/AnthonyGress/lab-dash#installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deployment: the setup page creates the first account, which becomes the administrator. Until then anyone with the URL can claim it, and the dashboard stays readable without signing in."
+    },
+    {
+      "type": "info",
+      "message": "The container runs without the Docker socket or host /sys, so the system monitor widget only sees what the container sees (no host temperatures or host network interfaces) and the in-app updater does not work. Update by redeploying with a newer image."
+    }
+  ]
+}
