@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "deckcraft"
+port = 8_080
+host = "${domain}"
