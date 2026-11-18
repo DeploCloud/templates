@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "JMAP webmail for Stalwart Mail Server with mail, calendar, contacts and files, configured through a first-run setup wizard.",
+  "category": "email",
+  "developedBy": {
+    "label": "Bulwark Mail",
+    "url": "https://github.com/bulwarkmail"
+  },
+  "links": {
+    "github": "https://github.com/bulwarkmail/webmail",
+    "website": "https://bulwarkmail.org",
+    "docs": [
+      "https://bulwarkmail.org/docs/getting-started/installation",
+      "https://bulwarkmail.org/docs/deployment/docker/compose",
+      "https://bulwarkmail.org/docs/getting-started/configuration/environment-reference"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the image marks session cookies as secure, so signing in over plain HTTP does not work.",
+      "link": "https://bulwarkmail.org/docs/getting-started/configuration/environment-reference"
+    },
+    {
+      "type": "warning",
+      "message": "The setup wizard needs a one-time token printed in the container log (valid for one hour; restart the container for a new one). It then asks for your Stalwart server URL and an admin password.",
+      "link": "https://bulwarkmail.org/docs/getting-started/installation"
+    },
+    {
+      "type": "warning",
+      "message": "Bulwark needs an existing Stalwart Mail Server with JMAP enabled. Its URL must be reachable both from browsers and from this container (sign-ins are checked server-side), and Stalwart must allow this webmail's domain in its CORS policy.",
+      "link": "https://bulwarkmail.org/docs/getting-started/stalwart-setup"
+    }
+  ]
+}
