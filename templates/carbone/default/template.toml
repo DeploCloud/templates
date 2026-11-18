@@ -1,0 +1,17 @@
+[variables]
+studio_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "carbone"
+port = 4_000
+host = "${domain}"
+
+[config.env]
+CARBONE_BIND = "0.0.0.0"
+CARBONE_STUDIO = "true"
+CARBONE_STUDIO_USER = "admin:${studio_password}"
+CARBONE_AUTHENTICATION = "true"
+CARBONE_LICENSE = ""

@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Report generator API that fills DOCX, XLSX, ODT and PPTX templates with JSON data and exports PDF and office formats, with the built-in Studio editor.",
+  "category": "development",
+  "developedBy": {
+    "label": "Carbone",
+    "url": "https://carbone.io"
+  },
+  "links": {
+    "github": "https://github.com/carboneio/carbone",
+    "website": "https://carbone.io",
+    "docs": [
+      "https://carbone.io/documentation/developer/self-hosted-deployment/deploy-with-docker.html",
+      "https://carbone.io/documentation/developer/on-premise-installation/configuration.html",
+      "https://carbone.io/api-reference.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Studio asks for basic auth: the user is admin and the password is the part after the colon in CARBONE_STUDIO_USER. REST API calls need an ES512 JWT in the Authorization: Bearer header, signed with the key pair Carbone generates in /app/config on first start.",
+      "link": "https://help.carbone.io/en-us/article/configure-authentification-with-carbone-docker-image-1fdzo9v"
+    },
+    {
+      "type": "info",
+      "message": "Without a license Carbone runs the free Community Edition features. Paste an Enterprise license into CARBONE_LICENSE to unlock the Enterprise features.",
+      "link": "https://carbone.io/documentation/developer/on-premise-installation/licensing.html"
+    }
+  ]
+}
