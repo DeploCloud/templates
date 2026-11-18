@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source project management with work packages, Gantt charts, agile boards and time tracking, backed by PostgreSQL, memcached and a real-time document collaboration server.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "OpenProject",
+    "url": "https://github.com/opf"
+  },
+  "links": {
+    "github": "https://github.com/opf/openproject",
+    "website": "https://www.openproject.org",
+    "docs": [
+      "https://www.openproject.org/docs/installation-and-operations/installation/docker-compose/",
+      "https://www.openproject.org/docs/installation-and-operations/configuration/environment/",
+      "https://www.openproject.org/docs/installation-and-operations/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated OPENPROJECT_SEED__ADMIN__USER__PASSWORD from the environment variables; OpenProject asks for a new password on the first login."
+    },
+    {
+      "type": "info",
+      "message": "The first deploy runs the database migrations before the web service starts, which can take a few minutes."
+    }
+  ]
+}

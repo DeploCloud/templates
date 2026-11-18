@@ -1,0 +1,83 @@
+x-openproject: &openproject
+  image: openproject/openproject:17.9.7-slim@sha256:4e978557b4009dfdcdab6f18acd1aa9348a2c41ce5cd50c3d535e4c093a5c505
+  restart: unless-stopped
+  environment:
+    OPENPROJECT_HTTPS: "true"
+    OPENPROJECT_HOST__NAME: ${OPENPROJECT_HOST__NAME}
+    # Lets the collaboration server reach the app directly at http://openproject:8080.
+    OPENPROJECT_ADDITIONAL__HOST__NAMES: openproject
+    OPENPROJECT_RAILS__CACHE__STORE: memcache
+    OPENPROJECT_CACHE__MEMCACHE__SERVER: openproject-cache:11211
+    OPENPROJECT_COLLABORATIVE__EDITING__HOCUSPOCUS__URL: ${OPENPROJECT_COLLABORATIVE__EDITING__HOCUSPOCUS__URL}
+    OPENPROJECT_COLLABORATIVE__EDITING__HOCUSPOCUS__SECRET: ${HOCUSPOCUS_SECRET}
+    OPENPROJECT_SEED__ADMIN__USER__PASSWORD: ${OPENPROJECT_SEED__ADMIN__USER__PASSWORD}
+    DATABASE_URL: ${DATABASE_URL}
+    SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    RAILS_MIN_THREADS: "4"
+    RAILS_MAX_THREADS: "16"
+  volumes:
+    - openproject-assets:/var/openproject/assets
+  depends_on:
+    openproject-seeder:
+      condition: service_completed_successfully
+    openproject-cache:
+      condition: service_started
+
+services:
+  openproject:
+    <<: *openproject
+    command: ./docker/prod/web
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health_checks/default"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  openproject-worker:
+    <<: *openproject
+    command: ./docker/prod/worker
+
+  # Runs migrations and seeds on every deploy, then exits.
+  openproject-seeder:
+    <<: *openproject
+    command: ./docker/prod/seeder
+    restart: "no"
+    depends_on:
+      openproject-db:
+        condition: service_healthy
+
+  openproject-hocuspocus:
+    image: openproject/hocuspocus:17.9.7@sha256:5f3fe32dd3c9ed36a2e22411f9dfdfdeb697b7fbfe4ecc5cbf557fb5d92062ff
+    restart: unless-stopped
+    expose:
+      - 1234
+    environment:
+      SECRET: ${HOCUSPOCUS_SECRET}
+      OPENPROJECT_URL: http://openproject:8080
+      OPENPROJECT_HTTPS: "true"
+
+  openproject-cache:
+    image: memcached:1.6.45-alpine@sha256:084fb554292d1447bc2c68b80c2331b98834514f56c866bc21a61be3c2ee376d
+    restart: unless-stopped
+
+  openproject-db:
+    image: postgres:17.12@sha256:0d938e975177bef9f1f61f3f9dbcf2e0aa0a139568f66d3415ed8892eb97f6ac
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: openproject
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: openproject
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openproject -d openproject"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - openproject-db:/var/lib/postgresql/data
+
+volumes:
+  openproject-assets: {}
+  openproject-db: {}
