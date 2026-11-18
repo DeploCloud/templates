@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted AI assistant with a web console for chat, model providers, skills and chat app channels.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Sipeed",
+    "url": "https://github.com/sipeed"
+  },
+  "links": {
+    "github": "https://github.com/sipeed/picoclaw",
+    "website": "https://picoclaw.io",
+    "docs": [
+      "https://github.com/sipeed/picoclaw/blob/main/docs/guides/docker.md",
+      "https://github.com/sipeed/picoclaw/blob/main/docs/guides/configuration.md",
+      "https://github.com/sipeed/picoclaw/blob/main/docs/guides/providers.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard password is created by whoever first opens /launcher-setup, so visit it immediately after deployment. An API key from an LLM provider must then be added in the web console.",
+      "link": "https://github.com/sipeed/picoclaw/blob/main/docs/guides/configuration.md#web-launcher-dashboard"
+    }
+  ]
+}

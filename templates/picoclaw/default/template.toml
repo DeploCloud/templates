@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "picoclaw"
+port = 18_800
+host = "${domain}"
