@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Stateless HTTP API that converts HTML, Markdown, URLs and office documents to PDF using Chromium and LibreOffice, protected by basic auth.",
+  "category": "development",
+  "developedBy": {
+    "label": "Gotenberg",
+    "url": "https://github.com/gotenberg"
+  },
+  "links": {
+    "github": "https://github.com/gotenberg/gotenberg",
+    "website": "https://gotenberg.dev",
+    "docs": [
+      "https://gotenberg.dev/docs/getting-started/installation",
+      "https://gotenberg.dev/docs/operate/secure",
+      "https://gotenberg.dev/docs/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Gotenberg has no web UI. Call its API from your application with basic auth: the username is gotenberg and the password is the generated GOTENBERG_API_BASIC_AUTH_PASSWORD value in the environment.",
+      "link": "https://gotenberg.dev/docs/operate/secure"
+    }
+  ]
+}
