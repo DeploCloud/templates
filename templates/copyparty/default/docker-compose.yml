@@ -1,0 +1,24 @@
+services:
+  copyparty:
+    image: copyparty/ac:1.20.26@sha256:b2054d65e05daa8982ca17c26b12b74315c0ce586a03ff9018a59c80731b9e19
+    restart: unless-stopped
+    command: ["-a", "admin:${COPYPARTY_ADMIN_PASSWORD}"]
+    expose:
+      - 3923
+    environment:
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - copyparty-config:/cfg
+      - ./copyparty.conf:/cfg/copyparty.conf:ro
+      - copyparty-files:/w
+    stop_grace_period: 15s
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q 127.0.0.1:3923/?reset=/._"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  copyparty-config: {}
+  copyparty-files: {}
