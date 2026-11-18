@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "cobalt processing API that saves media from social and video sites, ready to be used from the cobalt web app or any API client.",
+  "category": "media",
+  "developedBy": {
+    "label": "imput",
+    "url": "https://github.com/imputnet"
+  },
+  "links": {
+    "github": "https://github.com/imputnet/cobalt",
+    "website": "https://cobalt.tools",
+    "docs": [
+      "https://github.com/imputnet/cobalt/blob/main/docs/run-an-instance.md",
+      "https://github.com/imputnet/cobalt/blob/main/docs/api-env-variables.md",
+      "https://github.com/imputnet/cobalt/blob/main/docs/api.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This deploys the processing API only, with no web interface. Point the cobalt web app at it under settings > instances > use a custom processing server, or call the API directly."
+    },
+    {
+      "type": "warning",
+      "message": "The instance is open to anyone who knows its URL. For a public deployment, protect it with API keys or Turnstile as described in the upstream guide.",
+      "link": "https://github.com/imputnet/cobalt/blob/main/docs/protect-an-instance.md"
+    }
+  ]
+}
