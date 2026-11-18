@@ -1,0 +1,18 @@
+services:
+  altus:
+    image: lscr.io/linuxserver/altus:5.8.3-ls163@sha256:3baa26138e04e2efbd003cd219a5f4f809a9f1c20bb7d59e017cb2335327f2a6
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - altus-config:/config
+
+volumes:
+  altus-config: {}
