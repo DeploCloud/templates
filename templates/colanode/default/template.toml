@@ -1,0 +1,47 @@
+[variables]
+db_password = "${password:32}"
+valkey_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "colanode-web"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "colanode"
+port = 3_000
+host = "${domain}"
+path = "/api"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+VALKEY_PASSWORD = "${valkey_password}"
+COLANODE_DOMAIN = "${domain}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+  "name": "Colanode",
+  "web": {
+    "domain": "env://WEB_DOMAIN",
+    "protocol": "https"
+  },
+  "pathPrefix": "api",
+  "cors": {
+    "origin": "env://CORS_ORIGIN",
+    "maxAge": 7200
+  },
+  "account": {
+    "verificationType": "automatic"
+  },
+  "storage": {
+    "provider": {
+      "type": "file",
+      "directory": "/var/lib/colanode/storage"
+    }
+  }
+}
+"""

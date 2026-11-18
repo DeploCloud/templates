@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Local-first collaboration server with chat, pages, databases and files, plus the Colanode web client, backed by PostgreSQL with pgvector and Valkey.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Colanode",
+    "url": "https://github.com/colanode"
+  },
+  "links": {
+    "github": "https://github.com/colanode/colanode",
+    "website": "https://colanode.com",
+    "docs": [
+      "https://colanode.com/docs/self-hosting/docker",
+      "https://colanode.com/docs/self-hosting/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the web client stores its data with browser features that only work on a secure origin, and the server is configured with an https web address.",
+      "link": "https://colanode.com/docs/self-hosting/docker"
+    },
+    {
+      "type": "warning",
+      "message": "The web client starts with no server. Open the app, choose to add a server and enter https://<your-domain>/api/config, then register. The desktop apps connect with the same URL.",
+      "link": "https://colanode.com/docs/self-hosting/docker"
+    },
+    {
+      "type": "warning",
+      "message": "Registration is open: anyone who reaches the server can create a verified account. Set account.verificationType to manual or email in config.json to restrict sign-ups.",
+      "link": "https://colanode.com/docs/self-hosting/configuration"
+    }
+  ]
+}
