@@ -1,0 +1,30 @@
+[config]
+
+[[config.domains]]
+serviceName = "kong"
+port = 8_000
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "kong.yml"
+content = """# Declarative config, see https://developer.konghq.com/gateway/db-less-mode/
+_format_version: "3.0"
+
+# services:
+#   - name: my-api
+#     url: http://my-api:8080
+#     routes:
+#       - name: my-api
+#         paths:
+#           - /api
+
+routes:
+  - name: welcome
+    paths:
+      - /
+    plugins:
+      - name: request-termination
+        config:
+          status_code: 200
+          message: "Kong is running. Replace this route in kong.yml with your own services."
+"""
