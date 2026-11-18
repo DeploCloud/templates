@@ -1,0 +1,16 @@
+[variables]
+jwt_secret = "${password:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hoodik"
+port = 5_443
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+JWT_SECRET = "${jwt_secret}"
+DB_PASSWORD = "${db_password}"

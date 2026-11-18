@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "End-to-end encrypted cloud storage drive with browser-side encryption, sharing links and notes, using the built-in SQLite database.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Hudik",
+    "url": "https://github.com/hudikhq"
+  },
+  "links": {
+    "github": "https://github.com/hudikhq/hoodik",
+    "website": "https://hoodik.io",
+    "docs": [
+      "https://hoodik.io/get-started",
+      "https://github.com/hudikhq/hoodik#configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator, and open registration stays enabled until you turn it off in the admin settings. Save the private key shown during registration: without it a forgotten password means the encrypted files are unrecoverable.",
+      "link": "https://hoodik.io/get-started"
+    }
+  ]
+}
