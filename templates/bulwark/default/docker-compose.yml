@@ -1,0 +1,11 @@
+services:
+  bulwark:
+    image: ghcr.io/bulwarkmail/webmail:1.21.2@sha256:037b85b1433233d2d7eebb83f928df5ecc3b4adc91dc7e4c55f0a2f69024e754
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - bulwark-data:/app/data
+
+volumes:
+  bulwark-data: {}
