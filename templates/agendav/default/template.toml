@@ -1,0 +1,19 @@
+[variables]
+csrf_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "agendav"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+AGENDAV_SERVER_NAME = "${domain}"
+AGENDAV_TITLE = "AgenDAV"
+AGENDAV_CALDAV_SERVER = "https://caldav.example.com/"
+AGENDAV_TIMEZONE = "UTC"
+AGENDAV_LANG = "en"
+AGENDAV_WEEKSTART = "1"
+AGENDAV_CSRF_SECRET = "${csrf_secret}"
