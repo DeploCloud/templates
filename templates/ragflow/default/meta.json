@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "Retrieval-augmented generation engine that parses documents with layout analysis and OCR for grounded chat, search and agents, backed by Elasticsearch, MySQL, MinIO-compatible storage, Kvrocks and NATS.",
+  "category": "ai",
+  "developedBy": {
+    "label": "InfiniFlow",
+    "url": "https://github.com/infiniflow"
+  },
+  "links": {
+    "github": "https://github.com/infiniflow/ragflow",
+    "website": "https://ragflow.io",
+    "docs": [
+      "https://ragflow.io/docs/",
+      "https://ragflow.io/docs/configurations",
+      "https://ragflow.io/docs/admin_service",
+      "https://ragflow.io/docs/llm_api_key_setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Elasticsearch needs vm.max_map_count of at least 262144 on the server (sysctl -w vm.max_map_count=262144). Plan for at least 4 CPU cores, 16 GB RAM and 50 GB of disk.",
+      "link": "https://ragflow.io/docs/"
+    },
+    {
+      "type": "warning",
+      "message": "Sign-up is open: register your account on first visit, then set ENABLE_REGISTER to 0 and redeploy. The Admin UI at /admin uses admin@ragflow.io with the password in ADMIN_DEFAULT_PASSWORD.",
+      "link": "https://ragflow.io/docs/admin_service"
+    },
+    {
+      "type": "warning",
+      "message": "Add a chat model and an embedding model under User settings > Model providers (API key of an external provider or a local model server) before creating datasets.",
+      "link": "https://ragflow.io/docs/llm_api_key_setup"
+    }
+  ]
+}
