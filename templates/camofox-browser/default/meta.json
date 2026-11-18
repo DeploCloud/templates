@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Anti-detection headless browser server for AI agents, built on Camoufox and controlled through a REST API with accessibility snapshots and element refs.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Jo",
+    "url": "https://github.com/jo-inc"
+  },
+  "links": {
+    "github": "https://github.com/jo-inc/camofox-browser",
+    "docs": [
+      "https://github.com/jo-inc/camofox-browser#environment-variables",
+      "https://github.com/jo-inc/camofox-browser#api"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Every request except /health, including the /docs page, needs an Authorization: Bearer header with the generated CAMOFOX_ACCESS_KEY from the environment settings. Cookie import uses CAMOFOX_API_KEY and POST /stop uses CAMOFOX_ADMIN_KEY in the X-Admin-Key header.",
+      "link": "https://github.com/jo-inc/camofox-browser#access-control"
+    }
+  ]
+}
