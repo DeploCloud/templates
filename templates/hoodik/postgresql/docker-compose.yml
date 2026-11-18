@@ -1,0 +1,36 @@
+services:
+  hoodik:
+    image: hudik/hoodik:v2.6.1@sha256:d793b3b5e8631f2462fdb1ea0ca62d3b96cafefcab437afdf1003b3e7e9be193
+    restart: unless-stopped
+    expose:
+      - 5443
+    environment:
+      DATA_DIR: /data
+      DATABASE_URL: postgres://hoodik:${DB_PASSWORD}@hoodik-db:5432/hoodik
+      APP_URL: ${APP_URL}
+      SSL_DISABLED: "true"
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - hoodik-data:/data
+    depends_on:
+      hoodik-db:
+        condition: service_healthy
+
+  hoodik-db:
+    image: postgres:17.12-alpine@sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hoodik
+      POSTGRES_USER: hoodik
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hoodik -d hoodik"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - hoodik-db:/var/lib/postgresql/data
+
+volumes:
+  hoodik-data: {}
+  hoodik-db: {}
