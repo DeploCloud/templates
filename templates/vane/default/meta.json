@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI answering engine that searches the web through a bundled SearXNG instance and answers with cited sources, using local or cloud LLM providers.",
+  "category": "ai",
+  "developedBy": {
+    "label": "ItzCrazyKns",
+    "url": "https://github.com/ItzCrazyKns"
+  },
+  "links": {
+    "github": "https://github.com/ItzCrazyKns/Vane",
+    "docs": [
+      "https://github.com/ItzCrazyKns/Vane#getting-started-with-docker-recommended",
+      "https://github.com/ItzCrazyKns/Vane/blob/master/docs/installation/UPDATING.md",
+      "https://github.com/ItzCrazyKns/Vane/blob/master/docs/API/SEARCH.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Vane has no built-in login: anyone who knows the URL can use it and spend the AI provider keys you configure. Keep the domain private or put access control in front of it.",
+      "link": "https://github.com/ItzCrazyKns/Vane#upcoming-features"
+    },
+    {
+      "type": "warning",
+      "message": "An AI provider must be configured in the setup screen on first visit: a cloud API key (OpenAI, Anthropic, Gemini, Groq and others) or the URL of a reachable Ollama server."
+    }
+  ]
+}
