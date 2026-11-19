@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Hasura GraphQL Engine with its web console and a bundled PostgreSQL database, exposing GraphQL and REST APIs over the tables you track.",
+  "category": "development",
+  "developedBy": {
+    "label": "Hasura",
+    "url": "https://hasura.io"
+  },
+  "links": {
+    "github": "https://github.com/hasura/graphql-engine",
+    "website": "https://hasura.io",
+    "docs": [
+      "https://hasura.io/docs/2.0/getting-started/docker-simple/",
+      "https://hasura.io/docs/2.0/deployment/graphql-engine-flags/reference/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The console and the APIs are protected by an admin secret: enter the generated HASURA_GRAPHQL_ADMIN_SECRET from the environment settings when the console asks for it. Then connect the bundled database under Data > Connect Database using the environment variable PG_DATABASE_URL.",
+      "link": "https://hasura.io/docs/2.0/deployment/securing-graphql-endpoint/"
+    }
+  ]
+}
