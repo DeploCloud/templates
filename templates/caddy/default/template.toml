@@ -1,0 +1,25 @@
+[config]
+
+[[config.domains]]
+serviceName = "caddy"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """# HTTPS is terminated by the reverse proxy in front, so Caddy only listens on :80
+{
+	servers {
+		trusted_proxies static private_ranges
+		trusted_proxies_strict
+	}
+}
+
+:80 {
+	root * /usr/share/caddy
+	encode
+	file_server
+
+	# reverse_proxy other-service:8080
+}
+"""
