@@ -1,0 +1,27 @@
+services:
+  ekko-studio:
+    image: ekkoye8888/hermes-web-ui:v0.8.28@sha256:ca7f343184d04b0c8bf4ba478cbfbb8d7385d6a6b35e415da7c5f14298a83852
+    restart: unless-stopped
+    expose:
+      - 6060
+    volumes:
+      - ekko-studio-hermes:/home/agent/.hermes
+      - ekko-studio-data:/home/agent/.hermes-web-ui
+      - ekko-studio-files:/opt/data
+    environment:
+      PORT: "6060"
+      HERMES_BIN: /opt/hermes/.venv/bin/hermes
+      HERMES_WEB_UI_MANAGED_GATEWAY: "1"
+      HERMES_ALLOW_ROOT_GATEWAY: "1"
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:6060/livez"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  ekko-studio-hermes: {}
+  ekko-studio-data: {}
+  ekko-studio-files: {}
