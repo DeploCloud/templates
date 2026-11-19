@@ -81,10 +81,7 @@ services:
     restart: unless-stopped
     environment:
       SECRET: ${HULY_SECRET}
-    deploy:
-      resources:
-        limits:
-          memory: 500M
+    mem_limit: 500M
 
   huly-stats:
     image: hardcoreeng/stats:v0.7.426@sha256:9a08a6ec7f80e13d3d3694247087751727227152bb23fdc88f53f8fae1a07183
