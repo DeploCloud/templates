@@ -1,0 +1,51 @@
+[variables]
+db_password = "${password:32}"
+admin_api_key = "${secret:48}"
+jwt_secret = "${secret:64}"
+master_enc_key = "${hash:64}"
+api_keys_hash_key = "${hash:64}"
+user_auth_methods_key = "${hash:64}"
+pm_auth_key = "${secret:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "hyperswitch-gateway"
+port = 80
+host = "${domain}"
+
+[config.env]
+HYPERSWITCH_DOMAIN = "${domain}"
+HYPERSWITCH_DB_PASSWORD = "${db_password}"
+HYPERSWITCH_ADMIN_API_KEY = "${admin_api_key}"
+HYPERSWITCH_JWT_SECRET = "${jwt_secret}"
+HYPERSWITCH_MASTER_ENC_KEY = "${master_enc_key}"
+HYPERSWITCH_API_KEYS_HASH_KEY = "${api_keys_hash_key}"
+HYPERSWITCH_USER_AUTH_METHODS_KEY = "${user_auth_methods_key}"
+HYPERSWITCH_PM_AUTH_KEY = "${pm_auth_key}"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """
+server {
+    listen 80;
+    resolver 127.0.0.11 valid=10s ipv6=off;
+    client_max_body_size 20m;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+
+    location /api/ {
+        set $router hyperswitch-router:8080;
+        rewrite ^/api/(.*)$ /$1 break;
+        proxy_pass http://$router;
+    }
+
+    location / {
+        set $control_center hyperswitch-control-center:9000;
+        proxy_pass http://$control_center;
+    }
+}
+"""
