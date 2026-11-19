@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Network video recorder with real-time object detection for IP cameras, running OpenVINO on the CPU with recordings kept on a persistent volume.",
+  "category": "security",
+  "developedBy": {
+    "label": "Frigate, Inc.",
+    "url": "https://frigate.video"
+  },
+  "links": {
+    "github": "https://github.com/blakeblackshear/frigate",
+    "website": "https://frigate.video",
+    "docs": [
+      "https://docs.frigate.video/frigate/installation",
+      "https://docs.frigate.video/guides/getting_started",
+      "https://docs.frigate.video/configuration/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin password is generated on first start and printed in the container logs. Sign in as admin with it and change it under Settings > Users.",
+      "link": "https://docs.frigate.video/configuration/authentication"
+    },
+    {
+      "type": "warning",
+      "message": "Cameras must be reachable from this server over RTSP or HTTP, so cameras on a home network need a VPN or port forward. Only the web UI is published: WebRTC (8555) and the RTSP restream (8554) are not, so live view falls back to MSE or jsmpeg over the web port and two-way talk is unavailable.",
+      "link": "https://docs.frigate.video/configuration/live"
+    }
+  ]
+}
