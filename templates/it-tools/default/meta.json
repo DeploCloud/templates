@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Static web app with browser-side utilities for developers and IT work: encoders, converters, generators, hashing, network calculators and more.",
+  "category": "development",
+  "developedBy": {
+    "label": "Corentin Thomasset",
+    "url": "https://github.com/CorentinTh"
+  },
+  "links": {
+    "github": "https://github.com/CorentinTh/it-tools",
+    "website": "https://it-tools.tech",
+    "docs": [
+      "https://github.com/CorentinTh/it-tools#self-host"
+    ]
+  }
+}
