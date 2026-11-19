@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Wiki.js 3 knowledge base with a visual and Markdown editor, live collaboration and a bundled PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Requarks",
+    "url": "https://github.com/requarks"
+  },
+  "links": {
+    "github": "https://github.com/requarks/wiki",
+    "website": "https://js.wiki",
+    "docs": [
+      "https://docs.js.wiki/setup/installation",
+      "https://docs.js.wiki/setup/requirements",
+      "https://docs.js.wiki/setup/config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL and the generated ADMIN_PASS from the environment. Both are read only on the first start against an empty database, so change ADMIN_EMAIL before deploying if you want a different address.",
+      "link": "https://docs.js.wiki/setup/installation"
+    }
+  ]
+}

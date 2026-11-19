@@ -1,0 +1,50 @@
+services:
+  wiki-js:
+    image: ghcr.io/requarks/wiki:3.4.0@sha256:9424867464d9d899f975bbadb8ff1f794341eadd720b5fb5c22f0988c62e29bf
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DB_HOST: wiki-js-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_SSL: "false"
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASS: ${ADMIN_PASS}
+    volumes:
+      - wiki-js-data:/wiki/data
+      - wiki-js-content:/wiki/data/content
+      - wiki-js-repo:/wiki/data/repo
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:3000/_live"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5m
+    depends_on:
+      wiki-js-db:
+        condition: service_healthy
+
+  wiki-js-db:
+    image: postgres:18.7@sha256:37586cb420551a1d64a424c5d02e93642692499f70919dda80e4bdafbb0a9533
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - wiki-js-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  wiki-js-data: {}
+  wiki-js-content: {}
+  wiki-js-repo: {}
+  wiki-js-db: {}
