@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source platform to trace, evaluate and monitor LLM applications, RAG systems and agents, with MySQL, ClickHouse, Redis and MinIO.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Comet",
+    "url": "https://www.comet.com"
+  },
+  "links": {
+    "github": "https://github.com/comet-ml/opik",
+    "website": "https://www.comet.com/site/products/opik/",
+    "docs": [
+      "https://www.comet.com/docs/opik/self-host/overview",
+      "https://www.comet.com/docs/opik/self-host/local_deployment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The open source edition has no login or user management: anyone who can reach the URL can read and change every project, trace and stored LLM provider key. Restrict who can reach the domain before logging sensitive data.",
+      "link": "https://www.comet.com/docs/opik/self-host/overview"
+    }
+  ]
+}
