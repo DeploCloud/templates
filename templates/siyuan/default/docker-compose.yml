@@ -1,0 +1,14 @@
+services:
+  siyuan:
+    image: b3log/siyuan:v3.8.10@sha256:44ee53c45cde3a252c6d913de9b0ff79bf9bb0a5e336e5cc36c06357d6757919
+    restart: unless-stopped
+    expose:
+      - 6806
+    environment:
+      SIYUAN_ACCESS_AUTH_CODE: ${SIYUAN_ACCESS_AUTH_CODE}
+      TZ: ${TZ}
+    volumes:
+      - siyuan-workspace:/siyuan/workspace
+
+volumes:
+  siyuan-workspace: {}
