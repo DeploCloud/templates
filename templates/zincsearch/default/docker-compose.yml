@@ -1,0 +1,16 @@
+services:
+  zincsearch:
+    image: public.ecr.aws/zinclabs/zincsearch:0.4.10@sha256:fd865f7d0393428479726117c9f3b827e26eaee7f2fb21a22d8bc894e8f8f40e
+    restart: unless-stopped
+    expose:
+      - 4080
+    environment:
+      ZINC_DATA_PATH: /data
+      ZINC_FIRST_ADMIN_USER: ${ZINC_FIRST_ADMIN_USER}
+      ZINC_FIRST_ADMIN_PASSWORD: ${ZINC_FIRST_ADMIN_PASSWORD}
+      GIN_MODE: release
+    volumes:
+      - zincsearch-data:/data
+
+volumes:
+  zincsearch-data: {}

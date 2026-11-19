@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight full-text search engine with an Elasticsearch-compatible ingestion API and a built-in web UI.",
+  "category": "database",
+  "developedBy": {
+    "label": "ZincSearch",
+    "url": "https://github.com/zincsearch"
+  },
+  "links": {
+    "github": "https://github.com/zincsearch/zincsearch",
+    "website": "https://zincsearch-docs.zinc.dev",
+    "docs": [
+      "https://zincsearch-docs.zinc.dev/installation/",
+      "https://zincsearch-docs.zinc.dev/environment-variables/",
+      "https://zincsearch-docs.zinc.dev/quickstart/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated ZINC_FIRST_ADMIN_PASSWORD from the environment variables. Both values are read only on the first start, so changing them later has no effect; change the password on the Users page of the web UI instead.",
+      "link": "https://zincsearch-docs.zinc.dev/installation/"
+    }
+  ]
+}
