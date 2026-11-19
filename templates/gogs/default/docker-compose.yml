@@ -1,0 +1,15 @@
+services:
+  gogs:
+    image: gogs/gogs:0.14.4@sha256:ad893b78298754fe83010b3fa3cfe6b3f6cf42dfb8944fdb42c9a75e7420056b
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      SOCAT_LINK: "false"
+      GOGS_SECRET_KEY: ${GOGS_SECRET_KEY}
+    volumes:
+      - gogs-data:/data
+      - ./app.ini:/data/gogs/conf/app.ini:ro
+
+volumes:
+  gogs-data: {}
