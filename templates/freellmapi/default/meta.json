@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenAI-compatible LLM gateway that routes requests across free-tier provider keys with automatic failover, encrypted key storage and an admin dashboard.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Tashfeen Ahmed",
+    "url": "https://github.com/tashfeenahmed"
+  },
+  "links": {
+    "github": "https://github.com/tashfeenahmed/freellmapi",
+    "website": "https://freellmapi.co",
+    "docs": [
+      "https://github.com/tashfeenahmed/freellmapi/blob/main/docs/en/install/01-install.md",
+      "https://github.com/tashfeenahmed/freellmapi/blob/main/docs/en/clients/01-agent-clients.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Creating the first dashboard account from a remote browser requires the one-time setup code printed in the container logs at startup. Provider API keys are added in the dashboard afterwards.",
+      "link": "https://github.com/tashfeenahmed/freellmapi/blob/main/docs/en/install/01-install.md"
+    }
+  ]
+}
