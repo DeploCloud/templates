@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "AI coding router that exposes one OpenAI-compatible endpoint over 40+ model providers, with automatic fallback, token saving and a usage dashboard.",
+  "category": "ai",
+  "developedBy": {
+    "label": "decolua",
+    "url": "https://github.com/decolua"
+  },
+  "links": {
+    "github": "https://github.com/decolua/9router",
+    "website": "https://9router.com",
+    "docs": [
+      "https://github.com/decolua/9router/blob/master/DOCKER.md",
+      "https://9router.github.io/en/getting-started/quick-start/",
+      "https://9router.github.io/en/deployment/cloud/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard with the generated INITIAL_PASSWORD from the environment variables and change it in the settings. Providers need your own accounts or API keys, and clients call /v1 with an API key created in the dashboard."
+    }
+  ]
+}
