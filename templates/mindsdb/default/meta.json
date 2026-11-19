@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "MindsDB query engine with a web SQL editor that queries databases, warehouses and apps live in one SQL dialect and builds knowledge bases for semantic search.",
+  "category": "ai",
+  "developedBy": {
+    "label": "MindsDB",
+    "url": "https://github.com/mindsdb"
+  },
+  "links": {
+    "github": "https://github.com/mindsdb/mindshub",
+    "website": "https://mindshub.ai",
+    "docs": [
+      "https://mindsdb.github.io/engine/#setup-docker",
+      "https://mindsdb.github.io/engine/#quickstart"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated MINDSDB_PASSWORD from the environment settings. Knowledge bases and LLM features need an API key from an external model provider such as OpenAI."
+    },
+    {
+      "type": "info",
+      "message": "Only the HTTP editor and API are published. The MySQL wire protocol on port 47335 stays internal to the stack."
+    }
+  ]
+}
