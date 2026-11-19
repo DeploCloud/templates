@@ -1,0 +1,1 @@
+This variant runs Gatus with a bundled PostgreSQL 18 database instead of SQLite, so check results, events and uptime history live in the `gatus-db` volume. Monitored endpoints are listed in `config.yaml`, which already carries the generated database connection string; replace the example endpoint with your own services, alert providers and optional authentication, then redeploy.
