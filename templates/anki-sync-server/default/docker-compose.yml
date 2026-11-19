@@ -1,0 +1,13 @@
+services:
+  anki-sync-server:
+    image: jeankhawand/anki-sync-server:26.08@sha256:55d51cac22a33f61553af75740804553cf716fa5831cd59c76906c2a596ee9b9
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SYNC_USER1: "${SYNC_USERNAME}:${SYNC_PASSWORD}"
+    volumes:
+      - anki-data:/anki_data
+
+volumes:
+  anki-data: {}
