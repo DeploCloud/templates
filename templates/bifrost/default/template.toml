@@ -1,0 +1,30 @@
+[variables]
+admin_password = "${password:32}"
+encryption_key = "${password:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "bifrost"
+port = 8080
+host = "${domain}"
+
+[config.env]
+BIFROST_ADMIN_USERNAME = "admin"
+BIFROST_ADMIN_PASSWORD = "${admin_password}"
+BIFROST_ENCRYPTION_KEY = "${encryption_key}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+  "$schema": "https://www.getbifrost.ai/schema",
+  "encryption_key": "env.BIFROST_ENCRYPTION_KEY",
+  "governance": {
+    "auth_config": {
+      "is_enabled": true,
+      "admin_username": "env.BIFROST_ADMIN_USERNAME",
+      "admin_password": "env.BIFROST_ADMIN_PASSWORD"
+    }
+  }
+}
+"""
