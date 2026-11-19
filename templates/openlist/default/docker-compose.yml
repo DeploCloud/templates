@@ -1,0 +1,24 @@
+services:
+  openlist:
+    image: openlistteam/openlist:v4.2.9@sha256:897563beb674e7ad04edff14b0037dc8443ca3978570614005519df7eae06434
+    restart: unless-stopped
+    # the image's data dir is root-owned, so a fresh named volume needs root (as upstream's compose does)
+    user: "0:0"
+    expose:
+      - 5244
+    environment:
+      SITE_URL: ${SITE_URL}
+      OPENLIST_ADMIN_PASSWORD: ${OPENLIST_ADMIN_PASSWORD}
+      UMASK: ${UMASK}
+      TZ: ${TZ}
+    volumes:
+      - openlist-data:/opt/openlist/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:5244/ping || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  openlist-data: {}
