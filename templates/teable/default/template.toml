@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+secret_key = "${base64:44}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "teable"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PUBLIC_ORIGIN = "https://${domain}"
+SECRET_KEY = "${secret_key}"
+POSTGRES_DB = "teable"
+POSTGRES_USER = "teable"
+POSTGRES_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
