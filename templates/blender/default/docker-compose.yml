@@ -1,0 +1,18 @@
+services:
+  blender:
+    image: lscr.io/linuxserver/blender:5.3.0-ls247@sha256:ecd82590af507d4a64161be5a39517a62c95dce9eb24d685e31a116b611161a9
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - blender-config:/config
+
+volumes:
+  blender-config: {}

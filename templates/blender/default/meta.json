@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Blender 3D creation suite streamed to the browser behind a password, with preferences, add-ons and projects kept on a persistent volume and CPU rendering.",
+  "category": "media",
+  "developedBy": {
+    "label": "Blender Foundation",
+    "url": "https://www.blender.org/about/foundation/"
+  },
+  "links": {
+    "github": "https://github.com/blender/blender",
+    "website": "https://www.blender.org/",
+    "docs": [
+      "https://docs.blender.org/manual/en/latest/",
+      "https://docs.linuxserver.io/images/docker-blender/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. Save projects under /config so they persist.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-blender/"
+    },
+    {
+      "type": "info",
+      "message": "On arm64 servers this image installs the older Blender package from the Ubuntu repositories instead of the release in the image tag; x86_64 servers get the current release.",
+      "link": "https://docs.linuxserver.io/images/docker-blender/"
+    }
+  ]
+}
