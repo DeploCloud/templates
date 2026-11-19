@@ -1,0 +1,12 @@
+services:
+  chartdb:
+    image: ghcr.io/chartdb/chartdb:1.21.0@sha256:88664866464034f3fb3f6840f149e5beb6cc40d1b1665dbd787ab54b876d751c
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      OPENAI_API_KEY: "${OPENAI_API_KEY}"
+      OPENAI_API_ENDPOINT: "${OPENAI_API_ENDPOINT}"
+      LLM_MODEL_NAME: "${LLM_MODEL_NAME}"
+      HIDE_CHARTDB_CLOUD: "${HIDE_CHARTDB_CLOUD}"
+      DISABLE_ANALYTICS: "${DISABLE_ANALYTICS}"

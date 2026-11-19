@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based database diagram editor that imports a schema from a single query and exports SQL, served as a static app with diagrams kept in the browser.",
+  "category": "database",
+  "developedBy": {
+    "label": "ChartDB",
+    "url": "https://github.com/chartdb"
+  },
+  "links": {
+    "github": "https://github.com/chartdb/chartdb",
+    "website": "https://chartdb.io",
+    "docs": [
+      "https://github.com/chartdb/chartdb#run-the-docker-container",
+      "https://docs.chartdb.io/docs/cloud-vs-self-hosted"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Diagrams are stored in each browser's IndexedDB storage, not on the server. Export them to keep them across browsers and devices."
+    },
+    {
+      "type": "warning",
+      "message": "AI-powered SQL export is optional and needs OPENAI_API_KEY, or OPENAI_API_ENDPOINT plus LLM_MODEL_NAME for a custom OpenAI-compatible server. The values are served to every visitor in /config.js, so only set a key on an instance you do not expose publicly.",
+      "link": "https://github.com/chartdb/chartdb#using-custom-inference-server"
+    }
+  ]
+}
