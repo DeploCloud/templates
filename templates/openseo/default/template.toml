@@ -1,0 +1,51 @@
+[variables]
+storage_access_key = "${hash:20}"
+storage_secret_key = "${hash:64}"
+crawler_access_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "openseo"
+port = 80
+host = "${domain}"
+
+[config.env]
+BETTER_AUTH_URL = "https://${domain}"
+STORAGE_ACCESS_KEY = "${storage_access_key}"
+STORAGE_SECRET_KEY = "${storage_secret_key}"
+CRAWLER_ACCESS_SECRET = "${crawler_access_secret}"
+DATAFORSEO_API_KEY = ""
+TREG_API_TOKEN = ""
+OPENROUTER_API_KEY = ""
+OPENROUTER_BASE_URL = ""
+OPENROUTER_MODEL = ""
+GOOGLE_CLIENT_ID = ""
+GOOGLE_CLIENT_SECRET = ""
+GOOGLE_MAPS_API_KEY = ""
+CONTEXT_API_KEY = ""
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """server {
+  listen 80;
+  server_tokens off;
+  client_max_body_size 20m;
+  location = /api/standalone/import { return 404; }
+  location = /api/standalone/admin { return 404; }
+  location / {
+    proxy_pass http://openseo-runtime:8080;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header CF-Connecting-IP "";
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_read_timeout 3600s;
+    proxy_buffering off;
+  }
+}
+"""
