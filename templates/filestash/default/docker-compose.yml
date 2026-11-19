@@ -1,0 +1,22 @@
+services:
+  filestash:
+    image: machines/filestash:latest@sha256:6d82914d297a10871b34972742f842d1292917d69ee901916437d4d88450b12c
+    restart: unless-stopped
+    # Give the local storage backend a persisted home instead of "/".
+    command: ["/bin/sh", "-c", "mkdir -p /app/data/state/files && exec /app/filestash"]
+    expose:
+      - 8334
+    environment:
+      APPLICATION_URL: ${APPLICATION_URL}
+      HOME: /app/data/state/files
+    volumes:
+      - filestash-state:/app/data/state
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8334/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  filestash-state: {}
