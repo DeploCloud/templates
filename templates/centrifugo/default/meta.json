@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Real-time messaging server that delivers published messages to subscribed clients over WebSocket, SSE and HTTP-streaming, with an HTTP API and an admin web UI.",
+  "category": "development",
+  "developedBy": {
+    "label": "Centrifugal Labs",
+    "url": "https://github.com/centrifugal"
+  },
+  "links": {
+    "github": "https://github.com/centrifugal/centrifugo",
+    "website": "https://centrifugal.dev",
+    "docs": [
+      "https://centrifugal.dev/docs/getting-started/installation",
+      "https://centrifugal.dev/docs/server/configuration",
+      "https://centrifugal.dev/docs/server/admin_web",
+      "https://centrifugal.dev/docs/server/server_api"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the admin UI with the generated CENTRIFUGO_ADMIN_PASSWORD from the environment settings. Your backend publishes through the HTTP API at /api with the X-API-Key header set to CENTRIFUGO_HTTP_API_KEY, and signs client connection JWTs with CENTRIFUGO_CLIENT_TOKEN_HMAC_SECRET_KEY.",
+      "link": "https://centrifugal.dev/docs/server/admin_web"
+    },
+    {
+      "type": "warning",
+      "message": "Browser clients are rejected unless their origin is listed. Add your application's origins, space separated, to CENTRIFUGO_CLIENT_ALLOWED_ORIGINS.",
+      "link": "https://centrifugal.dev/docs/server/configuration#clientallowed_origins"
+    }
+  ]
+}

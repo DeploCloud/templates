@@ -1,0 +1,20 @@
+[variables]
+admin_password = "${password:24}"
+admin_secret = "${secret:64}"
+api_key = "${password:48}"
+token_secret = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "centrifugo"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+CENTRIFUGO_CLIENT_TOKEN_HMAC_SECRET_KEY = "${token_secret}"
+CENTRIFUGO_CLIENT_ALLOWED_ORIGINS = "https://${domain}"
+CENTRIFUGO_HTTP_API_KEY = "${api_key}"
+CENTRIFUGO_ADMIN_PASSWORD = "${admin_password}"
+CENTRIFUGO_ADMIN_SECRET = "${admin_secret}"
