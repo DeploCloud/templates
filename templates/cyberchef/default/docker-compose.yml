@@ -1,0 +1,6 @@
+services:
+  cyberchef:
+    image: ghcr.io/gchq/cyberchef:11.5.0@sha256:f04a39926344faf8e4cbbc8c92fb125d2b466f9be62db09aff23c7c406101a51
+    restart: unless-stopped
+    expose:
+      - 8080
