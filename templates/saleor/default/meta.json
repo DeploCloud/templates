@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Headless GraphQL commerce platform with the Saleor API, a Celery worker, the Dashboard admin UI, PostgreSQL and Valkey.",
+  "category": "other",
+  "developedBy": {
+    "label": "Saleor Commerce",
+    "url": "https://saleor.io"
+  },
+  "links": {
+    "github": "https://github.com/saleor/saleor",
+    "website": "https://saleor.io",
+    "docs": [
+      "https://docs.saleor.io/setup/docker-compose",
+      "https://docs.saleor.io/setup/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the Dashboard with the superuser created on first start: the email is DJANGO_SUPERUSER_EMAIL and the generated password is DJANGO_SUPERUSER_PASSWORD in the environment settings. The first start runs all database migrations and can take several minutes."
+    },
+    {
+      "type": "warning",
+      "message": "Outgoing email (password resets, staff invites, order notifications) needs an SMTP server: set EMAIL_URL, for example smtp://user:password@smtp.example.com:587/?tls=True."
+    }
+  ]
+}
