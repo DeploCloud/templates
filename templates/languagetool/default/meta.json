@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted LanguageTool HTTP server providing the grammar, style and spell checking API for 25+ languages.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "LanguageTool",
+    "url": "https://languagetool.org"
+  },
+  "links": {
+    "github": "https://github.com/languagetool-org/languagetool",
+    "website": "https://languagetool.org",
+    "docs": [
+      "https://dev.languagetool.org/http-server",
+      "https://languagetool.org/http-api/",
+      "https://github.com/Erikvl87/docker-languagetool"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The server has no web interface or authentication. Set https://<your-domain>/v2 as the custom server URL in the LanguageTool browser extension or add-in settings; anyone with the URL can use the API.",
+      "link": "https://dev.languagetool.org/http-server"
+    }
+  ]
+}
