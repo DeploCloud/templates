@@ -1,0 +1,14 @@
+[variables]
+elastic_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "elasticsearch"
+port = 9_200
+host = "${domain}"
+
+[config.env]
+ELASTIC_PASSWORD = "${elastic_password}"
+ES_JAVA_OPTS = "-Xms1g -Xmx1g"

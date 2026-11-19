@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Distributed RESTful search and analytics engine, deployed as a secured single-node cluster with persistent index storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "Elastic",
+    "url": "https://www.elastic.co/"
+  },
+  "links": {
+    "github": "https://github.com/elastic/elasticsearch",
+    "website": "https://www.elastic.co/elasticsearch",
+    "docs": [
+      "https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-basic",
+      "https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-configure",
+      "https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-prod",
+      "https://www.elastic.co/docs/reference/elasticsearch/rest-apis"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI: the domain serves the REST API with basic authentication. Log in as user elastic with the generated ELASTIC_PASSWORD from the environment variables."
+    }
+  ]
+}
