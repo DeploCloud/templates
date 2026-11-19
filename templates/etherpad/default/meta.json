@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Real-time collaborative document editor with a PostgreSQL database and persistent plugin storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "The Etherpad Foundation",
+    "url": "https://github.com/ether"
+  },
+  "links": {
+    "github": "https://github.com/ether/etherpad",
+    "website": "https://etherpad.org",
+    "docs": [
+      "https://github.com/ether/etherpad/blob/develop/doc/docker.md",
+      "https://github.com/ether/etherpad/blob/develop/doc/deployment.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin panel at /admin signs in as user \"admin\" with the generated ADMIN_PASSWORD from the environment variables. Pads are open to anyone who has the URL unless you enable authentication.",
+      "link": "https://github.com/ether/etherpad/blob/develop/doc/docker.md"
+    }
+  ]
+}
