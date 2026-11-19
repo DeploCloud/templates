@@ -1,0 +1,16 @@
+[variables]
+rpc_secret = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ariang"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+RPC_SECRET = "${rpc_secret}"
+ARIA2RPCPORT = "443"
+PUID = "1000"
+PGID = "1000"

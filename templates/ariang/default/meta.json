@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "AriaNg web interface bundled with the aria2 download engine for managing HTTP, FTP, BitTorrent and Metalink downloads from the browser.",
+  "category": "media",
+  "developedBy": {
+    "label": "mayswind",
+    "url": "https://github.com/mayswind"
+  },
+  "links": {
+    "github": "https://github.com/mayswind/AriaNg",
+    "website": "https://ariang.mayswind.net/",
+    "docs": [
+      "https://ariang.mayswind.net/",
+      "https://github.com/hurlenko/aria2-ariang-docker#readme",
+      "https://aria2.github.io/manual/en/html/aria2c.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open AriaNg Settings > RPC and paste the generated RPC_SECRET value into Aria2 RPC Secret Token. It is stored per browser and the UI shows as disconnected until it is set."
+    }
+  ]
+}
