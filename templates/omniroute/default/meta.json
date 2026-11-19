@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI gateway that routes OpenAI-compatible requests across many LLM providers with fallback, quotas and a web dashboard.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Cheaper Inference",
+    "url": "https://github.com/cheaper-inference"
+  },
+  "links": {
+    "github": "https://github.com/cheaper-inference/OmniRoute",
+    "website": "https://omniroute.online",
+    "docs": [
+      "https://github.com/cheaper-inference/OmniRoute/blob/main/docs/getting-started/SELF_HOST_GUIDE.md",
+      "https://github.com/cheaper-inference/OmniRoute/blob/main/docs/guides/DOCKER_GUIDE.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard with the generated INITIAL_PASSWORD environment variable, then add your provider API keys and create an API key for clients calling the /v1 endpoint.",
+      "link": "https://github.com/cheaper-inference/OmniRoute/blob/main/docs/getting-started/SELF_HOST_GUIDE.md"
+    }
+  ]
+}
