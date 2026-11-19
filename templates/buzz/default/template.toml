@@ -1,0 +1,27 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${hash:48}"
+s3_access_key = "${hash:20}"
+s3_secret_key = "${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "buzz"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+BUZZ_S3_ACCESS_KEY = "${s3_access_key}"
+BUZZ_S3_SECRET_KEY = "${s3_secret_key}"
+BUZZ_S3_BUCKET = "buzz-media"
+RELAY_URL = "wss://${domain}"
+BUZZ_MEDIA_BASE_URL = "https://${domain}/media"
+BUZZ_CORS_ORIGINS = "https://${domain}"
+BUZZ_RELAY_PRIVATE_KEY = "${hash:64}"
+BUZZ_GIT_HOOK_HMAC_SECRET = "${hash:64}"
+BUZZ_REQUIRE_RELAY_MEMBERSHIP = "false"
+RELAY_OWNER_PUBKEY = ""
