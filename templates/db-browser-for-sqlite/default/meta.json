@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "DB Browser for SQLite desktop app streamed to the browser, for creating, browsing and editing SQLite database files kept on a persistent volume.",
+  "category": "database",
+  "developedBy": {
+    "label": "DB Browser for SQLite",
+    "url": "https://github.com/sqlitebrowser"
+  },
+  "links": {
+    "github": "https://github.com/sqlitebrowser/sqlitebrowser",
+    "website": "https://sqlitebrowser.org/",
+    "docs": [
+      "https://github.com/sqlitebrowser/sqlitebrowser/wiki",
+      "https://docs.linuxserver.io/images/docker-sqlitebrowser/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and the web desktop includes a terminal with sudo inside the container. Save databases under /config so they persist.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-sqlitebrowser/"
+    }
+  ]
+}
