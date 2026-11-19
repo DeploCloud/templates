@@ -1,0 +1,24 @@
+[variables]
+node_cookie = "${password:48}"
+# Trailing digit keeps it valid under the dashboard rule of two character classes
+dashboard_password = "${password:31}7"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "emqx"
+port = 18_083
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "emqx"
+port = 8_083
+host = "${domain}"
+path = "/mqtt"
+
+[config.env]
+EMQX_NODE__COOKIE = "${node_cookie}"
+EMQX_DASHBOARD__DEFAULT_USERNAME = "admin"
+EMQX_DASHBOARD__DEFAULT_PASSWORD = "${dashboard_password}"
