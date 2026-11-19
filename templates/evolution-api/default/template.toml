@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+api_key = "${password:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "evolution-api"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SERVER_URL = "https://${domain}"
+AUTHENTICATION_API_KEY = "${api_key}"
+DB_NAME = "evolution"
+DB_USER = "evolution"
+DB_PASSWORD = "${db_password}"
