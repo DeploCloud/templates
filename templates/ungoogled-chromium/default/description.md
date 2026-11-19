@@ -1,0 +1,1 @@
+Ungoogled Chromium is Chromium with Google web service integration removed. This template runs it inside a web desktop that streams the browser to any modern browser over HTTPS. Profiles, bookmarks, extensions and downloads live in the home directory at `/config`, which is kept on a persistent volume. Sign in with the generated basic auth credentials shown in the environment.
