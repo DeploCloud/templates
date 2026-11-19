@@ -1,0 +1,74 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "apache-superset"
+port = 8_088
+host = "${domain}"
+
+[config.env]
+SUPERSET_SECRET_KEY = "${base64:64}"
+POSTGRES_PASSWORD = "${db_password}"
+SUPERSET_DATABASE_URI = "postgresql+psycopg2://superset:${db_password}@apache-superset-db:5432/superset"
+SUPERSET_PUBLIC_URL = "https://${domain}"
+ADMIN_USERNAME = "admin"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "superset_config.py"
+content = """import os
+
+from celery.schedules import crontab
+from flask_caching.backends.filesystemcache import FileSystemCache
+
+REDIS_URL = "redis://apache-superset-redis:6379"
+
+# TLS ends at the reverse proxy, which forwards X-Forwarded-* headers.
+ENABLE_PROXY_FIX = True
+
+CACHE_CONFIG = {
+    "CACHE_TYPE": "RedisCache",
+    "CACHE_DEFAULT_TIMEOUT": 300,
+    "CACHE_KEY_PREFIX": "superset_",
+    "CACHE_REDIS_URL": REDIS_URL + "/1",
+}
+DATA_CACHE_CONFIG = CACHE_CONFIG
+THUMBNAIL_CACHE_CONFIG = CACHE_CONFIG
+RATELIMIT_STORAGE_URI = REDIS_URL + "/2"
+
+# On the shared volume so the web app reads results of async queries run by the worker.
+RESULTS_BACKEND = FileSystemCache("/app/superset_home/sqllab")
+
+
+class CeleryConfig:
+    broker_url = REDIS_URL + "/0"
+    result_backend = REDIS_URL + "/1"
+    imports = (
+        "superset.sql_lab",
+        "superset.tasks.scheduler",
+        "superset.tasks.thumbnails",
+        "superset.tasks.cache",
+    )
+    worker_prefetch_multiplier = 1
+    task_acks_late = False
+    beat_schedule = {
+        "reports.scheduler": {
+            "task": "reports.scheduler",
+            "schedule": crontab(minute="*", hour="*"),
+        },
+        "reports.prune_log": {
+            "task": "reports.prune_log",
+            "schedule": crontab(minute=10, hour=0),
+        },
+    }
+
+
+CELERY_CONFIG = CeleryConfig
+
+WEBDRIVER_BASEURL = "http://apache-superset:8088/"
+WEBDRIVER_BASEURL_USER_FRIENDLY = os.environ["SUPERSET_PUBLIC_URL"] + "/"
+"""
