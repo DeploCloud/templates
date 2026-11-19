@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cyberchef"
+port = 8080
+host = "${domain}"

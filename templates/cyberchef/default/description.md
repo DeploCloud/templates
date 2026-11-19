@@ -1,0 +1,1 @@
+CyberChef is a web app for encoding, decoding, encryption, compression, hashing and data analysis, built by chaining operations into recipes. The official image serves the static build with an unprivileged nginx on port 8080. All processing happens in the browser, so the stack is stateless and needs no volumes, accounts or setup.
