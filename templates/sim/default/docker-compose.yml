@@ -1,0 +1,126 @@
+services:
+  sim:
+    image: ghcr.io/simstudioai/simstudio:v0.9.63@sha256:76059f19dc6ca67a22c71b87af928e2bf97ee9e768255eb307d8a5a66192d7c6
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://sim:${SIM_DB_PASSWORD}@sim-db:5432/simstudio
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      BETTER_AUTH_URL: ${NEXT_PUBLIC_APP_URL}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      INTERNAL_API_SECRET: ${INTERNAL_API_SECRET}
+      API_ENCRYPTION_KEY: ${API_ENCRYPTION_KEY}
+      CRON_SECRET: ${CRON_SECRET}
+      REDIS_URL: redis://sim-redis:6379
+      SOCKET_SERVER_URL: http://sim-realtime:3002
+      NEXT_PUBLIC_CHAT_DISABLED: ${NEXT_PUBLIC_CHAT_DISABLED}
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+    volumes:
+      - sim-uploads:/app/apps/sim/uploads
+    depends_on:
+      sim-init:
+        condition: service_completed_successfully
+      sim-migrations:
+        condition: service_completed_successfully
+      sim-db:
+        condition: service_healthy
+      sim-redis:
+        condition: service_healthy
+      sim-realtime:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  # The uploads mount point does not exist in the image, so the fresh volume is root-owned.
+  sim-init:
+    image: ghcr.io/simstudioai/simstudio:v0.9.63@sha256:76059f19dc6ca67a22c71b87af928e2bf97ee9e768255eb307d8a5a66192d7c6
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "1001:1001", "/app/apps/sim/uploads"]
+    volumes:
+      - sim-uploads:/app/apps/sim/uploads
+
+  sim-realtime:
+    image: ghcr.io/simstudioai/realtime:v0.9.63@sha256:3f578ddb8fc3b754f60b5662a4e6b40b7c7e7ea873f7a902a2db92689d3cfb2a
+    restart: unless-stopped
+    expose:
+      - 3002
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://sim:${SIM_DB_PASSWORD}@sim-db:5432/simstudio
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      BETTER_AUTH_URL: ${NEXT_PUBLIC_APP_URL}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      INTERNAL_API_SECRET: ${INTERNAL_API_SECRET}
+      REDIS_URL: redis://sim-redis:6379
+    depends_on:
+      sim-db:
+        condition: service_healthy
+      sim-redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3002/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  sim-migrations:
+    image: ghcr.io/simstudioai/migrations:v0.9.63@sha256:bc5a72a06b485fcdf7488dba260a2ef57b82034ffef73683250ffa160a72ab9f
+    restart: "no"
+    command: ["bun", "run", "db:migrate"]
+    environment:
+      DATABASE_URL: postgresql://sim:${SIM_DB_PASSWORD}@sim-db:5432/simstudio
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    depends_on:
+      sim-db:
+        condition: service_healthy
+
+  sim-cron:
+    image: ghcr.io/simstudioai/cron:v0.9.63@sha256:ba61c2b4b8e04f1a5377364741c078b5eebc11fa77c811d4080af50138fe9c7c
+    restart: unless-stopped
+    environment:
+      SIM_URL: http://sim:3000
+      CRON_SECRET: ${CRON_SECRET}
+      TZ: UTC
+    depends_on:
+      sim:
+        condition: service_healthy
+
+  sim-db:
+    image: pgvector/pgvector:0.8.7-pg17@sha256:b513c48566e4777cd3370451400000c78eda6a08131d68f4c31d4a76f27bd8fd
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sim
+      POSTGRES_PASSWORD: ${SIM_DB_PASSWORD}
+      POSTGRES_DB: simstudio
+    volumes:
+      - sim-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sim -d simstudio"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  sim-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - sim-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  sim-uploads: {}
+  sim-db-data: {}
+  sim-redis-data: {}
