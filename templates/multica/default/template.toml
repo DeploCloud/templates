@@ -1,0 +1,37 @@
+[variables]
+db_password = "${password:32}"
+jwt_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "multica"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "multica-backend"
+port = 8_080
+host = "${domain}"
+path = "/ws"
+
+[[config.domains]]
+serviceName = "multica-backend"
+port = 8_080
+host = "${domain}"
+path = "/api/daemon/ws"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+JWT_SECRET = "${jwt_secret}"
+MULTICA_APP_URL = "https://${domain}"
+ALLOW_SIGNUP = "true"
+SMTP_HOST = ""
+SMTP_PORT = "587"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+SMTP_FROM_EMAIL = ""
+RESEND_API_KEY = ""
+RESEND_FROM_EMAIL = ""
