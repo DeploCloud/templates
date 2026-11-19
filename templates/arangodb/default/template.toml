@@ -1,0 +1,13 @@
+[variables]
+root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "arangodb"
+port = 8_529
+host = "${domain}"
+
+[config.env]
+ARANGO_ROOT_PASSWORD = "${root_password}"
