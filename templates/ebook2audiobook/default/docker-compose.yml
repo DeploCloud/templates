@@ -1,0 +1,29 @@
+services:
+  ebook2audiobook:
+    image: athomasson2/ebook2audiobook:v26.11.17-cpu@sha256:d023ad542994643619bbd6f8d9b9d8380b4c1a7568e47358de2156c23cc242f2
+    restart: unless-stopped
+    expose:
+      - 7860
+    volumes:
+      - ebooks:/app/ebooks
+      - audiobooks:/app/audiobooks
+      - models:/app/models
+      - voices:/app/voices
+      - run:/app/run
+      - tmp:/app/tmp
+      - venvs:/app/lib/classes/tts_engines/venvs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:7860/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 600s
+
+volumes:
+  ebooks: {}
+  audiobooks: {}
+  models: {}
+  voices: {}
+  run: {}
+  tmp: {}
+  venvs: {}
