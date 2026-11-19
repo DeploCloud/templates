@@ -1,0 +1,60 @@
+[config]
+
+[[config.domains]]
+serviceName = "homer"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.yml"
+content = """---
+# Homer dashboard configuration
+# Options: https://github.com/homer-dashboard/homer/blob/main/docs/configuration.md
+# Icons: https://fontawesome.com/search
+
+title: "Dashboard"
+subtitle: "Homer"
+logo: "logo.png"
+
+header: true
+footer: false
+
+columns: "3"
+connectivityCheck: true
+
+defaults:
+  layout: columns
+  colorTheme: auto
+  iconWidth: auto
+
+theme: default
+
+links:
+  - name: "Documentation"
+    icon: "fas fa-book"
+    url: "https://github.com/homer-dashboard/homer/blob/main/docs/configuration.md"
+    target: "_blank"
+
+services:
+  - name: "Getting started"
+    icon: "fas fa-rocket"
+    items:
+      - name: "Configuration"
+        icon: "fas fa-sliders"
+        subtitle: "Edit config.yml to add your own services"
+        tag: "setup"
+        url: "https://github.com/homer-dashboard/homer/blob/main/docs/configuration.md"
+        target: "_blank"
+      - name: "Smart cards"
+        icon: "fas fa-bolt"
+        subtitle: "Cards that show live status from your apps"
+        tag: "setup"
+        url: "https://github.com/homer-dashboard/homer/blob/main/docs/customservices.md"
+        target: "_blank"
+      - name: "Theming"
+        icon: "fas fa-palette"
+        subtitle: "Colors, layout and custom stylesheets"
+        tag: "theming"
+        url: "https://github.com/homer-dashboard/homer/blob/main/docs/theming.md"
+        target: "_blank"
+"""
