@@ -1,0 +1,46 @@
+services:
+  open-notebook:
+    image: lfnovo/open_notebook:1.15.1@sha256:e4e18f12653df5bf48674b7b187c4252be52238b4d706330fd30d9b177b95812
+    restart: unless-stopped
+    expose:
+      - 8502
+    environment:
+      API_URL: ${API_URL}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      OPEN_NOTEBOOK_ENCRYPTION_KEY: ${OPEN_NOTEBOOK_ENCRYPTION_KEY}
+      OPEN_NOTEBOOK_PASSWORD: ${OPEN_NOTEBOOK_PASSWORD}
+      SURREAL_URL: ws://open-notebook-db:8000/rpc
+      SURREAL_USER: ${SURREAL_USER}
+      SURREAL_PASSWORD: ${SURREAL_PASSWORD}
+      SURREAL_NAMESPACE: open_notebook
+      SURREAL_DATABASE: open_notebook
+    volumes:
+      - open-notebook-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5055/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      open-notebook-db:
+        condition: service_healthy
+
+  open-notebook-db:
+    image: surrealdb/surrealdb:v2.7.0@sha256:e5d7387e3727bbe2f7cd6d869e48cd34777272258572ead37c9656b25f745723
+    restart: unless-stopped
+    # The image runs as non-root and cannot write to a fresh volume otherwise.
+    user: root
+    command: ["start", "--log", "info", "--user", "${SURREAL_USER}", "--pass", "${SURREAL_PASSWORD}", "rocksdb:/mydata/mydatabase.db"]
+    volumes:
+      - open-notebook-db:/mydata
+    healthcheck:
+      test: ["CMD", "/surreal", "is-ready", "--endpoint", "http://localhost:8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  open-notebook-data: {}
+  open-notebook-db: {}
