@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight web chat client for OpenAI, Claude, Gemini, DeepSeek and other model APIs, protected by an access password.",
+  "category": "ai",
+  "developedBy": {
+    "label": "NextChat",
+    "url": "https://github.com/ChatGPTNextWeb"
+  },
+  "links": {
+    "github": "https://github.com/ChatGPTNextWeb/NextChat",
+    "website": "https://nextchat.club",
+    "docs": [
+      "https://github.com/ChatGPTNextWeb/NextChat#environment-variables",
+      "https://github.com/ChatGPTNextWeb/NextChat/blob/main/docs/faq-en.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set OPENAI_API_KEY (and BASE_URL for an OpenAI-compatible endpoint) in the environment, or let each user enter their own key in the settings. Users must enter the generated CODE access password in the settings to use the server's key.",
+      "link": "https://github.com/ChatGPTNextWeb/NextChat#environment-variables"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+services:
+  nextchat:
+    image: yidadaa/chatgpt-next-web:v2.16.1@sha256:eaaa469ddeeb5fa58fb35f8767e9e096a2f1c8468c54b6703323624bf3071c5a
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      # Docker sets HOSTNAME to the container id; the Next.js server must bind all interfaces
+      HOSTNAME: 0.0.0.0
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      BASE_URL: ${BASE_URL}
+      CODE: ${CODE}
