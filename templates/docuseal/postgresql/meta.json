@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Open source document signing platform: build fillable PDF forms and collect e-signatures, backed by a bundled PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "DocuSeal",
+    "url": "https://www.docuseal.com"
+  },
+  "links": {
+    "github": "https://github.com/docusealco/docuseal",
+    "website": "https://www.docuseal.com",
+    "docs": [
+      "https://www.docuseal.com/install",
+      "https://www.docuseal.com/docs/configuring-docuseal-via-environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visit opens a setup page: the account created there becomes the admin. Configure SMTP under Settings > Email so signature requests can be sent by email.",
+      "link": "https://www.docuseal.com/install"
+    }
+  ]
+}

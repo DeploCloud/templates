@@ -1,0 +1,14 @@
+services:
+  docuseal:
+    image: docuseal/docuseal:3.3.7@sha256:d2e998dd1fbf9c462a1749df38e4b93f03f8bc552865aad6350d01511d450a65
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      FORCE_SSL: ${FORCE_SSL}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+    volumes:
+      - docuseal-data:/data/docuseal
+
+volumes:
+  docuseal-data: {}

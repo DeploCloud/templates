@@ -1,0 +1,33 @@
+services:
+  docuseal:
+    image: docuseal/docuseal:3.3.7@sha256:d2e998dd1fbf9c462a1749df38e4b93f03f8bc552865aad6350d01511d450a65
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      FORCE_SSL: ${FORCE_SSL}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DATABASE_URL: postgresql://docuseal:${DB_PASSWORD}@docuseal-db:5432/docuseal
+    volumes:
+      - docuseal-data:/data/docuseal
+    depends_on:
+      docuseal-db:
+        condition: service_healthy
+  docuseal-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: docuseal
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: docuseal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docuseal -d docuseal"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - docuseal-db:/var/lib/postgresql
+
+volumes:
+  docuseal-data: {}
+  docuseal-db: {}

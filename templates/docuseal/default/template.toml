@@ -1,0 +1,14 @@
+[variables]
+secret_key_base = "${hash:128}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "docuseal"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+FORCE_SSL = "true"
+SECRET_KEY_BASE = "${secret_key_base}"
