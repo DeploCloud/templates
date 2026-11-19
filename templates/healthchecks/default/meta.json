@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Cron job and background task monitoring that alerts you when scheduled jobs fail to check in on time, backed by PostgreSQL.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Healthchecks.io",
+    "url": "https://healthchecks.io"
+  },
+  "links": {
+    "github": "https://github.com/healthchecks/healthchecks",
+    "website": "https://healthchecks.io",
+    "docs": [
+      "https://healthchecks.io/docs/self_hosted_docker/",
+      "https://healthchecks.io/docs/self_hosted_configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set ADMIN_EMAIL to an address you own before the first deploy. The first start creates a superuser with that email and the generated ADMIN_PASSWORD; changing the email or password later emails a confirmation code to that address.",
+      "link": "https://github.com/healthchecks/healthchecks/tree/master/docker#getting-started"
+    },
+    {
+      "type": "warning",
+      "message": "Email alerts, email login links and account changes need SMTP: fill in EMAIL_HOST and the other EMAIL_* variables, then redeploy.",
+      "link": "https://healthchecks.io/docs/self_hosted_configuration/#EMAIL_HOST"
+    }
+  ]
+}
