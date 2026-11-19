@@ -1,0 +1,68 @@
+services:
+  odysseus:
+    image: ghcr.io/odysseus-dev/odysseus:1.0.3-9d0d372@sha256:5117c5e07e5976095ce213e601277ff372e0387a67de34c5fd59a3de723e6113
+    restart: unless-stopped
+    expose:
+      - 7000
+    environment:
+      AUTH_ENABLED: "true"
+      LOCALHOST_BYPASS: "false"
+      ODYSSEUS_ADMIN_USER: ${ODYSSEUS_ADMIN_USER}
+      ODYSSEUS_ADMIN_PASSWORD: ${ODYSSEUS_ADMIN_PASSWORD}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      OAUTH_REDIRECT_BASE_URL: ${OAUTH_REDIRECT_BASE_URL}
+      SEARXNG_INSTANCE: http://odysseus-searxng:8080
+      CHROMADB_HOST: odysseus-chromadb
+      CHROMADB_PORT: "8000"
+    volumes:
+      - odysseus-data:/app/data
+      - odysseus-logs:/app/logs
+      - odysseus-ssh:/app/.ssh
+      - odysseus-huggingface:/app/.cache/huggingface
+      - odysseus-local:/app/.local
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:7000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      odysseus-searxng:
+        condition: service_healthy
+      odysseus-chromadb:
+        condition: service_started
+
+  odysseus-chromadb:
+    image: docker.io/chromadb/chroma:1.5.9@sha256:1e0b73a187a28757c572acba508c46f48c9e8b0acaf5c20e6d95cdedce1acdf6
+    restart: unless-stopped
+    environment:
+      ANONYMIZED_TELEMETRY: "FALSE"
+    volumes:
+      - odysseus-chromadb:/data
+
+  odysseus-searxng:
+    image: docker.io/searxng/searxng:2026.10.24-ef0ec03da@sha256:7c7cbe509429e82755104b2a95f52085a98633c95d53f44e4e905fa3a59f08c8
+    restart: unless-stopped
+    environment:
+      SEARXNG_BASE_URL: http://odysseus-searxng:8080/
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+    volumes:
+      - odysseus-searxng-config:/etc/searxng
+      - odysseus-searxng-cache:/var/cache/searxng
+      - ./searxng-settings.yml:/etc/searxng/settings.yml:ro
+    healthcheck:
+      test: ["CMD", "/usr/local/searxng/.venv/bin/python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/', timeout=5).read(1)"]
+      interval: 10s
+      timeout: 6s
+      retries: 20
+      start_period: 10s
+
+volumes:
+  odysseus-data: {}
+  odysseus-logs: {}
+  odysseus-ssh: {}
+  odysseus-huggingface: {}
+  odysseus-local: {}
+  odysseus-chromadb: {}
+  odysseus-searxng-config: {}
+  odysseus-searxng-cache: {}

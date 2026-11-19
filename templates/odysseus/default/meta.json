@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI workspace for chat, agents, deep research, documents, email, notes and calendar, with bundled ChromaDB and SearXNG.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Odysseus",
+    "url": "https://github.com/odysseus-dev"
+  },
+  "links": {
+    "github": "https://github.com/odysseus-dev/odysseus",
+    "website": "https://odysseus-dev.github.io/odysseus/",
+    "docs": [
+      "https://odysseus-dev.github.io/odysseus/setup.html",
+      "https://odysseus-dev.github.io/odysseus/configuration-reference.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the password in the ODYSSEUS_ADMIN_PASSWORD environment variable, then add a model provider (OpenAI-compatible API key or a remote Ollama/vLLM endpoint) in Settings before chatting."
+    }
+  ]
+}
