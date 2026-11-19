@@ -1,0 +1,25 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Gatus status page and endpoint monitoring with check results and uptime history stored in a bundled PostgreSQL database.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "TwiN",
+    "url": "https://github.com/TwiN"
+  },
+  "links": {
+    "github": "https://github.com/TwiN/gatus",
+    "website": "https://gatus.io",
+    "docs": [
+      "https://github.com/TwiN/gatus#storage",
+      "https://github.com/TwiN/gatus/tree/master/.examples/docker-compose-postgres-storage",
+      "https://github.com/TwiN/gatus#endpoints"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Endpoints, alerting and access control are defined in config.yaml. Edit the mounted file and redeploy to monitor your own services. The dashboard is public unless you add basic auth or OIDC under security.",
+      "link": "https://github.com/TwiN/gatus#security"
+    }
+  ]
+}
