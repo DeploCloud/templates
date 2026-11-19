@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "Teleport Auth and Proxy Service with the web UI, audit log and session recordings, reachable by tsh and agents over the single HTTPS domain.",
+  "category": "security",
+  "developedBy": {
+    "label": "Teleport",
+    "url": "https://goteleport.com"
+  },
+  "links": {
+    "github": "https://github.com/gravitational/teleport",
+    "website": "https://goteleport.com",
+    "docs": [
+      "https://goteleport.com/docs/installation/single-machine/docker/",
+      "https://goteleport.com/docs/reference/architecture/tls-routing/",
+      "https://goteleport.com/docs/reference/deployment/config/",
+      "https://goteleport.com/docs/get-started/deploy-community/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No user exists after the first start. Run `tctl users add admin --roles=editor,access,auditor --logins=root` in the teleport container terminal, then open the printed invite link within one hour to set a password and register an authenticator app or passkey.",
+      "link": "https://goteleport.com/docs/get-started/deploy-community/"
+    },
+    {
+      "type": "info",
+      "message": "Only the HTTPS domain is published: agents join with proxy_server set to <domain>:443 and clients connect through connection upgrades. Application access on subdomains needs a wildcard domain that this template does not route.",
+      "link": "https://goteleport.com/docs/reference/architecture/tls-routing/"
+    },
+    {
+      "type": "info",
+      "message": "The official Teleport Community Edition image is free for personal use and for companies with fewer than 100 employees and under US$10M annual revenue; larger companies need a Teleport Enterprise license.",
+      "link": "https://goteleport.com/docs/feature-matrix/"
+    }
+  ]
+}
