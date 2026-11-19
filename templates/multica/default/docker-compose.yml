@@ -1,0 +1,64 @@
+services:
+  multica:
+    image: ghcr.io/multica-ai/multica-web:v0.11.0@sha256:ba8fd0fda94a9ec141e15d77e591db8ee4b246720a722d6f9dffd185ee48863b
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      HOSTNAME: 0.0.0.0
+      REMOTE_API_URL: http://multica-backend:8080
+    depends_on:
+      multica-backend:
+        condition: service_healthy
+
+  multica-backend:
+    image: ghcr.io/multica-ai/multica-backend:v0.11.0@sha256:099fd0d1eea8fc4cf03254c6dff86f7de206662ff71db8dc9a78e66726dd65a4
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - multica-uploads:/app/data/uploads
+    environment:
+      DATABASE_URL: postgres://multica:${POSTGRES_PASSWORD}@multica-db:5432/multica?sslmode=disable
+      PORT: "8080"
+      APP_ENV: production
+      JWT_SECRET: ${JWT_SECRET}
+      FRONTEND_ORIGIN: ${MULTICA_APP_URL}
+      CORS_ALLOWED_ORIGINS: ${MULTICA_APP_URL}
+      MULTICA_APP_URL: ${MULTICA_APP_URL}
+      ALLOW_SIGNUP: ${ALLOW_SIGNUP}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      multica-db:
+        condition: service_healthy
+
+  multica-db:
+    image: pgvector/pgvector:0.8.7-pg17@sha256:b513c48566e4777cd3370451400000c78eda6a08131d68f4c31d4a76f27bd8fd
+    restart: unless-stopped
+    volumes:
+      - multica-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: multica
+      POSTGRES_USER: multica
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U multica -d multica"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  multica-uploads: {}
+  multica-db: {}
