@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "PDF toolkit with over 100 tools to merge, split, edit, sign, convert, compress and OCR PDFs, all processed in the visitor's browser.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "BentoPDF",
+    "url": "https://www.bentopdf.com/"
+  },
+  "links": {
+    "github": "https://github.com/alam00000/bentopdf",
+    "website": "https://www.bentopdf.com/",
+    "docs": [
+      "https://www.bentopdf.com/docs",
+      "https://www.bentopdf.com/docs/self-hosting/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Files are never stored on the server: every tool runs in the browser and results must be downloaded before closing the tab. Some advanced tools and OCR load their WebAssembly modules and language data from the jsDelivr CDN, so visitors need internet access."
+    }
+  ]
+}

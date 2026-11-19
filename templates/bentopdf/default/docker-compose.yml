@@ -1,0 +1,13 @@
+services:
+  bentopdf:
+    image: ghcr.io/alam00000/bentopdf-simple:2.8.11@sha256:3bbab98791694b77bc70ab03bf1b2ea89e568a75ef172c27d95cbdbdf810038f
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DISABLE_IPV6: "true"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
