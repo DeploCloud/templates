@@ -1,0 +1,24 @@
+[variables]
+gateway_token = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "openclaw"
+port = 18_789
+host = "${domain}"
+
+[config.env]
+OPENCLAW_GATEWAY_TOKEN = "${gateway_token}"
+
+[[config.mounts]]
+filePath = "openclaw.json"
+content = """
+{
+  "gateway": {
+    "mode": "local",
+    "publicOrigin": "https://${domain}",
+    "trustedProxies": ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
+  }
+}
+"""
