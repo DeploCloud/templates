@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "AI gateway with one OpenAI-compatible API for many LLM providers, plus failover, load balancing, virtual keys, budgets and a web dashboard.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Maxim AI",
+    "url": "https://www.getmaxim.ai/"
+  },
+  "links": {
+    "github": "https://github.com/maximhq/bifrost",
+    "website": "https://docs.getbifrost.ai/",
+    "docs": [
+      "https://docs.getbifrost.ai/quickstart/gateway/setting-up",
+      "https://docs.getbifrost.ai/quickstart/gateway/setting-up-auth",
+      "https://docs.getbifrost.ai/deployment-guides/config-json/governance"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the username admin and the password in the BIFROST_ADMIN_PASSWORD environment variable, then add your provider API keys. Inference requests need a virtual key, created in the dashboard.",
+      "link": "https://docs.getbifrost.ai/quickstart/gateway/setting-up-auth"
+    }
+  ]
+}
