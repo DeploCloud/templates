@@ -1,0 +1,30 @@
+services:
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:1.2.1@sha256:d2bc230a714e933affd63753e181a0579328fdcbbc021800a76e0bc7b6e76b31
+    restart: unless-stopped
+    stop_grace_period: 75s
+    shm_size: 1gb
+    expose:
+      - 8888
+      - 9999
+    environment:
+      HINDSIGHT_API_LLM_PROVIDER: ${HINDSIGHT_API_LLM_PROVIDER}
+      HINDSIGHT_API_LLM_API_KEY: ${HINDSIGHT_API_LLM_API_KEY}
+      HINDSIGHT_API_LLM_MODEL: ${HINDSIGHT_API_LLM_MODEL}
+      HINDSIGHT_API_LLM_BASE_URL: ${HINDSIGHT_API_LLM_BASE_URL}
+      HINDSIGHT_API_TENANT_EXTENSION: hindsight_api.extensions.builtin.tenant:ApiKeyTenantExtension
+      HINDSIGHT_API_TENANT_API_KEY: ${HINDSIGHT_API_TENANT_API_KEY}
+      HINDSIGHT_CP_DATAPLANE_API_KEY: ${HINDSIGHT_API_TENANT_API_KEY}
+      HINDSIGHT_CP_ACCESS_KEY: ${HINDSIGHT_CP_ACCESS_KEY}
+      HINDSIGHT_API_WORKER_ID: hindsight
+    volumes:
+      - hindsight-data:/home/hindsight/.pg0
+    healthcheck:
+      test: ["CMD", "python3", "-m", "hindsight_api.http_probe", "http://localhost:8888/health", "5"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  hindsight-data: {}

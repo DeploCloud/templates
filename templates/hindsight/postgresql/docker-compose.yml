@@ -1,0 +1,46 @@
+services:
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:1.2.1@sha256:d2bc230a714e933affd63753e181a0579328fdcbbc021800a76e0bc7b6e76b31
+    restart: unless-stopped
+    stop_grace_period: 75s
+    expose:
+      - 8888
+      - 9999
+    environment:
+      HINDSIGHT_API_DATABASE_URL: postgresql://hindsight:${DB_PASSWORD}@hindsight-db:5432/hindsight
+      HINDSIGHT_API_LLM_PROVIDER: ${HINDSIGHT_API_LLM_PROVIDER}
+      HINDSIGHT_API_LLM_API_KEY: ${HINDSIGHT_API_LLM_API_KEY}
+      HINDSIGHT_API_LLM_MODEL: ${HINDSIGHT_API_LLM_MODEL}
+      HINDSIGHT_API_LLM_BASE_URL: ${HINDSIGHT_API_LLM_BASE_URL}
+      HINDSIGHT_API_TENANT_EXTENSION: hindsight_api.extensions.builtin.tenant:ApiKeyTenantExtension
+      HINDSIGHT_API_TENANT_API_KEY: ${HINDSIGHT_API_TENANT_API_KEY}
+      HINDSIGHT_CP_DATAPLANE_API_KEY: ${HINDSIGHT_API_TENANT_API_KEY}
+      HINDSIGHT_CP_ACCESS_KEY: ${HINDSIGHT_CP_ACCESS_KEY}
+      HINDSIGHT_API_WORKER_ID: hindsight
+    depends_on:
+      hindsight-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python3", "-m", "hindsight_api.http_probe", "http://localhost:8888/health", "5"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+  hindsight-db:
+    image: pgvector/pgvector:0.8.7-pg18@sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hindsight
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: hindsight
+    volumes:
+      - hindsight-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hindsight -d hindsight"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  hindsight-db: {}
