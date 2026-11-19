@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Explore and publish SQLite databases through a web interface and JSON API, with faceted browsing and read-only SQL queries.",
+  "category": "database",
+  "developedBy": {
+    "label": "Simon Willison",
+    "url": "https://github.com/simonw"
+  },
+  "links": {
+    "github": "https://github.com/simonw/datasette",
+    "website": "https://datasette.io",
+    "docs": [
+      "https://docs.datasette.io/en/stable/installation.html#using-docker",
+      "https://docs.datasette.io/en/stable/settings.html#configuration-directory-mode"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Datasette starts with no data. Copy your SQLite database files (.db, .sqlite, .sqlite3) into the /data volume and restart the service to publish them. Everything served is public with read-only SQL access unless you add an authentication plugin.",
+      "link": "https://docs.datasette.io/en/stable/settings.html#configuration-directory-mode"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

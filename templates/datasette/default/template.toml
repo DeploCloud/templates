@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "datasette"
+port = 8_001
+host = "${domain}"
+
+[config.env]
+DATASETTE_SECRET = "${secret:64}"
