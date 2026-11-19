@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source secrets management platform for syncing secrets, certificates and configuration across teams and infrastructure, backed by PostgreSQL and Redis.",
+  "category": "security",
+  "developedBy": {
+    "label": "Infisical",
+    "url": "https://infisical.com"
+  },
+  "links": {
+    "github": "https://github.com/Infisical/infisical",
+    "website": "https://infisical.com",
+    "docs": [
+      "https://infisical.com/docs/self-hosting/deployment-options/docker-compose",
+      "https://infisical.com/docs/self-hosting/configuration/envars"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the instance administrator. Create it right after deployment, before sharing the URL.",
+      "link": "https://infisical.com/docs/self-hosting/deployment-options/docker-compose"
+    },
+    {
+      "type": "warning",
+      "message": "ENCRYPTION_KEY encrypts every stored secret. Back it up together with the database; losing it makes the data unrecoverable. Email invitations and password resets need SMTP variables added separately.",
+      "link": "https://infisical.com/docs/self-hosting/configuration/envars"
+    }
+  ]
+}
