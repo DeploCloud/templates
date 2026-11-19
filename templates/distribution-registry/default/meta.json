@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Private OCI container image registry with htpasswd authentication and persistent filesystem storage for pushed images.",
+  "category": "development",
+  "developedBy": {
+    "label": "CNCF Distribution",
+    "url": "https://github.com/distribution"
+  },
+  "links": {
+    "github": "https://github.com/distribution/distribution",
+    "website": "https://distribution.github.io/distribution/",
+    "docs": [
+      "https://distribution.github.io/distribution/about/deploying/",
+      "https://distribution.github.io/distribution/about/configuration/",
+      "https://distribution.github.io/distribution/about/garbage-collection/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI. Log in with `docker login <your domain>` using REGISTRY_USERNAME and REGISTRY_PASSWORD from the environment settings, then push images as <your domain>/<name>:<tag>.",
+      "link": "https://distribution.github.io/distribution/about/deploying/"
+    }
+  ]
+}

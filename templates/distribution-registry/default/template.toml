@@ -1,0 +1,44 @@
+[variables]
+registry_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "distribution-registry"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+REGISTRY_USERNAME = "admin"
+REGISTRY_PASSWORD = "${registry_password}"
+REGISTRY_HTTP_HOST = "https://${domain}"
+REGISTRY_HTTP_SECRET = "${hash:64}"
+
+[[config.mounts]]
+filePath = "config.yml"
+content = """version: 0.1
+log:
+  level: info
+  fields:
+    service: registry
+storage:
+  delete:
+    enabled: true
+  cache:
+    blobdescriptor: inmemory
+  filesystem:
+    rootdirectory: /var/lib/registry
+  tag:
+    concurrencylimit: 5
+http:
+  addr: :5000
+auth:
+  htpasswd:
+    realm: Registry
+    path: /auth/htpasswd
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+"""
