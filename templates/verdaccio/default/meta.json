@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight private npm registry that hosts your own packages and caches the public npm registry, with a web UI to browse them.",
+  "category": "development",
+  "developedBy": {
+    "label": "Verdaccio",
+    "url": "https://github.com/verdaccio"
+  },
+  "links": {
+    "github": "https://github.com/verdaccio/verdaccio",
+    "website": "https://www.verdaccio.org/",
+    "docs": [
+      "https://verdaccio.org/docs/docker",
+      "https://verdaccio.org/docs/configuration",
+      "https://verdaccio.org/docs/authentication",
+      "https://verdaccio.org/docs/best"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the registry can create an account with npm adduser and publish packages. Create your accounts first, then set max_users: -1 under auth.htpasswd in config.yaml and redeploy to close registration.",
+      "link": "https://verdaccio.org/docs/authentication"
+    }
+  ]
+}
