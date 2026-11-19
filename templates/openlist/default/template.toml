@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openlist"
+port = 5_244
+host = "${domain}"
+
+[config.env]
+SITE_URL = "https://${domain}"
+OPENLIST_ADMIN_PASSWORD = "${admin_password}"
+UMASK = "022"
+TZ = "UTC"

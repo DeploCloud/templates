@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Community-maintained file list and WebDAV server that mounts local folders and many cloud storages behind one web UI, with its SQLite database kept on a persistent volume.",
+  "category": "storage",
+  "developedBy": {
+    "label": "OpenList Team",
+    "url": "https://github.com/OpenListTeam"
+  },
+  "links": {
+    "github": "https://github.com/OpenListTeam/OpenList",
+    "website": "https://doc.oplist.org",
+    "docs": [
+      "https://doc.oplist.org/guide/installation/docker",
+      "https://doc.oplist.org/configuration/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated OPENLIST_ADMIN_PASSWORD from this app's environment settings. It only applies on the first start; change it later in the OpenList profile page, not in the environment."
+    }
+  ]
+}
