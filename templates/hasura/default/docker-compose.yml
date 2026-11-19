@@ -1,0 +1,41 @@
+services:
+  hasura:
+    image: hasura/graphql-engine:v2.51.8@sha256:2ebf7df902ca13fb32e0714ef2e73d47dc66e7867f33698cd014320e3f577e03
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://hasura:${DB_PASSWORD}@hasura-db:5432/hasura
+      PG_DATABASE_URL: postgres://hasura:${DB_PASSWORD}@hasura-db:5432/hasura
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE}
+      HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
+      HASURA_GRAPHQL_DEV_MODE: ${HASURA_GRAPHQL_DEV_MODE}
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      hasura-db:
+        condition: service_healthy
+
+  hasura-db:
+    image: postgres:17.12-alpine@sha256:cdef2be34fbbd163d0d633177c02d228c6c47937b95fdffe1eefb91914dfd47f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hasura
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: hasura
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hasura -d hasura"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - hasura-db:/var/lib/postgresql/data
+
+volumes:
+  hasura-db: {}
