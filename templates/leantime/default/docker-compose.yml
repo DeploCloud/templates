@@ -1,0 +1,52 @@
+services:
+  leantime:
+    image: leantime/leantime:3.15.3@sha256:4d56dfa070634420426d38c3bcf26f9508e87c1b0e69aab2ee6c819c092e1973
+    restart: unless-stopped
+    expose:
+      - 8080
+    # Passes optional LEAN_* keys you add, such as LEAN_EMAIL_SMTP_* for email.
+    env_file:
+      - .env
+    environment:
+      LEAN_APP_URL: ${LEAN_APP_URL}
+      LEAN_DB_HOST: leantime-db
+      LEAN_DB_PORT: "3306"
+      LEAN_DB_DATABASE: ${DB_NAME}
+      LEAN_DB_USER: ${DB_USER}
+      LEAN_DB_PASSWORD: ${DB_PASSWORD}
+      LEAN_SESSION_PASSWORD: ${LEAN_SESSION_PASSWORD}
+      LEAN_SESSION_SECURE: ${LEAN_SESSION_SECURE}
+    volumes:
+      - leantime-userfiles:/var/www/html/userfiles
+      - leantime-public-userfiles:/var/www/html/public/userfiles
+      - leantime-plugins:/var/www/html/app/Plugins
+      - leantime-logs:/var/www/html/storage/logs
+    depends_on:
+      leantime-db:
+        condition: service_healthy
+
+  leantime-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - leantime-db:/var/lib/mysql
+    healthcheck:
+      # TCP, not the socket: the temporary first-run init server listens on the socket only
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 300s
+
+volumes:
+  leantime-userfiles: {}
+  leantime-public-userfiles: {}
+  leantime-plugins: {}
+  leantime-logs: {}
+  leantime-db: {}
