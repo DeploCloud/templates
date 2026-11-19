@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "freellmapi"
+port = 3_001
+host = "${domain}"
+
+[config.env]
+ENCRYPTION_KEY = "${hash:64}"
+TRUST_PROXY = "1"
