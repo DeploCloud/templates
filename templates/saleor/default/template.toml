@@ -1,0 +1,69 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "saleor-dashboard"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "saleor"
+port = 8_000
+host = "${domain}"
+path = "/graphql"
+
+[[config.domains]]
+serviceName = "saleor"
+port = 8_000
+host = "${domain}"
+path = "/thumbnail"
+
+[[config.domains]]
+serviceName = "saleor"
+port = 8_000
+host = "${domain}"
+path = "/image"
+
+[[config.domains]]
+serviceName = "saleor"
+port = 8_000
+host = "${domain}"
+path = "/plugins"
+
+[[config.domains]]
+serviceName = "saleor"
+port = 8_000
+host = "${domain}"
+path = "/.well-known/jwks.json"
+
+[config.env]
+DOMAIN = "${domain}"
+SECRET_KEY = "${secret:64}"
+DB_PASSWORD = "${db_password}"
+DJANGO_SUPERUSER_EMAIL = "admin@example.com"
+DJANGO_SUPERUSER_PASSWORD = "${admin_password}"
+DEFAULT_FROM_EMAIL = "noreply@${domain}"
+EMAIL_URL = ""
+
+[[config.mounts]]
+filePath = "saleor-entrypoint.sh"
+content = """
+#!/bin/sh
+set -e
+key=/app/keys/rsa.pem
+# RSA_PRIVATE_KEY is required with DEBUG off; generate it once and share it with the worker
+if [ ! -s "$key" ]; then
+  python3 -c 'import sys; from cryptography.hazmat.primitives import serialization as s; from cryptography.hazmat.primitives.asymmetric import rsa; k = rsa.generate_private_key(public_exponent=65537, key_size=2048); open(sys.argv[1], "wb").write(k.private_bytes(s.Encoding.PEM, s.PrivateFormat.PKCS8, s.NoEncryption()))' "$key"
+fi
+export RSA_PRIVATE_KEY="$(cat "$key")"
+if [ "$1" = "worker" ]; then
+  exec celery -A saleor --app=saleor.celeryconf:app worker --loglevel=info -B --concurrency=2
+fi
+python3 manage.py migrate --noinput
+python3 manage.py createsuperuser --noinput || true
+exec uvicorn saleor.asgi:application --host=0.0.0.0 --port=8000 --workers=2 --lifespan=auto --ws=none --no-server-header --no-access-log --timeout-keep-alive=35 --timeout-graceful-shutdown=30 --limit-max-requests=10000
+"""

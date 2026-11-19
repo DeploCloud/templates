@@ -1,0 +1,103 @@
+services:
+  saleor:
+    image: ghcr.io/saleor/saleor:3.23.50@sha256:354ab37a71b81b301f985b4c84cd36d75c3e446ec7f2db36b5b1a6d7da5bd616
+    restart: unless-stopped
+    command: ["sh", "/saleor-entrypoint.sh", "api"]
+    expose:
+      - 8000
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: postgres://saleor:${DB_PASSWORD}@saleor-db:5432/saleor
+      CACHE_URL: redis://saleor-valkey:6379/0
+      CELERY_BROKER_URL: redis://saleor-valkey:6379/1
+      PUBLIC_URL: https://${DOMAIN}/
+      ALLOWED_HOSTS: ${DOMAIN},saleor,localhost
+      ALLOWED_CLIENT_HOSTS: ${DOMAIN}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_URL: ${EMAIL_URL}
+      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
+    volumes:
+      - saleor-media:/app/media
+      - saleor-keys:/app/keys
+      - ./saleor-entrypoint.sh:/saleor-entrypoint.sh:ro
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 600s
+    depends_on:
+      saleor-db:
+        condition: service_healthy
+      saleor-valkey:
+        condition: service_healthy
+
+  saleor-worker:
+    image: ghcr.io/saleor/saleor:3.23.50@sha256:354ab37a71b81b301f985b4c84cd36d75c3e446ec7f2db36b5b1a6d7da5bd616
+    restart: unless-stopped
+    command: ["sh", "/saleor-entrypoint.sh", "worker"]
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: postgres://saleor:${DB_PASSWORD}@saleor-db:5432/saleor
+      CACHE_URL: redis://saleor-valkey:6379/0
+      CELERY_BROKER_URL: redis://saleor-valkey:6379/1
+      PUBLIC_URL: https://${DOMAIN}/
+      ALLOWED_HOSTS: ${DOMAIN},saleor,localhost
+      ALLOWED_CLIENT_HOSTS: ${DOMAIN}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      EMAIL_URL: ${EMAIL_URL}
+    volumes:
+      - saleor-media:/app/media
+      - saleor-keys:/app/keys
+      - ./saleor-entrypoint.sh:/saleor-entrypoint.sh:ro
+    depends_on:
+      saleor:
+        condition: service_healthy
+
+  saleor-dashboard:
+    image: ghcr.io/saleor/saleor-dashboard:3.23.45@sha256:4b4ba6be92682d110257725ca4995d2dc66b949ae20d15ea5f9fbc1a413a711c
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      API_URL: https://${DOMAIN}/graphql/
+    volumes:
+      # nginx serves /media/ from here; Saleor itself only serves media with DEBUG on
+      - saleor-media:/app/dashboard/media:ro
+    depends_on:
+      - saleor
+
+  saleor-db:
+    image: postgres:15.20-alpine@sha256:e18480a22d6e48f4d816a6696769b1ec09ac73a824c5649e49c7d8b684913f3d
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: saleor
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: saleor
+    volumes:
+      - saleor-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saleor -d saleor"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  saleor-valkey:
+    image: valkey/valkey:8.1.12-alpine@sha256:9971099af41c36e887aabdfe22b80c0fe45df949163dfc9cb434febc57cfc3fc
+    restart: unless-stopped
+    volumes:
+      - saleor-valkey:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  saleor-media: {}
+  saleor-keys: {}
+  saleor-db: {}
+  saleor-valkey: {}
