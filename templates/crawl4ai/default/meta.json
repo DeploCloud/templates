@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Crawl4AI server: a token-protected REST and MCP API that crawls websites with headless Chromium and returns LLM-ready markdown or structured data, plus a web playground.",
+  "category": "ai",
+  "developedBy": {
+    "label": "unclecode",
+    "url": "https://github.com/unclecode"
+  },
+  "links": {
+    "github": "https://github.com/unclecode/crawl4ai",
+    "website": "https://crawl4ai.com",
+    "docs": [
+      "https://docs.crawl4ai.com/core/self-hosting/",
+      "https://github.com/unclecode/crawl4ai/blob/main/deploy/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Every API call needs the header Authorization: Bearer <token>, where the token is the generated CRAWL4AI_API_TOKEN value in the environment. Paste the same token into the token bar of the playground at /playground.",
+      "link": "https://docs.crawl4ai.com/core/self-hosting/"
+    }
+  ]
+}
