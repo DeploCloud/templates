@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted location history tracker and Google Timeline alternative with maps, trips, stats and imports, backed by PostGIS and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Freika",
+    "url": "https://github.com/Freika"
+  },
+  "links": {
+    "github": "https://github.com/Freika/dawarich",
+    "website": "https://dawarich.app/",
+    "docs": [
+      "https://dawarich.app/docs/self-hosting/introduction/",
+      "https://dawarich.app/docs/self-hosting/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start seeds an admin account demo@dawarich.app with the password safepassword. Sign in and change the email and password right away."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
