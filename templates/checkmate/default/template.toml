@@ -1,0 +1,18 @@
+[variables]
+mongo_password = "${password:32}"
+jwt_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "checkmate"
+port = 52_345
+host = "${domain}"
+
+[config.env]
+CLIENT_HOST = "https://${domain}"
+JWT_SECRET = "${jwt_secret}"
+ENCRYPTION_KEY = "${hash:43}="
+MONGO_USER = "checkmate"
+MONGO_PASSWORD = "${mongo_password}"

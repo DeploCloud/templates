@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Uptime and infrastructure monitoring with response time charts, incidents, status pages and notifications, backed by MongoDB.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "BlueWave Labs",
+    "url": "https://github.com/bluewave-labs"
+  },
+  "links": {
+    "github": "https://github.com/bluewave-labs/Checkmate",
+    "website": "https://checkmate.so/",
+    "docs": [
+      "https://checkmate.so/docs",
+      "https://checkmate.so/docs/getting-started/installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered on a fresh instance becomes the super admin. Open the app right after deployment and create it; further users join by invitation only."
+    }
+  ]
+}
