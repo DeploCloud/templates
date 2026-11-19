@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "librespeed"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+STATS_PASSWORD = "${password:24}"
+OBFUSCATION_SALT = "0x${hash:8}"
+GDPR_EMAIL = ""
