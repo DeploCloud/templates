@@ -1,0 +1,18 @@
+services:
+  firefox:
+    image: lscr.io/linuxserver/firefox:1160.0.1build1-1xtradeb1.2404.1-ls138@sha256:7b8a0474231906d930e887cd5e164321aa0f3298ac4e4acefe32d654853b2297
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - firefox-config:/config
+
+volumes:
+  firefox-config: {}
