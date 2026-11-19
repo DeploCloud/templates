@@ -1,0 +1,33 @@
+[variables]
+db_password = "${password:32}"
+cookie_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "evershop"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_NAME = "evershop"
+DB_USER = "evershop"
+DB_PASSWORD = "${db_password}"
+EVERSHOP_HOME_URL = "https://${domain}"
+JWT_ADMIN_SECRET = "${hash:64}"
+JWT_ADMIN_REFRESH_SECRET = "${hash:64}"
+JWT_CUSTOMER_SECRET = "${hash:64}"
+JWT_CUSTOMER_REFRESH_SECRET = "${hash:64}"
+ORDER_TRACKING_TOKEN_SECRET = "${hash:64}"
+CART_RECOVERY_TOKEN_SECRET = "${hash:64}"
+
+[[config.mounts]]
+filePath = "production.json"
+content = """{
+  "system": {
+    "session": {
+      "cookieSecret": "${cookie_secret}"
+    }
+  }
+}
+"""

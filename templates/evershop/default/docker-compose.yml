@@ -1,0 +1,55 @@
+services:
+  evershop:
+    image: evershop/evershop:2.4.0@sha256:385934128c115f0ea92df17f5d70998532208d4a94b9b6b28149af74b5b3f6b2
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DB_HOST: evershop-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SSLMODE: disable
+      EVERSHOP_HOME_URL: ${EVERSHOP_HOME_URL}
+      JWT_ADMIN_SECRET: ${JWT_ADMIN_SECRET}
+      JWT_ADMIN_REFRESH_SECRET: ${JWT_ADMIN_REFRESH_SECRET}
+      JWT_CUSTOMER_SECRET: ${JWT_CUSTOMER_SECRET}
+      JWT_CUSTOMER_REFRESH_SECRET: ${JWT_CUSTOMER_REFRESH_SECRET}
+      ORDER_TRACKING_TOKEN_SECRET: ${ORDER_TRACKING_TOKEN_SECRET}
+      CART_RECOVERY_TOKEN_SECRET: ${CART_RECOVERY_TOKEN_SECRET}
+    volumes:
+      - evershop-media:/app/media
+      - ./production.json:/app/config/production.json:ro
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/').then((r) => process.exit(r.status < 500 ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      evershop-db:
+        condition: service_healthy
+
+  evershop-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - evershop-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  evershop-media: {}
+  evershop-db: {}
