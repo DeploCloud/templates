@@ -1,0 +1,15 @@
+[variables]
+auth_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "victoriametrics"
+port = 8428
+host = "${domain}"
+
+[config.env]
+VM_AUTH_USERNAME = "admin"
+VM_AUTH_PASSWORD = "${auth_password}"
+VM_RETENTION_PERIOD = "1"
