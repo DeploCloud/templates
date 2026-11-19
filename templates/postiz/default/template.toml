@@ -1,0 +1,41 @@
+[variables]
+db_password = "${password:32}"
+temporal_db_password = "${password:32}"
+jwt_secret = "${password:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "postiz"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+POSTIZ_DB_PASSWORD = "${db_password}"
+TEMPORAL_DB_PASSWORD = "${temporal_db_password}"
+MAIN_URL = "https://${domain}"
+FRONTEND_URL = "https://${domain}"
+NEXT_PUBLIC_BACKEND_URL = "https://${domain}/api"
+BACKEND_INTERNAL_URL = "http://localhost:3000"
+JWT_SECRET = "${jwt_secret}"
+DATABASE_URL = "postgresql://postiz:${db_password}@postiz-db:5432/postiz"
+REDIS_URL = "redis://postiz-redis:6379"
+TEMPORAL_ADDRESS = "postiz-temporal:7233"
+IS_GENERAL = "true"
+DISABLE_REGISTRATION = "true"
+RUN_CRON = "true"
+STORAGE_PROVIDER = "local"
+UPLOAD_DIRECTORY = "/uploads"
+NEXT_PUBLIC_UPLOAD_DIRECTORY = "/uploads"
+NX_ADD_PLUGINS = "false"
+
+[[config.mounts]]
+filePath = "dynamicconfig/development-sql.yaml"
+content = """
+limit.maxIDLength:
+  - value: 255
+    constraints: {}
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+    constraints: {}
+"""
