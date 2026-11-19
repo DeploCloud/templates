@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "databasus"
+port = 4_005
+host = "${domain}"
+
+[config.env]
+DATABASUS_URL = "https://${domain}"
