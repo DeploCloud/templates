@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal relationship manager to remember details about friends, family and contacts, with MariaDB and a scheduler for reminders.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Monica",
+    "url": "https://github.com/monicahq"
+  },
+  "links": {
+    "github": "https://github.com/monicahq/monica",
+    "website": "https://www.monicahq.com",
+    "docs": [
+      "https://github.com/monicahq/docker",
+      "https://github.com/monicahq/monica/blob/4.x/docs/installation/providers/docker.md",
+      "https://github.com/monicahq/monica/blob/4.x/docs/installation/mail.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Register your account in the web UI right after deploy: with APP_DISABLE_SIGNUP only the first signup is allowed and later ones are refused. Reminder emails need SMTP: set MAIL_MAILER to smtp and fill the MAIL_* variables.",
+      "link": "https://github.com/monicahq/monica/blob/4.x/docs/installation/mail.md"
+    }
+  ]
+}

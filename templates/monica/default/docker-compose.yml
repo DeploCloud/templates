@@ -1,0 +1,65 @@
+services:
+  monica:
+    image: monica:4.1.2-apache@sha256:9319157715ef21ce4206b7efcc66a74ce4ae0eed8859905e69e1be6105e4ecef
+    restart: unless-stopped
+    expose:
+      - 80
+    environment: &monica-env
+      APP_ENV: production
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      HASH_SALT: ${HASH_SALT}
+      APP_TRUSTED_PROXIES: "*"
+      APP_DISABLE_SIGNUP: ${APP_DISABLE_SIGNUP}
+      DB_HOST: monica-db
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      LOG_CHANNEL: stderr
+      CACHE_DRIVER: database
+      SESSION_DRIVER: database
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+    volumes:
+      - monica-storage:/var/www/html/storage
+    depends_on:
+      monica-db:
+        condition: service_healthy
+
+  # runs the Laravel scheduler (reminder emails) as documented upstream
+  monica-cron:
+    image: monica:4.1.2-apache@sha256:9319157715ef21ce4206b7efcc66a74ce4ae0eed8859905e69e1be6105e4ecef
+    restart: unless-stopped
+    command: cron.sh
+    environment: *monica-env
+    volumes:
+      - monica-storage:/var/www/html/storage
+    depends_on:
+      monica:
+        condition: service_started
+
+  monica-db:
+    image: mariadb:11.8.9@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "true"
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - monica-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+volumes:
+  monica-storage: {}
+  monica-db: {}

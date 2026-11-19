@@ -1,0 +1,28 @@
+[variables]
+app_key = "${password:32}"
+hash_salt = "${password:32}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "monica"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_KEY = "${app_key}"
+HASH_SALT = "${hash_salt}"
+APP_DISABLE_SIGNUP = "true"
+DB_DATABASE = "monica"
+DB_USERNAME = "monica"
+DB_PASSWORD = "${db_password}"
+MAIL_MAILER = "log"
+MAIL_HOST = ""
+MAIL_PORT = "587"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_ENCRYPTION = "tls"
+MAIL_FROM_ADDRESS = "noreply@${domain}"
