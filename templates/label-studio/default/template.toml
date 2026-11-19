@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "label-studio"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+LABEL_STUDIO_HOST = "https://${domain}"
+CSRF_TRUSTED_ORIGINS = "https://${domain}"
+LABEL_STUDIO_USERNAME = "admin@localhost"
+LABEL_STUDIO_PASSWORD = "${admin_password}"
+LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK = "true"
