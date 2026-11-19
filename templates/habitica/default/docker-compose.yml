@@ -1,0 +1,44 @@
+services:
+  habitica:
+    image: awinterstein/habitica-server:5.51.0@sha256:187e697156f503c918c2e7dffe7320128974b2180e8ee3082b05278cabf2cb53
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_DB_URI: mongodb://habitica-db:27017/habitica?replicaSet=rs
+      BASE_URL: ${BASE_URL}
+      SESSION_SECRET: ${SESSION_SECRET}
+      SESSION_SECRET_KEY: ${SESSION_SECRET_KEY}
+      INVITE_ONLY: ${INVITE_ONLY}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      EMAIL_SERVER_URL: ${EMAIL_SERVER_URL}
+      EMAIL_SERVER_PORT: ${EMAIL_SERVER_PORT}
+      EMAIL_SERVER_AUTH_USER: ${EMAIL_SERVER_AUTH_USER}
+      EMAIL_SERVER_AUTH_PASSWORD: ${EMAIL_SERVER_AUTH_PASSWORD}
+    depends_on:
+      habitica-db:
+        condition: service_healthy
+
+  habitica-db:
+    image: mongo:7.0.48@sha256:884c055bff8b7144ca44830d01826facd3083b33c4dea44b94a1476c62de3c32
+    restart: unless-stopped
+    command: ["--replSet", "rs", "--bind_ip_all"]
+    volumes:
+      - habitica-db:/data/db
+      - habitica-db-config:/data/configdb
+    # Habitica uses transactions, so MongoDB runs as a single-node replica set.
+    healthcheck:
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "try { rs.status(); } catch (e) { rs.initiate({ _id: 'rs', members: [{ _id: 0, host: 'habitica-db:27017' }] }); } quit(db.hello().isWritablePrimary ? 0 : 1);"
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  habitica-db: {}
+  habitica-db-config: {}
