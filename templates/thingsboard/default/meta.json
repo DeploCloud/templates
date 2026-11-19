@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source IoT platform for device management, telemetry collection, rule-based processing and dashboards, backed by PostgreSQL.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "ThingsBoard",
+    "url": "https://thingsboard.io/"
+  },
+  "links": {
+    "github": "https://github.com/thingsboard/thingsboard",
+    "website": "https://thingsboard.io/",
+    "docs": [
+      "https://thingsboard.io/docs/installation/docker/",
+      "https://thingsboard.io/docs/reference/configuration/how-to-change-config/",
+      "https://thingsboard.io/docs/getting-started/",
+      "https://thingsboard.io/docs/reference/http-api/getting-connected/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start initializes the database and takes a few minutes. Then sign in as sysadmin@thingsboard.org with password sysadmin and change that password immediately.",
+      "link": "https://thingsboard.io/docs/installation/docker/"
+    },
+    {
+      "type": "info",
+      "message": "Only the web UI and HTTP API are routed. Devices can send telemetry over the HTTP device API; MQTT, CoAP and LwM2M ports are not published."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "thingsboard"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRES_DB = "thingsboard"
+POSTGRES_USER = "thingsboard"
+POSTGRES_PASSWORD = "${db_password}"
