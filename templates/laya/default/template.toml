@@ -1,0 +1,15 @@
+[variables]
+api_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "laya"
+port = 8000
+host = "${domain}"
+
+[config.env]
+LAYA_API_KEY = "${api_key}"
+LAYA_PRELOAD = "1"
+LAYA_MODELS = "multilingual"
