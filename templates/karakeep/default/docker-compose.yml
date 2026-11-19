@@ -1,0 +1,52 @@
+services:
+  karakeep:
+    image: ghcr.io/karakeep-app/karakeep:0.35.0@sha256:6f7d32ef296ddf1fc7c67ff56b8a201b7006a6a47b92b202afee1338841b353d
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - karakeep-data:/data
+    environment:
+      DATA_DIR: /data
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      MEILI_ADDR: http://karakeep-meilisearch:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      BROWSER_WEB_URL: http://karakeep-chrome:9222
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      DISABLE_SIGNUPS: ${DISABLE_SIGNUPS}
+    depends_on:
+      karakeep-meilisearch:
+        condition: service_healthy
+      karakeep-chrome:
+        condition: service_started
+
+  karakeep-chrome:
+    image: ghcr.io/karakeep-app/karakeep-chrome:157.0.8103.78-r1@sha256:00fb4fa9c37aa74c58e74d0bdd16c4e3b81dddb5f264917c879f9579c3b3ad95
+    restart: unless-stopped
+    init: true
+    command:
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --hide-scrollbars
+      - --disable-blink-features=AutomationControlled
+      - --window-size=1440,900
+
+  karakeep-meilisearch:
+    image: getmeili/meilisearch:v1.55.1@sha256:88f2a08eb9532cc54a60d8fd014a23bf5cfda33d0c01ecbbaca9b4b463e17466
+    restart: unless-stopped
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+    volumes:
+      - karakeep-meilisearch:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://127.0.0.1:7700/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  karakeep-data: {}
+  karakeep-meilisearch: {}
