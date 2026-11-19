@@ -1,0 +1,17 @@
+services:
+  grocy:
+    image: linuxserver/grocy:v4.7.1-ls351@sha256:94a5a4c3daa3ebe8d4e304a3b6412136cb9501fcf3f228f9c319eae7c27c6328
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: ${TZ}
+      GROCY_CURRENCY: ${GROCY_CURRENCY}
+      GROCY_DEFAULT_LOCALE: ${GROCY_DEFAULT_LOCALE}
+    volumes:
+      - grocy-config:/config
+
+volumes:
+  grocy-config: {}

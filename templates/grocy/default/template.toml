@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "grocy"
+port = 80
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+GROCY_CURRENCY = "USD"
+GROCY_DEFAULT_LOCALE = "en"
