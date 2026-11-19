@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Reactive Python notebook editor with SQL support, token login and persistent notebook storage.",
+  "category": "development",
+  "developedBy": {
+    "label": "marimo",
+    "url": "https://marimo.io/"
+  },
+  "links": {
+    "github": "https://github.com/marimo-team/marimo",
+    "website": "https://marimo.io/",
+    "docs": [
+      "https://docs.marimo.io/guides/deploying/prebuilt_containers/",
+      "https://docs.marimo.io/guides/deploying/authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the access token stored in the MARIMO_TOKEN_PASSWORD environment variable. Anyone holding it can run arbitrary Python code inside the container.",
+      "link": "https://docs.marimo.io/guides/deploying/authentication/"
+    }
+  ]
+}
