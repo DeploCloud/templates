@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Typo-tolerant, in-memory search engine with a REST API for full-text, faceted, vector and semantic search.",
+  "category": "database",
+  "developedBy": {
+    "label": "Typesense",
+    "url": "https://typesense.org"
+  },
+  "links": {
+    "github": "https://github.com/typesense/typesense",
+    "website": "https://typesense.org",
+    "docs": [
+      "https://typesense.org/docs/guide/install-typesense.html",
+      "https://typesense.org/docs/30.2/api/server-configuration.html",
+      "https://typesense.org/docs/30.2/api/api-keys.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Typesense has no web UI. Use the generated TYPESENSE_API_KEY from the environment as the admin key in the X-TYPESENSE-API-KEY header, and create scoped search-only keys for browser clients.",
+      "link": "https://typesense.org/docs/30.2/api/api-keys.html"
+    }
+  ]
+}
