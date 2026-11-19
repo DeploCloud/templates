@@ -1,0 +1,14 @@
+services:
+  esphome:
+    image: ghcr.io/esphome/esphome:2026.11.0@sha256:6351ae811202064bb3eb49dde982609b47acd523103a66d7b9c5c1431beea055
+    restart: unless-stopped
+    expose:
+      - 6052
+    environment:
+      ESPHOME_USERNAME: ${ESPHOME_USERNAME}
+      ESPHOME_PASSWORD: ${ESPHOME_PASSWORD}
+    volumes:
+      - esphome-config:/config
+
+volumes:
+  esphome-config: {}
