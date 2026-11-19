@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mindsdb"
+port = 47_334
+host = "${domain}"
+
+[config.env]
+MINDSDB_USERNAME = "admin"
+MINDSDB_PASSWORD = "${admin_password}"
+FLASK_SECRET_KEY = "${hash:64}"
