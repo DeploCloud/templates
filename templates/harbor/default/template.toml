@@ -1,0 +1,269 @@
+[variables]
+registry_http_secret = "${hash:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "harbor"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+EXT_ENDPOINT = "https://${domain}"
+HARBOR_ADMIN_PASSWORD = "${password:24}"
+POSTGRESQL_PASSWORD = "${password:32}"
+CORE_SECRET = "${hash:16}"
+JOBSERVICE_SECRET = "${hash:16}"
+REGISTRY_CREDENTIAL_PASSWORD = "${hash:32}"
+ROBOT_SCANNER_NAME_PREFIX = "${hash:8}"
+
+[[config.mounts]]
+filePath = "core-app.conf"
+content = """appname = Harbor
+runmode = prod
+enablegzip = true
+
+[prod]
+httpport = 8080
+"""
+
+[[config.mounts]]
+filePath = "registry-config.yml"
+content = """version: 0.1
+log:
+  level: info
+  fields:
+    service: registry
+storage:
+  cache:
+    layerinfo: redis
+  filesystem:
+    rootdirectory: /storage
+  maintenance:
+    uploadpurging:
+      enabled: true
+      age: 168h
+      interval: 24h
+      dryrun: false
+  delete:
+    enabled: true
+redis:
+  addr: harbor-redis:6379
+  readtimeout: 10s
+  writetimeout: 10s
+  dialtimeout: 10s
+  db: 1
+  enableTLS: false
+  pool:
+    maxidle: 100
+    maxactive: 500
+    idletimeout: 60s
+http:
+  addr: :5000
+  secret: ${registry_http_secret}
+  debug:
+    addr: localhost:5001
+auth:
+  htpasswd:
+    realm: harbor-registry-basic-realm
+    path: /secret/passwd
+validation:
+  disabled: true
+compatibility:
+  schema1:
+    enabled: true
+"""
+
+[[config.mounts]]
+filePath = "registryctl-config.yml"
+content = """protocol: "http"
+port: 8080
+log_level: info
+registry_config: "/etc/registry/config.yml"
+"""
+
+[[config.mounts]]
+filePath = "jobservice-config.yml"
+content = """protocol: "http"
+port: 8080
+worker_pool:
+  workers: 10
+  backend: "redis"
+  redis_pool:
+    redis_url: redis://harbor-redis:6379/2?idle_timeout_seconds=30
+    namespace: "harbor_job_service_namespace"
+    idle_timeout_second: 3600
+job_loggers:
+  - name: "STD_OUTPUT"
+    level: "INFO"
+  - name: "FILE"
+    level: "INFO"
+    settings:
+      base_dir: "/var/log/jobs"
+    sweeper:
+      duration: 1
+      settings:
+        work_dir: "/var/log/jobs"
+loggers:
+  - name: "STD_OUTPUT"
+    level: "INFO"
+reaper:
+  max_update_hours: 24
+  max_dangling_hours: 168
+max_retrieve_size_mb: 10
+"""
+
+[[config.mounts]]
+filePath = "portal-nginx.conf"
+content = """worker_processes auto;
+pid /tmp/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  client_body_temp_path /tmp/client_body_temp;
+  proxy_temp_path /tmp/proxy_temp;
+  fastcgi_temp_path /tmp/fastcgi_temp;
+  uwsgi_temp_path /tmp/uwsgi_temp;
+  scgi_temp_path /tmp/scgi_temp;
+
+  server {
+    listen 8080;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    include /etc/nginx/mime.types;
+
+    gzip on;
+    gzip_min_length 1000;
+    gzip_proxied expired no-cache no-store private auth;
+    gzip_types text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    location /devcenter-api-2.0 {
+      try_files $uri $uri/ /swagger-ui-index.html;
+    }
+
+    location / {
+      try_files $uri $uri/ /index.html;
+    }
+
+    location = /index.html {
+      add_header Cache-Control "no-store, no-cache, must-revalidate";
+    }
+  }
+}
+"""
+
+[[config.mounts]]
+filePath = "proxy-nginx.conf"
+content = """worker_processes auto;
+pid /tmp/nginx.pid;
+
+events {
+  worker_connections 3096;
+  use epoll;
+  multi_accept on;
+}
+
+http {
+  client_body_temp_path /tmp/client_body_temp;
+  proxy_temp_path /tmp/proxy_temp;
+  fastcgi_temp_path /tmp/fastcgi_temp;
+  uwsgi_temp_path /tmp/uwsgi_temp;
+  scgi_temp_path /tmp/scgi_temp;
+  tcp_nodelay on;
+  proxy_http_version 1.1;
+  access_log /dev/stdout;
+
+  upstream core {
+    server harbor-core:8080;
+  }
+
+  upstream portal {
+    server harbor-portal:8080;
+  }
+
+  map $http_x_forwarded_proto $x_forwarded_proto {
+    default $http_x_forwarded_proto;
+    "" $scheme;
+  }
+
+  map $http_host $forwarded_host {
+    default $http_host;
+    "" $host;
+  }
+
+  server {
+    listen 8080;
+    server_tokens off;
+    client_max_body_size 0;
+
+    add_header X-Frame-Options DENY;
+    add_header Content-Security-Policy "frame-ancestors 'none'";
+
+    location / {
+      proxy_pass http://portal/;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
+      proxy_buffering off;
+      proxy_request_buffering off;
+    }
+
+    location /c/ {
+      proxy_pass http://core/c/;
+      proxy_set_header Host $forwarded_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
+      proxy_buffering off;
+      proxy_request_buffering off;
+      proxy_send_timeout 900;
+      proxy_read_timeout 900;
+    }
+
+    location /api/ {
+      proxy_pass http://core/api/;
+      proxy_set_header Host $forwarded_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
+      proxy_buffering off;
+      proxy_request_buffering off;
+    }
+
+    location /v1/ {
+      return 404;
+    }
+
+    location /v2/ {
+      proxy_pass http://core/v2/;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
+      proxy_buffering off;
+      proxy_request_buffering off;
+      proxy_send_timeout 900;
+      proxy_read_timeout 900;
+    }
+
+    location /service/ {
+      proxy_pass http://core/service/;
+      proxy_set_header Host $forwarded_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
+      proxy_buffering off;
+      proxy_request_buffering off;
+    }
+
+    location /service/notifications {
+      return 404;
+    }
+  }
+}
+"""

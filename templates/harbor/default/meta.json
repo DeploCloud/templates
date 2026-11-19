@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Cloud native container registry with projects, role-based access, replication, proxy cache and a web portal, backed by PostgreSQL and Valkey.",
+  "category": "development",
+  "developedBy": {
+    "label": "Harbor",
+    "url": "https://goharbor.io"
+  },
+  "links": {
+    "github": "https://github.com/goharbor/harbor",
+    "website": "https://goharbor.io",
+    "docs": [
+      "https://goharbor.io/docs/2.16.0/install-config/configure-yml-file/",
+      "https://goharbor.io/docs/2.16.0/working-with-projects/working-with-images/pulling-pushing-images/",
+      "https://goharbor.io/docs/2.16.0/administration/vulnerability-scanning/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the HARBOR_ADMIN_PASSWORD value from the environment, then change it in the portal. The variable is only read on the first start.",
+      "link": "https://goharbor.io/docs/2.16.0/install-config/configure-yml-file/"
+    }
+  ]
+}
