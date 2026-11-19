@@ -1,0 +1,17 @@
+services:
+  gopeed:
+    image: liwei2633/gopeed:v1.9.3@sha256:3ad6274077eb81282f0782efb9824783bb2f969c3a4ce966f0d959cc53c23eae
+    restart: unless-stopped
+    expose:
+      - 9999
+    environment:
+      GOPEED_USERNAME: ${GOPEED_USERNAME}
+      GOPEED_PASSWORD: ${GOPEED_PASSWORD}
+      GOPEED_APITOKEN: ${GOPEED_APITOKEN}
+    volumes:
+      - gopeed-storage:/app/storage
+      - gopeed-downloads:/app/Downloads
+
+volumes:
+  gopeed-storage: {}
+  gopeed-downloads: {}
