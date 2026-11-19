@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "LobeHub AI agent workspace with PostgreSQL (ParadeDB), Redis and RustFS object storage for chats, files and knowledge bases.",
+  "category": "ai",
+  "developedBy": {
+    "label": "LobeHub",
+    "url": "https://github.com/lobehub"
+  },
+  "links": {
+    "github": "https://github.com/lobehub/lobehub",
+    "website": "https://lobehub.com",
+    "docs": [
+      "https://lobehub.com/docs/self-hosting/platform/docker-compose",
+      "https://lobehub.com/docs/self-hosting/environment-variables",
+      "https://lobehub.com/docs/self-hosting/environment-variables/auth",
+      "https://lobehub.com/docs/self-hosting/environment-variables/model-provider"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Email and password sign-up is open to anyone who can reach the URL. Create your account first, then set AUTH_ALLOWED_EMAILS to your email address or domain to block other sign-ups.",
+      "link": "https://lobehub.com/docs/self-hosting/environment-variables/auth"
+    },
+    {
+      "type": "warning",
+      "message": "No AI model is configured. Add a provider API key in the settings after signing in, or set provider variables such as OPENAI_API_KEY.",
+      "link": "https://lobehub.com/docs/self-hosting/environment-variables/model-provider"
+    }
+  ]
+}

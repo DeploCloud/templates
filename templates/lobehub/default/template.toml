@@ -1,0 +1,30 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${hash:32}"
+s3_access_key = "${hash:20}"
+s3_secret_key = "${hash:40}"
+
+[config]
+
+[[config.domains]]
+serviceName = "lobehub"
+port = 3_210
+host = "${domain}"
+primary = true
+
+# Browser uploads use presigned path-style URLs on the app domain, so the bucket name is the route
+[[config.domains]]
+serviceName = "lobehub-s3"
+port = 9_000
+host = "${domain}"
+path = "/lobehub-files"
+
+[config.env]
+APP_URL = "https://${domain}"
+KEY_VAULTS_SECRET = "${base64:43}"
+AUTH_SECRET = "${base64:32}"
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+S3_BUCKET = "lobehub-files"
+S3_ACCESS_KEY = "${s3_access_key}"
+S3_SECRET_KEY = "${s3_secret_key}"
