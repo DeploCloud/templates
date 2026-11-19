@@ -1,0 +1,16 @@
+[variables]
+encryption_password = "${password:32}"
+encryption_salt = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "appsmith"
+port = 80
+host = "${domain}"
+
+[config.env]
+APPSMITH_BASE_URL = "https://${domain}"
+APPSMITH_ENCRYPTION_PASSWORD = "${encryption_password}"
+APPSMITH_ENCRYPTION_SALT = "${encryption_salt}"

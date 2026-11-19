@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Low-code platform for building internal tools, admin panels and dashboards on top of databases and APIs, in the all-in-one Community Edition image.",
+  "category": "development",
+  "developedBy": {
+    "label": "Appsmith",
+    "url": "https://github.com/appsmithorg"
+  },
+  "links": {
+    "github": "https://github.com/appsmithorg/appsmith",
+    "website": "https://www.appsmith.com",
+    "docs": [
+      "https://docs.appsmith.com/getting-started/setup/installation-guides/docker",
+      "https://docs.appsmith.com/getting-started/setup/environment-variables",
+      "https://docs.appsmith.com/getting-started/setup/instance-management/backup-and-restore/backup-instance"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created in the web UI becomes the instance administrator. Open the app right after deployment and register it; the first start can take up to 5 minutes.",
+      "link": "https://docs.appsmith.com/getting-started/setup/installation-guides/docker"
+    },
+    {
+      "type": "info",
+      "message": "This image runs MongoDB, Redis and PostgreSQL inside the Appsmith container. Upstream recommends at least 8 GB of RAM on the server for this all-in-one setup.",
+      "link": "https://docs.appsmith.com/getting-started/setup/infrastructure-sizing"
+    }
+  ]
+}
