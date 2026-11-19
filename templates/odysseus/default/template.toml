@@ -1,0 +1,27 @@
+[variables]
+admin_password = "${password:24}"
+searxng_secret = "${password:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "odysseus"
+port = 7_000
+host = "${domain}"
+
+[config.env]
+ODYSSEUS_ADMIN_USER = "admin"
+ODYSSEUS_ADMIN_PASSWORD = "${admin_password}"
+ALLOWED_ORIGINS = "https://${domain}"
+OAUTH_REDIRECT_BASE_URL = "https://${domain}"
+SEARXNG_SECRET = "${searxng_secret}"
+
+[[config.mounts]]
+filePath = "searxng-settings.yml"
+content = """use_default_settings: true
+
+search:
+  formats:
+    - html
+    - json
+"""
