@@ -1,0 +1,18 @@
+[variables]
+api_token = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "browserless"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+TOKEN = "${api_token}"
+EXTERNAL = "https://${domain}"
+CONCURRENT = "10"
+QUEUED = "10"
+TIMEOUT = "30000"
+METRICS_JSON_PATH = "/home/blessuser/metrics.json"
