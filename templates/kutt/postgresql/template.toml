@@ -1,0 +1,20 @@
+[variables]
+jwt_secret = "${password:64}"
+db_password = "${password:32}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kutt"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${jwt_secret}"
+DEFAULT_DOMAIN = "${domain}"
+DB_NAME = "kutt"
+DB_USER = "kutt"
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
