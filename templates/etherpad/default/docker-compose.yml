@@ -1,0 +1,48 @@
+services:
+  etherpad:
+    image: etherpad/etherpad:3.3.19@sha256:f8044e643950018862d383856b17b670072d7d7ac4d46832b9c88571de79e45e
+    restart: unless-stopped
+    expose:
+      - 9001
+    environment:
+      NODE_ENV: production
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DB_TYPE: postgres
+      DB_HOST: etherpad-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      TRUST_PROXY: "true"
+      PUBLIC_URL: ${PUBLIC_URL}
+      SSO_ISSUER: ${PUBLIC_URL}
+      ADMIN_REDIRECT: ${PUBLIC_URL}/admin/
+      USER_REDIRECT: ${PUBLIC_URL}/
+      ADMIN_SECRET: ${ADMIN_SECRET}
+      USER_SECRET: ${USER_SECRET}
+    volumes:
+      - etherpad-plugins:/opt/etherpad-lite/src/plugin_packages
+      - etherpad-var:/opt/etherpad-lite/var
+    depends_on:
+      etherpad-db:
+        condition: service_healthy
+
+  etherpad-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - etherpad-db:/var/lib/postgresql
+
+volumes:
+  etherpad-plugins: {}
+  etherpad-var: {}
+  etherpad-db: {}
