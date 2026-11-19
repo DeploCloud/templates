@@ -1,0 +1,24 @@
+services:
+  chroma:
+    image: chromadb/chroma:1.5.9@sha256:1e0b73a187a28757c572acba508c46f48c9e8b0acaf5c20e6d95cdedce1acdf6
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - chroma-data:/data
+
+  # the server has no authentication, so the public route goes through this token gate
+  chroma-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      CHROMA_TOKEN: ${CHROMA_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - chroma
+
+volumes:
+  chroma-data: {}
