@@ -1,0 +1,24 @@
+services:
+  zeroclaw:
+    image: ghcr.io/zeroclaw-labs/zeroclaw:v0.9.0@sha256:d3f567f253eb1de4dd89bc41730ff954f45958862c29465c21ec46d5c2387fd1
+    restart: unless-stopped
+    expose:
+      - 42617
+    environment:
+      ZEROCLAW_gateway__host: ${ZEROCLAW_gateway__host}
+      ZEROCLAW_gateway__port: ${ZEROCLAW_gateway__port}
+      ZEROCLAW_gateway__allow_public_bind: ${ZEROCLAW_gateway__allow_public_bind}
+      # The image bakes require_pairing = false; a public gateway must require it.
+      ZEROCLAW_gateway__require_pairing: ${ZEROCLAW_gateway__require_pairing}
+      ZEROCLAW_gateway__trust_forwarded_headers: ${ZEROCLAW_gateway__trust_forwarded_headers}
+    volumes:
+      - zeroclaw-data:/zeroclaw-data
+    healthcheck:
+      test: ["CMD", "zeroclaw", "status", "--format=exit-code"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  zeroclaw-data: {}
