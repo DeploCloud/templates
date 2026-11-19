@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Indexer proxy that translates Torznab and TorrentPotato API queries from apps like Sonarr and Radarr into searches on hundreds of torrent trackers.",
+  "category": "media",
+  "developedBy": {
+    "label": "Jackett",
+    "url": "https://github.com/Jackett"
+  },
+  "links": {
+    "github": "https://github.com/Jackett/Jackett",
+    "docs": [
+      "https://github.com/Jackett/Jackett#configuration",
+      "https://github.com/Jackett/Jackett#api-usage",
+      "https://github.com/Jackett/Jackett/wiki/Troubleshooting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard has no password on first start. Open it right after deploying and set an admin password under Jackett Configuration, otherwise anyone with the URL can manage your indexers.",
+      "link": "https://github.com/Jackett/Jackett#configuration"
+    }
+  ]
+}
