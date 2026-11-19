@@ -1,0 +1,12 @@
+services:
+  lightcraft:
+    image: ghcr.io/mikapst/lightcraft-web:v0.21.1@sha256:ae79a3d12a7e303710184134a3a9a98826be916b7538fe6124a64cd90dc4ca68
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
