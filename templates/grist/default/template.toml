@@ -1,0 +1,16 @@
+[variables]
+session_secret = "${secret:64}"
+boot_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "grist"
+port = 8_484
+host = "${domain}"
+
+[config.env]
+APP_HOME_URL = "https://${domain}"
+GRIST_SESSION_SECRET = "${session_secret}"
+GRIST_BOOT_KEY = "${boot_key}"

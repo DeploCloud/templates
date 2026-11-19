@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Relational spreadsheet with Python formulas, forms, access rules and a REST API, storing documents in SQLite on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Grist Labs",
+    "url": "https://www.getgrist.com/"
+  },
+  "links": {
+    "github": "https://github.com/gristlabs/grist-core",
+    "website": "https://www.getgrist.com/",
+    "docs": [
+      "https://support.getgrist.com/self-managed/",
+      "https://support.getgrist.com/install/first-run-setup/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit Grist asks for a boot key: paste the GRIST_BOOT_KEY value from this app's environment variables, then finish Quick setup to set the admin email and the sign-in method.",
+      "link": "https://support.getgrist.com/install/first-run-setup/"
+    }
+  ]
+}
