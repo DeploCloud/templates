@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Audacity multi-track audio editor and recorder streamed to the browser behind a password, with settings and projects kept on a persistent volume.",
+  "category": "media",
+  "developedBy": {
+    "label": "Audacity Team",
+    "url": "https://www.audacityteam.org/"
+  },
+  "links": {
+    "github": "https://github.com/audacity/audacity",
+    "website": "https://www.audacityteam.org/",
+    "docs": [
+      "https://www.audacityteam.org/manual/getting-started/",
+      "https://support.audacityteam.org/",
+      "https://docs.linuxserver.io/images/docker-audacity/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. Save projects under /config so they persist.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-audacity/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
