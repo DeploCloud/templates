@@ -1,0 +1,6 @@
+services:
+  drawdb:
+    image: ghcr.io/drawdb-io/drawdb:v1.9.0@sha256:8239ebdde4e23b35da2e68fc6ea158bffb6e59dad09abc7d1b1234d66ce6fbd4
+    restart: unless-stopped
+    expose:
+      - 80
