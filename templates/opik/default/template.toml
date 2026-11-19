@@ -1,0 +1,161 @@
+[variables]
+mysql_password = "${password:32}"
+mysql_root_password = "${password:32}"
+clickhouse_password = "${password:32}"
+redis_password = "${password:32}"
+minio_password = "${password:40}"
+encryption_key = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "opik-frontend"
+port = 5_173
+host = "${domain}"
+
+[config.env]
+MYSQL_PASSWORD = "${mysql_password}"
+MYSQL_ROOT_PASSWORD = "${mysql_root_password}"
+CLICKHOUSE_PASSWORD = "${clickhouse_password}"
+REDIS_PASSWORD = "${redis_password}"
+MINIO_ROOT_USER = "opik"
+MINIO_ROOT_PASSWORD = "${minio_password}"
+OPIK_ENCRYPTION_KEY = "${encryption_key}"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """client_max_body_size 2G;
+client_header_buffer_size 16k;
+large_client_header_buffers 4 64k;
+
+resolver 127.0.0.11 valid=30s;
+resolver_timeout 2s;
+
+map $http_x_forwarded_proto $opik_scheme {
+    default $http_x_forwarded_proto;
+    "" $scheme;
+}
+
+upstream backend {
+    zone backend 64k;
+    server opik-backend:8080 resolve;
+    keepalive 16;
+}
+
+server {
+    listen 5173 default_server;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location /health {
+        add_header Content-Type text/plain;
+        access_log off;
+        otel_trace off;
+        return 200 "healthy";
+    }
+
+    location @api {
+        rewrite /api/(.*) /$1 break;
+        proxy_pass http://backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $opik_scheme;
+        proxy_read_timeout 90;
+        proxy_connect_timeout 90;
+        proxy_send_timeout 90;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    location /api/ {
+        try_files /dev/null @api;
+    }
+
+    location = /oauth/consent {
+        try_files /dev/null /index.html;
+    }
+
+    location ^~ /oauth/ {
+        proxy_pass http://backend;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $opik_scheme;
+        proxy_read_timeout 90;
+        proxy_connect_timeout 90;
+        proxy_send_timeout 90;
+    }
+
+    location = /.well-known/oauth-authorization-server {
+        proxy_pass http://backend;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $opik_scheme;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    add_header X-Trace-ID $otel_trace_id;
+    add_header X-Frame-Options "DENY" always;
+    add_header Content-Security-Policy "frame-src 'self' https://cdn.comet.com" always;
+}
+"""
+
+[[config.mounts]]
+filePath = "clickhouse-config.xml"
+content = """<clickhouse>
+    <custom_settings_prefixes>SQL_</custom_settings_prefixes>
+    <timezone>UTC</timezone>
+    <macros>
+        <shard>1</shard>
+        <replica>clickhouse</replica>
+        <cluster>cluster</cluster>
+    </macros>
+    <zookeeper>
+        <node>
+            <host>opik-zookeeper</host>
+            <port>2181</port>
+        </node>
+    </zookeeper>
+    <zookeeper_path>/clickhouse</zookeeper_path>
+    <zookeeper_session_timeout_ms>30000</zookeeper_session_timeout_ms>
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+    </distributed_ddl>
+    <remote_servers>
+        <cluster>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>opik-clickhouse</host>
+                    <port>9000</port>
+                    <user>opik</user>
+                    <password>${clickhouse_password}</password>
+                </replica>
+            </shard>
+        </cluster>
+    </remote_servers>
+</clickhouse>
+"""
+
+[[config.mounts]]
+filePath = "clickhouse-users.xml"
+content = """<clickhouse>
+    <profiles>
+        <default>
+            <enable_time_time64_type>1</enable_time_time64_type>
+            <prefer_localhost_replica>0</prefer_localhost_replica>
+            <distributed_background_insert_batch>1</distributed_background_insert_batch>
+            <distributed_background_insert_split_batch_on_failure>1</distributed_background_insert_split_batch_on_failure>
+        </default>
+    </profiles>
+</clickhouse>
+"""
