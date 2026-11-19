@@ -1,0 +1,50 @@
+services:
+  wekan:
+    image: ghcr.io/wekan/wekan:v13.17@sha256:c4c1a905d282ed3b5a56f1a133c1a4fd400a97a40f1fcd7fc76669660cfc3bae
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      ROOT_URL: ${ROOT_URL}
+      MONGO_URL: ${MONGO_URL}
+      WRITABLE_PATH: /data
+      PORT: "8080"
+      # FerretDB has no change streams, so WeKan must poll
+      METEOR_REACTIVITY_ORDER: polling
+      DEFAULT_METEOR_REACTIVITY_ORDER: polling
+      DDP_TRANSPORT: sockjs
+      HTTP_FORWARDED_COUNT: ${HTTP_FORWARDED_COUNT}
+      WITH_API: "true"
+      BROWSER_POLICY_ENABLED: "true"
+      BIGEVENTS_PATTERN: NONE
+      CARD_OPENED_WEBHOOK_ENABLED: "false"
+      MAIL_URL: ${MAIL_URL}
+      MAIL_FROM: ${MAIL_FROM}
+    volumes:
+      - wekan-files:/data
+    depends_on:
+      wekan-ferretdb:
+        condition: service_healthy
+
+  wekan-ferretdb:
+    image: ghcr.io/wekan/ferretdb-sqlite:v1.112.0@sha256:1277d92a4a38470fd9af8b435432b781b06afc09762daad682dc6e358e49736c
+    restart: unless-stopped
+    # the replica set keeps the oplog that WeKan's admin backups read
+    command: ["--repl-set-name=rs0"]
+    environment:
+      # no MPTCP listener, as in the upstream compose
+      GODEBUG: multipathtcp=0
+    expose:
+      - 27017
+    volumes:
+      - wekan-ferretdb:/state
+    healthcheck:
+      test: ["CMD", "bash", "-c", "</dev/tcp/127.0.0.1/27017"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 15s
+
+volumes:
+  wekan-files: {}
+  wekan-ferretdb: {}
