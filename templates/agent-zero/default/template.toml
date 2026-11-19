@@ -1,0 +1,14 @@
+[variables]
+auth_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "agent-zero"
+port = 80
+host = "${domain}"
+
+[config.env]
+AUTH_LOGIN = "admin"
+AUTH_PASSWORD = "${auth_password}"

@@ -1,0 +1,24 @@
+services:
+  agent-zero:
+    image: agent0ai/agent-zero:v2.16@sha256:0490714bf25bf481ea50d59ead21acec04344cee410a86b4e159908cb92ed8a2
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      AUTH_LOGIN: ${AUTH_LOGIN}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+    volumes:
+      - agent-zero-usr:/a0/usr
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1/api/health > /dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  agent-zero-usr: {}
