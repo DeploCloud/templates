@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Backup client with a web UI that stores encrypted, incremental, compressed backups on S3, B2, WebDAV, SFTP and other cloud or remote storage.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Duplicati",
+    "url": "https://duplicati.com"
+  },
+  "links": {
+    "github": "https://github.com/duplicati/duplicati",
+    "website": "https://duplicati.com",
+    "docs": [
+      "https://docs.duplicati.com/detailed-descriptions/using-duplicati-from-docker",
+      "https://docs.duplicati.com/configuration-and-management/remote-sources",
+      "https://docs.duplicati.com/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated DUPLICATI__WEBSERVICE_PASSWORD value. It is re-applied on every restart, so change the password in the environment, not in the UI. Keep SETTINGS_ENCRYPTION_KEY: without it the stored settings and credentials cannot be decrypted.",
+      "link": "https://docs.duplicati.com/detailed-descriptions/using-duplicati-from-docker"
+    }
+  ]
+}
