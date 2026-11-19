@@ -1,0 +1,15 @@
+[variables]
+root_user = "${username}"
+root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "juicefs"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+MINIO_ROOT_USER = "${root_user}"
+MINIO_ROOT_PASSWORD = "${root_password}"

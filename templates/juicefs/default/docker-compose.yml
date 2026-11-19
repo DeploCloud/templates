@@ -1,0 +1,26 @@
+services:
+  juicefs:
+    image: juicedata/mount:ce-v1.4.2@sha256:4177c77bc873898127debf45786515b78c79bee18fed378d276fb221baa85640
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c"]
+    # --no-update makes format a no-op once the volume exists
+    command:
+      - >-
+        juicefs format --no-update --bucket /var/jfs/data sqlite3:///var/jfs/meta.db jfs &&
+        exec juicefs gateway --multi-buckets --keep-etag --cache-size 1024 sqlite3:///var/jfs/meta.db 0.0.0.0:9000
+    expose:
+      - 9000
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - juicefs-data:/var/jfs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9000/minio/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  juicefs-data: {}

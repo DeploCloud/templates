@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "JuiceFS S3 Gateway with its web file manager, running a standalone volume with SQLite metadata and data on local disk.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Juicedata",
+    "url": "https://github.com/juicedata"
+  },
+  "links": {
+    "github": "https://github.com/juicedata/juicefs",
+    "website": "https://juicefs.com",
+    "docs": [
+      "https://juicefs.com/docs/community/guide/gateway",
+      "https://juicefs.com/docs/community/juicefs_on_docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web file manager and the S3 API with the generated MINIO_ROOT_USER and MINIO_ROOT_PASSWORD environment variables."
+    }
+  ]
+}
