@@ -1,0 +1,18 @@
+services:
+  audacity:
+    image: lscr.io/linuxserver/audacity:4.0.2-ls290@sha256:abe4824a66486134c300938b2ff9e8fb5bac2234e7f1821f71104f174e278934
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - audacity-config:/config
+
+volumes:
+  audacity-config: {}
