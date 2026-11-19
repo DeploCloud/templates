@@ -1,0 +1,105 @@
+services:
+  invoiceninja:
+    image: invoiceninja/invoiceninja-debian:5.13.54@sha256:e2c8a5192abf842edaaff4a65f56ade343f37fa8a934b755c84ea62c8282e8e9
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      APP_ENV: production
+      APP_DEBUG: "false"
+      REQUIRE_HTTPS: "false"
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      IS_DOCKER: "true"
+      PHANTOMJS_PDF_GENERATION: "false"
+      PDF_GENERATOR: snappdf
+      FILESYSTEM_DISK: debian_docker
+      SCOUT_DRIVER: "null"
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      SESSION_DRIVER: redis
+      REDIS_HOST: invoiceninja-redis
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: "null"
+      DB_CONNECTION: mysql
+      DB_HOST: invoiceninja-db
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      IN_USER_EMAIL: ${IN_USER_EMAIL}
+      IN_PASSWORD: ${IN_PASSWORD}
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+    volumes:
+      - invoiceninja-public:/var/www/html/public
+      - invoiceninja-storage:/var/www/html/storage
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - REMOTE_ADDR=127.0.0.1 REQUEST_URI=/health REQUEST_METHOD=GET SCRIPT_FILENAME=/var/www/html/public/index.php cgi-fcgi -bind -connect 127.0.0.1:9000 | grep -q 'API is healthy'
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+    depends_on:
+      invoiceninja-db:
+        condition: service_healthy
+      invoiceninja-redis:
+        condition: service_healthy
+
+  invoiceninja-web:
+    image: nginx:1.31.9-alpine@sha256:90b6bd2aec278b16b98221d64deb1d6d35d164567f507ab0716e6053878315aa
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - invoiceninja-public:/var/www/html/public:ro
+      - invoiceninja-storage:/var/www/html/storage:ro
+    depends_on:
+      invoiceninja:
+        condition: service_healthy
+
+  invoiceninja-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - invoiceninja-db:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  invoiceninja-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - invoiceninja-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  invoiceninja-public: {}
+  invoiceninja-storage: {}
+  invoiceninja-db: {}
+  invoiceninja-redis: {}
