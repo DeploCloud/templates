@@ -1,0 +1,28 @@
+[variables]
+db_password = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sim"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "sim-realtime"
+port = 3_002
+host = "${domain}"
+path = "/socket.io"
+
+[config.env]
+NEXT_PUBLIC_APP_URL = "https://${domain}"
+SIM_DB_PASSWORD = "${db_password}"
+BETTER_AUTH_SECRET = "${hash:64}"
+ENCRYPTION_KEY = "${hash:64}"
+INTERNAL_API_SECRET = "${hash:64}"
+API_ENCRYPTION_KEY = "${hash:64}"
+CRON_SECRET = "${hash:64}"
+NEXT_PUBLIC_CHAT_DISABLED = "true"
+DISABLE_REGISTRATION = "false"
