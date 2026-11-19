@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bunkerweb"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SERVER_NAME = "${domain}"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "${password:24}Aa1-"

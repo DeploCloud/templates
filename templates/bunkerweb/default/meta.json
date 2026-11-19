@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source web application firewall built on NGINX, with ModSecurity, bot protection and a web UI to manage the services it reverse proxies.",
+  "category": "security",
+  "developedBy": {
+    "label": "Bunkerity",
+    "url": "https://www.bunkerity.com/"
+  },
+  "links": {
+    "github": "https://github.com/bunkerity/bunkerweb",
+    "website": "https://www.bunkerweb.io/",
+    "docs": [
+      "https://docs.bunkerweb.io/latest/integrations/#all-in-one-aio-image",
+      "https://docs.bunkerweb.io/latest/web-ui/",
+      "https://docs.bunkerweb.io/latest/quickstart-guide/#creating-a-new-service",
+      "https://docs.bunkerweb.io/latest/features/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web UI as ADMIN_USERNAME (admin) with the generated ADMIN_PASSWORD from the environment variables. The password must keep an uppercase letter, a lowercase letter, a digit and a symbol. Change it by editing ADMIN_PASSWORD and redeploying: it is re-applied on every start, so a password changed only in the UI is reset.",
+      "link": "https://docs.bunkerweb.io/latest/web-ui/"
+    },
+    {
+      "type": "warning",
+      "message": "To protect another app, point an extra domain at this service on port 8080, then add a service with that server name in the UI that reverse proxies to an address of the app this container can reach. HTTPS is terminated in front of BunkerWeb: leave Let's Encrypt and HTTP to HTTPS redirects disabled.",
+      "link": "https://docs.bunkerweb.io/latest/quickstart-guide/#creating-a-new-service"
+    }
+  ]
+}
