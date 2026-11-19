@@ -1,0 +1,239 @@
+services:
+  huly:
+    image: nginx:1.30.7-alpine@sha256:bef154735288bc38d99fac41ae63730684bcc661503673a04a0f9bc526ba8598
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./huly.nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - huly-front
+
+  huly-db:
+    image: cockroachdb/cockroach:v24.2.10@sha256:885d9b0e3243f262976763717e547dbbe75ca999548f7a4ea95fcd30a9aee66c
+    restart: unless-stopped
+    command: start-single-node --accept-sql-without-tls
+    environment:
+      COCKROACH_DATABASE: ${CR_DATABASE}
+      COCKROACH_USER: ${CR_USERNAME}
+      COCKROACH_PASSWORD: ${CR_PASSWORD}
+    volumes:
+      - huly-db-data:/cockroach/cockroach-data
+      - huly-db-certs:/cockroach/certs
+
+  huly-redpanda:
+    image: redpandadata/redpanda:v24.3.18@sha256:5c6bdbaf30c97de1ebc2ad417b7d02e0bdb5bf88e243bd3079d74bfde9c7754f
+    restart: unless-stopped
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092
+      - --advertise-kafka-addr internal://huly-redpanda:9092
+      - --rpc-addr 0.0.0.0:33145
+      - --advertise-rpc-addr huly-redpanda:33145
+      - --mode dev-container
+      - --smp 1
+      - --default-log-level=info
+    volumes:
+      - huly-redpanda-data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD", "rpk", "cluster", "info"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  huly-minio:
+    image: pgsty/silo:RELEASE.2026-11-12T00-00-00Z@sha256:c20d112390b9a9ce8c11b8af95ad35bcaa62f4759663c09c936cd8d2b511f329
+    restart: unless-stopped
+    command: server /data --address ":9000" --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    volumes:
+      - huly-files:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  huly-elastic:
+    image: elasticsearch:7.17.28@sha256:a06b03a2db8db2be43d3c3851e7bcebdd4fff79f4db08c7da6bad7a8776d3e15
+    restart: unless-stopped
+    command:
+      - /bin/sh
+      - -c
+      - ./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment; /usr/local/bin/docker-entrypoint.sh eswrapper
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms1024m -Xmx1024m
+    volumes:
+      - huly-elastic-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -vq '\"status\":\"red\"'"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  huly-rekoni:
+    image: hardcoreeng/rekoni-service:v0.7.426@sha256:d148cefc5e55372a4d5d513626136618f814ee341eff1be9deffbeb74c8b5fed
+    restart: unless-stopped
+    environment:
+      SECRET: ${HULY_SECRET}
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+
+  huly-stats:
+    image: hardcoreeng/stats:v0.7.426@sha256:9a08a6ec7f80e13d3d3694247087751727227152bb23fdc88f53f8fae1a07183
+    restart: unless-stopped
+    environment:
+      PORT: "4900"
+      SERVER_SECRET: ${HULY_SECRET}
+
+  huly-kvs:
+    image: hardcoreeng/hulykvs:v0.7.426@sha256:765ca15bb643e4f8d42dba9bc0bf0d0e668ee5ced8fb1c432abb142946b09d4f
+    restart: unless-stopped
+    expose:
+      - 8094
+    environment:
+      HULY_DB_CONNECTION: ${DB_URL}
+      HULY_TOKEN_SECRET: ${HULY_SECRET}
+    depends_on:
+      - huly-db
+
+  huly-transactor:
+    image: hardcoreeng/transactor:v0.7.426@sha256:4bbf156ff7ba06c665930d40bb577f6b549d1f9eeaa7270de5d98ac7fdd7465c
+    restart: unless-stopped
+    environment:
+      SERVER_PORT: "3333"
+      SERVER_SECRET: ${HULY_SECRET}
+      DB_URL: ${DB_URL}
+      STORAGE_CONFIG: ${STORAGE_CONFIG}
+      FRONT_URL: https://${HULY_HOST}
+      ACCOUNTS_URL: http://huly-account:3000
+      FULLTEXT_URL: http://huly-fulltext:4700
+      STATS_URL: http://huly-stats:4900
+      LAST_NAME_FIRST: ${LAST_NAME_FIRST}
+      QUEUE_CONFIG: huly-redpanda:9092
+    depends_on:
+      huly-db:
+        condition: service_started
+      huly-redpanda:
+        condition: service_healthy
+      huly-minio:
+        condition: service_healthy
+
+  huly-collaborator:
+    image: hardcoreeng/collaborator:v0.7.426@sha256:2747295c2cf5de05d6ea8ec90173891f28ede3064d45354a8069ebfe769f279f
+    restart: unless-stopped
+    environment:
+      COLLABORATOR_PORT: "3078"
+      SECRET: ${HULY_SECRET}
+      ACCOUNTS_URL: http://huly-account:3000
+      STATS_URL: http://huly-stats:4900
+      STORAGE_CONFIG: ${STORAGE_CONFIG}
+    depends_on:
+      huly-minio:
+        condition: service_healthy
+
+  huly-account:
+    image: hardcoreeng/account:v0.7.426@sha256:a77b42617b7c88e886458966c0001952c22f882feb44f78e9f6f8d89d7e73c1c
+    restart: unless-stopped
+    environment:
+      SERVER_PORT: "3000"
+      ACCOUNT_PORT: "3000"
+      SERVER_SECRET: ${HULY_SECRET}
+      DB_URL: ${DB_URL}
+      TRANSACTOR_URL: ws://huly-transactor:3333;wss://${HULY_HOST}/_transactor
+      STORAGE_CONFIG: ${STORAGE_CONFIG}
+      FRONT_URL: https://${HULY_HOST}
+      STATS_URL: https://${HULY_HOST}/_stats
+      ACCOUNTS_URL: https://${HULY_HOST}/_accounts
+      MODEL_ENABLED: "*"
+      QUEUE_CONFIG: huly-redpanda:9092
+    depends_on:
+      huly-db:
+        condition: service_started
+      huly-redpanda:
+        condition: service_healthy
+      huly-minio:
+        condition: service_healthy
+
+  huly-workspace:
+    image: hardcoreeng/workspace:v0.7.426@sha256:9a95e4fc7616fb427111400191a9cff42e5e8e56c893c61bfa15055b1bfadb53
+    restart: unless-stopped
+    environment:
+      SERVER_SECRET: ${HULY_SECRET}
+      DB_URL: ${DB_URL}
+      ACCOUNTS_DB_URL: ${DB_URL}
+      TRANSACTOR_URL: ws://huly-transactor:3333;wss://${HULY_HOST}/_transactor
+      STORAGE_CONFIG: ${STORAGE_CONFIG}
+      MODEL_ENABLED: "*"
+      ACCOUNTS_URL: http://huly-account:3000
+      STATS_URL: http://huly-stats:4900
+      QUEUE_CONFIG: huly-redpanda:9092
+    depends_on:
+      huly-db:
+        condition: service_started
+      huly-redpanda:
+        condition: service_healthy
+      huly-minio:
+        condition: service_healthy
+
+  huly-fulltext:
+    image: hardcoreeng/fulltext:v0.7.426@sha256:e8670c41aab79b0e4e15230aad61e2e7e886e57cc83796e92ecb3c4d1f99209a
+    restart: unless-stopped
+    environment:
+      SERVER_SECRET: ${HULY_SECRET}
+      DB_URL: ${DB_URL}
+      FULLTEXT_DB_URL: http://huly-elastic:9200
+      ELASTIC_INDEX_NAME: huly_storage_index
+      STORAGE_CONFIG: ${STORAGE_CONFIG}
+      REKONI_URL: http://huly-rekoni:4004
+      ACCOUNTS_URL: http://huly-account:3000
+      STATS_URL: http://huly-stats:4900
+      QUEUE_CONFIG: huly-redpanda:9092
+    depends_on:
+      huly-db:
+        condition: service_started
+      huly-redpanda:
+        condition: service_healthy
+      huly-elastic:
+        condition: service_healthy
+
+  huly-front:
+    image: hardcoreeng/front:v0.7.426@sha256:96d5270cb1f46cbe2d67a9cee79a83f184bbf5b6daf02ee8e2cbbb2522ce759f
+    restart: unless-stopped
+    environment:
+      SERVER_PORT: "8080"
+      SERVER_SECRET: ${HULY_SECRET}
+      ACCOUNTS_URL: https://${HULY_HOST}/_accounts
+      ACCOUNTS_URL_INTERNAL: http://huly-account:3000
+      REKONI_URL: https://${HULY_HOST}/_rekoni
+      STATS_URL: https://${HULY_HOST}/_stats
+      COLLABORATOR_URL: wss://${HULY_HOST}/_collaborator
+      LOVE_ENDPOINT: https://${HULY_HOST}/_love
+      CALENDAR_URL: https://${HULY_HOST}/_calendar
+      GMAIL_URL: https://${HULY_HOST}/_gmail
+      TELEGRAM_URL: https://${HULY_HOST}/_telegram
+      UPLOAD_URL: /files
+      ELASTIC_URL: http://huly-elastic:9200
+      STORAGE_CONFIG: ${STORAGE_CONFIG}
+      TITLE: ${HULY_TITLE}
+      DEFAULT_LANGUAGE: ${DEFAULT_LANGUAGE}
+      LAST_NAME_FIRST: ${LAST_NAME_FIRST}
+      DESKTOP_UPDATES_CHANNEL: 0.7.426
+      DISABLED_FEATURES: auto-translate,mailboxes
+    depends_on:
+      huly-minio:
+        condition: service_healthy
+
+volumes:
+  huly-db-data: {}
+  huly-db-certs: {}
+  huly-redpanda-data: {}
+  huly-files: {}
+  huly-elastic-data: {}

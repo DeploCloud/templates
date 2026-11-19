@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "All-in-one project management platform with issue tracking, documents, chat and planner, backed by CockroachDB, Elasticsearch, Redpanda and S3 storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Hardcore Engineering",
+    "url": "https://github.com/hcengineering"
+  },
+  "links": {
+    "github": "https://github.com/hcengineering/platform",
+    "website": "https://huly.io",
+    "docs": [
+      "https://github.com/hcengineering/huly-selfhost#readme",
+      "https://github.com/hcengineering/huly-selfhost/blob/main/MIGRATION.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Huly is resource-heavy: upstream recommends at least 2 vCPUs and 8 GB of RAM for the whole stack.",
+      "link": "https://github.com/hcengineering/huly-selfhost#system-requirements"
+    },
+    {
+      "type": "warning",
+      "message": "Sign-up is open to anyone who can reach the URL. Create your account and workspace first, then set DISABLE_SIGNUP=true on the account and front services to allow only invited users.",
+      "link": "https://github.com/hcengineering/huly-selfhost#disable-sign-up"
+    }
+  ]
+}
