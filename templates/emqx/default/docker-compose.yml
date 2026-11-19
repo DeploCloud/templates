@@ -1,0 +1,26 @@
+services:
+  emqx:
+    image: emqx/emqx-enterprise:6.3.3@sha256:54778dba62a5cbcb03ca381c9bceb3d8a87cab9e3da155ed3607d994454df900
+    restart: unless-stopped
+    expose:
+      - 18083
+      - 8083
+    environment:
+      # Mnesia data lives under the node name, so it must stay the same across recreates
+      EMQX_NODE__NAME: emqx@127.0.0.1
+      EMQX_NODE__COOKIE: ${EMQX_NODE__COOKIE}
+      EMQX_DASHBOARD__DEFAULT_USERNAME: ${EMQX_DASHBOARD__DEFAULT_USERNAME}
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: ${EMQX_DASHBOARD__DEFAULT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "/opt/emqx/bin/emqx", "ctl", "status"]
+      interval: 10s
+      timeout: 25s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - emqx-data:/opt/emqx/data
+      - emqx-log:/opt/emqx/log
+
+volumes:
+  emqx-data: {}
+  emqx-log: {}
