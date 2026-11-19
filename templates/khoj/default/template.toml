@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "khoj"
+port = 42_110
+host = "${domain}"
+
+[config.env]
+KHOJ_DOMAIN = "${domain}"
+KHOJ_ADMIN_EMAIL = "admin@example.com"
+KHOJ_ADMIN_PASSWORD = "${admin_password}"
+KHOJ_DJANGO_SECRET_KEY = "${secret:64}"
+POSTGRES_PASSWORD = "${db_password}"
+SEARXNG_SECRET = "${secret:64}"
+RESEND_API_KEY = ""
+RESEND_EMAIL = "noreply@${domain}"
