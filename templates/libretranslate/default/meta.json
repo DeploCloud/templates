@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Free and open source machine translation API with a web UI, running offline on the server's CPU with Argos Translate language models.",
+  "category": "ai",
+  "developedBy": {
+    "label": "LibreTranslate",
+    "url": "https://github.com/LibreTranslate"
+  },
+  "links": {
+    "github": "https://github.com/LibreTranslate/LibreTranslate",
+    "website": "https://libretranslate.com",
+    "docs": [
+      "https://docs.libretranslate.com/guides/installation/",
+      "https://docs.libretranslate.com/guides/api_usage/",
+      "https://docs.libretranslate.com/guides/manage_api_keys/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first start the container downloads the language models listed in LT_LOAD_ONLY before the web UI and API answer, which can take several minutes. To add languages, edit LT_LOAD_ONLY (comma-separated language codes) and redeploy; models already downloaded stay installed.",
+      "link": "https://docs.libretranslate.com/guides/installation/"
+    }
+  ]
+}
