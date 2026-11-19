@@ -1,0 +1,22 @@
+services:
+  llama-cpp:
+    image: ghcr.io/ggml-org/llama.cpp:server-v1.0.0-b12359-b1b770d@sha256:e3032ea0712da96dec820c770626385de4322dd06619fb5829256a504bbc9375
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      LLAMA_ARG_HF_REPO: ${LLAMA_ARG_HF_REPO}
+      LLAMA_ARG_CTX_SIZE: ${LLAMA_ARG_CTX_SIZE}
+      LLAMA_API_KEY: ${LLAMA_API_KEY}
+      LLAMA_CACHE: /models
+    volumes:
+      - llama-cpp-models:/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10m
+
+volumes:
+  llama-cpp-models: {}
