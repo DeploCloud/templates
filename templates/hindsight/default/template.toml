@@ -1,0 +1,32 @@
+[variables]
+api_key = "${password:48}"
+access_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hindsight"
+port = 9_999
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "hindsight"
+port = 8_888
+host = "${domain}"
+path = "/v1"
+
+[[config.domains]]
+serviceName = "hindsight"
+port = 8_888
+host = "${domain}"
+path = "/mcp"
+
+[config.env]
+HINDSIGHT_API_TENANT_API_KEY = "${api_key}"
+HINDSIGHT_CP_ACCESS_KEY = "${access_key}"
+HINDSIGHT_API_LLM_PROVIDER = "none"
+HINDSIGHT_API_LLM_API_KEY = ""
+HINDSIGHT_API_LLM_MODEL = ""
+HINDSIGHT_API_LLM_BASE_URL = ""
