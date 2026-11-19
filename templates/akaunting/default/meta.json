@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source online accounting for small businesses: invoices, bills, banking and reports, backed by MariaDB.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Akaunting",
+    "url": "https://akaunting.com"
+  },
+  "links": {
+    "github": "https://github.com/akaunting/akaunting",
+    "website": "https://akaunting.com",
+    "docs": [
+      "https://github.com/akaunting/docker",
+      "https://akaunting.com/hc/docs/on-premise/installation/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates an admin account from ADMIN_EMAIL (admin@example.com) and the generated ADMIN_PASSWORD in the environment. Sign in with them, then change the email and password in your profile.",
+      "link": "https://github.com/akaunting/docker"
+    }
+  ]
+}
