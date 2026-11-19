@@ -1,0 +1,193 @@
+services:
+  harbor:
+    image: goharbor/nginx-photon:v2.16.0@sha256:fab6398dc28d952572f3dcc3feceec69a7e6c9d8282bee8a0f27302d7127d289
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./proxy-nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - harbor-core
+      - harbor-portal
+
+  harbor-init:
+    image: goharbor/prepare:v2.16.0@sha256:c21cd339f1dd5ac60c6d91f397675660f634726c0bf8cab5d3a1d4f1da124b28
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -e
+        [ -s /secret/private_key.pem ] || openssl genrsa -traditional -out /secret/private_key.pem 4096
+        [ -s /secret/key ] || printf '%s' "$$(openssl rand -hex 8)" > /secret/key
+        htpasswd -bcB /secret/passwd harbor_registry_user "$$REGISTRY_CREDENTIAL_PASSWORD"
+        chown -R 10000:10000 /secret
+        chown 10000:10000 /storage /var/log/jobs
+        chmod 600 /secret/private_key.pem /secret/key
+    environment:
+      REGISTRY_CREDENTIAL_PASSWORD: ${REGISTRY_CREDENTIAL_PASSWORD}
+    volumes:
+      - harbor-secret:/secret
+      - harbor-registry:/storage
+      - harbor-jobs:/var/log/jobs
+
+  harbor-core:
+    image: goharbor/harbor-core:v2.16.0@sha256:0cf4b2269955cb88b0617518573426383705cc9ed54af2801a0a26afc95a3a71
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      CONFIG_PATH: /etc/core/app.conf
+      KEY_PATH: /secret/key
+      TOKEN_PRIVATE_KEY_PATH: /secret/private_key.pem
+      _REDIS_URL_CORE: redis://harbor-redis:6379?idle_timeout_seconds=30
+      _REDIS_URL_REG: redis://harbor-redis:6379/1?idle_timeout_seconds=30
+      LOG_LEVEL: info
+      EXT_ENDPOINT: ${EXT_ENDPOINT}
+      DATABASE_TYPE: postgresql
+      POSTGRESQL_HOST: harbor-db
+      POSTGRESQL_PORT: "5432"
+      POSTGRESQL_USERNAME: harbor
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRESQL_DATABASE: registry
+      POSTGRESQL_SSLMODE: disable
+      POSTGRESQL_MAX_IDLE_CONNS: "100"
+      POSTGRESQL_MAX_OPEN_CONNS: "900"
+      POSTGRESQL_CONN_MAX_LIFETIME: 5m
+      POSTGRESQL_CONN_MAX_IDLE_TIME: "0"
+      REGISTRY_URL: http://harbor-registry:5000
+      PORTAL_URL: http://harbor-portal:8080
+      TOKEN_SERVICE_URL: http://harbor-core:8080/service/token
+      HARBOR_ADMIN_PASSWORD: ${HARBOR_ADMIN_PASSWORD}
+      MAX_JOB_WORKERS: "10"
+      CORE_SECRET: ${CORE_SECRET}
+      JOBSERVICE_SECRET: ${JOBSERVICE_SECRET}
+      WITH_TRIVY: "false"
+      CORE_URL: http://harbor-core:8080
+      CORE_LOCAL_URL: http://127.0.0.1:8080
+      JOBSERVICE_URL: http://harbor-jobservice:8080
+      REGISTRY_STORAGE_PROVIDER_NAME: filesystem
+      READ_ONLY: "false"
+      REGISTRY_CONTROLLER_URL: http://harbor-registryctl:8080
+      REGISTRY_CREDENTIAL_USERNAME: harbor_registry_user
+      REGISTRY_CREDENTIAL_PASSWORD: ${REGISTRY_CREDENTIAL_PASSWORD}
+      ROBOT_SCANNER_NAME_PREFIX: ${ROBOT_SCANNER_NAME_PREFIX}
+      PERMITTED_REGISTRY_TYPES_FOR_PROXY_CACHE: docker-hub,harbor,azure-acr,ali-acr,aws-ecr,google-gcr,docker-registry,github-ghcr,jfrog-artifactory
+      REPLICATION_ADAPTER_WHITELIST: ali-acr,aws-ecr,azure-acr,docker-hub,docker-registry,github-ghcr,google-gcr,harbor,huawei-SWR,jfrog-artifactory,tencent-tcr,volcengine-cr
+      PORT: "8080"
+    volumes:
+      - harbor-secret:/secret:ro
+      - harbor-registry:/data:ro
+      - ./core-app.conf:/etc/core/app.conf:ro
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "http://localhost:8080/api/v2.0/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 120s
+    depends_on:
+      harbor-init:
+        condition: service_completed_successfully
+      harbor-db:
+        condition: service_healthy
+      harbor-redis:
+        condition: service_healthy
+      harbor-registry:
+        condition: service_started
+
+  harbor-portal:
+    image: goharbor/harbor-portal:v2.16.0@sha256:58f6b3f0e2a1ba17c1305e76a817421647fba10671030b8b5aa1cf7819d5eecd
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./portal-nginx.conf:/etc/nginx/nginx.conf:ro
+
+  harbor-jobservice:
+    image: goharbor/harbor-jobservice:v2.16.0@sha256:72f2ea2daf9f4279be54775090d2dcb6834e111ac635df8f6a88d13536785f60
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      CORE_SECRET: ${CORE_SECRET}
+      JOBSERVICE_SECRET: ${JOBSERVICE_SECRET}
+      CORE_URL: http://harbor-core:8080
+      REGISTRY_URL: http://harbor-registry:5000
+      REGISTRY_CONTROLLER_URL: http://harbor-registryctl:8080
+      REGISTRY_CREDENTIAL_USERNAME: harbor_registry_user
+      REGISTRY_CREDENTIAL_PASSWORD: ${REGISTRY_CREDENTIAL_PASSWORD}
+      JOBSERVICE_WEBHOOK_JOB_MAX_RETRY: "3"
+      JOBSERVICE_WEBHOOK_JOB_HTTP_CLIENT_TIMEOUT: "3"
+      LOG_LEVEL: info
+    volumes:
+      - harbor-jobs:/var/log/jobs
+      - ./jobservice-config.yml:/etc/jobservice/config.yml:ro
+    depends_on:
+      harbor-core:
+        condition: service_healthy
+
+  harbor-registry:
+    image: goharbor/registry-photon:v2.16.0@sha256:e345b0283d520a567c2fdaf91497d8928e0453f2880c14541e13330e6ba16c9a
+    restart: unless-stopped
+    expose:
+      - 5000
+    volumes:
+      - harbor-registry:/storage
+      - harbor-secret:/secret:ro
+      - ./registry-config.yml:/etc/registry/config.yml:ro
+    depends_on:
+      harbor-init:
+        condition: service_completed_successfully
+      harbor-redis:
+        condition: service_healthy
+
+  harbor-registryctl:
+    image: goharbor/harbor-registryctl:v2.16.0@sha256:6763c946ced0434b3c98f051003a25ed38724c8187a46a3917e1ded6826d3c12
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      CORE_SECRET: ${CORE_SECRET}
+      JOBSERVICE_SECRET: ${JOBSERVICE_SECRET}
+    volumes:
+      - harbor-registry:/storage
+      - harbor-secret:/secret:ro
+      - ./registry-config.yml:/etc/registry/config.yml:ro
+      - ./registryctl-config.yml:/etc/registryctl/config.yml:ro
+    depends_on:
+      harbor-init:
+        condition: service_completed_successfully
+
+  harbor-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=1024"]
+    shm_size: 1gb
+    environment:
+      POSTGRES_USER: harbor
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRES_DB: registry
+    volumes:
+      - harbor-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U harbor -d registry"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  harbor-redis:
+    image: valkey/valkey:9.0.7-alpine@sha256:2d04268dfa26ab31cfa3fdc538866e76438b2d00e41db41b8cb86d780ac5a416
+    restart: unless-stopped
+    volumes:
+      - harbor-redis:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  harbor-secret: {}
+  harbor-registry: {}
+  harbor-jobs: {}
+  harbor-db: {}
+  harbor-redis: {}
