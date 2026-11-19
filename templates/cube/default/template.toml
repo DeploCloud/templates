@@ -1,0 +1,44 @@
+[variables]
+db_password = "${password:32}"
+api_secret = "${password:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "cube"
+port = 4_000
+host = "${domain}"
+
+[config.env]
+CUBEJS_API_SECRET = "${api_secret}"
+CUBEJS_DB_TYPE = "postgres"
+CUBEJS_DB_HOST = "cube-db"
+CUBEJS_DB_PORT = "5432"
+CUBEJS_DB_NAME = "cube"
+CUBEJS_DB_USER = "cube"
+CUBEJS_DB_PASS = "${db_password}"
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "model/model.yml"
+content = """cubes:
+  - name: tables
+    sql_table: information_schema.tables
+
+    measures:
+      - name: count
+        type: count
+
+    dimensions:
+      - name: table_schema
+        sql: table_schema
+        type: string
+
+      - name: table_name
+        sql: table_name
+        type: string
+
+      - name: table_type
+        sql: table_type
+        type: string
+"""
