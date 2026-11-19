@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Stealth Chromium with source-level fingerprint patches, served by cloakserve as a Chrome DevTools Protocol endpoint for Playwright and Puppeteer automation.",
+  "category": "automation",
+  "developedBy": {
+    "label": "CloakHQ",
+    "url": "https://github.com/CloakHQ"
+  },
+  "links": {
+    "github": "https://github.com/CloakHQ/CloakBrowser",
+    "website": "https://cloakbrowser.dev",
+    "docs": [
+      "https://github.com/CloakHQ/CloakBrowser#cdp-server-mode",
+      "https://github.com/CloakHQ/CloakBrowser#docker-compose",
+      "https://github.com/CloakHQ/CloakBrowser/blob/main/BINARY-LICENSE.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This variant runs the 0.6 line, which ships a keyless Chromium 146 build inside the image and needs no account. Setting CLOAKBROWSER_LICENSE_KEY in the environment settings (a free key takes an email) makes it download and use the latest licensed build instead.",
+      "link": "https://cloakbrowser.dev/free"
+    },
+    {
+      "type": "warning",
+      "message": "cloakserve has no authentication of its own, so every request goes through a gateway that requires an Authorization: Bearer header with the generated CLOAKBROWSER_TOKEN from the environment settings. With Playwright: connect_over_cdp(\"https://<your-domain>\", headers={\"Authorization\": \"Bearer <token>\"}). Puppeteer does not send headers when it fetches browserURL, so read webSocketDebuggerUrl from /json/version yourself and pass it as browserWSEndpoint with the same headers.",
+      "link": "https://github.com/CloakHQ/CloakBrowser#cdp-server-mode"
+    }
+  ]
+}
