@@ -1,0 +1,41 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "mediamtx"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+MEDIAMTX_USER = "admin"
+MEDIAMTX_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "mediamtx.yml"
+content = """# Settings not listed here keep their defaults: https://mediamtx.org/docs/references/configuration-file
+# Only the HLS server is routed, so RTSP runs over TCP.
+rtspTransports: [tcp]
+
+# User and password are set by MEDIAMTX_USER and MEDIAMTX_PASSWORD.
+authInternalUsers:
+  - user: admin
+    pass:
+    ips: []
+    permissions:
+      - action: publish
+      - action: read
+      - action: playback
+
+pathDefaults:
+  rtspTransport: tcp
+  recordPath: /recordings/%path/%Y-%m-%d_%H-%M-%S-%f_%z
+
+# One entry per stream, played at https://<domain>/<name>/
+paths:
+  # camera1:
+  #   source: rtsp://user:pass@192.168.1.10:554/stream
+  #   sourceOnDemand: yes
+  all_others:
+"""
