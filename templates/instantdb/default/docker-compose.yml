@@ -1,0 +1,110 @@
+services:
+  instantdb:
+    image: ghcr.io/instantdb/dashboard:15358ad712df6879b8953ee8289af0e891d4dde8@sha256:981153f7e943420430a23ead384a73649b9aef0617fb64682534286ebd241b55
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      INSTANT_BACKEND_URL: ${INSTANT_BACKEND_URL}
+    depends_on:
+      - instantdb-server
+
+  instantdb-server:
+    image: ghcr.io/instantdb/server:15358ad712df6879b8953ee8289af0e891d4dde8@sha256:214bd0859834fd18242b9440f81969b81c9a6596a13c9af9036de16209563bc2
+    restart: unless-stopped
+    expose:
+      - 8888
+    environment:
+      JAVA_OPTS: ${JAVA_OPTS}
+      WAL_HISTORY_STORAGE: pg
+      DATABASE_URL: postgresql://instant:${DB_PASSWORD}@instantdb-db:5432/instant?sslmode=disable
+      CONNECTION_POOL_SIZE: "20"
+      INSTANT_BACKEND_URL: ${INSTANT_BACKEND_URL}
+      INSTANT_DASHBOARD_URL: ${INSTANT_DASHBOARD_URL}
+      INSTANT_SUPERUSER_EMAIL: ${INSTANT_SUPERUSER_EMAIL}
+      POSTMARK_TOKEN: ${POSTMARK_TOKEN}
+      SENDGRID_TOKEN: ${SENDGRID_TOKEN}
+      RESEND_TOKEN: ${RESEND_TOKEN}
+      INSTANT_EMAIL_REPLY_TO: ${EMAIL_SENDER}
+      INSTANT_DASHBOARD_EMAIL_SENDER_EMAIL: ${EMAIL_SENDER}
+      INSTANT_APP_EMAIL_SENDER_EMAIL: ${EMAIL_SENDER}
+      INSTANT_TEAM_EMAIL_SENDER_EMAIL: ${EMAIL_SENDER}
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY}
+      AWS_REGION: us-east-1
+      S3_ENDPOINT: http://instantdb-s3:9000
+      S3_PUBLIC_ENDPOINT: ${S3_PUBLIC_ENDPOINT}
+      S3_BUCKET: ${S3_BUCKET}
+    volumes:
+      # override.edn holds the generated encryption keysets
+      - instantdb-config:/app/resources/config
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8888/health/system"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 300s
+    depends_on:
+      instantdb-db:
+        condition: service_healthy
+      instantdb-s3-init:
+        condition: service_completed_successfully
+
+  # Upstream image: postgres 17 plus the wal2json and pg_hint_plan extensions the server needs
+  instantdb-db:
+    image: ghcr.io/instantdb/postgresql:postgresql-17-pg-hint-plan@sha256:45916a14c2312decb54881a054b346f3a088c5a0ade13089716c970da70572a5
+    restart: unless-stopped
+    command:
+      - postgres
+      - -c
+      - wal_level=logical
+      - -c
+      - max_replication_slots=10
+      - -c
+      - max_wal_senders=10
+      - -c
+      - shared_preload_libraries=pg_hint_plan
+      - -c
+      - random_page_cost=1.1
+    environment:
+      POSTGRES_USER: instant
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: instant
+    volumes:
+      - instantdb-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U instant -d instant"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  instantdb-s3:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY}
+    volumes:
+      - instantdb-s3:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  instantdb-s3-init:
+    image: rustfs/rc:v0.1.38@sha256:3c080aff53f0d3b06554fd08711d05c80be40bd7e56001874d7df5e18d5ec88a
+    restart: "no"
+    command: ["mb", "--ignore-existing", "s3/${S3_BUCKET}"]
+    environment:
+      RC_HOST_s3: http://${S3_ACCESS_KEY}:${S3_SECRET_KEY}@instantdb-s3:9000
+    depends_on:
+      instantdb-s3:
+        condition: service_healthy
+
+volumes:
+  instantdb-config: {}
+  instantdb-db: {}
+  instantdb-s3: {}
