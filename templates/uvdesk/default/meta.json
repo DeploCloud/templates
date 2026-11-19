@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source helpdesk with ticketing, a customer support center, knowledge base, workflows and email-to-ticket, backed by MySQL.",
+  "category": "communication",
+  "developedBy": {
+    "label": "UVdesk",
+    "url": "https://www.uvdesk.com/en/opensource/"
+  },
+  "links": {
+    "github": "https://github.com/uvdesk/community-skeleton",
+    "website": "https://www.uvdesk.com/en/opensource/",
+    "docs": [
+      "https://docs.uvdesk.com/uvdemo/default/docker.html",
+      "https://github.com/uvdesk/community-skeleton/wiki/Docker-Persistent-Container",
+      "https://docs.uvdesk.com/uvdemo/settings/swiftmailer.html",
+      "https://docs.uvdesk.com/uvdemo/settings/mailbox.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Finish the web installer on first visit. On the database step enter host uvdesk-db, port 3306, user and database uvdesk, and the generated MYSQL_PASSWORD from the environment variables; a later step creates the admin account. Agents sign in at /en/member/login."
+    },
+    {
+      "type": "warning",
+      "message": "Outgoing notifications need an SMTP account (Swift Mailer settings) and email-to-ticket needs an IMAP mailbox, both added in the admin panel after installation. Enabled IMAP mailboxes are checked every 5 minutes."
+    }
+  ]
+}

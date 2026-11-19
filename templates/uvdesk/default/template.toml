@@ -1,0 +1,31 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+app_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "uvdesk"
+port = 80
+host = "${domain}"
+
+[config.env]
+UVDESK_SITE_URL = "${domain}"
+APP_SECRET = "${app_secret}"
+MYSQL_DATABASE = "uvdesk"
+MYSQL_USER = "uvdesk"
+MYSQL_PASSWORD = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${db_root_password}"
+
+[[config.mounts]]
+filePath = "uvdesk-apache.conf"
+content = """<Directory /var/www/uvdesk/public>
+    SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on
+</Directory>
+
+# The app runs in Symfony dev mode, whose profiler would expose requests and secrets.
+<LocationMatch "^/(index[.]php/)?_(profiler|wdt)">
+    Require all denied
+</LocationMatch>
+"""
