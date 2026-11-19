@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Laya decision engine HTTP API on CPU: typed choice, score and yes/no decisions over text in 100+ languages, protected by a bearer API key.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Nandakishor",
+    "url": "https://github.com/NandhaKishorM"
+  },
+  "links": {
+    "github": "https://github.com/NandhaKishorM/laya",
+    "website": "https://huggingface.co/convaiinnovations/laya",
+    "docs": [
+      "https://nandhakishorm.github.io/laya/http-api/",
+      "https://nandhakishorm.github.io/laya/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The API has no web UI. Copy the generated LAYA_API_KEY from the environment and send it as a Bearer token with every request to /v1/systemone.",
+      "link": "https://nandhakishorm.github.io/laya/http-api/"
+    },
+    {
+      "type": "info",
+      "message": "On first start the server downloads about 680 MB of model weights from Hugging Face before it becomes healthy and keeps the multilingual checkpoint in memory (about 2 GB of RAM). English text routes to the English checkpoint, which loads on first use and needs about 2 GB more."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
