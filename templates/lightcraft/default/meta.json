@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based non-destructive photo library and raw developer built in Rust and WebAssembly: tone, color grading, masking, presets and export, with photos kept in the user's browser.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/lightcraft",
+    "website": "https://getartcraft.com/apps/lightcraft",
+    "docs": [
+      "https://github.com/storytold/lightcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/lightcraft/blob/main/docs/web.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Photos and the catalog are not stored on the server: the editor keeps its library in each browser's own storage, which the browser may clear. Keep your originals elsewhere and use File > Back Up Library regularly."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}
