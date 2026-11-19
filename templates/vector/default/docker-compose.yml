@@ -1,0 +1,17 @@
+services:
+  vector:
+    image: timberio/vector:0.62.0-alpine@sha256:149c77c09aabf16a3aa543abf9cea2e2152c1d9a7d4a45669fe7ad05f4ed8b27
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8686/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./vector.yaml:/etc/vector/vector.yaml:ro
+      - vector-data:/var/lib/vector
+
+volumes:
+  vector-data: {}
