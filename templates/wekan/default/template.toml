@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wekan"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+ROOT_URL = "https://${domain}"
+MONGO_URL = "mongodb://wekan-ferretdb:27017/wekan?directConnection=true"
+HTTP_FORWARDED_COUNT = "1"
+MAIL_URL = ""
+MAIL_FROM = "WeKan <noreply@${domain}>"
