@@ -1,0 +1,61 @@
+services:
+  flarum:
+    image: crazymax/flarum:2.0.2@sha256:cff0216da14932588bf63956c4d3633777e7dc21956a07d1a8f0682efcf8df63
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - flarum-data:/data
+    environment:
+      FLARUM_BASE_URL: ${FLARUM_BASE_URL}
+      FLARUM_FORUM_TITLE: ${FLARUM_FORUM_TITLE}
+      DB_HOST: flarum-db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REAL_IP_FROM: ${REAL_IP_FROM}
+    depends_on:
+      flarum-db:
+        condition: service_healthy
+
+  flarum-cron:
+    image: crazymax/flarum:2.0.2@sha256:cff0216da14932588bf63956c4d3633777e7dc21956a07d1a8f0682efcf8df63
+    restart: unless-stopped
+    volumes:
+      - flarum-data:/data
+    environment:
+      FLARUM_BASE_URL: ${FLARUM_BASE_URL}
+      DB_HOST: flarum-db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SIDECAR_CRON: "1"
+    depends_on:
+      flarum-db:
+        condition: service_healthy
+      flarum:
+        condition: service_started
+
+  flarum-db:
+    image: mariadb:11.8.9@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - flarum-db:/var/lib/mysql
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  flarum-data: {}
+  flarum-db: {}

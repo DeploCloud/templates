@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Flarum forum software with a MariaDB database, a scheduler sidecar and persistent assets, extensions and storage.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Flarum",
+    "url": "https://flarum.org"
+  },
+  "links": {
+    "github": "https://github.com/flarum/flarum",
+    "website": "https://flarum.org",
+    "docs": [
+      "https://docs.flarum.org/install/",
+      "https://docs.flarum.org/mail/",
+      "https://docs.flarum.org/scheduler/",
+      "https://github.com/crazy-max/docker-flarum#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates an administrator with the publicly known username flarum and password flarum. Log in right away and change the password and email in your profile settings."
+    },
+    {
+      "type": "warning",
+      "message": "Configure an SMTP server under Administration > Email, otherwise new users cannot receive their account confirmation emails.",
+      "link": "https://docs.flarum.org/mail/"
+    }
+  ]
+}
