@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted personal AI assistant gateway with a web Control UI for chat, model providers, tools and messaging channels.",
+  "category": "ai",
+  "developedBy": {
+    "label": "OpenClaw",
+    "url": "https://github.com/openclaw"
+  },
+  "links": {
+    "github": "https://github.com/openclaw/openclaw",
+    "website": "https://openclaw.ai",
+    "docs": [
+      "https://docs.openclaw.ai/install/docker",
+      "https://docs.openclaw.ai/web/control-ui/connect-and-pair",
+      "https://docs.openclaw.ai/concepts/model-providers/control-ui-and-keys"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the Control UI by pasting the OPENCLAW_GATEWAY_TOKEN value from the environment as the Gateway secret. Each new browser must then be approved once: run openclaw devices list in the container terminal, then openclaw devices approve <requestId>.",
+      "link": "https://docs.openclaw.ai/web/control-ui/connect-and-pair"
+    },
+    {
+      "type": "warning",
+      "message": "An API key or sign-in for an LLM provider must be added under Settings > Models before the assistant can reply.",
+      "link": "https://docs.openclaw.ai/concepts/model-providers/control-ui-and-keys"
+    }
+  ]
+}
