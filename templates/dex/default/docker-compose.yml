@@ -1,0 +1,43 @@
+services:
+  dex:
+    image: ghcr.io/dexidp/dex:v2.46.1@sha256:65b72ca0f4b0bf6d4ada84ec21da8851782563404ac7b8f926923d27ceced9ab
+    restart: unless-stopped
+    command: ["dex", "serve", "/etc/dex/config.yaml"]
+    expose:
+      - 5556
+    environment:
+      DEX_ISSUER: ${DEX_ISSUER}
+      DEX_DB_PASSWORD: ${DEX_DB_PASSWORD}
+      DEX_ADMIN_EMAIL: ${DEX_ADMIN_EMAIL}
+      DEX_ADMIN_PASSWORD: ${DEX_ADMIN_PASSWORD}
+      DEX_ADMIN_USER_ID: ${DEX_ADMIN_USER_ID}
+      DEX_CLIENT_SECRET: ${DEX_CLIENT_SECRET}
+    volumes:
+      - ./config.yaml:/etc/dex/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5556/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    depends_on:
+      dex-db:
+        condition: service_healthy
+
+  dex-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dex
+      POSTGRES_USER: dex
+      POSTGRES_PASSWORD: ${DEX_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dex -d dex"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - dex-postgres:/var/lib/postgresql
+
+volumes:
+  dex-postgres: {}
