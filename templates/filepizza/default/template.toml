@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "filepizza"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+REDIS_URL = "redis://filepizza-redis:6379"
