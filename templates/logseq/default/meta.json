@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Outliner for notes and knowledge graphs, served as the official static web app; graphs stay in folders on your own device, not on the server.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Logseq",
+    "url": "https://github.com/logseq"
+  },
+  "links": {
+    "github": "https://github.com/logseq/logseq",
+    "website": "https://logseq.com",
+    "docs": [
+      "https://github.com/logseq/logseq/blob/master/docs/docker-web-app-guide.md",
+      "https://docs.logseq.com"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Graphs are stored on your own device, not on the server. The web app opens local folders through the File System Access API, which only Chromium-based browsers support.",
+      "link": "https://github.com/logseq/logseq/blob/master/docs/docker-web-app-guide.md"
+    }
+  ]
+}
