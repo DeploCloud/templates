@@ -1,0 +1,18 @@
+[variables]
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "autogpt"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+AUTOGPT_PUBLIC_URL = "https://${domain}"
+AUTH_ALLOW_NEW_ACCOUNTS = "true"
+AUTH_SIGNUP_ALLOWLIST = ""
+CHAT_USE_OPENROUTER = "true"
+OPEN_ROUTER_API_KEY = ""
+OPENAI_API_KEY = ""
+ANTHROPIC_API_KEY = ""

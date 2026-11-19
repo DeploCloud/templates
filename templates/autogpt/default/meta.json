@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "AutoGPT Platform for building, running and delegating work to AI agents, packaged as one container with its database, queue and memory services.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Significant Gravitas",
+    "url": "https://github.com/Significant-Gravitas"
+  },
+  "links": {
+    "github": "https://github.com/Significant-Gravitas/AutoGPT",
+    "website": "https://agpt.co",
+    "docs": [
+      "https://agpt.co/docs/platform/self-hosting/single-container",
+      "https://github.com/Significant-Gravitas/AutoGPT/blob/master/autogpt_platform/single-container/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Signup is open to anyone who can reach the domain. Set AUTH_SIGNUP_ALLOWLIST to your email before deploying, register, run `autogpt-admin promote <email>` in the container terminal, sign out and back in, then set AUTH_ALLOW_NEW_ACCOUNTS to false and redeploy.",
+      "link": "https://agpt.co/docs/platform/self-hosting/single-container#account-policy"
+    },
+    {
+      "type": "warning",
+      "message": "AutoPilot and memory need model provider keys: OPEN_ROUTER_API_KEY for chat and memory extraction, OPENAI_API_KEY for embeddings. ANTHROPIC_API_KEY with CHAT_USE_OPENROUTER set to false routes chat to Anthropic directly, but memory still needs both other keys.",
+      "link": "https://agpt.co/docs/platform/self-hosting/single-container#models-and-memory"
+    },
+    {
+      "type": "info",
+      "message": "The first boot applies database migrations and can take several minutes; do not stop it until it reports healthy. The stack uses about 5-6 GB of RAM."
+    }
+  ]
+}
