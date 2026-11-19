@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "NATS messaging server with JetStream persistence and token-protected WebSocket client access over HTTPS.",
+  "category": "development",
+  "developedBy": {
+    "label": "NATS.io",
+    "url": "https://nats.io"
+  },
+  "links": {
+    "github": "https://github.com/nats-io/nats-server",
+    "website": "https://nats.io",
+    "docs": [
+      "https://docs.nats.io/running-a-nats-service/nats_docker",
+      "https://docs.nats.io/running-a-nats-service/configuration/websocket",
+      "https://docs.nats.io/running-a-nats-service/configuration/securing_nats/auth_intro/tokens"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Clients connect with wss://<your domain> and must send the generated NATS_TOKEN as their auth token. The native TCP port 4222 is not public; other apps in the same environment reach it at nats://nats:4222 with that token.",
+      "link": "https://docs.nats.io/running-a-nats-service/configuration/websocket"
+    }
+  ]
+}
