@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Proxy that exposes Codex, Claude Code, Gemini, Grok and other AI accounts as OpenAI, Gemini and Claude compatible APIs, with a web management panel.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Router-For.ME",
+    "url": "https://github.com/router-for-me"
+  },
+  "links": {
+    "github": "https://github.com/router-for-me/CLIProxyAPI",
+    "website": "https://help.router-for.me/",
+    "docs": [
+      "https://help.router-for.me/introduction/quick-start.html",
+      "https://help.router-for.me/configuration/basic.html",
+      "https://help.router-for.me/management/webui.html",
+      "https://help.router-for.me/management/api.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /management.html with the generated MANAGEMENT_PASSWORD, then add provider OAuth accounts or API keys there. The client API key clients must send is listed under API keys in the panel. OAuth logins redirect your browser to localhost at the end; paste that final URL back into the panel to finish.",
+      "link": "https://help.router-for.me/management/webui.html"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+services:
+  cliproxyapi:
+    image: eceasy/cli-proxy-api:v8.0.77@sha256:2acf44fbadf9933a04e971048b4c2ddd184ce6e3ea08fc2dc25354f3a365f5ab
+    restart: unless-stopped
+    expose:
+      - 8317
+    # Seed config.yaml into the volume once so edits made from the management panel survive redeploys.
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /data/auths /data/plugins
+        [ -f /data/config.yaml ] || cp /etc/cliproxyapi/config.yaml /data/config.yaml
+        exec /CLIProxyAPI/CLIProxyAPI --config /data/config.yaml
+    environment:
+      MANAGEMENT_PASSWORD: ${MANAGEMENT_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - cliproxyapi-data:/data
+      - ./config.yaml:/etc/cliproxyapi/config.yaml:ro
+
+volumes:
+  cliproxyapi-data: {}
