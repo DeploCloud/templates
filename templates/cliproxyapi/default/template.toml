@@ -1,0 +1,36 @@
+[variables]
+api_key = "${password:48}"
+management_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "cliproxyapi"
+port = 8_317
+host = "${domain}"
+
+[config.env]
+MANAGEMENT_PASSWORD = "${management_password}"
+TZ = "UTC"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """config-version: 8
+
+server:
+  port: 8317
+  trusted-proxies:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+
+access:
+  api-keys:
+    - "${api_key}"
+
+oauth:
+  auth-dir: "/data/auths"
+
+plugins:
+  dir: "/data/plugins"
+"""
