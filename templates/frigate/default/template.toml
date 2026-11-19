@@ -1,0 +1,38 @@
+[config]
+
+[[config.domains]]
+serviceName = "frigate"
+port = 8_971
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+
+[[config.mounts]]
+filePath = "config.yml"
+content = """mqtt:
+  enabled: false
+
+tls:
+  enabled: false
+
+auth:
+  cookie_secure: true
+
+detectors:
+  ov:
+    type: openvino
+    device: CPU
+
+model:
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  path: /openvino-model/ssdlite_mobilenet_v2.xml
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+
+cameras: {}
+
+version: 0.18-0
+"""
