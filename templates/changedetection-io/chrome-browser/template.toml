@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "changedetection"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+USE_X_SETTINGS = "1"
+MAX_CONCURRENT_CHROME_PROCESSES = "5"

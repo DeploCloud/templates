@@ -1,0 +1,14 @@
+services:
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io:0.70.3@sha256:47b1e9cc3eff820e6022b655e3fcc948625f60c1770ae8b9c30aa3bf104dc255
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      BASE_URL: ${BASE_URL}
+      USE_X_SETTINGS: ${USE_X_SETTINGS}
+    volumes:
+      - changedetection-data:/datastore
+
+volumes:
+  changedetection-data: {}
