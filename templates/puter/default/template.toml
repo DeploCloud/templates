@@ -1,0 +1,71 @@
+[variables]
+jwt_secret = "${hash:64}"
+url_secret = "${hash:64}"
+s3_secret = "${password:40}"
+api_domain = "api.${domain}"
+s3_domain = "s3.${domain}"
+
+[config]
+
+[[config.domains]]
+serviceName = "puter"
+port = 4_100
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "puter"
+port = 4_100
+host = "${api_domain}"
+
+[[config.domains]]
+serviceName = "puter-s3"
+port = 9_000
+host = "${s3_domain}"
+
+[config.env]
+S3_ACCESS_KEY = "puter"
+S3_SECRET_KEY = "${s3_secret}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+    "domain": "${domain}",
+    "protocol": "https",
+    "pub_port": 443,
+    "env": "prod",
+    "static_hosting_domain": "site.${domain}",
+    "static_hosting_domain_alt": "host.${domain}",
+    "private_app_hosting_domain": "app.${domain}",
+    "private_app_hosting_domain_alt": "dev.${domain}",
+    "jwt_secret_v2": "${jwt_secret}",
+    "url_signature_secret": "${url_secret}",
+    "database": {
+        "engine": "sqlite",
+        "path": "/var/puter/puter-database.sqlite"
+    },
+    "dynamo": {
+        "path": "/var/puter/puter-ddb"
+    },
+    "s3": {
+        "s3Config": {
+            "endpoint": "http://puter-s3:9000",
+            "publicEndpoint": "https://${s3_domain}",
+            "accessKeyId": "puter",
+            "secretAccessKey": "${s3_secret}",
+            "region": "us-east-1",
+            "forcePathStyle": true
+        }
+    },
+    "s3_bucket": "puter-local",
+    "s3_region": "us-east-1",
+    "providers": {
+        "ollama": { "enabled": false }
+    },
+    "meteringEnforcement": {
+        "subscriptions": false
+    },
+    "unlimitedMetering": true,
+    "trust_proxy": 1
+}
+"""

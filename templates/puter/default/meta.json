@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web desktop with a file system, built-in apps and a developer API, backed by SQLite and S3-compatible object storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Puter Technologies",
+    "url": "https://github.com/HeyPuter"
+  },
+  "links": {
+    "github": "https://github.com/HeyPuter/puter",
+    "website": "https://puter.com",
+    "docs": [
+      "https://github.com/HeyPuter/puter/blob/main/doc/self-hosting.md",
+      "https://github.com/HeyPuter/puter/blob/main/config.template.jsonc"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the temporary password printed in the puter container logs (search for \"password for admin\"), then change it in Settings.",
+      "link": "https://github.com/HeyPuter/puter/blob/main/doc/self-hosting.md#step-4--bring-it-up"
+    },
+    {
+      "type": "warning",
+      "message": "Anyone who opens the site can create an account and store files. For a private instance, add \"disable_user_signup\": true to the generated config.json mount and redeploy.",
+      "link": "https://github.com/HeyPuter/puter/blob/main/doc/self-hosting.md#disable-new-signups"
+    },
+    {
+      "type": "warning",
+      "message": "The API is served on api.<your domain> and browser file transfers on s3.<your domain>; both subdomains must resolve to this server. If you change the domain, update it in the generated config.json mount as well.",
+      "link": "https://github.com/HeyPuter/puter/blob/main/doc/self-hosting.md#running-behind-your-own-reverse-proxy"
+    }
+  ]
+}
