@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "spotDL web UI: search for songs or paste a Spotify link, then download the matching audio from YouTube Music with metadata, lyrics and album art.",
+  "category": "media",
+  "developedBy": {
+    "label": "spotDL",
+    "url": "https://github.com/spotDL"
+  },
+  "links": {
+    "github": "https://github.com/spotDL/spotify-downloader",
+    "website": "https://spotdl.readthedocs.io/en/latest/",
+    "docs": [
+      "https://spotdl.readthedocs.io/en/latest/installation/",
+      "https://spotdl.readthedocs.io/en/latest/usage/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no login: anyone who knows the URL can search and download through this server."
+    },
+    {
+      "type": "info",
+      "message": "YouTube Music can block or rate limit requests from datacenter IPs. If downloads fail, check the logs for a YouTube Music block warning."
+    }
+  ]
+}
