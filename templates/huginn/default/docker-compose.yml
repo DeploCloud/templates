@@ -1,0 +1,57 @@
+services:
+  huginn:
+    image: ghcr.io/huginn/huginn-single-process:v2026.11.18@sha256:c6a4dedb266a0e567f238c02641ecce38843e86b8798240f54b53a51657b0526
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment: &huginn-env
+      DATABASE_ADAPTER: postgresql
+      DATABASE_HOST: huginn-db
+      DATABASE_PORT: "5432"
+      DATABASE_NAME: huginn
+      DATABASE_USERNAME: huginn
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      APP_SECRET_TOKEN: ${APP_SECRET_TOKEN}
+      DOMAIN: ${DOMAIN}
+      INVITATION_CODE: ${INVITATION_CODE}
+      SEED_USERNAME: admin
+      SEED_PASSWORD: ${SEED_PASSWORD}
+      TIMEZONE: ${TIMEZONE}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+    depends_on:
+      huginn-db:
+        condition: service_healthy
+
+  huginn-worker:
+    image: ghcr.io/huginn/huginn-single-process:v2026.11.18@sha256:c6a4dedb266a0e567f238c02641ecce38843e86b8798240f54b53a51657b0526
+    restart: unless-stopped
+    command: /scripts/init bin/threaded.rb
+    environment: *huginn-env
+    depends_on:
+      huginn-db:
+        condition: service_healthy
+      huginn:
+        condition: service_started
+
+  huginn-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: huginn
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: huginn
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U huginn -d huginn"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - huginn-db:/var/lib/postgresql
+
+volumes:
+  huginn-db: {}

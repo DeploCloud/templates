@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "huginn"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DATABASE_PASSWORD = "${db_password}"
+APP_SECRET_TOKEN = "${hash:128}"
+SEED_PASSWORD = "${password:24}"
+INVITATION_CODE = "${password:24}"
+DOMAIN = "${domain}"
+TIMEZONE = "UTC"
