@@ -1,0 +1,16 @@
+[variables]
+web_password = "${password:24}"
+api_token = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gopeed"
+port = 9_999
+host = "${domain}"
+
+[config.env]
+GOPEED_USERNAME = "gopeed"
+GOPEED_PASSWORD = "${web_password}"
+GOPEED_APITOKEN = "${api_token}"
