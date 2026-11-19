@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Column-oriented SQL database for real-time analytics, served over its HTTP interface with a built-in SQL console and persistent storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "ClickHouse",
+    "url": "https://clickhouse.com"
+  },
+  "links": {
+    "github": "https://github.com/ClickHouse/ClickHouse",
+    "website": "https://clickhouse.com",
+    "docs": [
+      "https://clickhouse.com/docs/get-started/setup/self-managed/docker",
+      "https://clickhouse.com/docs/concepts/features/connect-to-clickhouse/protocols/http",
+      "https://clickhouse.com/docs/concepts/features/security/access-rights"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as user default with the generated CLICKHOUSE_PASSWORD from the environment variables. The SQL console is at /play and the metrics dashboard at /dashboard; only the HTTP interface is published, the native TCP port 9000 is not.",
+      "link": "https://clickhouse.com/docs/concepts/features/connect-to-clickhouse/protocols/http"
+    }
+  ]
+}
