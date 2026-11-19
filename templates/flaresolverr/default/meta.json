@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Proxy server that solves Cloudflare and DDoS-GUARD challenges with headless Chromium and returns the page HTML and cookies, for Prowlarr, Jackett and other HTTP clients.",
+  "category": "networking",
+  "developedBy": {
+    "label": "FlareSolverr",
+    "url": "https://github.com/FlareSolverr"
+  },
+  "links": {
+    "github": "https://github.com/FlareSolverr/FlareSolverr",
+    "docs": [
+      "https://github.com/FlareSolverr/FlareSolverr#usage",
+      "https://github.com/FlareSolverr/FlareSolverr#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "FlareSolverr has no authentication, so this template only answers under a secret path. Use https://<your-domain>/<FLARESOLVERR_TOKEN>/ as the FlareSolverr URL in Prowlarr or Jackett, where the token is the generated value in the environment settings; every other path returns 404. Keep the token private: anyone who has it can make the server browse any URL.",
+      "link": "https://github.com/FlareSolverr/FlareSolverr#usage"
+    }
+  ]
+}

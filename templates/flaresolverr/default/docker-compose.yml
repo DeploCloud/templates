@@ -1,0 +1,36 @@
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767
+    restart: unless-stopped
+    expose:
+      - 8191
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL}
+      TZ: ${TZ}
+    volumes:
+      - flaresolverr-config:/config
+    tmpfs:
+      - /tmp:size=256M,mode=1777
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8191/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  # FlareSolverr has no authentication, so the public route only answers under the secret token path
+  flaresolverr-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      FLARESOLVERR_TOKEN: ${FLARESOLVERR_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      flaresolverr:
+        condition: service_healthy
+
+volumes:
+  flaresolverr-config: {}

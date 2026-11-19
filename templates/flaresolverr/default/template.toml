@@ -1,0 +1,32 @@
+[variables]
+token = "${hash:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "flaresolverr-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	handle_path /{$FLARESOLVERR_TOKEN}/* {
+		reverse_proxy flaresolverr:8191
+	}
+	handle {
+		respond "Not Found" 404
+	}
+}
+"""
+
+[config.env]
+FLARESOLVERR_TOKEN = "${token}"
+LOG_LEVEL = "info"
+TZ = "UTC"
