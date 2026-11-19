@@ -1,0 +1,17 @@
+[variables]
+auth_password = "${password:32}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "prefect"
+port = 4_200
+host = "${domain}"
+
+[config.env]
+PREFECT_SERVER_API_AUTH_STRING = "admin:${auth_password}"
+PREFECT_SERVER_UI_API_URL = "https://${domain}/api"
+PREFECT_UI_URL = "https://${domain}"
+POSTGRES_PASSWORD = "${db_password}"
