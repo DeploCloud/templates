@@ -1,0 +1,43 @@
+services:
+  blinko:
+    image: blinkospace/blinko:1.8.9@sha256:ebbdcc375451570fad37319dea443c062d2a451a45d4f2ee0d98189d4b7615a5
+    restart: unless-stopped
+    expose:
+      - 1111
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://blinko:${DB_PASSWORD}@blinko-db:5432/blinko
+      NEXTAUTH_SECRET: ${AUTH_SECRET}
+      JWT_SECRET: ${AUTH_SECRET}
+      NEXTAUTH_URL: ${PUBLIC_URL}
+      NEXT_PUBLIC_BASE_URL: ${PUBLIC_URL}
+    volumes:
+      - blinko-data:/app/.blinko
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:1111/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      blinko-db:
+        condition: service_healthy
+
+  blinko-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: blinko
+      POSTGRES_USER: blinko
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - blinko-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blinko -d blinko"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  blinko-data: {}
+  blinko-db: {}
