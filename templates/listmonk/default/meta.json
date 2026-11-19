@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted newsletter and mailing list manager with subscriber management, campaigns, templates and analytics, backed by PostgreSQL.",
+  "category": "email",
+  "developedBy": {
+    "label": "Kailash Nadh",
+    "url": "https://github.com/knadh"
+  },
+  "links": {
+    "github": "https://github.com/knadh/listmonk",
+    "website": "https://listmonk.app",
+    "docs": [
+      "https://listmonk.app/docs/installation/",
+      "https://listmonk.app/docs/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated LISTMONK_ADMIN_USER and LISTMONK_ADMIN_PASSWORD from the environment variables; they only apply on the first start. Then set Root URL to your https:// domain under Settings > General, and configure an SMTP server under Settings > SMTP before sending campaigns.",
+      "link": "https://listmonk.app/docs/configuration/"
+    }
+  ]
+}
