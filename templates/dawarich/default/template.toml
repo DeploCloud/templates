@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dawarich"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+OTP_ENCRYPTION_PRIMARY_KEY = "${hash:64}"
+OTP_ENCRYPTION_DETERMINISTIC_KEY = "${hash:64}"
+OTP_ENCRYPTION_KEY_DERIVATION_SALT = "${hash:64}"
+APPLICATION_HOSTS = "${domain}"
+DOMAIN = "${domain}"
+TIME_ZONE = "UTC"
+DATABASE_USERNAME = "dawarich"
+DATABASE_PASSWORD = "${db_password}"
+DATABASE_NAME = "dawarich"
