@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal music streaming server with a web player, playlists and podcasts, backed by PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "Koel",
+    "url": "https://github.com/koel"
+  },
+  "links": {
+    "github": "https://github.com/koel/koel",
+    "website": "https://koel.dev",
+    "docs": [
+      "https://docs.koel.dev/guide/getting-started",
+      "https://docs.koel.dev/environment-variables",
+      "https://github.com/koel/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Koel creates a default admin account on first start: email admin@koel.dev, password KoelIsCool. Log in and change both right away.",
+      "link": "https://github.com/koel/docker#default-admin-account"
+    }
+  ]
+}
