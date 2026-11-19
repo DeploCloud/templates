@@ -1,0 +1,21 @@
+services:
+  kavita:
+    image: ghcr.io/kareadita/kavita:0.9.1@sha256:31181a32f0dda73cae68721867028a7253d57881b58bea5754cd9e578e75421a
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - kavita-config:/kavita/config
+      - kavita-library:/manga
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:5000/api/health || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  kavita-config: {}
+  kavita-library: {}

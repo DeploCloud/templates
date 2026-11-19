@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted reading server for manga, comics and ebooks with a web reader, metadata, reading progress and multi-user libraries.",
+  "category": "media",
+  "developedBy": {
+    "label": "Kareadita",
+    "url": "https://github.com/Kareadita"
+  },
+  "links": {
+    "github": "https://github.com/Kareadita/Kavita",
+    "website": "https://www.kavitareader.com",
+    "docs": [
+      "https://wiki.kavitareader.com/installation/docker/",
+      "https://wiki.kavitareader.com/getting-started/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered in the web UI becomes the administrator. Open the app right after deployment and create it."
+    },
+    {
+      "type": "warning",
+      "message": "Kavita has no upload feature: copy your manga, comics and books into the library volume mounted at /manga, then add /manga as a library in the admin settings."
+    }
+  ]
+}
