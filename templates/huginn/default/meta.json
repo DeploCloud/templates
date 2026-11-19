@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Huginn agents that watch websites, feeds and APIs and act on events, with a separate background worker and PostgreSQL.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Huginn",
+    "url": "https://github.com/huginn"
+  },
+  "links": {
+    "github": "https://github.com/huginn/huginn",
+    "docs": [
+      "https://github.com/huginn/huginn/tree/master/docker/single-process",
+      "https://github.com/huginn/huginn/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated SEED_PASSWORD from the environment variables and change it after the first login. New accounts can only sign up with the generated INVITATION_CODE."
+    }
+  ]
+}
