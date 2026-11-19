@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source website builder and blogging platform with themes, plugins and a web console, backed by PostgreSQL.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Halo",
+    "url": "https://github.com/halo-dev"
+  },
+  "links": {
+    "github": "https://github.com/halo-dev/halo",
+    "website": "https://www.halo.run",
+    "docs": [
+      "https://docs.halo.run/guide/install/docker-compose",
+      "https://docs.halo.run/guide/install/config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /console right after the first start and complete the initialization page: whoever opens it first creates the administrator account.",
+      "link": "https://docs.halo.run/guide/install/docker-compose"
+    }
+  ]
+}

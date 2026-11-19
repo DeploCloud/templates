@@ -1,0 +1,44 @@
+services:
+  halo:
+    image: halohub/halo:2.27.3@sha256:94ca6f3446383217d9a5a2bbed1d41a255330ba57d03ac4d0273736357ff501d
+    restart: unless-stopped
+    expose:
+      - 8090
+    environment:
+      JVM_OPTS: "${JVM_OPTS}"
+    command:
+      - --spring.r2dbc.url=r2dbc:pool:postgresql://halo-db:5432/halo
+      - --spring.r2dbc.username=halo
+      - --spring.r2dbc.password=${DB_PASSWORD}
+      - --spring.sql.init.platform=postgresql
+      - --halo.external-url=${HALO_EXTERNAL_URL}
+    volumes:
+      - halo-data:/root/.halo2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/actuator/health/readiness"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      halo-db:
+        condition: service_healthy
+
+  halo-db:
+    image: postgres:17.12-alpine@sha256:cdef2be34fbbd163d0d633177c02d228c6c47937b95fdffe1eefb91914dfd47f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: halo
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: halo
+    volumes:
+      - halo-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U halo -d halo"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  halo-data: {}
+  halo-db: {}
