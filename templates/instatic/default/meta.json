@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted visual CMS with a canvas editor, content engine and static publisher, running on a single Bun server backed by SQLite.",
+  "category": "cms",
+  "developedBy": {
+    "label": "CoreBunch",
+    "url": "https://github.com/CoreBunch"
+  },
+  "links": {
+    "github": "https://github.com/CoreBunch/Instatic",
+    "website": "https://instatic.com/",
+    "docs": [
+      "https://github.com/CoreBunch/Instatic/blob/main/docs/deployment/docker-image.md",
+      "https://github.com/CoreBunch/Instatic/blob/main/docs/deployment/vps.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /admin right after deployment: the first visitor creates the site and becomes its owner."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
