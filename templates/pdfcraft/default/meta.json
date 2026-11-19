@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based PDF reader and editor built in Rust and WebAssembly: read, search, organize, combine, split, annotate, fill forms, protect and OCR PDFs.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/pdfcraft",
+    "website": "https://getartcraft.com/apps/pdfcraft",
+    "docs": [
+      "https://github.com/storytold/pdfcraft/blob/main/packaging/web/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Documents are not stored on the server: the web app runs in the browser and starts fresh on every visit. Save your PDFs to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}
