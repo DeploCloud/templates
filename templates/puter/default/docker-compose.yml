@@ -1,0 +1,60 @@
+services:
+  puter:
+    image: ghcr.io/heyputer/puter:26.11@sha256:d2a07523e44421dae9d5de9e6a3f955456d2c1e9eaf769f053eecdcde1557628
+    restart: unless-stopped
+    expose:
+      - 4100
+    volumes:
+      - ./config.json:/etc/puter/config.json:ro
+      - puter-data:/var/puter
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:4100/ || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      puter-s3-init:
+        condition: service_completed_successfully
+
+  puter-s3:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY}
+    volumes:
+      - puter-s3-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- --tries=1 --timeout=2 http://127.0.0.1:9000/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  # Creates the bucket and the CORS rules browser uploads need; safe to rerun.
+  puter-s3-init:
+    image: amazon/aws-cli:2.41.1@sha256:538a9a80bc7c78e3228bc65100404a5dbd89ad812a547004c05ea20109543432
+    restart: "no"
+    depends_on:
+      puter-s3:
+        condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY}
+      AWS_DEFAULT_REGION: us-east-1
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+        aws --endpoint-url http://puter-s3:9000 s3api head-bucket --bucket puter-local 2>/dev/null \
+          || aws --endpoint-url http://puter-s3:9000 s3 mb s3://puter-local
+        aws --endpoint-url http://puter-s3:9000 s3api put-bucket-cors --bucket puter-local \
+          --cors-configuration '{"CORSRules":[{"AllowedOrigins":["*"],"AllowedMethods":["GET","HEAD","PUT","POST","DELETE"],"AllowedHeaders":["*"],"ExposeHeaders":["ETag","x-amz-request-id"],"MaxAgeSeconds":3600}]}'
+
+volumes:
+  puter-data: {}
+  puter-s3-data: {}
