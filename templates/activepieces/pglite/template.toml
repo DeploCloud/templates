@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "activepieces"
+port = 80
+host = "${domain}"
+
+[config.env]
+AP_FRONTEND_URL = "https://${domain}"
+AP_EDITION = "ce"
+AP_EXECUTION_MODE = "SANDBOX_CODE_ONLY"
+AP_API_KEY = "${hash:128}"
+AP_ENCRYPTION_KEY = "${hash:32}"
+AP_JWT_SECRET = "${hash:64}"
