@@ -1,0 +1,13 @@
+[variables]
+server_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "opencode"
+port = 4_096
+host = "${domain}"
+
+[config.env]
+OPENCODE_PASSWORD = "${server_password}"
