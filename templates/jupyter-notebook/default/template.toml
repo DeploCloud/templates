@@ -1,0 +1,13 @@
+[variables]
+jupyter_token = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "jupyter-notebook"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+JUPYTER_TOKEN = "${jupyter_token}"
