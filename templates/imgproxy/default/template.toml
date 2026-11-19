@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "imgproxy"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+IMGPROXY_KEY = "${hash:128}"
+IMGPROXY_SALT = "${hash:128}"
