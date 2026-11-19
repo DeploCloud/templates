@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Graph database queried with Cypher over the Redis protocol, with the bundled FalkorDB Browser web UI and persistent storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "FalkorDB",
+    "url": "https://www.falkordb.com/"
+  },
+  "links": {
+    "github": "https://github.com/FalkorDB/FalkorDB",
+    "website": "https://www.falkordb.com/",
+    "docs": [
+      "https://docs.falkordb.com/operations/docker",
+      "https://docs.falkordb.com/operations/durability/persistence",
+      "https://github.com/FalkorDB/falkordb-browser/blob/main/docs/configuration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the browser with host localhost, port 6379, user default and the generated FALKORDB_PASSWORD from the environment variables. The Redis port 6379 is not published outside the stack.",
+      "link": "https://docs.falkordb.com/operations/docker"
+    }
+  ]
+}

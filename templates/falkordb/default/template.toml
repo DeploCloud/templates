@@ -1,0 +1,16 @@
+[variables]
+falkordb_password = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "falkordb"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+FALKORDB_PASSWORD = "${falkordb_password}"
+AUTH_URL = "https://${domain}"
+AUTH_SECRET = "${hash:64}"
+ENCRYPTION_KEY = "${hash:64}"

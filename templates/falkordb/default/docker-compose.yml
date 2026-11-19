@@ -1,0 +1,27 @@
+services:
+  falkordb:
+    image: falkordb/falkordb:6.0.4@sha256:bef8acb1d8ed9ff8d2ea251767e75c6c05cfa759f7c6bc7e1c122f27d0ea4d7f
+    restart: unless-stopped
+    expose:
+      - 3000
+      - 6379
+    environment:
+      REDIS_ARGS: "--requirepass ${FALKORDB_PASSWORD} --appendonly yes"
+      REDISCLI_AUTH: ${FALKORDB_PASSWORD}
+      AUTH_URL: ${AUTH_URL}
+      AUTH_SECRET: ${AUTH_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      API_TOKEN_STORAGE_PATH: /app/.data/api_tokens.json
+    volumes:
+      - falkordb-data:/var/lib/falkordb/data
+      - falkordb-browser:/app/.data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  falkordb-data: {}
+  falkordb-browser: {}
