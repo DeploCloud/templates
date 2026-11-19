@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source kanban boards with swimlanes, checklists and attachments, backed by FerretDB on embedded SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "WeKan",
+    "url": "https://github.com/wekan"
+  },
+  "links": {
+    "github": "https://github.com/wekan/wekan",
+    "website": "https://wekan.fi",
+    "docs": [
+      "https://github.com/wekan/wekan/blob/main/docs/Features/Login-Page/Adding-users.md",
+      "https://github.com/wekan/wekan/blob/main/docs/Databases/FerretDB/1/README.md",
+      "https://github.com/wekan/wekan/blob/main/docs/Features/Admin-Panel/People/Login.md",
+      "https://github.com/wekan/wekan/blob/main/docs/Features/Admin-Panel/People/E-mail.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Sign up right after deploying, then turn off self-registration in Admin Panel / People / Login if the board should be invite-only."
+    },
+    {
+      "type": "info",
+      "message": "Invitations, password resets and notifications need SMTP: configure it in Admin Panel / People / E-mail, or set MAIL_URL (for example smtp://user:pass@mail.example.com:587/) and MAIL_FROM. Without it, emails are only written to the container log."
+    }
+  ]
+}
