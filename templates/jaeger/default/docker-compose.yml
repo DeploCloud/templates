@@ -1,0 +1,16 @@
+services:
+  jaeger:
+    image: cr.jaegertracing.io/jaegertracing/jaeger:2.23.0@sha256:3823829974ccfc2485d2e48b165579091f32295022ae80ca49704e2f4834116e
+    restart: unless-stopped
+    command: ["--config", "/jaeger/config.yaml"]
+    expose:
+      - 16686
+      - 4317
+      - 4318
+    volumes:
+      # /tmp is the image's declared volume and is writable by its non-root user
+      - jaeger-data:/tmp
+      - ./config.yaml:/jaeger/config.yaml:ro
+
+volumes:
+  jaeger-data: {}
