@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "ESPHome Device Builder dashboard for writing YAML configs, compiling firmware and updating ESP32, ESP8266, BK72xx and RP2040 devices.",
+  "category": "automation",
+  "developedBy": {
+    "label": "ESPHome",
+    "url": "https://github.com/esphome"
+  },
+  "links": {
+    "github": "https://github.com/esphome/esphome",
+    "website": "https://esphome.io/",
+    "docs": [
+      "https://esphome.io/install/docker/",
+      "https://esphome.io/guides/physical_device_connection/",
+      "https://github.com/esphome/device-builder"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ESPHOME_PASSWORD from the environment variables. Signed-in users can run arbitrary code at compile time, so keep the password private."
+    },
+    {
+      "type": "warning",
+      "message": "Without host networking the dashboard cannot use mDNS: devices are not discovered and .local names do not resolve. Flash the first install from your browser over USB, and give each device a fixed address reachable from this server (use_address or manual_ip) for status and OTA updates.",
+      "link": "https://esphome.io/install/docker/"
+    }
+  ]
+}

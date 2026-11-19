@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "esphome"
+port = 6_052
+host = "${domain}"
+
+[config.env]
+ESPHOME_USERNAME = "admin"
+ESPHOME_PASSWORD = "${admin_password}"
