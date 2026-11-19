@@ -1,0 +1,33 @@
+[variables]
+api_token = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "chroma-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	@unauthorized {
+		not header Authorization "Bearer {$CHROMA_TOKEN}"
+		not header X-Chroma-Token {$CHROMA_TOKEN}
+	}
+	respond @unauthorized "Unauthorized" 401
+	reverse_proxy chroma:8000
+}
+"""
+
+[config.env]
+CHROMA_TOKEN = "${api_token}"
