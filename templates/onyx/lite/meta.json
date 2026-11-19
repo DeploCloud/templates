@@ -1,0 +1,26 @@
+{
+  "name": "Lite",
+  "shortDescription": "Onyx Lite: AI chat with tools, file uploads, Projects and agents, running on PostgreSQL only, without connectors or document indexing.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Onyx",
+    "url": "https://onyx.app"
+  },
+  "links": {
+    "github": "https://github.com/onyx-dot-app/onyx",
+    "website": "https://onyx.app",
+    "docs": [
+      "https://docs.onyx.app/deployment/local/docker",
+      "https://docs.onyx.app/deployment/getting_started/resourcing",
+      "https://docs.onyx.app/deployment/authentication/basic",
+      "https://docs.onyx.app/admins/ai_models/overview"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the admin. Sign up right after the deploy, then add an LLM provider (OpenAI, Anthropic, Ollama or another) in the admin panel before chatting.",
+      "link": "https://docs.onyx.app/admins/ai_models/overview"
+    }
+  ]
+}
