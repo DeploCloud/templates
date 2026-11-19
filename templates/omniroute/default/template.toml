@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "omniroute"
+port = 20128
+host = "${domain}"
+primary = true
+
+[config.env]
+INITIAL_PASSWORD = "${admin_password}"
+PUBLIC_URL = "https://${domain}"
+LIVE_WS_PUBLIC_URL = "wss://${domain}/live-ws"
+OMNIROUTE_MEMORY_MB = "2048"
