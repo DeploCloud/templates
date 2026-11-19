@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Activepieces workflow automation with separate app and worker containers, PostgreSQL with pgvector and Redis for the job queue.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Activepieces",
+    "url": "https://github.com/activepieces"
+  },
+  "links": {
+    "github": "https://github.com/activepieces/activepieces",
+    "website": "https://www.activepieces.com",
+    "docs": [
+      "https://www.activepieces.com/docs/install/options/docker-compose",
+      "https://www.activepieces.com/docs/install/reference/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you sign up with becomes the platform administrator. Create it right after deploying."
+    }
+  ]
+}
