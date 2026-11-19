@@ -1,0 +1,48 @@
+services:
+  thingsboard:
+    image: thingsboard/tb-node:4.4.0.2@sha256:b827d10aa022872a3c1114faa6b90b4b74b7d7b260e404908fb09a70ccf5705f
+    restart: unless-stopped
+    expose:
+      - 8080
+    # Upstream installs the schema in a separate one-off run; the marker makes it happen once.
+    command:
+      - bash
+      - -c
+      - |
+        if [ ! -f /data/.installed ]; then
+          INSTALL_TB=true start-tb-node.sh || exit 1
+          touch /data/.installed
+        fi
+        exec start-tb-node.sh
+    environment:
+      TB_SERVICE_ID: tb-ce-node
+      SPRING_DATASOURCE_URL: jdbc:postgresql://thingsboard-db:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      TB_QUEUE_CF_ROCKS_DB_PATH: /data/rocksdb/cf_states
+      TB_EDQS_ROCKSDB_PATH: /data/rocksdb/edqs
+    volumes:
+      - thingsboard-data:/data
+    depends_on:
+      thingsboard-db:
+        condition: service_healthy
+
+  thingsboard-db:
+    image: postgres:18.7@sha256:e754b839f447639b7004895f4d8a4bfcb4e9dbe3a1bc035f27f646562a16fd61
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - thingsboard-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  thingsboard-data: {}
+  thingsboard-db: {}
