@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Hand-drawn style virtual whiteboard served as the official static web client, with drawings kept in the browser.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Excalidraw",
+    "url": "https://github.com/excalidraw"
+  },
+  "links": {
+    "github": "https://github.com/excalidraw/excalidraw",
+    "website": "https://excalidraw.com",
+    "docs": [
+      "https://plus.excalidraw.com/docs/sdk/development#self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Drawings are stored in the browser's local storage, not on the server. Export or save files to keep them across browsers and devices.",
+      "link": "https://plus.excalidraw.com/docs/sdk/development#self-hosting"
+    }
+  ]
+}
