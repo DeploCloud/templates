@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "All-in-one open-source whiteboard with mind maps, flowcharts and freehand drawing, served as a static web app with boards kept in the browser.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Plait Board",
+    "url": "https://github.com/plait-board"
+  },
+  "links": {
+    "github": "https://github.com/plait-board/drawnix",
+    "website": "https://drawnix.com",
+    "docs": [
+      "https://github.com/plait-board/drawnix/blob/develop/README_en.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Boards are saved in each browser's own storage, not on the server. Save them as .drawnix files to keep them across browsers and devices."
+    }
+  ]
+}
