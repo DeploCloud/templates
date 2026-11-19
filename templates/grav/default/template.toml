@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "grav"
+port = 80
+host = "${domain}"
+
+[config.env]
+GRAV_VERSION = "2.2.31"
