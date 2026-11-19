@@ -1,0 +1,20 @@
+services:
+  locust:
+    image: locustio/locust:2.47.0@sha256:90fdf5b9632e67bb556d17784095652871be68318c5074731d911d4caaa42cc3
+    restart: unless-stopped
+    command: -f /mnt/locust/locustfile.py,/mnt/locust/web_login.py --web-login
+    expose:
+      - 8089
+    environment:
+      LOGIN_USERNAME: ${LOGIN_USERNAME}
+      LOGIN_PASSWORD: ${LOGIN_PASSWORD}
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
+    volumes:
+      - ./locustfile.py:/mnt/locust/locustfile.py:ro
+      - ./web_login.py:/mnt/locust/web_login.py:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8089/login')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
