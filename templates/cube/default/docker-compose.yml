@@ -1,0 +1,80 @@
+services:
+  cube:
+    image: cubejs/cube:v1.8.27@sha256:3416365719b8ed91d0315f0bb3bd47cea48ba7fbdb55809ae7da5dc37171c659
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      CUBEJS_DEV_MODE: "false"
+      CUBEJS_API_SECRET: ${CUBEJS_API_SECRET}
+      CUBEJS_CUBESTORE_HOST: cube-cubestore
+      CUBEJS_DB_TYPE: ${CUBEJS_DB_TYPE}
+      CUBEJS_DB_HOST: ${CUBEJS_DB_HOST}
+      CUBEJS_DB_PORT: ${CUBEJS_DB_PORT}
+      CUBEJS_DB_NAME: ${CUBEJS_DB_NAME}
+      CUBEJS_DB_USER: ${CUBEJS_DB_USER}
+      CUBEJS_DB_PASS: ${CUBEJS_DB_PASS}
+    volumes:
+      - ./model/model.yml:/cube/conf/model/model.yml:ro
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:4000/livez').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      cube-db:
+        condition: service_healthy
+      cube-cubestore:
+        condition: service_started
+
+  cube-refresh-worker:
+    image: cubejs/cube:v1.8.27@sha256:3416365719b8ed91d0315f0bb3bd47cea48ba7fbdb55809ae7da5dc37171c659
+    restart: unless-stopped
+    environment:
+      CUBEJS_DEV_MODE: "false"
+      CUBEJS_REFRESH_WORKER: "true"
+      CUBEJS_API_SECRET: ${CUBEJS_API_SECRET}
+      CUBEJS_CUBESTORE_HOST: cube-cubestore
+      CUBEJS_DB_TYPE: ${CUBEJS_DB_TYPE}
+      CUBEJS_DB_HOST: ${CUBEJS_DB_HOST}
+      CUBEJS_DB_PORT: ${CUBEJS_DB_PORT}
+      CUBEJS_DB_NAME: ${CUBEJS_DB_NAME}
+      CUBEJS_DB_USER: ${CUBEJS_DB_USER}
+      CUBEJS_DB_PASS: ${CUBEJS_DB_PASS}
+    volumes:
+      - ./model/model.yml:/cube/conf/model/model.yml:ro
+    depends_on:
+      cube-db:
+        condition: service_healthy
+      cube-cubestore:
+        condition: service_started
+
+  cube-cubestore:
+    image: cubejs/cubestore:v1.8.27@sha256:c1fd27ea6e4d49ecb0377f1bbf73046eed9164af4a01d93514cc49b32dde4f46
+    restart: unless-stopped
+    volumes:
+      - cube-cubestore:/cube/.cubestore
+
+  cube-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cube
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: cube
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cube -d cube"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - cube-db:/var/lib/postgresql/data
+
+volumes:
+  cube-cubestore: {}
+  cube-db: {}
