@@ -1,0 +1,20 @@
+[variables]
+encryption_key = "${hash:64}"
+app_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-notebook"
+port = 8_502
+host = "${domain}"
+
+[config.env]
+API_URL = "https://${domain}"
+CORS_ORIGINS = "https://${domain}"
+OPEN_NOTEBOOK_ENCRYPTION_KEY = "${encryption_key}"
+OPEN_NOTEBOOK_PASSWORD = "${app_password}"
+SURREAL_USER = "root"
+SURREAL_PASSWORD = "${db_password}"
