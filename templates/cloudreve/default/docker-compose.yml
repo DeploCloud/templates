@@ -1,0 +1,58 @@
+services:
+  cloudreve:
+    image: cloudreve/cloudreve:4.19.1@sha256:5c6c5baf7fa5bc6e1bb9a7509c09dde00e80b618d180244eb1d5f7e36b358ea2
+    restart: unless-stopped
+    expose:
+      - 5212
+    environment:
+      CR_CONF_Database.Type: postgres
+      CR_CONF_Database.Host: cloudreve-db
+      CR_CONF_Database.Port: "5432"
+      CR_CONF_Database.User: cloudreve
+      CR_CONF_Database.Name: cloudreve
+      CR_CONF_Database.Password: ${DB_PASSWORD}
+      CR_CONF_Redis.Server: cloudreve-redis:6379
+      CR_CONF_Redis.Password: ${REDIS_PASSWORD}
+      CR_CONF_System.ProxyHeader: X-Forwarded-For
+      CR_SETTING_DEFAULT_siteURL: ${SITE_URL}
+    volumes:
+      - cloudreve-data:/cloudreve/data
+    depends_on:
+      cloudreve-db:
+        condition: service_healthy
+      cloudreve-redis:
+        condition: service_healthy
+
+  cloudreve-db:
+    image: postgres:17.12-alpine@sha256:cdef2be34fbbd163d0d633177c02d228c6c47937b95fdffe1eefb91914dfd47f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cloudreve
+      POSTGRES_DB: cloudreve
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cloudreve -d cloudreve"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - cloudreve-postgres:/var/lib/postgresql/data
+
+  cloudreve-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - cloudreve-redis:/data
+
+volumes:
+  cloudreve-data: {}
+  cloudreve-postgres: {}
+  cloudreve-redis: {}
