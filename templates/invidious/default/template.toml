@@ -1,0 +1,16 @@
+[variables]
+db_password = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "invidious"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+INV_DOMAIN = "${domain}"
+INV_DB_PASSWORD = "${db_password}"
+INV_HMAC_KEY = "${hash:64}"
+INV_COMPANION_KEY = "${hash:16}"

@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Alternative YouTube front-end without ads or tracking, with accounts, subscriptions and playlists in PostgreSQL and video streams fetched by Invidious companion.",
+  "category": "media",
+  "developedBy": {
+    "label": "Invidious",
+    "url": "https://invidious.io"
+  },
+  "links": {
+    "github": "https://github.com/iv-org/invidious",
+    "website": "https://invidious.io",
+    "docs": [
+      "https://docs.invidious.io/installation/",
+      "https://docs.invidious.io/configuration/",
+      "https://github.com/iv-org/invidious/blob/master/config/config.example.yml"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Upstream recommends restarting the Invidious service at least once a day; it can slow down or stop loading videos after running for a long time.",
+      "link": "https://docs.invidious.io/installation/#post-install-configuration"
+    }
+  ]
+}
