@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "AI assistant that answers questions from your documents and the web, with PostgreSQL and pgvector, a SearXNG search engine and a Python code sandbox.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Khoj",
+    "url": "https://khoj.dev"
+  },
+  "links": {
+    "github": "https://github.com/khoj-ai/khoj",
+    "website": "https://khoj.dev",
+    "docs": [
+      "https://docs.khoj.dev/get-started/setup",
+      "https://docs.khoj.dev/advanced/authentication",
+      "https://docs.khoj.dev/advanced/remote"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-in uses one-time email login links. To send them by email, set RESEND_API_KEY and RESEND_EMAIL (an address on a domain verified in Resend). Without a key no email is sent: enter KHOJ_ADMIN_EMAIL on the login page, then copy the link from the khoj service logs or from the Get email login URL action on the users list in /server/admin.",
+      "link": "https://docs.khoj.dev/advanced/authentication"
+    },
+    {
+      "type": "warning",
+      "message": "No chat model is configured out of the box. Sign in to /server/admin with KHOJ_ADMIN_EMAIL and KHOJ_ADMIN_PASSWORD and add an AI Model API (OpenAI, Anthropic, Gemini or any OpenAI-compatible endpoint) plus a chat model.",
+      "link": "https://docs.khoj.dev/get-started/setup#add-chat-models"
+    }
+  ]
+}
