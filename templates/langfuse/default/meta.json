@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source LLM engineering platform for tracing, evaluations, prompt management and metrics, with PostgreSQL, ClickHouse, Redis and MinIO.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Langfuse",
+    "url": "https://langfuse.com"
+  },
+  "links": {
+    "github": "https://github.com/langfuse/langfuse",
+    "website": "https://langfuse.com",
+    "docs": [
+      "https://langfuse.com/self-hosting/deployment/docker-compose",
+      "https://langfuse.com/self-hosting/configuration",
+      "https://langfuse.com/self-hosting/security/authentication-and-sso",
+      "https://langfuse.com/self-hosting/deployment/infrastructure/blobstorage",
+      "https://langfuse.com/self-hosting/configuration/transactional-emails"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no default login: open the URL and sign up to create the first user. Sign-up stays open to anyone who can reach the URL until you set AUTH_DISABLE_SIGNUP to true.",
+      "link": "https://langfuse.com/self-hosting/security/authentication-and-sso"
+    }
+  ]
+}

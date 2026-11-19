@@ -1,0 +1,35 @@
+[variables]
+db_password = "${password:32}"
+clickhouse_password = "${password:32}"
+redis_password = "${password:32}"
+minio_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "langfuse-web"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "langfuse-minio"
+port = 9_000
+host = "${domain}"
+path = "/langfuse-media"
+
+[config.env]
+NEXTAUTH_URL = "https://${domain}"
+NEXTAUTH_SECRET = "${secret:64}"
+SALT = "${secret:64}"
+ENCRYPTION_KEY = "${hash:64}"
+DATABASE_URL = "postgresql://langfuse:${db_password}@langfuse-db:5432/langfuse"
+POSTGRES_PASSWORD = "${db_password}"
+CLICKHOUSE_PASSWORD = "${clickhouse_password}"
+REDIS_AUTH = "${redis_password}"
+MINIO_ROOT_USER = "langfuse"
+MINIO_ROOT_PASSWORD = "${minio_password}"
+AUTH_DISABLE_SIGNUP = "false"
+EMAIL_FROM_ADDRESS = ""
+SMTP_CONNECTION_URL = ""
