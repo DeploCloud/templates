@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Network source of truth for IPAM and DCIM with PostgreSQL, Valkey and a background worker for jobs, webhooks and scripts.",
+  "category": "networking",
+  "developedBy": {
+    "label": "NetBox Community",
+    "url": "https://github.com/netbox-community"
+  },
+  "links": {
+    "github": "https://github.com/netbox-community/netbox",
+    "website": "https://netboxlabs.com/products/netbox/",
+    "docs": [
+      "https://netboxlabs.com/docs/netbox/",
+      "https://github.com/netbox-community/netbox-docker/wiki/Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated SUPERUSER_PASSWORD from the environment settings. The first start runs the database migrations and can take a few minutes before the login page responds."
+    }
+  ]
+}
