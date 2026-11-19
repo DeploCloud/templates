@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Goals-focused project management with kanban boards, gantt timelines, timesheets, wikis and idea boards, backed by MySQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Leantime",
+    "url": "https://github.com/Leantime"
+  },
+  "links": {
+    "github": "https://github.com/Leantime/leantime",
+    "website": "https://leantime.io",
+    "docs": [
+      "https://docs.leantime.io/installation/docker",
+      "https://docs.leantime.io/installation/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After the first deploy, open https://<your-domain>/install to create the database schema and the first admin account. Anyone who reaches that page first can complete the setup, so do it right away.",
+      "link": "https://docs.leantime.io/installation/docker"
+    }
+  ]
+}
