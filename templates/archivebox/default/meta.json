@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web archiving that saves URLs as HTML, PDF, screenshots, WARC and media, with a web UI, REST API and full-text search.",
+  "category": "storage",
+  "developedBy": {
+    "label": "ArchiveBox",
+    "url": "https://github.com/ArchiveBox"
+  },
+  "links": {
+    "github": "https://github.com/ArchiveBox/ArchiveBox",
+    "website": "https://archivebox.io",
+    "docs": [
+      "https://github.com/ArchiveBox/ArchiveBox/wiki/Docker",
+      "https://github.com/ArchiveBox/ArchiveBox/wiki/Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in at /admin/ with the username admin and the ADMIN_PASSWORD value from the environment settings. Changing it later has no effect; change the password from the admin UI instead.",
+      "link": "https://github.com/ArchiveBox/ArchiveBox/wiki/Setting-up-Authentication"
+    }
+  ]
+}
