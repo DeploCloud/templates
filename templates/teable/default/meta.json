@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "No-code database with a spreadsheet interface on PostgreSQL, with real-time collaboration, views, forms, automations and an API.",
+  "category": "database",
+  "developedBy": {
+    "label": "Teable",
+    "url": "https://teable.ai"
+  },
+  "links": {
+    "github": "https://github.com/teableio/teable",
+    "website": "https://teable.ai",
+    "docs": [
+      "https://help.teable.ai/en/deploy/docker",
+      "https://help.teable.ai/en/deploy/env"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no preset administrator: the first account that signs up becomes the instance administrator. Sign up right after deployment.",
+      "link": "https://help.teable.ai/en/deploy/docker"
+    }
+  ]
+}
