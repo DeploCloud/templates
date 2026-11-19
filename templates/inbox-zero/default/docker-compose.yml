@@ -1,0 +1,95 @@
+services:
+  inbox-zero:
+    image: ghcr.io/elie222/inbox-zero:2.30.0@sha256:e9970c499a79b8a15bbab21363d1b87ea247c75b2721f036c7cee0e2c78d1fcc
+    restart: unless-stopped
+    expose:
+      - 3000
+    # Inbox Zero reads dozens of optional provider keys; env_file passes any you add.
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://inboxzero:${POSTGRES_PASSWORD}@inbox-zero-db:5432/inboxzero?schema=public
+      DIRECT_URL: postgresql://inboxzero:${POSTGRES_PASSWORD}@inbox-zero-db:5432/inboxzero?schema=public
+      UPSTASH_REDIS_URL: http://inbox-zero-redis-http:80
+      UPSTASH_REDIS_TOKEN: ${UPSTASH_REDIS_TOKEN}
+      INTERNAL_API_URL: http://inbox-zero:3000
+    depends_on:
+      inbox-zero-db:
+        condition: service_healthy
+      inbox-zero-redis:
+        condition: service_healthy
+      inbox-zero-redis-http:
+        condition: service_started
+
+  inbox-zero-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: inboxzero
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: inboxzero
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U inboxzero -d inboxzero"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - inbox-zero-db:/var/lib/postgresql/data
+
+  inbox-zero-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - inbox-zero-redis:/data
+
+  # HTTP bridge the app's Redis client talks to.
+  inbox-zero-redis-http:
+    image: hiett/serverless-redis-http:0.0.10@sha256:65128347949bca511e448fd7238780d624573d74c22b79155a7563db19e9b678
+    restart: unless-stopped
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: ${UPSTASH_REDIS_TOKEN}
+      SRH_CONNECTION_STRING: redis://inbox-zero-redis:6379
+    depends_on:
+      inbox-zero-redis:
+        condition: service_healthy
+
+  # Calls the scheduled-task endpoints; see https://docs.getinboxzero.com/hosting/self-hosting#scheduled-tasks
+  inbox-zero-cron:
+    image: curlimages/curl:8.23.0@sha256:3fb7e13e5d179a845c97d78204f3f1064d1907037f26a3ebf91710571151fd93
+    restart: unless-stopped
+    environment:
+      CRON_SECRET: ${CRON_SECRET}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        job() {
+          sleep "$$3"
+          while true; do
+            curl -fsS -o /dev/null -H "Authorization: Bearer $$CRON_SECRET" "http://inbox-zero:3000$$2" || echo "[cron] $$2 failed"
+            sleep "$$1"
+          done
+        }
+        until curl -fs -o /dev/null http://inbox-zero:3000/; do echo "[cron] waiting for web"; sleep 5; done
+        job 900 /api/cron/scheduled-actions 0 &
+        job 900 /api/cron/automation-jobs 0 &
+        job 3600 /api/follow-up-reminders 0 &
+        job 1800 /api/resend/digest/all 0 &
+        job 900 /api/meeting-briefs 0 &
+        job 21600 /api/watch/all 0 &
+        job 86400 /api/cron/reasoning-retention 300 &
+        job 86400 /api/cron/draft-cleanup 300 &
+        wait
+    depends_on:
+      - inbox-zero
+
+volumes:
+  inbox-zero-db: {}
+  inbox-zero-redis: {}
