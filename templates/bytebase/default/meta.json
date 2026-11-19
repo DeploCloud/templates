@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Database DevOps and governance platform for reviewed schema changes, SQL editing and access control, running with its embedded metadata database.",
+  "category": "database",
+  "developedBy": {
+    "label": "Bytebase",
+    "url": "https://www.bytebase.com"
+  },
+  "links": {
+    "github": "https://github.com/bytebase/bytebase",
+    "website": "https://www.bytebase.com",
+    "docs": [
+      "https://docs.bytebase.com/get-started/self-host/deploy-with-docker",
+      "https://docs.bytebase.com/get-started/self-host/external-url"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered after deployment becomes the Workspace Admin. Open the app and create it right away.",
+      "link": "https://docs.bytebase.com/get-started/step-by-step/register-accounts"
+    }
+  ]
+}
