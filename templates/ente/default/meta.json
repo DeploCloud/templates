@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "End-to-end encrypted photo and video backup with the Ente server, the Photos web app, public album sharing, PostgreSQL and S3-compatible object storage.",
+  "category": "media",
+  "developedBy": {
+    "label": "Ente",
+    "url": "https://ente.com"
+  },
+  "links": {
+    "github": "https://github.com/ente/ente",
+    "website": "https://ente.com",
+    "docs": [
+      "https://ente.com/help/self-hosting/",
+      "https://ente.com/help/self-hosting/installation/config",
+      "https://ente.com/help/self-hosting/administration/object-storage",
+      "https://ente.com/help/self-hosting/installation/post-install/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No email server is configured, so sign-up verification codes are printed in the ente-museum service logs. The first account created becomes the admin, so register your own account first.",
+      "link": "https://ente.com/help/self-hosting/administration/users"
+    },
+    {
+      "type": "warning",
+      "message": "The API is served on api.<your domain> and public albums on albums.<your domain>; both subdomains must resolve to this server. Point the Ente mobile and desktop apps at https://api.<your domain> as a custom server.",
+      "link": "https://ente.com/help/self-hosting/installation/post-install/"
+    },
+    {
+      "type": "warning",
+      "message": "Every account, including the admin, starts with a 10 GB storage limit. Raise it with the Ente CLI (ente admin user update-subscription) logged in as the admin.",
+      "link": "https://ente.com/help/cli/admin"
+    }
+  ]
+}
