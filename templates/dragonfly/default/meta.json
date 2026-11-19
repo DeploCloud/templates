@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Redis and Memcached compatible in-memory data store, with password auth, periodic snapshots to a persistent volume and its HTTP console and JSON command API.",
+  "category": "database",
+  "developedBy": {
+    "label": "DragonflyDB",
+    "url": "https://www.dragonflydb.io/"
+  },
+  "links": {
+    "github": "https://github.com/dragonflydb/dragonfly",
+    "website": "https://www.dragonflydb.io/",
+    "docs": [
+      "https://www.dragonflydb.io/docs/getting-started/docker-compose",
+      "https://www.dragonflydb.io/docs/managing-dragonfly/flags",
+      "https://www.dragonflydb.io/docs/managing-dragonfly/backups"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The domain serves the HTTP console and the POST /api command endpoint behind basic auth: user default, password DRAGONFLY_PASSWORD from the environment variables. The Redis protocol port 6379 is not public; other apps in the same environment reach it at dragonfly:6379 with that password.",
+      "link": "https://www.dragonflydb.io/docs/managing-dragonfly/flags"
+    }
+  ]
+}
