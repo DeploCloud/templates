@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "apache-airflow"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+AIRFLOW_BASE_URL = "https://${domain}"
+AIRFLOW_ADMIN_USERNAME = "admin"
+AIRFLOW_ADMIN_PASSWORD = "${admin_password}"
+AIRFLOW_LOAD_EXAMPLES = "false"
+AIRFLOW_FERNET_KEY = "${base64:43}="
+AIRFLOW_SECRET_KEY = "${secret:64}"
+AIRFLOW_JWT_SECRET = "${secret:64}"
+POSTGRES_PASSWORD = "${db_password}"
