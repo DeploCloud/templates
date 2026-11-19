@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "JupyterLab notebook and code environment with a Python kernel, terminal, token login and a persistent home directory.",
+  "category": "development",
+  "developedBy": {
+    "label": "Project Jupyter",
+    "url": "https://jupyter.org/"
+  },
+  "links": {
+    "github": "https://github.com/jupyterlab/jupyterlab",
+    "website": "https://jupyter.org/",
+    "docs": [
+      "https://jupyterlab.readthedocs.io/en/stable/",
+      "https://jupyter-docker-stacks.readthedocs.io/en/latest/using/running.html",
+      "https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html",
+      "https://jupyter-server.readthedocs.io/en/latest/operators/security.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the token stored in the JUPYTER_TOKEN environment variable. Anyone holding it can run arbitrary code and open a terminal inside the container.",
+      "link": "https://jupyter-server.readthedocs.io/en/latest/operators/security.html"
+    }
+  ]
+}
