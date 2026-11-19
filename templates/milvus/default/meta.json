@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Standalone Milvus vector database with etcd metadata, MinIO object storage and authentication enabled.",
+  "category": "database",
+  "developedBy": {
+    "label": "Milvus",
+    "url": "https://github.com/milvus-io"
+  },
+  "links": {
+    "github": "https://github.com/milvus-io/milvus",
+    "website": "https://milvus.io",
+    "docs": [
+      "https://milvus.io/docs/install_standalone-docker-compose.md",
+      "https://milvus.io/docs/authenticate.md",
+      "https://milvus.io/api-reference/restful/v3.0.x/About.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is enabled. Connect as user root with the generated MILVUS_ROOT_PASSWORD and rotate it from a client if needed; changing the variable after the first start has no effect. The domain serves the RESTful API only; gRPC SDK clients connect from apps in the same environment at milvus:19530.",
+      "link": "https://milvus.io/docs/authenticate.md"
+    }
+  ]
+}
