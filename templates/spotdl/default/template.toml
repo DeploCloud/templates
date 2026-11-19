@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "spotdl"
+port = 8_800
+host = "${domain}"
