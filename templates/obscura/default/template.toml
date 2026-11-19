@@ -1,0 +1,13 @@
+[variables]
+cdp_token = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "obscura"
+port = 80
+host = "${domain}"
+
+[config.env]
+OBSCURA_CDP_TOKEN = "${cdp_token}"

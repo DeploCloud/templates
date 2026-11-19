@@ -1,0 +1,24 @@
+{
+  "name": "MCP",
+  "shortDescription": "Obscura headless browser exposed as a Model Context Protocol server over HTTP, giving AI agents navigate, snapshot, click, fill, screenshot and PDF tools.",
+  "category": "ai",
+  "developedBy": {
+    "label": "h4ckf0r0day",
+    "url": "https://github.com/h4ckf0r0day"
+  },
+  "links": {
+    "github": "https://github.com/h4ckf0r0day/obscura",
+    "website": "https://obscura.sh",
+    "docs": [
+      "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Use-the-MCP-server.md",
+      "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Environment-variables.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Point your MCP client at https://<your-domain>/mcp and send an Authorization: Bearer header with the generated OBSCURA_MCP_TOKEN from the environment settings.",
+      "link": "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Use-the-MCP-server.md"
+    }
+  ]
+}
