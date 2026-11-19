@@ -1,0 +1,37 @@
+{
+  "name": "Default",
+  "shortDescription": "Decentralized social network server with the Rails web app, streaming API, Sidekiq workers, PostgreSQL and Redis.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Mastodon",
+    "url": "https://github.com/mastodon"
+  },
+  "links": {
+    "github": "https://github.com/mastodon/mastodon",
+    "website": "https://joinmastodon.org",
+    "docs": [
+      "https://docs.joinmastodon.org/admin/config/",
+      "https://docs.joinmastodon.org/admin/setup/",
+      "https://docs.joinmastodon.org/admin/tootctl/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: Mastodon forces HTTPS in production, so the instance does not work on a plain HTTP domain."
+    },
+    {
+      "type": "warning",
+      "message": "LOCAL_DOMAIN is the instance identity and cannot be changed safely after the first start, so deploy on the final domain."
+    },
+    {
+      "type": "warning",
+      "message": "Registrations are closed by default. Create the owner account in the mastodon container terminal with `tootctl accounts create <username> --email <email> --confirmed --approve --role Owner`; the password is printed in the output. Fill in the SMTP_* variables so other users can confirm their email.",
+      "link": "https://docs.joinmastodon.org/admin/setup/"
+    },
+    {
+      "type": "warning",
+      "message": "Push notifications stay off until you run `bundle exec rails mastodon:webpush:generate_vapid_key` in the mastodon container terminal, copy the two values into VAPID_PRIVATE_KEY and VAPID_PUBLIC_KEY and redeploy."
+    }
+  ]
+}
