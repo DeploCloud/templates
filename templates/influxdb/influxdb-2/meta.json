@@ -1,0 +1,23 @@
+{
+  "name": "InfluxDB 2",
+  "shortDescription": "InfluxDB 2 time series database with its built-in web UI, Flux and InfluxQL queries, dashboards and tasks, set up automatically with an admin user, organization and bucket.",
+  "category": "database",
+  "developedBy": {
+    "label": "InfluxData",
+    "url": "https://www.influxdata.com/"
+  },
+  "links": {
+    "github": "https://github.com/influxdata/influxdb",
+    "website": "https://www.influxdata.com/products/influxdb/",
+    "docs": [
+      "https://docs.influxdata.com/influxdb/v2/",
+      "https://docs.influxdata.com/influxdb/v2/install/use-docker-compose/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the password in DOCKER_INFLUXDB_INIT_PASSWORD. The operator API token is in DOCKER_INFLUXDB_INIT_ADMIN_TOKEN. Both only apply on the first start; changing them later has no effect."
+    }
+  ]
+}
