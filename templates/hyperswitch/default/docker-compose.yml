@@ -1,0 +1,140 @@
+services:
+  hyperswitch-gateway:
+    image: nginx:1.30.7-alpine@sha256:bef154735288bc38d99fac41ae63730684bcc661503673a04a0f9bc526ba8598
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - hyperswitch-router
+      - hyperswitch-control-center
+
+  hyperswitch-router:
+    image: juspaydotin/hyperswitch-router:v1.129.0-standalone@sha256:dbbc78845ac1c6dd3cdcc6bd00de11646351b37e2173cca5f32dd723a8021dea
+    restart: unless-stopped
+    command: /local/bin/router -f /local/config/docker_compose.toml
+    expose:
+      - 8080
+    environment:
+      ROUTER__MASTER_DATABASE__HOST: hyperswitch-db
+      ROUTER__MASTER_DATABASE__PASSWORD: ${HYPERSWITCH_DB_PASSWORD}
+      ROUTER__REPLICA_DATABASE__HOST: hyperswitch-db
+      ROUTER__REPLICA_DATABASE__PASSWORD: ${HYPERSWITCH_DB_PASSWORD}
+      ROUTER__ACCOUNTS_DATABASE__HOST: hyperswitch-db
+      ROUTER__ACCOUNTS_DATABASE__PASSWORD: ${HYPERSWITCH_DB_PASSWORD}
+      ROUTER__GLOBAL_DATABASE__HOST: hyperswitch-db
+      ROUTER__GLOBAL_DATABASE__PASSWORD: ${HYPERSWITCH_DB_PASSWORD}
+      ROUTER__ANALYTICS__SQLX__HOST: hyperswitch-db
+      ROUTER__ANALYTICS__SQLX__PASSWORD: ${HYPERSWITCH_DB_PASSWORD}
+      ROUTER__REDIS__HOST: hyperswitch-redis
+      ROUTER__SECRETS__ADMIN_API_KEY: ${HYPERSWITCH_ADMIN_API_KEY}
+      ROUTER__SECRETS__JWT_SECRET: ${HYPERSWITCH_JWT_SECRET}
+      ROUTER__SECRETS__MASTER_ENC_KEY: ${HYPERSWITCH_MASTER_ENC_KEY}
+      ROUTER__API_KEYS__HASH_KEY: ${HYPERSWITCH_API_KEYS_HASH_KEY}
+      ROUTER__USER_AUTH_METHODS__ENCRYPTION_KEY: ${HYPERSWITCH_USER_AUTH_METHODS_KEY}
+      ROUTER__PAYMENT_METHOD_AUTH__PM_AUTH_KEY: ${HYPERSWITCH_PM_AUTH_KEY}
+      ROUTER__USER__BASE_URL: https://${HYPERSWITCH_DOMAIN}
+      ROUTER__MULTITENANCY__TENANTS__PUBLIC__BASE_URL: https://${HYPERSWITCH_DOMAIN}/api
+      ROUTER__MULTITENANCY__TENANTS__PUBLIC__USER__CONTROL_CENTER_URL: https://${HYPERSWITCH_DOMAIN}
+      # No Superposition service: the router falls back to the seed file shipped with the release.
+      ROUTER__SUPERPOSITION__ENDPOINT: http://127.0.0.1:1
+      ROUTER__SUPERPOSITION__BACKUP_FILE_PATH: /local/config/superposition_seed.toml
+      ROUTER__SUPERPOSITION__POLLING_INTERVAL: "3600"
+      ROUTER__LOG__CONSOLE__LEVEL: INFO
+      ROUTER__LOG__TELEMETRY__METRICS_ENABLED: "false"
+    volumes:
+      - hyperswitch-config:/local/config
+      - hyperswitch-files:/local/bin/files
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      hyperswitch-db:
+        condition: service_healthy
+      hyperswitch-redis:
+        condition: service_healthy
+      hyperswitch-migrations:
+        condition: service_completed_successfully
+
+  hyperswitch-control-center:
+    image: juspaydotin/hyperswitch-control-center:v1.39.0@sha256:19a4c9c15b89865798b9730445cd5a1e84820896d6383c3eed97ad6e61ce18b0
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      default__endpoints__api_url: https://${HYPERSWITCH_DOMAIN}/api
+    depends_on:
+      hyperswitch-router:
+        condition: service_healthy
+
+  # Applies the release's database migrations and installs its router config.
+  hyperswitch-migrations:
+    image: debian:13.7-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2
+    restart: "no"
+    environment:
+      HYPERSWITCH_VERSION: v1.129.0
+      DIESEL_VERSION: v2.3.5
+      DATABASE_URL: postgresql://db_user:${HYPERSWITCH_DB_PASSWORD}@hyperswitch-db:5432/hyperswitch_db
+    volumes:
+      - hyperswitch-config:/config
+      - hyperswitch-files:/files
+    command:
+      - bash
+      - -euo
+      - pipefail
+      - -c
+      - |
+        chown 999:999 /files
+        if [ "$$(cat /config/.version 2>/dev/null)" = "$$HYPERSWITCH_VERSION" ]; then
+          echo "Hyperswitch $$HYPERSWITCH_VERSION is already set up"
+          exit 0
+        fi
+        apt-get update -qq
+        apt-get install -y -qq --no-install-recommends ca-certificates curl xz-utils
+        curl --proto '=https' --tlsv1.2 -LsSf "https://github.com/diesel-rs/diesel/releases/download/$$DIESEL_VERSION/diesel_cli-installer.sh" | sh
+        mkdir -p /tmp/hyperswitch
+        cd /tmp/hyperswitch
+        curl -fsSL --retry 3 "https://github.com/juspay/hyperswitch/archive/refs/tags/$$HYPERSWITCH_VERSION.tar.gz" | tar -xz --strip-components=1 --wildcards '*/migrations/*' '*/config/*'
+        "$$HOME/.cargo/bin/diesel" migration --database-url "$$DATABASE_URL" run --migration-dir migrations
+        cp config/docker_compose.toml config/superposition_seed.toml config/payment_required_fields_v2.toml /config/
+        echo "$$HYPERSWITCH_VERSION" > /config/.version
+        rm -rf /tmp/hyperswitch
+    depends_on:
+      hyperswitch-db:
+        condition: service_healthy
+
+  hyperswitch-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: ${HYPERSWITCH_DB_PASSWORD}
+      POSTGRES_DB: hyperswitch_db
+    volumes:
+      - hyperswitch-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U db_user -d hyperswitch_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  hyperswitch-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - hyperswitch-redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  hyperswitch-db: {}
+  hyperswitch-config: {}
+  hyperswitch-files: {}
+  hyperswitch-redis: {}
