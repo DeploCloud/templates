@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source project management with kanban boards, list and Gantt views, and GitHub integration, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kaneo",
+    "url": "https://github.com/usekaneo"
+  },
+  "links": {
+    "github": "https://github.com/usekaneo/kaneo",
+    "website": "https://kaneo.app/",
+    "docs": [
+      "https://kaneo.app/docs/core/installation/docker-compose",
+      "https://kaneo.app/docs/core/installation/environment-variables",
+      "https://kaneo.app/docs/core/installation/object-storage-and-image-uploads",
+      "https://kaneo.app/docs/core/operations/administration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first non-guest account you create becomes the instance administrator. Create it right after deployment. Public sign-up stays open afterwards until you close registration in the administration settings.",
+      "link": "https://kaneo.app/docs/core/operations/administration"
+    }
+  ]
+}
