@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+root_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nocobase"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_KEY = "${password:64}"
+APP_PUBLIC_ORIGIN = "https://${domain}"
+DB_DATABASE = "nocobase"
+DB_USER = "nocobase"
+DB_PASSWORD = "${db_password}"
+TZ = "Etc/UTC"
+INIT_APP_LANG = "en-US"
+INIT_ROOT_EMAIL = "admin@${domain}"
+INIT_ROOT_PASSWORD = "${root_password}"
+INIT_ROOT_NICKNAME = "Super Admin"

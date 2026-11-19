@@ -1,0 +1,45 @@
+services:
+  nocobase:
+    image: nocobase/nocobase:2.2.48-full@sha256:4603e730434e1bc6e41704aa0974a53fa889a5bff3779d18a730068d26450f36
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_KEY: ${APP_KEY}
+      APP_PUBLIC_ORIGIN: ${APP_PUBLIC_ORIGIN}
+      DB_DIALECT: postgres
+      DB_HOST: nocobase-db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ}
+      INIT_APP_LANG: ${INIT_APP_LANG}
+      INIT_ROOT_EMAIL: ${INIT_ROOT_EMAIL}
+      INIT_ROOT_PASSWORD: ${INIT_ROOT_PASSWORD}
+      INIT_ROOT_NICKNAME: ${INIT_ROOT_NICKNAME}
+    volumes:
+      - nocobase-storage:/app/nocobase/storage
+    depends_on:
+      nocobase-db:
+        condition: service_healthy
+
+  nocobase-db:
+    image: postgres:16.16@sha256:3950ad7c3148ca2175ef1b6c36c9efbf78957ae8fbe8b3a5d7c35af50500382f
+    restart: unless-stopped
+    command: postgres -c wal_level=logical
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - nocobase-db:/var/lib/postgresql/data
+
+volumes:
+  nocobase-storage: {}
+  nocobase-db: {}

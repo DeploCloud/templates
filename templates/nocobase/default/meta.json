@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source no-code and low-code platform for building business systems, internal tools and workflows, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "NocoBase",
+    "url": "https://github.com/nocobase"
+  },
+  "links": {
+    "github": "https://github.com/nocobase/nocobase",
+    "website": "https://www.nocobase.com",
+    "docs": [
+      "https://nocode.docs.nocobase.com/get-started/installation/docker",
+      "https://nocode.docs.nocobase.com/get-started/installation/env"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the root account created on first start: the email is INIT_ROOT_EMAIL and the generated password is INIT_ROOT_PASSWORD in the environment settings. These variables only apply on the first install, so change the password from the UI after the first login."
+    }
+  ]
+}
