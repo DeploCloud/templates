@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted SEO suite for keyword research, rank tracking, backlinks, site audits and AI visibility, with email and password accounts.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "EveryApp",
+    "url": "https://github.com/every-app"
+  },
+  "links": {
+    "github": "https://github.com/every-app/open-seo",
+    "website": "https://openseo.so",
+    "docs": [
+      "https://github.com/every-app/open-seo/blob/main/docs/SELF_HOSTING_DOCKER.md",
+      "https://github.com/every-app/open-seo/blob/main/docs/DATAFORSEO_API_KEY.md",
+      "https://openseo.so/docs/mcp"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "SEO data needs a DataForSEO API key (the Base64 credential) or a treg API token: set DATAFORSEO_API_KEY or TREG_API_TOKEN and redeploy.",
+      "link": "https://github.com/every-app/open-seo/blob/main/docs/DATAFORSEO_API_KEY.md"
+    },
+    {
+      "type": "warning",
+      "message": "The first visitor creates the administrator account and registration then closes. Open the app and create it right after deployment."
+    }
+  ]
+}
