@@ -1,0 +1,118 @@
+services:
+  lobehub:
+    image: lobehub/lobehub:2.3.4@sha256:33fe4f6721c82dbda67d2d17ec96aeb4c32b3dc8d6611b70c970788353c29959
+    restart: unless-stopped
+    expose:
+      - 3210
+    # JWKS_KEY is an RSA key set, so lobehub-keys generates it once into a volume
+    entrypoint:
+      - /bin/sh
+      - -c
+      - export JWKS_KEY="$$(cat /keys/jwks.json)" && exec /bin/node /app/startServer.js
+    environment:
+      APP_URL: ${APP_URL}
+      INTERNAL_APP_URL: http://localhost:3210
+      KEY_VAULTS_SECRET: ${KEY_VAULTS_SECRET}
+      AUTH_SECRET: ${AUTH_SECRET}
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD}@lobehub-db:5432/lobehub
+      REDIS_URL: redis://:${REDIS_PASSWORD}@lobehub-redis:6379
+      S3_ENDPOINT: ${APP_URL}
+      S3_INTERNAL_ENDPOINT: http://lobehub-s3:9000
+      S3_BUCKET: ${S3_BUCKET}
+      S3_ENABLE_PATH_STYLE: "1"
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_KEY}
+      LLM_VISION_IMAGE_USE_BASE64: "1"
+    volumes:
+      - lobehub-keys:/keys:ro
+    depends_on:
+      lobehub-keys:
+        condition: service_completed_successfully
+      lobehub-db:
+        condition: service_healthy
+      lobehub-redis:
+        condition: service_healthy
+      lobehub-s3-init:
+        condition: service_completed_successfully
+
+  lobehub-keys:
+    image: lobehub/lobehub:2.3.4@sha256:33fe4f6721c82dbda67d2d17ec96aeb4c32b3dc8d6611b70c970788353c29959
+    restart: "no"
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+        if [ ! -s /keys/jwks.json ]; then
+          /bin/node -e 'const c=require("crypto");const {privateKey}=c.generateKeyPairSync("rsa",{modulusLength:2048});console.log(JSON.stringify({keys:[Object.assign(privateKey.export({format:"jwk"}),{alg:"RS256",kid:c.randomBytes(8).toString("hex"),use:"sig"})]}))' > /keys/jwks.json.tmp
+          mv /keys/jwks.json.tmp /keys/jwks.json
+        fi
+        chown 1001:1001 /keys/jwks.json
+        chmod 600 /keys/jwks.json
+    volumes:
+      - lobehub-keys:/keys
+
+  lobehub-db:
+    image: paradedb/paradedb:0.26.8-pg17@sha256:de0f0e0a7552b86843d4f759ca1702e93e05c4c7f7971621d234c76e7d137977
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lobehub
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PDB_TUNE: "false"
+    volumes:
+      - lobehub-db:/var/lib/postgresql/data
+    healthcheck:
+      # TCP probe: the init-time server listens only on the Unix socket
+      test: ["CMD-SHELL", "pg_isready -U postgres -h 127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  lobehub-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - lobehub-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  lobehub-s3:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY}
+    volumes:
+      - lobehub-s3:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  # The bundled rc in the RustFS image cannot run its bucket bootstrap, so the bucket is created here
+  lobehub-s3-init:
+    image: rustfs/rc:v0.1.37@sha256:7e93fd410a8fe51514f89373e093392c92095b98dc6140335fcfe956810c4c80
+    restart: "no"
+    command: ["mb", "--ignore-existing", "s3/${S3_BUCKET}"]
+    environment:
+      RC_HOST_s3: http://${S3_ACCESS_KEY}:${S3_SECRET_KEY}@lobehub-s3:9000
+    depends_on:
+      lobehub-s3:
+        condition: service_healthy
+
+volumes:
+  lobehub-keys: {}
+  lobehub-db: {}
+  lobehub-redis: {}
+  lobehub-s3: {}
