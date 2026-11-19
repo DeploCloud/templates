@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web file manager that browses SFTP, S3, SMB, WebDAV, FTP, local storage and more from one browser UI, configured from a built-in admin console.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Mickael Kerjean",
+    "url": "https://github.com/mickael-kerjean"
+  },
+  "links": {
+    "github": "https://github.com/mickael-kerjean/filestash",
+    "website": "https://www.filestash.app/",
+    "docs": [
+      "https://www.filestash.app/docs/install-and-upgrade/",
+      "https://www.filestash.app/docs/guide/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor sets the admin password, then picks a storage preset in the admin console.",
+      "link": "https://www.filestash.app/docs/install-and-upgrade/"
+    }
+  ]
+}
