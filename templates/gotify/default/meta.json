@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted push notification server with a REST API, real-time WebSocket delivery and a web UI, using SQLite storage.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Gotify",
+    "url": "https://github.com/gotify"
+  },
+  "links": {
+    "github": "https://github.com/gotify/server",
+    "website": "https://gotify.net",
+    "docs": [
+      "https://gotify.net/docs/install",
+      "https://gotify.net/docs/config",
+      "https://gotify.net/docs/first-login"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated GOTIFY_DEFAULTUSER_PASS from the environment settings. It only applies when the database is first created; change the password later in the Gotify web UI, not in the environment.",
+      "link": "https://gotify.net/docs/first-login"
+    }
+  ]
+}
