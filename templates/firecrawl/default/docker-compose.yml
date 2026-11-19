@@ -1,0 +1,106 @@
+services:
+  firecrawl:
+    image: ghcr.io/firecrawl/firecrawl:2.11.797@sha256:18c21311046714ca1e8e52d216cec91564eeb0c9dc36e5cda984b1be6c81107b
+    restart: unless-stopped
+    expose:
+      - 3002
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    environment:
+      HOST: 0.0.0.0
+      PORT: "3002"
+      ENV: local
+      USE_DB_AUTHENTICATION: "false"
+      REDIS_URL: redis://firecrawl-redis:6379
+      REDIS_RATE_LIMIT_URL: redis://firecrawl-redis:6379
+      PLAYWRIGHT_MICROSERVICE_URL: http://firecrawl-playwright:3000/scrape
+      POSTGRES_HOST: firecrawl-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+      NUQ_RABBITMQ_URL: amqp://firecrawl:${RABBITMQ_PASSWORD}@firecrawl-rabbitmq:5672
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL}
+      MODEL_NAME: ${MODEL_NAME}
+      LOGGING_LEVEL: INFO
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3002/health/liveness > /dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      firecrawl-db:
+        condition: service_healthy
+      firecrawl-redis:
+        condition: service_healthy
+      firecrawl-rabbitmq:
+        condition: service_healthy
+      firecrawl-playwright:
+        condition: service_started
+
+  firecrawl-playwright:
+    image: ghcr.io/firecrawl/playwright-service:latest@sha256:227ce3d8059173925a5a0697c63a1e947662cca934a609151651f578774edd5d
+    restart: unless-stopped
+    environment:
+      PORT: "3000"
+      MAX_CONCURRENT_PAGES: "10"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp/.cache:noexec,nosuid,size=1g
+
+  firecrawl-db:
+    image: ghcr.io/firecrawl/nuq-postgres:latest@sha256:d719b36160eac2fcbe16dc7e7360ddb9c82c40ea5da183d07bf4a755c6a0b2ae
+    restart: unless-stopped
+    # pg_cron is bound to the "postgres" database by the image.
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+    volumes:
+      - firecrawl-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  firecrawl-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: redis-server --bind 0.0.0.0
+    volumes:
+      - firecrawl-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  firecrawl-rabbitmq:
+    image: rabbitmq:4.4.1-alpine@sha256:6bf98f3f634a57951103efe3e9ff866b5d8b3faa35cc7be12b2ce052d8367a12
+    restart: unless-stopped
+    # A fixed node name keeps the persisted queues across container recreation.
+    hostname: firecrawl-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: firecrawl
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - firecrawl-rabbitmq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+
+volumes:
+  firecrawl-db: {}
+  firecrawl-redis: {}
+  firecrawl-rabbitmq: {}

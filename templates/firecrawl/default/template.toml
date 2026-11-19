@@ -1,0 +1,18 @@
+[variables]
+postgres_password = "${password:32}"
+rabbitmq_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "firecrawl"
+port = 3_002
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${postgres_password}"
+RABBITMQ_PASSWORD = "${rabbitmq_password}"
+OPENAI_API_KEY = ""
+OPENAI_BASE_URL = ""
+MODEL_NAME = ""
