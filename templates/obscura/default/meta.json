@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight headless browser engine written in Rust, served as a Chrome DevTools Protocol endpoint for Puppeteer and Playwright scraping and AI agents.",
+  "category": "automation",
+  "developedBy": {
+    "label": "h4ckf0r0day",
+    "url": "https://github.com/h4ckf0r0day"
+  },
+  "links": {
+    "github": "https://github.com/h4ckf0r0day/obscura",
+    "website": "https://obscura.sh",
+    "docs": [
+      "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Connect-Puppeteer-or-Playwright.md",
+      "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Run-in-production-at-scale.md",
+      "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Environment-variables.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Every request needs an Authorization: Bearer header with the generated OBSCURA_CDP_TOKEN from the environment settings. Connect Puppeteer or Playwright straight to wss://<your-domain>/devtools/browser: the /json/version discovery endpoint advertises a plain ws:// URL.",
+      "link": "https://github.com/h4ckf0r0day/obscura/blob/main/docs/Environment-variables.md"
+    }
+  ]
+}

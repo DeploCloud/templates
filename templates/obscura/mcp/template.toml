@@ -1,0 +1,13 @@
+[variables]
+mcp_token = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "obscura"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+OBSCURA_MCP_TOKEN = "${mcp_token}"
