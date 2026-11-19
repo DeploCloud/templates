@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "anubis"
+port = 8_923
+host = "${domain}"
+
+[config.env]
+TARGET = "http://anubis-site:80"
+DIFFICULTY = "4"
+SERVE_ROBOTS_TXT = "false"
+ED25519_PRIVATE_KEY_HEX = "${hash:64}"
