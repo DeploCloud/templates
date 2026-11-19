@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "paperclip"
+port = 3100
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+PAPERCLIP_PUBLIC_URL = "https://${domain}"
+BETTER_AUTH_SECRET = "${hash:64}"
+PAPERCLIP_TOOL_ACTION_SIGNING_SECRET = "${hash:64}"
+ANTHROPIC_API_KEY = ""
+OPENAI_API_KEY = ""

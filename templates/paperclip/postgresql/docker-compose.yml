@@ -1,0 +1,44 @@
+services:
+  paperclip:
+    image: ghcr.io/paperclipai/paperclip:2026.1117.0@sha256:bdf38d10544dc6c831e16dc027f23ad586353ef3be1a1b2c6979e63b956aceb1
+    restart: unless-stopped
+    expose:
+      - 3100
+    pids_limit: 2048
+    stop_grace_period: 90s
+    environment:
+      DATABASE_URL: postgres://paperclip:${DB_PASSWORD}@paperclip-db:5432/paperclip
+      PAPERCLIP_MIGRATION_AUTO_APPLY: "true"
+      PAPERCLIP_PUBLIC_URL: ${PAPERCLIP_PUBLIC_URL}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      PAPERCLIP_TOOL_ACTION_SIGNING_SECRET: ${PAPERCLIP_TOOL_ACTION_SIGNING_SECRET}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - paperclip-data:/paperclip
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3100/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 300s
+    depends_on:
+      paperclip-db:
+        condition: service_healthy
+  paperclip-db:
+    image: postgres:17.12-alpine@sha256:cdef2be34fbbd163d0d633177c02d228c6c47937b95fdffe1eefb91914dfd47f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: paperclip
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: paperclip
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperclip -d paperclip"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - paperclip-db-data:/var/lib/postgresql/data
+volumes:
+  paperclip-data: {}
+  paperclip-db-data: {}
