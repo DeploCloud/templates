@@ -1,0 +1,41 @@
+services:
+  kanboard:
+    image: kanboard/kanboard:v1.2.57@sha256:637989624e5362af2b97bfb4be1936fb6b111ea7cbdffea0ae8bd3068dc84125
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DB_DRIVER: postgres
+      DB_HOSTNAME: kanboard-db
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - kanboard-data:/var/www/app/data
+      - kanboard-plugins:/var/www/app/plugins
+      - kanboard-ssl:/etc/nginx/ssl
+    depends_on:
+      kanboard-db:
+        condition: service_healthy
+
+  kanboard-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - kanboard-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+volumes:
+  kanboard-data: {}
+  kanboard-plugins: {}
+  kanboard-ssl: {}
+  kanboard-db: {}
