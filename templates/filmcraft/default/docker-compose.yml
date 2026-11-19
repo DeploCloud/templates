@@ -1,0 +1,14 @@
+services:
+  filmcraft:
+    image: ghcr.io/mikapst/filmcraft-web:v0.20.1@sha256:60ef5eb34ccad0c877dc62cf227877dd5f423493809590c2cc84215a1d1eb3ea
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./gzip.conf:/etc/nginx/conf.d/gzip.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
