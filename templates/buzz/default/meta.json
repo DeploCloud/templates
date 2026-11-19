@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Buzz relay for a workspace where people and AI agents share channels, threads, DMs, media and git events, with PostgreSQL, Redis and S3 storage.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Block",
+    "url": "https://github.com/block"
+  },
+  "links": {
+    "github": "https://github.com/block/buzz",
+    "website": "https://buzz.xyz/",
+    "docs": [
+      "https://github.com/block/buzz/blob/main/deploy/compose/README.md",
+      "https://github.com/block/buzz/blob/main/deploy/compose/.env.example",
+      "https://github.com/block/buzz/blob/main/ARCHITECTURE.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The relay starts open: any Nostr key can join. To make it members-only, set RELAY_OWNER_PUBKEY to your 64-character hex public key (Buzz Desktop: Settings - Identity - Public key) and BUZZ_REQUIRE_RELAY_MEMBERSHIP to true, then redeploy.",
+      "link": "https://github.com/block/buzz/blob/main/deploy/compose/README.md"
+    },
+    {
+      "type": "warning",
+      "message": "There is no browser client: connect with the Buzz desktop or mobile app using wss://<your-domain>. The community is keyed to RELAY_URL, so deploy on the final domain before adding data.",
+      "link": "https://github.com/block/buzz-app"
+    }
+  ]
+}
