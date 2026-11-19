@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "MySQL-compatible database clustering system: a single-shard Vitess cluster with etcd topology, a MySQL 8.4 tablet, VTOrc, VTGate and the VTAdmin web console.",
+  "category": "database",
+  "developedBy": {
+    "label": "Vitess",
+    "url": "https://vitess.io"
+  },
+  "links": {
+    "github": "https://github.com/vitessio/vitess",
+    "website": "https://vitess.io",
+    "docs": [
+      "https://vitess.io/docs/24.0/get-started/local/",
+      "https://vitess.io/docs/24.0/reference/vtadmin/",
+      "https://vitess.io/docs/24.0/reference/vtorc/",
+      "https://vitess.io/docs/24.0/user-guides/configuration-advanced/static-auth/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "VTAdmin is protected by basic auth: sign in with VTADMIN_USER and VTADMIN_PASSWORD from the environment variables. The MySQL port is not public; other apps in the same environment connect to vitess-vtgate:3306 with VITESS_MYSQL_USER and VITESS_MYSQL_PASSWORD, using the keyspace name (VITESS_KEYSPACE, default main) as the database. Set VITESS_KEYSPACE before the first deploy: renaming it later does not move existing data.",
+      "link": "https://vitess.io/docs/24.0/user-guides/configuration-advanced/static-auth/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
