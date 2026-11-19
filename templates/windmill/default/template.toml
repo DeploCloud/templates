@@ -1,0 +1,28 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "windmill-server"
+port = 8_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "windmill-extra"
+port = 3_000
+host = "${domain}"
+path = "/ws"
+
+[[config.domains]]
+serviceName = "windmill-extra"
+port = 3_000
+host = "${domain}"
+path = "/ws_debug"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+DATABASE_URL = "postgres://postgres:${db_password}@windmill-db:5432/windmill?sslmode=disable"
+BASE_URL = "https://${domain}"
