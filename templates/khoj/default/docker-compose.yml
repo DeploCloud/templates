@@ -1,0 +1,68 @@
+services:
+  khoj:
+    image: ghcr.io/khoj-ai/khoj:1.42.10@sha256:41aa881c957a035207c11da239dc436d0f8a0c6a72b372651c5a48e08127043a
+    restart: unless-stopped
+    command: --host=0.0.0.0 --port=42110 -v --non-interactive
+    working_dir: /app
+    expose:
+      - 42110
+    environment:
+      POSTGRES_HOST: khoj-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: khoj
+      POSTGRES_USER: khoj
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      KHOJ_DJANGO_SECRET_KEY: ${KHOJ_DJANGO_SECRET_KEY}
+      KHOJ_DEBUG: "False"
+      KHOJ_DOMAIN: ${KHOJ_DOMAIN}
+      KHOJ_ADMIN_EMAIL: ${KHOJ_ADMIN_EMAIL}
+      KHOJ_ADMIN_PASSWORD: ${KHOJ_ADMIN_PASSWORD}
+      KHOJ_TERRARIUM_URL: http://khoj-sandbox:8080
+      KHOJ_SEARXNG_URL: http://khoj-search:8080
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_EMAIL: ${RESEND_EMAIL}
+      FORWARDED_ALLOW_IPS: "*"
+    volumes:
+      - khoj-config:/root/.khoj
+      - khoj-models:/root/.cache
+    depends_on:
+      khoj-db:
+        condition: service_healthy
+      khoj-sandbox:
+        condition: service_started
+      khoj-search:
+        condition: service_started
+
+  khoj-db:
+    image: pgvector/pgvector:0.8.7-pg17@sha256:b513c48566e4777cd3370451400000c78eda6a08131d68f4c31d4a76f27bd8fd
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: khoj
+      POSTGRES_USER: khoj
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - khoj-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U khoj -d khoj"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  khoj-sandbox:
+    image: ghcr.io/khoj-ai/terrarium:latest@sha256:caf9356305daf9f7f4e4a63ef1ce3a72dc2c0190cb8fdfa4e0e837d2298f19ce
+    restart: unless-stopped
+
+  khoj-search:
+    image: searxng/searxng:2026.11.18-b867c56a5@sha256:6012a064924a032969a2e7989d66971803f126a237a2fb6c62f10ae3d82093e1
+    restart: unless-stopped
+    environment:
+      SEARXNG_BASE_URL: http://khoj-search:8080/
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+    volumes:
+      - khoj-search:/etc/searxng
+
+volumes:
+  khoj-config: {}
+  khoj-models: {}
+  khoj-db: {}
+  khoj-search: {}
