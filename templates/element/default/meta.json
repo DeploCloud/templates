@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Element Web, the Matrix chat client for the browser, served by nginx with an editable config.json to point it at your own homeserver.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Element",
+    "url": "https://element.io"
+  },
+  "links": {
+    "github": "https://github.com/element-hq/element-web",
+    "website": "https://element.io",
+    "docs": [
+      "https://github.com/element-hq/element-web/blob/develop/docs/install.md",
+      "https://github.com/element-hq/element-web/blob/develop/docs/config.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This deploys only the web client, not a Matrix homeserver. It defaults to matrix.org; edit the mounted config.json (default_server_config) to use your own homeserver.",
+      "link": "https://github.com/element-hq/element-web/blob/develop/docs/config.md"
+    }
+  ]
+}
