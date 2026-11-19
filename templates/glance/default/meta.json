@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted dashboard that shows RSS feeds, Hacker News, weather, GitHub releases and more on one page, configured from a single YAML file.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Glance",
+    "url": "https://github.com/glanceapp"
+  },
+  "links": {
+    "github": "https://github.com/glanceapp/glance",
+    "docs": [
+      "https://github.com/glanceapp/glance/blob/main/docs/configuration.md",
+      "https://github.com/glanceapp/glance/blob/main/docs/preconfigured-pages.md",
+      "https://github.com/glanceapp/glance/blob/main/docs/themes.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated password stored under auth.users in the glance.yml config file. Pages and widgets are also defined in glance.yml, which you edit to customize the dashboard.",
+      "link": "https://github.com/glanceapp/glance/blob/main/docs/configuration.md#authentication"
+    }
+  ]
+}
