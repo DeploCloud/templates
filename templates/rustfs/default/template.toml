@@ -1,0 +1,15 @@
+[variables]
+access_key = "${hash:20}"
+secret_key = "${password:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rustfs"
+port = 9_001
+host = "${domain}"
+
+[config.env]
+RUSTFS_ACCESS_KEY = "${access_key}"
+RUSTFS_SECRET_KEY = "${secret_key}"

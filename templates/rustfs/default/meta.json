@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "S3-compatible object storage server written in Rust, with the S3 API and the web console served on one domain.",
+  "category": "storage",
+  "developedBy": {
+    "label": "RustFS",
+    "url": "https://rustfs.com"
+  },
+  "links": {
+    "github": "https://github.com/rustfs/rustfs",
+    "website": "https://rustfs.com",
+    "docs": [
+      "https://docs.rustfs.com/en/installation/container/docker",
+      "https://docs.rustfs.com/en/administration/console"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the console with the generated RUSTFS_ACCESS_KEY and RUSTFS_SECRET_KEY from the environment variables. The same pair is the root S3 credential, so create separate access keys for applications. S3 clients must use path-style addressing."
+    }
+  ]
+}
