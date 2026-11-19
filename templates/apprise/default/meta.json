@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted notification gateway with a web UI and REST API that relays alerts to more than 150 services such as Telegram, Discord, Slack and email.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Chris Caron",
+    "url": "https://github.com/caronc"
+  },
+  "links": {
+    "github": "https://github.com/caronc/apprise-api",
+    "website": "https://hub.docker.com/r/caronc/apprise",
+    "docs": [
+      "https://github.com/caronc/apprise-api#environment-variables",
+      "https://github.com/caronc/apprise-api#persistent-stateful-storage-solution",
+      "https://github.com/caronc/apprise#supported-notifications"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is enabled. Sign in as admin with the generated APPRISE_PASSWORD from the environment variables; API clients must send the same credentials as HTTP Basic Auth.",
+      "link": "https://github.com/caronc/apprise-api#authentication"
+    }
+  ]
+}
