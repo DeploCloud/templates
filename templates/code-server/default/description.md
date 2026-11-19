@@ -1,0 +1,1 @@
+Deploys code-server, the official image that runs VS Code in the browser as the `coder` user. The whole home directory `/home/coder` is kept on a persistent volume, so projects, installed extensions, settings and the `~/.config/code-server` configuration survive redeploys. Sign in with the generated password from the `PASSWORD` environment variable.
