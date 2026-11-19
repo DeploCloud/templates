@@ -1,0 +1,25 @@
+[variables]
+pg_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tooljet"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+TOOLJET_HOST = "https://${domain}"
+LOCKBOX_MASTER_KEY = "${hash:64}"
+SECRET_KEY_BASE = "${hash:128}"
+PGRST_JWT_SECRET = "${hash:64}"
+PG_DB = "tooljet_production"
+PG_USER = "postgres"
+PG_PASS = "${pg_password}"
+TOOLJET_DB = "tooljet_db"
+DEFAULT_FROM_EMAIL = "tooljet@${domain}"
+SMTP_DOMAIN = ""
+SMTP_PORT = ""
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""

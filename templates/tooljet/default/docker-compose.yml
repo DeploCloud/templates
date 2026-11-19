@@ -1,0 +1,73 @@
+services:
+  tooljet:
+    image: tooljet/tooljet-ce:v3.20.257-lts@sha256:de8c08f85e30f59973b96aaf6697bda97bdd2de063ed9286a3853d8555103311
+    restart: unless-stopped
+    command: ["npm", "run", "start:prod"]
+    expose:
+      - 3000
+    environment:
+      TOOLJET_HOST: ${TOOLJET_HOST}
+      SERVE_CLIENT: "true"
+      PORT: "3000"
+      LISTEN_ADDR: 0.0.0.0
+      LOCKBOX_MASTER_KEY: ${LOCKBOX_MASTER_KEY}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      PG_HOST: tooljet-db
+      PG_PORT: "5432"
+      PG_DB: ${PG_DB}
+      PG_USER: ${PG_USER}
+      PG_PASS: ${PG_PASS}
+      TOOLJET_DB: ${TOOLJET_DB}
+      TOOLJET_DB_HOST: tooljet-db
+      TOOLJET_DB_PORT: "5432"
+      TOOLJET_DB_USER: ${PG_USER}
+      TOOLJET_DB_PASS: ${PG_PASS}
+      PGRST_HOST: tooljet-postgrest:3000
+      PGRST_JWT_SECRET: ${PGRST_JWT_SECRET}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL}
+      SMTP_DOMAIN: ${SMTP_DOMAIN}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      WORKER: "true"
+      DEPLOYMENT_PLATFORM: docker
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 300s
+    depends_on:
+      tooljet-db:
+        condition: service_healthy
+
+  tooljet-postgrest:
+    image: postgrest/postgrest:v12.2.12@sha256:5f4ce744539bbba786b4e24dbbd95bdb2a956dcf568c5374995a0ff4a68f5bd2
+    restart: unless-stopped
+    environment:
+      PGRST_DB_URI: postgres://${PG_USER}:${PG_PASS}@tooljet-db:5432/${TOOLJET_DB}
+      PGRST_JWT_SECRET: ${PGRST_JWT_SECRET}
+      PGRST_DB_PRE_CONFIG: postgrest.pre_config
+      PGRST_SERVER_PORT: "3000"
+      PGRST_LOG_LEVEL: info
+    # ToolJet creates this database and its pre-config function during first boot
+    depends_on:
+      tooljet:
+        condition: service_healthy
+
+  tooljet-db:
+    image: postgres:16.16@sha256:23fdb7b8156ad34bc663ed911f360764c5a5e237d6d70d1e379e025f63439a2f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - tooljet-db:/var/lib/postgresql/data
+
+volumes:
+  tooljet-db: {}
