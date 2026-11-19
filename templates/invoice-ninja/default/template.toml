@@ -1,0 +1,79 @@
+[variables]
+app_key = "${password:32}"
+# Hex: the init script passes it as a CLI option value, which must not start with "-"
+admin_password = "${hash:32}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "invoiceninja-web"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_KEY = "${app_key}"
+TRUSTED_PROXIES = "*"
+IN_USER_EMAIL = "admin@example.com"
+IN_PASSWORD = "${admin_password}"
+DB_DATABASE = "ninja"
+DB_USERNAME = "ninja"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+MAIL_MAILER = "log"
+MAIL_HOST = "smtp.example.com"
+MAIL_PORT = "587"
+MAIL_USERNAME = "null"
+MAIL_PASSWORD = "null"
+MAIL_ENCRYPTION = "tls"
+MAIL_FROM_ADDRESS = "invoices@${domain}"
+MAIL_FROM_NAME = "Invoice Ninja"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """client_max_body_size 10M;
+client_body_buffer_size 10M;
+server_tokens off;
+fastcgi_buffers 32 16K;
+
+gzip on;
+gzip_comp_level 2;
+gzip_min_length 1M;
+gzip_proxied any;
+gzip_types *;
+
+# The Flutter web app loads main.dart.mjs as an ES module
+types { text/javascript mjs; }
+
+server {
+    listen 80 default_server;
+    server_name _;
+    root /var/www/html/public;
+    index index.php;
+    charset utf-8;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ [.]php$ {
+        fastcgi_pass invoiceninja:9000;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /[.](?!well-known).* {
+        deny all;
+    }
+}
+"""

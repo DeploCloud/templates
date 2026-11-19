@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Invoicing, quotes, payments, expenses and time tracking with a client portal, backed by MySQL and Redis.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Invoice Ninja",
+    "url": "https://invoiceninja.com"
+  },
+  "links": {
+    "github": "https://github.com/invoiceninja/invoiceninja",
+    "website": "https://invoiceninja.com",
+    "docs": [
+      "https://invoiceninja.github.io/docs/self-host/self-host-installation",
+      "https://invoiceninja.github.io/docs/self-host/env-variables",
+      "https://github.com/invoiceninja/dockerfiles/tree/debian"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin@example.com with the generated IN_PASSWORD from the environment variables, then change the email and password in Settings."
+    },
+    {
+      "type": "warning",
+      "message": "Emails are only written to the log until you set MAIL_MAILER to smtp and fill in the MAIL_* variables with your SMTP server.",
+      "link": "https://invoiceninja.github.io/docs/self-host/env-variables"
+    }
+  ]
+}
