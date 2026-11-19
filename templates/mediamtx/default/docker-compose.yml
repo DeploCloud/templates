@@ -1,0 +1,15 @@
+services:
+  mediamtx:
+    image: bluenviron/mediamtx:1.21.4@sha256:c730bccdbc8739f8f0c13cefe9bea8b61926f599b88fa4d0d229baa91846c7bc
+    restart: unless-stopped
+    expose:
+      - 8888
+    environment:
+      MTX_AUTHINTERNALUSERS_0_USER: ${MEDIAMTX_USER}
+      MTX_AUTHINTERNALUSERS_0_PASS: ${MEDIAMTX_PASSWORD}
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+      - mediamtx-recordings:/recordings
+
+volumes:
+  mediamtx-recordings: {}

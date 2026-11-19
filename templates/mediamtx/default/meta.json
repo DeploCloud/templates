@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Live media server and proxy that pulls RTSP, RTMP, SRT or HLS sources and serves them to browsers over password-protected HLS, with optional recording to disk.",
+  "category": "media",
+  "developedBy": {
+    "label": "bluenviron",
+    "url": "https://github.com/bluenviron"
+  },
+  "links": {
+    "github": "https://github.com/bluenviron/mediamtx",
+    "website": "https://mediamtx.org",
+    "docs": [
+      "https://mediamtx.org/docs/kickoff/install",
+      "https://mediamtx.org/docs/features/configuration",
+      "https://mediamtx.org/docs/features/proxy",
+      "https://mediamtx.org/docs/publish/rtsp-cameras-and-servers",
+      "https://mediamtx.org/docs/read/hls",
+      "https://mediamtx.org/docs/features/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Only HLS playback is routed through the web domain. RTSP, RTMP, SRT, WebRTC and Media-over-QUIC ports are not published, so streams cannot be pushed from outside: add each source to pull under paths in mediamtx.yml and open https://<domain>/<name>/.",
+      "link": "https://mediamtx.org/docs/features/proxy"
+    },
+    {
+      "type": "warning",
+      "message": "Watching a stream asks for credentials: use the MEDIAMTX_USER and MEDIAMTX_PASSWORD environment values. The root URL has no page of its own and redirects to the MediaMTX proxy guide.",
+      "link": "https://mediamtx.org/docs/features/authentication"
+    }
+  ]
+}
