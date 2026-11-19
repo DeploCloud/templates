@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Mozilla Firefox web browser streamed to your own browser behind a password, with the profile, bookmarks, extensions and downloads kept on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Mozilla",
+    "url": "https://www.mozilla.org/"
+  },
+  "links": {
+    "github": "https://github.com/mozilla-firefox/firefox",
+    "website": "https://www.firefox.com/",
+    "docs": [
+      "https://support.mozilla.org/products/firefox",
+      "https://docs.linuxserver.io/images/docker-firefox/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets a terminal with passwordless sudo inside the container.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the streamed browser does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-firefox/"
+    }
+  ]
+}
