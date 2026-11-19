@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "NGINX web server serving a static site from a persistent volume, configured through an editable server block for file serving, redirects or reverse proxying.",
+  "category": "networking",
+  "developedBy": {
+    "label": "NGINX",
+    "url": "https://github.com/nginx"
+  },
+  "links": {
+    "github": "https://github.com/nginx/nginx",
+    "website": "https://nginx.org/",
+    "docs": [
+      "https://nginx.org/en/docs/beginners_guide.html",
+      "https://nginx.org/en/docs/http/ngx_http_core_module.html",
+      "https://nginx.org/en/docs/http/ngx_http_proxy_module.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "NGINX serves its welcome page until you replace the files in the nginx-html volume (/usr/share/nginx/html) or edit default.conf. Keep listen 80: HTTPS is handled in front of the container.",
+      "link": "https://nginx.org/en/docs/beginners_guide.html"
+    }
+  ]
+}
