@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Web scraping and crawling API that turns websites into clean markdown or structured data, with a headless Chromium renderer, PostgreSQL job queue, Redis and RabbitMQ.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Firecrawl",
+    "url": "https://github.com/firecrawl"
+  },
+  "links": {
+    "github": "https://github.com/firecrawl/firecrawl",
+    "website": "https://firecrawl.dev",
+    "docs": [
+      "https://docs.firecrawl.dev/contributing/self-host",
+      "https://github.com/firecrawl/firecrawl/blob/main/SELF_HOST.md",
+      "https://docs.firecrawl.dev/api-reference/introduction"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The self-hosted API has no authentication: anyone who knows the domain can run scrapes and crawls through your server. Keep the domain private or restrict access to it.",
+      "link": "https://github.com/firecrawl/firecrawl/blob/main/SELF_HOST.md"
+    },
+    {
+      "type": "info",
+      "message": "AI features such as JSON extraction and summaries need an OpenAI API key or an OpenAI-compatible endpoint in OPENAI_API_KEY and OPENAI_BASE_URL.",
+      "link": "https://docs.firecrawl.dev/contributing/self-host"
+    }
+  ]
+}
