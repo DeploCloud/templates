@@ -1,0 +1,29 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Paperclip AI agent control plane backed by a separate PostgreSQL 17 service instead of the embedded database.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Paperclip",
+    "url": "https://github.com/paperclipai"
+  },
+  "links": {
+    "github": "https://github.com/paperclipai/paperclip",
+    "website": "https://paperclip.ing",
+    "docs": [
+      "https://docs.paperclip.ing/reference/deploy/docker/",
+      "https://docs.paperclip.ing/reference/deploy/database/",
+      "https://docs.paperclip.ing/reference/deploy/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Claim the instance right after deploying: open the app, create an account and choose Claim this instance. The first account to claim it becomes the instance admin, so until then anyone who can reach the URL could take it over.",
+      "link": "https://docs.paperclip.ing/reference/deploy/deployment-modes/"
+    },
+    {
+      "type": "warning",
+      "message": "Agents need an LLM provider credential. Set ANTHROPIC_API_KEY or OPENAI_API_KEY, or store provider keys as company secrets in the app."
+    }
+  ]
+}
