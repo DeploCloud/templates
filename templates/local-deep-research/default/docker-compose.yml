@@ -1,0 +1,57 @@
+services:
+  local-deep-research:
+    image: localdeepresearch/local-deep-research:2.0.1@sha256:867e4ebf8baff9b5a759d2ae154359fe0ecb19b5e8231409feea4e781d5733ae
+    restart: unless-stopped
+    stop_grace_period: 60s
+    expose:
+      - 5000
+    environment:
+      LDR_WEB_HOST: 0.0.0.0
+      LDR_WEB_PORT: 5000
+      LDR_DATA_DIR: /data
+      TRUST_PROXY_HEADERS: "true"
+      LDR_APP_ALLOW_REGISTRATIONS: ${LDR_APP_ALLOW_REGISTRATIONS}
+      LDR_LLM_OLLAMA_URL: http://local-deep-research-ollama:11434
+      LDR_SEARCH_ENGINE_WEB_SEARXNG_DEFAULT_PARAMS_INSTANCE_URL: http://local-deep-research-searxng:8080
+    volumes:
+      - ldr-data:/data
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      local-deep-research-ollama:
+        condition: service_healthy
+      local-deep-research-searxng:
+        condition: service_started
+
+  local-deep-research-ollama:
+    image: ollama/ollama:0.40.16@sha256:910d0d8107b538fb0894e63163eb195de0cc7aefcbc666dc62d3b18f71124592
+    restart: unless-stopped
+    environment:
+      OLLAMA_KEEP_ALIVE: 30m
+    volumes:
+      - ollama-data:/root/.ollama
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  local-deep-research-searxng:
+    image: searxng/searxng:2026.11.18-b867c56a5@sha256:6012a064924a032969a2e7989d66971803f126a237a2fb6c62f10ae3d82093e1
+    restart: unless-stopped
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+    volumes:
+      - searxng-config:/etc/searxng
+      - searxng-cache:/var/cache/searxng
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  ldr-data: {}
+  ollama-data: {}
+  searxng-config: {}
+  searxng-cache: {}

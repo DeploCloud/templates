@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "AI research assistant that searches the web, papers and your documents and writes cited reports, bundled with SearXNG and Ollama.",
+  "category": "ai",
+  "developedBy": {
+    "label": "LearningCircuit",
+    "url": "https://github.com/LearningCircuit"
+  },
+  "links": {
+    "github": "https://github.com/LearningCircuit/local-deep-research",
+    "docs": [
+      "https://github.com/LearningCircuit/local-deep-research/blob/main/docs/docker-compose-guide.md",
+      "https://github.com/LearningCircuit/local-deep-research/blob/main/docs/CONFIGURATION.md",
+      "https://github.com/LearningCircuit/local-deep-research/blob/main/docs/deployment/reverse-proxy.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who opens the site can register an account. Create your own account first, then set LDR_APP_ALLOW_REGISTRATIONS to false and redeploy."
+    },
+    {
+      "type": "warning",
+      "message": "No LLM is preconfigured. Either run ollama pull <model> in the local-deep-research-ollama container (CPU only, so small models are slow) or choose a cloud provider such as OpenAI, Anthropic or OpenRouter under Settings and enter its API key.",
+      "link": "https://github.com/LearningCircuit/local-deep-research/blob/main/docs/faq.md#how-do-i-download-ollama-models-in-docker"
+    }
+  ]
+}
