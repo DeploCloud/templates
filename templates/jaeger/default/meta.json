@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Distributed tracing platform with the Jaeger UI, an OTLP endpoint for traces and persistent Badger storage.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "The Jaeger Authors",
+    "url": "https://github.com/jaegertracing"
+  },
+  "links": {
+    "github": "https://github.com/jaegertracing/jaeger",
+    "website": "https://www.jaegertracing.io/",
+    "docs": [
+      "https://www.jaegertracing.io/docs/2.23/getting-started/",
+      "https://www.jaegertracing.io/docs/2.23/storage/badger/",
+      "https://www.jaegertracing.io/docs/2.23/deployment/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Jaeger has no built-in authentication: anyone who knows the domain can browse traces in the UI and send spans to https://<domain>/v1/traces. Do not send sensitive data, or restrict access in front of the app."
+    }
+  ]
+}
