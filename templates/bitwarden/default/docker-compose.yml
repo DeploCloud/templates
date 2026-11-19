@@ -1,0 +1,63 @@
+services:
+  bitwarden:
+    image: ghcr.io/bitwarden/lite:2026.11.0@sha256:89c1844364fa6fe09e145e73b035c0e01d6194d317fb10853e30bc672a4648fb
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      BW_DOMAIN: ${BW_DOMAIN}
+      BW_DB_PROVIDER: mysql
+      BW_DB_SERVER: bitwarden-db
+      BW_DB_PORT: "3306"
+      BW_DB_DATABASE: bitwarden_vault
+      BW_DB_USERNAME: bitwarden
+      BW_DB_PASSWORD: ${DB_PASSWORD}
+      BW_INSTALLATION_ID: ${BW_INSTALLATION_ID}
+      BW_INSTALLATION_KEY: ${BW_INSTALLATION_KEY}
+      BW_ENABLE_IPV6: "false"
+      BACKUP_LITE_TAG: "2026.11.0"
+      globalSettings__disableUserRegistration: ${DISABLE_USER_REGISTRATION}
+      adminSettings__admins: ${ADMIN_EMAILS}
+      globalSettings__mail__replyToEmail: ${SMTP_FROM}
+      globalSettings__mail__smtp__host: ${SMTP_HOST}
+      globalSettings__mail__smtp__port: ${SMTP_PORT}
+      globalSettings__mail__smtp__ssl: ${SMTP_SSL}
+      globalSettings__mail__smtp__startTls: ${SMTP_STARTTLS}
+      globalSettings__mail__smtp__username: ${SMTP_USERNAME}
+      globalSettings__mail__smtp__password: ${SMTP_PASSWORD}
+    volumes:
+      - bitwarden-data:/etc/bitwarden
+      - bitwarden-logs:/var/log/bitwarden
+      - bitwarden-backups:/backups
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/alive"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      bitwarden-db:
+        condition: service_healthy
+
+  bitwarden-db:
+    image: mariadb:10.11.19@sha256:7d829180b5b2a9ba74f6242876ab401a0d7dd338a807e522ef92bc9698760f20
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: bitwarden_vault
+      MARIADB_USER: bitwarden
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "true"
+    volumes:
+      - bitwarden-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  bitwarden-data: {}
+  bitwarden-logs: {}
+  bitwarden-backups: {}
+  bitwarden-db: {}
