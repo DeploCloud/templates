@@ -1,0 +1,15 @@
+services:
+  mindsdb:
+    image: mindsdb/mindsdb:v26.1.0@sha256:163011c09299a95c97ce2e1b9f157683b3538c5b9167ddc258b95ac256c806bb
+    restart: unless-stopped
+    expose:
+      - 47334
+    environment:
+      MINDSDB_USERNAME: ${MINDSDB_USERNAME}
+      MINDSDB_PASSWORD: ${MINDSDB_PASSWORD}
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
+    volumes:
+      - mindsdb-data:/root/mdb_storage
+
+volumes:
+  mindsdb-data: {}
