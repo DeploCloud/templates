@@ -1,0 +1,63 @@
+services:
+  lemmy-proxy:
+    image: nginx:1.31.9-alpine@sha256:90b6bd2aec278b16b98221d64deb1d6d35d164567f507ab0716e6053878315aa
+    restart: unless-stopped
+    expose:
+      - 8536
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - lemmy
+      - lemmy-ui
+
+  lemmy:
+    image: dessalines/lemmy:0.19.21@sha256:839d72704b10d574a21dacab046d9369e241366e4092b950d801e821f779de29
+    restart: unless-stopped
+    environment:
+      LEMMY_DATABASE_URL: ${LEMMY_DATABASE_URL}
+      RUST_LOG: warn
+    volumes:
+      - ./lemmy.hjson:/config/config.hjson:ro
+    depends_on:
+      lemmy-db:
+        condition: service_healthy
+      lemmy-pictrs:
+        condition: service_started
+
+  lemmy-ui:
+    image: dessalines/lemmy-ui:0.19.21@sha256:d78d073a888c780f83e10850867841eca03261c8c459b65465fa337b4071768d
+    restart: unless-stopped
+    environment:
+      LEMMY_UI_LEMMY_INTERNAL_HOST: lemmy:8536
+      LEMMY_UI_LEMMY_EXTERNAL_HOST: ${LEMMY_UI_LEMMY_EXTERNAL_HOST}
+      LEMMY_UI_HTTPS: "true"
+    depends_on:
+      - lemmy
+
+  lemmy-pictrs:
+    image: asonix/pictrs:0.5.25@sha256:6c64d7d282b67931716861b92bce48392791b57b571f5b7bbe132a10b4f0c39e
+    restart: unless-stopped
+    environment:
+      PICTRS__SERVER__API_KEY: ${PICTRS__SERVER__API_KEY}
+    volumes:
+      - lemmy-pictrs:/mnt
+
+  lemmy-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    shm_size: 256m
+    environment:
+      POSTGRES_USER: lemmy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: lemmy
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lemmy -d lemmy"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - lemmy-db:/var/lib/postgresql/data
+
+volumes:
+  lemmy-pictrs: {}
+  lemmy-db: {}

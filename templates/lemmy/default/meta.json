@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Federated link aggregator and discussion forum with the Lemmy backend, web UI, pict-rs image hosting and PostgreSQL.",
+  "category": "communication",
+  "developedBy": {
+    "label": "LemmyNet",
+    "url": "https://github.com/LemmyNet"
+  },
+  "links": {
+    "github": "https://github.com/LemmyNet/lemmy",
+    "website": "https://join-lemmy.org",
+    "docs": [
+      "https://join-lemmy.org/docs/administration/install_docker.html",
+      "https://join-lemmy.org/docs/administration/configuration.html",
+      "https://join-lemmy.org/docs/administration/first_steps.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the generated LEMMY_ADMIN_PASSWORD from the environment variables. The account is created only on the first start, so changing the variable later has no effect.",
+      "link": "https://join-lemmy.org/docs/administration/first_steps.html"
+    },
+    {
+      "type": "warning",
+      "message": "Set the final domain before the first deploy. Lemmy writes it into every user, community and post ID, so the instance cannot move to another domain later."
+    },
+    {
+      "type": "warning",
+      "message": "No SMTP server is configured, so email verification and password resets do not work. Add an email block to the lemmy.hjson mount and redeploy if you need them.",
+      "link": "https://join-lemmy.org/docs/administration/configuration.html"
+    }
+  ]
+}
