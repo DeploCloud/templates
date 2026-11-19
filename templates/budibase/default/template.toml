@@ -1,0 +1,17 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "budibase"
+port = 80
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${hash:64}"
+INTERNAL_API_KEY = "${hash:32}"
+MINIO_ACCESS_KEY = "${hash:20}"
+MINIO_SECRET_KEY = "${hash:40}"
+REDIS_PASSWORD = "${hash:32}"
+COUCHDB_USER = "budibase"
+COUCHDB_PASSWORD = "${hash:32}"
+PLATFORM_URL = "https://${domain}"
