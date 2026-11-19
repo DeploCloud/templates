@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "libretranslate"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+LT_LOAD_ONLY = "en,ar,de,es,fr,hi,it,ja,ko,pt,ru,zh"
+LT_UPDATE_MODELS = "true"
