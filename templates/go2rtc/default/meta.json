@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Camera streaming server that restreams RTSP, ONVIF, HomeKit and other camera feeds to the browser as WebRTC, MSE, HLS or MJPEG, with a Basic auth protected web UI.",
+  "category": "media",
+  "developedBy": {
+    "label": "AlexxIT",
+    "url": "https://github.com/AlexxIT"
+  },
+  "links": {
+    "github": "https://github.com/AlexxIT/go2rtc",
+    "website": "https://go2rtc.org",
+    "docs": [
+      "https://go2rtc.org/internal/app/",
+      "https://go2rtc.org/internal/api/",
+      "https://github.com/AlexxIT/go2rtc#security",
+      "https://go2rtc.org/internal/webrtc/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the GO2RTC_PASSWORD value from the environment variables. Anyone with access to the API can run commands inside the container through exec sources, so keep this password private.",
+      "link": "https://github.com/AlexxIT/go2rtc#security"
+    },
+    {
+      "type": "warning",
+      "message": "Cameras must be reachable from this server, so cameras on a home network need a VPN or port forward. Only the web port is published: WebRTC (8555) and the RTSP restream (8554) are not, so browser playback falls back to MSE, HLS or MJPEG over HTTPS.",
+      "link": "https://go2rtc.org/internal/webrtc/"
+    }
+  ]
+}
