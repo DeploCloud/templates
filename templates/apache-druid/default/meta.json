@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Real-time analytics database with the web console, a coordinator, broker, historical and MiddleManager, ZooKeeper and PostgreSQL metadata storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://www.apache.org/"
+  },
+  "links": {
+    "github": "https://github.com/apache/druid",
+    "website": "https://druid.apache.org/",
+    "docs": [
+      "https://druid.apache.org/docs/latest/tutorials/docker",
+      "https://druid.apache.org/docs/latest/operations/web-console",
+      "https://druid.apache.org/docs/latest/development/extensions-core/druid-basic-security"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Basic authentication is enabled. Sign in to the web console as admin with the generated DRUID_ADMIN_PASSWORD from the environment settings. It only applies on the first start; change it later through the Druid user API, not in the environment.",
+      "link": "https://druid.apache.org/docs/latest/operations/security-overview"
+    },
+    {
+      "type": "info",
+      "message": "The stack runs seven containers. Upstream recommends at least 6 GiB of memory for it; with less, services or ingestion tasks can be killed for running out of memory."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
