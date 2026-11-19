@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Scheduled backups for PostgreSQL, MySQL, MariaDB and MongoDB with encryption, retention policies, remote storage and notifications.",
+  "category": "database",
+  "developedBy": {
+    "label": "Databasus",
+    "url": "https://github.com/databasus"
+  },
+  "links": {
+    "github": "https://github.com/databasus/databasus",
+    "website": "https://databasus.com",
+    "docs": [
+      "https://databasus.com/installation",
+      "https://databasus.com/advanced-config",
+      "https://databasus.com/faq#backup-databasus"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up administers the instance. Create it right after deployment, then disable sign-ups in the settings if the instance is public."
+    },
+    {
+      "type": "warning",
+      "message": "Backups are encrypted with the key stored in /databasus-data/secret.key. Copy it somewhere safe: without it, encrypted backups cannot be restored on a new instance.",
+      "link": "https://databasus.com/faq#backup-databasus"
+    }
+  ]
+}
