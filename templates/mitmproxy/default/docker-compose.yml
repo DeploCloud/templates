@@ -1,0 +1,22 @@
+services:
+  mitmproxy:
+    image: ghcr.io/mitmproxy/mitmproxy:12.3.1@sha256:2711066c855659b5af8b1dbb84494ed3eff69b42ece439c60b4fe09a2db829d4
+    restart: unless-stopped
+    command:
+      - mitmweb
+      - --web-host
+      - 0.0.0.0
+      - --mode
+      - reverse:${MITM_UPSTREAM}
+      - --set
+      - web_password=${WEB_PASSWORD}
+      - --set
+      - web_open_browser=false
+    expose:
+      - 8080
+      - 8081
+    volumes:
+      - mitmproxy-data:/home/mitmproxy/.mitmproxy
+
+volumes:
+  mitmproxy-data: {}
