@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalist Kanban project management with boards, tasks, swimlanes and a JSON-RPC API, using a built-in SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kanboard",
+    "url": "https://github.com/kanboard"
+  },
+  "links": {
+    "github": "https://github.com/kanboard/kanboard",
+    "website": "https://kanboard.org/",
+    "docs": [
+      "https://docs.kanboard.org/v1/admin/docker/",
+      "https://docs.kanboard.org/v1/admin/config/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin and change its password right away.",
+      "link": "https://docs.kanboard.org/v1/admin/installation/"
+    }
+  ]
+}

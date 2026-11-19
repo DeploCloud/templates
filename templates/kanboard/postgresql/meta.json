@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Kanboard Kanban project management backed by a dedicated PostgreSQL database instead of SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kanboard",
+    "url": "https://github.com/kanboard"
+  },
+  "links": {
+    "github": "https://github.com/kanboard/kanboard",
+    "website": "https://kanboard.org/",
+    "docs": [
+      "https://docs.kanboard.org/v1/admin/docker/",
+      "https://docs.kanboard.org/v1/admin/postgresql/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin and change its password right away.",
+      "link": "https://docs.kanboard.org/v1/admin/installation/"
+    }
+  ]
+}
