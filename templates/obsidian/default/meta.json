@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Obsidian Markdown knowledge base desktop app streamed to the browser behind a password, with vaults, settings and plugins kept on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Obsidian",
+    "url": "https://github.com/obsidianmd"
+  },
+  "links": {
+    "github": "https://github.com/obsidianmd/obsidian-releases",
+    "website": "https://obsidian.md/",
+    "docs": [
+      "https://help.obsidian.md/",
+      "https://docs.linuxserver.io/images/docker-obsidian/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. Create vaults under /config so they persist.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-obsidian/"
+    }
+  ]
+}
