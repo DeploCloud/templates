@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Relational database and application server that runs your logic as modules inside the database and syncs state to clients over WebSockets.",
+  "category": "database",
+  "developedBy": {
+    "label": "Clockwork Labs",
+    "url": "https://github.com/clockworklabs"
+  },
+  "links": {
+    "github": "https://github.com/clockworklabs/SpacetimeDB",
+    "website": "https://spacetimedb.com",
+    "docs": [
+      "https://spacetimedb.com/docs",
+      "https://spacetimedb.com/docs/how-to/deploy/self-hosting",
+      "https://spacetimedb.com/docs/http/authorization/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The whole HTTP API is public: anyone who can reach the URL can obtain an identity and publish databases. Upstream recommends restricting publishing on internet-facing servers.",
+      "link": "https://spacetimedb.com/docs/how-to/deploy/self-hosting"
+    },
+    {
+      "type": "warning",
+      "message": "There is no web interface. Register the server with the CLI (spacetime server add --url https://<your-domain> <name>) and publish modules from your machine.",
+      "link": "https://spacetimedb.com/docs/cli-reference"
+    }
+  ]
+}
