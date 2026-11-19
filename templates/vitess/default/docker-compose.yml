@@ -1,0 +1,160 @@
+services:
+  vitess:
+    image: vitess/vtadmin:v24.0.5@sha256:7f264a2c5a1d2c22998cc8c882a94847bb379254c9b4aca65b914e0c2bd656e7
+    restart: unless-stopped
+    expose:
+      - 14201
+    environment:
+      VTADMIN_USER: ${VTADMIN_USER}
+      VTADMIN_PASSWORD: ${VTADMIN_PASSWORD}
+    command:
+      - sh
+      - -c
+      - printf '%s:{PLAIN}%s\n' "$$VTADMIN_USER" "$$VTADMIN_PASSWORD" > /tmp/htpasswd && exec /docker-entrypoint.sh nginx -g 'daemon off;'
+    volumes:
+      - ./vtadmin-web.conf:/etc/nginx/templates/default.conf.template:ro
+      - ./config.js:/var/www/config/config.js:ro
+    depends_on:
+      - vitess-vtadmin-api
+
+  vitess-vtadmin-api:
+    image: vitess/lite:v24.0.5@sha256:8cfdeff8f56368d87a4e7ca4436b8d30ab53bfd5f7c1c796f803296dce18d5f3
+    restart: unless-stopped
+    command:
+      - vtadmin
+      - --addr=0.0.0.0:14200
+      - --no-rbac
+      - --http-no-debug
+      - --http-tablet-url-tmpl=http://{{ .Tablet.Hostname }}:15000
+      - --cluster=id=vitess,name=vitess,discovery=staticfile,discovery-staticfile-path=/vt/config/vtadmin/discovery.json,schema-cache-default-expiration=1m
+    volumes:
+      - ./discovery.json:/vt/config/vtadmin/discovery.json:ro
+    depends_on:
+      vitess-vtctld:
+        condition: service_healthy
+      vitess-vtgate:
+        condition: service_started
+
+  vitess-etcd:
+    image: quay.io/coreos/etcd:v3.6.17@sha256:316f5d367455f75a327f9dc72f669cbf645651859fa2e272f692a1f2dee6f5c9
+    restart: unless-stopped
+    command:
+      - etcd
+      - --data-dir=/etcd-data
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://vitess-etcd:2379
+    volumes:
+      - vitess-etcd-data:/etcd-data
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  vitess-vtctld:
+    image: vitess/lite:v24.0.5@sha256:8cfdeff8f56368d87a4e7ca4436b8d30ab53bfd5f7c1c796f803296dce18d5f3
+    restart: unless-stopped
+    environment:
+      VITESS_KEYSPACE: ${VITESS_KEYSPACE}
+    command:
+      - bash
+      - -c
+      - |
+        topo="--topo-implementation etcd2 --topo-global-server-address vitess-etcd:2379 --topo-global-root /vitess/global"
+        vtctldclient --server internal $$topo AddCellInfo --root /vitess/zone1 --server-address vitess-etcd:2379 zone1 || true
+        if ! vtctldclient --server internal $$topo GetKeyspace "$$VITESS_KEYSPACE" > /dev/null 2>&1; then
+          vtctldclient --server internal $$topo CreateKeyspace --durability-policy=none "$$VITESS_KEYSPACE" || exit 1
+        fi
+        exec vtctld $$topo --service-map grpc-vtctl,grpc-vtctld --port 15000 --grpc-port 15999 --config-file-not-found-handling=ignore
+    depends_on:
+      vitess-etcd:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:15000/debug/status"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  vitess-vttablet:
+    image: vitess/lite:v24.0.5@sha256:8cfdeff8f56368d87a4e7ca4436b8d30ab53bfd5f7c1c796f803296dce18d5f3
+    restart: unless-stopped
+    stop_grace_period: 60s
+    environment:
+      VITESS_KEYSPACE: ${VITESS_KEYSPACE}
+    command:
+      - bash
+      - -c
+      - |
+        topo="--topo-implementation etcd2 --topo-global-server-address vitess-etcd:2379 --topo-global-root /vitess/global"
+        action=init
+        [ -d /vt/vtdataroot/vt_0000000100 ] && action=start
+        mysqlctl --tablet-uid 100 --mysql-port 17000 --config-file-not-found-handling=ignore $$action || exit 1
+        vttablet $$topo --tablet-path zone1-0000000100 --tablet-hostname vitess-vttablet \
+          --init-keyspace "$$VITESS_KEYSPACE" --init-shard 0 --init-tablet-type replica \
+          --health-check-interval 5s --port 15000 --grpc-port 16000 \
+          --service-map grpc-queryservice,grpc-tabletmanager,grpc-updatestream \
+          --heartbeat-on-demand-duration=5s --config-file-not-found-handling=ignore &
+        pid=$$!
+        # stop vttablet first, then shut mysqld down cleanly before the container exits
+        trap 'kill -TERM $$pid' TERM INT
+        wait $$pid
+        wait $$pid
+        mysqlctl --tablet-uid 100 --config-file-not-found-handling=ignore shutdown
+    volumes:
+      - vitess-vtdataroot:/vt/vtdataroot
+    depends_on:
+      vitess-vtctld:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:15000/debug/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+  vitess-vtorc:
+    image: vitess/lite:v24.0.5@sha256:8cfdeff8f56368d87a4e7ca4436b8d30ab53bfd5f7c1c796f803296dce18d5f3
+    restart: unless-stopped
+    command:
+      - vtorc
+      - --topo-implementation=etcd2
+      - --topo-global-server-address=vitess-etcd:2379
+      - --topo-global-root=/vitess/global
+      - --cell=zone1
+      - --port=16000
+      - --config-file-not-found-handling=ignore
+    depends_on:
+      vitess-vtctld:
+        condition: service_healthy
+
+  vitess-vtgate:
+    image: vitess/lite:v24.0.5@sha256:8cfdeff8f56368d87a4e7ca4436b8d30ab53bfd5f7c1c796f803296dce18d5f3
+    restart: unless-stopped
+    expose:
+      - 3306
+    environment:
+      VITESS_MYSQL_USER: ${VITESS_MYSQL_USER}
+      VITESS_MYSQL_PASSWORD: ${VITESS_MYSQL_PASSWORD}
+    command:
+      - bash
+      - -c
+      - |
+        exec vtgate --topo-implementation etcd2 --topo-global-server-address vitess-etcd:2379 --topo-global-root /vitess/global \
+          --cell zone1 --cells-to-watch zone1 --tablet-types-to-wait PRIMARY \
+          --port 15001 --grpc-port 15991 --mysql-server-port 3306 \
+          --service-map grpc-vtgateservice --enable-buffer \
+          --mysql-auth-server-impl static \
+          --mysql-auth-server-static-string "{\"$$VITESS_MYSQL_USER\":[{\"Password\":\"$$VITESS_MYSQL_PASSWORD\",\"UserData\":\"$$VITESS_MYSQL_USER\"}]}" \
+          --config-file-not-found-handling=ignore
+    depends_on:
+      vitess-vtctld:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:15001/debug/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  vitess-etcd-data: {}
+  vitess-vtdataroot: {}
