@@ -1,0 +1,31 @@
+services:
+  sillytavern:
+    image: ghcr.io/sillytavern/sillytavern:1.19.0@sha256:eef27ff0c7961f1a2f488400f581f48ff38f8b910c5d3b8d389138d71791bb14
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      NODE_ENV: production
+      SILLYTAVERN_HEARTBEATINTERVAL: "30"
+      SILLYTAVERN_WHITELISTMODE: "false"
+      SILLYTAVERN_BASICAUTHMODE: "true"
+      SILLYTAVERN_BASICAUTHUSER_USERNAME: ${SILLYTAVERN_USERNAME}
+      SILLYTAVERN_BASICAUTHUSER_PASSWORD: ${SILLYTAVERN_PASSWORD}
+      SILLYTAVERN_RATELIMITING_PREFERREALIPHEADER: "true"
+    volumes:
+      - sillytavern-config:/home/node/app/config
+      - sillytavern-data:/home/node/app/data
+      - sillytavern-plugins:/home/node/app/plugins
+      - sillytavern-extensions:/home/node/app/public/scripts/extensions/third-party
+    healthcheck:
+      test: ["CMD", "node", "src/healthcheck.js"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+
+volumes:
+  sillytavern-config: {}
+  sillytavern-data: {}
+  sillytavern-plugins: {}
+  sillytavern-extensions: {}
