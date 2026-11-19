@@ -1,0 +1,43 @@
+services:
+  checkmate:
+    image: ghcr.io/bluewave-labs/checkmate:4.0.0@sha256:ccaf4135e68001d07b84d4127cbad52f620fd1e0a80ea401e4b31eda19be7895
+    restart: unless-stopped
+    expose:
+      - 52345
+    environment:
+      DB_CONNECTION_STRING: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@checkmate-db:27017/uptime_db?authSource=admin
+      CLIENT_HOST: ${CLIENT_HOST}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    stop_grace_period: 60s
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://localhost:52346/livez',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 15s
+      timeout: 3s
+      start_period: 60s
+      retries: 3
+    depends_on:
+      checkmate-db:
+        condition: service_healthy
+
+  checkmate-db:
+    image: mongo:8.0.38@sha256:bdc216e9d5a6ec2cfdac789b5832fdab64cd32055f59885cae918a92de63c361
+    restart: unless-stopped
+    command: ["mongod", "--quiet", "--bind_ip_all"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - checkmate-db:/data/db
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/27017"]
+      interval: 5s
+      timeout: 30s
+      retries: 30
+
+volumes:
+  checkmate-db: {}
