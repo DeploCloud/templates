@@ -1,0 +1,15 @@
+[variables]
+root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "surrealdb"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SURREAL_USER = "root"
+SURREAL_PASS = "${root_password}"
+SURREAL_LOG = "info"

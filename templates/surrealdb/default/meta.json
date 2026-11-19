@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Multi-model document-graph database serving SurrealQL over HTTP and WebSocket, with SurrealKV on-disk storage and a generated root user.",
+  "category": "database",
+  "developedBy": {
+    "label": "SurrealDB",
+    "url": "https://surrealdb.com"
+  },
+  "links": {
+    "github": "https://github.com/surrealdb/surrealdb",
+    "website": "https://surrealdb.com",
+    "docs": [
+      "https://surrealdb.com/docs/running/docker",
+      "https://surrealdb.com/docs/reference/cli/db/commands/start",
+      "https://surrealdb.com/docs/reference/rest-api/http-protocol",
+      "https://surrealdb.com/docs/reference/studio"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as root with the generated SURREAL_PASS from the environment variables. The root user is created only on the first start, so changing the variable later has no effect. The server has no web page of its own: connect SurrealDB Studio or an SDK to https://<your domain>.",
+      "link": "https://surrealdb.com/docs/running/docker"
+    }
+  ]
+}
