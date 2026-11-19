@@ -1,0 +1,27 @@
+[variables]
+api_domain = "api.${domain}"
+site_domain = "site.${domain}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "convex-dashboard"
+port = 6_791
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "convex-backend"
+port = 3_210
+host = "${api_domain}"
+
+[[config.domains]]
+serviceName = "convex-backend"
+port = 3_211
+host = "${site_domain}"
+
+[config.env]
+CONVEX_CLOUD_ORIGIN = "https://${api_domain}"
+CONVEX_SITE_ORIGIN = "https://${site_domain}"
+NEXT_PUBLIC_DEPLOYMENT_URL = "https://${api_domain}"

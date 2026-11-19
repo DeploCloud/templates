@@ -1,0 +1,39 @@
+services:
+  convex-backend:
+    image: ghcr.io/convex/convex-backend:21f6fe42d4a5e4b8530f69b9a188dabcdb316e06@sha256:6644f704e3a22444d5e166c3071a97be429915db962b38d1df1776876b102320
+    restart: unless-stopped
+    stop_grace_period: 10s
+    stop_signal: SIGINT
+    expose:
+      - 3210
+      - 3211
+    volumes:
+      - convex-data:/convex/data
+    environment:
+      CONVEX_CLOUD_ORIGIN: ${CONVEX_CLOUD_ORIGIN}
+      CONVEX_SITE_ORIGIN: ${CONVEX_SITE_ORIGIN}
+      DISABLE_METRICS_ENDPOINT: "true"
+      DOCUMENT_RETENTION_DELAY: "172800"
+      RUST_LOG: info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3210/version"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  convex-dashboard:
+    image: ghcr.io/convex/convex-dashboard:21f6fe42d4a5e4b8530f69b9a188dabcdb316e06@sha256:3cabc039ab4b4e3a75cc02338b6c70f37f5c0c356e1b79499151b43ec8d83e34
+    restart: unless-stopped
+    stop_grace_period: 10s
+    stop_signal: SIGINT
+    expose:
+      - 6791
+    environment:
+      NEXT_PUBLIC_DEPLOYMENT_URL: ${NEXT_PUBLIC_DEPLOYMENT_URL}
+    depends_on:
+      convex-backend:
+        condition: service_healthy
+
+volumes:
+  convex-data: {}
