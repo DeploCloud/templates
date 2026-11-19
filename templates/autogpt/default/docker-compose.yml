@@ -1,0 +1,24 @@
+services:
+  autogpt:
+    image: significantgravitas/autogpt:v0.11.3@sha256:6dd38566729c0e76863960f57018191ab9f49b80a947fa26a6ebd2d200507e23
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: 2gb
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      AUTOGPT_PUBLIC_URL: ${AUTOGPT_PUBLIC_URL}
+      AUTH_ALLOW_NEW_ACCOUNTS: ${AUTH_ALLOW_NEW_ACCOUNTS}
+      AUTH_SIGNUP_ALLOWLIST: ${AUTH_SIGNUP_ALLOWLIST}
+      CHAT_USE_OPENROUTER: ${CHAT_USE_OPENROUTER}
+      OPEN_ROUTER_API_KEY: ${OPEN_ROUTER_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    volumes:
+      - autogpt-data:/data
+
+volumes:
+  autogpt-data: {}
