@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ddns-go"
+port = 9_876
+host = "${domain}"
