@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Flat-file CMS powered by PHP, Markdown and Twig, with the Admin2 panel bundled and the whole site kept on a persistent volume.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Grav",
+    "url": "https://github.com/getgrav"
+  },
+  "links": {
+    "github": "https://github.com/getgrav/grav",
+    "website": "https://getgrav.org/",
+    "docs": [
+      "https://learn.getgrav.org/2/basics/installation",
+      "https://learn.getgrav.org/2/admin-panel",
+      "https://github.com/getgrav/docker-grav"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no default login: until an account exists, every visit is sent to /admin, where the first visitor creates the super-admin account. Open /admin right after deploying.",
+      "link": "https://learn.getgrav.org/2/admin-panel"
+    }
+  ]
+}
