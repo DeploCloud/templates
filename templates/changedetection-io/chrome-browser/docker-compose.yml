@@ -1,0 +1,33 @@
+services:
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io:0.70.3@sha256:47b1e9cc3eff820e6022b655e3fcc948625f60c1770ae8b9c30aa3bf104dc255
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      BASE_URL: ${BASE_URL}
+      USE_X_SETTINGS: ${USE_X_SETTINGS}
+      PLAYWRIGHT_DRIVER_URL: ws://changedetection-browser:3000
+    volumes:
+      - changedetection-data:/datastore
+    depends_on:
+      changedetection-browser:
+        condition: service_healthy
+
+  changedetection-browser:
+    image: dgtlmoon/sockpuppetbrowser:0.0.5@sha256:71fed9b1de8de865a8f30c61e6d8d129de183bf34f8cc545dc7ae499198ec935
+    restart: unless-stopped
+    init: true
+    environment:
+      SCREEN_WIDTH: "1920"
+      SCREEN_HEIGHT: "1024"
+      MAX_CONCURRENT_CHROME_PROCESSES: ${MAX_CONCURRENT_CHROME_PROCESSES}
+    healthcheck:
+      test: ["CMD-SHELL", "python3 /usr/src/app/docker-health-check.py --host http://localhost"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  changedetection-data: {}
