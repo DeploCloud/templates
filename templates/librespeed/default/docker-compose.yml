@@ -1,0 +1,18 @@
+services:
+  librespeed:
+    image: ghcr.io/librespeed/speedtest:6.3.1@sha256:bc34bf69b6c102b23ab81b6e77beb7cce321fb0d3be33ec6e80edef3e9dd8bab
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      MODE: standalone
+      TELEMETRY: "true"
+      PASSWORD: ${STATS_PASSWORD}
+      ENABLE_ID_OBFUSCATION: "true"
+      OBFUSCATION_SALT: ${OBFUSCATION_SALT}
+      GDPR_EMAIL: ${GDPR_EMAIL}
+    volumes:
+      - librespeed-db:/database
+
+volumes:
+  librespeed-db: {}
