@@ -1,0 +1,42 @@
+services:
+  label-studio:
+    image: heartexlabs/label-studio:1.23.2@sha256:afcc516a22775a39d0d66f4c2ddc95d01be3e3d3862b21fcf4f9de34b4ad4e12
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DJANGO_DB: default
+      POSTGRE_HOST: label-studio-db
+      POSTGRE_PORT: "5432"
+      POSTGRE_NAME: "${POSTGRE_NAME}"
+      POSTGRE_USER: "${POSTGRE_USER}"
+      POSTGRE_PASSWORD: "${POSTGRE_PASSWORD}"
+      LABEL_STUDIO_HOST: "${LABEL_STUDIO_HOST}"
+      CSRF_TRUSTED_ORIGINS: "${CSRF_TRUSTED_ORIGINS}"
+      LABEL_STUDIO_USERNAME: "${LABEL_STUDIO_USERNAME}"
+      LABEL_STUDIO_PASSWORD: "${LABEL_STUDIO_PASSWORD}"
+      LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK: "${LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK}"
+    volumes:
+      - label-studio-data:/label-studio/data
+    depends_on:
+      label-studio-db:
+        condition: service_healthy
+
+  label-studio-db:
+    image: postgres:17.12-alpine@sha256:cdef2be34fbbd163d0d633177c02d228c6c47937b95fdffe1eefb91914dfd47f
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${POSTGRE_NAME}"
+      POSTGRES_USER: "${POSTGRE_USER}"
+      POSTGRES_PASSWORD: "${POSTGRE_PASSWORD}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - label-studio-db:/var/lib/postgresql/data
+
+volumes:
+  label-studio-data: {}
+  label-studio-db: {}
