@@ -1,0 +1,14 @@
+[variables]
+api_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "typesense"
+port = 8_108
+host = "${domain}"
+
+[config.env]
+TYPESENSE_API_KEY = "${api_key}"
+TYPESENSE_DATA_DIR = "/data"
