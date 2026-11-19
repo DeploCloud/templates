@@ -1,0 +1,119 @@
+services:
+  wazuh-dashboard:
+    image: wazuh/wazuh-dashboard:4.14.10@sha256:4d48be7210a291c00a2bd148cbd8bd61a25876e947b81790fd03f7d2aabda95a
+    restart: unless-stopped
+    expose:
+      - 5601
+    environment:
+      WAZUH_API_URL: https://wazuh-manager
+      API_USERNAME: wazuh-wui
+      API_PASSWORD: ${API_PASSWORD}
+      DASHBOARD_USERNAME: kibanaserver
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
+    volumes:
+      - ./opensearch_dashboards.yml:/usr/share/wazuh-dashboard/config/opensearch_dashboards.yml:ro
+      - wazuh-certs:/usr/share/wazuh-dashboard/certs:ro
+      - wazuh-dashboard-config:/usr/share/wazuh-dashboard/data/wazuh/config
+      - wazuh-dashboard-custom:/usr/share/wazuh-dashboard/plugins/wazuh/public/assets/custom
+    depends_on:
+      wazuh-indexer:
+        condition: service_healthy
+      wazuh-manager:
+        condition: service_started
+
+  wazuh-manager:
+    image: wazuh/wazuh-manager:4.14.10@sha256:eabfa7ee4e63acb51c2130fa0583e30f843d030b091cf45a4fbd93d78fa21517
+    restart: unless-stopped
+    hostname: wazuh-manager
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 655360
+        hard: 655360
+    environment:
+      # filebeat writes this inside a YAML flow list, so the quotes are part of the value
+      INDEXER_URL: '"https://wazuh-indexer:9200"'
+      INDEXER_USERNAME: admin
+      INDEXER_PASSWORD: ${INDEXER_PASSWORD}
+      FILEBEAT_SSL_VERIFICATION_MODE: full
+      SSL_CERTIFICATE_AUTHORITIES: /etc/ssl/wazuh/root-ca.pem
+      SSL_CERTIFICATE: /etc/ssl/wazuh/wazuh-manager.pem
+      SSL_KEY: /etc/ssl/wazuh/wazuh-manager-key.pem
+      API_USERNAME: wazuh-wui
+      API_PASSWORD: ${API_PASSWORD}
+    volumes:
+      - wazuh-api-configuration:/var/ossec/api/configuration
+      - wazuh-etc:/var/ossec/etc
+      - wazuh-logs:/var/ossec/logs
+      - wazuh-queue:/var/ossec/queue
+      - wazuh-var-multigroups:/var/ossec/var/multigroups
+      - wazuh-integrations:/var/ossec/integrations
+      - wazuh-active-response:/var/ossec/active-response/bin
+      - wazuh-agentless:/var/ossec/agentless
+      - wazuh-wodles:/var/ossec/wodles
+      - filebeat-etc:/etc/filebeat
+      - filebeat-var:/var/lib/filebeat
+      - wazuh-certs:/etc/ssl/wazuh:ro
+      - ./manager-indexer.sh:/entrypoint-scripts/indexer.sh:ro
+    depends_on:
+      wazuh-indexer:
+        condition: service_healthy
+
+  wazuh-indexer:
+    image: wazuh/wazuh-indexer:4.14.10@sha256:1d2aeadb9de88c6d17ce12030606425deca5a210cdf5c87008843da38eb629ea
+    restart: unless-stopped
+    command: ["bash", "/indexer-init.sh"]
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      OPENSEARCH_JAVA_OPTS: ${OPENSEARCH_JAVA_OPTS}
+      ADMIN_PASSWORD: ${INDEXER_PASSWORD}
+      KIBANASERVER_PASSWORD: ${DASHBOARD_PASSWORD}
+    volumes:
+      - wazuh-indexer-data:/var/lib/wazuh-indexer
+      - wazuh-certs:/usr/share/wazuh-indexer/config/wazuh-certs:ro
+      - ./opensearch.yml:/usr/share/wazuh-indexer/config/opensearch.yml:ro
+      - ./indexer-init.sh:/indexer-init.sh:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -skf -o /dev/null -u "admin:$$ADMIN_PASSWORD" https://localhost:9200/_cluster/health
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
+    depends_on:
+      wazuh-certs:
+        condition: service_completed_successfully
+
+  wazuh-certs:
+    image: wazuh/wazuh-certs-generator:0.0.5@sha256:1be9f9abfb6a37ac7bd3d6d707e1b43589c2b81b23c01a46992e93832795abf9
+    restart: "no"
+    entrypoint: ["bash", "/certs.sh"]
+    volumes:
+      - wazuh-certs:/certificates
+      - ./certs.sh:/certs.sh:ro
+
+volumes:
+  wazuh-api-configuration: {}
+  wazuh-etc: {}
+  wazuh-logs: {}
+  wazuh-queue: {}
+  wazuh-var-multigroups: {}
+  wazuh-integrations: {}
+  wazuh-active-response: {}
+  wazuh-agentless: {}
+  wazuh-wodles: {}
+  filebeat-etc: {}
+  filebeat-var: {}
+  wazuh-indexer-data: {}
+  wazuh-dashboard-config: {}
+  wazuh-dashboard-custom: {}
+  wazuh-certs: {}

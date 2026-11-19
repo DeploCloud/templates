@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source SIEM and XDR platform: the Wazuh manager, indexer and dashboard as a single-node stack with internal TLS and persistent data.",
+  "category": "security",
+  "developedBy": {
+    "label": "Wazuh",
+    "url": "https://wazuh.com/"
+  },
+  "links": {
+    "github": "https://github.com/wazuh/wazuh",
+    "website": "https://wazuh.com/",
+    "docs": [
+      "https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html",
+      "https://documentation.wazuh.com/current/deployment-options/docker/changing-default-password.html",
+      "https://documentation.wazuh.com/current/user-manual/agent/agent-enrollment/index.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in to the dashboard as admin with the generated INDEXER_PASSWORD. The passwords are stored on the first start, so do not change the generated password variables afterwards; follow the upstream password procedure instead.",
+      "link": "https://documentation.wazuh.com/current/deployment-options/docker/changing-default-password.html"
+    },
+    {
+      "type": "warning",
+      "message": "Agents connect to the wazuh-manager service on TCP 1514 (events) and 1515 (enrollment), which are not routed through the web domain. Publish those ports on the server before enrolling agents.",
+      "link": "https://documentation.wazuh.com/current/user-manual/agent/agent-enrollment/index.html"
+    },
+    {
+      "type": "warning",
+      "message": "The stack needs at least 4 GB of RAM, and upstream recommends vm.max_map_count=262144 on the host for the indexer.",
+      "link": "https://documentation.wazuh.com/current/deployment-options/docker/wazuh-container.html"
+    }
+  ]
+}
