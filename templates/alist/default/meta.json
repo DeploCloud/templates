@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "File list and WebDAV server that mounts local folders and dozens of cloud storages behind one web UI, with SQLite metadata kept on a persistent volume.",
+  "category": "storage",
+  "developedBy": {
+    "label": "AlistGo",
+    "url": "https://github.com/AlistGo"
+  },
+  "links": {
+    "github": "https://github.com/AlistGo/alist",
+    "website": "https://alistgo.com",
+    "docs": [
+      "https://alistgo.com/guide/install/docker.html",
+      "https://alistgo.com/config/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ALIST_ADMIN_PASSWORD from this app's environment settings. It only applies on the first start; change it later in the AList profile page, not in the environment."
+    }
+  ]
+}
