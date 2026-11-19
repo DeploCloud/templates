@@ -1,0 +1,35 @@
+services:
+  gogs:
+    image: gogs/gogs:0.14.4@sha256:ad893b78298754fe83010b3fa3cfe6b3f6cf42dfb8944fdb42c9a75e7420056b
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      SOCAT_LINK: "false"
+      GOGS_SECRET_KEY: ${GOGS_SECRET_KEY}
+      GOGS_DATABASE_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - gogs-data:/data
+      - ./app.ini:/data/gogs/conf/app.ini:ro
+    depends_on:
+      gogs-db:
+        condition: service_healthy
+
+  gogs-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gogs
+      POSTGRES_USER: gogs
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gogs -d gogs"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - gogs-db:/var/lib/postgresql
+
+volumes:
+  gogs-data: {}
+  gogs-db: {}

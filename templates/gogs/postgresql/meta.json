@@ -1,0 +1,25 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Lightweight self-hosted Git service with repositories, issues, pull requests and wikis, backed by a bundled PostgreSQL database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Gogs",
+    "url": "https://github.com/gogs"
+  },
+  "links": {
+    "github": "https://github.com/gogs/gogs",
+    "website": "https://gogs.io",
+    "docs": [
+      "https://gogs.io/getting-started/installation",
+      "https://gogs.io/fine-tuning/configuration-primer",
+      "https://github.com/gogs/gogs/blob/main/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the administrator. Register it right after deployment. To stop public sign-ups afterwards, set DISABLE_REGISTRATION = true under [auth] in the app.ini mount and redeploy.",
+      "link": "https://gogs.io/getting-started/installation"
+    }
+  ]
+}
