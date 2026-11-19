@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Low-code platform for building internal tools, dashboards and workflows, with PostgreSQL and PostgREST for the built-in ToolJet Database.",
+  "category": "development",
+  "developedBy": {
+    "label": "ToolJet",
+    "url": "https://github.com/ToolJet"
+  },
+  "links": {
+    "github": "https://github.com/ToolJet/ToolJet",
+    "website": "https://tooljet.com",
+    "docs": [
+      "https://docs.tooljet.com/docs/setup/docker/",
+      "https://docs.tooljet.com/docs/setup/env-vars/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created on the setup page becomes the instance super admin. Open the app right after deployment to claim it."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
