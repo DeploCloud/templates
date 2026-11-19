@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Developer platform for scripts, workflows and internal apps in Python, TypeScript, Go, Bash and SQL, with a server, workers and PostgreSQL.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Windmill Labs",
+    "url": "https://github.com/windmill-labs"
+  },
+  "links": {
+    "github": "https://github.com/windmill-labs/windmill",
+    "website": "https://www.windmill.dev",
+    "docs": [
+      "https://www.windmill.dev/docs/advanced/self_host",
+      "https://www.windmill.dev/docs/advanced/security_isolation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the default superadmin account admin@windmill.dev / changeme, then finish the setup wizard and replace that account right away: until you do, anyone who reaches the instance can log in as superadmin.",
+      "link": "https://www.windmill.dev/docs/advanced/self_host#first-time-login"
+    }
+  ]
+}
