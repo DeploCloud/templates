@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted bookmark manager for links, notes and images with full-text search, page archiving and optional AI tagging.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Karakeep",
+    "url": "https://github.com/karakeep-app"
+  },
+  "links": {
+    "github": "https://github.com/karakeep-app/karakeep",
+    "website": "https://karakeep.com",
+    "docs": [
+      "https://docs.karakeep.com/installation/docker/",
+      "https://docs.karakeep.com/configuration/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-ups are open and the first account created becomes the administrator. Create your account right after deployment, then set DISABLE_SIGNUPS to true if the instance is private.",
+      "link": "https://docs.karakeep.com/administration/FAQ/"
+    },
+    {
+      "type": "warning",
+      "message": "Automatic AI tagging and summaries need an OpenAI API key (or another provider) set in OPENAI_API_KEY. Without it, bookmarks are saved and searchable but not tagged.",
+      "link": "https://docs.karakeep.com/configuration/different-ai-providers/"
+    }
+  ]
+}
