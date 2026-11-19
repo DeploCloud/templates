@@ -1,0 +1,34 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "inbox-zero"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+NEXT_PUBLIC_BASE_URL = "https://${domain}"
+POSTGRES_PASSWORD = "${db_password}"
+AUTH_SECRET = "${hash:64}"
+EMAIL_ENCRYPT_SECRET = "${hash:64}"
+EMAIL_ENCRYPT_SALT = "${hash:32}"
+INTERNAL_API_KEY = "${hash:64}"
+API_KEY_SALT = "${hash:64}"
+CRON_SECRET = "${hash:64}"
+UPSTASH_REDIS_TOKEN = "${hash:64}"
+GOOGLE_PUBSUB_VERIFICATION_TOKEN = "${hash:64}"
+MICROSOFT_WEBHOOK_CLIENT_STATE = "${hash:64}"
+GOOGLE_CLIENT_ID = "skipped"
+GOOGLE_CLIENT_SECRET = "skipped"
+GOOGLE_PUBSUB_TOPIC_NAME = "projects/your-project-id/topics/inbox-zero-emails"
+DEFAULT_LLM_PROVIDER = "anthropic"
+DEFAULT_LLM_MODEL = "claude-sonnet-4-6"
+ECONOMY_LLM_PROVIDER = "anthropic"
+ECONOMY_LLM_MODEL = "claude-haiku-4-5-20251001"
+LLM_API_KEY = ""
+NEXT_PUBLIC_BYPASS_PREMIUM_CHECKS = "true"
+NEXT_PUBLIC_EMAIL_SEND_ENABLED = "true"
+NEXT_PUBLIC_AI_MODEL_SETTINGS_DISABLED = "false"

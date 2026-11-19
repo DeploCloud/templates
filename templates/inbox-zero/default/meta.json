@@ -1,0 +1,38 @@
+{
+  "name": "Default",
+  "shortDescription": "AI email assistant for Gmail and Outlook that triages, labels, drafts replies and bulk-unsubscribes, with PostgreSQL, Redis and a scheduler.",
+  "category": "email",
+  "developedBy": {
+    "label": "Elie Steinbock",
+    "url": "https://github.com/elie222"
+  },
+  "links": {
+    "github": "https://github.com/elie222/inbox-zero",
+    "website": "https://www.getinboxzero.com",
+    "docs": [
+      "https://docs.getinboxzero.com/hosting/self-hosting",
+      "https://docs.getinboxzero.com/hosting/environment-variables",
+      "https://docs.getinboxzero.com/hosting/google-oauth",
+      "https://docs.getinboxzero.com/hosting/microsoft-oauth",
+      "https://docs.getinboxzero.com/hosting/google-pubsub",
+      "https://docs.getinboxzero.com/hosting/llm-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-in needs your own OAuth app. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET (redirect URIs https://<your-domain>/api/auth/callback/google and https://<your-domain>/api/google/linking/callback), or MICROSOFT_CLIENT_ID and MICROSOFT_CLIENT_SECRET for Outlook, then redeploy. Sign-up is open to any account until you set AUTH_ALLOWED_EMAILS or AUTH_ALLOWED_EMAIL_DOMAINS.",
+      "link": "https://docs.getinboxzero.com/hosting/google-oauth"
+    },
+    {
+      "type": "warning",
+      "message": "The AI features need an LLM provider. Set LLM_API_KEY, and change DEFAULT_LLM_PROVIDER, DEFAULT_LLM_MODEL, ECONOMY_LLM_PROVIDER and ECONOMY_LLM_MODEL if you do not use Anthropic, then redeploy.",
+      "link": "https://docs.getinboxzero.com/hosting/llm-setup"
+    },
+    {
+      "type": "warning",
+      "message": "Real-time Gmail processing needs a Google Pub/Sub topic. Set GOOGLE_PUBSUB_TOPIC_NAME and point its push subscription at https://<your-domain>/api/google/webhook?token=<GOOGLE_PUBSUB_VERIFICATION_TOKEN>.",
+      "link": "https://docs.getinboxzero.com/hosting/google-pubsub"
+    }
+  ]
+}
