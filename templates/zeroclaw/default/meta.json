@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI agent runtime with a web dashboard for chat, memory, cron jobs, tools and multi-channel messaging, using your own LLM provider keys.",
+  "category": "ai",
+  "developedBy": {
+    "label": "ZeroClaw Labs",
+    "url": "https://github.com/zeroclaw-labs"
+  },
+  "links": {
+    "github": "https://github.com/zeroclaw-labs/zeroclaw",
+    "website": "https://www.zeroclaw.com/",
+    "docs": [
+      "https://docs.zeroclaw.com/master/en/setup/container.html",
+      "https://docs.zeroclaw.com/master/en/getting-started/quickstart.html",
+      "https://docs.zeroclaw.com/master/en/providers/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Pair the dashboard right after deployment: copy the one-time code from the PAIRING REQUIRED box in the container logs and enter it on the dashboard. The code expires after 10 minutes; restart the app to print a new one while no device is paired. To pair again later, run `zeroclaw gateway get-paircode --new` in the container.",
+      "link": "https://docs.zeroclaw.com/master/en/setup/container.html"
+    },
+    {
+      "type": "warning",
+      "message": "An API key for an LLM provider (OpenRouter, Anthropic, OpenAI or another supported one) must be added through the dashboard Quickstart before the agent can reply.",
+      "link": "https://docs.zeroclaw.com/master/en/providers/configuration.html"
+    }
+  ]
+}
