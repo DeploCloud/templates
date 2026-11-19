@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "VS Code running in the browser, with a persistent home directory for projects, extensions and settings behind password login.",
+  "category": "development",
+  "developedBy": {
+    "label": "Coder",
+    "url": "https://github.com/coder"
+  },
+  "links": {
+    "github": "https://github.com/coder/code-server",
+    "website": "https://coder.com/",
+    "docs": [
+      "https://coder.com/docs/code-server/install",
+      "https://coder.com/docs/code-server/guide",
+      "https://coder.com/docs/code-server/FAQ"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the generated PASSWORD value shown in this app's environment settings. The editor has a terminal with passwordless sudo inside the container, so keep that password private."
+    }
+  ]
+}
