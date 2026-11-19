@@ -1,0 +1,27 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "weknora"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+TZ = "UTC"
+DEFAULT_LOCALE = "en-US"
+MAX_FILE_SIZE_MB = "50"
+DB_USER = "weknora"
+DB_NAME = "weknora"
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+JWT_SECRET = "${hash:64}"
+SYSTEM_AES_KEY = "${hash:32}"
+SYSTEM_SIGNING_KEY = "${hash:64}"
+DISABLE_REGISTRATION = "false"
+WEKNORA_BOOTSTRAP_SYSTEM_ADMIN_EMAIL = ""
+OLLAMA_BASE_URL = ""
