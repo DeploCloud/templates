@@ -1,0 +1,24 @@
+[variables]
+admin_email = "${email}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "apache-answer"
+port = 80
+host = "${domain}"
+
+[config.env]
+AUTO_INSTALL = "true"
+DB_TYPE = "sqlite3"
+DB_FILE = "/data/answer.db"
+LANGUAGE = "en_US"
+SITE_NAME = "Apache Answer"
+SITE_URL = "https://${domain}"
+CONTACT_EMAIL = "${admin_email}"
+ADMIN_NAME = "admin"
+ADMIN_PASSWORD = "${admin_password}"
+ADMIN_EMAIL = "${admin_email}"
+EXTERNAL_CONTENT_DISPLAY = "ask_before_display"

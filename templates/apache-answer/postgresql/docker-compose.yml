@@ -1,0 +1,51 @@
+services:
+  apache-answer:
+    image: apache/answer:2.0.3@sha256:0863470d8293294b899f8b39a373df6d6250c3f3e412ea0e483924b41e23428f
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      AUTO_INSTALL: "${AUTO_INSTALL}"
+      DB_TYPE: "${DB_TYPE}"
+      DB_HOST: "${DB_HOST}"
+      DB_NAME: "${DB_NAME}"
+      DB_USERNAME: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+      LANGUAGE: "${LANGUAGE}"
+      SITE_NAME: "${SITE_NAME}"
+      SITE_URL: "${SITE_URL}"
+      CONTACT_EMAIL: "${CONTACT_EMAIL}"
+      ADMIN_NAME: "${ADMIN_NAME}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+      ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      EXTERNAL_CONTENT_DISPLAY: "${EXTERNAL_CONTENT_DISPLAY}"
+    volumes:
+      - apache-answer-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/healthz || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      apache-answer-db:
+        condition: service_healthy
+
+  apache-answer-db:
+    image: postgres:17-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - apache-answer-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  apache-answer-data: {}
+  apache-answer-db: {}
