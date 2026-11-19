@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Team chat with channels, direct messages, threads, file sharing and calls, backed by a single-node MongoDB replica set.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Rocket.Chat",
+    "url": "https://github.com/RocketChat"
+  },
+  "links": {
+    "github": "https://github.com/RocketChat/Rocket.Chat",
+    "website": "https://www.rocket.chat/",
+    "docs": [
+      "https://docs.rocket.chat/docs/deploy-with-docker-docker-compose",
+      "https://docs.rocket.chat/docs/complete-the-setup-wizard",
+      "https://docs.rocket.chat/docs/deployment-environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Finish the setup wizard right after deploying: the first account created there becomes the workspace administrator. The wizard then asks you to register the workspace with Rocket.Chat Cloud, which mobile push notifications and marketplace apps need.",
+      "link": "https://docs.rocket.chat/docs/complete-the-setup-wizard"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+services:
+  rocket-chat:
+    image: rocketchat/rocket.chat:9.0.0@sha256:ce4f33c7efc0f0cc672ed9c3de46d32d811a4b109df2247817d9a80ba283f415
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ROOT_URL: ${ROOT_URL}
+      PORT: 3000
+      MONGO_URL: mongodb://rocket-chat-db:27017/rocketchat?replicaSet=rs0
+      DEPLOY_PLATFORM: compose
+    volumes:
+      - rocket-chat-uploads:/app/uploads
+    depends_on:
+      rocket-chat-db:
+        condition: service_healthy
+
+  rocket-chat-db:
+    image: mongo:8.0.38@sha256:bdc216e9d5a6ec2cfdac789b5832fdab64cd32055f59885cae918a92de63c361
+    restart: unless-stopped
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - rocket-chat-db:/data/db
+    # Rocket.Chat needs a replica set; the first check initiates it.
+    healthcheck:
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "try { rs.status(); } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'rocket-chat-db:27017' }] }); } quit(db.hello().isWritablePrimary ? 0 : 1);"
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  rocket-chat-uploads: {}
+  rocket-chat-db: {}
