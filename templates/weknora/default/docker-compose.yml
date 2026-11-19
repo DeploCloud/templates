@@ -1,0 +1,128 @@
+services:
+  weknora:
+    image: wechatopenai/weknora-ui:v0.9.0@sha256:df26705d866997db07f3da78dabedc4f594b383566a3996810c166a5c6bee393
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_HOST: weknora-app
+      APP_PORT: "8080"
+      APP_SCHEME: http
+      MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB}
+      DEFAULT_LOCALE: ${DEFAULT_LOCALE}
+    depends_on:
+      weknora-app:
+        condition: service_healthy
+
+  weknora-app:
+    image: wechatopenai/weknora-app:v0.9.0@sha256:25b20959b7456f7842ef55ed4feff3694dbd0c6f8af4117c1fb3c5dec6bdf14d
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      GIN_MODE: release
+      LOG_LEVEL: info
+      TZ: ${TZ}
+      AUTO_MIGRATE: "true"
+      AUTO_RECOVER_DIRTY: "true"
+      FRONTEND_BASE_URL: https://${DOMAIN}
+      APP_EXTERNAL_URL: https://${DOMAIN}
+      DB_DRIVER: postgres
+      DB_HOST: weknora-db
+      DB_PORT: "5432"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      RETRIEVE_DRIVER: postgres
+      STREAM_MANAGER_TYPE: redis
+      REDIS_ADDR: weknora-redis:6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DB: "0"
+      REDIS_PREFIX: "stream:"
+      DOCREADER_ADDR: weknora-docreader:50051
+      DOCREADER_TRANSPORT: grpc
+      STORAGE_TYPE: local
+      LOCAL_STORAGE_BASE_DIR: /data/files
+      MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+      OLLAMA_OPTIONAL: "true"
+      NEO4J_ENABLE: "false"
+      WEKNORA_SANDBOX_DOCKER_ENABLED: "false"
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+      WEKNORA_BOOTSTRAP_SYSTEM_ADMIN_EMAIL: ${WEKNORA_BOOTSTRAP_SYSTEM_ADMIN_EMAIL}
+      JWT_SECRET: ${JWT_SECRET}
+      SYSTEM_AES_KEY: ${SYSTEM_AES_KEY}
+      SYSTEM_SIGNING_KEY: ${SYSTEM_SIGNING_KEY}
+    volumes:
+      - weknora-files:/data/files
+      - weknora-docreader-tmp:/tmp/docreader:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    depends_on:
+      weknora-db:
+        condition: service_healthy
+      weknora-redis:
+        condition: service_healthy
+      weknora-docreader:
+        condition: service_healthy
+
+  weknora-docreader:
+    image: wechatopenai/weknora-docreader:v0.9.0@sha256:8c71ec3cc2e291829c3938d2c7dc5f921c1d10551c8774bf844c83bc4aa3cb84
+    restart: unless-stopped
+    expose:
+      - 50051
+    environment:
+      TZ: ${TZ}
+      DOCREADER_IMAGE_OUTPUT_DIR: /tmp/docreader
+      DOCREADER_GRPC_PORT: "50051"
+      DOCREADER_GRPC_MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB}
+      MAX_FILE_SIZE_MB: ${MAX_FILE_SIZE_MB}
+    volumes:
+      - weknora-docreader-tmp:/tmp/docreader
+    healthcheck:
+      test: ["CMD", "grpc_health_probe", "-addr=localhost:50051"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  weknora-db:
+    image: paradedb/paradedb:v0.25.11-pg17@sha256:78d65750f0f88a56548526201bcab9910f83b90fe929cdbf979890f3f80b0f95
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - weknora-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  weknora-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - weknora-redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" --no-auth-warning ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  weknora-files:
+  weknora-docreader-tmp:
+  weknora-db:
+  weknora-redis:
