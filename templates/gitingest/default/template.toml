@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gitingest"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+ALLOWED_HOSTS = "${domain},localhost,127.0.0.1"

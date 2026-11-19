@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app and API that turn any Git repository into a prompt-friendly text digest for LLMs, with file tree, size and token count.",
+  "category": "development",
+  "developedBy": {
+    "label": "Coderamp",
+    "url": "https://github.com/coderamp-labs"
+  },
+  "links": {
+    "github": "https://github.com/coderamp-labs/gitingest",
+    "website": "https://gitingest.com",
+    "docs": [
+      "https://github.com/coderamp-labs/gitingest#-self-host",
+      "https://github.com/coderamp-labs/gitingest/blob/main/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Only hostnames listed in ALLOWED_HOSTS are accepted. If you add another domain to this app, append it to ALLOWED_HOSTS (comma-separated, no spaces) or requests on it return 'Invalid host header'.",
+      "link": "https://github.com/coderamp-labs/gitingest#-self-host"
+    }
+  ]
+}
