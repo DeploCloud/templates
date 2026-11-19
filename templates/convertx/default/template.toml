@@ -1,0 +1,16 @@
+[variables]
+jwt_secret = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "convertx"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${jwt_secret}"
+ACCOUNT_REGISTRATION = "false"
+AUTO_DELETE_EVERY_N_HOURS = "24"
+TZ = "UTC"
