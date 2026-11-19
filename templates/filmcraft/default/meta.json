@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based nonlinear video editor built in Rust and WebAssembly: multi-track timeline, color grading, effects, audio mixing and export, with media kept on the user's device.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/filmcraft",
+    "website": "https://getartcraft.com/apps/filmcraft",
+    "docs": [
+      "https://github.com/storytold/filmcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/filmcraft/blob/main/docs/web.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Projects and media are not stored on the server: the editor runs in the browser and keeps only a recovery snapshot in that browser's storage. Save projects and exports to your own device."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}

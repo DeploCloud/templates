@@ -1,0 +1,13 @@
+[config]
+
+[[config.domains]]
+serviceName = "filmcraft"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "gzip.conf"
+content = """gzip on;
+gzip_proxied any;
+gzip_types application/wasm application/javascript text/javascript text/css;
+"""
