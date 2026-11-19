@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source payments switch with the Hyperswitch API, Control Center dashboard, PostgreSQL and Redis behind one domain.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Juspay",
+    "url": "https://juspay.io/"
+  },
+  "links": {
+    "github": "https://github.com/juspay/hyperswitch",
+    "website": "https://hyperswitch.io/",
+    "docs": [
+      "https://docs.hyperswitch.io/self-hosting/want-to-explore/readme-1/unified-local-setup-using-docker",
+      "https://docs.hyperswitch.io/self-hosting/want-to-explore/account-setup/using-hyperswitch-control-center",
+      "https://docs.hyperswitch.io/self-hosting/guides-for-self-hosting/deployment-overview/card-vault-and-key-management"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up stays open: anyone who can reach the URL can create an account and merchant. Create your own account right after the first deploy."
+    },
+    {
+      "type": "warning",
+      "message": "Card data is kept by the built-in mock locker, which is meant for testing. Set up the Hyperswitch card vault before processing real card payments.",
+      "link": "https://docs.hyperswitch.io/self-hosting/guides-for-self-hosting/deployment-overview/card-vault-and-key-management"
+    }
+  ]
+}
