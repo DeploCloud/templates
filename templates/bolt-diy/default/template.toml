@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bolt-diy"
+port = 5_173
+host = "${domain}"
+
+[config.env]
+ALLOWED_HOST = "${domain}"
