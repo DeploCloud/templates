@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-improving AI agent by Nous Research with its messaging gateway, scheduled jobs, persistent memory and skills, managed from a password-protected web dashboard.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Nous Research",
+    "url": "https://nousresearch.com"
+  },
+  "links": {
+    "github": "https://github.com/NousResearch/hermes-agent",
+    "website": "https://hermes-agent.nousresearch.com",
+    "docs": [
+      "https://hermes-agent.nousresearch.com/docs/user-guide/docker",
+      "https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard",
+      "https://hermes-agent.nousresearch.com/docs/integrations/providers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard as admin with the generated HERMES_DASHBOARD_BASIC_AUTH_PASSWORD from the environment, then add an LLM provider key (OpenRouter, Nous Portal, OpenAI and others) under API Keys and pick a model in Config before the agent can answer. Messaging platforms such as Telegram or Discord are connected from the Channels page.",
+      "link": "https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard"
+    },
+    {
+      "type": "warning",
+      "message": "The dashboard can edit API keys and run commands inside the container. Upstream recommends the username/password login only on a trusted network or behind a VPN; for an internet-facing dashboard configure its OAuth or self-hosted OIDC sign-in instead.",
+      "link": "https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard#authentication-gated-mode"
+    }
+  ]
+}
