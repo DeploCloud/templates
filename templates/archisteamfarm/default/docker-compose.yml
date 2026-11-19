@@ -1,0 +1,25 @@
+services:
+  archisteamfarm:
+    image: justarchi/archisteamfarm:6.3.11.7@sha256:884137cd5dd93c42c789008ce12016107073b1c7bfa79c59cd675b583ae30975
+    restart: unless-stopped
+    # IPC listens on localhost by default; KnownNetworks makes the anti-bruteforce ban the client, not the proxy
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        [ -f /app/config/IPC.config ] || printf '{"Kestrel":{"Endpoints":{"HTTP":{"Url":"http://*:1242"}},"KnownNetworks":["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]}}' > /app/config/IPC.config
+        [ -f /app/config/ASF.json ] || printf '{"Headless":true,"IPCPassword":"%s"}' "$$ASF_IPC_PASSWORD" > /app/config/ASF.json
+        exec ArchiSteamFarm --no-restart
+    expose:
+      - 1242
+    environment:
+      ASF_IPC_PASSWORD: ${ASF_IPC_PASSWORD}
+    volumes:
+      - archisteamfarm-config:/app/config
+      - archisteamfarm-logs:/app/logs
+      - archisteamfarm-plugins:/app/plugins
+
+volumes:
+  archisteamfarm-config: {}
+  archisteamfarm-logs: {}
+  archisteamfarm-plugins: {}
