@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "halo"
+port = 8_090
+host = "${domain}"
+primary = true
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+HALO_EXTERNAL_URL = "https://${domain}"
+JVM_OPTS = "-Xmx256m -Xms256m"
