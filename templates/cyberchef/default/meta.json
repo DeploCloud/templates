@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app for encryption, encoding, compression, hashing and data analysis, chaining hundreds of operations into reusable recipes in the browser.",
+  "category": "security",
+  "developedBy": {
+    "label": "GCHQ",
+    "url": "https://github.com/gchq"
+  },
+  "links": {
+    "github": "https://github.com/gchq/CyberChef",
+    "website": "https://gchq.github.io/CyberChef/",
+    "docs": [
+      "https://github.com/gchq/CyberChef#with-docker",
+      "https://github.com/gchq/CyberChef/wiki"
+    ]
+  }
+}
