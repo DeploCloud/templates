@@ -1,0 +1,50 @@
+services:
+  akaunting:
+    image: akaunting/akaunting:3.3.1@sha256:468ea4f89ad25bc85890909726577ab6bf3515d3bb2d7bb3aded42cbf93263c4
+    restart: unless-stopped
+    # Run the CLI installer only until it has marked the app installed, as upstream requires.
+    entrypoint:
+      - /bin/bash
+      - -c
+      - grep -qs '^APP_INSTALLED=true' /var/www/html/.env || export AKAUNTING_SETUP=true; exec /usr/local/bin/akaunting.sh --start
+    expose:
+      - 80
+    volumes:
+      - akaunting-data:/var/www/html
+    environment:
+      APP_URL: ${APP_URL}
+      LOCALE: ${LOCALE}
+      DB_HOST: akaunting-db
+      DB_PORT: "3306"
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PREFIX: ${DB_PREFIX}
+      COMPANY_NAME: ${COMPANY_NAME}
+      COMPANY_EMAIL: ${COMPANY_EMAIL}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      akaunting-db:
+        condition: service_healthy
+
+  akaunting-db:
+    image: mariadb:11.8.9@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - akaunting-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  akaunting-data: {}
+  akaunting-db: {}
