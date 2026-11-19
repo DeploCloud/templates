@@ -1,0 +1,14 @@
+[variables]
+access_auth_code = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "siyuan"
+port = 6_806
+host = "${domain}"
+
+[config.env]
+SIYUAN_ACCESS_AUTH_CODE = "${access_auth_code}"
+TZ = "UTC"
