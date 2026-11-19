@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web file manager with indexed search, file previews, sharing links, WebDAV and multi-user access control.",
+  "category": "storage",
+  "developedBy": {
+    "label": "gtsteffaniak",
+    "url": "https://github.com/gtsteffaniak"
+  },
+  "links": {
+    "github": "https://github.com/gtsteffaniak/filebrowser",
+    "website": "https://filebrowserquantum.com",
+    "docs": [
+      "https://filebrowserquantum.com/en/docs/getting-started/docker/",
+      "https://filebrowserquantum.com/en/docs/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated FILEBROWSER_ADMIN_PASSWORD. It is reapplied on every start, so change the admin password in the environment rather than in the UI.",
+      "link": "https://filebrowserquantum.com/en/docs/getting-started/docker/"
+    }
+  ]
+}
