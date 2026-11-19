@@ -1,0 +1,39 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "novu-dashboard"
+port = 4_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "novu-api"
+port = 3_000
+host = "${domain}"
+path = "/v1"
+
+[[config.domains]]
+serviceName = "novu-api"
+port = 3_000
+host = "${domain}"
+path = "/v2"
+
+[[config.domains]]
+serviceName = "novu-ws"
+port = 3_002
+host = "${domain}"
+path = "/socket.io"
+
+[config.env]
+NOVU_URL = "https://${domain}"
+MONGO_PASSWORD = "${password:32}"
+JWT_SECRET = "${hash:64}"
+STORE_ENCRYPTION_KEY = "${hash:32}"
+NOVU_SECRET_KEY = "${hash:64}"
+DISABLE_USER_REGISTRATION = "false"
+S3_LOCAL_STACK = ""
+S3_BUCKET_NAME = ""
+S3_REGION = "us-east-1"
+AWS_ACCESS_KEY_ID = ""
+AWS_SECRET_ACCESS_KEY = ""
