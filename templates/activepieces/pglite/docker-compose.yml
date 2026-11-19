@@ -1,0 +1,23 @@
+services:
+  activepieces:
+    image: ghcr.io/activepieces/activepieces:0.93.0@sha256:151c2a4326c30a6a8086297136644da9b58072212c35bca7c87dcb5724e7d687
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      AP_DB_TYPE: PGLITE
+      AP_REDIS_TYPE: MEMORY
+      AP_EDITION: ${AP_EDITION}
+      AP_ENVIRONMENT: prod
+      AP_EXECUTION_MODE: ${AP_EXECUTION_MODE}
+      AP_FRONTEND_URL: ${AP_FRONTEND_URL}
+      AP_API_KEY: ${AP_API_KEY}
+      AP_ENCRYPTION_KEY: ${AP_ENCRYPTION_KEY}
+      AP_JWT_SECRET: ${AP_JWT_SECRET}
+    volumes:
+      - activepieces-data:/root/.activepieces
+      - activepieces-cache:/usr/src/app/cache
+
+volumes:
+  activepieces-data: {}
+  activepieces-cache: {}

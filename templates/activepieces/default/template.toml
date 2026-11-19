@@ -1,0 +1,21 @@
+[variables]
+db_password = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "activepieces"
+port = 80
+host = "${domain}"
+
+[config.env]
+AP_FRONTEND_URL = "https://${domain}"
+AP_EDITION = "ee"
+AP_EXECUTION_MODE = "SANDBOX_CODE_ONLY"
+AP_API_KEY = "${hash:128}"
+AP_ENCRYPTION_KEY = "${hash:32}"
+AP_JWT_SECRET = "${hash:64}"
+AP_POSTGRES_DATABASE = "activepieces"
+AP_POSTGRES_USERNAME = "activepieces"
+AP_POSTGRES_PASSWORD = "${db_password}"

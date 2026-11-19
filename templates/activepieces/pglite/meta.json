@@ -1,0 +1,27 @@
+{
+  "name": "PGLite",
+  "shortDescription": "Single-container Activepieces with the embedded PGLite database and in-memory queue, for personal use on one server.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Activepieces",
+    "url": "https://github.com/activepieces"
+  },
+  "links": {
+    "github": "https://github.com/activepieces/activepieces",
+    "website": "https://www.activepieces.com",
+    "docs": [
+      "https://www.activepieces.com/docs/install/options/docker",
+      "https://www.activepieces.com/docs/install/reference/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you sign up with becomes the platform administrator. Create it right after deploying."
+    },
+    {
+      "type": "warning",
+      "message": "The embedded database runs on one server only, cannot take an Enterprise license and cannot be moved to PostgreSQL later; switching means starting over. Use the Default variant for production."
+    }
+  ]
+}
