@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Password-protected browser and mobile interface for Hermes Agent with chat, sessions, a workspace file browser and scheduled tasks, deployed together with the Hermes Agent gateway.",
+  "category": "ai",
+  "developedBy": {
+    "label": "nesquena",
+    "url": "https://github.com/nesquena"
+  },
+  "links": {
+    "github": "https://github.com/nesquena/hermes-webui",
+    "website": "https://get-hermes.ai",
+    "docs": [
+      "https://github.com/nesquena/hermes-webui/blob/master/docs/docker.md",
+      "https://github.com/nesquena/hermes-webui/blob/master/docs/onboarding.md",
+      "https://github.com/nesquena/hermes-webui#configuration--access"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated HERMES_WEBUI_PASSWORD from the environment, then pick an LLM provider and enter its API key in the onboarding wizard or under Settings > Providers; the agent cannot answer until a provider is configured. The first start installs the agent's Python dependencies and can take several minutes before the page loads.",
+      "link": "https://github.com/nesquena/hermes-webui/blob/master/docs/onboarding.md"
+    },
+    {
+      "type": "warning",
+      "message": "When upgrading the hermes-agent image, remove the hermes-agent-src volume before redeploying, otherwise the old agent code in that volume keeps masking the new image. Keep the WebUI and agent versions paired.",
+      "link": "https://github.com/nesquena/hermes-webui/blob/master/docs/docker.md#upgrading-the-agent-container"
+    }
+  ]
+}
