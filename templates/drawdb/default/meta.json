@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based database entity relationship diagram editor that imports and exports SQL, served as the official static web app.",
+  "category": "development",
+  "developedBy": {
+    "label": "drawDB",
+    "url": "https://github.com/drawdb-io"
+  },
+  "links": {
+    "github": "https://github.com/drawdb-io/drawdb",
+    "website": "https://drawdb.app",
+    "docs": [
+      "https://github.com/drawdb-io/drawdb#docker-build",
+      "https://www.drawdb.app/docs/how-it-works"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Diagrams are stored in each browser, not on the server. Export them to files to keep them across browsers and devices."
+    }
+  ]
+}
