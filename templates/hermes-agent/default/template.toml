@@ -1,0 +1,17 @@
+[variables]
+dashboard_password = "${password:32}"
+dashboard_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hermes-agent"
+port = 9_119
+host = "${domain}"
+
+[config.env]
+HERMES_DASHBOARD_PUBLIC_URL = "https://${domain}"
+HERMES_DASHBOARD_BASIC_AUTH_USERNAME = "admin"
+HERMES_DASHBOARD_BASIC_AUTH_PASSWORD = "${dashboard_password}"
+HERMES_DASHBOARD_BASIC_AUTH_SECRET = "${dashboard_secret}"
