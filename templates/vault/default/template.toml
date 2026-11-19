@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vault"
+port = 8_200
+host = "${domain}"
+
+[config.env]
+VAULT_API_ADDR = "https://${domain}"
