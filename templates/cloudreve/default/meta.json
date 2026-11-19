@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file management and sharing with a web UI, WebDAV and multiple storage providers, backed by PostgreSQL and Redis.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Cloudreve",
+    "url": "https://github.com/cloudreve"
+  },
+  "links": {
+    "github": "https://github.com/cloudreve/cloudreve",
+    "website": "https://cloudreve.org",
+    "docs": [
+      "https://docs.cloudreve.org/en/overview/deploy/docker-compose",
+      "https://docs.cloudreve.org/en/overview/deploy/configure",
+      "https://docs.cloudreve.org/en/overview/configure"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open on first start and the first account you register becomes the administrator. Create it right after deploying, then turn off registration in the admin panel if the instance is private.",
+      "link": "https://docs.cloudreve.org/en/overview/deploy/configure"
+    }
+  ]
+}
