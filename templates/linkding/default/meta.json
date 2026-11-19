@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted bookmark manager with tags, search, Markdown notes, a REST API and browser extensions, using a built-in SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Sascha Ißbrücker",
+    "url": "https://github.com/sissbruecker"
+  },
+  "links": {
+    "github": "https://github.com/sissbruecker/linkding",
+    "website": "https://linkding.link/",
+    "docs": [
+      "https://linkding.link/installation/",
+      "https://linkding.link/options/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated LD_SUPERUSER_PASSWORD from the environment variables. It is only applied on first start, so change it later in the app settings. Create further users from the admin panel at /admin.",
+      "link": "https://linkding.link/options/#ld_superuser_name"
+    }
+  ]
+}
