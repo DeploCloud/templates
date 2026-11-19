@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "InfluxDB 3 Core time series database with an HTTP API for writes and SQL or InfluxQL queries, local file object storage and a preconfigured admin token.",
+  "category": "database",
+  "developedBy": {
+    "label": "InfluxData",
+    "url": "https://www.influxdata.com/"
+  },
+  "links": {
+    "github": "https://github.com/influxdata/influxdb",
+    "website": "https://www.influxdata.com/products/influxdb/",
+    "docs": [
+      "https://docs.influxdata.com/influxdb3/core/",
+      "https://docs.influxdata.com/influxdb3/core/admin/tokens/admin/preconfigured/",
+      "https://docs.influxdata.com/influxdb3/core/reference/config-options/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "InfluxDB 3 Core has no built-in web UI. Authenticate API and client requests with the generated admin token stored in the INFLUXDB3_AUTH_TOKEN environment variable. The token is registered on the first start; changing the variable later does not change the server's token.",
+      "link": "https://docs.influxdata.com/influxdb3/core/admin/tokens/admin/preconfigured/"
+    }
+  ]
+}

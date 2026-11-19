@@ -1,0 +1,18 @@
+[variables]
+admin_password = "${password:32}"
+admin_token = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "influxdb"
+port = 8_086
+host = "${domain}"
+
+[config.env]
+DOCKER_INFLUXDB_INIT_USERNAME = "admin"
+DOCKER_INFLUXDB_INIT_PASSWORD = "${admin_password}"
+DOCKER_INFLUXDB_INIT_ORG = "primary"
+DOCKER_INFLUXDB_INIT_BUCKET = "default"
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN = "${admin_token}"
