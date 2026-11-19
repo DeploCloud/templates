@@ -1,0 +1,72 @@
+services:
+  jumpserver:
+    image: jumpserver/jms_all:v5.1.1@sha256:63e9e7d22b8e65b7c8f2e7f80f0570215e8011e58284e16038f16eecf1ea4d15
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN}
+      LOG_LEVEL: ${LOG_LEVEL}
+      DOMAINS: ${DOMAINS}
+      SITE_URL: ${SITE_URL}
+      DB_ENGINE: postgresql
+      DB_HOST: jumpserver-db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: jumpserver-redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - jumpserver-data:/opt/data
+      - jumpserver-download:/opt/download
+      - jumpserver-nginx-logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/api/health/ > /dev/null"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 600s
+    depends_on:
+      jumpserver-db:
+        condition: service_healthy
+      jumpserver-redis:
+        condition: service_healthy
+
+  jumpserver-db:
+    image: postgres:16.16-bookworm@sha256:ce3efec6bc404f6b15ebf5d9bed6b45a9d4655aea238d7dacc3467ccb05a1175
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - jumpserver-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  jumpserver-redis:
+    image: redis:7.4.12-bookworm@sha256:2e3eb11462c4e3759e6972678dd051d150ff54b1e60714b3c33b701260172a90
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - jumpserver-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  jumpserver-data: {}
+  jumpserver-download: {}
+  jumpserver-nginx-logs: {}
+  jumpserver-db: {}
+  jumpserver-redis: {}

@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source privileged access management (PAM) bastion for browser-based SSH, RDP, Kubernetes and database sessions, with PostgreSQL and Redis.",
+  "category": "security",
+  "developedBy": {
+    "label": "FIT2CLOUD",
+    "url": "https://github.com/jumpserver"
+  },
+  "links": {
+    "github": "https://github.com/jumpserver/jumpserver",
+    "website": "https://www.jumpserver.com/",
+    "docs": [
+      "https://github.com/jumpserver/Dockerfile/blob/master/allinone/README_EN.md",
+      "https://www.jumpserver.com/docs/quickstart",
+      "https://www.jumpserver.com/docs/operations/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the default password ChangeMe and set a new password right after the first login.",
+      "link": "https://www.jumpserver.com/docs/quickstart"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
