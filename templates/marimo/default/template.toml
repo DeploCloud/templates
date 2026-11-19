@@ -1,0 +1,15 @@
+[variables]
+token_password = "${password:32}"
+session_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "marimo"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+MARIMO_TOKEN_PASSWORD = "${token_password}"
+MARIMO_SESSION_SECRET = "${session_secret}"
