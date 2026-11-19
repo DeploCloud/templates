@@ -1,0 +1,197 @@
+[variables]
+secret_key = "${base64:42}"
+db_password = "${password:32}"
+redis_password = "${password:32}"
+weaviate_api_key = "${password:32}"
+sandbox_api_key = "${password:32}"
+plugin_daemon_key = "${password:48}"
+plugin_inner_api_key = "${password:48}"
+agent_api_token = "${password:43}"
+agent_sandbox_token = "${hash:64}"
+agent_server_secret_key = "${secret:43}"
+
+[config]
+
+[[config.domains]]
+serviceName = "dify-nginx"
+port = 80
+host = "${domain}"
+
+[config.env]
+DIFY_HOST = "${domain}"
+SECRET_KEY = "${secret_key}"
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+WEAVIATE_API_KEY = "${weaviate_api_key}"
+SANDBOX_API_KEY = "${sandbox_api_key}"
+PLUGIN_DAEMON_KEY = "${plugin_daemon_key}"
+PLUGIN_INNER_API_KEY = "${plugin_inner_api_key}"
+AGENT_API_TOKEN = "${agent_api_token}"
+AGENT_SANDBOX_TOKEN = "${agent_sandbox_token}"
+AGENT_SERVER_SECRET_KEY = "${agent_server_secret_key}"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """map $http_x_forwarded_proto $dify_scheme {
+    default $http_x_forwarded_proto;
+    "" $scheme;
+}
+
+server {
+    listen 80;
+    server_name _;
+    resolver 127.0.0.11 valid=30s ipv6=off;
+    client_max_body_size 100M;
+
+    set $dify_api dify-api:5001;
+    set $dify_web dify-web:3000;
+
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Proto $dify_scheme;
+    proxy_set_header Connection "";
+    proxy_buffering off;
+    proxy_read_timeout 3600s;
+    proxy_send_timeout 3600s;
+
+    location /console/api { proxy_pass http://$dify_api; }
+    location /api { proxy_pass http://$dify_api; }
+    location /v1 { proxy_pass http://$dify_api; }
+    location /openapi { proxy_pass http://$dify_api; }
+    location /files { proxy_pass http://$dify_api; }
+    location /mcp { proxy_pass http://$dify_api; }
+    location /triggers { proxy_pass http://$dify_api; }
+    location /callbacks/human-input/v2/im/ { proxy_pass http://$dify_api; }
+    location / { proxy_pass http://$dify_web; }
+
+    location /e/ {
+        set $dify_plugin dify-plugin-daemon:5002;
+        proxy_pass http://$dify_plugin;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $dify_scheme;
+        proxy_set_header Connection "";
+        proxy_set_header Dify-Hook-Url $dify_scheme://$host$request_uri;
+    }
+
+    location /socket.io/ {
+        set $dify_socket dify-api-websocket:5001;
+        proxy_pass http://$dify_socket;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $dify_scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+"""
+
+[[config.mounts]]
+filePath = "squid-common.conf"
+content = """acl client_localnet src 0.0.0.1-0.255.255.255
+acl client_localnet src 10.0.0.0/8
+acl client_localnet src 100.64.0.0/10
+acl client_localnet src 169.254.0.0/16
+acl client_localnet src 172.16.0.0/12
+acl client_localnet src 192.168.0.0/16
+acl client_localnet src fc00::/7
+acl client_localnet src fe80::/10
+
+acl to_private_networks dst 0.0.0.0/8
+acl to_private_networks dst 10.0.0.0/8
+acl to_private_networks dst 100.64.0.0/10
+acl to_private_networks dst 127.0.0.0/8
+acl to_private_networks dst 169.254.0.0/16
+acl to_private_networks dst 172.16.0.0/12
+acl to_private_networks dst 192.168.0.0/16
+acl to_private_networks dst 224.0.0.0/4
+acl to_private_networks dst 240.0.0.0/4
+acl to_private_networks dst ::/128
+acl to_private_networks dst ::1/128
+acl to_private_networks dst ::ffff:0:0/96
+acl to_private_networks dst ::/96
+acl to_private_networks dst fc00::/7
+acl to_private_networks dst fe80::/10
+
+acl SSL_ports port 443
+acl Safe_ports port 80
+acl Safe_ports port 21
+acl Safe_ports port 443
+acl Safe_ports port 70
+acl Safe_ports port 210
+acl Safe_ports port 1025-65535
+acl Safe_ports port 280
+acl Safe_ports port 488
+acl Safe_ports port 591
+acl Safe_ports port 777
+acl CONNECT method CONNECT
+
+tcp_outgoing_address 0.0.0.0
+coredump_dir /var/spool/squid
+refresh_pattern . 0 20% 4320
+client_request_buffer_max_size 100 MB
+max_filedescriptors 65536
+connect_timeout 30 seconds
+request_timeout 2 minutes
+read_timeout 2 minutes
+client_lifetime 5 minutes
+shutdown_lifetime 30 seconds
+server_persistent_connections on
+client_persistent_connections on
+persistent_request_timeout 30 seconds
+pconn_timeout 1 minute
+client_db on
+server_idle_pconn_timeout 2 minutes
+client_idle_pconn_timeout 2 minutes
+quick_abort_min 16 KB
+quick_abort_max 16 MB
+quick_abort_pct 95
+memory_cache_mode disk
+cache_mem 256 MB
+maximum_object_size_in_memory 512 KB
+dns_timeout 30 seconds
+dns_retransmit_interval 5 seconds
+logformat dify_log %ts.%03tu %6tr %>a %Ss/%03>Hs %<st %rm %ru %[un %Sh/%<a %mt
+access_log daemon:/var/log/squid/access.log dify_log
+logfile_rotate 10
+"""
+
+[[config.mounts]]
+filePath = "squid.conf"
+content = """include /etc/squid/dify_common.conf
+
+acl allowed_domains dstdomain .marketplace.dify.ai
+
+http_port 3128
+
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+http_access allow localhost manager
+http_access deny manager
+http_access deny to_private_networks
+http_access allow allowed_domains
+http_access allow client_localnet
+http_access allow localhost
+http_access deny all
+"""
+
+[[config.mounts]]
+filePath = "squid-agent.conf"
+content = """include /etc/squid/dify_common.conf
+
+acl dst_agent_backend dstdomain dify-agent-backend
+acl dst_dify_api dstdomain dify-api
+acl path_files urlpath_regex -i ^/files/
+acl path_agent_stub urlpath_regex -i ^/agent-stub/
+
+http_port 3128
+
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+http_access allow dst_agent_backend path_agent_stub
+http_access allow dst_dify_api path_files
+http_access deny to_private_networks
+http_access allow all
+"""
