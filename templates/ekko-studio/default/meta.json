@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI workspace for multi-agent chat, coding agents and visual workflows, shipped as one container with the Hermes Agent runtime built in.",
+  "category": "ai",
+  "developedBy": {
+    "label": "EKKOLearnAI",
+    "url": "https://github.com/EKKOLearnAI"
+  },
+  "links": {
+    "github": "https://github.com/EKKOLearnAI/ekko-studio",
+    "website": "https://ekkostudio.xyz",
+    "docs": [
+      "https://github.com/EKKOLearnAI/ekko-studio/blob/main/docs/docker.md",
+      "https://github.com/EKKOLearnAI/ekko-studio#studio-environment-variables",
+      "https://ekkostudio.xyz/#/docs/getting-started"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in right after deploying with the default credentials admin / 123456: the first login creates the super administrator, so change the username and password when prompted. Then add an LLM provider and its API key under Models before starting a chat.",
+      "link": "https://github.com/EKKOLearnAI/ekko-studio#authentication"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ekko-studio"
+port = 6_060
+host = "${domain}"
+
+[config.env]
+CORS_ORIGINS = "https://${domain}"
