@@ -1,0 +1,35 @@
+services:
+  kopia:
+    image: kopia/kopia:0.23.1@sha256:89fd95ee2942880ca00eae964266958a394421ddbdf69bca62e38afc55f5900e
+    restart: unless-stopped
+    hostname: kopia
+    command:
+      - server
+      - start
+      - --insecure
+      - --address=0.0.0.0:51515
+    expose:
+      - 51515
+    environment:
+      KOPIA_PASSWORD: ${KOPIA_PASSWORD}
+      KOPIA_SERVER_USERNAME: ${KOPIA_SERVER_USERNAME}
+      KOPIA_SERVER_PASSWORD: ${KOPIA_SERVER_PASSWORD}
+    volumes:
+      - kopia-config:/app/config
+      - kopia-cache:/app/cache
+      - kopia-logs:/app/logs
+      - kopia-repository:/repository
+      - kopia-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -so /dev/null http://127.0.0.1:51515/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  kopia-config: {}
+  kopia-cache: {}
+  kopia-logs: {}
+  kopia-repository: {}
+  kopia-data: {}

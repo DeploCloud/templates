@@ -1,0 +1,16 @@
+[variables]
+repository_password = "${password:32}"
+ui_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kopia"
+port = 51_515
+host = "${domain}"
+
+[config.env]
+KOPIA_PASSWORD = "${repository_password}"
+KOPIA_SERVER_USERNAME = "admin"
+KOPIA_SERVER_PASSWORD = "${ui_password}"
