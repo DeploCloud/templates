@@ -1,0 +1,16 @@
+services:
+  openobserve:
+    image: public.ecr.aws/zinclabs/openobserve:v1.1.2@sha256:4a154849432f75c4fb024de32fe34163c02406c905dab22bf8d213d2e3386392
+    restart: unless-stopped
+    expose:
+      - 5080
+    environment:
+      ZO_ROOT_USER_EMAIL: ${ZO_ROOT_USER_EMAIL}
+      ZO_ROOT_USER_PASSWORD: ${ZO_ROOT_USER_PASSWORD}
+      ZO_DATA_DIR: ${ZO_DATA_DIR}
+      ZO_WEB_URL: ${ZO_WEB_URL}
+    volumes:
+      - openobserve-data:/data
+
+volumes:
+  openobserve-data: {}
