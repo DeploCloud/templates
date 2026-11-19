@@ -1,0 +1,530 @@
+x-fluxer-env: &fluxer-env
+  FLUXER_ENV: production
+  FLUXER_SELF_HOSTED: "true"
+  FLUXER_BASE_DOMAIN: ${FLUXER_DOMAIN}
+  FLUXER_PUBLIC_SCHEME: https
+  FLUXER_PUBLIC_PORT: "443"
+  FLUXER_TRUST_CLIENT_IP_HEADER: "true"
+  FLUXER_APP_ENDPOINT: https://${FLUXER_DOMAIN}
+  FLUXER_MARKETING_ENDPOINT: https://${FLUXER_DOMAIN}
+  FLUXER_ADMIN_ENDPOINT: https://${FLUXER_DOMAIN}/admin
+  FLUXER_MEDIA_ENDPOINT: https://${FLUXER_DOMAIN}/media
+  FLUXER_MEDIA_PROXY_PUBLIC_ENDPOINT: https://${FLUXER_DOMAIN}/media
+  FLUXER_MEDIA_PROXY_UPLOAD_RELAY_ENDPOINT: https://${FLUXER_DOMAIN}/media
+  FLUXER_INTERNAL_API_ENDPOINT: http://fluxer-api:8080
+  FLUXER_INTERNAL_MEDIA_PROXY_ENDPOINT: http://fluxer-media-proxy:8080
+  FLUXER_DATABASE_BACKEND: postgres
+  FLUXER_POSTGRES_HOST: fluxer-db
+  FLUXER_POSTGRES_DATABASE: fluxer
+  FLUXER_POSTGRES_USERNAME: fluxer
+  FLUXER_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  FLUXER_KV_URL: redis://fluxer-valkey:6379/0
+  FLUXER_NATS_URL: nats://fluxer-nats:4222
+  FLUXER_NATS_JETSTREAM_URL: nats://fluxer-nats:4222
+  FLUXER_SVC_NATS_URL: nats://fluxer-nats:4222
+  FLUXER_SVC_SHARD_COUNT: "1"
+  FLUXER_SEARCH_ENGINE: meilisearch
+  FLUXER_SEARCH_URL: http://fluxer-meilisearch:7700
+  FLUXER_SEARCH_API_KEY: ${MEILI_MASTER_KEY}
+  FLUXER_S3_ENDPOINT: http://fluxer-seaweedfs:8333
+  FLUXER_S3_PUBLIC_ENDPOINT: http://fluxer-seaweedfs:8333
+  FLUXER_S3_REGION: us-east-1
+  FLUXER_S3_ACCESS_KEY_ID: fluxer
+  FLUXER_S3_SECRET_ACCESS_KEY: ${FLUXER_S3_SECRET_KEY}
+  FLUXER_S3_FORCE_PATH_STYLE: "true"
+  FLUXER_S3_BUCKET_CDN: fluxer
+  FLUXER_S3_BUCKET_UPLOADS: fluxer-uploads
+  FLUXER_S3_BUCKET_REPORTS: fluxer-reports
+  FLUXER_S3_BUCKET_HARVESTS: fluxer-harvests
+  FLUXER_API_PRESIGNED_HARVEST_DOWNLOADS_ENABLED: "false"
+  # Calls need published TCP/UDP media ports, which an HTTP route cannot carry.
+  FLUXER_LIVEKIT_ENABLED: "false"
+  FLUXER_LIVEKIT_BUNDLED: "false"
+  FLUXER_LIVEKIT_TURN_SERVERS: "[]"
+  FLUXER_EMAIL_DELIVERY: ${FLUXER_EMAIL_DELIVERY:-}
+  FLUXER_EMAIL_FROM_EMAIL: ${FLUXER_EMAIL_FROM_EMAIL:-}
+  FLUXER_EMAIL_SMTP_HOST: ${FLUXER_EMAIL_SMTP_HOST:-}
+  FLUXER_EMAIL_SMTP_PORT: ${FLUXER_EMAIL_SMTP_PORT:-}
+  FLUXER_EMAIL_SMTP_USERNAME: ${FLUXER_EMAIL_SMTP_USERNAME:-}
+  FLUXER_EMAIL_SMTP_PASSWORD: ${FLUXER_EMAIL_SMTP_PASSWORD:-}
+  FLUXER_EMAIL_SMTP_TLS_MODE: ${FLUXER_EMAIL_SMTP_TLS_MODE:-}
+  FLUXER_SUDO_MODE_SECRET: ${FLUXER_SUDO_MODE_SECRET}
+  FLUXER_CONNECTION_INITIATION_SECRET: ${FLUXER_CONNECTION_INITIATION_SECRET}
+  FLUXER_PROFILE_PSEUDONYM_SECRET: ${FLUXER_PROFILE_PSEUDONYM_SECRET}
+  FLUXER_VAPID_EMAIL: admin@${FLUXER_DOMAIN}
+  FLUXER_PASSKEY_RP_ID: ${FLUXER_DOMAIN}
+  FLUXER_PASSKEY_ADDITIONAL_ALLOWED_ORIGINS: https://${FLUXER_DOMAIN}
+  FLUXER_GATEWAY_RPC_AUTH_TOKEN: ${FLUXER_GATEWAY_RPC_AUTH_TOKEN}
+  FLUXER_MEDIA_PROXY_SECRET_KEY: ${FLUXER_MEDIA_PROXY_SECRET_KEY}
+  FLUXER_MEDIA_PROXY_UPLOAD_RELAY_SECRET_BASE64: ${FLUXER_MEDIA_PROXY_UPLOAD_RELAY_SECRET_BASE64}
+  FLUXER_ADMIN_SECRET_KEY_BASE: ${FLUXER_ADMIN_SECRET_KEY_BASE}
+  FLUXER_ADMIN_OAUTH_CLIENT_SECRET: ${FLUXER_ADMIN_OAUTH_CLIENT_SECRET}
+
+x-fluxer-rust-env: &fluxer-rust-env
+  <<: *fluxer-env
+  TOKIO_WORKER_THREADS: "2"
+  MALLOC_ARENA_MAX: "2"
+
+x-fluxer-svc-healthcheck: &fluxer-svc-healthcheck
+  test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8090 && printf \"GET /_health HTTP/1.0\\r\\n\\r\\n\" >&3 && head -n 1 <&3 | grep -q \" 200 \"'"]
+  interval: 10s
+  timeout: 5s
+  retries: 30
+  start_period: 60s
+
+services:
+  fluxer:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/_health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      fluxer-api:
+        condition: service_healthy
+      fluxer-gateway:
+        condition: service_healthy
+
+  fluxer-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    command:
+      - postgres
+      - -c
+      - max_connections=150
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - jit=off
+      - -c
+      - shared_preload_libraries=pg_stat_statements
+    shm_size: 256mb
+    environment:
+      POSTGRES_DB: fluxer
+      POSTGRES_USER: fluxer
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - fluxer-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fluxer -d fluxer"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  fluxer-valkey:
+    image: valkey/valkey:9.1.4-alpine@sha256:56729e68bdda139cbd3f6a2538683dc3523325fc5711ea1a379938f1b37893f0
+    restart: unless-stopped
+    command: ["valkey-server", "--appendonly", "yes", "--appendfsync", "everysec", "--dir", "/data", "--save", "", "--maxmemory", "192mb", "--maxmemory-policy", "noeviction"]
+    volumes:
+      - fluxer-valkey:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  fluxer-nats:
+    image: nats:2.14.10-alpine@sha256:311da47e2f31c26e99c623cd78d486a1e8ab039c49b32652770bb91a4f70512e
+    restart: unless-stopped
+    environment:
+      GOMEMLIMIT: 200MiB
+    command:
+      - sh
+      - -c
+      - |
+        printf 'http_port: 8222\njetstream {\n  store_dir: /data\n  max_memory_store: 64MB\n  max_file_store: 10GB\n}\n' > /tmp/nats.conf
+        exec nats-server -c /tmp/nats.conf
+    volumes:
+      - fluxer-nats:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8222/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  fluxer-meilisearch:
+    image: getmeili/meilisearch:v1.53.3@sha256:cf9bb47e8ecf080f0b3ca33f58a2f9d1e382d5479d360541df05e1c49841e4a9
+    restart: unless-stopped
+    environment:
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_UPGRADE_DB: "true"
+      MEILI_MAX_INDEXING_MEMORY: 256mb
+      MEILI_MAX_INDEXING_THREADS: "2"
+      MEILI_LOG_LEVEL: WARN
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+    volumes:
+      - fluxer-meilisearch:/meili_data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  fluxer-seaweedfs:
+    image: chrislusf/seaweedfs:4.52@sha256:57877e32bb90073b37dc109b438ba66e84fd5ed9ced5f5c04f56444ef243ce59
+    restart: unless-stopped
+    environment:
+      GOMEMLIMIT: 1536MiB
+      WEED_MASTER_VOLUME_GROWTH_COPY_1: "1"
+      WEED_FILER_OPTIONS_MAX_FILE_NAME_LENGTH: "1024"
+    command: ["server", "-s3", "-s3.iam=false", "-dir=/data", "-master.telemetry=false", "-master.volumeSizeLimitMB=1024", "-master.garbageThreshold=0.1", "-volume.max=10000", "-s3.concurrentFileUploadLimit=5"]
+    volumes:
+      - fluxer-seaweedfs:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  # Creates the buckets and the S3 identity; uploads expire after a day until attached.
+  fluxer-seaweedfs-init:
+    image: chrislusf/seaweedfs:4.52@sha256:57877e32bb90073b37dc109b438ba66e84fd5ed9ced5f5c04f56444ef243ce59
+    restart: "no"
+    environment:
+      FLUXER_S3_SECRET_KEY: ${FLUXER_S3_SECRET_KEY}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        master=fluxer-seaweedfs:9333
+        buckets="fluxer fluxer-uploads fluxer-reports fluxer-harvests"
+        for attempt in $$(seq 1 60); do
+          if ! nc -z fluxer-seaweedfs 9333 2>/dev/null; then sleep 2; continue; fi
+          listed=$$(echo "s3.bucket.list" | timeout 10 weed shell -master=$$master 2>&1)
+          missing=""
+          for b in $$buckets; do
+            echo "$$listed" | grep -q "^[[:space:]]*$$b[[:space:]]" || missing="$$missing $$b"
+          done
+          if [ -z "$$missing" ]; then
+            if echo "s3.configure -user=fluxer -access_key=fluxer -secret_key=$$FLUXER_S3_SECRET_KEY -actions=Admin,Read,Write,List,Tagging -apply" | timeout 10 weed shell -master=$$master >/dev/null 2>&1 \
+              && echo "fs.configure -locationPrefix=/buckets/fluxer-uploads/ -ttl=1d -apply" | timeout 10 weed shell -master=$$master >/dev/null 2>&1; then
+              echo "buckets ready"
+              exit 0
+            fi
+            sleep 2
+            continue
+          fi
+          for b in $$missing; do
+            echo "s3.bucket.create -name $$b" | timeout 10 weed shell -master=$$master >/dev/null 2>&1
+          done
+          sleep 2
+        done
+        echo "seaweedfs-init could not prepare the buckets" >&2
+        exit 1
+    depends_on:
+      fluxer-seaweedfs:
+        condition: service_healthy
+
+  # Web push needs a P-256 key pair, generated once and kept in a volume.
+  fluxer-vapid:
+    image: ghcr.io/fluxerapp/fluxer-api:2026.1118.153948@sha256:3ebdf81de85b5956c9d03fdbb1ebe0d8d4c918b8b5c3ec182c47adf1df42cbc6
+    restart: "no"
+    user: "0:0"
+    command:
+      - node
+      - -e
+      - |
+        const fs = require('fs');
+        const f = '/keys/vapid.env';
+        if (!fs.existsSync(f)) {
+          const c = require('crypto').createECDH('prime256v1');
+          do { c.generateKeys(); } while (c.getPrivateKey().length !== 32);
+          const pub = c.getPublicKey().toString('base64url');
+          const priv = c.getPrivateKey().toString('base64url');
+          fs.writeFileSync(f + '.tmp', 'export FLUXER_VAPID_PUBLIC_KEY=' + pub + '\nexport FLUXER_VAPID_PRIVATE_KEY=' + priv + '\n', {mode: 0o644});
+          fs.renameSync(f + '.tmp', f);
+        }
+    volumes:
+      - fluxer-keys:/keys
+
+  fluxer-api:
+    image: ghcr.io/fluxerapp/fluxer-api:2026.1118.153948@sha256:3ebdf81de85b5956c9d03fdbb1ebe0d8d4c918b8b5c3ec182c47adf1df42cbc6
+    restart: unless-stopped
+    command: ["sh", "-c", ". /keys/vapid.env && exec node dist/AppEntrypoint.js"]
+    environment:
+      <<: *fluxer-env
+      FLUXER_API_PORT: "8080"
+      FLUXER_SETUP_TOKEN: ${FLUXER_SETUP_TOKEN}
+      NODE_OPTIONS: --max-old-space-size=1536
+      FLUXER_POSTGRES_MAX_CONNECTIONS: "25"
+      FLUXER_API_PRESIGNED_ATTACHMENT_UPLOADS_ENABLED: "true"
+      FLUXER_API_EMBEDDED_WORKER: "false"
+    volumes:
+      - fluxer-keys:/keys:ro
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080 && printf \"GET /_health HTTP/1.0\\r\\nHost: 127.0.0.1\\r\\n\\r\\n\" >&3 && head -n 1 <&3 | grep -q \" 200 \"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 90s
+    depends_on:
+      fluxer-db:
+        condition: service_healthy
+      fluxer-valkey:
+        condition: service_healthy
+      fluxer-nats:
+        condition: service_healthy
+      fluxer-meilisearch:
+        condition: service_healthy
+      fluxer-seaweedfs-init:
+        condition: service_completed_successfully
+      fluxer-vapid:
+        condition: service_completed_successfully
+      fluxer-gifs:
+        condition: service_healthy
+      fluxer-snowflakes:
+        condition: service_healthy
+      fluxer-messages:
+        condition: service_healthy
+      fluxer-users:
+        condition: service_healthy
+
+  fluxer-worker:
+    image: ghcr.io/fluxerapp/fluxer-api:2026.1118.153948@sha256:3ebdf81de85b5956c9d03fdbb1ebe0d8d4c918b8b5c3ec182c47adf1df42cbc6
+    restart: unless-stopped
+    command: ["sh", "-c", ". /keys/vapid.env && exec node dist/WorkerEntrypoint.js"]
+    environment:
+      <<: *fluxer-env
+      NODE_OPTIONS: --max-old-space-size=1408
+      FLUXER_API_WORKER_MODE: all_lanes
+      FLUXER_API_WORKER_ENABLE_CRON_SCHEDULER: "true"
+      FLUXER_POSTGRES_MAX_CONNECTIONS: "25"
+    volumes:
+      - fluxer-keys:/keys:ro
+    healthcheck:
+      test: ["CMD-SHELL", "find /tmp/fluxer-worker-heartbeat -newermt '-30 seconds' | grep -q ."]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    depends_on:
+      fluxer-db:
+        condition: service_healthy
+      fluxer-valkey:
+        condition: service_healthy
+      fluxer-nats:
+        condition: service_healthy
+      fluxer-seaweedfs-init:
+        condition: service_completed_successfully
+      fluxer-vapid:
+        condition: service_completed_successfully
+      fluxer-snowflakes:
+        condition: service_healthy
+      fluxer-messages:
+        condition: service_healthy
+      fluxer-users:
+        condition: service_healthy
+
+  fluxer-gateway:
+    image: ghcr.io/fluxerapp/fluxer-gateway:2026.1118.154012@sha256:e64973609bb8ae65d6ebf65d6539a2b77aa0fad251c882db91abe83e2e2b89de
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      <<: *fluxer-env
+      FLUXER_GATEWAY_PORT: "8080"
+      FLUXER_GATEWAY_MEDIA_PROXY_ENDPOINT: https://${FLUXER_DOMAIN}/media
+      FLUXER_GATEWAY_STATIC_CDN_ENDPOINT: https://${FLUXER_DOMAIN}
+      FLUXER_ERLANG_COOKIE: ${FLUXER_ERLANG_COOKIE}
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080 && printf \"GET /_health/ready HTTP/1.0\\r\\nHost: 127.0.0.1\\r\\n\\r\\n\" >&3 && head -n 1 <&3 | grep -q \" 200 \"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 90s
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+      fluxer-valkey:
+        condition: service_healthy
+
+  fluxer-media-proxy:
+    image: ghcr.io/fluxerapp/fluxer-media-proxy:2026.1118.154015@sha256:0f6cecde63ebc8a91502109e4c74c5feabf321a32037393490c8f63f2f19cedf
+    restart: unless-stopped
+    environment:
+      <<: *fluxer-env
+      FLUXER_MEDIA_PROXY_PORT: "8080"
+      TOKIO_WORKER_THREADS: "4"
+      FLUXER_MEDIA_PROXY_MODE: upload
+      FLUXER_MEDIA_PROXY_STORAGE_BACKEND: s3
+      FLUXER_MEDIA_PROXY_CORS_ALLOWED_ORIGINS: https://${FLUXER_DOMAIN}:443
+      FLUXER_MEDIA_PROXY_UPLOAD_RELAY_SPOOL_MAX_TOTAL_BYTES: "2147483648"
+      FLUXER_S3_READ_SIGNED: "true"
+    volumes:
+      - fluxer-media-proxy-tmp:/tmp
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/fluxer-media-proxy", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      fluxer-seaweedfs-init:
+        condition: service_completed_successfully
+      fluxer-nats:
+        condition: service_healthy
+
+  fluxer-push:
+    image: ghcr.io/fluxerapp/fluxer-push:2026.1118.154025@sha256:bcc98b724fb25174a2f1759c7603cd66ddcda01eda8ecbb2470bd385989280e2
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c", ". /keys/vapid.env && exec /usr/local/bin/fluxer-push"]
+    environment:
+      <<: *fluxer-rust-env
+    volumes:
+      - fluxer-keys:/keys:ro
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/fluxer-push", "healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+      fluxer-api:
+        condition: service_healthy
+      fluxer-vapid:
+        condition: service_completed_successfully
+
+  fluxer-static:
+    image: ghcr.io/fluxerapp/fluxer-static:2026.1118.154043@sha256:6c5e5e959a39085dc1091823015cefad614a9e0222e533f2291546a94fbcc6dd
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/avatars/0.png"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  fluxer-app-proxy:
+    image: ghcr.io/fluxerapp/fluxer-app-proxy-self-hosted:2026.1118.154009@sha256:1138d995b1e2bb06636562355e5d6169ab5d7e9251adffa60775d02733b340c0
+    restart: unless-stopped
+    environment:
+      TOKIO_WORKER_THREADS: "2"
+      FLUXER_APP_PROXY_PORT: "8080"
+      FLUXER_S3_BUCKET_UPLOADS: fluxer-uploads
+      DISCOVERY_UPSTREAM_URL: http://fluxer-api:8080/.well-known/fluxer
+      DISCOVERY_REFRESH_INTERVAL_MS: "5000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8080/_ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      fluxer-api:
+        condition: service_healthy
+
+  fluxer-snowflakes:
+    image: ghcr.io/fluxerapp/fluxer-snowflakes:2026.1118.154042@sha256:6b816644af357818afdde0328dd7dfc344b30250e3368f578f53c844d933c251
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      <<: *fluxer-rust-env
+      FLUXER_SVC_NAME: snowflakes
+      FLUXER_SVC_MODE: combined
+      FLUXER_SNOWFLAKES_WORKER_GUARD: "true"
+    healthcheck: *fluxer-svc-healthcheck
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+
+  fluxer-users:
+    image: ghcr.io/fluxerapp/fluxer-users:2026.1118.154049@sha256:c68ddd0ccf4737a1c5ef7cefb369bfae2e873c12e378f4c4a16208b3ab330946
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      <<: *fluxer-rust-env
+      FLUXER_SVC_NAME: users
+      FLUXER_SVC_MODE: combined
+      FLUXER_POSTGRES_MAX_CONNECTIONS: "20"
+    healthcheck: *fluxer-svc-healthcheck
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+      fluxer-db:
+        condition: service_healthy
+
+  fluxer-gifs:
+    image: ghcr.io/fluxerapp/fluxer-gifs:2026.1118.154017@sha256:5f4428f9fc6c4d3971fb32aeca046aecfd2415617c234f94b1d45a239bc89783
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      <<: *fluxer-rust-env
+      FLUXER_SVC_NAME: gifs
+      FLUXER_SVC_MODE: combined
+      FLUXER_GIFS_SHARD_CACHE_MAX_BYTES: "134217728"
+    healthcheck: *fluxer-svc-healthcheck
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+
+  fluxer-messages:
+    image: ghcr.io/fluxerapp/fluxer-messages:2026.1118.154015@sha256:1ac94c38a5f65e55e6619e2d4da7995c04da7acdf4d1ee7da3c94e5f5b053dd9
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      <<: *fluxer-rust-env
+      FLUXER_SVC_NAME: messages
+      FLUXER_SVC_MODE: combined
+      FLUXER_POSTGRES_MAX_CONNECTIONS: "20"
+    healthcheck: *fluxer-svc-healthcheck
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+      fluxer-db:
+        condition: service_healthy
+
+  fluxer-unfurl:
+    image: ghcr.io/fluxerapp/fluxer-unfurl:2026.1118.154023@sha256:74bee91698c67e60676e7e1a02bc002ecab78710bfc137961cc1b08cc64ba027
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      <<: *fluxer-rust-env
+      FLUXER_SVC_NAME: unfurl
+      FLUXER_SVC_MODE: combined
+      FLUXER_MEDIA_PROXY_ENDPOINT: http://fluxer-media-proxy:8080
+    healthcheck: *fluxer-svc-healthcheck
+    depends_on:
+      fluxer-nats:
+        condition: service_healthy
+
+  fluxer-admin:
+    image: ghcr.io/fluxerapp/fluxer-admin:2026.1118.153955@sha256:24f34e9e9080b20a27bff8db968f6f7debe63709a011273c1788f2e259830080
+    restart: unless-stopped
+    environment:
+      <<: *fluxer-rust-env
+      FLUXER_ADMIN_PORT: "8080"
+      FLUXER_ADMIN_BASE_PATH: /admin
+      FLUXER_API_ENDPOINT: http://fluxer-api:8080
+      FLUXER_STATIC_CDN_ENDPOINT: https://${FLUXER_DOMAIN}
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/8080 && printf \"GET /_health HTTP/1.0\\r\\n\\r\\n\" >&3 && head -n 1 <&3 | grep -q \" 200 \"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    depends_on:
+      fluxer-api:
+        condition: service_healthy
+
+volumes:
+  fluxer-db: {}
+  fluxer-valkey: {}
+  fluxer-nats: {}
+  fluxer-meilisearch: {}
+  fluxer-seaweedfs: {}
+  fluxer-media-proxy-tmp: {}
+  fluxer-keys: {}
