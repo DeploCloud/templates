@@ -1,0 +1,17 @@
+services:
+  filebrowser-quantum:
+    image: ghcr.io/gtsteffaniak/filebrowser:2.0.2-stable@sha256:de2b4c4d18485ea202ab2cdada5bd25d8f0b8ed071712c8216a67194c31285ae
+    restart: unless-stopped
+    # the image's /srv source is root-owned, so the uid 1000 default cannot write to the files volume
+    user: "0:0"
+    expose:
+      - 80
+    environment:
+      FILEBROWSER_ADMIN_PASSWORD: ${FILEBROWSER_ADMIN_PASSWORD}
+    volumes:
+      - filebrowser-quantum-files:/srv
+      - filebrowser-quantum-data:/home/filebrowser/data
+
+volumes:
+  filebrowser-quantum-files: {}
+  filebrowser-quantum-data: {}
