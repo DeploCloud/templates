@@ -1,0 +1,40 @@
+services:
+  bytebase:
+    image: bytebase/bytebase:3.24.1@sha256:cf445146f8948cb4ba6338e1e4d5182cdb1be422b139d86ff9c70e709c7992d5
+    restart: unless-stopped
+    init: true
+    command: ["--port", "8080", "--data", "/var/opt/bytebase", "--external-url", "${BYTEBASE_EXTERNAL_URL}"]
+    expose:
+      - 8080
+    environment:
+      PG_URL: postgresql://bytebase:${DB_PASSWORD}@bytebase-db:5432/bytebase
+    volumes:
+      - bytebase-data:/var/opt/bytebase
+    depends_on:
+      bytebase-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/healthz || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  bytebase-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bytebase
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: bytebase
+    volumes:
+      - bytebase-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bytebase -d bytebase"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  bytebase-data: {}
+  bytebase-db: {}

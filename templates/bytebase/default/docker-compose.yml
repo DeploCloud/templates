@@ -1,0 +1,19 @@
+services:
+  bytebase:
+    image: bytebase/bytebase:3.24.1@sha256:cf445146f8948cb4ba6338e1e4d5182cdb1be422b139d86ff9c70e709c7992d5
+    restart: unless-stopped
+    init: true
+    command: ["--port", "8080", "--data", "/var/opt/bytebase", "--external-url", "${BYTEBASE_EXTERNAL_URL}"]
+    expose:
+      - 8080
+    volumes:
+      - bytebase-data:/var/opt/bytebase
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/healthz || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  bytebase-data: {}
