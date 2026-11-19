@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Vector observability data pipeline receiving newline-delimited JSON events on a bearer-token protected HTTPS endpoint, with an editable vector.yaml to transform and route them to sinks.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Datadog",
+    "url": "https://github.com/vectordotdev"
+  },
+  "links": {
+    "github": "https://github.com/vectordotdev/vector",
+    "website": "https://vector.dev",
+    "docs": [
+      "https://vector.dev/docs/setup/installation/platforms/docker/",
+      "https://vector.dev/docs/reference/configuration/sources/http_server/",
+      "https://vector.dev/docs/reference/configuration/sinks/",
+      "https://vector.dev/docs/reference/vrl/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Out of the box Vector only prints received events to its container logs. Edit vector.yaml to add a real sink such as Loki, Elasticsearch or S3. Clients must send the generated ingest_token as an Authorization: Bearer header.",
+      "link": "https://vector.dev/docs/reference/configuration/sinks/"
+    }
+  ]
+}
