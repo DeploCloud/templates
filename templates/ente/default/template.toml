@@ -1,0 +1,71 @@
+[variables]
+api_domain = "api.${domain}"
+albums_domain = "albums.${domain}"
+db_password = "${password:32}"
+s3_access_key = "${hash:20}"
+s3_secret_key = "${password:40}"
+# Hex is valid base64: the padding makes these decode to the 32 and 64 byte keys museum expects
+encryption_key = "${hash:43}="
+hashing_key = "${hash:86}=="
+jwt_secret = "${hash:43}="
+
+[config]
+
+[[config.domains]]
+serviceName = "ente-web"
+port = 3_000
+host = "${domain}"
+primary = true
+
+# Presigned S3 URLs are path-style on the app domain, so the bucket name is the route
+[[config.domains]]
+serviceName = "ente-minio"
+port = 3_200
+host = "${domain}"
+path = "/b2-eu-cen"
+
+[[config.domains]]
+serviceName = "ente-museum"
+port = 8_080
+host = "${api_domain}"
+
+[[config.domains]]
+serviceName = "ente-web"
+port = 3_002
+host = "${albums_domain}"
+
+[config.env]
+ENTE_API_ORIGIN = "https://${api_domain}"
+DB_PASSWORD = "${db_password}"
+S3_ACCESS_KEY = "${s3_access_key}"
+S3_SECRET_KEY = "${s3_secret_key}"
+
+[[config.mounts]]
+filePath = "museum.yaml"
+content = """db:
+  host: ente-db
+  port: 5432
+  name: ente_db
+  user: pguser
+  password: "${db_password}"
+
+s3:
+  are_local_buckets: false
+  use_path_style_urls: true
+  b2-eu-cen:
+    key: "${s3_access_key}"
+    secret: "${s3_secret_key}"
+    endpoint: "${domain}"
+    region: eu-central-2
+    bucket: b2-eu-cen
+
+apps:
+  public-albums: "https://${albums_domain}"
+
+key:
+  encryption: "${encryption_key}"
+  hash: "${hashing_key}"
+
+jwt:
+  secret: "${jwt_secret}"
+"""
