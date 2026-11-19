@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source AI coding agent served as a password-protected web app, with persistent sessions, configuration and workspace.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Anomaly",
+    "url": "https://anoma.ly"
+  },
+  "links": {
+    "github": "https://github.com/anomalyco/opencode",
+    "website": "https://opencode.ai",
+    "docs": [
+      "https://opencode.ai/docs/web/",
+      "https://opencode.ai/docs/providers/",
+      "https://opencode.ai/docs/config/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in on the web UI with \"Use password\" and the generated OPENCODE_PASSWORD value, then connect a model provider (API key or subscription) before starting a session."
+    }
+  ]
+}
