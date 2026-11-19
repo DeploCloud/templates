@@ -1,0 +1,87 @@
+[variables]
+db_password = "${password:32}"
+pictrs_api_key = "${password:48}"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "lemmy-proxy"
+port = 8_536
+host = "${domain}"
+
+[config.env]
+LEMMY_DATABASE_URL = "postgres://lemmy:${db_password}@lemmy-db:5432/lemmy"
+POSTGRES_PASSWORD = "${db_password}"
+PICTRS__SERVER__API_KEY = "${pictrs_api_key}"
+LEMMY_UI_LEMMY_EXTERNAL_HOST = "${domain}"
+LEMMY_ADMIN_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "lemmy.hjson"
+content = """{
+  # https://join-lemmy.org/docs/administration/configuration.html
+  hostname: "${domain}"
+  pictrs: {
+    url: "http://lemmy-pictrs:8080/"
+    api_key: "${pictrs_api_key}"
+  }
+  # only read on the very first start
+  setup: {
+    admin_username: "admin"
+    admin_password: "${admin_password}"
+    site_name: "Lemmy"
+  }
+}
+"""
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    # Docker DNS, so restarted containers are picked up without reloading nginx
+    resolver 127.0.0.11 valid=5s;
+
+    set_real_ip_from 10.0.0.0/8;
+    set_real_ip_from 172.16.0.0/12;
+    set_real_ip_from 192.168.0.0/16;
+
+    # ActivityPub lookups and every non-GET request go to the backend, the rest to the UI
+    map "$request_method:$http_accept" $proxpass {
+        default "http://lemmy-ui:1234";
+        "~^(?:GET|HEAD):.*?application/(?:activity|ld)[+]json" "http://lemmy:8536";
+        "~^(?!(GET|HEAD)).*:" "http://lemmy:8536";
+    }
+
+    server {
+        set $lemmy_ui "lemmy-ui:1234";
+        set $lemmy "lemmy:8536";
+        listen 8536;
+        server_tokens off;
+        absolute_redirect off;
+
+        client_max_body_size 20M;
+
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        location / {
+            proxy_pass $proxpass;
+            rewrite ^(.+)/+$ $1 permanent;
+        }
+
+        location = /.well-known/security.txt {
+            proxy_pass "http://$lemmy_ui";
+        }
+
+        location ~ ^/(api|pictrs|feeds|nodeinfo|.well-known|version|sitemap.xml) {
+            proxy_pass "http://$lemmy";
+        }
+    }
+}
+"""
