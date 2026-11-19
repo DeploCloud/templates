@@ -1,0 +1,33 @@
+services:
+  czkawka-init:
+    image: jlesage/krokiet:v26.09.2@sha256:597a991b9750a44c72fec13ffd7c18f615fdb83757ae5e48a2f6d5c52fdae40a
+    restart: "no"
+    user: "0:0"
+    # /storage starts root-owned; the app and file manager run as uid 1000
+    entrypoint: ["chown", "1000:1000", "/storage"]
+    volumes:
+      - czkawka-storage:/storage
+
+  czkawka:
+    image: jlesage/krokiet:v26.09.2@sha256:597a991b9750a44c72fec13ffd7c18f615fdb83757ae5e48a2f6d5c52fdae40a
+    restart: unless-stopped
+    expose:
+      - 5800
+    environment:
+      TZ: ${TZ}
+      KEEP_APP_RUNNING: ${KEEP_APP_RUNNING}
+      WEB_AUTHENTICATION: ${WEB_AUTHENTICATION}
+      WEB_AUTHENTICATION_ALLOW_INSECURE: ${WEB_AUTHENTICATION_ALLOW_INSECURE}
+      WEB_AUTHENTICATION_USERNAME: ${WEB_AUTHENTICATION_USERNAME}
+      WEB_AUTHENTICATION_PASSWORD: ${WEB_AUTHENTICATION_PASSWORD}
+      WEB_FILE_MANAGER: ${WEB_FILE_MANAGER}
+    volumes:
+      - czkawka-config:/config
+      - czkawka-storage:/storage
+    depends_on:
+      czkawka-init:
+        condition: service_completed_successfully
+
+volumes:
+  czkawka-config: {}
+  czkawka-storage: {}
