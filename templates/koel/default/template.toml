@@ -1,0 +1,22 @@
+[variables]
+app_key = "${password:32}"
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "koel"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_KEY = "${app_key}"
+APP_URL = "https://${domain}"
+DB_DATABASE = "koel"
+DB_USERNAME = "koel"
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "koel.env"
+content = """APP_NAME=Koel
+"""
