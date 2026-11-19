@@ -1,0 +1,21 @@
+services:
+  opencode:
+    image: ghcr.io/anomalyco/opencode:2.3.2@sha256:be07cc4afd6d668d91b77accf1bc4338c87b39fbacc0a61666eb003781015f5a
+    restart: unless-stopped
+    command: ["serve", "--hostname", "0.0.0.0", "--port", "4096"]
+    working_dir: /workspace
+    expose:
+      - 4096
+    environment:
+      OPENCODE_PASSWORD: ${OPENCODE_PASSWORD}
+    volumes:
+      - opencode-data:/root/.local/share/opencode
+      - opencode-config:/root/.config/opencode
+      - opencode-state:/root/.local/state/opencode
+      - opencode-workspace:/workspace
+
+volumes:
+  opencode-data: {}
+  opencode-config: {}
+  opencode-state: {}
+  opencode-workspace: {}
