@@ -1,0 +1,22 @@
+services:
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:v1.156.0@sha256:da8a90ac0912f16589be2b96a6441a2fca4bca415c83783d972d92e3b5b66970
+    restart: unless-stopped
+    expose:
+      - 8428
+    command:
+      - --storageDataPath=/storage
+      - --httpListenAddr=:8428
+      - --retentionPeriod=${VM_RETENTION_PERIOD}
+      - --httpAuth.username=${VM_AUTH_USERNAME}
+      - --httpAuth.password=${VM_AUTH_PASSWORD}
+    volumes:
+      - victoriametrics-data:/storage
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8428/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  victoriametrics-data: {}

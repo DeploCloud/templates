@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node VictoriaMetrics time series database with Prometheus-compatible ingestion and querying, the vmui web interface and persistent storage.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "VictoriaMetrics",
+    "url": "https://victoriametrics.com/"
+  },
+  "links": {
+    "github": "https://github.com/VictoriaMetrics/VictoriaMetrics",
+    "website": "https://victoriametrics.com/",
+    "docs": [
+      "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/",
+      "https://docs.victoriametrics.com/victoriametrics/quick-start/",
+      "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/#security"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Every endpoint except the health checks, including vmui and the write API, requires HTTP basic auth with VM_AUTH_USERNAME and VM_AUTH_PASSWORD from the environment. Configure the same credentials in Prometheus remote_write, vmagent or Grafana.",
+      "link": "https://docs.victoriametrics.com/victoriametrics/single-server-victoriametrics/#security"
+    }
+  ]
+}
