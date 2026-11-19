@@ -1,0 +1,21 @@
+{
+  "name": "Default",
+  "shortDescription": "Dynamic DNS updater with a web UI that keeps A and AAAA records current on Cloudflare, Aliyun, DNSPod, GoDaddy, Namecheap and many other providers.",
+  "category": "networking",
+  "developedBy": {
+    "label": "jeessy2",
+    "url": "https://github.com/jeessy2"
+  },
+  "links": {
+    "github": "https://github.com/jeessy2/ddns-go",
+    "docs": [
+      "https://github.com/jeessy2/ddns-go/blob/master/README_EN.md#use-in-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor of the web UI sets the admin username and password. Do it within 30 minutes of the first start, otherwise restart the app to reopen the setup window."
+    }
+  ]
+}
