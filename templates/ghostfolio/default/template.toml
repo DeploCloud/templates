@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ghostfolio"
+port = 3_333
+host = "${domain}"
+
+[config.env]
+POSTGRES_DB = "ghostfolio"
+POSTGRES_USER = "ghostfolio"
+POSTGRES_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+ACCESS_TOKEN_SALT = "${hash:32}"
+JWT_SECRET_KEY = "${hash:64}"
+ROOT_URL = "https://${domain}"
+TRUST_PROXY = "1"

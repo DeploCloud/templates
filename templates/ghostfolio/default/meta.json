@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source wealth management app to track stocks, ETFs and crypto across accounts, backed by PostgreSQL and Redis.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Ghostfolio",
+    "url": "https://ghostfol.io"
+  },
+  "links": {
+    "github": "https://github.com/ghostfolio/ghostfolio",
+    "website": "https://ghostfol.io",
+    "docs": [
+      "https://github.com/ghostfolio/ghostfolio#self-hosting",
+      "https://ghostfol.io/en/faq/self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first user created via Get Started gets the ADMIN role. Sign-in uses a security token shown once at sign-up, so store it safely.",
+      "link": "https://github.com/ghostfolio/ghostfolio#setup"
+    }
+  ]
+}
