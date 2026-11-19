@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Git-powered wiki that stores every page as a file in a Git repository, with a web editor, history and Markdown support.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Gollum",
+    "url": "https://github.com/gollum"
+  },
+  "links": {
+    "github": "https://github.com/gollum/gollum",
+    "docs": [
+      "https://github.com/gollum/gollum/wiki",
+      "https://github.com/gollum/gollum/wiki/Gollum-via-Docker",
+      "https://github.com/gollum/gollum#configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Gollum has no user accounts, so this template protects the whole wiki with HTTP basic auth. Sign in as admin with the generated GOLLUM_PASSWORD from the environment settings."
+    }
+  ]
+}
