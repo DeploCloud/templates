@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Jupyter Notebook 7 web interface with a Python kernel, terminal, token login and a persistent home directory.",
+  "category": "development",
+  "developedBy": {
+    "label": "Project Jupyter",
+    "url": "https://jupyter.org/"
+  },
+  "links": {
+    "github": "https://github.com/jupyter/notebook",
+    "website": "https://jupyter.org/",
+    "docs": [
+      "https://jupyter-notebook.readthedocs.io/en/stable/",
+      "https://jupyter-docker-stacks.readthedocs.io/en/latest/using/running.html",
+      "https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the token stored in the JUPYTER_TOKEN environment variable. Anyone holding it can run arbitrary code and open a terminal inside the container.",
+      "link": "https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html"
+    }
+  ]
+}
