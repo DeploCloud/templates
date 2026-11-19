@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "go2rtc"
+port = 1_984
+host = "${domain}"
+
+[config.env]
+GO2RTC_USERNAME = "admin"
+GO2RTC_PASSWORD = "${admin_password}"
+TZ = "UTC"
