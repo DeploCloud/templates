@@ -1,0 +1,16 @@
+[variables]
+root_password = "${password:32}"
+minio_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "milvus"
+port = 19_530
+host = "${domain}"
+
+[config.env]
+MILVUS_ROOT_PASSWORD = "${root_password}"
+MINIO_ROOT_USER = "milvus"
+MINIO_ROOT_PASSWORD = "${minio_password}"
