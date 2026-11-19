@@ -1,0 +1,6 @@
+services:
+  drawnix:
+    image: pubuzhixing/drawnix:v0.4.1@sha256:1faa5576e4bb70fc6d78a0f0d9b406dd4db9f966a96c53d62ed05b7b02f31c43
+    restart: unless-stopped
+    expose:
+      - 80

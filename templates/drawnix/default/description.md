@@ -1,0 +1,1 @@
+Drawnix is an open-source whiteboard for mind maps, flowcharts and freehand drawing, with Mermaid and Markdown import. This template serves the official static web build over HTTPS. The server stores nothing, so no volume is needed: the board auto-saves in each browser's own storage (IndexedDB) and can be saved as a .drawnix file or exported as SVG, PNG or JPG.
