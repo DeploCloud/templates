@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Prefect workflow orchestration server with its web UI and API, storing flow runs, deployments and logs in a persistent SQLite database.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Prefect",
+    "url": "https://www.prefect.io/"
+  },
+  "links": {
+    "github": "https://github.com/PrefectHQ/prefect",
+    "website": "https://www.prefect.io/",
+    "docs": [
+      "https://www.prefect.io/docs/v3/how-to-guides/self-hosted/server-cli",
+      "https://www.prefect.io/docs/v3/advanced/security-settings"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The UI and API are protected by basic auth. On first load, enter the full PREFECT_SERVER_API_AUTH_STRING value (admin:password) from the environment variables.",
+      "link": "https://www.prefect.io/docs/v3/advanced/security-settings"
+    },
+    {
+      "type": "warning",
+      "message": "The server only orchestrates; flows run on your own workers. Point them at it with PREFECT_API_URL set to https://<your domain>/api and PREFECT_API_AUTH_STRING set to the same auth string."
+    }
+  ]
+}
