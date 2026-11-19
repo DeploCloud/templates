@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "it-tools"
+port = 80
+host = "${domain}"
