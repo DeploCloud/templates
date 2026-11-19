@@ -1,0 +1,77 @@
+services:
+  automatisch:
+    image: automatischio/automatisch:0.15.0@sha256:3bace7a12d5fb3f5b1305a6a52232270e0e0abd8465a8b78baacb07f6ea89594
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment: &automatisch-env
+      APP_ENV: production
+      PORT: "3000"
+      API_URL: ${API_URL}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      WEBHOOK_SECRET_KEY: ${WEBHOOK_SECRET_KEY}
+      APP_SECRET_KEY: ${APP_SECRET_KEY}
+      POSTGRES_HOST: automatisch-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DATABASE: ${POSTGRES_DATABASE}
+      POSTGRES_USERNAME: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: automatisch-redis
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      DISABLE_SEED_USER: ${DISABLE_SEED_USER}
+      TELEMETRY_ENABLED: ${TELEMETRY_ENABLED}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/healthcheck').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      automatisch-db:
+        condition: service_healthy
+      automatisch-redis:
+        condition: service_healthy
+
+  automatisch-worker:
+    image: automatischio/automatisch:0.15.0@sha256:3bace7a12d5fb3f5b1305a6a52232270e0e0abd8465a8b78baacb07f6ea89594
+    restart: unless-stopped
+    environment:
+      <<: *automatisch-env
+      WORKER: "true"
+    depends_on:
+      automatisch:
+        condition: service_healthy
+
+  automatisch-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - automatisch-db:/var/lib/postgresql
+
+  automatisch-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - automatisch-redis:/data
+
+volumes:
+  automatisch-db: {}
+  automatisch-redis: {}

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source workflow automation that connects apps and services through triggers and actions, with a background worker, PostgreSQL and Redis.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Automatisch",
+    "url": "https://github.com/automatisch"
+  },
+  "links": {
+    "github": "https://github.com/automatisch/automatisch",
+    "website": "https://automatisch.io",
+    "docs": [
+      "https://automatisch.io/docs/guide/installation",
+      "https://automatisch.io/docs/advanced/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor is taken to the installation page and creates the admin account. ENCRYPTION_KEY and WEBHOOK_SECRET_KEY must never change after the first start, or existing connections and webhooks stop working.",
+      "link": "https://automatisch.io/docs/guide/installation"
+    }
+  ]
+}
