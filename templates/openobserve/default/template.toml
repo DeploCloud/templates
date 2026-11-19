@@ -1,0 +1,17 @@
+[variables]
+# OpenObserve rejects a root password without lower, upper, digit and special characters
+root_password = "${password:32}Aa1-"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openobserve"
+port = 5_080
+host = "${domain}"
+
+[config.env]
+ZO_ROOT_USER_EMAIL = "admin@example.com"
+ZO_ROOT_USER_PASSWORD = "${root_password}"
+ZO_DATA_DIR = "/data"
+ZO_WEB_URL = "https://${domain}"

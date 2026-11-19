@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node observability platform for logs, metrics and traces with SQL and PromQL search, dashboards and alerts, storing data locally.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "OpenObserve",
+    "url": "https://github.com/openobserve"
+  },
+  "links": {
+    "github": "https://github.com/openobserve/openobserve",
+    "website": "https://openobserve.ai",
+    "docs": [
+      "https://openobserve.ai/docs/getting-started/",
+      "https://openobserve.ai/docs/administration/configuration/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin@example.com with the generated ZO_ROOT_USER_PASSWORD from the environment. Both values are read only on the first start, so change them before the first deploy if you want different credentials.",
+      "link": "https://openobserve.ai/docs/administration/configuration/environment-variables/"
+    }
+  ]
+}
