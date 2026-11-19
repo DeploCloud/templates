@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "To-do list and time tracker with timeboxing, focus mode and Jira, GitLab and GitHub integrations, served as a browser web app.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Johannes Millan",
+    "url": "https://github.com/johannesjo"
+  },
+  "links": {
+    "github": "https://github.com/super-productivity/super-productivity",
+    "website": "https://super-productivity.com/",
+    "docs": [
+      "https://github.com/super-productivity/super-productivity/wiki/2.13-Run-with-Docker",
+      "https://github.com/super-productivity/super-productivity/wiki/2.09-Configure-Sync-Backend"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Tasks are stored only in each browser's local storage, not on the server. Configure a sync provider in the app to share or back up your data; the sync server must allow this domain as a CORS origin.",
+      "link": "https://github.com/super-productivity/super-productivity/wiki/2.09-Configure-Sync-Backend"
+    }
+  ]
+}
