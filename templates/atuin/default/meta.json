@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Atuin sync server that stores end-to-end encrypted shell history from your machines in PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Atuin",
+    "url": "https://github.com/atuinsh"
+  },
+  "links": {
+    "github": "https://github.com/atuinsh/atuin",
+    "website": "https://atuin.sh",
+    "docs": [
+      "https://docs.atuin.sh/latest/self-hosting/server-setup/",
+      "https://docs.atuin.sh/latest/self-hosting/docker/",
+      "https://docs.atuin.sh/latest/self-hosting/usage/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open so you can create your account with the atuin client. Anyone who can reach the server can register until you set ATUIN_OPEN_REGISTRATION to false and redeploy; accounts can still be created afterwards with atuin-server admin user create in the server container.",
+      "link": "https://docs.atuin.sh/latest/self-hosting/server-setup/#user-management"
+    }
+  ]
+}
