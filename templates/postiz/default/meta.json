@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted social media scheduler with a Temporal workflow engine, PostgreSQL, Redis and local media storage.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Gitroom",
+    "url": "https://github.com/gitroomhq"
+  },
+  "links": {
+    "github": "https://github.com/gitroomhq/postiz-app",
+    "website": "https://postiz.com",
+    "docs": [
+      "https://docs.postiz.com/installation/docker-compose",
+      "https://docs.postiz.com/configuration/reference",
+      "https://docs.postiz.com/providers/overview"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Only the first account can sign up. Set DISABLE_REGISTRATION to false and redeploy to allow more sign-ups, including teammates you invite."
+    },
+    {
+      "type": "warning",
+      "message": "Each social network needs your own developer app. Add its keys as environment variables (for example LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET) and redeploy before connecting a channel.",
+      "link": "https://docs.postiz.com/providers/overview"
+    }
+  ]
+}
