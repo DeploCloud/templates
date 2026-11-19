@@ -1,0 +1,20 @@
+services:
+  budibase:
+    image: budibase/budibase:v4.0.1@sha256:aa6254657857973841f5ada454dca7f05d518f0c8a48ba73b056556fd4728343
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      PLATFORM_URL: ${PLATFORM_URL}
+    volumes:
+      - budibase-data:/data
+
+volumes:
+  budibase-data: {}
