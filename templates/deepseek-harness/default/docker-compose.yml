@@ -1,0 +1,17 @@
+services:
+  deepseek-harness:
+    image: ghcr.io/meixu6693/dsh:0.2.2-rc.5@sha256:d3555a5fcf9cdb98a84e17b7c7a1a9ad8eba1fec78e4acb20ddfac63629d1f30
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DSH_PASSWORD: ${DSH_PASSWORD}
+      PUBLIC_URL: ${PUBLIC_URL}
+      ALLOWED_CLIENTS: ${ALLOWED_CLIENTS}
+    volumes:
+      - dsh-data:/data
+      - dsh-workspace:/workspace
+
+volumes:
+  dsh-data: {}
+  dsh-workspace: {}

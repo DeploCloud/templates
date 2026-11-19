@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-driven AI coding agent with a password-protected Web UI and persistent sessions, settings and workspace.",
+  "category": "ai",
+  "developedBy": {
+    "label": "DeepSeek AI",
+    "url": "https://deepseek.com"
+  },
+  "links": {
+    "github": "https://github.com/deepseek-ai/deepseek-harness",
+    "website": "https://deepseek.com/harness",
+    "docs": [
+      "https://deepseek-harness.github.io/deepseek-harness/en/guide/public-deployments",
+      "https://deepseek-harness.github.io/deepseek-harness/en/guide/providers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as user dsh with DSH_PASSWORD from the template environment, then add a DeepSeek or other model API key under Settings - Models before starting a session."
+    },
+    {
+      "type": "warning",
+      "message": "DeepSeek Harness is a developer preview with compatibility-breaking changes between releases. The agent can run commands and modify files in the workspace volume; share this instance only with trusted users."
+    }
+  ]
+}

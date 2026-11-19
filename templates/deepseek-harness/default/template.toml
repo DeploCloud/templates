@@ -1,0 +1,15 @@
+[variables]
+dsh_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "deepseek-harness"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DSH_PASSWORD = "${dsh_password}"
+PUBLIC_URL = "https://${domain}"
+ALLOWED_CLIENTS = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7,${domain}"
