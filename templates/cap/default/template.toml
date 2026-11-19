@@ -1,0 +1,35 @@
+[variables]
+mysql_password = "${password:32}"
+mysql_root_password = "${password:32}"
+s3_access_key = "${hash:20}"
+s3_secret_key = "${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cap"
+port = 3_000
+host = "${domain}"
+primary = true
+
+# Presigned S3 URLs are path-style on the app domain: this path must equal the bucket name
+[[config.domains]]
+serviceName = "cap-minio"
+port = 9_000
+host = "${domain}"
+path = "/cap-videos"
+
+[config.env]
+CAP_URL = "https://${domain}"
+MYSQL_PASSWORD = "${mysql_password}"
+MYSQL_ROOT_PASSWORD = "${mysql_root_password}"
+NEXTAUTH_SECRET = "${hash:64}"
+DATABASE_ENCRYPTION_KEY = "${hash:64}"
+MEDIA_SERVER_WEBHOOK_SECRET = "${hash:64}"
+S3_ACCESS_KEY = "${s3_access_key}"
+S3_SECRET_KEY = "${s3_secret_key}"
+RESEND_API_KEY = ""
+RESEND_FROM_DOMAIN = ""
+CAP_ALLOWED_SIGNUP_DOMAINS = ""
+CAP_CHROME_EXTENSION_ID = "fefjaffcodfiogbbngmjkcjpbpclbdcp"

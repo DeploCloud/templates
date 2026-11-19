@@ -1,0 +1,107 @@
+services:
+  cap:
+    image: ghcr.io/capsoftware/cap-web:latest@sha256:b93679f183fa5ce417e03d0b59dd9bdf094d5491cacf291dbada3fc024b82718
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DATABASE_URL: mysql://cap:${MYSQL_PASSWORD}@cap-db:3306/cap
+      WEB_URL: ${CAP_URL}
+      NEXTAUTH_URL: ${CAP_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      DATABASE_ENCRYPTION_KEY: ${DATABASE_ENCRYPTION_KEY}
+      MEDIA_SERVER_WEBHOOK_SECRET: ${MEDIA_SERVER_WEBHOOK_SECRET}
+      MEDIA_SERVER_URL: http://cap-media-server:3456
+      MEDIA_SERVER_WEBHOOK_URL: http://cap:3000
+      CAP_AWS_ACCESS_KEY: ${S3_ACCESS_KEY}
+      CAP_AWS_SECRET_KEY: ${S3_SECRET_KEY}
+      CAP_AWS_BUCKET: cap-videos
+      CAP_AWS_REGION: us-east-1
+      S3_PUBLIC_ENDPOINT: ${CAP_URL}
+      S3_INTERNAL_ENDPOINT: http://cap-minio:9000
+      S3_PATH_STYLE: "true"
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_DOMAIN: ${RESEND_FROM_DOMAIN}
+      CAP_ALLOWED_SIGNUP_DOMAINS: ${CAP_ALLOWED_SIGNUP_DOMAINS}
+      CAP_CHROME_EXTENSION_ID: ${CAP_CHROME_EXTENSION_ID}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      cap-db:
+        condition: service_healthy
+      cap-minio:
+        condition: service_healthy
+      cap-minio-setup:
+        condition: service_completed_successfully
+
+  cap-media-server:
+    image: ghcr.io/capsoftware/cap-media-server:latest@sha256:f510bd041e7cc3cb4fcb2f89bef76967639f4e6af714553d439927f818ac76d8
+    restart: unless-stopped
+    expose:
+      - 3456
+    environment:
+      PORT: 3456
+      MEDIA_SERVER_WEBHOOK_SECRET: ${MEDIA_SERVER_WEBHOOK_SECRET}
+
+  cap-db:
+    image: mysql:8.0.46@sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+    restart: unless-stopped
+    command:
+      - --max_connections=1000
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: cap
+      MYSQL_USER: cap
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - cap-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -u cap -p"$${MYSQL_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  cap-minio:
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z@sha256:b6bfe7239bfc83fb90d31612d9704d86039dd714f7904b3f1ad68f211e602372
+    restart: unless-stopped
+    command: ["server", "/data"]
+    expose:
+      - 9000
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    volumes:
+      - cap-minio:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+
+  cap-minio-setup:
+    image: pgsty/mc:RELEASE.2026-11-12T00-00-00Z@sha256:b532278b7a3747dbab6fe45eebb40a653efa704e6758e24e9d9ec54fc96c1800
+    restart: "no"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - mc alias set capminio http://cap-minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}" && mc mb --ignore-existing "capminio/$${S3_BUCKET}"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+      S3_BUCKET: cap-videos
+    depends_on:
+      cap-minio:
+        condition: service_healthy
+
+volumes:
+  cap-db: {}
+  cap-minio: {}
