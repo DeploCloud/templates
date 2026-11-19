@@ -1,0 +1,19 @@
+services:
+  kutt:
+    image: kutt/kutt:v3.2.6@sha256:fa3d24a89b04e0feb542ed7d3c77993d58dbcc1406e5291a369595d543886146
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - kutt-data:/var/lib/kutt
+      - kutt-custom:/kutt/custom
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      DEFAULT_DOMAIN: ${DEFAULT_DOMAIN}
+      DB_CLIENT: better-sqlite3
+      DB_FILENAME: /var/lib/kutt/data.sqlite
+      TRUST_PROXY: "true"
+
+volumes:
+  kutt-data: {}
+  kutt-custom: {}
