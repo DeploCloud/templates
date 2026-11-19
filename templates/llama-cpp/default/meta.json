@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "llama-server running GGUF language models on CPU, with the built-in chat web UI and an OpenAI compatible API protected by an API key.",
+  "category": "ai",
+  "developedBy": {
+    "label": "ggml-org",
+    "url": "https://github.com/ggml-org"
+  },
+  "links": {
+    "github": "https://github.com/ggml-org/llama.cpp",
+    "website": "https://llama.app",
+    "docs": [
+      "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md",
+      "https://github.com/ggml-org/llama.cpp/blob/master/docs/docker.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The API is protected by the generated LLAMA_API_KEY. Copy it from the environment and enter it when the web UI asks for it; API clients send it as a Bearer token.",
+      "link": "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md"
+    },
+    {
+      "type": "info",
+      "message": "On first start the server downloads the model set in LLAMA_ARG_HF_REPO from Hugging Face (Gemma 3 1B, about 800 MB, by default) before it becomes healthy. Change it to any GGUF repository; larger models need more RAM."
+    }
+  ]
+}
