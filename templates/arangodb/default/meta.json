@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Multi-model document, graph and key-value database with the AQL query language, a built-in web interface and persistent storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "Arango",
+    "url": "https://arango.ai"
+  },
+  "links": {
+    "github": "https://github.com/arangodb/arangodb",
+    "website": "https://arango.ai",
+    "docs": [
+      "https://docs.arango.ai/arangodb/3.12/operations/installation/docker/",
+      "https://docs.arango.ai/arangodb/3.12/components/web-interface/",
+      "https://docs.arango.ai/arangodb/3.12/features/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web interface as root with the generated ARANGO_ROOT_PASSWORD from the environment variables. The root user is created only on the first start, so changing the variable later has no effect.",
+      "link": "https://docs.arango.ai/arangodb/3.12/operations/installation/docker/"
+    },
+    {
+      "type": "info",
+      "message": "Without a license key ArangoDB runs as the Community Edition under the ArangoDB Community License: commercial production use needs an Enterprise license, and a dataset over 100 GiB turns read-only and then shuts the server down.",
+      "link": "https://docs.arango.ai/arangodb/3.12/features/"
+    }
+  ]
+}

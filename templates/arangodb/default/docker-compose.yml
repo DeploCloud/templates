@@ -1,0 +1,21 @@
+services:
+  arangodb:
+    image: arangodb:3.12.13@sha256:e48adfc58986a10e0316aa23ccae95ca580d880a41c76a8f0df68f9c29b470f2
+    restart: unless-stopped
+    expose:
+      - 8529
+    environment:
+      ARANGO_ROOT_PASSWORD: ${ARANGO_ROOT_PASSWORD}
+    volumes:
+      - arangodb-data:/var/lib/arangodb3
+      - arangodb-apps:/var/lib/arangodb3-apps
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8529/_admin/server/availability"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  arangodb-data: {}
+  arangodb-apps: {}
