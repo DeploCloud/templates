@@ -1,0 +1,14 @@
+services:
+  httpbin:
+    image: ghcr.io/psf/httpbin:0.10.4@sha256:c0a0cc396b38d7083a3664076e6f728649e2b2a42ed3d493dbf9266ca55c461f
+    restart: unless-stopped
+    # the image's gunicorn rejects its bundled gevent, so use the stdlib thread worker
+    command: ["/opt/httpbin/bin/gunicorn", "-b", "0.0.0.0:8080", "-k", "gthread", "--threads", "16", "httpbin:app"]
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/status/200')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
