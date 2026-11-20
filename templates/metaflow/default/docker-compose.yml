@@ -1,0 +1,68 @@
+services:
+  metaflow:
+    image: public.ecr.aws/outerbounds/metaflow_ui:v1.3.14@sha256:34eed8b806ef097c256cc1f107589a7d2187956b8fd585cf1396aa27eb7ac2bd
+    restart: unless-stopped
+    expose:
+      - 3000
+    depends_on:
+      - metaflow-api
+
+  metaflow-api:
+    image: public.ecr.aws/outerbounds/metaflow_metadata_service:2.6.1@sha256:dfcd512a217aa38d7fc2ab4672d816c6f5643c27ab55e0a332102b16dfa603dc
+    restart: unless-stopped
+    command: ["/opt/latest/bin/python3", "-m", "services.ui_backend_service.ui_server"]
+    expose:
+      - 8083
+    environment:
+      MF_METADATA_DB_HOST: metaflow-db
+      MF_METADATA_DB_PORT: "5432"
+      MF_METADATA_DB_USER: ${DB_USER}
+      MF_METADATA_DB_PSWD: ${DB_PASSWORD}
+      MF_METADATA_DB_NAME: ${DB_NAME}
+      PATH_PREFIX: /api
+      UI_ENABLED: "0"
+    depends_on:
+      metaflow-metadata:
+        condition: service_healthy
+
+  metaflow-metadata:
+    image: public.ecr.aws/outerbounds/metaflow_metadata_service:2.6.1@sha256:dfcd512a217aa38d7fc2ab4672d816c6f5643c27ab55e0a332102b16dfa603dc
+    restart: unless-stopped
+    # Apply pending schema migrations, then start the metadata service.
+    command: ["sh", "-c", "/opt/latest/bin/python3 /root/run_goose.py && exec /opt/latest/bin/python3 -m services.metadata_service.server"]
+    expose:
+      - 8080
+    environment:
+      MF_METADATA_DB_HOST: metaflow-db
+      MF_METADATA_DB_PORT: "5432"
+      MF_METADATA_DB_USER: ${DB_USER}
+      MF_METADATA_DB_PSWD: ${DB_PASSWORD}
+      MF_METADATA_DB_NAME: ${DB_NAME}
+      PATH_PREFIX: /metadata-service
+    healthcheck:
+      test: ["CMD", "/opt/latest/bin/python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/metadata-service/ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      metaflow-db:
+        condition: service_healthy
+
+  metaflow-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - metaflow-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  metaflow-db: {}
