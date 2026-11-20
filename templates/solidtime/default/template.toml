@@ -1,0 +1,28 @@
+[variables]
+db_password = "${password:32}"
+app_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "solidtime"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_KEY = "${app_key}"
+APP_ENABLE_REGISTRATION = "off"
+SUPER_ADMINS = ""
+TRUSTED_PROXIES = "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+DB_DATABASE = "solidtime"
+DB_USERNAME = "solidtime"
+DB_PASSWORD = "${db_password}"
+MAIL_MAILER = "log"
+MAIL_HOST = ""
+MAIL_PORT = "587"
+MAIL_ENCRYPTION = "tls"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_FROM_ADDRESS = "no-reply@${domain}"
