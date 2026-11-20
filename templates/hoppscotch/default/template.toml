@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+encryption_key = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hoppscotch"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DATA_ENCRYPTION_KEY = "${encryption_key}"
+WHITELISTED_ORIGINS = "https://${domain},app://hoppscotch"
+TRUST_PROXY = "true"
+VITE_BASE_URL = "https://${domain}"
+VITE_SHORTCODE_BASE_URL = "https://${domain}"
+VITE_ADMIN_URL = "https://${domain}/admin"
+VITE_BACKEND_GQL_URL = "https://${domain}/backend/graphql"
+VITE_BACKEND_WS_URL = "wss://${domain}/backend/graphql"
+VITE_BACKEND_API_URL = "https://${domain}/backend/v1"

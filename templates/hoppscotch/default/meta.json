@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source API development platform for REST, GraphQL and WebSocket requests, with team workspaces and an admin dashboard, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Hoppscotch",
+    "url": "https://github.com/hoppscotch"
+  },
+  "links": {
+    "github": "https://github.com/hoppscotch/hoppscotch",
+    "website": "https://hoppscotch.io",
+    "docs": [
+      "https://docs.hoppscotch.io/documentation/self-host/community-edition/install-and-build",
+      "https://docs.hoppscotch.io/documentation/self-host/community-edition/setup-and-access",
+      "https://docs.hoppscotch.io/documentation/self-host/community-edition/prerequisites"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /admin right after deploying: the first account to sign in there becomes the administrator. The onboarding needs at least one sign-in method, either GitHub, Google or Microsoft OAuth credentials, or an SMTP server for email magic links. Register OAuth apps with the callback URL https://<your-domain>/backend/v1/auth/<provider>/callback (github, google or microsoft).",
+      "link": "https://docs.hoppscotch.io/documentation/self-host/community-edition/prerequisites"
+    }
+  ]
+}
