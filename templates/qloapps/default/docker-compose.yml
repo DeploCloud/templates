@@ -1,0 +1,23 @@
+services:
+  qloapps:
+    image: webkul/qloapps_docker:1.8.0@sha256:11bf1a3fbff1669d25768a1fc98c251b86e8ce5102d6418b464acc4478d18222
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      USER_PASSWORD: ${USER_PASSWORD}
+    volumes:
+      - qloapps-app:/home/qloapps/www/QloApps
+      - qloapps-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping --silent && curl -sS -o /dev/null http://127.0.0.1/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+volumes:
+  qloapps-app: {}
+  qloapps-mysql: {}
