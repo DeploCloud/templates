@@ -1,0 +1,26 @@
+services:
+  homebox:
+    image: ghcr.io/sysadminsmedia/homebox:0.27.1@sha256:9d0b64776c694f018c0ca06faf52105a33ca376024f46bb58e6ab0e2b728bb61
+    restart: unless-stopped
+    expose:
+      - 7745
+    environment:
+      HBOX_LOG_LEVEL: info
+      HBOX_LOG_FORMAT: text
+      HBOX_WEB_MAX_UPLOAD_SIZE: "${HBOX_WEB_MAX_UPLOAD_SIZE}"
+      HBOX_OPTIONS_ALLOW_ANALYTICS: "false"
+      HBOX_OPTIONS_ALLOW_REGISTRATION: "${HBOX_OPTIONS_ALLOW_REGISTRATION}"
+      HBOX_OPTIONS_TRUST_PROXY: "true"
+      HBOX_OPTIONS_HOSTNAME: "${HBOX_OPTIONS_HOSTNAME}"
+      HBOX_AUTH_API_KEY_PEPPER: "${HBOX_AUTH_API_KEY_PEPPER}"
+    volumes:
+      - homebox-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "-O", "/dev/null", "http://localhost:7745/api/v1/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  homebox-data: {}
