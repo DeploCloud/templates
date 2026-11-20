@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "All-in-one mail and collaboration server with JMAP, IMAP, SMTP, CalDAV, CardDAV and WebDAV, managed from a web admin interface and backed by an embedded RocksDB store.",
+  "category": "email",
+  "developedBy": {
+    "label": "Stalwart Labs",
+    "url": "https://stalw.art"
+  },
+  "links": {
+    "github": "https://github.com/stalwartlabs/stalwart",
+    "website": "https://stalw.art",
+    "docs": [
+      "https://stalw.art/docs/install/platform/docker/",
+      "https://stalw.art/docs/configuration/environment-variables/",
+      "https://stalw.art/docs/configuration/bootstrap-mode/",
+      "https://stalw.art/docs/server/reverse-proxy/traefik/",
+      "https://stalw.art/docs/install/dns/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /admin with the username admin and the password that follows admin: in STALWART_RECOVERY_ADMIN. This credential is a full-access administrator for as long as the variable is set; create a permanent administrator account before removing it. Create your mail domain and accounts from the web interface before using the server."
+    },
+    {
+      "type": "warning",
+      "message": "Only HTTPS is public: the web interface, JMAP, CalDAV, CardDAV and WebDAV. The SMTP, IMAP, POP3 and ManageSieve ports are not published, so the server cannot receive mail from the internet and desktop mail clients cannot connect over IMAP or SMTP. Outbound delivery needs port 25 open at your provider and the DNS records Stalwart shows for each domain.",
+      "link": "https://stalw.art/docs/install/dns/"
+    }
+  ]
+}

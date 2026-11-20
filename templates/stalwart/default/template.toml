@@ -1,0 +1,19 @@
+[variables]
+admin_password = "${hash:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "stalwart"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+STALWART_HOSTNAME = "${domain}"
+STALWART_PUBLIC_URL = "https://${domain}"
+STALWART_RECOVERY_ADMIN = "admin:${admin_password}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{"@type":"RocksDb","path":"/var/lib/stalwart/"}
+"""
