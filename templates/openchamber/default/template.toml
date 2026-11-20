@@ -1,0 +1,16 @@
+[variables]
+ui_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openchamber"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+OPENCHAMBER_UI_PASSWORD = "${ui_password}"
+OPENCHAMBER_LAN_URL = "https://${domain}"
+GIT_USER_NAME = "OpenChamber"
+GIT_USER_EMAIL = "openchamber@${domain}"
