@@ -1,0 +1,24 @@
+services:
+  privatebin:
+    image: privatebin/nginx-fpm-alpine:2.1.1@sha256:023fe5d30c67aa1f015b4007a644d65474a300bf908725a10c8d0d64abe0086a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      PHP_TZ: ${TZ}
+    volumes:
+      - privatebin-data:/srv/data
+      - ./conf.php:/srv/cfg/conf.php:ro
+    tmpfs:
+      - /tmp:nodev,noexec,mode=1777
+      - /run:nodev,exec,mode=1777
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://127.0.0.1:8080/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  privatebin-data: {}

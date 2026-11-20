@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalist zero-knowledge pastebin: pastes are encrypted and decrypted in the browser with 256-bit AES, so the server never sees their content.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "PrivateBin",
+    "url": "https://github.com/PrivateBin"
+  },
+  "links": {
+    "github": "https://github.com/PrivateBin/PrivateBin",
+    "website": "https://privatebin.info/",
+    "docs": [
+      "https://github.com/PrivateBin/docker-nginx-fpm-alpine/blob/master/README.md",
+      "https://github.com/PrivateBin/PrivateBin/wiki/Configuration",
+      "https://github.com/PrivateBin/PrivateBin/wiki/FAQ"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; over plain HTTP the browser blocks the Web Crypto API and pastes cannot be created or read.",
+      "link": "https://github.com/PrivateBin/PrivateBin/wiki/FAQ#why-does-it-show-me-an-error-about-an-insecure-connection"
+    }
+  ]
+}
