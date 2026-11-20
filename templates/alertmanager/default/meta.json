@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Prometheus Alertmanager that deduplicates, groups and routes alerts to receivers, with silences and notification state kept on a persistent volume.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Prometheus",
+    "url": "https://prometheus.io/"
+  },
+  "links": {
+    "github": "https://github.com/prometheus/alertmanager",
+    "website": "https://prometheus.io/",
+    "docs": [
+      "https://prometheus.io/docs/alerting/latest/alertmanager/",
+      "https://prometheus.io/docs/alerting/latest/configuration/",
+      "https://prometheus.io/docs/alerting/latest/https/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Alertmanager has no login: anyone who can reach the domain can view alerts and create silences. Protect it with basic auth through a web config file or restrict access.",
+      "link": "https://prometheus.io/docs/alerting/latest/https/"
+    },
+    {
+      "type": "warning",
+      "message": "The shipped alertmanager.yml routes every alert to an empty receiver. Edit it to add your email, Slack, webhook or other receivers, then point Prometheus at this Alertmanager.",
+      "link": "https://prometheus.io/docs/alerting/latest/configuration/"
+    }
+  ]
+}
