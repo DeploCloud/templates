@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "adminer"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+ADMINER_DEFAULT_SERVER = "db"
+ADMINER_DESIGN = ""
+ADMINER_PLUGINS = ""
