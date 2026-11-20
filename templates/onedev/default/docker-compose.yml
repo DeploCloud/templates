@@ -1,0 +1,22 @@
+services:
+  onedev:
+    image: 1dev/server:17.2.2@sha256:453493420089be792ae707c795512a90bfe348417deb71a1dea07d1f31311122
+    restart: unless-stopped
+    expose:
+      - 6610
+    environment:
+      initial_user: ${ONEDEV_ADMIN_USER}
+      initial_password: ${ONEDEV_ADMIN_PASSWORD}
+      initial_email: ${ONEDEV_ADMIN_EMAIL}
+      initial_server_url: ${ONEDEV_SERVER_URL}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:6610/readyz || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 300s
+    volumes:
+      - onedev-data:/opt/onedev
+
+volumes:
+  onedev-data: {}
