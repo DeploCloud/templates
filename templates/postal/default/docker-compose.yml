@@ -1,0 +1,90 @@
+x-postal: &postal
+  image: ghcr.io/postalserver/postal:3.4.0@sha256:7eb37cdce9fdeeeadd21b3ffb7b426564e5a1c0d2ade6fe0d62af5b618938bd3
+  restart: unless-stopped
+  environment: &postal-env
+    POSTAL_WEB_HOSTNAME: ${POSTAL_WEB_HOSTNAME}
+    POSTAL_WEB_PROTOCOL: https
+    POSTAL_SMTP_HOSTNAME: ${POSTAL_SMTP_HOSTNAME}
+    POSTAL_SIGNING_KEY_PATH: /opt/postal/config/signing.key
+    POSTAL_TRUSTED_PROXIES: ${POSTAL_TRUSTED_PROXIES}
+    MAIN_DB_HOST: postal-db
+    MAIN_DB_USERNAME: root
+    MAIN_DB_PASSWORD: ${DB_ROOT_PASSWORD}
+    MAIN_DB_DATABASE: postal
+    MESSAGE_DB_HOST: postal-db
+    MESSAGE_DB_USERNAME: root
+    MESSAGE_DB_PASSWORD: ${DB_ROOT_PASSWORD}
+    RAILS_SECRET_KEY: ${RAILS_SECRET_KEY}
+    WEB_SERVER_DEFAULT_BIND_ADDRESS: 0.0.0.0
+    SMTP_SERVER_DEFAULT_BIND_ADDRESS: 0.0.0.0
+    DNS_MX_RECORDS: ${DNS_MX_RECORDS}
+    DNS_SPF_INCLUDE: ${DNS_SPF_INCLUDE}
+    DNS_RETURN_PATH_DOMAIN: ${DNS_RETURN_PATH_DOMAIN}
+    DNS_ROUTE_DOMAIN: ${DNS_ROUTE_DOMAIN}
+    DNS_TRACK_DOMAIN: ${DNS_TRACK_DOMAIN}
+    SMTP_HOST: postal-smtp
+    SMTP_PORT: 25
+    SMTP_USERNAME: ${SMTP_USERNAME}
+    SMTP_PASSWORD: ${SMTP_PASSWORD}
+    SMTP_FROM_ADDRESS: ${SMTP_FROM_ADDRESS}
+  volumes:
+    - postal-config:/opt/postal/config
+  depends_on:
+    postal-init:
+      condition: service_completed_successfully
+
+services:
+  postal:
+    <<: *postal
+    command: postal web-server
+    expose:
+      - 5000
+
+  postal-smtp:
+    <<: *postal
+    command: postal smtp-server
+    expose:
+      - 25
+
+  postal-worker:
+    <<: *postal
+    command: postal worker
+
+  # One-shot: signing key, schema load/migrations and the first admin, then exits.
+  postal-init:
+    <<: *postal
+    restart: "no"
+    environment:
+      <<: *postal-env
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      postal-db:
+        condition: service_healthy
+    command:
+      - sh
+      - -ec
+      - |
+        test -s /opt/postal/config/signing.key || ruby -ropenssl -e 'File.write(ARGV[0], OpenSSL::PKey::RSA.new(1024).to_pem, perm: 0600)' /opt/postal/config/signing.key
+        postal initialize
+        bundle exec rails runner 'User.exists? || User.create!(email_address: ENV.fetch("ADMIN_EMAIL"), first_name: "Postal", last_name: "Admin", password: ENV.fetch("ADMIN_PASSWORD"), admin: true, email_verified_at: Time.now)'
+
+  postal-db:
+    image: mariadb:11.8@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    command: --innodb-log-file-size=150M
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: postal
+    volumes:
+      - postal-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+volumes:
+  postal-config: {}
+  postal-db: {}
