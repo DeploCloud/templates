@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openbao"
+port = 8_200
+host = "${domain}"
+
+[config.env]
+BAO_API_ADDR = "https://${domain}"
