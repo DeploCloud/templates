@@ -1,0 +1,34 @@
+services:
+  nginx-ui:
+    image: uozi/nginx-ui:3.0.6@sha256:7453ecde10267db2b03c24cdc2bbef386212c118046298278ae21d017942a514
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      NGINX_UI_NODE_SKIP_INSTALLATION: ${NGINX_UI_NODE_SKIP_INSTALLATION}
+      NGINX_UI_APP_JWT_SECRET: ${NGINX_UI_APP_JWT_SECRET}
+      NGINX_UI_NODE_SECRET: ${NGINX_UI_NODE_SECRET}
+      NGINX_UI_PREDEFINED_USER_NAME: ${NGINX_UI_PREDEFINED_USER_NAME}
+      NGINX_UI_PREDEFINED_USER_PASSWORD: ${NGINX_UI_PREDEFINED_USER_PASSWORD}
+      NGINX_UI_IGNORE_DOCKER_SOCKET: ${NGINX_UI_IGNORE_DOCKER_SOCKET}
+      NGINX_UI_AUTH_TRUSTED_PROXIES: ${NGINX_UI_AUTH_TRUSTED_PROXIES}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    volumes:
+      # nocopy keeps the volume empty so the image seeds its own nginx config on first start
+      - type: volume
+        source: nginx-ui-nginx
+        target: /etc/nginx
+        volume:
+          nocopy: true
+      - nginx-ui-data:/etc/nginx-ui
+      - nginx-ui-www:/var/www
+
+volumes:
+  nginx-ui-nginx: {}
+  nginx-ui-data: {}
+  nginx-ui-www: {}
