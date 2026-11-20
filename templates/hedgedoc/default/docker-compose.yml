@@ -1,0 +1,40 @@
+services:
+  hedgedoc:
+    image: quay.io/hedgedoc/hedgedoc:1.12.0@sha256:1df4cbc99611ccc9761fd46b08b91e4fc787e9adc5b3f190d1b897a29b825452
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      CMD_DB_URL: postgres://hedgedoc:${DB_PASSWORD}@hedgedoc-db:5432/hedgedoc
+      CMD_DOMAIN: ${CMD_DOMAIN}
+      CMD_PROTOCOL_USESSL: "true"
+      CMD_URL_ADDPORT: "false"
+      CMD_SESSION_SECRET: ${CMD_SESSION_SECRET}
+      CMD_IMAGE_UPLOAD_TYPE: filesystem
+      CMD_ALLOW_ANONYMOUS: ${CMD_ALLOW_ANONYMOUS}
+      CMD_ALLOW_EMAIL_REGISTER: ${CMD_ALLOW_EMAIL_REGISTER}
+      CMD_ENABLE_STATS_API: "false"
+    volumes:
+      - hedgedoc-uploads:/hedgedoc/public/uploads
+    depends_on:
+      hedgedoc-db:
+        condition: service_healthy
+
+  hedgedoc-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hedgedoc
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: hedgedoc
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hedgedoc -d hedgedoc"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - hedgedoc-db:/var/lib/postgresql
+
+volumes:
+  hedgedoc-uploads: {}
+  hedgedoc-db: {}
