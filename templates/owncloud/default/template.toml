@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "owncloud"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+OWNCLOUD_DOMAIN = "${domain}"
+OWNCLOUD_DB_NAME = "owncloud"
+OWNCLOUD_DB_USERNAME = "owncloud"
+OWNCLOUD_DB_PASSWORD = "${db_password}"
+OWNCLOUD_DB_ROOT_PASSWORD = "${db_root_password}"
+OWNCLOUD_ADMIN_USERNAME = "admin"
+OWNCLOUD_ADMIN_PASSWORD = "${admin_password}"

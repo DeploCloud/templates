@@ -1,0 +1,70 @@
+services:
+  owncloud:
+    image: owncloud/server:11.1.0@sha256:60f13cb41959d9a4abc44535409d113107efb64b83764efbcc3530c12c4de98d
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      OWNCLOUD_DOMAIN: ${OWNCLOUD_DOMAIN}
+      OWNCLOUD_TRUSTED_DOMAINS: ${OWNCLOUD_DOMAIN}
+      OWNCLOUD_OVERWRITE_CLI_URL: https://${OWNCLOUD_DOMAIN}
+      OWNCLOUD_OVERWRITE_PROTOCOL: https
+      OWNCLOUD_DB_TYPE: mysql
+      OWNCLOUD_DB_HOST: owncloud-db
+      OWNCLOUD_DB_NAME: ${OWNCLOUD_DB_NAME}
+      OWNCLOUD_DB_USERNAME: ${OWNCLOUD_DB_USERNAME}
+      OWNCLOUD_DB_PASSWORD: ${OWNCLOUD_DB_PASSWORD}
+      OWNCLOUD_ADMIN_USERNAME: ${OWNCLOUD_ADMIN_USERNAME}
+      OWNCLOUD_ADMIN_PASSWORD: ${OWNCLOUD_ADMIN_PASSWORD}
+      OWNCLOUD_MYSQL_UTF8MB4: "true"
+      OWNCLOUD_REDIS_ENABLED: "true"
+      OWNCLOUD_REDIS_HOST: owncloud-redis
+    volumes:
+      - owncloud-data:/mnt/data
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      owncloud-db:
+        condition: service_healthy
+      owncloud-redis:
+        condition: service_healthy
+
+  owncloud-db:
+    image: mariadb:10.11.19@sha256:7d829180b5b2a9ba74f6242876ab401a0d7dd338a807e522ef92bc9698760f20
+    restart: unless-stopped
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    environment:
+      MYSQL_ROOT_PASSWORD: ${OWNCLOUD_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${OWNCLOUD_DB_NAME}
+      MYSQL_USER: ${OWNCLOUD_DB_USERNAME}
+      MYSQL_PASSWORD: ${OWNCLOUD_DB_PASSWORD}
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - owncloud-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  owncloud-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["--databases", "1"]
+    volumes:
+      - owncloud-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  owncloud-data: {}
+  owncloud-db: {}
+  owncloud-redis: {}

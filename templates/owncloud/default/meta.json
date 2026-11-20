@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "ownCloud file sync and sharing server with WebDAV access, backed by MariaDB and Redis with persistent data storage.",
+  "category": "storage",
+  "developedBy": {
+    "label": "ownCloud",
+    "url": "https://github.com/owncloud"
+  },
+  "links": {
+    "github": "https://github.com/owncloud/core",
+    "website": "https://owncloud.com/",
+    "docs": [
+      "https://doc.owncloud.com/server/11.1/admin_manual/installation/installing_with_docker.html",
+      "https://github.com/owncloud-docker/base/blob/master/ENVIRONMENT.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated OWNCLOUD_ADMIN_PASSWORD from the environment variables. It is only applied on the first start; change it later in the ownCloud user settings."
+    }
+  ]
+}
