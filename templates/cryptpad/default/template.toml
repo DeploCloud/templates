@@ -1,0 +1,35 @@
+[variables]
+sandbox_domain = "sandbox.${domain}"
+
+[config]
+
+[[config.domains]]
+serviceName = "cryptpad"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "cryptpad"
+port = 3_000
+host = "${sandbox_domain}"
+
+[config.env]
+CPAD_MAIN_DOMAIN = "https://${domain}"
+CPAD_SANDBOX_DOMAIN = "https://${sandbox_domain}"
+CPAD_INSTALL_OFFICE = "no"
+
+[[config.mounts]]
+filePath = "config.js"
+content = """// Upstream defaults shipped in the image; override settings below.
+// see https://github.com/cryptpad/cryptpad/blob/main/config/README.md
+const config = require('../config.local/config.example.js');
+config.logToStdout = true;
+module.exports = config;
+"""
+
+[[config.mounts]]
+filePath = "infra.js"
+content = """// Origins and listen addresses come from CPAD_MAIN_DOMAIN and CPAD_SANDBOX_DOMAIN.
+module.exports = require('../config.local/infra.example.js');
+"""
