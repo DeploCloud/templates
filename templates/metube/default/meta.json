@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web UI for yt-dlp that downloads video, audio, subtitles and thumbnails from YouTube and hundreds of other sites, with playlist, channel and subscription support.",
+  "category": "media",
+  "developedBy": {
+    "label": "alexta69",
+    "url": "https://github.com/alexta69"
+  },
+  "links": {
+    "github": "https://github.com/alexta69/metube",
+    "docs": [
+      "https://github.com/alexta69/metube#configuration",
+      "https://github.com/alexta69/metube/wiki",
+      "https://github.com/alexta69/metube/wiki/yt-dlp-options",
+      "https://github.com/alexta69/metube/wiki/Using-browser-cookies"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "MeTube has no built-in login: anyone who can reach the URL can queue downloads on the server and fetch the downloaded files. Put it behind access control if the domain is public.",
+      "link": "https://github.com/alexta69/metube/wiki/Reverse-proxy-configurations"
+    }
+  ]
+}

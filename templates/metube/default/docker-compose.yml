@@ -1,0 +1,17 @@
+services:
+  metube:
+    image: ghcr.io/alexta69/metube:2026.11.14@sha256:55ce41ab9a78069dc42bd808b20a96aeef4199560a02698a2205ea8a2bc4fef1
+    restart: unless-stopped
+    expose:
+      - 8081
+    volumes:
+      - metube-downloads:/downloads
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8081/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  metube-downloads: {}
