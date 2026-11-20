@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Indexer manager for Usenet and torrent indexers that syncs them to Sonarr, Radarr, Lidarr and other PVR apps from one web interface.",
+  "category": "media",
+  "developedBy": {
+    "label": "Prowlarr",
+    "url": "https://prowlarr.com/"
+  },
+  "links": {
+    "github": "https://github.com/Prowlarr/Prowlarr",
+    "website": "https://prowlarr.com/",
+    "docs": [
+      "https://wiki.servarr.com/prowlarr",
+      "https://wiki.servarr.com/prowlarr/quick-start-guide",
+      "https://wiki.servarr.com/prowlarr/installation/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the web interface right after deploying: Prowlarr asks you to choose an authentication method and create the login on first visit. Until you do, anyone with the URL reaches that setup screen.",
+      "link": "https://wiki.servarr.com/prowlarr/settings"
+    }
+  ]
+}

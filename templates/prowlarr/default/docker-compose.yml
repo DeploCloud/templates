@@ -1,0 +1,15 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:3.0.2.5780-ls169@sha256:45117ba8439e2337a92ffe38a451a4dafc0be771754d05d88cdf102419d09646
+    restart: unless-stopped
+    expose:
+      - 9696
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - prowlarr-config:/config
+
+volumes:
+  prowlarr-config: {}
