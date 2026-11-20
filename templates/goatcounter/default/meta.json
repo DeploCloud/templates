@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web analytics that records pageviews and referrers without tracking personal data, using an embedded SQLite database on a persistent volume.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Martin Tournoij",
+    "url": "https://github.com/arp242"
+  },
+  "links": {
+    "github": "https://github.com/arp242/goatcounter",
+    "website": "https://www.goatcounter.com",
+    "docs": [
+      "https://github.com/arp242/goatcounter#self-hosting-goatcounter",
+      "https://github.com/arp242/goatcounter#running-with-docker",
+      "https://www.goatcounter.com/help/start"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor gets the setup wizard and creates the site and its admin account. No SMTP server is configured, so emails such as password resets are only written to the container logs."
+    }
+  ]
+}
