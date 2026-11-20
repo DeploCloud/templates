@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "photoview"
+port = 80
+host = "${domain}"
+
+[config.env]
+MAPBOX_TOKEN = ""
