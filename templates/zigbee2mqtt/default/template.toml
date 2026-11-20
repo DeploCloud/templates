@@ -1,0 +1,17 @@
+[variables]
+frontend_token = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zigbee2mqtt"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+ZIGBEE2MQTT_CONFIG_FRONTEND_ENABLED = "true"
+ZIGBEE2MQTT_CONFIG_FRONTEND_AUTH_TOKEN = "${frontend_token}"
+ZIGBEE2MQTT_CONFIG_FRONTEND_URL = "https://${domain}"
+Z2M_ONBOARD_NO_REDIRECT = "1"
