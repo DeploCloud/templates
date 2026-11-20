@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "End-to-end encrypted collaborative office suite with rich text, code, kanban, forms and a shared drive, served on a main and a sandbox domain.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "XWiki CryptPad Team",
+    "url": "https://github.com/cryptpad"
+  },
+  "links": {
+    "github": "https://github.com/cryptpad/cryptpad",
+    "website": "https://cryptpad.org",
+    "docs": [
+      "https://docs.cryptpad.org/en/admin_guide/installation.html",
+      "https://docs.cryptpad.org/en/admin_guide/admin_panel.html",
+      "https://github.com/cryptpad/cryptpad/blob/main/config/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After the first start, open the install link printed in the container logs (https://<your domain>/install/#<token>) to create the first administrator account.",
+      "link": "https://docs.cryptpad.org/en/admin_guide/installation.html"
+    },
+    {
+      "type": "warning",
+      "message": "CryptPad loads its editors from a second hostname, sandbox.<your domain>. It must resolve to this server with HTTPS. If you change the domains, update CPAD_MAIN_DOMAIN and CPAD_SANDBOX_DOMAIN to match, otherwise pages stay blank.",
+      "link": "https://github.com/cryptpad/cryptpad/blob/main/config/README.md"
+    }
+  ]
+}

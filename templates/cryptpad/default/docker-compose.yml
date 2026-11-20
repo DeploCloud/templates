@@ -1,0 +1,36 @@
+services:
+  cryptpad:
+    image: cryptpad/cryptpad:version-2026.10.1@sha256:b1129d954692e9b8a7d198e79d3080d3627051c95137bbf41a7d2683aa53305d
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      CPAD_MAIN_DOMAIN: ${CPAD_MAIN_DOMAIN}
+      CPAD_SANDBOX_DOMAIN: ${CPAD_SANDBOX_DOMAIN}
+      CPAD_INSTALL_OFFICE: ${CPAD_INSTALL_OFFICE}
+    volumes:
+      - cryptpad-blob:/cryptpad/blob
+      - cryptpad-block:/cryptpad/block
+      - cryptpad-customize:/cryptpad/customize
+      - cryptpad-data:/cryptpad/data
+      - cryptpad-datastore:/cryptpad/datastore
+      # the image's config volume is root-owned, so the entrypoint cannot write these itself
+      - ./config.js:/cryptpad/config/config.js:ro
+      - ./infra.js:/cryptpad/config/infra.js:ro
+    ulimits:
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:3000/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  cryptpad-blob: {}
+  cryptpad-block: {}
+  cryptpad-customize: {}
+  cryptpad-data: {}
+  cryptpad-datastore: {}
