@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenCloud file sync and sharing platform with spaces, WebDAV access and its built-in identity provider, running as a single container.",
+  "category": "storage",
+  "developedBy": {
+    "label": "OpenCloud GmbH",
+    "url": "https://opencloud.eu"
+  },
+  "links": {
+    "github": "https://github.com/opencloud-eu/opencloud",
+    "website": "https://opencloud.eu",
+    "docs": [
+      "https://docs.opencloud.eu/docs/admin/getting-started/container/docker",
+      "https://docs.opencloud.eu/docs/admin/getting-started/container/docker-compose/",
+      "https://docs.opencloud.eu/docs/admin/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated IDM_ADMIN_PASSWORD from the environment. It is applied only on the first start, so later changes to the variable do not change the password.",
+      "link": "https://docs.opencloud.eu/docs/admin/getting-started/container/docker"
+    }
+  ]
+}
