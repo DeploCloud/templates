@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Metaflow metadata service and web UI with PostgreSQL, tracking the flows, runs, steps and tasks that Metaflow clients record.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Netflix",
+    "url": "https://github.com/Netflix"
+  },
+  "links": {
+    "github": "https://github.com/Netflix/metaflow",
+    "website": "https://metaflow.org",
+    "docs": [
+      "https://docs.outerbounds.com/engineering/service-architecture/",
+      "https://docs.outerbounds.com/engineering/operations/configure-metaflow/",
+      "https://github.com/Netflix/metaflow-service"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The UI and the metadata API have no built-in authentication: anyone with the URL can read run data and write metadata. Restrict access before recording real projects."
+    },
+    {
+      "type": "warning",
+      "message": "Point your Metaflow clients at the service with METAFLOW_SERVICE_URL=https://<your-domain>/metadata-service and METAFLOW_DEFAULT_METADATA=service. Logs, artifacts and DAGs appear in the UI only when flows use an S3 datastore that the metaflow-api service can read.",
+      "link": "https://docs.outerbounds.com/engineering/operations/configure-metaflow/"
+    }
+  ]
+}

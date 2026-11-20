@@ -1,0 +1,28 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "metaflow"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "metaflow-api"
+port = 8_083
+host = "${domain}"
+path = "/api"
+
+[[config.domains]]
+serviceName = "metaflow-metadata"
+port = 8_080
+host = "${domain}"
+path = "/metadata-service"
+
+[config.env]
+DB_USER = "metaflow"
+DB_NAME = "metaflow"
+DB_PASSWORD = "${db_password}"
