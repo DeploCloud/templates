@@ -1,0 +1,23 @@
+services:
+  myip:
+    image: jason5ng32/myip:v8.1.0@sha256:d227c25321cad8e448203a3301b65ae432e84e550066ba760f5bfe53febecca3
+    restart: unless-stopped
+    expose:
+      - 18966
+    environment:
+      ALLOWED_DOMAINS: ${ALLOWED_DOMAINS}
+      MAXMIND_ACCOUNT_ID: ${MAXMIND_ACCOUNT_ID}
+      MAXMIND_LICENSE_KEY: ${MAXMIND_LICENSE_KEY}
+    volumes:
+      - myip-maxmind:/app/common/maxmind-db
+      - myip-as-org:/app/common/as-org-db
+      - myip-as-rel:/app/common/as-rel-db
+      - myip-peeringdb:/app/common/peeringdb-db
+      - myip-oui:/app/common/oui-db
+
+volumes:
+  myip-maxmind: {}
+  myip-as-org: {}
+  myip-as-rel: {}
+  myip-peeringdb: {}
+  myip-oui: {}
