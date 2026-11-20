@@ -1,0 +1,31 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:3.10.0@sha256:02d6d6e40c820ae08233b60540aa5d3d9364d64e2dc724e38d6c8c794879b2a0
+    restart: unless-stopped
+    command: ["bash", "/usr/share/opensearch/seed-users.sh"]
+    expose:
+      - 9200
+    environment:
+      discovery.type: single-node
+      plugins.security.ssl.http.enabled: "false"
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: ${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+      OPENSEARCH_JAVA_OPTS: ${OPENSEARCH_JAVA_OPTS}
+      DISABLE_PERFORMANCE_ANALYZER_AGENT_CLI: "true"
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+      - ./seed-users.sh:/usr/share/opensearch/seed-users.sh:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --output /dev/null --silent --fail -u "admin:$${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" http://localhost:9200/_cluster/health
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 90s
+
+volumes:
+  opensearch-data: {}

@@ -1,0 +1,24 @@
+{
+  "name": "Dashboards",
+  "shortDescription": "OpenSearch single-node cluster with OpenSearch Dashboards, the web UI for search, visualizations, alerting and the Dev Tools console.",
+  "category": "database",
+  "developedBy": {
+    "label": "OpenSearch Project",
+    "url": "https://opensearch.org/"
+  },
+  "links": {
+    "github": "https://github.com/opensearch-project/OpenSearch",
+    "website": "https://opensearch.org/",
+    "docs": [
+      "https://docs.opensearch.org/latest/install-and-configure/install-opensearch/docker/",
+      "https://docs.opensearch.org/latest/install-and-configure/install-dashboards/docker/",
+      "https://docs.opensearch.org/latest/dashboards/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in to OpenSearch Dashboards as user admin with the generated OPENSEARCH_INITIAL_ADMIN_PASSWORD from the environment variables. The REST API is not published; use the Dev Tools console in Dashboards to query it."
+    }
+  ]
+}
