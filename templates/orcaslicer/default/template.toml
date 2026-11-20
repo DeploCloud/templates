@@ -1,0 +1,17 @@
+[variables]
+password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "orcaslicer"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+CUSTOM_USER = "orcaslicer"
+PASSWORD = "${password}"
