@@ -1,0 +1,78 @@
+x-mautic: &mautic
+  image: mautic/mautic:7.2.2-apache@sha256:83461b9ec7c109413281490180e1f96c379aa935bd92f80c68294f98487a9015
+  restart: unless-stopped
+  volumes:
+    - mautic-config:/var/www/html/config
+    - mautic-logs:/var/www/html/var/logs
+    - mautic-files:/var/www/html/docroot/media/files
+    - mautic-images:/var/www/html/docroot/media/images
+    - ./parameters_local.php:/var/www/html/config/parameters_local.php
+  environment: &mautic-env
+    MAUTIC_DB_HOST: mautic-db
+    MAUTIC_DB_PORT: "3306"
+    MAUTIC_DB_DATABASE: ${MAUTIC_DB_DATABASE}
+    MAUTIC_DB_USER: ${MAUTIC_DB_USER}
+    MAUTIC_DB_PASSWORD: ${MAUTIC_DB_PASSWORD}
+    MAUTIC_MESSENGER_DSN_EMAIL: ${MAUTIC_MESSENGER_DSN_EMAIL}
+    MAUTIC_MESSENGER_DSN_HIT: ${MAUTIC_MESSENGER_DSN_HIT}
+    PHP_INI_VALUE_DATE_TIMEZONE: ${PHP_INI_VALUE_DATE_TIMEZONE}
+
+services:
+  mautic:
+    <<: *mautic
+    expose:
+      - 80
+    environment:
+      <<: *mautic-env
+      DOCKER_MAUTIC_ROLE: mautic_web
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sS -o /dev/null http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    depends_on:
+      mautic-db:
+        condition: service_healthy
+
+  mautic-cron:
+    <<: *mautic
+    environment:
+      <<: *mautic-env
+      DOCKER_MAUTIC_ROLE: mautic_cron
+    depends_on:
+      mautic:
+        condition: service_healthy
+
+  mautic-worker:
+    <<: *mautic
+    environment:
+      <<: *mautic-env
+      DOCKER_MAUTIC_ROLE: mautic_worker
+    depends_on:
+      mautic:
+        condition: service_healthy
+
+  mautic-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    volumes:
+      - mautic-db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MAUTIC_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MAUTIC_DB_DATABASE}
+      MYSQL_USER: ${MAUTIC_DB_USER}
+      MYSQL_PASSWORD: ${MAUTIC_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  mautic-config: {}
+  mautic-logs: {}
+  mautic-files: {}
+  mautic-images: {}
+  mautic-db: {}
