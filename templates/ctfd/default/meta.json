@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Capture The Flag platform for running jeopardy-style security competitions, with MariaDB, Redis and persistent uploads.",
+  "category": "security",
+  "developedBy": {
+    "label": "CTFd",
+    "url": "https://ctfd.io"
+  },
+  "links": {
+    "github": "https://github.com/CTFd/CTFd",
+    "website": "https://ctfd.io",
+    "docs": [
+      "https://docs.ctfd.io/docs/deployment/installation",
+      "https://docs.ctfd.io/docs/deployment/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor is sent to the setup wizard, which names the event and creates the admin account. Open the app and finish it right after deployment.",
+      "link": "https://docs.ctfd.io/docs/deployment/installation"
+    }
+  ]
+}
