@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Realtime collaborative markdown editor for notes, diagrams and slides, backed by PostgreSQL with persistent image uploads.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "HedgeDoc",
+    "url": "https://github.com/hedgedoc"
+  },
+  "links": {
+    "github": "https://github.com/hedgedoc/hedgedoc",
+    "website": "https://hedgedoc.org",
+    "docs": [
+      "https://docs.hedgedoc.org/setup/docker/",
+      "https://docs.hedgedoc.org/configuration/",
+      "https://docs.hedgedoc.org/guides/production-ready/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Email sign-up is open to anyone who can reach the instance. After creating your accounts, set CMD_ALLOW_EMAIL_REGISTER to false and redeploy.",
+      "link": "https://docs.hedgedoc.org/configuration/"
+    }
+  ]
+}
