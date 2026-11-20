@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted server management with SSH terminals, remote desktop, file manager and tunnels in the browser, backed by an encrypted SQLite database.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Termix",
+    "url": "https://github.com/Termix-SSH"
+  },
+  "links": {
+    "github": "https://github.com/Termix-SSH/Termix",
+    "website": "https://termix.site/",
+    "docs": [
+      "https://docs.termix.site/install/server/docker",
+      "https://docs.termix.site/install/first-run",
+      "https://docs.termix.site/configure/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you create becomes the admin. Turn off Allow User Registration in Settings, General afterwards if you do not want others to sign up.",
+      "link": "https://docs.termix.site/install/first-run"
+    }
+  ]
+}
