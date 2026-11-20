@@ -1,0 +1,47 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "teslamate-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	@grafana path /grafana /grafana/*
+	handle @grafana {
+		reverse_proxy teslamate-grafana:3000
+	}
+	handle {
+		basic_auth {
+			{$TESLAMATE_USERNAME} {$TESLAMATE_PASSWORD_HASH}
+		}
+		reverse_proxy teslamate:4000
+	}
+}
+"""
+
+[config.env]
+ENCRYPTION_KEY = "${secret:64}"
+DATABASE_USER = "teslamate"
+DATABASE_PASS = "${db_password}"
+DATABASE_NAME = "teslamate"
+VIRTUAL_HOST = "${domain}"
+DISABLE_MQTT = "true"
+TZ = "UTC"
+TESLAMATE_USERNAME = "teslamate"
+TESLAMATE_PASSWORD = "${password:24}"
+GRAFANA_ADMIN_USER = "admin"
+GRAFANA_ADMIN_PASSWORD = "${password:24}"
