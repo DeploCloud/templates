@@ -1,0 +1,24 @@
+services:
+  openchamber:
+    image: ghcr.io/cyberschorsch/openchamber:openchamber-2.7.2-opencode-2.3.2@sha256:cfea87ad6ab23189d6f0a7f5d2618c814f98721aecaf14b8aecc215c2128a4e7
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      OPENCHAMBER_UI_PASSWORD: ${OPENCHAMBER_UI_PASSWORD}
+      OPENCHAMBER_LAN_URL: ${OPENCHAMBER_LAN_URL}
+      GIT_USER_NAME: ${GIT_USER_NAME}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL}
+    volumes:
+      - openchamber-data:/home/agent/.config/openchamber
+      - opencode-config:/home/agent/.config/opencode
+      - opencode-share:/home/agent/.local/share/opencode
+      - opencode-state:/home/agent/.local/state/opencode
+      - openchamber-workspaces:/home/agent/workspaces
+
+volumes:
+  openchamber-data: {}
+  opencode-config: {}
+  opencode-share: {}
+  opencode-state: {}
+  openchamber-workspaces: {}
