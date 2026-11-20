@@ -1,0 +1,70 @@
+services:
+  typebot-builder:
+    image: baptistearno/typebot-builder:3.19.1@sha256:9b277e31c84773f49a07ef2d48c90dc83b01cabeaeef6eb1c43005264d194fdd
+    restart: unless-stopped
+    expose:
+      - 3000
+    # Passes optional keys you add, such as SMTP_*, ADMIN_EMAIL, S3_* or OAuth providers.
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://typebot:${DB_PASSWORD}@typebot-db:5432/typebot
+      REDIS_URL: redis://typebot-redis:6379
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXT_PUBLIC_VIEWER_URL: ${NEXT_PUBLIC_VIEWER_URL}
+    depends_on:
+      typebot-db:
+        condition: service_healthy
+      typebot-redis:
+        condition: service_healthy
+
+  typebot-viewer:
+    image: baptistearno/typebot-viewer:3.19.1@sha256:1fba8b9a165c196af09c652e44feef01f6948204261d956cf7b545b2acd24425
+    restart: unless-stopped
+    expose:
+      - 3000
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://typebot:${DB_PASSWORD}@typebot-db:5432/typebot
+      REDIS_URL: redis://typebot-redis:6379
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXT_PUBLIC_VIEWER_URL: ${NEXT_PUBLIC_VIEWER_URL}
+    depends_on:
+      typebot-db:
+        condition: service_healthy
+      typebot-redis:
+        condition: service_healthy
+
+  typebot-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: typebot
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: typebot
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U typebot -d typebot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - typebot-db:/var/lib/postgresql/data
+
+  typebot-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - typebot-redis:/data
+
+volumes:
+  typebot-db: {}
+  typebot-redis: {}
