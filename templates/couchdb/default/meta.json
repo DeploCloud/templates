@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node Apache CouchDB document database with its HTTP/JSON API, the Fauxton web dashboard at /_utils and persistent data and configuration.",
+  "category": "database",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://couchdb.apache.org/"
+  },
+  "links": {
+    "github": "https://github.com/apache/couchdb",
+    "website": "https://couchdb.apache.org/",
+    "docs": [
+      "https://docs.couchdb.org/en/stable/",
+      "https://docs.couchdb.org/en/stable/setup/single-node.html",
+      "https://github.com/apache/couchdb-docker/blob/main/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open https://<your-domain>/_utils and sign in as admin with the generated COUCHDB_PASSWORD from the environment variables. The admin is written to the persistent configuration on the first start, so changing the variable later has no effect; change the password in Fauxton instead.",
+      "link": "https://github.com/apache/couchdb-docker/blob/main/README.md"
+    }
+  ]
+}

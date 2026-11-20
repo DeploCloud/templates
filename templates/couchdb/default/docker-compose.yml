@@ -1,0 +1,18 @@
+services:
+  couchdb:
+    image: couchdb:3.5.3@sha256:907eab5b7e55ab7cfd241d39b90b2a335ea40bef82acee5a37388c08bf201dda
+    restart: unless-stopped
+    expose:
+      - 5984
+    environment:
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
+      COUCHDB_SECRET: ${COUCHDB_SECRET}
+    volumes:
+      - couchdb-data:/opt/couchdb/data
+      - couchdb-config:/opt/couchdb/etc/local.d
+      - ./single-node.ini:/opt/couchdb/etc/default.d/20-single-node.ini
+
+volumes:
+  couchdb-data: {}
+  couchdb-config: {}
