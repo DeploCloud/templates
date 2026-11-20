@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted manga reader server running Tachiyomi/Mihon extensions, with a web UI and GraphQL API, storing its library in PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "Suwayomi",
+    "url": "https://github.com/Suwayomi"
+  },
+  "links": {
+    "github": "https://github.com/Suwayomi/Suwayomi-Server",
+    "website": "https://suwayomi.org",
+    "docs": [
+      "https://github.com/Suwayomi/Suwayomi-Server-docker",
+      "https://github.com/Suwayomi/Suwayomi-Server/wiki/Configuring-Suwayomi%E2%80%90Server"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The site is protected with HTTP basic auth. Log in as admin with the generated AUTH_PASSWORD environment variable, then add an extension repository in the web UI settings before browsing sources."
+    }
+  ]
+}

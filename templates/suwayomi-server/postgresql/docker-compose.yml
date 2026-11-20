@@ -1,0 +1,39 @@
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:v2.4.2366@sha256:1fac27c387dc2ea9949e1a01ad7f6d6de9d72d3988338a95476748e5c45c4582
+    restart: unless-stopped
+    expose:
+      - 4567
+    environment:
+      TZ: ${TZ}
+      AUTH_MODE: ${AUTH_MODE}
+      AUTH_USERNAME: ${AUTH_USERNAME}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      DATABASE_TYPE: POSTGRESQL
+      DATABASE_URL: postgresql://suwayomi-server-db:5432/suwayomi
+      DATABASE_USERNAME: suwayomi
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - suwayomi-data:/home/suwayomi/.local/share/Tachidesk
+    depends_on:
+      suwayomi-server-db:
+        condition: service_healthy
+
+  suwayomi-server-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: suwayomi
+      POSTGRES_USER: suwayomi
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U suwayomi -d suwayomi"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - suwayomi-db:/var/lib/postgresql
+
+volumes:
+  suwayomi-data: {}
+  suwayomi-db: {}
