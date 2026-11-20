@@ -1,0 +1,12 @@
+services:
+  vectorcraft:
+    image: ghcr.io/mikapst/vectorcraft-web:v0.24.1@sha256:40b43ee888d900aa0a5001f23258e35c9da839847dc02dfb32f70348bfc3b4cb
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
