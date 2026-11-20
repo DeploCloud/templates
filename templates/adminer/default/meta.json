@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based database management tool in a single PHP file for MySQL, MariaDB, PostgreSQL, MS SQL and more: browse tables, edit data, run SQL and import or export dumps.",
+  "category": "database",
+  "developedBy": {
+    "label": "Jakub Vrána",
+    "url": "https://github.com/vrana"
+  },
+  "links": {
+    "github": "https://github.com/vrana/adminer",
+    "website": "https://www.adminer.org/",
+    "docs": [
+      "https://www.adminer.org/en/",
+      "https://github.com/docker-library/docs/blob/master/adminer/content.md",
+      "https://www.adminer.org/en/plugins/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no Adminer account: the login form takes the credentials of the database you connect to. The page is public, so anyone who reaches it can try to log in to any database host this server can reach. Use strong database passwords."
+    }
+  ]
+}
