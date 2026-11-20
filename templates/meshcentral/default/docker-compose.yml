@@ -1,0 +1,28 @@
+services:
+  meshcentral:
+    image: ghcr.io/ylianst/meshcentral:1.3.1-slim@sha256:a5814cd2d23029876457d84e742e819bd46335c3c6320f3bfebf6fc3e150e165
+    restart: unless-stopped
+    expose:
+      - 4430
+    environment:
+      CONFIG_FILE: /opt/meshcentral/config.json
+    volumes:
+      - meshcentral-data:/opt/meshcentral/meshcentral-data
+      - meshcentral-files:/opt/meshcentral/meshcentral-files
+      - meshcentral-web:/opt/meshcentral/meshcentral-web
+      - meshcentral-backups:/opt/meshcentral/meshcentral-backups
+      - meshcentral-recordings:/opt/meshcentral/meshcentral-recordings
+      - ./config.json:/opt/meshcentral/config.json
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:4430/health.ashx"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 5
+
+volumes:
+  meshcentral-data: {}
+  meshcentral-files: {}
+  meshcentral-web: {}
+  meshcentral-backups: {}
+  meshcentral-recordings: {}
