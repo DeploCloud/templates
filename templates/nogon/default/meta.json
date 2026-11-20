@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Private full-text search engine for the web pages you visit and the files you keep, fed by a browser extension, with web, terminal and MCP clients.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Adam Tauber",
+    "url": "https://github.com/asciimoo"
+  },
+  "links": {
+    "github": "https://github.com/asciimoo/nogon",
+    "website": "https://nogon.eu/",
+    "docs": [
+      "https://nogon.eu/docs/docker",
+      "https://nogon.eu/docs/configuration",
+      "https://nogon.eu/docs/browser-extension"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The instance is protected by the generated NOGON__APP__ACCESS_TOKEN environment variable. Enter it on the web login page and in the browser extension settings to start indexing pages.",
+      "link": "https://nogon.eu/docs/configuration#access-token"
+    }
+  ]
+}
