@@ -1,0 +1,23 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+cookie_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "yourls"
+port = 8080
+host = "${domain}"
+
+[config.env]
+YOURLS_SITE = "https://${domain}"
+YOURLS_USER = "admin"
+YOURLS_PASS = "${admin_password}"
+YOURLS_COOKIEKEY = "${cookie_key}"
+YOURLS_DB_NAME = "yourls"
+YOURLS_DB_USER = "yourls"
+YOURLS_DB_PASS = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${db_root_password}"
