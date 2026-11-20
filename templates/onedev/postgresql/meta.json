@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted Git server with CI/CD, code review, issue boards and package registry, backed by a bundled PostgreSQL database.",
+  "category": "development",
+  "developedBy": {
+    "label": "OneDev",
+    "url": "https://github.com/theonedev"
+  },
+  "links": {
+    "github": "https://github.com/theonedev/onedev",
+    "website": "https://onedev.io",
+    "docs": [
+      "https://docs.onedev.io/installation-guide/run-as-docker-container",
+      "https://docs.onedev.io/administration-guide/agent-management",
+      "https://docs.onedev.io/tutorials/cicd/agent-farm"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ONEDEV_ADMIN_PASSWORD from this app's environment settings. The admin account and server URL are only created on the first start; change the password and email later in OneDev, not in the environment.",
+      "link": "https://docs.onedev.io/installation-guide/run-as-docker-container"
+    },
+    {
+      "type": "warning",
+      "message": "The Docker socket is not mounted, so CI/CD jobs cannot run on the server itself. Connect an agent and add a Remote Docker or Remote Shell executor under Administration to run builds.",
+      "link": "https://docs.onedev.io/administration-guide/agent-management"
+    }
+  ]
+}
