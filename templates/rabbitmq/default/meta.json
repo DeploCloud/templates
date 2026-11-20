@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source message and streaming broker for AMQP, MQTT and STOMP, with the management web UI and HTTP API served on the app domain.",
+  "category": "development",
+  "developedBy": {
+    "label": "RabbitMQ",
+    "url": "https://github.com/rabbitmq"
+  },
+  "links": {
+    "github": "https://github.com/rabbitmq/rabbitmq-server",
+    "website": "https://www.rabbitmq.com/",
+    "docs": [
+      "https://www.rabbitmq.com/docs/download",
+      "https://www.rabbitmq.com/docs/management",
+      "https://www.rabbitmq.com/docs/configure",
+      "https://www.rabbitmq.com/docs/access-control"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in to the management UI as admin with the generated RABBITMQ_DEFAULT_PASS. It only seeds the first user on an empty node; later changes are made in the management UI under Admin > Users.",
+      "link": "https://www.rabbitmq.com/docs/access-control"
+    },
+    {
+      "type": "info",
+      "message": "Only the management UI and HTTP API are routed. AMQP (5672) is TCP and is not published by this template; services in the same stack reach the broker at rabbitmq:5672. The MQTT and STOMP plugins ship with the image but are not enabled."
+    }
+  ]
+}
