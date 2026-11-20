@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted status page and incident dashboard in the lightweight setup: a libSQL database and no automated monitoring or analytics.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "OpenStatus",
+    "url": "https://www.openstatus.dev"
+  },
+  "links": {
+    "github": "https://github.com/openstatusHQ/openstatus",
+    "website": "https://www.openstatus.dev",
+    "docs": [
+      "https://www.openstatus.dev/docs/guides/self-host-status-page-only",
+      "https://www.openstatus.dev/docs/guides/self-hosting-openstatus"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No email provider is configured, so login links are not mailed. Enter your email on the login page, then open the URL printed after '>>> Magic Link:' in the openstatus service logs. The first sign-in creates your account and workspace."
+    },
+    {
+      "type": "warning",
+      "message": "The public status page is served on status.<your domain> and only shows a page whose custom domain matches that host, which a self-hosted dashboard cannot save. After creating a page, open a shell in the openstatus service and run this, replacing status.example.com with status.<your domain> and my-page with your page slug: curl -s http://openstatus-db:8080/ -H 'Content-Type: application/json' -d '{\"statements\":[{\"q\":\"UPDATE page SET custom_domain = ? WHERE slug = ?\",\"params\":[\"status.example.com\",\"my-page\"]}]}'"
+    },
+    {
+      "type": "info",
+      "message": "New workspaces get the free plan limits (one status page, three components). Raise them in the database as described in the upstream guide.",
+      "link": "https://www.openstatus.dev/docs/guides/self-host-status-page-only"
+    }
+  ]
+}
