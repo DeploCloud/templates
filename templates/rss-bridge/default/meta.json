@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "PHP web app that generates RSS, Atom and JSON feeds for websites that do not offer one, with hundreds of bundled bridges.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "RSS-Bridge community",
+    "url": "https://github.com/RSS-Bridge"
+  },
+  "links": {
+    "github": "https://github.com/RSS-Bridge/rss-bridge",
+    "website": "https://rss-bridge.org/bridge01/",
+    "docs": [
+      "https://rss-bridge.github.io/rss-bridge/index.html",
+      "https://rss-bridge.github.io/rss-bridge/For_Hosts/Custom_Configuration.html",
+      "https://github.com/RSS-Bridge/rss-bridge#how-to-password-protect-the-instance-http-basic-auth",
+      "https://github.com/RSS-Bridge/rss-bridge#install-with-docker-compose-using-docker-hub"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "The instance is open to anyone who knows its URL. To require HTTP basic auth, set RSSBRIDGE_authentication_enable to true; the username and a generated password are already set in the environment."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[variables]
+auth_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rss-bridge"
+port = 80
+host = "${domain}"
+
+[config.env]
+RSSBRIDGE_authentication_enable = "false"
+RSSBRIDGE_authentication_username = "admin"
+RSSBRIDGE_authentication_password = "${auth_password}"
