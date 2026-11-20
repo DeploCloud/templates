@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based 2D and 3D CAD built in Rust and WebAssembly: command line, object snaps, layers, dimensions, hatches, blocks, layouts, DXF and DWG open and save, and PDF, SVG and PNG export.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/cadcraft",
+    "website": "https://getartcraft.com/apps/cadcraft",
+    "docs": [
+      "https://github.com/storytold/cadcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/cadcraft/blob/main/docs/file-format-parity.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Drawings are not stored on the server: the web app runs in the browser and keeps only preferences and panel layout there. Save or export your drawings to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the source of the official release tags."
+    }
+  ]
+}
