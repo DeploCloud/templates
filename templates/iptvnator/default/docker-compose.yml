@@ -1,0 +1,25 @@
+services:
+  iptvnator:
+    image: 4gray/iptvnator:0.25.0@sha256:88cb0cae6c6efd8c07b4c5579be3150b9f714364498c6fdcabc302808804cab2
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BACKEND_URL: /api
+      CLIENT_URL: ${CLIENT_URL}
+      PORT: "3000"
+      IPTVNATOR_STORAGE: server
+      IPTVNATOR_DATA_DIR: /data
+      IPTVNATOR_PROXY_ALLOW_PRIVATE_NETWORKS: "0"
+      IPTVNATOR_ACCESS_TOKEN: ${IPTVNATOR_ACCESS_TOKEN}
+    volumes:
+      - iptvnator-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/api/health >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  iptvnator-data: {}
