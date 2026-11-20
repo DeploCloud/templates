@@ -1,0 +1,16 @@
+services:
+  owncast:
+    image: owncast/owncast:0.3.0@sha256:0f35b568b1098d2badbde2dbf3c73a902009c95eb687c647edea04d6da079a78
+    restart: unless-stopped
+    # Both flags apply on every start: the password replaces the default abc123, the key is the only one accepted
+    command:
+      - --adminpassword=${OWNCAST_ADMIN_PASSWORD}
+      - --streamkey=${OWNCAST_STREAM_KEY}
+    expose:
+      - 8080
+      - 1935
+    volumes:
+      - owncast-data:/app/data
+
+volumes:
+  owncast-data: {}
