@@ -1,0 +1,14 @@
+services:
+  dbgate:
+    image: dbgate/dbgate:7.3.6@sha256:adb32bb7e0de948d1ffccbc9639014741e1f6d750f7fddd800af651777922953
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      LOGIN: ${DBGATE_LOGIN}
+      PASSWORD: ${DBGATE_PASSWORD}
+    volumes:
+      - dbgate-data:/root/.dbgate
+
+volumes:
+  dbgate-data: {}
