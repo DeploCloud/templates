@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source e-commerce platform with a storefront and back office, installed automatically on Apache with a bundled MariaDB database.",
+  "category": "other",
+  "developedBy": {
+    "label": "PrestaShop",
+    "url": "https://www.prestashop-project.org/"
+  },
+  "links": {
+    "github": "https://github.com/PrestaShop/PrestaShop",
+    "website": "https://www.prestashop-project.org/",
+    "docs": [
+      "https://github.com/PrestaShop/docker",
+      "https://docs.prestashop-project.org/",
+      "https://devdocs.prestashop-project.org/9/basics/installation/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The back office is at https://<your domain>/<PS_FOLDER_ADMIN>/ (a generated folder name, see the environment). Sign in with ADMIN_MAIL (admin@example.com) and the generated ADMIN_PASSWD, then change the email in your employee profile and configure outgoing email.",
+      "link": "https://github.com/PrestaShop/docker"
+    }
+  ]
+}
