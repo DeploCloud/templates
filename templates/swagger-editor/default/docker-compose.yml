@@ -1,0 +1,6 @@
+services:
+  swagger-editor:
+    image: swaggerapi/swagger-editor:v5.11.1@sha256:63ca789b8eb565dcf9174b7fc615ceedf48a9f795edf77cb1b8d532270d7ab18
+    restart: unless-stopped
+    expose:
+      - 80
