@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "metube"
+port = 8_081
+host = "${domain}"
