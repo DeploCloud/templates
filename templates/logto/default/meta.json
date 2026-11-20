@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source identity and access platform built on OIDC and OAuth 2.1, with the Admin Console, a sign-in experience and a PostgreSQL database.",
+  "category": "security",
+  "developedBy": {
+    "label": "Logto",
+    "url": "https://github.com/logto-io"
+  },
+  "links": {
+    "github": "https://github.com/logto-io/logto",
+    "website": "https://logto.io",
+    "docs": [
+      "https://docs.logto.io/logto-oss/get-started-with-oss",
+      "https://docs.logto.io/logto-oss/deployment-and-configuration",
+      "https://docs.logto.io/logto-oss/upgrading-oss-version"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app domain right after deployment and create the admin account: the welcome page allows exactly one account, and whoever registers first owns the Admin Console.",
+      "link": "https://docs.logto.io/logto-oss/get-started-with-oss"
+    }
+  ]
+}
