@@ -1,0 +1,28 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "mautic"
+port = 80
+host = "${domain}"
+
+[config.env]
+MAUTIC_DB_DATABASE = "mautic"
+MAUTIC_DB_USER = "mautic"
+MAUTIC_DB_PASSWORD = "${db_password}"
+MAUTIC_DB_ROOT_PASSWORD = "${db_root_password}"
+MAUTIC_MESSENGER_DSN_EMAIL = "doctrine://default"
+MAUTIC_MESSENGER_DSN_HIT = "doctrine://default"
+PHP_INI_VALUE_DATE_TIMEZONE = "UTC"
+
+[[config.mounts]]
+filePath = "parameters_local.php"
+content = """<?php
+// Trust the reverse proxy so Mautic sees HTTPS and the real visitor IP.
+$parameters = [
+    'trusted_proxies' => ['0.0.0.0/0', '::/0'],
+];
+"""
