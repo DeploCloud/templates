@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source crypto trading bot with a web interface for grid, DCA, AI and TradingView strategies, backtesting and paper trading.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Drakkar-Software",
+    "url": "https://github.com/Drakkar-Software"
+  },
+  "links": {
+    "github": "https://github.com/Drakkar-Software/OctoBot",
+    "website": "https://www.octobot.cloud",
+    "docs": [
+      "https://www.octobot.cloud/en/guides/octobot-interfaces/web",
+      "https://www.octobot.cloud/en/guides/octobot-installation/install-octobot-with-docker-video"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web interface has no password by default. Right after the first start, open Accounts > Interfaces, set a password, enable password protection and click Save and restart.",
+      "link": "https://www.octobot.cloud/en/guides/octobot-interfaces/web"
+    }
+  ]
+}
