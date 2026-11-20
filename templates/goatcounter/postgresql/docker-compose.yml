@@ -1,0 +1,33 @@
+services:
+  goatcounter:
+    image: arp242/goatcounter:2.7.0@sha256:791df3317bf5ce379511181a4802aaf29127a318b372d4fe39ec59e1c5af44be
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      GOATCOUNTER_DB: postgresql+postgresql://goatcounter:${DB_PASSWORD}@goatcounter-db:5432/goatcounter?sslmode=disable
+    volumes:
+      - goatcounter-data:/home/goatcounter/goatcounter-data
+    depends_on:
+      goatcounter-db:
+        condition: service_healthy
+
+  goatcounter-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: goatcounter
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: goatcounter
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U goatcounter -d goatcounter"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    volumes:
+      - goatcounter-db:/var/lib/postgresql
+
+volumes:
+  goatcounter-data: {}
+  goatcounter-db: {}
