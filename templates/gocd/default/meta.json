@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Continuous delivery server for modelling and visualising build, test and deploy pipelines, with one build agent included.",
+  "category": "development",
+  "developedBy": {
+    "label": "GoCD",
+    "url": "https://www.gocd.org/"
+  },
+  "links": {
+    "github": "https://github.com/gocd/gocd",
+    "website": "https://www.gocd.org/",
+    "docs": [
+      "https://docs.gocd.org/current/",
+      "https://github.com/gocd/docker-gocd-server",
+      "https://github.com/gocd/docker-gocd-agent-wolfi",
+      "https://docs.gocd.org/current/configuration/dev_authentication.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "GoCD starts with no authentication: anyone who can reach the URL has full admin access. Configure an authorization plugin (for example the bundled password file plugin) under Admin > Security > Authorization Configuration right after the first start.",
+      "link": "https://docs.gocd.org/current/configuration/dev_authentication.html"
+    },
+    {
+      "type": "warning",
+      "message": "The bundled agent registers as Pending. Enable it on the Agents page before running pipelines.",
+      "link": "https://docs.gocd.org/current/configuration/managing_a_build_cloud.html"
+    }
+  ]
+}
