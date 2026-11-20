@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "shiori"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SHIORI_HTTP_SECRET_KEY = "${secret:64}"
