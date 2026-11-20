@@ -1,0 +1,20 @@
+services:
+  whisperlivekit:
+    image: ghcr.io/quentinfuxa/whisperlivekit:v0.2.27-cpu-diarization-sortformer@sha256:e52376e8ad84a4cda80f2fe4594c6eae961882f27ec72bd5619ea311cb111b27
+    restart: unless-stopped
+    command: ["--model", "${WLK_MODEL}", "--language", "${WLK_LANGUAGE}"]
+    expose:
+      - 8000
+    environment:
+      WLK_API_TOKEN: ${WLK_API_TOKEN}
+    volumes:
+      - whisperlivekit-cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 300s
+
+volumes:
+  whisperlivekit-cache: {}
