@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+root_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "peertube"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+PEERTUBE_WEBSERVER_HOSTNAME = "${domain}"
+PEERTUBE_SECRET = "${hash:64}"
+POSTGRES_DB = "peertube"
+POSTGRES_USER = "peertube"
+POSTGRES_PASSWORD = "${db_password}"
+PEERTUBE_ADMIN_EMAIL = "admin@${domain}"
+PEERTUBE_SMTP_FROM = "noreply@${domain}"
+PT_INITIAL_ROOT_PASSWORD = "${root_password}"
