@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "baserow"
+port = 80
+host = "${domain}"
+
+[config.env]
+BASEROW_PUBLIC_URL = "https://${domain}"
+DATABASE_NAME = "baserow"
+DATABASE_USER = "baserow"
+DATABASE_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"

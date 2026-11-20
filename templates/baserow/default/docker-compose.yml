@@ -1,0 +1,20 @@
+services:
+  baserow:
+    image: baserow/baserow:2.4.3@sha256:304bebe22bf4c66d96d11bb746727492fa91637bd6deb807b2ef464f071c215c
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BASEROW_PUBLIC_URL: ${BASEROW_PUBLIC_URL}
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/baserow/backend/docker/docker-entrypoint.sh", "backend-healthcheck"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 600s
+      start_interval: 5s
+    volumes:
+      - baserow-data:/baserow/data
+
+volumes:
+  baserow-data: {}

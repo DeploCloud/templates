@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "No-code database and application builder with a spreadsheet-like interface, backed by separate PostgreSQL (pgvector) and Redis services as upstream recommends for production.",
+  "category": "database",
+  "developedBy": {
+    "label": "Baserow",
+    "url": "https://baserow.io"
+  },
+  "links": {
+    "github": "https://github.com/baserow/baserow",
+    "website": "https://baserow.io",
+    "docs": [
+      "https://baserow.io/docs/installation/install-with-docker",
+      "https://baserow.io/docs/installation/configuration",
+      "https://baserow.io/docs/installation/supported"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the instance admin. Create it right after deploying, then restrict sign-ups in the admin settings if the instance is private."
+    }
+  ]
+}

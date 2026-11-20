@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "baserow"
+port = 80
+host = "${domain}"
+
+[config.env]
+BASEROW_PUBLIC_URL = "https://${domain}"
