@@ -1,0 +1,34 @@
+[variables]
+session_key = "${password:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "meshcentral"
+port = 4_430
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+  "settings": {
+    "cert": "${domain}",
+    "WANonly": true,
+    "port": 4430,
+    "aliasPort": 443,
+    "redirPort": 800,
+    "tlsOffload": true,
+    "sessionKey": "${session_key}",
+    "selfUpdate": false,
+    "agentPong": 300
+  },
+  "domains": {
+    "": {
+      "certUrl": "https://${domain}:443/",
+      "agentConfig": ["webSocketMaskOverride=1"],
+      "newAccounts": false,
+      "minify": true
+    }
+  }
+}
+"""

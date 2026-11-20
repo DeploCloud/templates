@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based remote monitoring and management server for remote desktop, terminal and file access to devices running the Mesh agent.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Ylian Saint-Hilaire",
+    "url": "https://github.com/Ylianst"
+  },
+  "links": {
+    "github": "https://github.com/Ylianst/MeshCentral",
+    "website": "https://meshcentral.com",
+    "docs": [
+      "https://docs.meshcentral.com/install/container/",
+      "https://docs.meshcentral.com/meshcentral/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created on the login page becomes the server administrator. Create it right after deployment; self-registration is closed once that account exists."
+    }
+  ]
+}
