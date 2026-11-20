@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source survey and experience management platform for link, website and in-app surveys, with PostgreSQL, Valkey, SpiceDB, Hub and Cube analytics.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Formbricks",
+    "url": "https://formbricks.com"
+  },
+  "links": {
+    "github": "https://github.com/formbricks/formbricks",
+    "website": "https://formbricks.com",
+    "docs": [
+      "https://formbricks.com/docs/self-hosting/setup/docker",
+      "https://formbricks.com/docs/self-hosting/configuration/environment-variables",
+      "https://formbricks.com/docs/self-hosting/configuration/file-uploads"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor completes the setup wizard and becomes the organization owner. Email invites, verification and password resets need SMTP settings (SMTP_HOST, MAIL_FROM and related variables) added to the formbricks service.",
+      "link": "https://formbricks.com/docs/self-hosting/configuration/smtp"
+    },
+    {
+      "type": "info",
+      "message": "File uploads, image questions and branding logos need S3-compatible storage configured through the S3_* variables; without it those features stay disabled.",
+      "link": "https://formbricks.com/docs/self-hosting/configuration/file-uploads"
+    }
+  ]
+}
