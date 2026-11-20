@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Open business management platform (ERP, CRM, HRM, ATS, PM) with time tracking, invoicing and projects, backed by PostgreSQL and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ever Co.",
+    "url": "https://ever.co/"
+  },
+  "links": {
+    "github": "https://github.com/ever-co/ever-gauzy",
+    "website": "https://gauzy.co/",
+    "docs": [
+      "https://docs.gauzy.co/getting-started/configuration/",
+      "https://docs.gauzy.co/deployment/docker/docker-compose/",
+      "https://github.com/ever-co/ever-gauzy/blob/develop/.env.sample"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start runs the database migrations and seeds it, which can take several minutes. Then sign in as DEMO_SUPER_ADMIN_EMAIL (admin@ever.co) with the generated DEMO_SUPER_ADMIN_PASSWORD from the environment settings. The seeded accounts are created only on the first start, so change the email there before the first deploy.",
+      "link": "https://github.com/ever-co/ever-gauzy#production"
+    },
+    {
+      "type": "warning",
+      "message": "Invitations and password resets need email: set up SMTP in Settings > Custom SMTP after signing in.",
+      "link": "https://docs.gauzy.co/getting-started/configuration/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
