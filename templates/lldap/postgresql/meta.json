@@ -1,0 +1,27 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Lightweight LDAP server for user and group authentication with a web admin UI, backed by a bundled PostgreSQL database.",
+  "category": "security",
+  "developedBy": {
+    "label": "LLDAP",
+    "url": "https://github.com/lldap"
+  },
+  "links": {
+    "github": "https://github.com/lldap/lldap",
+    "docs": [
+      "https://github.com/lldap/lldap/blob/main/docs/install.md",
+      "https://github.com/lldap/lldap/blob/main/lldap_config.docker_template.toml"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated LLDAP_LDAP_USER_PASS. It is only used to create the admin account on the first start; change the password later from the web UI. Never change LLDAP_KEY_SEED after the first start: LLDAP then refuses to start because stored passwords can no longer be verified.",
+      "link": "https://github.com/lldap/lldap/blob/main/docs/install.md#with-docker"
+    },
+    {
+      "type": "info",
+      "message": "Only the web UI is exposed. The LDAP port 3890 is reachable only from containers on the same private network, not from the internet."
+    }
+  ]
+}
