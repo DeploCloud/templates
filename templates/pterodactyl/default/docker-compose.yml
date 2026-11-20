@@ -1,0 +1,75 @@
+services:
+  pterodactyl:
+    image: ghcr.io/pterodactyl/panel:v1.15.2@sha256:499c586cc808ad417ecf47df6da13d5926f97f7f6c665b297fa07d86a3a99bcd
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_URL: https://${DOMAIN}
+      APP_ENV: production
+      APP_ENVIRONMENT_ONLY: "false"
+      APP_TIMEZONE: ${APP_TIMEZONE}
+      APP_SERVICE_AUTHOR: ${APP_SERVICE_AUTHOR}
+      APP_KEY: ${APP_KEY}
+      HASHIDS_SALT: ${HASHIDS_SALT}
+      HASHIDS_LENGTH: "8"
+      TRUSTED_PROXIES: "*"
+      DB_HOST: pterodactyl-db
+      DB_PORT: "3306"
+      DB_DATABASE: panel
+      DB_USERNAME: pterodactyl
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: pterodactyl-redis
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      MAIL_MAILER: smtp
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+    volumes:
+      - pterodactyl-var:/app/var
+      - pterodactyl-logs:/app/storage/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost/auth/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      pterodactyl-db:
+        condition: service_healthy
+      pterodactyl-redis:
+        condition: service_healthy
+
+  pterodactyl-db:
+    image: mariadb:11.8.9@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: panel
+      MARIADB_USER: pterodactyl
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - pterodactyl-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  pterodactyl-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - pterodactyl-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pterodactyl-var: {}
+  pterodactyl-logs: {}
+  pterodactyl-db: {}
+  pterodactyl-redis: {}
