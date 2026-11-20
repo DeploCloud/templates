@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Password-protected web workspace for Hermes Agent with chat, sessions, memory, scheduled jobs, a file browser and a terminal, deployed together with the Hermes Agent gateway.",
+  "category": "ai",
+  "developedBy": {
+    "label": "outsourc-e",
+    "url": "https://github.com/outsourc-e"
+  },
+  "links": {
+    "github": "https://github.com/outsourc-e/hermes-workspace",
+    "website": "https://hermes-workspace.com",
+    "docs": [
+      "https://github.com/outsourc-e/hermes-workspace/blob/main/docs/docker.md",
+      "https://github.com/outsourc-e/hermes-workspace#-security--deployment-env-vars",
+      "https://hermes-agent.nousresearch.com/docs/integrations/providers",
+      "https://hermes-agent.nousresearch.com/docs/reference/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Before the first chat, set the API key of one LLM provider (OPENROUTER_API_KEY, ANTHROPIC_API_KEY, OPENAI_API_KEY or GOOGLE_API_KEY) in the environment and redeploy; the agent then uses that provider's default model. Sign in with the generated HERMES_PASSWORD. Provider settings cannot be edited inside the workspace in this setup, so to pick another model run `hermes config set model <model-id>` in the console of the hermes-workspace-agent container.",
+      "link": "https://hermes-agent.nousresearch.com/docs/integrations/providers"
+    },
+    {
+      "type": "info",
+      "message": "The Hermes Agent dashboard is not started, because on a network bind it requires its own sign-in that the workspace cannot pass. Chat, sessions and scheduled jobs use the agent gateway API and memory is read from the shared volume; the skills browser, in-app provider and config editing, MCP management, Conductor missions and the native kanban plugin need the dashboard and stay unavailable or fall back to the workspace's own versions.",
+      "link": "https://github.com/outsourc-e/hermes-workspace/issues/580"
+    }
+  ]
+}

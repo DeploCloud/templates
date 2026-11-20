@@ -1,0 +1,50 @@
+services:
+  hermes-workspace:
+    image: ghcr.io/outsourc-e/hermes-workspace:main-c631425@sha256:1ec05339750da7caaf1cd0183c8c3b188856918b377407b4ac1dafca67e42d88
+    restart: unless-stopped
+    expose:
+      - 3000
+    depends_on:
+      hermes-workspace-agent:
+        condition: service_healthy
+    volumes:
+      - hermes-home:/home/workspace/.hermes
+      - hermes-workspace-files:/workspace
+    environment:
+      HERMES_HOME: /home/workspace/.hermes
+      HERMES_WORKSPACE_DIR: /workspace
+      HERMES_API_URL: http://hermes-workspace-agent:8642
+      HERMES_API_TOKEN: ${API_SERVER_KEY}
+      HERMES_PASSWORD: ${HERMES_PASSWORD}
+      COOKIE_SECURE: "1"
+      TRUST_PROXY: "1"
+
+  hermes-workspace-agent:
+    image: nousresearch/hermes-agent:v0.23.2@sha256:d6746a084e9341baada483e3d6210444d3c1aeb7c130f0915150065fb2851459
+    restart: unless-stopped
+    command: ["gateway", "run"]
+    shm_size: 1gb
+    expose:
+      - 8642
+    volumes:
+      - hermes-home:/opt/data
+    environment:
+      # same UID as the workspace image user, both containers write the shared Hermes home
+      HERMES_UID: "10010"
+      API_SERVER_ENABLED: "true"
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_KEY: ${API_SERVER_KEY}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8642/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+volumes:
+  hermes-home: {}
+  hermes-workspace-files: {}

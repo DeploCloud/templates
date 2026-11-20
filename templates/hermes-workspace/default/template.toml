@@ -1,0 +1,19 @@
+[variables]
+workspace_password = "${password:32}"
+api_server_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hermes-workspace"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+HERMES_PASSWORD = "${workspace_password}"
+API_SERVER_KEY = "${api_server_key}"
+OPENROUTER_API_KEY = ""
+ANTHROPIC_API_KEY = ""
+OPENAI_API_KEY = ""
+GOOGLE_API_KEY = ""
