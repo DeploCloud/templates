@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Pterodactyl Panel, the web interface for managing game servers that run in isolated Docker containers on Wings nodes.",
+  "category": "other",
+  "developedBy": {
+    "label": "Pterodactyl",
+    "url": "https://github.com/pterodactyl"
+  },
+  "links": {
+    "github": "https://github.com/pterodactyl/panel",
+    "website": "https://pterodactyl.io",
+    "docs": [
+      "https://docs.pterodactyl.io/v1/panel/getting-started",
+      "https://github.com/pterodactyl/panel/blob/1.0-develop/.github/docker/README.md",
+      "https://docs.pterodactyl.io/v1/wings/installing"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No account exists after the first start. Open a terminal in the pterodactyl container and run php artisan p:user:make to create the first administrator.",
+      "link": "https://docs.pterodactyl.io/v1/panel/getting-started"
+    },
+    {
+      "type": "warning",
+      "message": "This template deploys only the Panel. Game servers run on Wings, which must be installed separately on a host with Docker and linked to the Panel as a node. Because the Panel is served over HTTPS, Wings needs its own TLS certificate for its FQDN.",
+      "link": "https://docs.pterodactyl.io/v1/wings/installing"
+    }
+  ]
+}
