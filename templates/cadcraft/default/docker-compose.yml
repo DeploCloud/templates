@@ -1,0 +1,12 @@
+services:
+  cadcraft:
+    image: ghcr.io/mikapst/cadcraft-web:v0.20.1@sha256:cbd330af4c27a77f6e708062ad63f3b4fbc5a54cf122ac9875212a40f7bbd44c
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
