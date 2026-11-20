@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Private X.509 certificate authority and ACME server, initialized on first start with a root, an intermediate, an admin provisioner and an ACME provisioner.",
+  "category": "security",
+  "developedBy": {
+    "label": "Smallstep",
+    "url": "https://smallstep.com"
+  },
+  "links": {
+    "github": "https://github.com/smallstep/certificates",
+    "website": "https://smallstep.com/open-source/",
+    "docs": [
+      "https://smallstep.com/docs/step-ca/",
+      "https://smallstep.com/docs/tutorials/docker-tls-certificate-authority/",
+      "https://smallstep.com/docs/tutorials/acme-protocol-acme-clients/",
+      "https://smallstep.com/docs/step-ca/provisioners/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Clients must trust the private root certificate, served at https://<your-domain>/roots.pem. The root fingerprint is printed in the step-ca logs on first start. The generated CA_PASSWORD variable unlocks the CA keys and the admin provisioner.",
+      "link": "https://smallstep.com/docs/tutorials/docker-tls-certificate-authority/"
+    },
+    {
+      "type": "info",
+      "message": "TLS for your domain ends in front of the CA, so ACME clients work as-is at https://<your-domain>/acme/acme/directory. For the step CLI, run step ca renew with --mtls=false, and pass --root a bundle that trusts the domain's public certificate, because mutual TLS and the private root pin do not pass through this route.",
+      "link": "https://smallstep.com/docs/step-cli/reference/ca/renew/"
+    }
+  ]
+}

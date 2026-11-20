@@ -1,0 +1,33 @@
+services:
+  step-ca:
+    image: smallstep/step-ca:0.30.2@sha256:a2b17872915c193259b75a5474c398326f41bd199f0842093e52cf4182bc8270
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      DOCKER_STEPCA_INIT_NAME: ${CA_NAME}
+      DOCKER_STEPCA_INIT_DNS_NAMES: ${CA_DNS_NAMES}
+      DOCKER_STEPCA_INIT_WITH_CA_URL: https://localhost:9000
+      DOCKER_STEPCA_INIT_ACME: "true"
+      DOCKER_STEPCA_INIT_PASSWORD: ${CA_PASSWORD}
+    volumes:
+      - step-ca-data:/home/step
+    healthcheck:
+      test: ["CMD-SHELL", "step ca health 2>/dev/null | grep -q '^ok'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+  step-ca-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      step-ca:
+        condition: service_healthy
+
+volumes:
+  step-ca-data: {}
