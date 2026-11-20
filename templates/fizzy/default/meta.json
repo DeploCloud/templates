@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Kanban boards for tracking issues and ideas, with SQLite storage, background jobs and uploads on one persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "37signals",
+    "url": "https://37signals.com"
+  },
+  "links": {
+    "github": "https://github.com/basecamp/fizzy",
+    "website": "https://fizzy.do",
+    "docs": [
+      "https://github.com/basecamp/fizzy/blob/main/docs/docker-deployment.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: Fizzy forces SSL and marks its session cookies secure, so signing in over a plain HTTP domain fails.",
+      "link": "https://github.com/basecamp/fizzy/blob/main/docs/docker-deployment.md#ssl"
+    },
+    {
+      "type": "warning",
+      "message": "Sign-in sends a one-time code by email. Set the SMTP variables, or find the 6-character code in the container logs. The first account created owns the instance and further account signups are disabled.",
+      "link": "https://github.com/basecamp/fizzy/blob/main/docs/docker-deployment.md#smtp-email"
+    }
+  ]
+}
