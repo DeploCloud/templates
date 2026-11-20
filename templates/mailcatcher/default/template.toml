@@ -1,0 +1,12 @@
+[variables]
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mailcatcher"
+port = 1_080
+host = "${domain}"
+
+[config.env]
+MAILCATCHER_MESSAGES_LIMIT = "1000"
