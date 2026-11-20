@@ -1,0 +1,39 @@
+services:
+  lldap:
+    image: lldap/lldap:v0.6.3@sha256:2a8454b668c1aba7157e832eab0e242e1e7eb5fb7591d7e7774ba05286511ca8
+    restart: unless-stopped
+    expose:
+      - 17170
+      - 3890
+    environment:
+      TZ: ${TZ}
+      LLDAP_JWT_SECRET: ${LLDAP_JWT_SECRET}
+      LLDAP_KEY_SEED: ${LLDAP_KEY_SEED}
+      LLDAP_LDAP_BASE_DN: ${LLDAP_LDAP_BASE_DN}
+      LLDAP_LDAP_USER_PASS: ${LLDAP_LDAP_USER_PASS}
+      LLDAP_HTTP_URL: ${LLDAP_HTTP_URL}
+      LLDAP_DATABASE_URL: postgres://lldap:${DB_PASSWORD}@lldap-db:5432/lldap
+    volumes:
+      - lldap-data:/data
+    depends_on:
+      lldap-db:
+        condition: service_healthy
+
+  lldap-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lldap
+      POSTGRES_USER: lldap
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lldap -d lldap"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - lldap-db:/var/lib/postgresql
+
+volumes:
+  lldap-data: {}
+  lldap-db: {}
