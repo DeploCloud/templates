@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "the-lounge"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+THELOUNGE_USER = "admin"
+THELOUNGE_PASSWORD = "${password:24}"

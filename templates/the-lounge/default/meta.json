@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web IRC client that stays connected to your networks while you are offline, in private multi-user mode.",
+  "category": "communication",
+  "developedBy": {
+    "label": "The Lounge",
+    "url": "https://github.com/thelounge"
+  },
+  "links": {
+    "github": "https://github.com/thelounge/thelounge",
+    "website": "https://thelounge.chat",
+    "docs": [
+      "https://thelounge.chat/docs",
+      "https://thelounge.chat/docs/usage",
+      "https://thelounge.chat/docs/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as THELOUNGE_USER with the generated THELOUNGE_PASSWORD from the environment. This user is created only while no user exists yet, so change its password in the app settings afterwards. Add more users with thelounge add <name> in the container terminal.",
+      "link": "https://thelounge.chat/docs/usage"
+    }
+  ]
+}
