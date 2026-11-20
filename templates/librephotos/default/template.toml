@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "librephotos"
+port = 8_001
+host = "${domain}"
+
+[config.env]
+FRONTEND_BASE_URL = "https://${domain}"
+CSRF_TRUSTED_ORIGINS = "https://${domain}"
