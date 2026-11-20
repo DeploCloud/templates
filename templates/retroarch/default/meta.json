@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "RetroArch emulator frontend streamed to the browser behind a password, with gamepad support and settings, cores, saves and states kept on a persistent volume.",
+  "category": "media",
+  "developedBy": {
+    "label": "libretro",
+    "url": "https://www.libretro.com/"
+  },
+  "links": {
+    "github": "https://github.com/libretro/RetroArch",
+    "website": "https://www.retroarch.com/",
+    "docs": [
+      "https://docs.libretro.com/start/understanding/",
+      "https://docs.libretro.com/guides/download-cores/",
+      "https://docs.libretro.com/guides/import-content/",
+      "https://docs.linuxserver.io/images/docker-retroarch/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. No games are included: uploads from the web client land in /config/Desktop.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-retroarch/"
+    }
+  ]
+}
