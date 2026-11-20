@@ -1,0 +1,15 @@
+services:
+  reacher:
+    image: reacherhq/backend:v0.11.11@sha256:658de20fac2bc49360eb81c2ed365c5bdc9eb3285ff05f366328aeab990eba64
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      RCH__HTTP_HOST: 0.0.0.0
+      RCH__HTTP_PORT: "8080"
+      RCH__BACKEND_NAME: "${RCH__BACKEND_NAME}"
+      RCH__HEADER_SECRET: "${RCH__HEADER_SECRET}"
+      RCH__HELLO_NAME: "${RCH__HELLO_NAME}"
+      RCH__FROM_EMAIL: "${RCH__FROM_EMAIL}"
+      RCH__SMTP_TIMEOUT: "${RCH__SMTP_TIMEOUT}"
+      RUST_LOG: "${RUST_LOG}"
