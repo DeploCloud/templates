@@ -1,0 +1,29 @@
+{
+  "name": "ClickHouse",
+  "shortDescription": "Self-hosted proof-of-work CAPTCHA server with a dashboard for site keys and rules, storing analytics events in a bundled ClickHouse server next to Valkey.",
+  "category": "security",
+  "developedBy": {
+    "label": "tiagozip",
+    "url": "https://github.com/tiagozip"
+  },
+  "links": {
+    "github": "https://github.com/tiagozip/cap",
+    "website": "https://trycap.dev",
+    "docs": [
+      "https://trycap.dev/guide/capd/#analytics-storage",
+      "https://trycap.dev/guide/capd/options"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard with the generated ADMIN_KEY environment variable. Changing it later makes stored site key secrets unreadable.",
+      "link": "https://trycap.dev/guide/capd/"
+    },
+    {
+      "type": "warning",
+      "message": "Rate limits use the socket address until you set a proxy header. After the first sign-in, open Instance settings > Visitor location, choose Edit header names and set Visitor IP header to X-Forwarded-For so each visitor gets its own bucket.",
+      "link": "https://trycap.dev/guide/capd/options#client-ips-behind-a-proxy"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+services:
+  cap-captcha:
+    image: tiago2/cap:4.0.15@sha256:d8c8af1b871c4b10adefbc388844ee6de497c6d96923698ffa1aa4567316e86f
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ADMIN_KEY: ${ADMIN_KEY}
+      VALKEY_URL: ${VALKEY_URL}
+    volumes:
+      - cap-data:/usr/src/app/data
+    depends_on:
+      cap-captcha-valkey:
+        condition: service_healthy
+    stop_grace_period: 15s
+
+  cap-captcha-valkey:
+    image: valkey/valkey:9.2.0-alpine@sha256:4d67e1af80c653bd46c0bbe8de438c81a6535ab5a39b22f2100028f314005663
+    restart: unless-stopped
+    command: valkey-server --appendonly yes --appendfsync everysec --save 60 1 --maxmemory-policy noeviction --loglevel warning
+    volumes:
+      - valkey-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  cap-data: {}
+  valkey-data: {}
