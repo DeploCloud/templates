@@ -1,0 +1,12 @@
+services:
+  effectcraft:
+    image: ghcr.io/mikapst/effectcraft-web:v0.24.1@sha256:455d01b61970a3d2f373a950145c4f8de8350734106cb30ee8bac7069d3e5146
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

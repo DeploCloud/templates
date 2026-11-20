@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based motion graphics and compositing studio built in Rust and WebAssembly: layers, keyframes, 308 effects, 3D cameras and lights, Lottie import and export, and a render queue.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/effectcraft",
+    "website": "https://getartcraft.com/apps/effectcraft",
+    "docs": [
+      "https://github.com/storytold/effectcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/effectcraft/blob/main/docs/web.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Projects and media are not stored on the server: the studio runs in the browser and keeps projects in that browser's storage. Save projects and renders to your own device."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the source of the official release tags."
+    }
+  ]
+}
