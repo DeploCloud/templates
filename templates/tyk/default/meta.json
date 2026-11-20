@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Tyk open source API gateway with Redis, proxying and securing REST, GraphQL and gRPC APIs managed through the Gateway API.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Tyk Technologies",
+    "url": "https://tyk.io/"
+  },
+  "links": {
+    "github": "https://github.com/TykTechnologies/tyk",
+    "website": "https://tyk.io/",
+    "docs": [
+      "https://tyk.io/docs/deployment-and-operations/tyk-open-source-api-gateway/quick-start",
+      "https://tyk.io/docs/tyk-gateway-api",
+      "https://tyk.io/docs/api-management/gateway-config-managing-classic",
+      "https://tyk.io/docs/tyk-oss-gateway/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI. Manage APIs, keys and policies through the Gateway API under /tyk/, sending the generated TYK_GW_SECRET value in the X-Tyk-Authorization header, then call /tyk/reload/group to apply API changes.",
+      "link": "https://tyk.io/docs/tyk-gateway-api"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+services:
+  tyk:
+    image: tykio/tyk-gateway:v5.16.0@sha256:7af43f37fcae9bccf050c934e51a2ba710c48b5916290da13ef36fcdee3c60c1
+    restart: unless-stopped
+    # The image runs as uid 65532, but fresh named volumes are root-owned.
+    user: "0:0"
+    expose:
+      - 8080
+    environment:
+      TYK_GW_SECRET: ${TYK_GW_SECRET}
+      TYK_GW_STORAGE_HOST: tyk-redis
+      TYK_GW_STORAGE_PORT: "6379"
+      TYK_GW_STORAGE_PASSWORD: ${REDIS_PASSWORD}
+      TYK_GW_APPPATH: /opt/tyk-gateway/data/apps
+      TYK_GW_POLICIES_POLICYSOURCE: file
+      TYK_GW_POLICIES_POLICYPATH: /opt/tyk-gateway/data/policies
+    volumes:
+      - tyk-apps:/opt/tyk-gateway/data/apps
+      - tyk-policies:/opt/tyk-gateway/data/policies
+    depends_on:
+      tyk-redis:
+        condition: service_healthy
+
+  tyk-redis:
+    image: redis:8.2.11-alpine@sha256:da23c2478319ceb4903857d77a2fd7aa5137d9e9d4c8165dafbacedac6403e95
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - tyk-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  tyk-apps: {}
+  tyk-policies: {}
+  tyk-redis: {}

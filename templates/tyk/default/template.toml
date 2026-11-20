@@ -1,0 +1,15 @@
+[variables]
+gateway_secret = "${password:48}"
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tyk"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TYK_GW_SECRET = "${gateway_secret}"
+REDIS_PASSWORD = "${redis_password}"
