@@ -1,0 +1,40 @@
+services:
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:v0.10.0-web@sha256:1a3eb7802907e48c960c06b412592969efe5514b9c01b70fa634076f7e675adf
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SCRUTINY_WEB_INFLUXDB_HOST: scrutiny-influxdb
+      SCRUTINY_WEB_INFLUXDB_PORT: "8086"
+      SCRUTINY_WEB_INFLUXDB_TOKEN: ${INFLUXDB_TOKEN}
+      SCRUTINY_WEB_INFLUXDB_INIT_USERNAME: admin
+      SCRUTINY_WEB_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD}
+    volumes:
+      - scrutiny-config:/opt/scrutiny/config
+    depends_on:
+      scrutiny-influxdb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+
+  scrutiny-influxdb:
+    image: influxdb:2.8.0@sha256:e6d293bedc5800bc5f7f61af6335d90a355c78be88fa41e591431ff44df553a5
+    restart: unless-stopped
+    volumes:
+      - scrutiny-influxdb-data:/var/lib/influxdb2
+      - scrutiny-influxdb-config:/etc/influxdb2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+
+volumes:
+  scrutiny-config: {}
+  scrutiny-influxdb-data: {}
+  scrutiny-influxdb-config: {}
