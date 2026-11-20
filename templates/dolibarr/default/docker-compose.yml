@@ -1,0 +1,47 @@
+services:
+  dolibarr:
+    image: dolibarr/dolibarr:24.0.2@sha256:0fab863277ca8f88759ecf6857325a55ee43a0457c94c54459db036bf19d3cae
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DOLI_DB_HOST: dolibarr-db
+      DOLI_DB_NAME: ${DOLI_DB_NAME}
+      DOLI_DB_USER: ${DOLI_DB_USER}
+      DOLI_DB_PASSWORD: ${DOLI_DB_PASSWORD}
+      DOLI_URL_ROOT: ${DOLI_URL_ROOT}
+      DOLI_ADMIN_LOGIN: ${DOLI_ADMIN_LOGIN}
+      DOLI_ADMIN_PASSWORD: ${DOLI_ADMIN_PASSWORD}
+      DOLI_INSTANCE_UNIQUE_ID: ${DOLI_INSTANCE_UNIQUE_ID}
+      DOLI_CRON_KEY: ${DOLI_CRON_KEY}
+    volumes:
+      - dolibarr-documents:/var/www/documents
+      - dolibarr-custom:/var/www/html/custom
+    depends_on:
+      dolibarr-db:
+        condition: service_healthy
+
+  dolibarr-db:
+    image: mariadb:12.3.3@sha256:4ebbcf100a3ba320766dfa0e1af008df12261301db6ef72798c7650f70794aed
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MARIADB_DATABASE: ${DOLI_DB_NAME}
+      MARIADB_USER: ${DOLI_DB_USER}
+      MARIADB_PASSWORD: ${DOLI_DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - dolibarr-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dolibarr-documents: {}
+  dolibarr-custom: {}
+  dolibarr-db: {}
