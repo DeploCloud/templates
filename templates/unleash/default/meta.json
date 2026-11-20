@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source feature flag platform with a web dashboard, SDK APIs and a bundled PostgreSQL database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Unleash",
+    "url": "https://www.getunleash.io"
+  },
+  "links": {
+    "github": "https://github.com/Unleash/unleash",
+    "website": "https://www.getunleash.io",
+    "docs": [
+      "https://docs.getunleash.io/deploy/getting-started",
+      "https://docs.getunleash.io/deploy/configuring-unleash"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the UNLEASH_DEFAULT_ADMIN_PASSWORD value from the environment variables. The admin user is created only on the first start, so changing that variable later has no effect; change the password from your profile instead."
+    }
+  ]
+}
