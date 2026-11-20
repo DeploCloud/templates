@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source enterprise social network for intranets and communities, with spaces, profiles, activity streams and modules, backed by MariaDB.",
+  "category": "communication",
+  "developedBy": {
+    "label": "HumHub",
+    "url": "https://www.humhub.com"
+  },
+  "links": {
+    "github": "https://github.com/humhub/humhub",
+    "website": "https://www.humhub.com",
+    "docs": [
+      "https://github.com/humhub/docker/blob/main/README.md",
+      "https://docs.humhub.org/docs/admin/reverse-proxy",
+      "https://docs.humhub.org/docs/admin/requirements"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the domain after the first start to finish the web installer: the database is already configured, and the account you create there becomes the administrator. Configure SMTP in the installer or later under Administration so notification and registration emails are delivered."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
