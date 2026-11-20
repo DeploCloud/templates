@@ -1,0 +1,18 @@
+[variables]
+admin_password = "${password:24}"
+jwt_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mage-ai"
+port = 6_789
+host = "${domain}"
+
+[config.env]
+MAGE_PUBLIC_HOST = "https://${domain}"
+JWT_SECRET = "${jwt_secret}"
+DEFAULT_OWNER_EMAIL = "admin@admin.com"
+DEFAULT_OWNER_USERNAME = "admin"
+DEFAULT_OWNER_PASSWORD = "${admin_password}"
