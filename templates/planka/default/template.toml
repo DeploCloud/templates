@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+secret_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "planka"
+port = 1_337
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+SECRET_KEY = "${secret_key}"
+DEFAULT_ADMIN_EMAIL = "admin@${domain}"
+DEFAULT_ADMIN_PASSWORD = "${admin_password}"
+DEFAULT_ADMIN_NAME = "Admin"
+DEFAULT_ADMIN_USERNAME = "admin"
