@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "IT asset and license management with check-in/check-out tracking, audits and a REST API, backed by MariaDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Grokability",
+    "url": "https://github.com/grokability"
+  },
+  "links": {
+    "github": "https://github.com/grokability/snipe-it",
+    "website": "https://snipeitapp.com",
+    "docs": [
+      "https://snipe-it.readme.io/docs/docker",
+      "https://snipe-it.readme.io/docs/configuration",
+      "https://snipe-it.readme.io/docs/getting-started"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the setup wizard creates the first administrator account, and whoever completes it first becomes the admin.",
+      "link": "https://snipe-it.readme.io/docs/getting-started"
+    },
+    {
+      "type": "warning",
+      "message": "Outgoing email is written to the container log by default. Set MAIL_MAILER to smtp and fill in the MAIL_* variables to send password resets and notifications.",
+      "link": "https://snipe-it.readme.io/docs/configuration"
+    }
+  ]
+}
