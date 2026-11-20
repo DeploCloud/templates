@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "File transfer server with a web admin panel, a browser file client, a REST API and WebDAV, backed by local storage or S3, GCS and Azure Blob.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Nicola Murino",
+    "url": "https://github.com/drakkan"
+  },
+  "links": {
+    "github": "https://github.com/drakkan/sftpgo",
+    "website": "https://sftpgo.com",
+    "docs": [
+      "https://docs.sftpgo.com/latest/docker/",
+      "https://docs.sftpgo.com/latest/initial-configuration/",
+      "https://docs.sftpgo.com/latest/env-vars/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /web/admin as admin with the generated SFTPGO_DEFAULT_ADMIN_PASSWORD from the environment variables, then create the users who will transfer files. The admin is only created on the first start, so change the password later from the admin panel, not the environment.",
+      "link": "https://docs.sftpgo.com/latest/initial-configuration/"
+    },
+    {
+      "type": "info",
+      "message": "Only HTTP is routed: users connect through the web client and WebDAV at /dav. The SFTP service on port 2022 is not published."
+    }
+  ]
+}

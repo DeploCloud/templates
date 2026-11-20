@@ -1,0 +1,23 @@
+[variables]
+admin_password = "${password:24}"
+signing_passphrase = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sftpgo"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "sftpgo"
+port = 10_080
+host = "${domain}"
+path = "/dav"
+
+[config.env]
+SFTPGO_DEFAULT_ADMIN_USERNAME = "admin"
+SFTPGO_DEFAULT_ADMIN_PASSWORD = "${admin_password}"
+SFTPGO_HTTPD__SIGNING_PASSPHRASE = "${signing_passphrase}"
