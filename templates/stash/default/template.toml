@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "stash"
+port = 9_999
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"

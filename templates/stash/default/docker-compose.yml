@@ -1,0 +1,29 @@
+services:
+  stash:
+    image: stashapp/stash:v0.32.0@sha256:1099ffd7cc53f165916a07644874448011308a46eadbcd4edd328786e59b5eb9
+    restart: unless-stopped
+    expose:
+      - 9999
+    environment:
+      STASH_STASH: /data/
+      STASH_GENERATED: /generated/
+      STASH_METADATA: /metadata/
+      STASH_CACHE: /cache/
+      STASH_BLOBS: /blobs/
+      STASH_PORT: 9999
+      TZ: ${TZ}
+    volumes:
+      - stash-config:/root/.stash
+      - stash-data:/data
+      - stash-metadata:/metadata
+      - stash-cache:/cache
+      - stash-blobs:/blobs
+      - stash-generated:/generated
+
+volumes:
+  stash-config: {}
+  stash-data: {}
+  stash-metadata: {}
+  stash-cache: {}
+  stash-blobs: {}
+  stash-generated: {}
