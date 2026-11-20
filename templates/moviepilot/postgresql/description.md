@@ -1,0 +1,3 @@
+MoviePilot automates a movie and TV library: subscriptions, resource search, download scheduling, file renaming, metadata scraping and media server refresh. This variant follows the upstream full-feature setup, storing data in an included PostgreSQL 17 database and using an included Redis service as the cache.
+
+Settings and logs persist in `/config`, the browser kernel persists in `/moviepilot/.cloakbrowser`, `/media` holds downloads and the organized library, and PostgreSQL and Redis keep their data on their own volumes. On the first visit the web UI asks you to create the admin user and API key; afterwards complete site authentication and connect a downloader and media server under Settings.

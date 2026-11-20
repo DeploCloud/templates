@@ -1,0 +1,69 @@
+services:
+  moviepilot:
+    # 3.2.7+ cannot initialize an empty PostgreSQL database (migration 5b3355c964bb rolls back on text ids)
+    image: jxxghp/moviepilot-v3:3.2.6@sha256:0bb4c50a0b9c8597e9ffc910da52792f6fc64650f6caf66ed2e2a63ed9cec373
+    restart: unless-stopped
+    stop_grace_period: 120s
+    expose:
+      - 3000
+    environment:
+      NGINX_PORT: "3000"
+      PORT: "3001"
+      PUID: "0"
+      PGID: "0"
+      UMASK: "000"
+      TZ: ${TZ}
+      APP_DOMAIN: ${APP_DOMAIN}
+      DB_TYPE: postgresql
+      DB_POSTGRESQL_HOST: moviepilot-db
+      DB_POSTGRESQL_PORT: "5432"
+      DB_POSTGRESQL_DATABASE: moviepilot
+      DB_POSTGRESQL_USERNAME: moviepilot
+      DB_POSTGRESQL_PASSWORD: ${DB_PASSWORD}
+      CACHE_BACKEND_TYPE: redis
+      CACHE_BACKEND_URL: redis://:${REDIS_PASSWORD}@moviepilot-redis:6379/0
+    volumes:
+      - moviepilot-config:/config
+      - moviepilot-core:/moviepilot/.cloakbrowser
+      - moviepilot-media:/media
+    depends_on:
+      moviepilot-db:
+        condition: service_healthy
+      moviepilot-redis:
+        condition: service_healthy
+
+  moviepilot-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: moviepilot
+      POSTGRES_USER: moviepilot
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - moviepilot-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moviepilot -d moviepilot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  moviepilot-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--save", "600", "1", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - moviepilot-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  moviepilot-config: {}
+  moviepilot-core: {}
+  moviepilot-media: {}
+  moviepilot-postgres: {}
+  moviepilot-redis: {}

@@ -1,0 +1,24 @@
+services:
+  moviepilot:
+    image: jxxghp/moviepilot-v3:3.2.8@sha256:51cf8fe90a474bde2d79bbbccb5ce83f926b4da887b6fcc7c9457730095d6ebb
+    restart: unless-stopped
+    stop_grace_period: 120s
+    expose:
+      - 3000
+    environment:
+      NGINX_PORT: "3000"
+      PORT: "3001"
+      PUID: "0"
+      PGID: "0"
+      UMASK: "000"
+      TZ: ${TZ}
+      APP_DOMAIN: ${APP_DOMAIN}
+    volumes:
+      - moviepilot-config:/config
+      - moviepilot-core:/moviepilot/.cloakbrowser
+      - moviepilot-media:/media
+
+volumes:
+  moviepilot-config: {}
+  moviepilot-core: {}
+  moviepilot-media: {}
