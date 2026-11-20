@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "On-demand image cropping, resizing and filtering service with signed URLs and a persistent cache for original images.",
+  "category": "media",
+  "developedBy": {
+    "label": "Thumbor",
+    "url": "https://github.com/thumbor"
+  },
+  "links": {
+    "github": "https://github.com/thumbor/thumbor",
+    "website": "https://www.thumbor.org",
+    "docs": [
+      "https://thumbor.readthedocs.io/en/latest/hosting.html",
+      "https://thumbor.readthedocs.io/en/latest/configuration.html",
+      "https://thumbor.readthedocs.io/en/latest/security.html",
+      "https://thumbor.readthedocs.io/en/latest/libraries.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Image URLs must be signed with the generated SECURITY_KEY, so your application needs a Thumbor client library. Unsigned /unsafe/ URLs are disabled unless you set ALLOW_UNSAFE_URL to true.",
+      "link": "https://thumbor.readthedocs.io/en/latest/security.html"
+    }
+  ]
+}

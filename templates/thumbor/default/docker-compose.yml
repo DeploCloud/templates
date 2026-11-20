@@ -1,0 +1,23 @@
+services:
+  thumbor:
+    image: ghcr.io/thumbor/thumbor:7.8.0-py-3.13@sha256:2de4d4105879ad6954cfda1676a9bc0de9ba84298f95e16654f5a53f927d3148
+    restart: unless-stopped
+    command: ["--conf=/etc/thumbor.conf"]
+    expose:
+      - 8888
+    environment:
+      SECURITY_KEY: ${SECURITY_KEY}
+      ALLOW_UNSAFE_URL: ${ALLOW_UNSAFE_URL}
+    volumes:
+      - ./thumbor.conf:/etc/thumbor.conf:ro
+      # /var/tmp is world-writable in the image, so the non-root user can write to the volume
+      - thumbor-storage:/var/tmp
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8888/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  thumbor-storage: {}

@@ -1,0 +1,22 @@
+[variables]
+security_key = "${password:48}"
+
+[config]
+[[config.mounts]]
+filePath = "thumbor.conf"
+content = """
+import os
+
+SECURITY_KEY = os.environ["SECURITY_KEY"]
+ALLOW_UNSAFE_URL = os.environ.get("ALLOW_UNSAFE_URL", "false").strip().lower() == "true"
+FILE_STORAGE_ROOT_PATH = "/var/tmp/thumbor/storage"
+"""
+
+[[config.domains]]
+serviceName = "thumbor"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+SECURITY_KEY = "${security_key}"
+ALLOW_UNSAFE_URL = "false"
