@@ -1,0 +1,14 @@
+services:
+  pairdrop:
+    image: ghcr.io/schlagmichdoch/pairdrop:v1.11.2@sha256:c4b30977264a76e335740089e693a52a0d0d616330dec7f93c7b96beef7b4a02
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      WS_FALLBACK: ${WS_FALLBACK}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
