@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "evcc"
+port = 7_070
+host = "${domain}"
+
+[config.env]
+TZ = "Europe/Berlin"

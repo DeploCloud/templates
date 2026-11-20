@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Solar-aware EV charging and home energy management with a web interface, SQLite database and configuration done in the browser.",
+  "category": "automation",
+  "developedBy": {
+    "label": "evcc",
+    "url": "https://evcc.io"
+  },
+  "links": {
+    "github": "https://github.com/evcc-io/evcc",
+    "website": "https://evcc.io",
+    "docs": [
+      "https://docs.evcc.io/en/installation/docker/",
+      "https://docs.evcc.io/en/installation/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor sets the administration password. Open the app right after deployment and set it.",
+      "link": "https://docs.evcc.io/en/installation/configuration/"
+    },
+    {
+      "type": "warning",
+      "message": "Chargers, meters and inverters must be reachable from this server by IP address or cloud API. Only the web interface on port 7070 is published, so device discovery, mDNS features (EEBus, SMA Sunny Home Manager), UDP devices (KEBA, SMA Speedwire, Modbus UDP) and inbound OCPP chargers on port 8887 do not work in this setup.",
+      "link": "https://docs.evcc.io/en/installation/docker/"
+    }
+  ]
+}
