@@ -1,0 +1,33 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${hash:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "faraday"
+port = 5_985
+host = "${domain}"
+
+[config.env]
+PGSQL_PASSWD = "${db_password}"
+FARADAY_PASSWORD = "${admin_password}"
+FQDN = "${domain}"
+
+[[config.mounts]]
+filePath = "server.ini"
+content = """[faraday_server]
+port = 5985
+bind_address = 0.0.0.0
+api_token_expiration = 604800
+session_timeout = 24
+delete_report_after_process = true
+celery_broker_url = faraday-redis
+celery_backend_url = faraday-redis
+
+[storage]
+path = /home/faraday/.faraday/storage
+
+[database]
+connection_string = postgresql+psycopg2://USER:PASSWORD@HOST/DB
+"""

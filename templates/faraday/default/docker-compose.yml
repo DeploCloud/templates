@@ -1,0 +1,79 @@
+services:
+  faraday:
+    image: faradaysec/faraday:5.25.4@sha256:9c34b6f1e81c0f25b754d25c87f8358e532a3f668dc9435b530e0ef49d2c8965
+    restart: unless-stopped
+    expose:
+      - 5985
+    volumes:
+      - faraday-data:/home/faraday/.faraday
+      - ./server.ini:/docker_server.ini:ro
+    environment:
+      PGSQL_USER: faraday
+      PGSQL_PASSWD: ${PGSQL_PASSWD}
+      PGSQL_HOST: faraday-db
+      PGSQL_DBNAME: faraday
+      FARADAY_PASSWORD: ${FARADAY_PASSWORD}
+      FQDN: ${FQDN}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5985/_api/config"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      faraday-db:
+        condition: service_healthy
+      faraday-redis:
+        condition: service_healthy
+
+  faraday-worker:
+    image: faradaysec/faraday:5.25.4@sha256:9c34b6f1e81c0f25b754d25c87f8358e532a3f668dc9435b530e0ef49d2c8965
+    restart: unless-stopped
+    command: ["faraday-worker"]
+    volumes:
+      - faraday-data:/home/faraday/.faraday
+    depends_on:
+      faraday:
+        condition: service_healthy
+
+  # Celery beat scheduler: run exactly one, never scale it.
+  faraday-beat:
+    image: faradaysec/faraday:5.25.4@sha256:9c34b6f1e81c0f25b754d25c87f8358e532a3f668dc9435b530e0ef49d2c8965
+    restart: unless-stopped
+    command: ["faraday-beat"]
+    volumes:
+      - faraday-data:/home/faraday/.faraday
+    depends_on:
+      faraday:
+        condition: service_healthy
+
+  faraday-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: faraday
+      POSTGRES_PASSWORD: ${PGSQL_PASSWD}
+      POSTGRES_DB: faraday
+    volumes:
+      - faraday-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U faraday -d faraday"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  faraday-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - faraday-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  faraday-data: {}
+  faraday-db-data: {}
+  faraday-redis-data: {}
