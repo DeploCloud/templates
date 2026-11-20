@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser editor for Mermaid diagrams with real-time preview, SVG export and shareable links, served as the official static web build.",
+  "category": "development",
+  "developedBy": {
+    "label": "Mermaid",
+    "url": "https://github.com/mermaid-js"
+  },
+  "links": {
+    "github": "https://github.com/mermaid-js/mermaid-live-editor",
+    "website": "https://mermaid.live",
+    "docs": [
+      "https://github.com/mermaid-js/mermaid-live-editor#docker",
+      "https://mermaid.js.org/intro/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Diagrams stay in the browser and in share links, not on the server. The published image is built with upstream defaults, so the PNG/SVG and Kroki export links, Save to Mermaid Chart and Repair with AI send the diagram to hosted third-party services when used.",
+      "link": "https://github.com/mermaid-js/mermaid-live-editor#docker"
+    }
+  ]
+}
