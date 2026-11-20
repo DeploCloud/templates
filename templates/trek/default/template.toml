@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "trek"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+ENCRYPTION_KEY = "${hash:64}"
+ADMIN_EMAIL = "admin@trek.local"
+ADMIN_PASSWORD = "${admin_password}"
+TZ = "UTC"
