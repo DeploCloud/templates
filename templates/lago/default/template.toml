@@ -1,0 +1,74 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lago-front"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/api/v"
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/graphql"
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/cable"
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/rails"
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/documents"
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/webhooks"
+
+[[config.domains]]
+serviceName = "lago-api"
+port = 3_000
+host = "${domain}"
+path = "/x402"
+
+[config.env]
+LAGO_URL = "https://${domain}"
+POSTGRES_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+SECRET_KEY_BASE = "${hash:128}"
+LAGO_ENCRYPTION_PRIMARY_KEY = "${hash:64}"
+LAGO_ENCRYPTION_DETERMINISTIC_KEY = "${hash:64}"
+LAGO_ENCRYPTION_KEY_DERIVATION_SALT = "${hash:64}"
+LAGO_ORG_NAME = "Lago"
+LAGO_ORG_USER_EMAIL = "${email}"
+LAGO_ORG_USER_PASSWORD = "${admin_password}"
+LAGO_DISABLE_SIGNUP = "true"
+LAGO_DISABLE_SEGMENT = "true"
+LAGO_FROM_EMAIL = ""
+LAGO_SMTP_ADDRESS = ""
+LAGO_SMTP_PORT = "587"
+LAGO_SMTP_USERNAME = ""
+LAGO_SMTP_PASSWORD = ""
