@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted server monitoring dashboard with real-time metrics collected by agents, history charts, alerts and a web terminal.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Komari Monitor",
+    "url": "https://github.com/komari-monitor"
+  },
+  "links": {
+    "github": "https://github.com/komari-monitor/komari",
+    "website": "https://www.komari.wiki/",
+    "docs": [
+      "https://www.komari.wiki/en/install/docker",
+      "https://www.komari.wiki/en/install/quick-start"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor completes the installation guide and creates the administrator account.",
+      "link": "https://www.komari.wiki/en/install/docker"
+    }
+  ]
+}
