@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalist feed reader for RSS, Atom and JSON feeds, backed by a persistent PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Miniflux",
+    "url": "https://github.com/miniflux"
+  },
+  "links": {
+    "github": "https://github.com/miniflux/v2",
+    "website": "https://miniflux.app",
+    "docs": [
+      "https://miniflux.app/docs/docker.html",
+      "https://miniflux.app/docs/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "An admin account named \"admin\" is created on first start. Its generated password is the ADMIN_PASSWORD environment variable; change it under Settings after the first login."
+    }
+  ]
+}
