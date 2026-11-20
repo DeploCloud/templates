@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Local file and text sharing between devices in the browser over peer-to-peer WebRTC, with automatic discovery on the same network and device pairing.",
+  "category": "storage",
+  "developedBy": {
+    "label": "schlagmichdoch",
+    "url": "https://github.com/schlagmichdoch"
+  },
+  "links": {
+    "github": "https://github.com/schlagmichdoch/PairDrop",
+    "website": "https://pairdrop.net",
+    "docs": [
+      "https://github.com/schlagmichdoch/PairDrop/blob/master/docs/host-your-own.md",
+      "https://github.com/schlagmichdoch/PairDrop/blob/master/docs/how-to.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Transfers between devices on different networks need a TURN server; only a public STUN server is configured by default. Set WS_FALLBACK to true to relay transfers through this server when WebRTC is unavailable.",
+      "link": "https://github.com/schlagmichdoch/PairDrop/blob/master/docs/host-your-own.md#specify-stunturn-servers"
+    }
+  ]
+}

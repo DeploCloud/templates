@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pairdrop"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+WS_FALLBACK = "false"
