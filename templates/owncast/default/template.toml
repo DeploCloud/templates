@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:32}"
+stream_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "owncast"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+OWNCAST_ADMIN_PASSWORD = "${admin_password}"
+OWNCAST_STREAM_KEY = "${stream_key}"

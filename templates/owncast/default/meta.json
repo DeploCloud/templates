@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted live video streaming server with built-in chat, a viewer web page and an admin dashboard, fed from OBS or any RTMP broadcasting software.",
+  "category": "media",
+  "developedBy": {
+    "label": "Owncast",
+    "url": "https://github.com/owncast"
+  },
+  "links": {
+    "github": "https://github.com/owncast/owncast",
+    "website": "https://owncast.online",
+    "docs": [
+      "https://owncast.online/docs/getting-started/install/container/",
+      "https://owncast.online/docs/getting-started/configure-first-stream/",
+      "https://owncast.online/docs/configuration/website/",
+      "https://owncast.online/docs/configuration/runtime-flags/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "RTMP ingest is not routed through the web domain, so you cannot stream until you add ports: [\"1935:1935\"] to the owncast service in the app's Compose file (this needs the Publish ports permission) and redeploy. Then point your broadcasting software at rtmp://<server IP>:1935/live with the OWNCAST_STREAM_KEY value as the stream key.",
+      "link": "https://deplo.build/docs/advanced/compose-apps"
+    },
+    {
+      "type": "warning",
+      "message": "Sign in at https://<your domain>/admin as admin with the OWNCAST_ADMIN_PASSWORD value. The password and stream key are applied on every start, so change them in the environment variables rather than in the admin, where the Stream Keys tab is hidden.",
+      "link": "https://owncast.online/docs/configuration/runtime-flags/"
+    }
+  ]
+}
