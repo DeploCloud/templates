@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pghero"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DATABASE_URL = "postgres://pghero:password@db.example.com:5432/dbname"
+PGHERO_USERNAME = "admin"
+PGHERO_PASSWORD = "${admin_password}"
+SECRET_KEY_BASE = "${hash:64}"
+PGHERO_TZ = "UTC"
