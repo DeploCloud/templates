@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Open-Meteo weather forecast API that reads the public Open-Meteo dataset on demand and caches it locally.",
+  "category": "development",
+  "developedBy": {
+    "label": "Open-Meteo",
+    "url": "https://open-meteo.com"
+  },
+  "links": {
+    "github": "https://github.com/open-meteo/open-meteo",
+    "website": "https://open-meteo.com",
+    "docs": [
+      "https://github.com/open-meteo/open-meteo/blob/main/docs/getting-started.md",
+      "https://github.com/open-meteo/open-meteo/blob/main/docs/remote-data.md",
+      "https://open-meteo.com/en/docs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The API has no authentication: anyone who knows the domain can query it. Weather data is licensed CC BY 4.0 and must be attributed to Open-Meteo.",
+      "link": "https://github.com/open-meteo/open-meteo/blob/main/docs/getting-started.md#license"
+    },
+    {
+      "type": "info",
+      "message": "On x86_64 the image is compiled for Skylake-class CPUs and needs AVX2: on an older or masked virtual CPU it exits at start with an illegal instruction error. arm64 servers are also supported.",
+      "link": "https://github.com/open-meteo/open-meteo/blob/main/docs/getting-started.md#hardware-requirements"
+    }
+  ]
+}
