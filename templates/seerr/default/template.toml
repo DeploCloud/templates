@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "seerr"
+port = 5_055
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+LOG_LEVEL = "info"
