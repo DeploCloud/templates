@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Private portfolio and net worth tracker for investments, spending and budgets, served as a password-protected web app backed by SQLite.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Wealthfolio",
+    "url": "https://wealthfolio.app"
+  },
+  "links": {
+    "github": "https://github.com/wealthfolio/wealthfolio",
+    "website": "https://wealthfolio.app",
+    "docs": [
+      "https://wealthfolio.app/docs/guide/self-hosting/docker/",
+      "https://wealthfolio.app/docs/guide/self-hosting/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated WEALTHFOLIO_PASSWORD environment variable. Wealthfolio has a single password and no user accounts; change the variable and redeploy to rotate it."
+    },
+    {
+      "type": "warning",
+      "message": "WF_SECRET_KEY encrypts stored API keys and broker credentials. Keep it with your backups and never change it on an existing installation."
+    }
+  ]
+}
