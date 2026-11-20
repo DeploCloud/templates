@@ -1,0 +1,29 @@
+services:
+  backrest:
+    image: ghcr.io/garethgeorge/backrest:v1.14.1@sha256:b852979754281026230cc69fb11428e6d57c9a97784ab4a444ffc7934c53a215
+    restart: unless-stopped
+    hostname: backrest
+    expose:
+      - 9898
+    environment:
+      BACKREST_PORT: 0.0.0.0:9898
+      BACKREST_DATA: /data
+      BACKREST_CONFIG: /config/config.json
+      XDG_CACHE_HOME: /cache
+      TMPDIR: /tmp
+      TZ: ${TZ}
+    volumes:
+      - backrest-data:/data
+      - backrest-config:/config
+      - backrest-cache:/cache
+      - backrest-rclone:/root/.config/rclone
+      - backrest-userdata:/userdata
+      - backrest-repos:/repos
+
+volumes:
+  backrest-data: {}
+  backrest-config: {}
+  backrest-cache: {}
+  backrest-rclone: {}
+  backrest-userdata: {}
+  backrest-repos: {}

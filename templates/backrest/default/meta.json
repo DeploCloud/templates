@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI and scheduler for restic backups: create or import repositories, run scheduled backups and prune jobs, browse snapshots and restore files.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Gareth George",
+    "url": "https://github.com/garethgeorge"
+  },
+  "links": {
+    "github": "https://github.com/garethgeorge/backrest",
+    "website": "https://garethgeorge.github.io/backrest/",
+    "docs": [
+      "https://garethgeorge.github.io/backrest/introduction/getting-started",
+      "https://github.com/garethgeorge/backrest#configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is off until setup is completed, and the first visitor sets the instance ID, username and password. Open the app right after deployment and complete the setup.",
+      "link": "https://garethgeorge.github.io/backrest/introduction/getting-started"
+    },
+    {
+      "type": "info",
+      "message": "The container can only reach its own volumes. Use remote repositories (S3, B2, SFTP, rclone) for real backups; /userdata and /repos are volumes inside this stack."
+    }
+  ]
+}
