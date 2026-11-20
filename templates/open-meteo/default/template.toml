@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-meteo"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+REMOTE_DATA_DIRECTORY = "https://openmeteo.s3.amazonaws.com/data/"
+CACHE_SIZE = "8GB"
