@@ -1,0 +1,56 @@
+services:
+  cap-captcha:
+    image: tiago2/cap:4.0.15@sha256:d8c8af1b871c4b10adefbc388844ee6de497c6d96923698ffa1aa4567316e86f
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ADMIN_KEY: ${ADMIN_KEY}
+      VALKEY_URL: ${VALKEY_URL}
+      CLICKHOUSE_URL: ${CLICKHOUSE_URL}
+    volumes:
+      - cap-data:/usr/src/app/data
+    depends_on:
+      cap-captcha-valkey:
+        condition: service_healthy
+      cap-captcha-clickhouse:
+        condition: service_healthy
+    stop_grace_period: 15s
+
+  cap-captcha-valkey:
+    image: valkey/valkey:9.2.0-alpine@sha256:4d67e1af80c653bd46c0bbe8de438c81a6535ab5a39b22f2100028f314005663
+    restart: unless-stopped
+    command: valkey-server --appendonly yes --appendfsync everysec --save 60 1 --maxmemory-policy noeviction --loglevel warning
+    volumes:
+      - valkey-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  cap-captcha-clickhouse:
+    image: clickhouse/clickhouse-server:25.8.33.6-alpine@sha256:87e0a5b72f5465b18eacca7c76850e7ff551c9795c50e451f5646299e5e24146
+    restart: unless-stopped
+    environment:
+      ADMIN_KEY: ${ADMIN_KEY}
+      CLICKHOUSE_SKIP_USER_SETUP: "1"
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+      - ./clickhouse/cap-config.xml:/etc/clickhouse-server/config.d/cap.xml:ro
+      - ./clickhouse/cap-users.xml:/etc/clickhouse-server/users.d/cap.xml:ro
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8123/ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 20s
+
+volumes:
+  cap-data: {}
+  valkey-data: {}
+  clickhouse-data: {}

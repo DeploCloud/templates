@@ -1,0 +1,14 @@
+[variables]
+admin_key = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cap-captcha"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ADMIN_KEY = "${admin_key}"
+VALKEY_URL = "redis://cap-captcha-valkey:6379"
