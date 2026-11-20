@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source web and product analytics with events, funnels, retention and dashboards, backed by PostgreSQL, Redis and ClickHouse.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "OpenPanel",
+    "url": "https://github.com/Openpanel-dev"
+  },
+  "links": {
+    "github": "https://github.com/Openpanel-dev/openpanel",
+    "website": "https://openpanel.dev",
+    "docs": [
+      "https://openpanel.dev/docs/self-hosting/self-hosting",
+      "https://openpanel.dev/docs/self-hosting/environment-variables",
+      "https://openpanel.dev/docs/self-hosting/reverse-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you register becomes the owner, and public sign-up closes after it. Password resets and invitation emails are only sent once SMTP_HOST, SMTP_USER and SMTP_PASS (or RESEND_API_KEY) are filled in the environment; until then they are written to the API logs.",
+      "link": "https://openpanel.dev/docs/self-hosting/environment-variables"
+    }
+  ]
+}
