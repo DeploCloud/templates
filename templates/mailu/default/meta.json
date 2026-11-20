@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Mail server suite built from Postfix, Dovecot and Rspamd containers, with a web admin interface and the SnappyMail webmail.",
+  "category": "email",
+  "developedBy": {
+    "label": "Mailu",
+    "url": "https://mailu.io"
+  },
+  "links": {
+    "github": "https://github.com/Mailu/Mailu",
+    "website": "https://mailu.io",
+    "docs": [
+      "https://mailu.io/2024.06/configuration.html",
+      "https://mailu.io/2024.06/webadministration.html",
+      "https://mailu.io/2024.06/dns.html",
+      "https://mailu.io/2024.06/reverse.html",
+      "https://mailu.io/2024.06/faq.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /sso/login as admin@ followed by your domain, with the password in INITIAL_ADMIN_PW. The account is created only on the first start, so change the password in the web interface afterwards instead of editing the variable."
+    },
+    {
+      "type": "warning",
+      "message": "Only the web interface and webmail are public. Port 25 is not published, so Mailu cannot receive mail from the internet, and the IMAP, POP3 and submission listeners stay off because Mailu runs here without a TLS certificate of its own, so desktop mail clients cannot connect. Outbound delivery needs port 25 open at your provider, or a smarthost in RELAYHOST, plus the MX, SPF, DKIM and DMARC records the admin interface shows for each domain.",
+      "link": "https://mailu.io/2024.06/dns.html"
+    },
+    {
+      "type": "info",
+      "message": "The stack uses the fixed internal network 192.168.203.0/24, so only one Mailu deployment can run per server."
+    }
+  ]
+}

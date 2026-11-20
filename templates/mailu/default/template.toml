@@ -1,0 +1,23 @@
+[variables]
+secret_key = "${hash:32}"
+admin_password = "${hash:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mailu"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+HOSTNAMES = "${domain}"
+WEBSITE = "https://${domain}"
+SECRET_KEY = "${secret_key}"
+INITIAL_ADMIN_ACCOUNT = "admin"
+INITIAL_ADMIN_DOMAIN = "${domain}"
+INITIAL_ADMIN_PW = "${admin_password}"
+RELAYHOST = ""
+RELAYUSER = ""
+RELAYPASSWORD = ""
