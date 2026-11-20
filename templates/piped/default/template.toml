@@ -1,0 +1,69 @@
+[variables]
+api_domain = "api.${domain}"
+proxy_domain = "proxy.${domain}"
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "piped-frontend"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "piped"
+port = 8_080
+host = "${api_domain}"
+
+[[config.domains]]
+serviceName = "piped-proxy-nginx"
+port = 80
+host = "${proxy_domain}"
+
+[config.env]
+BACKEND_HOSTNAME = "${api_domain}"
+API_URL = "https://${api_domain}"
+FRONTEND_URL = "https://${domain}"
+PROXY_PART = "https://${proxy_domain}"
+DISABLE_REGISTRATION = "false"
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "ytproxy.conf"
+content = """server {
+    listen 80;
+
+    proxy_buffering on;
+    proxy_buffers 1024 16k;
+    proxy_max_temp_file_size 32m;
+    proxy_http_version 1.1;
+    proxy_set_header Connection keep-alive;
+    proxy_set_header X-Forwarded-For "";
+    proxy_set_header X-Forwarded-Host "";
+    proxy_set_header X-Forwarded-Port "";
+    proxy_set_header X-Forwarded-Proto "";
+    proxy_set_header X-Forwarded-Server "";
+    proxy_set_header X-Real-IP "";
+    proxy_set_header CF-Connecting-IP "";
+    proxy_hide_header alt-svc;
+    proxy_hide_header etag;
+    proxy_hide_header Cache-Control;
+    access_log off;
+
+    # piped-proxy answers 500 to any request without ?host=, so a bare visit gets a clean 404
+    if ($arg_host = "") {
+        return 404;
+    }
+
+    location ~ (/videoplayback|/api/v4/|/api/manifest/) {
+        proxy_pass http://piped-proxy:8080;
+        add_header Cache-Control private always;
+    }
+
+    location / {
+        proxy_pass http://piped-proxy:8080;
+        add_header Cache-Control "public, max-age=604800";
+    }
+}
+"""
