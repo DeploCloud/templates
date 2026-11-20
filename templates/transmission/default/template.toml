@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "transmission"
+port = 9_091
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+TRANSMISSION_USER = "admin"
+TRANSMISSION_PASS = "${admin_password}"
