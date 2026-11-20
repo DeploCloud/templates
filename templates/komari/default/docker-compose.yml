@@ -1,0 +1,11 @@
+services:
+  komari:
+    image: ghcr.io/komari-monitor/komari:1.6.1@sha256:68df57a235d0d9d631f73a6c95466d1acc4220e9cae6ab2c5e009a51318937e0
+    restart: unless-stopped
+    expose:
+      - 25774
+    volumes:
+      - komari-data:/app/data
+
+volumes:
+  komari-data: {}
