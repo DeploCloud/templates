@@ -1,0 +1,18 @@
+[variables]
+header_secret = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "reacher"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+RCH__BACKEND_NAME = "${domain}"
+RCH__HEADER_SECRET = "${header_secret}"
+RCH__HELLO_NAME = "${domain}"
+RCH__FROM_EMAIL = "hello@${domain}"
+RCH__SMTP_TIMEOUT = "45"
+RUST_LOG = "reacher=info"

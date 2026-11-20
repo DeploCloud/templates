@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Email verification HTTP API that checks whether an address exists over SMTP without sending any email.",
+  "category": "email",
+  "developedBy": {
+    "label": "Reacher",
+    "url": "https://github.com/reacherhq"
+  },
+  "links": {
+    "github": "https://github.com/reacherhq/check-if-email-exists",
+    "website": "https://reacher.email",
+    "docs": [
+      "https://docs.reacher.email/self-hosting/install",
+      "https://docs.reacher.email/self-hosting/reacher-configuration-v0.10",
+      "https://docs.reacher.email/advanced/openapi/v1-check_email"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Verification needs outbound connections on port 25. Many cloud providers block it; if yours does, configure a SOCKS5 proxy through the RCH__PROXY__* variables.",
+      "link": "https://docs.reacher.email/self-hosting/proxies"
+    },
+    {
+      "type": "warning",
+      "message": "Every API request must send the generated RCH__HEADER_SECRET value in the x-reacher-secret header."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
