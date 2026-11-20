@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted library and reading platform for ebooks, PDFs, comics and audiobooks, with a web reader, OPDS, Kobo and KOReader sync, backed by PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "BookOrbit",
+    "url": "https://github.com/bookorbit"
+  },
+  "links": {
+    "github": "https://github.com/bookorbit/bookorbit",
+    "website": "https://bookorbit.app",
+    "docs": [
+      "https://bookorbit.app/installation",
+      "https://bookorbit.app/creating-a-library"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit BookOrbit asks for a setup token before creating the administrator account. Copy the SETUP_BOOTSTRAP_TOKEN value from this app's environment variables.",
+      "link": "https://bookorbit.app/installation"
+    }
+  ]
+}
