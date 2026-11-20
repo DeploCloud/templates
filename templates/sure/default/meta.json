@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted personal finance app for tracking accounts, net worth, budgets and transactions, with a background worker, PostgreSQL and Redis.",
+  "category": "finance",
+  "developedBy": {
+    "label": "we-promise",
+    "url": "https://github.com/we-promise"
+  },
+  "links": {
+    "github": "https://github.com/we-promise/sure",
+    "website": "https://sure.am",
+    "docs": [
+      "https://github.com/we-promise/sure/blob/main/docs/hosting/docker.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open on first start. The first account you create becomes the super admin; switch onboarding to Closed or Invite-only under Settings > Self-Hosting afterwards.",
+      "link": "https://github.com/we-promise/sure/blob/main/docs/hosting/docker.md#step-5a-restrict-future-signups-optional"
+    },
+    {
+      "type": "warning",
+      "message": "Never change the ACTIVE_RECORD_ENCRYPTION_* variables after the first start: data encrypted with them, such as provider credentials, MFA secrets and email addresses, becomes unreadable. Changing SECRET_KEY_BASE signs everyone out.",
+      "link": "https://github.com/we-promise/sure/blob/main/docs/hosting/docker.md#encrypting-sensitive-data"
+    }
+  ]
+}
