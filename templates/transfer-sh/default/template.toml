@@ -1,0 +1,16 @@
+[variables]
+auth_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "transfer-sh"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+HTTP_AUTH_USER = "admin"
+HTTP_AUTH_PASS = "${auth_password}"
+PURGE_DAYS = "14"
+PURGE_INTERVAL = "24"

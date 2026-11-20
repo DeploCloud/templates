@@ -1,0 +1,18 @@
+services:
+  transfer-sh:
+    image: dutchcoders/transfer.sh:v1.6.1@sha256:9383e66489ab3a7a56bec1b67d2e27d41c072102d515cdc5ab35f913b72e8a09
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PROVIDER: local
+      BASEDIR: /data
+      HTTP_AUTH_USER: "${HTTP_AUTH_USER}"
+      HTTP_AUTH_PASS: "${HTTP_AUTH_PASS}"
+      PURGE_DAYS: "${PURGE_DAYS}"
+      PURGE_INTERVAL: "${PURGE_INTERVAL}"
+    volumes:
+      - transfer-sh-data:/data
+
+volumes:
+  transfer-sh-data: {}

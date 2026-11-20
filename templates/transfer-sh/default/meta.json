@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file sharing server: upload files with curl or the web page and share short download links, stored on a local volume.",
+  "category": "storage",
+  "developedBy": {
+    "label": "dutchcoders",
+    "url": "https://github.com/dutchcoders"
+  },
+  "links": {
+    "github": "https://github.com/dutchcoders/transfer.sh",
+    "docs": [
+      "https://github.com/dutchcoders/transfer.sh#usage",
+      "https://github.com/dutchcoders/transfer.sh/blob/main/examples.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Uploads are protected by HTTP basic auth. The user is HTTP_AUTH_USER (admin) and the generated password is HTTP_AUTH_PASS in the environment; downloads stay public for anyone with the link."
+    }
+  ]
+}
