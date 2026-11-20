@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Monitoring, statistics and notifications for Plex Media Server: watch history, stream activity, user stats and newsletters.",
+  "category": "media",
+  "developedBy": {
+    "label": "Tautulli",
+    "url": "https://tautulli.com"
+  },
+  "links": {
+    "github": "https://github.com/Tautulli/Tautulli",
+    "website": "https://tautulli.com",
+    "docs": [
+      "https://docs.tautulli.com/getting-started/installation",
+      "https://github.com/Tautulli/Tautulli/wiki/Installation#tautulli-login",
+      "https://docs.tautulli.com/support/frequently-asked-questions"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first start Tautulli generates a temporary login and prints it in the container logs under \"Setup wizard login\" (username tautulli). Sign in with it, then finish the setup wizard: set your own username and password, sign in with your Plex account and pick a Plex Media Server that is reachable from this server.",
+      "link": "https://github.com/Tautulli/Tautulli/wiki/Installation#tautulli-login"
+    }
+  ]
+}

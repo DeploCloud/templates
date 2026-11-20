@@ -1,0 +1,13 @@
+services:
+  tautulli:
+    image: tautulli/tautulli:v2.19.1@sha256:239cd6dbc429a0eb441bdf88a7a015871e2d4d6e02b6e6039af30c0487528a8e
+    restart: unless-stopped
+    expose:
+      - 8181
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - tautulli-config:/config
+
+volumes:
+  tautulli-config: {}
