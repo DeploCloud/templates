@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Identity and access management platform with OIDC, SAML, passkeys and multi-tenancy, deployed with its login UI and PostgreSQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "ZITADEL",
+    "url": "https://zitadel.com"
+  },
+  "links": {
+    "github": "https://github.com/zitadel/zitadel",
+    "website": "https://zitadel.com",
+    "docs": [
+      "https://zitadel.com/docs/self-hosting/deploy/compose",
+      "https://zitadel.com/docs/self-hosting/manage/configure"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at https://<your-domain>/ui/console as zitadel-admin@zitadel.<your-domain> with the password stored in the ZITADEL_ADMIN_PASSWORD environment variable. That variable is only read on the first start; change the password later in the console. Configure SMTP in the console for email verification and password resets."
+    },
+    {
+      "type": "destructive",
+      "message": "Zitadel binds its instance to the domain and HTTPS at first start. Serve it over HTTPS and do not change the domain or ZITADEL_MASTERKEY afterwards, or requests fail with \"Instance not found\" and encrypted data becomes unreadable.",
+      "link": "https://zitadel.com/docs/self-hosting/manage/custom-domain"
+    }
+  ]
+}
