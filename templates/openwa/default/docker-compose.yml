@@ -1,0 +1,24 @@
+services:
+  openwa:
+    image: ghcr.io/rmyndharis/openwa:0.30.3@sha256:4bcc8738f154db2664a1897cc9a284015b5f9a83d74741f6c091912f417461a2
+    restart: unless-stopped
+    stop_grace_period: 75s
+    expose:
+      - 2785
+    environment:
+      BASE_URL: ${BASE_URL}
+      API_MASTER_KEY: ${API_MASTER_KEY}
+      API_KEY_PEPPER: ${API_KEY_PEPPER}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      AUTO_START_SESSIONS: ${AUTO_START_SESSIONS}
+    volumes:
+      - openwa-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2785/api/health/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  openwa-data: {}
