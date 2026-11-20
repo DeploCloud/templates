@@ -1,0 +1,66 @@
+services:
+  peertube:
+    image: chocobozzz/peertube:v8.3.2@sha256:af06157bc96ab6e00fe002c84846313c1fffe3991eb8d5583eb38db946fe0b8a
+    restart: unless-stopped
+    expose:
+      - 9000
+    # Passes optional PEERTUBE_* keys you add, such as PEERTUBE_SMTP_* for email.
+    env_file:
+      - .env
+    environment:
+      PEERTUBE_WEBSERVER_HOSTNAME: ${PEERTUBE_WEBSERVER_HOSTNAME}
+      PEERTUBE_SECRET: ${PEERTUBE_SECRET}
+      PEERTUBE_DB_HOSTNAME: peertube-db
+      PEERTUBE_DB_NAME: ${POSTGRES_DB}
+      PEERTUBE_DB_USERNAME: ${POSTGRES_USER}
+      PEERTUBE_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      PEERTUBE_REDIS_HOSTNAME: peertube-redis
+      PEERTUBE_ADMIN_EMAIL: ${PEERTUBE_ADMIN_EMAIL}
+      PEERTUBE_SMTP_FROM: ${PEERTUBE_SMTP_FROM}
+      PT_INITIAL_ROOT_PASSWORD: ${PT_INITIAL_ROOT_PASSWORD}
+    volumes:
+      - peertube-data:/data
+      - peertube-config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:9000/api/v1/ping"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      peertube-db:
+        condition: service_healthy
+      peertube-redis:
+        condition: service_healthy
+
+  peertube-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - peertube-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  peertube-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - peertube-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  peertube-data: {}
+  peertube-config: {}
+  peertube-db: {}
+  peertube-redis: {}

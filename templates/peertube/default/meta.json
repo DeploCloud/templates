@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Federated, self-hosted video platform with channels, playlists and ActivityPub federation, backed by PostgreSQL and Redis.",
+  "category": "media",
+  "developedBy": {
+    "label": "Framasoft",
+    "url": "https://framasoft.org/"
+  },
+  "links": {
+    "github": "https://github.com/Chocobozzz/PeerTube",
+    "website": "https://joinpeertube.org/",
+    "docs": [
+      "https://docs.joinpeertube.org/install/docker",
+      "https://docs.joinpeertube.org/maintain/configuration",
+      "https://docs.joinpeertube.org/admin/managing-users"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as root with the password stored in the PT_INITIAL_ROOT_PASSWORD variable. Emails (signup verification, password reset, notifications) are only sent after you add PEERTUBE_SMTP_HOSTNAME, PEERTUBE_SMTP_PORT, PEERTUBE_SMTP_USERNAME, PEERTUBE_SMTP_PASSWORD and PEERTUBE_SMTP_TLS to the environment and redeploy; SMTP cannot be set from the administration panel.",
+      "link": "https://docs.joinpeertube.org/maintain/configuration"
+    },
+    {
+      "type": "warning",
+      "message": "PeerTube does not support changing its domain after the first start. Set the final domain before deploying."
+    },
+    {
+      "type": "info",
+      "message": "Live streaming ingest uses RTMP on port 1935, which is not routed by this template; regular video uploads and playback work over HTTPS."
+    }
+  ]
+}
