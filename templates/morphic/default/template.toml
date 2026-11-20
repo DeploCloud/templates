@@ -1,0 +1,35 @@
+[variables]
+db_password = "${password:32}"
+
+[[config.domains]]
+serviceName = "morphic"
+port = 3_000
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "searxng-settings.yml"
+content = """use_default_settings: true
+server:
+  limiter: false
+  public_instance: false
+  image_proxy: false
+  method: 'POST'
+search:
+  formats:
+    - json
+"""
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+BETTER_AUTH_SECRET = "${hash:64}"
+BETTER_AUTH_URL = "https://${domain}"
+AUTH_SIGNUP_MODE = "open"
+BOOTSTRAP_ADMIN_EMAIL = ""
+SEARXNG_SECRET = "${hash:64}"
+OPENAI_API_KEY = ""
+ANTHROPIC_API_KEY = ""
+GOOGLE_GENERATIVE_AI_API_KEY = ""
+OPENAI_COMPATIBLE_API_KEY = ""
+OPENAI_COMPATIBLE_API_BASE_URL = ""
+OLLAMA_BASE_URL = ""
+AI_GATEWAY_API_KEY = ""

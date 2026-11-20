@@ -1,0 +1,76 @@
+services:
+  morphic:
+    image: ghcr.io/miurla/morphic:ad418f16c5202a5d214eeaefb0293ed89d43720f@sha256:9701c15fb8a3e6cdff8bebf01386b9120db67adaf7c53ad8061ba4f57e9dd9fb
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DATABASE_URL: postgresql://morphic:${POSTGRES_PASSWORD}@morphic-db:5432/morphic
+      DATABASE_RESTRICTED_URL: postgresql://morphic:${POSTGRES_PASSWORD}@morphic-db:5432/morphic
+      DATABASE_SSL_DISABLED: "true"
+      MORPHIC_CLOUD_DEPLOYMENT: "false"
+      LOCAL_REDIS_URL: redis://morphic-redis:6379
+      SEARCH_API: searxng
+      SEARXNG_API_URL: http://morphic-searxng:8080
+      AUTH_PROVIDER: better-auth
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      AUTH_SIGNUP_MODE: ${AUTH_SIGNUP_MODE}
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${GOOGLE_GENERATIVE_AI_API_KEY}
+      OPENAI_COMPATIBLE_API_KEY: ${OPENAI_COMPATIBLE_API_KEY}
+      OPENAI_COMPATIBLE_API_BASE_URL: ${OPENAI_COMPATIBLE_API_BASE_URL}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+      AI_GATEWAY_API_KEY: ${AI_GATEWAY_API_KEY}
+    depends_on:
+      morphic-db:
+        condition: service_healthy
+      morphic-redis:
+        condition: service_healthy
+      morphic-searxng:
+        condition: service_started
+
+  morphic-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: morphic
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: morphic
+    volumes:
+      - morphic-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U morphic -d morphic"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  morphic-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - morphic-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  morphic-searxng:
+    image: searxng/searxng:2026.11.19-368baa340@sha256:5b72d7ef63a3d214c2a690016ecf53a17f1ab7f02dcc4a1de1669837d9340fc9
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET}
+    volumes:
+      - ./searxng-settings.yml:/etc/searxng/settings.yml:ro
+      - morphic-searxng-cache:/var/cache/searxng
+
+volumes:
+  morphic-db-data: {}
+  morphic-redis-data: {}
+  morphic-searxng-cache: {}
