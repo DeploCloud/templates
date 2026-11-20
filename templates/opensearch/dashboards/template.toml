@@ -1,0 +1,44 @@
+[variables]
+admin_password = "Os1-${password:32}"
+dashboards_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "opensearch-dashboards"
+port = 5_601
+host = "${domain}"
+
+[config.env]
+OPENSEARCH_INITIAL_ADMIN_PASSWORD = "${admin_password}"
+OPENSEARCH_DASHBOARDS_PASSWORD = "${dashboards_password}"
+OPENSEARCH_JAVA_OPTS = "-Xms1g -Xmx1g"
+
+[[config.mounts]]
+filePath = "seed-users.sh"
+content = """#!/bin/bash
+# First start: drop the bundled demo users (public passwords), keeping admin and the Dashboards server user.
+# The admin hash is the stock one; the demo installer then swaps in OPENSEARCH_INITIAL_ADMIN_PASSWORD.
+set -e
+users=config/opensearch-security/internal_users.yml
+if grep -q '^kibanaro:' "$users"; then
+  admin_hash='$2a$12$VcCDgh2NDk07JGN0rjGbM.Ad41qVR/YFJcgHp0UGns5JDymv..TOG'
+  dashboards_hash=$(bash plugins/opensearch-security/tools/hash.sh -env OPENSEARCH_DASHBOARDS_PASSWORD | tail -n 1)
+  case "$dashboards_hash" in '$2'*) ;; *) echo "Failed to hash the Dashboards password" >&2; exit 1 ;; esac
+  cat > "$users" <<USERS
+---
+_meta:
+  type: "internalusers"
+  config_version: 2
+admin:
+  hash: "$admin_hash"
+  reserved: true
+  backend_roles:
+  - "admin"
+kibanaserver:
+  hash: "$dashboards_hash"
+  reserved: true
+USERS
+fi
+exec ./opensearch-docker-entrypoint.sh opensearch
+"""
