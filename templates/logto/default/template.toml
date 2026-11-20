@@ -1,0 +1,24 @@
+[variables]
+db_password = "${password:32}"
+auth_domain = "auth.${domain}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "logto"
+port = 3_002
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "logto"
+port = 3_001
+host = "${auth_domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+ENDPOINT = "https://${auth_domain}"
+ADMIN_ENDPOINT = "https://${domain}"
+# Base64 of 32 random bytes: 43 base64 characters plus padding
+SECRET_VAULT_KEK = "${base64:43}="
