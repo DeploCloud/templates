@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Media server for comics, manga, magazines and eBooks with a web reader, metadata management, OPDS, Kobo Sync and KOReader Sync support.",
+  "category": "media",
+  "developedBy": {
+    "label": "Gauthier Roebroeck",
+    "url": "https://github.com/gotson"
+  },
+  "links": {
+    "github": "https://github.com/gotson/komga",
+    "website": "https://komga.org",
+    "docs": [
+      "https://komga.org/docs/installation/docker",
+      "https://komga.org/docs/guides/webui",
+      "https://komga.org/docs/guides/libraries"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created in the web UI becomes the administrator. Open the app right after deployment and create it.",
+      "link": "https://komga.org/docs/guides/webui"
+    },
+    {
+      "type": "warning",
+      "message": "Komga does not upload books through the browser: copy your CBZ, CBR, EPUB and PDF files into the data volume mounted at /data, then create a library pointing to a folder under /data.",
+      "link": "https://komga.org/docs/guides/libraries"
+    }
+  ]
+}

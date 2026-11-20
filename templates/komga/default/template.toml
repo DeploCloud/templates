@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "komga"
+port = 25_600
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
