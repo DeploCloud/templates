@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight Go server that exposes HTTP endpoints which run configured shell commands, with request data and trigger rules defined in a hooks file.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Adnan Hajdarevic",
+    "url": "https://github.com/adnanh"
+  },
+  "links": {
+    "github": "https://github.com/adnanh/webhook",
+    "docs": [
+      "https://github.com/adnanh/webhook/blob/master/docs/Hook-Definition.md",
+      "https://github.com/adnanh/webhook/blob/master/docs/Hook-Rules.md",
+      "https://github.com/adnanh/webhook/blob/master/docs/Webhook-Parameters.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Hooks are defined in the hooks.json config file. The sample hook at /hooks/hello only runs when the X-Webhook-Token header matches the generated WEBHOOK_TOKEN environment variable. Commands run inside a minimal Alpine container as an unprivileged user, so edit hooks.json to add your own hooks and redeploy.",
+      "link": "https://github.com/adnanh/webhook/blob/master/docs/Hook-Definition.md"
+    }
+  ]
+}

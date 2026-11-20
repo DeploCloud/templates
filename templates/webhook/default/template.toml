@@ -1,0 +1,33 @@
+[variables]
+hook_token = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "webhook"
+port = 9_000
+host = "${domain}"
+
+[config.env]
+WEBHOOK_TOKEN = "${hook_token}"
+
+[[config.mounts]]
+filePath = "hooks.json"
+content = """[
+  {
+    "id": "hello",
+    "execute-command": "/bin/echo",
+    "include-command-output-in-response": true,
+    "pass-arguments-to-command": [
+      { "source": "string", "name": "Hello from webhook" }
+    ],
+    "trigger-rule": {
+      "match": {
+        "type": "value",
+        "value": "{{ getenv "WEBHOOK_TOKEN" | js }}",
+        "parameter": { "source": "header", "name": "X-Webhook-Token" }
+      }
+    }
+  }
+]
+"""
