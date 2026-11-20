@@ -1,0 +1,16 @@
+[variables]
+api_key_pepper = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "homebox"
+port = 7_745
+host = "${domain}"
+
+[config.env]
+HBOX_AUTH_API_KEY_PEPPER = "${api_key_pepper}"
+HBOX_OPTIONS_HOSTNAME = "https://${domain}"
+HBOX_OPTIONS_ALLOW_REGISTRATION = "true"
+HBOX_WEB_MAX_UPLOAD_SIZE = "10"
