@@ -1,0 +1,16 @@
+services:
+  phpmyadmin:
+    image: phpmyadmin:5.2.3@sha256:e4b3eb5305cd42d21512bb55def2bab52625d56df927ad4ee1864a9354c84d40
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PMA_ARBITRARY: "1"
+      UPLOAD_LIMIT: ${UPLOAD_LIMIT}
+      TZ: ${TZ}
+      HIDE_PHP_VERSION: "true"
+    volumes:
+      - phpmyadmin-sessions:/sessions
+
+volumes:
+  phpmyadmin-sessions: {}

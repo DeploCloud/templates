@@ -1,0 +1,23 @@
+{
+  "name": "Arbitrary Server",
+  "shortDescription": "Standalone phpMyAdmin web interface that connects to any MySQL or MariaDB server entered on the login page.",
+  "category": "database",
+  "developedBy": {
+    "label": "phpMyAdmin",
+    "url": "https://www.phpmyadmin.net/"
+  },
+  "links": {
+    "github": "https://github.com/phpmyadmin/phpmyadmin",
+    "website": "https://www.phpmyadmin.net/",
+    "docs": [
+      "https://docs.phpmyadmin.net/en/latest/setup.html#installing-using-docker",
+      "https://github.com/phpmyadmin/docker#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No database is included. Enter the host, user and password of an existing MySQL or MariaDB server that this deployment can reach on the login page."
+    }
+  ]
+}
