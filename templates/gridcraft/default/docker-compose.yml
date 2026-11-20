@@ -1,0 +1,16 @@
+services:
+  gridcraft:
+    image: ghcr.io/mikapst/gridcraft-web:v0.19.1@sha256:16c79b0f2ed276a744ba038b16afdd106ee7dc03397b2c13329ea839fde2630d
+    restart: unless-stopped
+    # The image CMD repeats the pid directive of nginx.conf, so nginx refuses to start;
+    # run the stock nginx command as root (workers still drop to the nginx user).
+    user: root
+    command: ["nginx", "-g", "daemon off;"]
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
