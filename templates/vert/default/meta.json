@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source web file converter for 250+ image, audio, document and video formats; most conversions run in the browser with WebAssembly.",
+  "category": "media",
+  "developedBy": {
+    "label": "VERT",
+    "url": "https://github.com/VERT-sh"
+  },
+  "links": {
+    "github": "https://github.com/VERT-sh/VERT",
+    "website": "https://vert.sh",
+    "docs": [
+      "https://github.com/VERT-sh/VERT/blob/main/docs/DOCKER.md",
+      "https://github.com/VERT-sh/VERT/blob/main/docs/VIDEO_CONVERSION.md",
+      "https://github.com/VERT-sh/VERT/blob/main/docs/FAQ.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "The prebuilt image sends server-side video conversions to the official vertd instance at vertd.vert.sh. To keep videos private, deploy vertd yourself and enter its https URL as the Instance URL in VERT settings.",
+      "link": "https://github.com/VERT-sh/VERT/blob/main/docs/VIDEO_CONVERSION.md"
+    }
+  ]
+}
