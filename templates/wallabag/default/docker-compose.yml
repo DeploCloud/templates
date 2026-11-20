@@ -1,0 +1,19 @@
+services:
+  wallabag:
+    image: wallabag/wallabag:2.6.17@sha256:9055d92d6e7973abea2d902ecb5459f6063fce05595eaef37f6750e49ff8cdee
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SYMFONY__ENV__DATABASE_DRIVER: pdo_sqlite
+      SYMFONY__ENV__DOMAIN_NAME: ${SYMFONY__ENV__DOMAIN_NAME}
+      SYMFONY__ENV__SECRET: ${SYMFONY__ENV__SECRET}
+      SYMFONY__ENV__SERVER_NAME: ${SYMFONY__ENV__SERVER_NAME}
+      SYMFONY__ENV__FOSUSER_REGISTRATION: ${SYMFONY__ENV__FOSUSER_REGISTRATION}
+    volumes:
+      - wallabag-data:/var/www/wallabag/data
+      - wallabag-images:/var/www/wallabag/web/assets/images
+
+volumes:
+  wallabag-data: {}
+  wallabag-images: {}

@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wallabag"
+port = 80
+host = "${domain}"
+
+[config.env]
+MYSQL_ROOT_PASSWORD = "${password:32}"
+DB_PASSWORD = "${password:32}"
+SYMFONY__ENV__DOMAIN_NAME = "https://${domain}"
+SYMFONY__ENV__SECRET = "${secret:32}"
+SYMFONY__ENV__SERVER_NAME = "Wallabag"
+SYMFONY__ENV__FOSUSER_REGISTRATION = "false"

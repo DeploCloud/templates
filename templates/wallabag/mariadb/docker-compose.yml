@@ -1,0 +1,44 @@
+services:
+  wallabag:
+    image: wallabag/wallabag:2.6.17@sha256:9055d92d6e7973abea2d902ecb5459f6063fce05595eaef37f6750e49ff8cdee
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      SYMFONY__ENV__DATABASE_DRIVER: pdo_mysql
+      SYMFONY__ENV__DATABASE_HOST: wallabag-db
+      SYMFONY__ENV__DATABASE_PORT: 3306
+      SYMFONY__ENV__DATABASE_NAME: wallabag
+      SYMFONY__ENV__DATABASE_USER: wallabag
+      SYMFONY__ENV__DATABASE_PASSWORD: ${DB_PASSWORD}
+      SYMFONY__ENV__DATABASE_CHARSET: utf8mb4
+      SYMFONY__ENV__DOMAIN_NAME: ${SYMFONY__ENV__DOMAIN_NAME}
+      SYMFONY__ENV__SECRET: ${SYMFONY__ENV__SECRET}
+      SYMFONY__ENV__SERVER_NAME: ${SYMFONY__ENV__SERVER_NAME}
+      SYMFONY__ENV__FOSUSER_REGISTRATION: ${SYMFONY__ENV__FOSUSER_REGISTRATION}
+    volumes:
+      - wallabag-data:/var/www/wallabag/data
+      - wallabag-images:/var/www/wallabag/web/assets/images
+    depends_on:
+      wallabag-db:
+        condition: service_healthy
+
+  wallabag-db:
+    image: mariadb:11.8.9@sha256:d36f18d65a0459510b8b0f643b226a6d299e3206486e2b64ff20754a6d291707
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - wallabag-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  wallabag-data: {}
+  wallabag-images: {}
+  wallabag-db: {}
