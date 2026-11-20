@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "big-agi"
+port = 3_000
+host = "${domain}"
