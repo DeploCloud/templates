@@ -1,0 +1,22 @@
+[variables]
+admin_password = "${password:32}"
+cookie_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "couchdb"
+port = 5_984
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "single-node.ini"
+content = """
+[couchdb]
+single_node = true
+"""
+
+[config.env]
+COUCHDB_USER = "admin"
+COUCHDB_PASSWORD = "${admin_password}"
+COUCHDB_SECRET = "${cookie_secret}"
