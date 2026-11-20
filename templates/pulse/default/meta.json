@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Monitoring and alerting dashboard for Proxmox, Docker, Kubernetes, vSphere and Linux, Windows or macOS hosts, with 90 days of metric history.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Richard Courtman",
+    "url": "https://github.com/rcourtman"
+  },
+  "links": {
+    "github": "https://github.com/rcourtman/Pulse",
+    "website": "https://pulserelay.pro",
+    "docs": [
+      "https://github.com/rcourtman/Pulse/blob/main/docs/INSTALL.md",
+      "https://github.com/rcourtman/Pulse/blob/main/docs/DOCKER.md",
+      "https://github.com/rcourtman/Pulse/blob/main/docs/CONFIGURATION.md",
+      "https://github.com/rcourtman/Pulse/blob/main/docs/REVERSE_PROXY.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "First login needs a one-time setup token: open the container console, run `/app/pulse bootstrap-token`, paste the printed token in the browser and create the admin account. The token is not written to the logs.",
+      "link": "https://github.com/rcourtman/Pulse/blob/main/docs/INSTALL.md#step-1-get-the-token"
+    }
+  ]
+}
