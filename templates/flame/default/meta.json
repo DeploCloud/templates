@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted startpage for your server with built-in editors for apps, bookmarks, search queries and themes, stored in SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Pawel Malak",
+    "url": "https://github.com/pawelmalak"
+  },
+  "links": {
+    "github": "https://github.com/pawelmalak/flame",
+    "docs": [
+      "https://github.com/pawelmalak/flame#readme",
+      "https://github.com/pawelmalak/flame/wiki/Authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The startpage and every new entry are public by default. Log in under Settings > App with the generated PASSWORD from the environment settings to edit apps, bookmarks and settings, and mark private entries as hidden. Docker label discovery is not available because this template does not mount the Docker socket.",
+      "link": "https://github.com/pawelmalak/flame/wiki/Authentication"
+    }
+  ]
+}
