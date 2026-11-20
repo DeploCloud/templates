@@ -1,0 +1,78 @@
+services:
+  clickstack:
+    image: clickhouse/clickstack:2.46.0@sha256:3002ce9ea2c0c9032f27e6541eb7485884bc9b8f9263faf0c8b80973b6c58c6e
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      FRONTEND_URL: ${FRONTEND_URL}
+      MONGO_URI: mongodb://clickstack-db:27017/hyperdx
+      HYPERDX_API_PORT: "8000"
+      HYPERDX_APP_PORT: "8080"
+      HYPERDX_LOG_LEVEL: ${HYPERDX_LOG_LEVEL}
+      EXPRESS_SESSION_SECRET: ${EXPRESS_SESSION_SECRET}
+      TOKEN_ENCRYPTION_KEY: ${TOKEN_ENCRYPTION_KEY}
+      USAGE_STATS_ENABLED: ${USAGE_STATS_ENABLED}
+      DEFAULT_CONNECTIONS: '[{"name":"Local ClickHouse","host":"http://clickstack-clickhouse:8123","username":"default","password":"${CLICKHOUSE_PASSWORD}"}]'
+      DEFAULT_SOURCES: '[{"from":{"databaseName":"default","tableName":"otel_logs"},"kind":"log","timestampValueExpression":"Timestamp","name":"Logs","displayedTimestampValueExpression":"Timestamp","implicitColumnExpression":"Body","serviceNameExpression":"ServiceName","bodyExpression":"Body","eventAttributesExpression":"LogAttributes","resourceAttributesExpression":"ResourceAttributes","defaultTableSelectExpression":"Timestamp,ServiceName,SeverityText,Body","severityTextExpression":"SeverityText","severityNumberExpression":"SeverityNumber","eventNameExpression":"EventName","traceIdExpression":"TraceId","spanIdExpression":"SpanId","metadataMaterializedViews":{"kvRollupTable":"otel_logs_kv_rollup_15m","granularity":"15 minute"},"connection":"Local ClickHouse","traceSourceId":"Traces","metricSourceId":"Metrics"},{"from":{"databaseName":"default","tableName":"otel_traces"},"kind":"trace","timestampValueExpression":"Timestamp","name":"Traces","displayedTimestampValueExpression":"Timestamp","implicitColumnExpression":"SpanName","serviceNameExpression":"ServiceName","eventAttributesExpression":"SpanAttributes","resourceAttributesExpression":"ResourceAttributes","defaultTableSelectExpression":"Timestamp,ServiceName,StatusCode,round(Duration/1e6),SpanName","traceIdExpression":"TraceId","spanIdExpression":"SpanId","durationExpression":"Duration","durationPrecision":9,"parentSpanIdExpression":"ParentSpanId","spanNameExpression":"SpanName","spanKindExpression":"SpanKind","statusCodeExpression":"StatusCode","statusMessageExpression":"StatusMessage","spanEventsValueExpression":"Events","spanLinksValueExpression":"Links","metadataMaterializedViews":{"kvRollupTable":"otel_traces_kv_rollup_15m","granularity":"15 minute"},"connection":"Local ClickHouse","logSourceId":"Logs","sessionSourceId":"Sessions","metricSourceId":"Metrics"},{"from":{"databaseName":"default","tableName":""},"kind":"metric","timestampValueExpression":"TimeUnix","name":"Metrics","resourceAttributesExpression":"ResourceAttributes","metricTables":{"gauge":"otel_metrics_gauge","histogram":"otel_metrics_histogram","sum":"otel_metrics_sum","summary":"otel_metrics_summary","exponential histogram":"otel_metrics_exponential_histogram"},"connection":"Local ClickHouse","logSourceId":"Logs"},{"from":{"databaseName":"default","tableName":"hyperdx_sessions"},"kind":"session","timestampValueExpression":"TimestampTime","name":"Sessions","resourceAttributesExpression":"ResourceAttributes","connection":"Local ClickHouse","traceSourceId":"Traces"}]'
+    depends_on:
+      clickstack-db:
+        condition: service_healthy
+      clickstack-clickhouse:
+        condition: service_healthy
+
+  clickstack-otel-collector:
+    image: clickhouse/clickstack-otel-collector:2.46.0@sha256:759e2136311a6c9343a1b31e0494dd7e623958f70fdcf8a50fca08be33e4aaee
+    restart: unless-stopped
+    expose:
+      - 4318
+    environment:
+      CLICKHOUSE_ENDPOINT: tcp://clickstack-clickhouse:9000?dial_timeout=10s
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      HYPERDX_OTEL_EXPORTER_CLICKHOUSE_DATABASE: default
+      HYPERDX_LOG_LEVEL: ${HYPERDX_LOG_LEVEL}
+      OPAMP_SERVER_URL: http://clickstack:4320
+      CUSTOM_OTELCOL_CONFIG_FILE: /etc/otelcol-contrib/listen.yaml
+    volumes:
+      - ./otel-collector-listen.yaml:/etc/otelcol-contrib/listen.yaml:ro
+    depends_on:
+      clickstack-clickhouse:
+        condition: service_healthy
+      clickstack:
+        condition: service_started
+
+  clickstack-clickhouse:
+    image: clickhouse/clickhouse-server:26.10.6.18-alpine@sha256:366b4896eceb5944ad25736b57e8c250132888919848fc42fe0cfbb9d51dc88e
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    volumes:
+      - clickstack-clickhouse-data:/var/lib/clickhouse
+      - clickstack-clickhouse-logs:/var/log/clickhouse-server
+      - ./clickhouse-config.xml:/etc/clickhouse-server/config.d/clickstack.xml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  clickstack-db:
+    image: mongo:5.0.33-focal@sha256:5e15a3f014edd771d9a343fba762dbfd3e637406addc494ee840f544affb5f75
+    restart: unless-stopped
+    volumes:
+      - clickstack-db-data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongo --quiet --eval \"db.adminCommand('ping').ok\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  clickstack-clickhouse-data: {}
+  clickstack-clickhouse-logs: {}
+  clickstack-db-data: {}
