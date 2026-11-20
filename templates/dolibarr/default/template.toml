@@ -1,0 +1,23 @@
+[variables]
+db_password = "${hash:32}"
+db_root_password = "${hash:32}"
+admin_password = "${hash:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dolibarr"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOLI_DB_NAME = "dolibarr"
+DOLI_DB_USER = "dolibarr"
+DOLI_DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+DOLI_URL_ROOT = "https://${domain}"
+DOLI_ADMIN_LOGIN = "admin"
+DOLI_ADMIN_PASSWORD = "${admin_password}"
+DOLI_INSTANCE_UNIQUE_ID = "${hash:32}"
+DOLI_CRON_KEY = "${hash:32}"
