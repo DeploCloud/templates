@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hatchet"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+SERVER_URL = "https://${domain}"
+SERVER_AUTH_COOKIE_DOMAIN = "${domain}"
+SERVER_AUTH_COOKIE_INSECURE = "false"
+SERVER_AUTH_SET_EMAIL_VERIFIED = "true"
+SERVER_ALLOW_SIGNUP = "false"
+SERVER_GRPC_BROADCAST_ADDRESS = "hatchet:7077"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "Hx7${admin_password}"
