@@ -1,0 +1,16 @@
+[variables]
+jwt_secret = "${password:32}"
+secure_link_secret = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "onlyoffice-docs"
+port = 80
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${jwt_secret}"
+JWT_HEADER = "Authorization"
+SECURE_LINK_SECRET = "${secure_link_secret}"
