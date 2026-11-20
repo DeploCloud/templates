@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nodebb"
+port = 4_567
+host = "${domain}"
+
+[config.env]
+NODEBB_URL = "https://${domain}"
+NODEBB_ADMIN_USERNAME = "admin"
+NODEBB_ADMIN_EMAIL = "admin@${domain}"
+NODEBB_ADMIN_PASSWORD = "${admin_password}"
+DB_PASSWORD = "${db_password}"
