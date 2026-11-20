@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Engram Cloud server: shared, project-scoped memory sync for AI coding agents with a browser dashboard, backed by PostgreSQL.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Gentleman Programming",
+    "url": "https://github.com/Gentleman-Programming"
+  },
+  "links": {
+    "github": "https://github.com/Gentleman-Programming/engram",
+    "website": "https://engram.gentlemanprogramming.com/",
+    "docs": [
+      "https://github.com/Gentleman-Programming/engram/blob/main/docs/engram-cloud/quickstart.md",
+      "https://github.com/Gentleman-Programming/engram/blob/main/docs/engram-cloud/production-checklist.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /dashboard/login with the ENGRAM_CLOUD_ADMIN value from the environment, then open /dashboard/bootstrap to create the first managed admin. Engram CLI clients sync with the ENGRAM_CLOUD_TOKEN value: run engram cloud config --server https://<your-domain> on each machine.",
+      "link": "https://github.com/Gentleman-Programming/engram/blob/main/docs/engram-cloud/quickstart.md"
+    },
+    {
+      "type": "info",
+      "message": "ENGRAM_CLOUD_ALLOWED_PROJECTS defaults to * (every project). Replace it with a comma-separated list of project names to restrict what the shared sync token can reach."
+    }
+  ]
+}

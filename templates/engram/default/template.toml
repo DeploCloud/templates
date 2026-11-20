@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "engram"
+port = 18_080
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+# All secrets must be at least 32 bytes; the admin and sync tokens must differ
+ENGRAM_CLOUD_TOKEN = "${password:48}"
+ENGRAM_CLOUD_ADMIN = "${password:48}"
+ENGRAM_JWT_SECRET = "${secret:64}"
+ENGRAM_CLOUD_TOKEN_PEPPER = "${secret:64}"
+ENGRAM_CLOUD_ALLOWED_PROJECTS = "*"
