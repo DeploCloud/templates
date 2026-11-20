@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "OneUptime monitoring and observability platform with uptime probes, status pages, incidents, on-call and telemetry, backed by PostgreSQL, ClickHouse and Valkey.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "OneUptime",
+    "url": "https://oneuptime.com/"
+  },
+  "links": {
+    "github": "https://github.com/OneUptime/oneuptime",
+    "website": "https://oneuptime.com/",
+    "docs": [
+      "https://oneuptime.com/docs/installation/docker-compose",
+      "https://oneuptime.com/docs/installation/self-hosting-guide",
+      "https://oneuptime.com/docs/emails/smtp"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account that signs up becomes the master admin. Anyone who can reach the domain can sign up after you, so turn off sign-ups under Settings > Authentication in the Admin Dashboard (/admin).",
+      "link": "https://oneuptime.com/docs/installation/docker-compose"
+    },
+    {
+      "type": "warning",
+      "message": "OneUptime sends no email until a mail server is set up in the Admin Dashboard under Settings > Notifications > Emails.",
+      "link": "https://oneuptime.com/docs/emails/smtp"
+    }
+  ]
+}
