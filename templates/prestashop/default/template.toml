@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+admin_folder = "admin${hash:12}"
+
+[config]
+
+[[config.domains]]
+serviceName = "prestashop"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_NAME = "prestashop"
+DB_USER = "prestashop"
+DB_PASSWD = "${db_password}"
+DB_PREFIX = "ps_"
+PS_DOMAIN = "${domain}"
+PS_ENABLE_SSL = "1"
+PS_FOLDER_ADMIN = "${admin_folder}"
+PS_LANGUAGE = "en"
+PS_COUNTRY = "GB"
+ADMIN_MAIL = "admin@example.com"
+ADMIN_PASSWD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "reverse-proxy.conf"
+content = """SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on
+"""
