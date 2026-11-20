@@ -1,0 +1,23 @@
+services:
+  celld:
+    image: ghcr.io/denoland/celld:0.6.3@sha256:22bca1b40a9e4c434cc149d8913d7eaafa9792961a8c05f9fecf921d416216dc
+    restart: unless-stopped
+    # Above CELLD_SHUTDOWN_TOTAL_MS (40s) so SIGTERM can hand cells off.
+    stop_grace_period: 45s
+    expose:
+      - 8080
+    environment:
+      CELLD_BUCKET: ${CELLD_BUCKET}
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      AWS_REGION: ${AWS_REGION}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      CELLD_ADDR: 0.0.0.0:8080
+      CELLD_INTERNAL_ADDR: 127.0.0.1:8081
+      CELLD_WATCH: /var/lib/celld/state
+      CELLD_TRUST_FORWARDED_HEADERS: "1"
+    volumes:
+      - celld-state:/var/lib/celld
+
+volumes:
+  celld-state: {}

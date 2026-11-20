@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Single celld node that runs Workers applications with Durable Objects, KV, Queues and D1, storing state in your S3-compatible bucket.",
+  "category": "development",
+  "developedBy": {
+    "label": "Deno",
+    "url": "https://deno.com"
+  },
+  "links": {
+    "github": "https://github.com/denoland/celld",
+    "website": "https://celld.dev",
+    "docs": [
+      "https://celld.dev/docs",
+      "https://celld.dev/docs/guarantees",
+      "https://celld.dev/docs/security"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "celld needs your own S3-compatible bucket that supports conditional writes. Set CELLD_BUCKET (s3://NAME or s3://NAME/PREFIX), AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY, S3_ENDPOINT for a store other than Amazon S3, and AWS_REGION to the bucket's region (default us-east-1), then redeploy. The bucket credentials give full control of the fleet.",
+      "link": "https://celld.dev/docs#configure-object-storage"
+    },
+    {
+      "type": "warning",
+      "message": "The node waits for a deployment and serves nothing until you run `celld deploy . --bucket s3://NAME` from a Wrangler project on your machine, with the same bucket settings. A single node waits for the bucket on every write, so writes are slower than in a multi-node fleet.",
+      "link": "https://celld.dev/docs#deploy-an-application"
+    }
+  ]
+}
