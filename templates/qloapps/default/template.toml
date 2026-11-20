@@ -1,0 +1,16 @@
+[variables]
+mysql_root_password = "${password:32}"
+ssh_user_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "qloapps"
+port = 80
+host = "${domain}"
+
+[config.env]
+MYSQL_ROOT_PASSWORD = "${mysql_root_password}"
+MYSQL_DATABASE = "qloapps"
+USER_PASSWORD = "${ssh_user_password}"
