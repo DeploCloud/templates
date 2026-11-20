@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+secret_key = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tandoor-recipes"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${secret_key}"
+ALLOWED_HOSTS = "${domain}"
+CSRF_TRUSTED_ORIGINS = "https://${domain}"
+TZ = "Europe/Berlin"
+POSTGRES_DB = "tandoor"
+POSTGRES_USER = "tandoor"
+POSTGRES_PASSWORD = "${db_password}"

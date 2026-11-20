@@ -1,0 +1,43 @@
+services:
+  tandoor-recipes:
+    image: ghcr.io/tandoorrecipes/recipes:2.7.6@sha256:6c467bf484044a0305ff39bed5badb48b58bb963d4276fc248e101921151895b
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      TZ: ${TZ}
+      # the edge proxy plus the bundled nginx, so login rate limits see the real client IP
+      ALLAUTH_TRUSTED_PROXY_COUNT: "2"
+      DB_ENGINE: django.db.backends.postgresql
+      POSTGRES_HOST: tandoor-recipes-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - tandoor-media:/opt/recipes/mediafiles
+    depends_on:
+      tandoor-recipes-db:
+        condition: service_healthy
+
+  tandoor-recipes-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - tandoor-db:/var/lib/postgresql/data
+
+volumes:
+  tandoor-media: {}
+  tandoor-db: {}
