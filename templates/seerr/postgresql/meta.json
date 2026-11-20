@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Media request and discovery manager for Jellyfin, Plex and Emby, backed by a bundled PostgreSQL database instead of SQLite.",
+  "category": "media",
+  "developedBy": {
+    "label": "Seerr Team",
+    "url": "https://github.com/seerr-team"
+  },
+  "links": {
+    "github": "https://github.com/seerr-team/seerr",
+    "website": "https://seerr.dev/",
+    "docs": [
+      "https://docs.seerr.dev/extending-seerr/database-config",
+      "https://docs.seerr.dev/getting-started/docker",
+      "https://docs.seerr.dev/using-seerr/backups"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment to finish the setup wizard: the account you sign in with (Jellyfin, Plex or Emby) becomes the owner, so a reachable media server is required.",
+      "link": "https://docs.seerr.dev/using-seerr/users/owner"
+    },
+    {
+      "type": "info",
+      "message": "The setup page may warn that the /app/config volume mount was not configured properly. This is expected with a named volume: data in /app/config persists across restarts and updates, so the warning can be ignored.",
+      "link": "https://docs.seerr.dev/getting-started/docker"
+    }
+  ]
+}

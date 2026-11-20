@@ -1,0 +1,47 @@
+services:
+  seerr:
+    image: ghcr.io/seerr-team/seerr:v3.5.2@sha256:aadee014b40e28cf9aa4928bc9d1183a6eb08f8c44d543cddc9efdcb16549be2
+    restart: unless-stopped
+    init: true
+    expose:
+      - 5055
+    environment:
+      TZ: "${TZ}"
+      LOG_LEVEL: "${LOG_LEVEL}"
+      PORT: "5055"
+      DB_TYPE: postgres
+      DB_HOST: seerr-db
+      DB_PORT: "5432"
+      DB_USER: "${DB_USER}"
+      DB_PASS: "${DB_PASS}"
+      DB_NAME: "${DB_NAME}"
+    volumes:
+      - seerr-config:/app/config
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1"]
+      start_period: 20s
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      seerr-db:
+        condition: service_healthy
+
+  seerr-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASS}"
+      POSTGRES_DB: "${DB_NAME}"
+    volumes:
+      - seerr-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  seerr-config: {}
+  seerr-db-data: {}
