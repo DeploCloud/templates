@@ -100,7 +100,19 @@ On Windows, run:
 
 The launcher selects the binary for your platform and checks the templates in
 this checkout. macOS, Linux and Windows are supported on x64 and ARM64.
-Pass a directory as the first argument to validate a different set of templates.
+Pass a directory to validate a different set of templates. Use `--json` for
+structured diagnostics. The bundled `templates/` directory is the default in
+both modes.
+
+```sh
+./validate --json
+./validate --json /path/to/templates
+```
+
+On Windows, use `.\validate.cmd --json` with the same optional directory
+argument. JSON output is an array of issues with `path`, `field`, and
+`message`. Exit codes are `0` for valid templates, `1` for validation errors,
+and `2` if validation cannot complete.
 The [third-party notices](bin/THIRD_PARTY_NOTICES.txt) are bundled with the executables.
 
 ## License

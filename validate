@@ -18,5 +18,7 @@ esac
 
 if [ "$#" -eq 0 ]; then
     set -- "$root/templates"
+elif [ "$#" -eq 1 ] && [ "$1" = "--json" ]; then
+    set -- --json "$root/templates"
 fi
 exec "$root/bin/template-validator-$target" "$@"

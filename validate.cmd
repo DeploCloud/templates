@@ -11,6 +11,11 @@ if not defined target (
     exit /b 1
 )
 
+if "%~1"=="--json" if "%~2"=="" (
+    "%~dp0bin\template-validator-%target%.exe" --json "%~dp0templates"
+    exit /b
+)
+
 if "%~1"=="" (
     "%~dp0bin\template-validator-%target%.exe" "%~dp0templates"
 ) else (
