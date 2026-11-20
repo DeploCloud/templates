@@ -1,0 +1,183 @@
+# Mailu trusts SUBNET by IP, so every service gets a fixed address on it and
+# the *_ADDRESS variables point there instead of at service names.
+x-mailu-env: &mailu-env
+  SECRET_KEY: ${SECRET_KEY}
+  DOMAIN: ${DOMAIN}
+  HOSTNAMES: ${HOSTNAMES}
+  WEBSITE: ${WEBSITE}
+  SUBNET: 192.168.203.0/24
+  TLS_FLAVOR: notls
+  SESSION_COOKIE_SECURE: "true"
+  REAL_IP_HEADER: X-Forwarded-For
+  REAL_IP_FROM: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+  POSTMASTER: admin
+  ADMIN: "true"
+  WEBMAIL: snappymail
+  API: "false"
+  WEBDAV: none
+  ANTIVIRUS: none
+  SCAN_MACROS: "false"
+  FETCHMAIL_ENABLED: "false"
+  DISABLE_STATISTICS: "true"
+  MESSAGE_SIZE_LIMIT: "50000000"
+  RECIPIENT_DELIMITER: +
+  DMARC_RUA: admin
+  DMARC_RUF: admin
+  FULL_TEXT_SEARCH: en
+  WEBROOT_REDIRECT: /webmail
+  WEB_ADMIN: /admin
+  WEB_WEBMAIL: /webmail
+  SITENAME: Mailu
+  FRONT_ADDRESS: 192.168.203.10
+  ADMIN_ADDRESS: 192.168.203.11
+  IMAP_ADDRESS: 192.168.203.12
+  SMTP_ADDRESS: 192.168.203.13
+  ANTISPAM_ADDRESS: 192.168.203.14
+  WEBMAIL_ADDRESS: 192.168.203.15
+  REDIS_ADDRESS: 192.168.203.16
+
+services:
+  mailu:
+    image: ghcr.io/mailu/nginx:2024.06.71@sha256:50699835b061d6ce6c220f7941306b012468ee75e4d8ecd0416cb27209a90dea
+    restart: unless-stopped
+    environment: *mailu-env
+    expose:
+      - 80
+    dns:
+      - 192.168.203.254
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.10
+    depends_on:
+      mailu-resolver:
+        condition: service_healthy
+
+  mailu-resolver:
+    image: ghcr.io/mailu/unbound:2024.06.71@sha256:c52868e32562fd33ee92333d141cf61f03040f26762cdad3671c82afafcd4d2e
+    restart: unless-stopped
+    environment: *mailu-env
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.254
+
+  mailu-admin:
+    image: ghcr.io/mailu/admin:2024.06.71@sha256:2cc94b794474a4ec9d118dada0494dfa2e37ceee4489f20e9b179fe9d4e826de
+    restart: unless-stopped
+    environment:
+      <<: *mailu-env
+      INITIAL_ADMIN_ACCOUNT: ${INITIAL_ADMIN_ACCOUNT}
+      INITIAL_ADMIN_DOMAIN: ${INITIAL_ADMIN_DOMAIN}
+      INITIAL_ADMIN_PW: ${INITIAL_ADMIN_PW}
+      INITIAL_ADMIN_MODE: ifmissing
+    volumes:
+      - mailu-data:/data
+      - mailu-dkim:/dkim
+    dns:
+      - 192.168.203.254
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.11
+    depends_on:
+      mailu-redis:
+        condition: service_healthy
+      mailu-resolver:
+        condition: service_healthy
+
+  mailu-imap:
+    image: ghcr.io/mailu/dovecot:2024.06.71@sha256:5cb8f19246c37c96f6ae1259cd895295f47c9883f0ee93731cdc1cfa123556f4
+    restart: unless-stopped
+    environment: *mailu-env
+    volumes:
+      - mailu-mail:/mail
+    dns:
+      - 192.168.203.254
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.12
+    depends_on:
+      mailu:
+        condition: service_started
+      mailu-resolver:
+        condition: service_healthy
+
+  mailu-smtp:
+    image: ghcr.io/mailu/postfix:2024.06.71@sha256:82497f53363aa8dbd3cedae5e6a39ab54e946ab3bad40cf58ddb06002d370a5e
+    restart: unless-stopped
+    environment:
+      <<: *mailu-env
+      RELAYHOST: ${RELAYHOST}
+      RELAYUSER: ${RELAYUSER}
+      RELAYPASSWORD: ${RELAYPASSWORD}
+    volumes:
+      - mailu-queue:/queue
+    dns:
+      - 192.168.203.254
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.13
+    depends_on:
+      mailu:
+        condition: service_started
+      mailu-resolver:
+        condition: service_healthy
+
+  mailu-antispam:
+    image: ghcr.io/mailu/rspamd:2024.06.71@sha256:986939067ec8d120e6fa86a95f9f73eb44967e749ee9e4ce26f78339e51250b1
+    restart: unless-stopped
+    environment: *mailu-env
+    volumes:
+      - mailu-filter:/var/lib/rspamd
+    dns:
+      - 192.168.203.254
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.14
+    depends_on:
+      mailu:
+        condition: service_started
+      mailu-redis:
+        condition: service_healthy
+      mailu-resolver:
+        condition: service_healthy
+
+  mailu-webmail:
+    image: ghcr.io/mailu/webmail:2024.06.71@sha256:a39046eddf189fdf449779badb927db60ff4c967d6ed7cccfa72aa90091f2b90
+    restart: unless-stopped
+    environment: *mailu-env
+    volumes:
+      - mailu-webmail:/data
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.15
+    depends_on:
+      mailu:
+        condition: service_started
+
+  mailu-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - mailu-redis:/data
+    networks:
+      mailu:
+        ipv4_address: 192.168.203.16
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+networks:
+  mailu:
+    ipam:
+      config:
+        - subnet: 192.168.203.0/24
+
+volumes:
+  mailu-data: {}
+  mailu-dkim: {}
+  mailu-mail: {}
+  mailu-queue: {}
+  mailu-filter: {}
+  mailu-webmail: {}
+  mailu-redis: {}
