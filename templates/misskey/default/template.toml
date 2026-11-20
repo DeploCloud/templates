@@ -1,0 +1,53 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+setup_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "misskey"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+MISSKEY_SETUP_PASSWORD = "${setup_password}"
+
+[[config.mounts]]
+filePath = "default.yml"
+content = """# https://misskey-hub.net/en/docs/for-admin/install/guides/docker/
+# Never change url or id after the first start.
+url: https://${domain}/
+port: 3000
+
+db:
+  host: misskey-db
+  port: 5432
+  db: misskey
+  user: misskey
+  pass: "${db_password}"
+
+dbReplications: false
+
+redis:
+  host: misskey-redis
+  port: 6379
+  pass: "${redis_password}"
+
+fulltextSearch:
+  provider: sqlLike
+
+id: 'aidx'
+
+# Asked once on the initial admin setup page
+setupPassword: "${setup_password}"
+
+proxyBypassHosts:
+  - api.deepl.com
+  - api-free.deepl.com
+  - www.recaptcha.net
+  - hcaptcha.com
+  - challenges.cloudflare.com
+"""

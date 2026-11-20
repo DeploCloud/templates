@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Federated microblogging server on ActivityPub with notes, reactions, drive and timelines, backed by PostgreSQL and Redis.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Misskey",
+    "url": "https://github.com/misskey-dev"
+  },
+  "links": {
+    "github": "https://github.com/misskey-dev/misskey",
+    "website": "https://misskey-hub.net/",
+    "docs": [
+      "https://misskey-hub.net/en/docs/for-admin/install/guides/docker/",
+      "https://misskey-hub.net/en/docs/for-admin/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the instance URL is fixed to https://<domain>, and federation with other servers does not work over plain HTTP."
+    },
+    {
+      "type": "warning",
+      "message": "The domain and the ID generation method become the instance identity on the first start and cannot be changed afterwards, so deploy on the final domain."
+    },
+    {
+      "type": "warning",
+      "message": "Open the site after the first start to create the administrator account. The setup page asks for the initial setup password, which is the value of MISSKEY_SETUP_PASSWORD."
+    }
+  ]
+}
