@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Recursive and authoritative DNS server with ad blocking, a web console and a DNS-over-HTTPS endpoint served through the app domain.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Technitium",
+    "url": "https://technitium.com/"
+  },
+  "links": {
+    "github": "https://github.com/TechnitiumSoftware/DnsServer",
+    "website": "https://technitium.com/dns/",
+    "docs": [
+      "https://github.com/TechnitiumSoftware/DnsServer/blob/master/DockerEnvironmentVariables.md",
+      "https://blog.technitium.com/2020/07/how-to-host-your-own-dns-over-https-and.html",
+      "https://github.com/TechnitiumSoftware/DnsServer/blob/master/APIDOCS.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web console as admin with the generated DNS_SERVER_ADMIN_PASSWORD. It is applied only on the first start; change it later from the console."
+    },
+    {
+      "type": "warning",
+      "message": "Plain DNS on port 53 is not published. To use https://<your domain>/dns-query, add the proxy networks (10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16) to Reverse Proxy Network ACL under Settings > Optional Protocols, then allow recursion for your clients under Settings > Recursion."
+    }
+  ]
+}

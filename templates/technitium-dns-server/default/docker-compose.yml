@@ -1,0 +1,25 @@
+services:
+  dns-server:
+    image: technitium/dns-server:15.6.2@sha256:eb48ac5c135f4ab936b536f74f853d53e15ab39ef37fdbc9598a089b90d9f245
+    restart: unless-stopped
+    expose:
+      - 5380
+      - 80
+    environment:
+      DNS_SERVER_DOMAIN: ${DNS_SERVER_DOMAIN}
+      DNS_SERVER_ADMIN_PASSWORD: ${DNS_SERVER_ADMIN_PASSWORD}
+      DNS_SERVER_OPTIONAL_PROTOCOL_DNS_OVER_HTTP: "true"
+      DNS_SERVER_LOG_FOLDER_PATH: /var/log/technitium/dns
+    volumes:
+      - technitium-config:/etc/dns
+      - technitium-logs:/var/log/technitium/dns
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://127.0.0.1:5380/api/dnsClient/healthCheck | grep -q '\"status\":\"ok\"'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  technitium-config: {}
+  technitium-logs: {}
