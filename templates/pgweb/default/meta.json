@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based PostgreSQL explorer for browsing tables, running SQL queries and exporting data, protected by HTTP basic auth.",
+  "category": "database",
+  "developedBy": {
+    "label": "Dan Sosedoff",
+    "url": "https://github.com/sosedoff"
+  },
+  "links": {
+    "github": "https://github.com/sosedoff/pgweb",
+    "website": "https://sosedoff.github.io/pgweb/",
+    "docs": [
+      "https://github.com/sosedoff/pgweb/wiki/Usage",
+      "https://github.com/sosedoff/pgweb/wiki/Docker",
+      "https://github.com/sosedoff/pgweb/wiki/SSH-Gateway"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI is protected by HTTP basic auth: the user is admin and the password is the generated PGWEB_AUTH_PASS environment variable. pgweb does not include a database; connect it to an existing PostgreSQL server reachable from this deployment."
+    }
+  ]
+}
