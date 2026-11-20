@@ -1,0 +1,68 @@
+services:
+  graylog:
+    image: graylog/graylog:7.2.2@sha256:ab6bff1cb38d3aeee5273d71af76a453fcd2884035d417c0b2012551818f21dc
+    restart: unless-stopped
+    entrypoint: ["tini", "--", "bash", "/graylog-start.sh"]
+    expose:
+      - 9000
+    environment:
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      GRAYLOG_PASSWORD_SECRET: ${GRAYLOG_PASSWORD_SECRET}
+      GRAYLOG_NODE_ID_FILE: /usr/share/graylog/data/data/node-id
+      GRAYLOG_HTTP_BIND_ADDRESS: 0.0.0.0:9000
+      GRAYLOG_HTTP_EXTERNAL_URI: ${GRAYLOG_HTTP_EXTERNAL_URI}
+      GRAYLOG_ELASTICSEARCH_HOSTS: http://graylog-opensearch:9200
+      GRAYLOG_MONGODB_URI: mongodb://graylog:${MONGO_PASSWORD}@graylog-mongodb:27017/graylog?authSource=admin
+      GRAYLOG_SERVER_JAVA_OPTS: ${GRAYLOG_SERVER_JAVA_OPTS}
+    volumes:
+      - graylog-data:/usr/share/graylog/data
+      - ./graylog-start.sh:/graylog-start.sh:ro
+    depends_on:
+      graylog-mongodb:
+        condition: service_healthy
+      graylog-opensearch:
+        condition: service_healthy
+
+  graylog-mongodb:
+    image: mongo:8.0.38@sha256:bdc216e9d5a6ec2cfdac789b5832fdab64cd32055f59885cae918a92de63c361
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: graylog
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - graylog-mongodb-data:/data/db
+      - graylog-mongodb-config:/data/configdb
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  graylog-opensearch:
+    image: opensearchproject/opensearch:2.19.7@sha256:d89333b6bd4a13b9a95aef7f373c0a6e73440f59bc0d8d1460f9b347289ed0ef
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      action.auto_create_index: "false"
+      DISABLE_SECURITY_PLUGIN: "true"
+      DISABLE_PERFORMANCE_ANALYZER_AGENT_CLI: "true"
+      OPENSEARCH_JAVA_OPTS: ${OPENSEARCH_JAVA_OPTS}
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - graylog-opensearch-data:/usr/share/opensearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:9200/_cluster/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+
+volumes:
+  graylog-data: {}
+  graylog-mongodb-data: {}
+  graylog-mongodb-config: {}
+  graylog-opensearch-data: {}

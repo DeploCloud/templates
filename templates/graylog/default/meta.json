@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Centralized log management server with a web UI for searching, dashboards and alerts, backed by MongoDB and a single-node OpenSearch.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Graylog",
+    "url": "https://graylog.org/"
+  },
+  "links": {
+    "github": "https://github.com/Graylog2/graylog2-server",
+    "website": "https://graylog.org/",
+    "docs": [
+      "https://go2docs.graylog.org/current/downloading_and_installing_graylog/docker_installation_os.htm",
+      "https://go2docs.graylog.org/current/setting_up_graylog/server.conf.html",
+      "https://go2docs.graylog.org/current/getting_in_log_data/inputs.htm"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as user admin with the generated ADMIN_PASSWORD from the environment variables. Only the web UI and REST API are routed: inputs you create for syslog, GELF or Beats listen on their own ports, which this template does not publish."
+    }
+  ]
+}
