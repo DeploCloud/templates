@@ -1,0 +1,65 @@
+services:
+  snipe-it:
+    image: snipe/snipe-it:v8.8.3@sha256:eb6d78c1bdae46d15177b149fcc14d7cd795d9f6c17e53dc4d87e04da9653218
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - snipe-it-data:/var/lib/snipeit
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      APP_TIMEZONE: ${APP_TIMEZONE}
+      APP_LOCALE: ${APP_LOCALE}
+      APP_TRUSTED_PROXIES: ${APP_TRUSTED_PROXIES}
+      APP_TRUSTED_HEADERS: ${APP_TRUSTED_HEADERS}
+      SECURE_COOKIES: "true"
+      DB_CONNECTION: mariadb
+      DB_HOST: snipe-it-db
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM_ADDR: ${MAIL_FROM_ADDR}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      MAIL_REPLYTO_ADDR: ${MAIL_FROM_ADDR}
+      MAIL_REPLYTO_NAME: ${MAIL_FROM_NAME}
+      IMAGE_LIB: gd
+      LOG_CHANNEL: stderr
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/health > /dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      snipe-it-db:
+        condition: service_healthy
+
+  snipe-it-db:
+    image: mariadb:11.4.13@sha256:5e73baf8179b29f115101bb102763a47a017361f3e9792daccba6646c3ab1532
+    restart: unless-stopped
+    volumes:
+      - snipe-it-db:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  snipe-it-data: {}
+  snipe-it-db: {}
