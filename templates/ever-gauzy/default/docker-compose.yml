@@ -1,0 +1,111 @@
+x-gauzy-env: &gauzy-env
+  NODE_ENV: production
+  DEMO: "false"
+  # The image defaults to API_HOST=api, which the API also binds to.
+  API_HOST: 0.0.0.0
+  API_PORT: "3000"
+  API_BASE_URL: ${PUBLIC_URL}
+  CLIENT_BASE_URL: ${PUBLIC_URL}
+  ALLOWED_ORIGINS: ${PUBLIC_URL}
+  TRUST_PROXY: "1"
+  DB_TYPE: postgres
+  DB_HOST: ever-gauzy-db
+  DB_PORT: "5432"
+  DB_NAME: ${DB_NAME}
+  DB_USER: ${DB_USER}
+  DB_PASS: ${DB_PASS}
+  REDIS_ENABLED: "true"
+  REDIS_URL: redis://ever-gauzy-redis:6379
+  JWT_SECRET: ${JWT_SECRET}
+  JWT_REFRESH_TOKEN_SECRET: ${JWT_REFRESH_TOKEN_SECRET}
+  JWT_VERIFICATION_TOKEN_SECRET: ${JWT_VERIFICATION_TOKEN_SECRET}
+  EXPRESS_SESSION_SECRET: ${EXPRESS_SESSION_SECRET}
+  DEMO_SUPER_ADMIN_EMAIL: ${DEMO_SUPER_ADMIN_EMAIL}
+  DEMO_SUPER_ADMIN_PASSWORD: ${DEMO_SUPER_ADMIN_PASSWORD}
+  DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD}
+  DEMO_EMPLOYEE_PASSWORD: ${DEMO_EMPLOYEE_PASSWORD}
+  APP_USER_REGISTRATION: ${APP_USER_REGISTRATION}
+  ALLOW_TENANTS_REGISTRATION: ${ALLOW_TENANTS_REGISTRATION}
+
+services:
+  ever-gauzy:
+    image: ghcr.io/ever-co/gauzy-webapp:latest@sha256:9757fbe2a198e8289ef00a384179bf0239aa5ca002a2db1feda850ae733d02e0
+    restart: unless-stopped
+    expose:
+      - 4200
+    environment:
+      NODE_ENV: production
+      DEMO: "false"
+      API_BASE_URL: ${PUBLIC_URL}
+      CLIENT_BASE_URL: ${PUBLIC_URL}
+      DEFAULT_COUNTRY: US
+    depends_on:
+      - ever-gauzy-api
+
+  ever-gauzy-api:
+    image: ghcr.io/ever-co/gauzy-api:latest@sha256:ffa2be9beae4171fb2f954b053d6b256cd10bd612b446b72032495052e1c3d8e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      <<: *gauzy-env
+    volumes:
+      - ever-gauzy-public:/srv/gauzy/apps/api/public
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health/live').then(r => process.exit(r.ok ? 0 : 1), () => process.exit(1))"
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      # First start runs the migrations and seeds the database before listening.
+      start_period: 600s
+    depends_on:
+      ever-gauzy-db:
+        condition: service_healthy
+      ever-gauzy-redis:
+        condition: service_healthy
+
+  ever-gauzy-worker:
+    image: ghcr.io/ever-co/gauzy-worker:latest@sha256:e4d2c6a0d383989b5e1e8d8ac74d61c35f29fe7660aa34a991ee7fb9de759697
+    restart: unless-stopped
+    environment:
+      <<: *gauzy-env
+      # Uploads live in the API volume, so the API keeps processing documents.
+      GAUZY_DOCS_QUEUE_WORKER_ENABLED: "false"
+    depends_on:
+      ever-gauzy-api:
+        condition: service_healthy
+
+  ever-gauzy-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ever-gauzy-db:/var/lib/postgresql/data
+
+  ever-gauzy-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ever-gauzy-redis:/data
+
+volumes:
+  ever-gauzy-public: {}
+  ever-gauzy-db: {}
+  ever-gauzy-redis: {}
