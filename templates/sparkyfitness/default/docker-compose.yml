@@ -1,0 +1,63 @@
+services:
+  sparkyfitness:
+    image: codewithcj/sparkyfitness:v1.12.1@sha256:c4e0769cece9ee70439b86cc457bed14d543edebab7502cd0c5d67174eb11f57
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SPARKY_FITNESS_FRONTEND_URL: ${SPARKY_FITNESS_FRONTEND_URL}
+      SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server
+      SPARKY_FITNESS_SERVER_PORT: "3010"
+    depends_on:
+      - sparkyfitness-server
+
+  sparkyfitness-server:
+    image: codewithcj/sparkyfitness_server:v1.12.1@sha256:2f064604c2034fa5953cb3e17651aad32e8a9f8362895500cd5d188376215b3a
+    restart: unless-stopped
+    stop_grace_period: 20s
+    expose:
+      - 3010
+    environment:
+      SPARKY_FITNESS_DB_HOST: sparkyfitness-db
+      SPARKY_FITNESS_DB_PORT: "5432"
+      SPARKY_FITNESS_DB_NAME: ${SPARKY_FITNESS_DB_NAME}
+      SPARKY_FITNESS_DB_USER: ${SPARKY_FITNESS_DB_USER}
+      SPARKY_FITNESS_DB_PASSWORD: ${SPARKY_FITNESS_DB_PASSWORD}
+      SPARKY_FITNESS_APP_DB_USER: sparky_app
+      SPARKY_FITNESS_APP_DB_PASSWORD: ${SPARKY_FITNESS_APP_DB_PASSWORD}
+      SPARKY_FITNESS_FRONTEND_URL: ${SPARKY_FITNESS_FRONTEND_URL}
+      SPARKY_FITNESS_API_ENCRYPTION_KEY: ${SPARKY_FITNESS_API_ENCRYPTION_KEY}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      NODE_ENV: production
+      TZ: ${TZ}
+      SPARKY_FITNESS_LOG_LEVEL: ERROR
+      SPARKY_FITNESS_SERVER_PORT: "3010"
+      SPARKY_FITNESS_DISABLE_SIGNUP: ${SPARKY_FITNESS_DISABLE_SIGNUP}
+      SPARKY_FITNESS_TRUSTED_PROXY_HOPS: "2"
+    volumes:
+      - sparkyfitness-backup:/app/SparkyFitnessServer/backup
+      - sparkyfitness-uploads:/app/SparkyFitnessServer/uploads
+    depends_on:
+      sparkyfitness-db:
+        condition: service_healthy
+
+  sparkyfitness-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${SPARKY_FITNESS_DB_NAME}
+      POSTGRES_USER: ${SPARKY_FITNESS_DB_USER}
+      POSTGRES_PASSWORD: ${SPARKY_FITNESS_DB_PASSWORD}
+    volumes:
+      - sparkyfitness-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  sparkyfitness-backup: {}
+  sparkyfitness-uploads: {}
+  sparkyfitness-db: {}
