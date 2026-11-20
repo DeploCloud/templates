@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nango-server"
+port = 3_003
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "nango-server"
+port = 3_009
+host = "connect-${domain}"
+
+[config.env]
+NANGO_SERVER_URL = "https://${domain}"
+NANGO_PUBLIC_CONNECT_URL = "https://connect-${domain}"
+NANGO_ENCRYPTION_KEY = "${base64:43}"
+NANGO_ADMIN_KEY = "${secret:48}"
+NANGO_DB_PASSWORD = "${db_password}"
+NANGO_DASHBOARD_USERNAME = "admin"
+NANGO_DASHBOARD_PASSWORD = "${password:24}"

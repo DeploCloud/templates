@@ -1,0 +1,50 @@
+services:
+  nango-server:
+    image: nangohq/nango-server:hosted-b6e064817a5be22fcd2862c39acb4340c7094137@sha256:562fe39f8b6bc6b33864298d4e0a049ffe914da32721c99ad67ed1e48678b809
+    restart: unless-stopped
+    expose:
+      - 3003
+      - 3009
+    environment:
+      SERVER_PORT: "3003"
+      NANGO_SERVER_URL: ${NANGO_SERVER_URL}
+      NANGO_PUBLIC_SERVER_URL: ${NANGO_SERVER_URL}
+      NANGO_PUBLIC_CONNECT_URL: ${NANGO_PUBLIC_CONNECT_URL}
+      FLAG_SERVE_CONNECT_UI: "true"
+      NANGO_CONNECT_UI_PORT: "3009"
+      NANGO_ENCRYPTION_KEY: ${NANGO_ENCRYPTION_KEY}
+      NANGO_ADMIN_KEY: ${NANGO_ADMIN_KEY}
+      NANGO_DB_HOST: nango-db
+      NANGO_DB_PORT: "5432"
+      NANGO_DB_NAME: nango
+      NANGO_DB_USER: nango
+      NANGO_DB_PASSWORD: ${NANGO_DB_PASSWORD}
+      NANGO_DB_SSL: "false"
+      RECORDS_DATABASE_URL: postgresql://nango:${NANGO_DB_PASSWORD}@nango-db:5432/nango
+      FLAG_AUTH_ENABLED: "false"
+      NANGO_DASHBOARD_USERNAME: ${NANGO_DASHBOARD_USERNAME}
+      NANGO_DASHBOARD_PASSWORD: ${NANGO_DASHBOARD_PASSWORD}
+      NANGO_LOGS_ENABLED: "false"
+      CSP_REPORT_ONLY: "true"
+      LOG_LEVEL: info
+    depends_on:
+      nango-db:
+        condition: service_healthy
+
+  nango-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nango
+      POSTGRES_USER: nango
+      POSTGRES_PASSWORD: ${NANGO_DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nango -d nango"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - nango-db:/var/lib/postgresql/data
+
+volumes:
+  nango-db: {}
