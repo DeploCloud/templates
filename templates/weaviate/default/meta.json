@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-node Weaviate vector database with persistent storage, API key authentication and RBAC, serving its REST and GraphQL API over HTTPS.",
+  "category": "database",
+  "developedBy": {
+    "label": "Weaviate",
+    "url": "https://github.com/weaviate"
+  },
+  "links": {
+    "github": "https://github.com/weaviate/weaviate",
+    "website": "https://weaviate.io",
+    "docs": [
+      "https://docs.weaviate.io/deploy/installation-guides/docker-installation",
+      "https://docs.weaviate.io/deploy/configuration/env-vars",
+      "https://docs.weaviate.io/deploy/configuration/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI. Every request needs the generated WEAVIATE_API_KEY from the environment settings as Authorization: Bearer <key>; it belongs to the root user admin. The domain serves the REST and GraphQL API only. The gRPC API that the Python v4 and TypeScript v3 clients need is reachable only from apps in the same environment at weaviate:50051 (HTTP at weaviate:8080).",
+      "link": "https://docs.weaviate.io/deploy/configuration/authentication"
+    }
+  ]
+}

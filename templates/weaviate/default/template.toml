@@ -1,0 +1,13 @@
+[variables]
+api_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "weaviate"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+WEAVIATE_API_KEY = "${api_key}"
