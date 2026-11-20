@@ -1,0 +1,29 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "LibrePhotos single-container image backed by a bundled PostgreSQL database for larger libraries and multiple users.",
+  "category": "media",
+  "developedBy": {
+    "label": "LibrePhotos",
+    "url": "https://github.com/LibrePhotos"
+  },
+  "links": {
+    "github": "https://github.com/LibrePhotos/librephotos",
+    "website": "https://docs.librephotos.com/",
+    "docs": [
+      "https://docs.librephotos.com/docs/installation/unified-deployment/",
+      "https://docs.librephotos.com/docs/installation/environment-variables/",
+      "https://docs.librephotos.com/docs/user-guide/first-steps/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deploying: the first-time setup wizard lets whoever reaches it first create the admin account.",
+      "link": "https://docs.librephotos.com/docs/user-guide/first-steps/"
+    },
+    {
+      "type": "info",
+      "message": "LibrePhotos needs 4 GB of RAM at minimum and 8 GB or more for smooth face recognition, tagging and captioning on the CPU; the models download on first use and take several GB of disk."
+    }
+  ]
+}
