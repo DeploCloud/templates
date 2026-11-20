@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rabbitmq"
+port = 15_672
+host = "${domain}"
+primary = true
+
+[config.env]
+RABBITMQ_DEFAULT_USER = "admin"
+RABBITMQ_DEFAULT_PASS = "${admin_password}"
