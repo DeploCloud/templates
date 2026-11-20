@@ -1,0 +1,27 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zitadel"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "zitadel-login"
+port = 3_000
+host = "${domain}"
+path = "/ui/v2/login"
+
+[config.env]
+ZITADEL_DOMAIN = "${domain}"
+ZITADEL_MASTERKEY = "${password:32}"
+LOGIN_SESSION_COOKIE_SECRET = "${secret:48}"
+ZITADEL_ADMIN_USERNAME = "zitadel-admin"
+ZITADEL_ADMIN_PASSWORD = "${admin_password}Aa1!"
+ZITADEL_DATABASE_POSTGRES_DSN = "postgresql://zitadel:${db_password}@zitadel-db:5432/zitadel?sslmode=disable"
+POSTGRES_PASSWORD = "${db_password}"
