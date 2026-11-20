@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "backrest"
+port = 9_898
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
