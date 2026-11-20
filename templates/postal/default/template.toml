@@ -1,0 +1,29 @@
+[variables]
+db_root_password = "${password:32}"
+rails_secret_key = "${hash:128}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "postal"
+port = 5000
+host = "${domain}"
+
+[config.env]
+POSTAL_WEB_HOSTNAME = "${domain}"
+POSTAL_SMTP_HOSTNAME = "${domain}"
+POSTAL_TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+DB_ROOT_PASSWORD = "${db_root_password}"
+RAILS_SECRET_KEY = "${rails_secret_key}"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"
+DNS_MX_RECORDS = "mx.${domain}"
+DNS_SPF_INCLUDE = "spf.${domain}"
+DNS_RETURN_PATH_DOMAIN = "rp.${domain}"
+DNS_ROUTE_DOMAIN = "routes.${domain}"
+DNS_TRACK_DOMAIN = "track.${domain}"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+SMTP_FROM_ADDRESS = "postal@${domain}"
