@@ -1,0 +1,32 @@
+[variables]
+ca_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "step-ca-gateway"
+port = 80
+host = "${domain}"
+
+[config.env]
+CA_NAME = "step-ca"
+CA_DNS_NAMES = "${domain},localhost"
+CA_PASSWORD = "${ca_password}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """# step-ca only serves TLS; this hop re-encrypts to it inside the stack network
+{
+	admin off
+	auto_https off
+	persist_config off
+}
+
+:80 {
+	reverse_proxy https://step-ca:9000 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+}
+"""
