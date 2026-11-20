@@ -1,0 +1,28 @@
+services:
+  weaviate:
+    image: semitechnologies/weaviate:1.40.5@sha256:fe848a3830c8a96fc598c903e39bbaa84a84553e30362663c313643a0febe32a
+    restart: unless-stopped
+    expose:
+      - 8080
+      - 50051
+    environment:
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      CLUSTER_HOSTNAME: node1
+      QUERY_DEFAULTS_LIMIT: "25"
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "false"
+      AUTHENTICATION_APIKEY_ENABLED: "true"
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: ${WEAVIATE_API_KEY}
+      AUTHENTICATION_APIKEY_USERS: admin
+      AUTHORIZATION_RBAC_ENABLED: "true"
+      AUTHORIZATION_RBAC_ROOT_USERS: admin
+    volumes:
+      - weaviate-data:/var/lib/weaviate
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 10
+
+volumes:
+  weaviate-data: {}
