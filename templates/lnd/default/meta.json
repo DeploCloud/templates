@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightning Network node on Bitcoin mainnet using the built-in Neutrino light client, with an auto-created wallet and the REST API served over HTTPS.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Lightning Labs",
+    "url": "https://lightning.engineering/"
+  },
+  "links": {
+    "github": "https://github.com/lightningnetwork/lnd",
+    "website": "https://lightning.engineering/",
+    "docs": [
+      "https://docs.lightning.engineering/lightning-network-tools/lnd/run-lnd",
+      "https://github.com/lightningnetwork/lnd/blob/master/docs/DOCKER.md",
+      "https://github.com/lightninglabs/lndinit#readme",
+      "https://lightning.engineering/api-docs/api/lnd/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The wallet seed is generated on first start and saved to /root/.lnd/seed.txt. Open a terminal in the lnd container, run cat /root/.lnd/seed.txt, back up the 24 words offline, then delete the file. Without the seed, funds cannot be recovered if the volume is lost; channel funds also need a recent copy of data/chain/bitcoin/mainnet/channel.backup.",
+      "link": "https://docs.lightning.engineering/lightning-network-tools/lnd/disaster-recovery"
+    },
+    {
+      "type": "warning",
+      "message": "Every REST call needs a macaroon. Use lncli in the lnd container terminal, and bake a scoped macaroon for remote clients with lncli bakemacaroon. Only the REST API is routed; peers cannot open inbound connections on port 9735, so this node opens channels outbound only.",
+      "link": "https://docs.lightning.engineering/lightning-network-tools/lnd/macaroons"
+    }
+  ]
+}
