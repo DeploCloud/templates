@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "glpi"
+port = 80
+host = "${domain}"
+
+[config.env]
+GLPI_DB_NAME = "glpi"
+GLPI_DB_USER = "glpi"
+GLPI_DB_PASSWORD = "${db_password}"
+GLPI_DB_ROOT_PASSWORD = "${db_root_password}"

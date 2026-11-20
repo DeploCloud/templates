@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "IT asset management and ITIL service desk with inventory, tickets, licenses and data center tracking, backed by MySQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "GLPI Project",
+    "url": "https://github.com/glpi-project"
+  },
+  "links": {
+    "github": "https://github.com/glpi-project/glpi",
+    "website": "https://glpi-project.org",
+    "docs": [
+      "https://github.com/glpi-project/docker-images#readme",
+      "https://glpi-install.readthedocs.io/en/latest/",
+      "https://glpi-user-documentation.readthedocs.io/en/latest/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "GLPI installs itself with default accounts: sign in as glpi / glpi, then change the passwords of the glpi, tech, normal and post-only accounts (or disable them) right away.",
+      "link": "https://github.com/glpi-project/docker-images#readme"
+    }
+  ]
+}
