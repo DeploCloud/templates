@@ -1,0 +1,19 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nginx-ui"
+port = 80
+host = "${domain}"
+
+[config.env]
+NGINX_UI_NODE_SKIP_INSTALLATION = "true"
+NGINX_UI_APP_JWT_SECRET = "${hash:64}"
+NGINX_UI_NODE_SECRET = "${uuid}"
+NGINX_UI_PREDEFINED_USER_NAME = "admin"
+NGINX_UI_PREDEFINED_USER_PASSWORD = "${admin_password}"
+NGINX_UI_IGNORE_DOCKER_SOCKET = "true"
+NGINX_UI_AUTH_TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
