@@ -1,0 +1,98 @@
+services:
+  openstatus:
+    image: ghcr.io/openstatushq/openstatus-dashboard:107cc9a@sha256:9f456aea01ba5d05d7767e19cc89bdbd71ffa33664ff9811b3e2ca64f7317be9
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DATABASE_URL: http://openstatus-db:8080
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      SELF_HOST: "true"
+      AUTH_TRUST_HOST: "true"
+      AUTH_SECRET: ${AUTH_SECRET}
+      CRON_SECRET: ${CRON_SECRET}
+      NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      FLY_REGION: self-hosted
+      TINYBIRD_NOOP: "true"
+      # Placeholders upstream expects when Upstash and Stripe are not used
+      UPSTASH_REDIS_REST_URL: http://localhost:6379
+      UPSTASH_REDIS_REST_TOKEN: placeholder
+      STRIPE_SECRET_KEY: sk_self_hosted_placeholder
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:3000/"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    depends_on:
+      openstatus-db:
+        condition: service_healthy
+      openstatus-migrate:
+        condition: service_completed_successfully
+
+  openstatus-status-page:
+    image: ghcr.io/openstatushq/openstatus-status-page:9620756@sha256:77a146d07816e7f6e0e278c826bf8d36fb5c4dbd8360ae5e282c4d3d779d83ce
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DATABASE_URL: http://openstatus-db:8080
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      SELF_HOST: "true"
+      AUTH_TRUST_HOST: "true"
+      AUTH_SECRET: ${AUTH_SECRET}
+      CRON_SECRET: ${CRON_SECRET}
+      NEXT_PUBLIC_URL: ${NEXT_PUBLIC_URL}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      FLY_REGION: self-hosted
+      TINYBIRD_NOOP: "true"
+      UPSTASH_REDIS_REST_URL: http://localhost:6379
+      UPSTASH_REDIS_REST_TOKEN: placeholder
+      STRIPE_SECRET_KEY: sk_self_hosted_placeholder
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:3000/"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    depends_on:
+      openstatus-db:
+        condition: service_healthy
+      openstatus-migrate:
+        condition: service_completed_successfully
+
+  # One-shot: applies pending drizzle migrations, then exits
+  openstatus-migrate:
+    image: ghcr.io/openstatushq/openstatus-db-migrate:9620756@sha256:e7256a55acc8d48437a3e5a17aa0a42f649e36e88acaa2bc45c6028a4e264f77
+    restart: on-failure:3
+    environment:
+      DATABASE_URL: http://openstatus-db:8080
+    depends_on:
+      openstatus-db:
+        condition: service_healthy
+
+  openstatus-db:
+    image: ghcr.io/tursodatabase/libsql-server:v0.24.33@sha256:f8ca0134cdded747793888e48591aece07647d9d598d3ac229aabfa93159ca88
+    restart: unless-stopped
+    environment:
+      SQLD_NODE: primary
+    volumes:
+      - openstatus-db-data:/var/lib/sqld
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'perl -e ''use IO::Socket::INET; exit(IO::Socket::INET->new(PeerAddr=>"127.0.0.1:8080",Timeout=>1) ? 0 : 1);''',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  openstatus-db-data: {}
