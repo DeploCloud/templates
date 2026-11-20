@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "typecho"
+port = 80
+host = "${domain}"
+
+[config.env]
+TYPECHO_SITE_URL = "https://${domain}"
+TYPECHO_USER_NAME = "admin"
+TYPECHO_USER_PASSWORD = "${admin_password}"
+TYPECHO_USER_MAIL = "admin@${domain}"

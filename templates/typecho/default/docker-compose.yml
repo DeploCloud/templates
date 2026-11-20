@@ -1,0 +1,24 @@
+services:
+  typecho:
+    image: joyqi/typecho:1.3.0-php8.2-apache@sha256:195752c1174219f8a12c56c8c93809cc7e14b327e21dba3fdb4d81384e598fbd
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - typecho-app:/app
+      # outside the web root /app, so the SQLite file is never served
+      - typecho-db:/var/www/html
+    environment:
+      TYPECHO_INSTALL: "1"
+      TYPECHO_LANG: en_US
+      TYPECHO_DB_ADAPTER: Pdo_SQLite
+      TYPECHO_DB_FILE: /var/www/html/typecho.db
+      TYPECHO_DB_NEXT: keep
+      TYPECHO_SITE_URL: ${TYPECHO_SITE_URL}
+      TYPECHO_USER_NAME: ${TYPECHO_USER_NAME}
+      TYPECHO_USER_PASSWORD: ${TYPECHO_USER_PASSWORD}
+      TYPECHO_USER_MAIL: ${TYPECHO_USER_MAIL}
+
+volumes:
+  typecho-app: {}
+  typecho-db: {}

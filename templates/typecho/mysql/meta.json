@@ -1,0 +1,24 @@
+{
+  "name": "MySQL",
+  "shortDescription": "Lightweight PHP blogging platform with Markdown, themes and plugins, installed automatically on a bundled MySQL database.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Typecho",
+    "url": "https://github.com/typecho"
+  },
+  "links": {
+    "github": "https://github.com/typecho/typecho",
+    "website": "https://typecho.org/",
+    "docs": [
+      "https://docs.typecho.org/en/guide/operations/containers",
+      "https://docs.typecho.org/en/guide/getting-started/cli-install",
+      "https://docs.typecho.org/en/guide/getting-started/upgrade"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin account is created on first start: sign in at /admin/ as admin with the password from TYPECHO_USER_PASSWORD."
+    }
+  ]
+}
