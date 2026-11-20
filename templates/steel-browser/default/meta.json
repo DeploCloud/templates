@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source browser API for AI agents: Chromium sessions for Puppeteer, Playwright and Selenium, scrape, screenshot and PDF endpoints, and a UI to watch sessions live.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Steel",
+    "url": "https://steel.dev"
+  },
+  "links": {
+    "github": "https://github.com/steel-dev/steel-browser",
+    "website": "https://steel.dev",
+    "docs": [
+      "https://steel.dev/docs/self-hosting/docker",
+      "https://steel.dev/docs/self-hosting/configuration",
+      "https://github.com/steel-dev/steel-browser/blob/main/SECURITY.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Steel Browser has no authentication of its own, so a gateway guards the domain. Open https://<your-domain>/ui and sign in as admin with STEEL_UI_PASSWORD from the environment settings. Programs use the generated STEEL_API_KEY: the Steel SDK sends it as the steel-api-key header (set STEEL_BASE_URL=https://<your-domain> and STEEL_API_KEY), and Playwright or Puppeteer add apiKey=<key> as a query parameter to the session's websocketUrl. Anyone with the key can make the browser fetch any URL, including services on your private network.",
+      "link": "https://github.com/steel-dev/steel-browser/blob/main/SECURITY.md"
+    }
+  ]
+}
