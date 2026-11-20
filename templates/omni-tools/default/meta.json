@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted collection of everyday web tools for images, video, audio, PDF, text, dates, math and data formats, all processed in the browser.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "iib0011",
+    "url": "https://github.com/iib0011"
+  },
+  "links": {
+    "github": "https://github.com/iib0011/omni-tools",
+    "website": "https://omnitools.app",
+    "docs": [
+      "https://github.com/iib0011/omni-tools#self-hostrun"
+    ]
+  }
+}
