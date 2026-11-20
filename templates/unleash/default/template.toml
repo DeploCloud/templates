@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "unleash"
+port = 4_242
+host = "${domain}"
+
+[config.env]
+DATABASE_NAME = "unleash"
+DATABASE_USERNAME = "unleash"
+DATABASE_PASSWORD = "${db_password}"
+UNLEASH_URL = "https://${domain}"
+UNLEASH_SECRET = "${secret:64}"
+UNLEASH_DEFAULT_ADMIN_USERNAME = "admin"
+UNLEASH_DEFAULT_ADMIN_PASSWORD = "${admin_password}"
