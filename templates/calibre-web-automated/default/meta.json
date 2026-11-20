@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Calibre-Web ebook library server with automatic ingest, format conversion, EPUB fixing, Kobo and KOReader sync and an OPDS catalog.",
+  "category": "media",
+  "developedBy": {
+    "label": "CrocodileStick",
+    "url": "https://github.com/crocodilestick"
+  },
+  "links": {
+    "github": "https://github.com/crocodilestick/Calibre-Web-Automated",
+    "docs": [
+      "https://github.com/crocodilestick/Calibre-Web-Automated#quick-install-",
+      "https://github.com/crocodilestick/Calibre-Web-Automated/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin123 and change the password right after the first login.",
+      "link": "https://github.com/crocodilestick/Calibre-Web-Automated#default-admin-login"
+    }
+  ]
+}

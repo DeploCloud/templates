@@ -1,0 +1,19 @@
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:v4.0.8@sha256:5e00373854247750cc3e4479b492ae09293ff5e06ed10177f226634d97888679
+    restart: unless-stopped
+    expose:
+      - 8083
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - cwa-config:/config
+      - cwa-library:/calibre-library
+      - cwa-ingest:/cwa-book-ingest
+
+volumes:
+  cwa-config: {}
+  cwa-library: {}
+  cwa-ingest: {}
