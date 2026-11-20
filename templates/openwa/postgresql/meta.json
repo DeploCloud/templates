@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted WhatsApp API gateway with REST API, webhooks and web dashboard, backed by a bundled PostgreSQL database.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Yudhi Armyndharis",
+    "url": "https://github.com/rmyndharis"
+  },
+  "links": {
+    "github": "https://github.com/rmyndharis/OpenWA",
+    "website": "https://www.open-wa.org",
+    "docs": [
+      "https://docs.open-wa.org/getting-started/configuration",
+      "https://docs.open-wa.org/getting-started/first-session",
+      "https://docs.open-wa.org/self-hosting/deployment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard with the API_MASTER_KEY value from the environment variables. It is the first admin API key and is only applied on the first start.",
+      "link": "https://docs.open-wa.org/guides/authentication"
+    },
+    {
+      "type": "warning",
+      "message": "OpenWA uses unofficial WhatsApp clients, so a linked number can be restricted or banned. Link a dedicated number, not your primary one.",
+      "link": "https://docs.open-wa.org/guides/safe-sending"
+    }
+  ]
+}

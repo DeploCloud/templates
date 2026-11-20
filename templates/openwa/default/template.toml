@@ -1,0 +1,18 @@
+[variables]
+api_master_key = "${password:48}"
+api_key_pepper = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openwa"
+port = 2_785
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+API_MASTER_KEY = "${api_master_key}"
+API_KEY_PEPPER = "${api_key_pepper}"
+TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+AUTO_START_SESSIONS = "true"
