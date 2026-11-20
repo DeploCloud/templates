@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted organizer for adult video and image collections with metadata scraping, tagging and in-browser streaming.",
+  "category": "media",
+  "developedBy": {
+    "label": "Stash",
+    "url": "https://github.com/stashapp"
+  },
+  "links": {
+    "github": "https://github.com/stashapp/stash",
+    "website": "https://stashapp.cc/",
+    "docs": [
+      "https://docs.stashapp.cc/installation/docker/",
+      "https://docs.stashapp.cc/in-app-manual/configuration/",
+      "https://docs.stashapp.cc/networking/authentication-required-when-accessing-stash-from-the-internet/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying and finish the setup wizard: until it is done anyone with the URL can configure the instance. Set a username and password in the credentials step, otherwise Stash refuses every request from a public IP once setup completes.",
+      "link": "https://docs.stashapp.cc/networking/authentication-required-when-accessing-stash-from-the-internet/"
+    },
+    {
+      "type": "warning",
+      "message": "Stash only indexes files that already exist on disk and has no upload feature. Copy your media into the volume mounted at /data, then run a library scan from the web UI."
+    }
+  ]
+}
