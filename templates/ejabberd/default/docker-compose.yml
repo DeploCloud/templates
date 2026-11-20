@@ -1,0 +1,26 @@
+services:
+  ejabberd:
+    image: ghcr.io/processone/ejabberd:26.09.1@sha256:1842577c33c8088ea15a2a7f940a7b8ffcfb09a4d1c0e713caf03df663f3b069
+    restart: unless-stopped
+    expose:
+      - 5280
+    environment:
+      EJABBERD_MACRO_HOST: ${EJABBERD_MACRO_HOST}
+      EJABBERD_MACRO_ADMIN: ${EJABBERD_MACRO_ADMIN}
+      REGISTER_ADMIN_PASSWORD: ${REGISTER_ADMIN_PASSWORD}
+    healthcheck:
+      test: ["CMD", "ejabberdctl", "status"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - ./ejabberd.yml:/opt/ejabberd/conf/ejabberd.yml:ro
+      - ejabberd-database:/opt/ejabberd/database
+      - ejabberd-upload:/opt/ejabberd/upload
+      - ejabberd-logs:/opt/ejabberd/logs
+
+volumes:
+  ejabberd-database: {}
+  ejabberd-upload: {}
+  ejabberd-logs: {}
