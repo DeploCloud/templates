@@ -1,0 +1,32 @@
+services:
+  fizzy:
+    image: ghcr.io/basecamp/fizzy:main@sha256:4db67e42363c84c8bdc5a023c39213c9654ed7e046f86734985b71b57196a04f
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      OAUTH_TOKEN_PEPPER: ${OAUTH_TOKEN_PEPPER}
+      BASE_URL: ${BASE_URL}
+      MULTI_TENANT: ${MULTI_TENANT}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+      JOB_CONCURRENCY: ${JOB_CONCURRENCY}
+      MAILER_FROM_ADDRESS: ${MAILER_FROM_ADDRESS}
+      SMTP_ADDRESS: ${SMTP_ADDRESS}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_TLS: ${SMTP_TLS}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY}
+    volumes:
+      - fizzy-storage:/rails/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/up || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  fizzy-storage: {}

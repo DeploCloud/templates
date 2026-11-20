@@ -1,0 +1,23 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fizzy"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+OAUTH_TOKEN_PEPPER = "${hash:64}"
+BASE_URL = "https://${domain}"
+MULTI_TENANT = "false"
+WEB_CONCURRENCY = "2"
+JOB_CONCURRENCY = "1"
+MAILER_FROM_ADDRESS = "fizzy@${domain}"
+SMTP_ADDRESS = ""
+SMTP_PORT = "587"
+SMTP_TLS = "false"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+VAPID_PUBLIC_KEY = ""
+VAPID_PRIVATE_KEY = ""
