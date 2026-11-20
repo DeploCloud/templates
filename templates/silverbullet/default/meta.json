@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Markdown knowledge base and wiki programmable with Lua, hosting several spaces with user accounts and per-space access.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "SilverBullet",
+    "url": "https://github.com/silverbulletmd"
+  },
+  "links": {
+    "github": "https://github.com/silverbulletmd/silverbullet",
+    "website": "https://silverbullet.md",
+    "docs": [
+      "https://docs.silverbullet.md/Install/Docker",
+      "https://docs.silverbullet.md/Install/Configuration",
+      "https://docs.silverbullet.md/Dashboard"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the setup wizard is unauthenticated until finished, and the first account it creates becomes the administrator.",
+      "link": "https://docs.silverbullet.md/Dashboard"
+    }
+  ]
+}
