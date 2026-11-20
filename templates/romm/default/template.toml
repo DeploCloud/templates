@@ -1,0 +1,30 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "romm"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+ROMM_BASE_URL = "https://${domain}"
+ROMM_SESSION_SECURE_COOKIE = "true"
+ROMM_AUTH_SECRET_KEY = "${hash:64}"
+DB_NAME = "romm"
+DB_USER = "romm-user"
+DB_PASSWD = "${db_password}"
+DB_ROOT_PASSWD = "${db_root_password}"
+TZ = "Etc/UTC"
+IGDB_CLIENT_ID = ""
+IGDB_CLIENT_SECRET = ""
+SCREENSCRAPER_USER = ""
+SCREENSCRAPER_PASSWORD = ""
+RETROACHIEVEMENTS_API_KEY = ""
+STEAMGRIDDB_API_KEY = ""
+HASHEOUS_API_ENABLED = "true"
+SCAN_WORKERS = "4"
+WEB_SERVER_CONCURRENCY = "4"
