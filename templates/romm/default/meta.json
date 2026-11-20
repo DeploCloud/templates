@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted ROM manager and in-browser player that scans a game library, fetches metadata and artwork, and stores saves and states.",
+  "category": "media",
+  "developedBy": {
+    "label": "RomM",
+    "url": "https://github.com/rommapp"
+  },
+  "links": {
+    "github": "https://github.com/rommapp/romm",
+    "website": "https://romm.app",
+    "docs": [
+      "https://docs.romm.app/latest/getting-started/quick-start/",
+      "https://docs.romm.app/latest/getting-started/folder-structure/",
+      "https://docs.romm.app/latest/getting-started/metadata-providers/",
+      "https://docs.romm.app/latest/reference/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the setup wizard creates the first account, which becomes the admin.",
+      "link": "https://docs.romm.app/latest/getting-started/quick-start/"
+    },
+    {
+      "type": "info",
+      "message": "Hasheous hash matching is enabled and needs no account. For fuller metadata, artwork and achievements, add IGDB, ScreenScraper, SteamGridDB or RetroAchievements credentials in the environment variables before the first scan.",
+      "link": "https://docs.romm.app/latest/getting-started/metadata-providers/"
+    }
+  ]
+}

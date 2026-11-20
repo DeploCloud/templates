@@ -1,0 +1,54 @@
+services:
+  romm:
+    image: rommapp/romm:5.4.1@sha256:8677fb7b81b1d3db20b849e989a1dadc2a11159e51eb34a2acdcb01102274edf
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      ROMM_BASE_URL: ${ROMM_BASE_URL}
+      ROMM_SESSION_SECURE_COOKIE: ${ROMM_SESSION_SECURE_COOKIE}
+      ROMM_AUTH_SECRET_KEY: ${ROMM_AUTH_SECRET_KEY}
+      DB_HOST: romm-db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWD: ${DB_PASSWD}
+      TZ: ${TZ}
+      IGDB_CLIENT_ID: ${IGDB_CLIENT_ID}
+      IGDB_CLIENT_SECRET: ${IGDB_CLIENT_SECRET}
+      SCREENSCRAPER_USER: ${SCREENSCRAPER_USER}
+      SCREENSCRAPER_PASSWORD: ${SCREENSCRAPER_PASSWORD}
+      RETROACHIEVEMENTS_API_KEY: ${RETROACHIEVEMENTS_API_KEY}
+      STEAMGRIDDB_API_KEY: ${STEAMGRIDDB_API_KEY}
+      HASHEOUS_API_ENABLED: ${HASHEOUS_API_ENABLED}
+      SCAN_WORKERS: ${SCAN_WORKERS}
+      WEB_SERVER_CONCURRENCY: ${WEB_SERVER_CONCURRENCY}
+    volumes:
+      # One mount for library, assets, resources and config keeps hardlinks working.
+      - romm-data:/romm
+      - romm-redis:/redis-data
+    depends_on:
+      romm-db:
+        condition: service_healthy
+
+  romm-db:
+    image: mariadb:12.3.3@sha256:4ebbcf100a3ba320766dfa0e1af008df12261301db6ef72798c7650f70794aed
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWD}
+    volumes:
+      - romm-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  romm-data: {}
+  romm-redis: {}
+  romm-db: {}
