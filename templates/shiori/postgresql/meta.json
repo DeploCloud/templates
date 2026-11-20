@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Simple self-hosted bookmark manager with offline page archives, backed by a bundled PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "go-shiori",
+    "url": "https://github.com/go-shiori"
+  },
+  "links": {
+    "github": "https://github.com/go-shiori/shiori",
+    "docs": [
+      "https://github.com/go-shiori/shiori/blob/master/docs/Configuration.md#postgresql",
+      "https://github.com/go-shiori/shiori/blob/master/docs/Usage.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Shiori creates a default owner account shiori / gopher on first start. Log in, create your own owner account in Settings, then delete the default one.",
+      "link": "https://github.com/go-shiori/shiori/blob/master/docs/Usage.md#using-web-interface"
+    }
+  ]
+}

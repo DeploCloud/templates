@@ -1,0 +1,13 @@
+services:
+  shiori:
+    image: ghcr.io/go-shiori/shiori:v1.8.0@sha256:d3bdfc1b68b8f267a04cf74d73b8a0e1d99ac71c3a9047375e97202f079eb1f6
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SHIORI_HTTP_SECRET_KEY: ${SHIORI_HTTP_SECRET_KEY}
+    volumes:
+      - shiori-data:/shiori
+
+volumes:
+  shiori-data: {}
