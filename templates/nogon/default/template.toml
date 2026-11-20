@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nogon"
+port = 4_433
+host = "${domain}"
+
+[config.env]
+NOGON__SERVER__ADDRESS = "0.0.0.0:4433"
+NOGON__SERVER__BASE_URL = "https://${domain}"
+NOGON__APP__ACCESS_TOKEN = "${password:32}"
