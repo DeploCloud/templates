@@ -1,0 +1,13 @@
+[variables]
+password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flame"
+port = 5_005
+host = "${domain}"
+
+[config.env]
+PASSWORD = "${password}"
