@@ -1,0 +1,62 @@
+services:
+  flagsmith:
+    image: docker.flagsmith.com/flagsmith/flagsmith:2.292.0@sha256:88671e65e7ca62ed971b0fc3fb392c47993d92515833cf6899db77b90014b0e3
+    restart: unless-stopped
+    command: migrate-and-serve
+    expose:
+      - 8000
+    environment: &flagsmith-env
+      DATABASE_URL: postgresql://flagsmith:${DB_PASSWORD}@flagsmith-db:5432/flagsmith
+      ENVIRONMENT: production
+      DJANGO_ALLOWED_HOSTS: "*"
+      DJANGO_CSRF_TRUSTED_ORIGINS: https://${FLAGSMITH_DOMAIN}
+      FLAGSMITH_DOMAIN: ${FLAGSMITH_DOMAIN}
+      FLAGSMITH_API_URL: https://${FLAGSMITH_DOMAIN}
+      FLAGSMITH_FRONTEND_URL: https://${FLAGSMITH_DOMAIN}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      WAREHOUSE_CREDENTIALS_SECRET: ${WAREHOUSE_CREDENTIALS_SECRET}
+      USE_POSTGRES_FOR_ANALYTICS: "true"
+      EXPERIMENTATION_ENABLED: "true"
+      TASK_RUN_METHOD: TASK_PROCESSOR
+    healthcheck:
+      test: ["CMD", "flagsmith", "healthcheck", "tcp"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 300s
+    depends_on:
+      flagsmith-db:
+        condition: service_healthy
+
+  flagsmith-task-processor:
+    image: docker.flagsmith.com/flagsmith/flagsmith:2.292.0@sha256:88671e65e7ca62ed971b0fc3fb392c47993d92515833cf6899db77b90014b0e3
+    restart: unless-stopped
+    command: run-task-processor
+    environment: *flagsmith-env
+    healthcheck:
+      test: ["CMD", "flagsmith", "healthcheck", "tcp"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      flagsmith:
+        condition: service_healthy
+
+  flagsmith-db:
+    image: postgres:15.20-alpine@sha256:e18480a22d6e48f4d816a6696769b1ec09ac73a824c5649e49c7d8b684913f3d
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: flagsmith
+      POSTGRES_USER: flagsmith
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flagsmith -d flagsmith"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - flagsmith-db:/var/lib/postgresql/data
+
+volumes:
+  flagsmith-db: {}

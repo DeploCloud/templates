@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source feature flag and remote config platform with the dashboard, REST API, task processor and a PostgreSQL database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Flagsmith",
+    "url": "https://github.com/Flagsmith"
+  },
+  "links": {
+    "github": "https://github.com/Flagsmith/flagsmith",
+    "website": "https://www.flagsmith.com",
+    "docs": [
+      "https://docs.flagsmith.com/deployment-self-hosting/hosting-guides/docker",
+      "https://docs.flagsmith.com/deployment-self-hosting/core-configuration/initial-setup",
+      "https://docs.flagsmith.com/deployment-self-hosting/core-configuration/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the dashboard right after deploying: the first account created from the Welcome to Flagsmith screen becomes the instance superuser. Public sign-up stays open until you set PREVENT_SIGNUP.",
+      "link": "https://docs.flagsmith.com/deployment-self-hosting/core-configuration/initial-setup"
+    }
+  ]
+}
