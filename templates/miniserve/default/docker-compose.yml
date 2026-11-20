@@ -1,0 +1,27 @@
+services:
+  miniserve:
+    image: svenstaro/miniserve:0.35.0-alpine@sha256:00e0919f6e09679541872d68e2172542a73181a95c2d180690d00589c497a59b
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      MINISERVE_PATH: /data
+      MINISERVE_INTERFACE: 0.0.0.0
+      MINISERVE_PORT: "8080"
+      MINISERVE_AUTH: ${MINISERVE_AUTH}
+      MINISERVE_ALLOWED_UPLOAD_DIR: /
+      MINISERVE_MKDIR_ENABLED: "true"
+      MINISERVE_ALLOWED_RM_DIR: /
+      MINISERVE_ON_DUPLICATE_FILES: rename
+      MINISERVE_ENABLE_TAR_GZ: "true"
+      MINISERVE_DIRS_FIRST: "true"
+    volumes:
+      - miniserve-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/__miniserve_internal/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  miniserve-data: {}
