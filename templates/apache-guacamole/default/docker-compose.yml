@@ -1,0 +1,64 @@
+services:
+  apache-guacamole:
+    image: guacamole/guacamole:1.6.0@sha256:f344085e618bb05e22b964b0208dbd06d3468275bac70206f93805245e067b40
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      WEBAPP_CONTEXT: ROOT
+      GUACD_HOSTNAME: apache-guacamole-guacd
+      GUACD_PORT: "4822"
+      POSTGRESQL_ENABLED: "true"
+      POSTGRESQL_HOSTNAME: apache-guacamole-db
+      POSTGRESQL_PORT: "5432"
+      POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
+      POSTGRESQL_USERNAME: ${POSTGRESQL_USERNAME}
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
+      # real client IPs from the proxy, so the brute-force ban does not lock out everyone
+      REMOTE_IP_VALVE_ENABLED: "true"
+    depends_on:
+      apache-guacamole-db:
+        condition: service_healthy
+      apache-guacamole-guacd:
+        condition: service_healthy
+
+  apache-guacamole-guacd:
+    image: guacamole/guacd:1.6.0@sha256:8974eaa9ba32f713daf311e7cc8cd7e4cdfba1edea39eed75524e78ef4b08f4f
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "4822"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # writes the schema shipped in the image, loaded by Postgres on first start only
+  apache-guacamole-initdb:
+    image: guacamole/guacamole:1.6.0@sha256:f344085e618bb05e22b964b0208dbd06d3468275bac70206f93805245e067b40
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["/bin/sh", "-c", "/opt/guacamole/bin/initdb.sh --postgresql > /initdb/initdb.sql"]
+    volumes:
+      - apache-guacamole-initdb:/initdb
+
+  apache-guacamole-db:
+    image: postgres:18.7@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRESQL_DATABASE}
+      POSTGRES_USER: ${POSTGRESQL_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+    volumes:
+      - apache-guacamole-db:/var/lib/postgresql
+      - apache-guacamole-initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    depends_on:
+      apache-guacamole-initdb:
+        condition: service_completed_successfully
+
+volumes:
+  apache-guacamole-db: {}
+  apache-guacamole-initdb: {}
