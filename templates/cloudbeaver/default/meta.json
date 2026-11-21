@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based database manager from the DBeaver team for browsing, querying and editing SQL and NoSQL databases from the browser.",
+  "category": "database",
+  "developedBy": {
+    "label": "DBeaver",
+    "url": "https://dbeaver.com/"
+  },
+  "links": {
+    "github": "https://github.com/dbeaver/cloudbeaver",
+    "website": "https://dbeaver.com/",
+    "docs": [
+      "https://github.com/dbeaver/cloudbeaver/wiki/CloudBeaver-Community-deployment-from-docker-image",
+      "https://dbeaver.com/docs/cloudbeaver/Server-configuration/",
+      "https://dbeaver.com/docs/cloudbeaver/Proxy-Configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as cbadmin with the generated CB_ADMIN_PASSWORD from the environment variables. Changing it later in the environment does not update the existing administrator.",
+      "link": "https://dbeaver.com/docs/cloudbeaver/Server-configuration/"
+    }
+  ]
+}

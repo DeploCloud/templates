@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cloudbeaver"
+port = 8_978
+host = "${domain}"
+
+[config.env]
+CB_SERVER_NAME = "CloudBeaver"
+CB_ADMIN_NAME = "cbadmin"
+CB_ADMIN_PASSWORD = "${admin_password}Aa1"
+CLOUDBEAVER_APP_ANONYMOUS_ACCESS_ENABLED = "false"
+CLOUDBEAVER_APP_FORWARD_PROXY = "true"
