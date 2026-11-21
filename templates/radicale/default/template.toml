@@ -1,0 +1,27 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "radicale"
+port = 5_232
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config"
+content = """# Radicale configuration: edit and redeploy to apply.
+# Reference: https://radicale.org/v3.html#configuration
+[auth]
+type = htpasswd
+htpasswd_filename = /etc/radicale/users
+htpasswd_encryption = autodetect
+
+[storage]
+filesystem_folder = /var/lib/radicale/collections
+"""
+
+[[config.mounts]]
+filePath = "users"
+content = """admin:${admin_password}
+"""
