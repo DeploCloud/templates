@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+clickhouse_password = "${password:32}"
+login_password = "${password:24}"
+# 43 base64 chars decode to the 32-byte key the app requires
+secret_key = "${base64:43}"
+
+[config]
+
+[[config.domains]]
+serviceName = "dittofeed"
+port = 3_000
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "dynamicconfig.yaml"
+content = """
+limit.maxIDLength:
+  - value: 255
+    constraints: {}
+"""
+
+[config.env]
+DOMAIN = "${domain}"
+WORKSPACE_NAME = "Default"
+PASSWORD = "${login_password}"
+SECRET_KEY = "${secret_key}"
+DATABASE_PASSWORD = "${db_password}"
+CLICKHOUSE_PASSWORD = "${clickhouse_password}"

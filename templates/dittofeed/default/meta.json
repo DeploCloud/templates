@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source customer engagement platform for automating email, SMS, push and webhook journeys, with PostgreSQL, ClickHouse and Temporal.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Dittofeed",
+    "url": "https://www.dittofeed.com/"
+  },
+  "links": {
+    "github": "https://github.com/dittofeed/dittofeed",
+    "website": "https://www.dittofeed.com/",
+    "docs": [
+      "https://docs.dittofeed.com/deployment/self-hosted/docker-compose",
+      "https://docs.dittofeed.com/deployment/self-hosted/auth-modes"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard is protected by a single shared password: sign in with the value of the PASSWORD environment variable. Email, SMS and other providers must be configured in the dashboard settings before messages can be sent.",
+      "link": "https://docs.dittofeed.com/deployment/self-hosted/auth-modes"
+    }
+  ]
+}

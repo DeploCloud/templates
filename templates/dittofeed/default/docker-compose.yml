@@ -1,0 +1,92 @@
+services:
+  dittofeed:
+    image: dittofeed/dittofeed-lite:v0.23.0@sha256:f8e55e9469892434b8e9afe2953d023da70772df67dd98ae742f4f07f9ea6617
+    restart: unless-stopped
+    command: node --max-old-space-size=824 ./packages/lite/dist/scripts/startLite.js --workspace-name=${WORKSPACE_NAME}
+    mem_limit: 1g
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      WORKSPACE_NAME: ${WORKSPACE_NAME}
+      AUTH_MODE: single-tenant
+      PASSWORD: ${PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+      SESSION_COOKIE_SECURE: "true"
+      DASHBOARD_URL: https://${DOMAIN}
+      DASHBOARD_API_BASE: https://${DOMAIN}
+      DATABASE_HOST: dittofeed-db
+      DATABASE_PORT: "5432"
+      DATABASE_USER: dittofeed
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      CLICKHOUSE_HOST: http://dittofeed-clickhouse:8123
+      CLICKHOUSE_USER: dittofeed
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      TEMPORAL_ADDRESS: dittofeed-temporal:7233
+      # idempotent upserts: keeps the workspace and schemas in place on every start
+      BOOTSTRAP: "true"
+    depends_on:
+      dittofeed-db:
+        condition: service_healthy
+      dittofeed-clickhouse:
+        condition: service_healthy
+      dittofeed-temporal:
+        condition: service_healthy
+
+  dittofeed-temporal:
+    image: temporalio/auto-setup:1.22.4@sha256:b8bdd2208877ba6178bd9e46e162590965b170577659f4b1add95d9f1a69a5c2
+    restart: unless-stopped
+    environment:
+      DB: postgres12
+      DB_PORT: "5432"
+      POSTGRES_SEEDS: dittofeed-db
+      POSTGRES_USER: dittofeed
+      POSTGRES_PWD: ${DATABASE_PASSWORD}
+      TEMPORAL_ADDRESS: dittofeed-temporal:7233
+    volumes:
+      - ./dynamicconfig.yaml:/etc/temporal/config/dynamicconfig/docker.yaml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "temporal operator namespace describe default"]
+      interval: 10s
+      timeout: 10s
+      start_period: 60s
+      retries: 30
+    depends_on:
+      dittofeed-db:
+        condition: service_healthy
+
+  dittofeed-db:
+    image: postgres:15.20-alpine@sha256:e18480a22d6e48f4d816a6696769b1ec09ac73a824c5649e49c7d8b684913f3d
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dittofeed
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: dittofeed
+    volumes:
+      - dittofeed-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dittofeed -d dittofeed"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  dittofeed-clickhouse:
+    image: clickhouse/clickhouse-server:24.12.6.70-alpine@sha256:cd450891db46cc6ffe313ca2b0fb7dbfb897a6873ca74a724cbe050a2cf62621
+    restart: unless-stopped
+    mem_limit: 2g
+    environment:
+      CLICKHOUSE_USER: dittofeed
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+    volumes:
+      - dittofeed-clickhouse:/var/lib/clickhouse
+      - dittofeed-clickhouse-logs:/var/log/clickhouse-server
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  dittofeed-db: {}
+  dittofeed-clickhouse: {}
+  dittofeed-clickhouse-logs: {}
