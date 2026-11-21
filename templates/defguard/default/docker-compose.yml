@@ -1,0 +1,46 @@
+services:
+  defguard:
+    image: ghcr.io/defguard/defguard:2.2.0@sha256:b8f94beb79f1011d5bd3803b2d06ee3c6d87004ac2d830ff11699b5c1ca2222c
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      DEFGUARD_DB_HOST: defguard-db
+      DEFGUARD_DB_PORT: 5432
+      DEFGUARD_DB_NAME: defguard
+      DEFGUARD_DB_USER: defguard
+      DEFGUARD_DB_PASSWORD: ${DB_PASSWORD}
+      DEFGUARD_LOG_LEVEL: ${DEFGUARD_LOG_LEVEL}
+    depends_on:
+      defguard-db:
+        condition: service_healthy
+
+  defguard-edge:
+    image: ghcr.io/defguard/defguard-proxy:2.2.0@sha256:f53e1888df0da2561d5e4e29377909691fb7bb9288424c89fe9714c3f53c3a95
+    restart: unless-stopped
+    expose:
+      - 8080
+      - 50051
+    environment:
+      DEFGUARD_ADOPTION_TIMEOUT: ${EDGE_ADOPTION_TIMEOUT}
+    volumes:
+      - defguard-edge-certs:/etc/defguard/certs
+
+  defguard-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: defguard
+      POSTGRES_USER: defguard
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U defguard -d defguard"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - defguard-db:/var/lib/postgresql
+
+volumes:
+  defguard-db: {}
+  defguard-edge-certs: {}
