@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "aiostreams"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+SECRET_KEY = "${hash:64}"
+DATABASE_URI = "sqlite://./data/db.sqlite"
+AIOSTREAMS_AUTH = "admin:${admin_password}"
