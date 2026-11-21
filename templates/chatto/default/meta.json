@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Team and community chat server in a single container, with an embedded NATS JetStream store for messages and uploaded files.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Chatto",
+    "url": "https://github.com/chattocorp"
+  },
+  "links": {
+    "github": "https://github.com/chattocorp/chatto",
+    "website": "https://chatto.run",
+    "docs": [
+      "https://docs.chatto.run/getting-started/quick-start/",
+      "https://docs.chatto.run/reference/environment-variables/",
+      "https://docs.chatto.run/guides/operations/identity-login/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and complete the setup wizard: the first visitor chooses the server name and creates the owner account.",
+      "link": "https://docs.chatto.run/getting-started/quick-start/"
+    },
+    {
+      "type": "warning",
+      "message": "Email registration, email verification and password reset need SMTP or JMAP. Add the CHATTO_SMTP_* variables to enable them.",
+      "link": "https://docs.chatto.run/guides/operations/identity-login/#transactional-email"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "chatto"
+port = 4_000
+host = "${domain}"
+
+[config.env]
+CHATTO_WEBSERVER_URL = "https://${domain}"
+CHATTO_WEBSERVER_COOKIE_SIGNING_SECRET = "${hash:64}"
+CHATTO_WEBSERVER_COOKIE_ENCRYPTION_SECRET = "${hash:64}"
+CHATTO_CORE_SECRET_KEY = "${hash:64}"
+CHATTO_CORE_ASSETS_SIGNING_SECRET = "${hash:64}"
