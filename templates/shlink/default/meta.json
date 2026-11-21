@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted URL shortener with a REST API, visit tracking and custom slugs, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Shlink",
+    "url": "https://github.com/shlinkio"
+  },
+  "links": {
+    "github": "https://github.com/shlinkio/shlink",
+    "website": "https://shlink.io",
+    "docs": [
+      "https://shlink.io/documentation/install-docker-image/",
+      "https://shlink.io/documentation/environment-variables/",
+      "https://shlink.io/documentation/shlink-web-client/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Shlink has no built-in admin UI. Manage it through the REST API or the Shlink web client, connecting with this app's URL and the API key stored in the INITIAL_API_KEY environment variable.",
+      "link": "https://shlink.io/documentation/shlink-web-client/"
+    }
+  ]
+}

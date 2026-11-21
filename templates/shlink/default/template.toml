@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+api_key = "${uuid}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "shlink"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DEFAULT_DOMAIN = "${domain}"
+DB_NAME = "shlink"
+DB_USER = "shlink"
+DB_PASSWORD = "${db_password}"
+INITIAL_API_KEY = "${api_key}"
+GEOLITE_LICENSE_KEY = ""

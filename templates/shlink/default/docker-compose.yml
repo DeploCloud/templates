@@ -1,0 +1,40 @@
+services:
+  shlink:
+    image: ghcr.io/shlinkio/shlink:5.1.8@sha256:68a722f7677008a50ccf3a9e570966bc37d7627fe6a870b86be28c5dcf9085ee
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DEFAULT_DOMAIN: ${DEFAULT_DOMAIN}
+      IS_HTTPS_ENABLED: "true"
+      DB_DRIVER: postgres
+      DB_HOST: shlink-db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      INITIAL_API_KEY: ${INITIAL_API_KEY}
+      GEOLITE_LICENSE_KEY: ${GEOLITE_LICENSE_KEY}
+    volumes:
+      - shlink-data:/etc/shlink/data
+    depends_on:
+      shlink-db:
+        condition: service_healthy
+
+  shlink-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - shlink-db:/var/lib/postgresql
+
+volumes:
+  shlink-data: {}
+  shlink-db: {}
