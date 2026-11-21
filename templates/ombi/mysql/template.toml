@@ -1,0 +1,35 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "ombi"
+port = 3579
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+
+[[config.mounts]]
+filePath = "database.json"
+content = """{
+  "OmbiDatabase": {
+    "Type": "MySQL",
+    "ConnectionString": "Server=ombi-db;Port=3306;Database=ombi;User=ombi;Password=${db_password};AllowPublicKeyRetrieval=True"
+  },
+  "SettingsDatabase": {
+    "Type": "MySQL",
+    "ConnectionString": "Server=ombi-db;Port=3306;Database=ombi;User=ombi;Password=${db_password};AllowPublicKeyRetrieval=True"
+  },
+  "ExternalDatabase": {
+    "Type": "MySQL",
+    "ConnectionString": "Server=ombi-db;Port=3306;Database=ombi;User=ombi;Password=${db_password};AllowPublicKeyRetrieval=True"
+  }
+}
+"""

@@ -1,0 +1,1 @@
+Deploys Ombi, a self-hosted portal where your Plex, Emby or Jellyfin users request movies, TV shows and music, which can then be sent to Sonarr, Radarr or Lidarr. Settings and the default SQLite databases persist in the config volume. On first visit a setup wizard connects your media server and creates the local admin account, so complete it right after deployment.

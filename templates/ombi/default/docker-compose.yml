@@ -1,0 +1,15 @@
+services:
+  ombi:
+    image: lscr.io/linuxserver/ombi:v4.53.10-ls277@sha256:617c872fd5a05b1cabbb052c58974cf8dd90d972d18417d28cf137fd7579a17b
+    restart: unless-stopped
+    expose:
+      - 3579
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - ombi-config:/config
+
+volumes:
+  ombi-config: {}

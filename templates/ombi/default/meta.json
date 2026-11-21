@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Media request portal for Plex, Emby and Jellyfin users, with request approval, Sonarr and Radarr integration and a built-in SQLite database.",
+  "category": "media",
+  "developedBy": {
+    "label": "Ombi",
+    "url": "https://github.com/Ombi-app"
+  },
+  "links": {
+    "github": "https://github.com/Ombi-app/Ombi",
+    "website": "https://ombi.io",
+    "docs": [
+      "https://docs.ombi.app/guides/installation/",
+      "https://docs.ombi.app/info/docker-containers/",
+      "https://docs.ombi.app/settings/ombi/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the setup wizard lets the first visitor connect a media server and create the admin account.",
+      "link": "https://docs.ombi.app/guides/installation/"
+    }
+  ]
+}
