@@ -1,0 +1,34 @@
+services:
+  opengist:
+    image: ghcr.io/thomiceli/opengist:1.15.3@sha256:f5dd39cc9409b4006f8b090e5f9ed042cdb736d28a06b4f985c674dacafc94d5
+    restart: unless-stopped
+    expose:
+      - 6157
+    environment:
+      OG_EXTERNAL_URL: ${OG_EXTERNAL_URL}
+      OG_SSH_GIT_ENABLED: ${OG_SSH_GIT_ENABLED}
+      OG_LOG_LEVEL: ${OG_LOG_LEVEL}
+      OG_DB_URI: postgres://opengist:${DB_PASSWORD}@opengist-db:5432/opengist
+    volumes:
+      - opengist-data:/opengist
+    depends_on:
+      opengist-db:
+        condition: service_healthy
+  opengist-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: opengist
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: opengist
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U opengist -d opengist"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - opengist-postgres:/var/lib/postgresql
+
+volumes:
+  opengist-data: {}
+  opengist-postgres: {}

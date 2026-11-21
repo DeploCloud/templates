@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "opengist"
+port = 6_157
+host = "${domain}"
+
+[config.env]
+OG_EXTERNAL_URL = "https://${domain}"
+OG_SSH_GIT_ENABLED = "disabled"
+OG_LOG_LEVEL = "info"

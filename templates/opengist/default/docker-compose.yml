@@ -1,0 +1,15 @@
+services:
+  opengist:
+    image: ghcr.io/thomiceli/opengist:1.15.3@sha256:f5dd39cc9409b4006f8b090e5f9ed042cdb736d28a06b4f985c674dacafc94d5
+    restart: unless-stopped
+    expose:
+      - 6157
+    environment:
+      OG_EXTERNAL_URL: ${OG_EXTERNAL_URL}
+      OG_SSH_GIT_ENABLED: ${OG_SSH_GIT_ENABLED}
+      OG_LOG_LEVEL: ${OG_LOG_LEVEL}
+    volumes:
+      - opengist-data:/opengist
+
+volumes:
+  opengist-data: {}

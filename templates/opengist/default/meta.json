@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Git-powered self-hosted pastebin with SQLite storage, code search and Git clone and push over HTTP.",
+  "category": "development",
+  "developedBy": {
+    "label": "Thomas Miceli",
+    "url": "https://github.com/thomiceli"
+  },
+  "links": {
+    "github": "https://github.com/thomiceli/opengist",
+    "website": "https://opengist.io",
+    "docs": [
+      "https://opengist.io/docs/installation/docker",
+      "https://opengist.io/docs/configuration/cheat-sheet"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Create it right after deployment, then restrict signups in the admin panel if the instance is public."
+    }
+  ]
+}
