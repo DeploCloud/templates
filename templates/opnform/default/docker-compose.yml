@@ -1,0 +1,157 @@
+services:
+  opnform:
+    image: nginx:1.30.7-alpine@sha256:caf4e1e032a20f9c3c5e28fc7f25ffd768ad8677b4975c54193075997b3a97e3
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      opnform-api:
+        condition: service_started
+      opnform-client:
+        condition: service_started
+
+  opnform-api:
+    image: jhumanj/opnform-api:2.8.6@sha256:6170a601ba3199ba2bd5562cd391f9eaab9e3a3a02904e17eec5029efa38e13f
+    restart: unless-stopped
+    volumes:
+      - opnform-storage:/usr/share/nginx/html/storage
+    environment: &opnform-api-env
+      APP_NAME: OpnForm
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      FRONT_URL: ${APP_URL}
+      FRONT_API_SECRET: ${FRONT_API_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_TTL: "1440"
+      JWT_SKIP_IP_UA_VALIDATION: "false"
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      LOG_CHANNEL: errorlog
+      LOG_LEVEL: ${LOG_LEVEL}
+      DB_CONNECTION: pgsql
+      DB_HOST: opnform-db
+      DB_PORT: "5432"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: opnform-redis
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      SESSION_DRIVER: redis
+      FILESYSTEM_DRIVER: local
+      LOCAL_FILESYSTEM_VISIBILITY: public
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: OpnForm
+      SHOW_OFFICIAL_TEMPLATES: "true"
+      PHP_MEMORY_LIMIT: 1G
+      PHP_MAX_EXECUTION_TIME: "600"
+      PHP_UPLOAD_MAX_FILESIZE: 64M
+      PHP_POST_MAX_SIZE: 64M
+    healthcheck:
+      test: ["CMD-SHELL", "php /usr/share/nginx/html/artisan about || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      opnform-db:
+        condition: service_healthy
+      opnform-redis:
+        condition: service_healthy
+
+  opnform-api-worker:
+    image: jhumanj/opnform-api:2.8.6@sha256:6170a601ba3199ba2bd5562cd391f9eaab9e3a3a02904e17eec5029efa38e13f
+    restart: unless-stopped
+    command: ["php", "artisan", "queue:work"]
+    volumes:
+      - opnform-storage:/usr/share/nginx/html/storage
+    environment:
+      <<: *opnform-api-env
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f 'php artisan queue:work' > /dev/null || exit 1"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      opnform-api:
+        condition: service_healthy
+
+  opnform-api-scheduler:
+    image: jhumanj/opnform-api:2.8.6@sha256:6170a601ba3199ba2bd5562cd391f9eaab9e3a3a02904e17eec5029efa38e13f
+    restart: unless-stopped
+    command: ["php", "artisan", "schedule:work"]
+    volumes:
+      - opnform-storage:/usr/share/nginx/html/storage
+    environment:
+      <<: *opnform-api-env
+    healthcheck:
+      test: ["CMD-SHELL", "php /usr/share/nginx/html/artisan app:scheduler-status --mode=check --max-minutes=3 || exit 1"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 70s
+    depends_on:
+      opnform-api:
+        condition: service_healthy
+
+  opnform-client:
+    image: jhumanj/opnform-client:2.8.6@sha256:3bb7664efcd7101b091b4d54dec0c139e6e2041edccf4e9a07324074b125c6b7
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NUXT_PUBLIC_APP_URL: ${APP_URL}
+      NUXT_PUBLIC_API_BASE: ${APP_URL}/api
+      NUXT_PRIVATE_API_BASE: http://opnform/api
+      NUXT_PUBLIC_ENV: dev
+      NUXT_API_SECRET: ${FRONT_API_SECRET}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:3000/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    depends_on:
+      opnform-api:
+        condition: service_healthy
+
+  opnform-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - opnform-db:/var/lib/postgresql/data
+
+  opnform-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - opnform-redis:/data
+
+volumes:
+  opnform-storage: {}
+  opnform-db: {}
+  opnform-redis: {}
