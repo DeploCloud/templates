@@ -1,0 +1,52 @@
+services:
+  kimai:
+    image: kimai/kimai2:2.72.1@sha256:ef2699052e6a6ff20a1b42279927b4512e462659f3bf7d23f80882a8218021b4
+    restart: unless-stopped
+    expose:
+      - 8001
+    environment:
+      DATABASE_URL: "mysql://kimai:${DB_PASSWORD}@kimai-db:3306/kimai?charset=utf8mb4&serverVersion=8.4.13"
+      APP_SECRET: ${APP_SECRET}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      DEFAULT_URI: ${DEFAULT_URI}
+      ADMINMAIL: ${ADMINMAIL}
+      ADMINPASS: ${ADMINPASS}
+      MAILER_FROM: ${MAILER_FROM}
+      MAILER_URL: ${MAILER_URL}
+    volumes:
+      - kimai-data:/opt/kimai/var/data
+      - kimai-invoices:/opt/kimai/var/invoices
+      - kimai-plugins:/opt/kimai/var/plugins
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8001"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    depends_on:
+      kimai-db:
+        condition: service_healthy
+
+  kimai-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: kimai
+      MYSQL_USER: kimai
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - kimai-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  kimai-data: {}
+  kimai-invoices: {}
+  kimai-plugins: {}
+  kimai-db: {}

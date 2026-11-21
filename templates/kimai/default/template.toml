@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+app_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kimai"
+port = 8_001
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+APP_SECRET = "${app_secret}"
+TRUSTED_HOSTS = "${domain}|localhost|127.0.0.1"
+TRUSTED_PROXIES = "127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+DEFAULT_URI = "https://${domain}"
+ADMINMAIL = "admin@${domain}"
+ADMINPASS = "${admin_password}"
+MAILER_FROM = "kimai@${domain}"
+MAILER_URL = "null://null"
