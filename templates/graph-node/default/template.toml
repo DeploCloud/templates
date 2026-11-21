@@ -1,0 +1,52 @@
+[variables]
+db_password = "${password:32}"
+deploy_key = "${secret:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "graph-node"
+port = 8_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "graph-node-gateway"
+port = 80
+host = "${domain}"
+path = "/deploy"
+
+[config.env]
+ETHEREUM_RPC = "mainnet:https://replace-with-your-rpc-url.invalid"
+DEPLOY_KEY = "${deploy_key}"
+POSTGRES_PASSWORD = "${db_password}"
+GRAPH_LOG = "info"
+
+[[config.mounts]]
+filePath = "deploy-gateway.conf.template"
+content = """# The nginx image substitutes $DEPLOY_KEY from the environment at start.
+server {
+    listen 80;
+    client_max_body_size 256m;
+    resolver 127.0.0.11 valid=10s ipv6=off;
+
+    if ($http_authorization != "Bearer $DEPLOY_KEY") {
+        return 401;
+    }
+
+    location ~ ^/deploy/node/?$ {
+        set $admin_rpc http://graph-node:8020/;
+        proxy_pass $admin_rpc;
+    }
+
+    location /deploy/ipfs/ {
+        set $ipfs_rpc http://graph-node-ipfs:5001;
+        rewrite ^/deploy/ipfs(/.*)$ $1 break;
+        proxy_pass $ipfs_rpc;
+    }
+
+    location / {
+        return 404;
+    }
+}
+"""
