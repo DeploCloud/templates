@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted paste bin, file sharing and URL shortener with expiring uploads, raw links, QR codes and optional end-to-end encryption.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Daniel Szabo",
+    "url": "https://github.com/szabodanika"
+  },
+  "links": {
+    "github": "https://github.com/szabodanika/microbin",
+    "website": "https://microbin.eu",
+    "docs": [
+      "https://microbin.eu/docs/intro",
+      "https://microbin.eu/docs/installation-and-configuration/docker",
+      "https://microbin.eu/docs/installation-and-configuration/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can upload. The admin panel at /admin signs in as admin with the generated MICROBIN_ADMIN_PASSWORD. To restrict uploads, add MICROBIN_BASIC_AUTH_USERNAME and MICROBIN_BASIC_AUTH_PASSWORD (or MICROBIN_READONLY and MICROBIN_UPLOADER_PASSWORD) to the service environment.",
+      "link": "https://microbin.eu/docs/installation-and-configuration/configuration"
+    }
+  ]
+}
