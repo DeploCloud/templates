@@ -1,0 +1,1 @@
+Moodist is an ambient sound web app for focus and relaxation, with layered soundscapes, presets, binaural beats, a Pomodoro timer and a sleep timer. This template deploys the official static image served by Caddy on port 8080. The server keeps no data: presets, mixes and notes are stored in each visitor's browser, so no volume or account setup is needed.
