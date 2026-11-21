@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dnote"
+port = 3_001
+host = "${domain}"
+
+[config.env]
+DNOTE_BASE_URL = "https://${domain}"
+DNOTE_DISABLE_REGISTRATION = "false"
+DNOTE_SMTP_HOST = ""
+DNOTE_SMTP_PORT = "587"
+DNOTE_SMTP_USERNAME = ""
+DNOTE_SMTP_PASSWORD = ""

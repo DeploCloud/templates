@@ -1,0 +1,26 @@
+services:
+  dnote:
+    image: dnote/dnote:3.0.0@sha256:13edf4b31b89141f1b58a709b9b770de36001ba5add2fc32ddbb9505a85cdd88
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      BaseURL: ${DNOTE_BASE_URL}
+      PORT: "3001"
+      DBPath: /data/dnote.db
+      DisableRegistration: ${DNOTE_DISABLE_REGISTRATION}
+      SmtpHost: ${DNOTE_SMTP_HOST}
+      SmtpPort: ${DNOTE_SMTP_PORT}
+      SmtpUsername: ${DNOTE_SMTP_USERNAME}
+      SmtpPassword: ${DNOTE_SMTP_PASSWORD}
+    volumes:
+      - dnote-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "-O", "/dev/null", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  dnote-data: {}

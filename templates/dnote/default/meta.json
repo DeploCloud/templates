@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Dnote sync server: stores notes from the Dnote command line client in SQLite and exposes them through a REST API, with a web page for accounts.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Dnote",
+    "url": "https://github.com/dnote"
+  },
+  "links": {
+    "github": "https://github.com/dnote/dnote",
+    "website": "https://www.getdnote.com",
+    "docs": [
+      "https://www.getdnote.com/docs/server/docker/",
+      "https://www.getdnote.com/docs/server/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open to anyone who can reach the server. Create your account, then set DNOTE_DISABLE_REGISTRATION to true and redeploy.",
+      "link": "https://www.getdnote.com/docs/server/configuration/"
+    }
+  ]
+}
