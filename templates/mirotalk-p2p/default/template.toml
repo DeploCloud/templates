@@ -1,0 +1,25 @@
+[variables]
+jwt_key = "${hash:64}"
+api_key_secret = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mirotalk"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+HOST = "https://${domain}"
+JWT_KEY = "${jwt_key}"
+API_KEY_SECRET = "${api_key_secret}"
+HOST_PROTECTED = "false"
+HOST_USER_AUTH = "false"
+HOST_USERS = ""
+TURN_SERVER_ENABLED = "false"
+TURN_SERVER_URL = ""
+TURN_SERVER_USERNAME = ""
+TURN_SERVER_CREDENTIAL = ""
+STATS_ENABLED = "false"
+SURVEY_ENABLED = "false"
