@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "AI companion for Paperless-ngx that titles, tags and files documents, runs local OCR and answers questions about your archive.",
+  "category": "ai",
+  "developedBy": {
+    "label": "clusterzx",
+    "url": "https://github.com/clusterzx"
+  },
+  "links": {
+    "github": "https://github.com/clusterzx/paperless-ai",
+    "website": "https://clusterzx.github.io/paperless-ai/",
+    "docs": [
+      "https://github.com/clusterzx/paperless-ai#-installation",
+      "https://github.com/clusterzx/paperless-ai/blob/main/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The setup wizard is open to anyone who reaches the site until the first account is created. Complete it right after deployment.",
+      "link": "https://github.com/clusterzx/paperless-ai#-installation"
+    },
+    {
+      "type": "warning",
+      "message": "Requires a reachable Paperless-ngx instance with an API token for a user that can view and change documents, plus an AI provider (OpenAI, Anthropic, Ollama, Azure or an OpenAI-compatible API) and its API key."
+    }
+  ]
+}

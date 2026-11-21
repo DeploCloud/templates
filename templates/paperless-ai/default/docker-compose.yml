@@ -1,0 +1,19 @@
+services:
+  paperless-ai:
+    image: clusterzx/paperless-ai:4.4.0@sha256:66b219a196c4e244c4f5f09a0fa5f31ac2786e62ff43a61c6eedca3c8ac93937
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - 3000
+    environment:
+      PAPERLESS_AI_PORT: ${PAPERLESS_AI_PORT}
+      PAPERLESS_AI_URL: ${PAPERLESS_AI_URL}
+      TRUST_PROXY: ${TRUST_PROXY}
+    volumes:
+      - paperless-ai-data:/app/data
+
+volumes:
+  paperless-ai-data: {}

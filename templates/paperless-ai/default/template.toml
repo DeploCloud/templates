@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "paperless-ai"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PAPERLESS_AI_PORT = "3000"
+PAPERLESS_AI_URL = "https://${domain}"
+TRUST_PROXY = "1"
