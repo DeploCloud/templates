@@ -1,0 +1,21 @@
+services:
+  xpipe:
+    image: ghcr.io/xpipe-io/xpipe-webtop:main@sha256:ad385a08044040335f971eb57d84465ead22fe9fd1120883e2f1fed6b8d1f1dc
+    restart: unless-stopped
+    hostname: xpipe-webtop
+    expose:
+      - 3000
+    shm_size: "256mb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      LC_ALL: ${LC_ALL}
+      XPIPE_VPN: ${XPIPE_VPN}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - xpipe-config:/config
+
+volumes:
+  xpipe-config: {}
