@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "WhatsApp REST API server with multi-device support, a web dashboard, webhooks, an MCP endpoint and Chatwoot integration, written in Go.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Aldino Kemal",
+    "url": "https://github.com/aldinokemal"
+  },
+  "links": {
+    "github": "https://github.com/aldinokemal/go-whatsapp-web-multidevice",
+    "website": "https://gowa-docs.mintlify.site/",
+    "docs": [
+      "https://gowa-docs.mintlify.site/installation",
+      "https://gowa-docs.mintlify.site/configuration",
+      "https://gowa-docs.mintlify.site/authentication",
+      "https://gowa-docs.mintlify.site/concepts/webhooks"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with GOWA_USERNAME and GOWA_PASSWORD from the environment, then add a device in the dashboard and link it by scanning the QR code with the WhatsApp app on your phone.",
+      "link": "https://gowa-docs.mintlify.site/authentication"
+    }
+  ]
+}
