@@ -1,0 +1,42 @@
+services:
+  ezbookkeeping:
+    image: mayswind/ezbookkeeping:2.1.1@sha256:584e4d7f6fc1642773e840b56296f8782912e3bb17abfe3c49097508b198cdb7
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      EBK_SERVER_DOMAIN: ${EBK_SERVER_DOMAIN}
+      EBK_SERVER_ROOT_URL: ${EBK_SERVER_ROOT_URL}
+      EBK_SERVER_ENABLE_GZIP: "true"
+      EBK_DATABASE_TYPE: postgres
+      EBK_DATABASE_HOST: ezbookkeeping-db:5432
+      EBK_DATABASE_NAME: ezbookkeeping
+      EBK_DATABASE_USER: ezbookkeeping
+      EBK_DATABASE_PASSWD: ${DB_PASSWORD}
+      EBK_LOG_MODE: console
+      EBK_SECURITY_SECRET_KEY: ${EBK_SECURITY_SECRET_KEY}
+      EBK_USER_ENABLE_REGISTER: ${EBK_USER_ENABLE_REGISTER}
+    volumes:
+      - ezbookkeeping-storage:/ezbookkeeping/storage
+    depends_on:
+      ezbookkeeping-db:
+        condition: service_healthy
+
+  ezbookkeeping-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ezbookkeeping
+      POSTGRES_USER: ezbookkeeping
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ezbookkeeping -d ezbookkeeping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ezbookkeeping-db:/var/lib/postgresql
+
+volumes:
+  ezbookkeeping-storage: {}
+  ezbookkeeping-db: {}

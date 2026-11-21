@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ezbookkeeping"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+EBK_SERVER_DOMAIN = "${domain}"
+EBK_SERVER_ROOT_URL = "https://${domain}/"
+EBK_SECURITY_SECRET_KEY = "${base64:32}"
+EBK_USER_ENABLE_REGISTER = "true"
+DB_PASSWORD = "${db_password}"
