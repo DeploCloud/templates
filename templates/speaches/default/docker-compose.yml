@@ -1,0 +1,25 @@
+services:
+  speaches:
+    image: ghcr.io/speaches-ai/speaches:0.8.3-cpu@sha256:21e3df06d842fb7802ab470dd77c25f0e8c0d22950e8d8c6ae886e851af53ef8
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      API_KEY: ${API_KEY}
+      ENABLE_UI: ${ENABLE_UI}
+      LOG_LEVEL: ${LOG_LEVEL}
+      # the Gradio playground calls the API locally instead of through the proxy
+      LOOPBACK_HOST_URL: http://localhost:8000
+      FORWARDED_ALLOW_IPS: "*"
+    volumes:
+      - speaches-models:/home/ubuntu/.cache/huggingface/hub
+    healthcheck:
+      # 0.8.3 puts /health behind the API key too
+      test: ["CMD-SHELL", "curl -fsS -H \"Authorization: Bearer $${API_KEY}\" http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  speaches-models: {}

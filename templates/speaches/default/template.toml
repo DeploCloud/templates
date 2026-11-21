@@ -1,0 +1,15 @@
+[variables]
+api_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "speaches"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+API_KEY = "${api_key}"
+ENABLE_UI = "false"
+LOG_LEVEL = "info"
