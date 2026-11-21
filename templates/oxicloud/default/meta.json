@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted cloud storage written in Rust, with files, photos, WebDAV, CalDAV and CardDAV, backed by PostgreSQL.",
+  "category": "storage",
+  "developedBy": {
+    "label": "AtalayaLabs",
+    "url": "https://github.com/AtalayaLabs"
+  },
+  "links": {
+    "github": "https://github.com/AtalayaLabs/OxiCloud",
+    "website": "https://atalayalabs.github.io/OxiCloud/",
+    "docs": [
+      "https://atalayalabs.github.io/OxiCloud/config/deployment",
+      "https://atalayalabs.github.io/OxiCloud/config/env",
+      "https://atalayalabs.github.io/OxiCloud/config/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and complete the setup flow: it creates the first admin account. Public sign-up is enabled by default; turn it off in the admin panel if you do not want open registration."
+    }
+  ]
+}

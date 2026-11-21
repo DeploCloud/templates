@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "oxicloud"
+port = 8_086
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+OXICLOUD_DB_CONNECTION_STRING = "postgres://oxicloud:${db_password}@oxicloud-db:5432/oxicloud"
+OXICLOUD_BASE_URL = "https://${domain}"
+OXICLOUD_TRUST_PROXY_CIDR = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
