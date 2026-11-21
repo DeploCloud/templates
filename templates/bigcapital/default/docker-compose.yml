@@ -1,0 +1,104 @@
+services:
+  bigcapital:
+    image: bigcapitalhq/webapp:v0.25.47@sha256:bb8e1051df07d8dcf4e9b39924e13fa084f596e7b52e74d5ddaf16f1aa444ee8
+    restart: unless-stopped
+    expose:
+      - 80
+
+  bigcapital-server:
+    image: bigcapitalhq/server:v0.25.47@sha256:a1ea78999fcc7f17ae232a204f5c6afb241fc82b1d02dd463a766ce77a0f9a30
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      BASE_URL: ${BASE_URL}
+      APP_JWT_SECRET: ${APP_JWT_SECRET}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY}
+      DB_HOST: bigcapital-db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_CHARSET: utf8
+      SYSTEM_DB_NAME: ${SYSTEM_DB_NAME}
+      REDIS_HOST: bigcapital-redis
+      REDIS_PORT: 6379
+      QUEUE_HOST: bigcapital-redis
+      QUEUE_PORT: 6379
+      GOTENBERG_URL: http://bigcapital-gotenberg:3000
+      GOTENBERG_DOCS_URL: http://bigcapital-server:3000/public/
+      SIGNUP_DISABLED: ${SIGNUP_DISABLED}
+      SIGNUP_EMAIL_CONFIRMATION: ${SIGNUP_EMAIL_CONFIRMATION}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_SECURE: ${MAIL_SECURE}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      S3_REGION: ${S3_REGION}
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      S3_BUCKET: ${S3_BUCKET}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+      S3_FORCE_PATH_STYLE: ${S3_FORCE_PATH_STYLE}
+    depends_on:
+      bigcapital-migration:
+        condition: service_completed_successfully
+      bigcapital-db:
+        condition: service_healthy
+      bigcapital-redis:
+        condition: service_healthy
+      bigcapital-gotenberg:
+        condition: service_started
+
+  bigcapital-migration:
+    image: bigcapitalhq/server:v0.25.47@sha256:a1ea78999fcc7f17ae232a204f5c6afb241fc82b1d02dd463a766ce77a0f9a30
+    restart: "no"
+    working_dir: /app/packages/server
+    command: ["sh", "-c", "node dist/cli.js system:migrate:latest && node dist/cli.js tenants:migrate:latest"]
+    environment:
+      DB_HOST: bigcapital-db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_CHARSET: utf8
+      SYSTEM_DB_NAME: ${SYSTEM_DB_NAME}
+    depends_on:
+      bigcapital-db:
+        condition: service_healthy
+
+  bigcapital-db:
+    image: mariadb:10.11.19@sha256:e5fe75b2b9de0eb9f6f9a4d9c97272fb3a7480e389ccd487a786bab2a12cc0d7
+    restart: unless-stopped
+    # Tenant databases are created as utf8; keep the system database on the same charset.
+    command: ["--character-set-server=utf8mb3", "--collation-server=utf8mb3_general_ci"]
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${SYSTEM_DB_NAME}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - bigcapital-db:/var/lib/mysql
+
+  bigcapital-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - bigcapital-redis:/data
+
+  bigcapital-gotenberg:
+    image: gotenberg/gotenberg:7.10.2@sha256:d03b8a04c6e6c5e568b38f57352266dee4674849b71818774025f8f48d869a9a
+    restart: unless-stopped
+    expose:
+      - 3000
+
+volumes:
+  bigcapital-db: {}
+  bigcapital-redis: {}
