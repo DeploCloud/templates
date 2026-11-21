@@ -1,0 +1,47 @@
+services:
+  autobrr:
+    image: ghcr.io/autobrr/autobrr:v1.91.1@sha256:8c63fa0ba732eb33b2e531a84b3de3c99ae88e87c49bf077a6194020667ef92f
+    restart: unless-stopped
+    expose:
+      - 7474
+    depends_on:
+      autobrr-db:
+        condition: service_healthy
+    environment:
+      AUTOBRR__HOST: 0.0.0.0
+      AUTOBRR__PORT: "7474"
+      AUTOBRR__DATABASE_TYPE: postgres
+      AUTOBRR__POSTGRES_HOST: autobrr-db
+      AUTOBRR__POSTGRES_PORT: "5432"
+      AUTOBRR__POSTGRES_DATABASE: autobrr
+      AUTOBRR__POSTGRES_USER: autobrr
+      AUTOBRR__POSTGRES_PASS: ${DB_PASSWORD}
+      AUTOBRR__POSTGRES_SSLMODE: disable
+      TZ: ${TZ}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:7474/api/healthz/liveness"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    volumes:
+      - autobrr-config:/config
+
+  autobrr-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: autobrr
+      POSTGRES_USER: autobrr
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U autobrr -d autobrr"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - autobrr-db:/var/lib/postgresql
+
+volumes:
+  autobrr-config: {}
+  autobrr-db: {}

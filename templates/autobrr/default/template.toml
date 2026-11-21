@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "autobrr"
+port = 7_474
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"

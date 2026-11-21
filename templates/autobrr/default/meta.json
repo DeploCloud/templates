@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Download automation for torrents and usenet that grabs releases from IRC announces and feeds and sends them to your clients, with a SQLite database.",
+  "category": "media",
+  "developedBy": {
+    "label": "autobrr",
+    "url": "https://github.com/autobrr"
+  },
+  "links": {
+    "github": "https://github.com/autobrr/autobrr",
+    "website": "https://autobrr.com",
+    "docs": [
+      "https://autobrr.com/installation/docker",
+      "https://autobrr.com/configuration/autobrr",
+      "https://autobrr.com/configuration/indexers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor to the web UI creates the only user account. Open it right after deployment and create your account before anyone else can.",
+      "link": "https://autobrr.com/installation/docker"
+    }
+  ]
+}
