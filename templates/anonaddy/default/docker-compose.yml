@@ -1,0 +1,76 @@
+services:
+  anonaddy:
+    image: anonaddy/anonaddy:1.7.4@sha256:3901fd82ee7d80feeea4bb5a032fdcf0a96cf359a553ce89c72604e37c97e2ad
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - anonaddy-data:/data
+    environment:
+      TZ: ${TZ}
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      DB_HOST: anonaddy-db
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: anonaddy-redis
+      ANONADDY_DOMAIN: ${ANONADDY_DOMAIN}
+      ANONADDY_HOSTNAME: ${ANONADDY_HOSTNAME}
+      ANONADDY_SECRET: ${ANONADDY_SECRET}
+      ANONADDY_ADMIN_USERNAME: ${ANONADDY_ADMIN_USERNAME}
+      ANONADDY_ENABLE_REGISTRATION: ${ANONADDY_ENABLE_REGISTRATION}
+      RSPAMD_ENABLE: ${RSPAMD_ENABLE}
+      POSTFIX_RELAYHOST: ${POSTFIX_RELAYHOST}
+      POSTFIX_RELAYHOST_AUTH_ENABLE: ${POSTFIX_RELAYHOST_AUTH_ENABLE}
+      POSTFIX_RELAYHOST_USERNAME: ${POSTFIX_RELAYHOST_USERNAME}
+      POSTFIX_RELAYHOST_PASSWORD: ${POSTFIX_RELAYHOST_PASSWORD}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8000/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      anonaddy-db:
+        condition: service_healthy
+      anonaddy-redis:
+        condition: service_healthy
+
+  anonaddy-db:
+    image: mariadb:12.3.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    command:
+      - mariadbd
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - anonaddy-db:/var/lib/mysql
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  anonaddy-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - anonaddy-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  anonaddy-data: {}
+  anonaddy-db: {}
+  anonaddy-redis: {}

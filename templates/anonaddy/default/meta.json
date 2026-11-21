@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Anonymous email forwarding service: create aliases that forward to your real inbox, with a web dashboard, MariaDB and Redis.",
+  "category": "email",
+  "developedBy": {
+    "label": "addy.io",
+    "url": "https://addy.io"
+  },
+  "links": {
+    "github": "https://github.com/anonaddy/anonaddy",
+    "website": "https://addy.io",
+    "docs": [
+      "https://github.com/anonaddy/docker#readme",
+      "https://github.com/anonaddy/anonaddy/blob/master/SELF-HOSTING.md",
+      "https://addy.io/help/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Register your account in the web interface; usernames such as admin or root are reserved. New accounts must verify their email address before reaching the dashboard, so outbound mail must work first. To also receive aliases at the root domain, set ANONADDY_ADMIN_USERNAME to your username, then set ANONADDY_ENABLE_REGISTRATION to false to stop public sign-ups."
+    },
+    {
+      "type": "warning",
+      "message": "Only the web interface is routed: the Postfix SMTP port 25 is not published, so aliases cannot receive mail until you publish port 25 and point the MX records of ANONADDY_DOMAIN (and its wildcard for username subdomains) at this server. Outbound forwarding needs port 25 open at your provider, or a smarthost in POSTFIX_RELAYHOST.",
+      "link": "https://github.com/anonaddy/anonaddy/blob/master/SELF-HOSTING.md#dns-records"
+    }
+  ]
+}
