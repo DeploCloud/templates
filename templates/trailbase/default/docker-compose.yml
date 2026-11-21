@@ -1,0 +1,19 @@
+services:
+  trailbase:
+    image: trailbase/trailbase:0.36.2@sha256:f0c65b854de2ed9ac7c2c386c4bde95a7d4ffc3beb3f4657a9291f76b6d8e9a5
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL}
+    volumes:
+      - trailbase-depot:/app/traildepot
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:4000/api/healthcheck"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  trailbase-depot: {}
