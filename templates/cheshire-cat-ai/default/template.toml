@@ -1,0 +1,23 @@
+[variables]
+api_key = "${password:48}"
+api_key_ws = "${password:48}"
+jwt_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cheshire-cat-ai"
+port = 80
+host = "${domain}"
+
+[config.env]
+CCAT_CORE_HOST = "${domain}"
+CCAT_CORE_PORT = "443"
+CCAT_CORE_USE_SECURE_PROTOCOLS = "true"
+CCAT_HTTPS_PROXY_MODE = "true"
+CCAT_API_KEY = "${api_key}"
+CCAT_API_KEY_WS = "${api_key_ws}"
+CCAT_JWT_SECRET = "${jwt_secret}"
+CCAT_DEBUG = "false"
+CCAT_LOG_LEVEL = "INFO"
