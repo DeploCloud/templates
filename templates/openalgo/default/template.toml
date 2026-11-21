@@ -1,0 +1,26 @@
+[variables]
+app_key = "${hash:64}"
+api_key_pepper = "${hash:64}"
+fernet_salt = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openalgo"
+port = 5_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "openalgo"
+port = 8_765
+host = "${domain}"
+path = "/ws"
+
+[config.env]
+HOST_SERVER = "https://${domain}"
+APP_KEY = "${app_key}"
+API_KEY_PEPPER = "${api_key_pepper}"
+FERNET_SALT = "${fernet_salt}"
+TZ = "Asia/Kolkata"

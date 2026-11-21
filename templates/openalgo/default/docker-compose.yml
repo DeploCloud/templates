@@ -1,0 +1,31 @@
+services:
+  openalgo:
+    image: marketcalls/openalgo:4d92491@sha256:87ca1c70784fe1f92c943cd774e75f2b030872851a036b7c6ee2a6f458f10580
+    restart: unless-stopped
+    expose:
+      - 5000
+      - 8765
+    shm_size: 512m
+    environment:
+      HOST_SERVER: ${HOST_SERVER}
+      APP_KEY: ${APP_KEY}
+      API_KEY_PEPPER: ${API_KEY_PEPPER}
+      FERNET_SALT: ${FERNET_SALT}
+      TZ: ${TZ}
+    volumes:
+      - openalgo-db:/app/db
+      - openalgo-log:/app/log
+      - openalgo-strategies:/app/strategies
+      - openalgo-keys:/app/keys
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:5000/auth/check-setup"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  openalgo-db: {}
+  openalgo-log: {}
+  openalgo-strategies: {}
+  openalgo-keys: {}
