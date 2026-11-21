@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalist, database-free personal bookmarking service with tags, private links, RSS feeds and a REST API.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Shaarli Community",
+    "url": "https://github.com/shaarli"
+  },
+  "links": {
+    "github": "https://github.com/shaarli/Shaarli",
+    "website": "https://shaarli.readthedocs.io/",
+    "docs": [
+      "https://shaarli.readthedocs.io/en/master/Docker.html",
+      "https://shaarli.readthedocs.io/en/master/Installation.html",
+      "https://shaarli.readthedocs.io/en/master/Shaarli-configuration.html",
+      "https://shaarli.readthedocs.io/en/master/Reverse-proxy.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor fills in the installation form and sets the login and password.",
+      "link": "https://shaarli.readthedocs.io/en/master/Installation.html"
+    }
+  ]
+}
