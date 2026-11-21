@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Scanopy server that maps hosts, services and subnets reported by its scanning daemons into live network topology diagrams, with a bundled PostgreSQL database.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Scanopy",
+    "url": "https://github.com/scanopy"
+  },
+  "links": {
+    "github": "https://github.com/scanopy/scanopy",
+    "website": "https://scanopy.net",
+    "docs": [
+      "https://scanopy.net/docs/self-hosted-server/installation/",
+      "https://scanopy.net/docs/reference/server-configuration/",
+      "https://scanopy.net/docs/setting-up-daemons/installing-daemons/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Register the first account right after deployment: it creates the only organization on the server, and later users need an invite to join.",
+      "link": "https://scanopy.net/docs/self-hosted-server/installation/"
+    },
+    {
+      "type": "warning",
+      "message": "This template runs the server only. Nothing is scanned until you create a daemon under Discovery > Daemons and install it on a host inside each network you want to map; in the default mode it connects outbound to this server's URL.",
+      "link": "https://scanopy.net/docs/setting-up-daemons/installing-daemons/"
+    }
+  ]
+}

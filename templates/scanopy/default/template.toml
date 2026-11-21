@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "scanopy"
+port = 60_072
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+SCANOPY_PUBLIC_URL = "https://${domain}"
+SCANOPY_LOG_LEVEL = "info"

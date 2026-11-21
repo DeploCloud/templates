@@ -1,0 +1,48 @@
+services:
+  scanopy:
+    image: ghcr.io/scanopy/scanopy/server:v0.20.0@sha256:8af845c3e7db7ad767ad5d2c1257928e5a4024db6d5068d36dfe080d6ca0b8bc
+    restart: unless-stopped
+    expose:
+      - 60072
+    # Passes optional SCANOPY_* settings (SMTP, license key) added to the app's variables.
+    env_file:
+      - .env
+    environment:
+      SCANOPY_SERVER_PORT: "60072"
+      SCANOPY_LOG_LEVEL: ${SCANOPY_LOG_LEVEL}
+      SCANOPY_DATABASE_URL: postgresql://scanopy:${POSTGRES_PASSWORD}@scanopy-db:5432/scanopy
+      SCANOPY_WEB_EXTERNAL_PATH: /app/static
+      SCANOPY_PUBLIC_URL: ${SCANOPY_PUBLIC_URL}
+      SCANOPY_USE_SECURE_SESSION_COOKIES: "true"
+      SCANOPY_CLIENT_IP_SOURCE: RightmostXForwardedFor
+    volumes:
+      - scanopy-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:60072/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      scanopy-db:
+        condition: service_healthy
+
+  scanopy-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: scanopy
+      POSTGRES_USER: scanopy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - scanopy-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U scanopy -d scanopy"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  scanopy-data: {}
+  scanopy-db: {}
