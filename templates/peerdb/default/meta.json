@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Change data capture from Postgres, MySQL and MongoDB into ClickHouse or Postgres, orchestrated by Temporal, with a web UI to manage peers and mirrors.",
+  "category": "database",
+  "developedBy": {
+    "label": "PeerDB",
+    "url": "https://github.com/PeerDB-io"
+  },
+  "links": {
+    "github": "https://github.com/PeerDB-io/peerdb",
+    "website": "https://www.peerdb.io/",
+    "docs": [
+      "https://docs.peerdb.io/introduction",
+      "https://docs.peerdb.io/quickstart/quickstart"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The UI is protected by a single password: sign in with the generated PEERDB_PASSWORD value from the environment variables."
+    },
+    {
+      "type": "warning",
+      "message": "No object storage is bundled. ClickHouse mirrors need an S3-compatible staging bucket (AWS S3, GCS with HMAC keys or MinIO) reachable by both PeerDB and your ClickHouse server, set in the ClickHouse peer form."
+    }
+  ]
+}

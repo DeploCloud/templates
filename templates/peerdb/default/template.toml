@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+ui_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "peerdb"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+PEERDB_PASSWORD = "${ui_password}"
+NEXTAUTH_SECRET = "${base64:32}"
+NEXTAUTH_URL = "https://${domain}"
+
+[[config.mounts]]
+filePath = "temporal-dynamicconfig.yaml"
+content = """limit.maxIDLength:
+  - value: 255
+    constraints: {}
+system.forceSearchAttributesCacheRefreshOnRead:
+  - value: true
+    constraints: {}
+frontend.enableUpdateWorkflowExecution:
+  - value: true
+    constraints: {}
+"""
