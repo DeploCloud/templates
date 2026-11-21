@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted vehicle maintenance and fuel mileage tracker storing records in a built-in LiteDB database file.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Hargata Softworks",
+    "url": "https://github.com/hargata"
+  },
+  "links": {
+    "github": "https://github.com/hargata/lubelog",
+    "website": "https://lubelogger.com",
+    "docs": [
+      "https://docs.lubelogger.com/Installation/Getting%20Started/",
+      "https://docs.lubelogger.com/Installation/Authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is disabled by default, so anyone who can reach the URL can use the app. Right after deployment open Settings, check Enable Authentication and set the root user credentials.",
+      "link": "https://docs.lubelogger.com/Installation/Authentication/"
+    }
+  ]
+}
