@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flipt"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+FLIPT_AUTHENTICATION_SESSION_DOMAIN = "${domain}"

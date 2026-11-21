@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Git-native feature flag server with a web UI, REST and OpenFeature APIs, storing flag state in a local Git repository on a persistent volume.",
+  "category": "development",
+  "developedBy": {
+    "label": "Flipt",
+    "url": "https://flipt.io"
+  },
+  "links": {
+    "github": "https://github.com/flipt-io/flipt",
+    "website": "https://flipt.io",
+    "docs": [
+      "https://docs.flipt.io/v2/installation",
+      "https://docs.flipt.io/v2/configuration/storage",
+      "https://docs.flipt.io/v2/configuration/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is disabled by default, so anyone who knows the URL can change your flags. Enable an OIDC or GitHub login method (the session domain is already set to your app domain) and set FLIPT_AUTHENTICATION_REQUIRED=true before relying on it.",
+      "link": "https://docs.flipt.io/v2/configuration/authentication"
+    }
+  ]
+}
