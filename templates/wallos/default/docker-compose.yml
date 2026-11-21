@@ -1,0 +1,21 @@
+services:
+  wallos:
+    image: bellamy/wallos:5.11.2@sha256:de82c41215a761d33a38a3672526b3ce47d0fe7acb84f5c2a4cb2342c710cf4c
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - wallos-db:/var/www/html/db
+      - wallos-logos:/var/www/html/images/uploads/logos
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1/health.php"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  wallos-db: {}
+  wallos-logos: {}
