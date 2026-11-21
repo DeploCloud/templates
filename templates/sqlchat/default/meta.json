@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Chat-based SQL client that turns natural language into queries against MySQL, PostgreSQL, SQL Server, TiDB and OceanBase using an OpenAI-compatible API.",
+  "category": "database",
+  "developedBy": {
+    "label": "Bytebase",
+    "url": "https://github.com/sqlchat"
+  },
+  "links": {
+    "github": "https://github.com/sqlchat/sqlchat",
+    "website": "https://sqlchat.ai",
+    "docs": [
+      "https://github.com/sqlchat/sqlchat#self-host",
+      "https://github.com/sqlchat/sqlchat/blob/main/process.d.ts"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set OPENAI_API_KEY in the environment and redeploy before chatting. The published image does not let users enter their own key in the UI. Set OPENAI_API_ENDPOINT to use another OpenAI-compatible API such as a self-hosted Ollama.",
+      "link": "https://github.com/sqlchat/sqlchat#openai-related"
+    },
+    {
+      "type": "warning",
+      "message": "There is no login: anyone who can reach the URL can spend your API key and make the server open connections to any database host. Keep the URL private or put it behind an access control layer."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
