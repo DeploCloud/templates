@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "General purpose HTTP reverse proxy and forwarding tool with a web management UI, access rules, uptime monitoring and a static web server.",
+  "category": "networking",
+  "developedBy": {
+    "label": "tobychui",
+    "url": "https://github.com/tobychui"
+  },
+  "links": {
+    "github": "https://github.com/tobychui/zoraxy",
+    "website": "https://zoraxy.aroz.org",
+    "docs": [
+      "https://github.com/tobychui/zoraxy/wiki/Getting-Started",
+      "https://github.com/tobychui/zoraxy/tree/main/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visit to the management UI asks you to create the admin account. Open it right after deploying and register before anyone else can.",
+      "link": "https://github.com/tobychui/zoraxy/wiki/Getting-Started"
+    }
+  ]
+}
