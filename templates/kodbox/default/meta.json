@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web file manager and private cloud drive with online preview, editing and sharing, backed by MariaDB and Redis.",
+  "category": "storage",
+  "developedBy": {
+    "label": "KodCloud",
+    "url": "https://kodcloud.com"
+  },
+  "links": {
+    "github": "https://github.com/kalcaddle/kodbox",
+    "website": "https://kodcloud.com",
+    "docs": [
+      "https://github.com/KodCloud-dev/docker",
+      "https://doc.kodcloud.com/v2/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start installs Kodbox automatically. Sign in as admin with the password from the KODBOX_ADMIN_PASSWORD environment variable and change it afterwards."
+    }
+  ]
+}
