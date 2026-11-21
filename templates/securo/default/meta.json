@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted personal finance manager with accounts, budgets, bank sync, reports and multi-currency support, backed by PostgreSQL and Redis.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Securo",
+    "url": "https://github.com/securo-finance"
+  },
+  "links": {
+    "github": "https://github.com/securo-finance/securo",
+    "website": "https://usesecuro.com/",
+    "docs": [
+      "https://docs.usesecuro.com/docs/deployment/docker/",
+      "https://docs.usesecuro.com/docs/features/bank-sync/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor to the app runs the setup wizard and becomes the administrator. Open it right after deploying."
+    }
+  ]
+}
