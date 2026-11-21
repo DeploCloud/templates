@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source user and authentication platform with an admin dashboard and API, backed by PostgreSQL and ClickHouse.",
+  "category": "security",
+  "developedBy": {
+    "label": "Hexclave",
+    "url": "https://github.com/hexclave"
+  },
+  "links": {
+    "github": "https://github.com/hexclave/hexclave",
+    "website": "https://hexclave.com",
+    "docs": [
+      "https://docs.hexclave.com/guides/other/self-host",
+      "https://docs.hexclave.com/guides/getting-started/setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard with ADMIN_EMAIL and ADMIN_PASSWORD from the environment variables. The API is served on the api. subdomain of the app domain, so that hostname must resolve to this server too.",
+      "link": "https://docs.hexclave.com/guides/other/self-host"
+    },
+    {
+      "type": "warning",
+      "message": "Emails such as verification, magic links and password reset need SMTP (set per project in the dashboard) and a Freestyle API key in HEXCLAVE_FREESTYLE_API_KEY, with the sandbox snapshot bootstrapped as described in the self-host guide.",
+      "link": "https://docs.hexclave.com/guides/other/self-host"
+    }
+  ]
+}

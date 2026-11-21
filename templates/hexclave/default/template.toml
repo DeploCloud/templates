@@ -1,0 +1,32 @@
+[variables]
+api_domain = "api.${domain}"
+db_password = "${password:32}"
+clickhouse_password = "${password:32}"
+cron_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hexclave"
+port = 8_101
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "hexclave"
+port = 8_102
+host = "${api_domain}"
+
+[config.env]
+NEXT_PUBLIC_HEXCLAVE_DASHBOARD_URL = "https://${domain}"
+NEXT_PUBLIC_HEXCLAVE_API_URL = "https://${api_domain}"
+HEXCLAVE_SERVER_SECRET = "${base64:43}"
+DB_PASSWORD = "${db_password}"
+CLICKHOUSE_PASSWORD = "${clickhouse_password}"
+CLICKHOUSE_EXTERNAL_PASSWORD = "${password:32}"
+CRON_SECRET = "${cron_secret}"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${password:24}"
+HEXCLAVE_FREESTYLE_API_KEY = ""
+HEXCLAVE_FREESTYLE_SNAPSHOT_ID = "hexclave-js-node24-v6"
