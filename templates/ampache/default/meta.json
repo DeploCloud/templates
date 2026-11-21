@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Web based music and video streaming server with a web player, Ampache and Subsonic APIs, and a bundled MariaDB database.",
+  "category": "media",
+  "developedBy": {
+    "label": "Ampache",
+    "url": "https://github.com/ampache"
+  },
+  "links": {
+    "github": "https://github.com/ampache/ampache",
+    "website": "https://ampache.org",
+    "docs": [
+      "https://github.com/ampache/ampache-docker",
+      "https://ampache.org/docs/installation/catalog",
+      "https://ampache.org/docs/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated AMPACHE_ADMIN_PASSWORD from the environment. The account is created only on the first start, so change AMPACHE_ADMIN_USER or AMPACHE_ADMIN_EMAIL before deploying if you want different values.",
+      "link": "https://github.com/ampache/ampache-docker#automated-install"
+    },
+    {
+      "type": "warning",
+      "message": "Subsonic clients stream through an internal request that fails behind the HTTPS proxy until you set local_web_path = \"http://localhost\" in /var/www/config/ampache.cfg.php.",
+      "link": "https://github.com/ampache/ampache-docker#set-the-local_web_path"
+    }
+  ]
+}

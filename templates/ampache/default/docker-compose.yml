@@ -1,0 +1,47 @@
+services:
+  ampache:
+    image: ampache/ampache:nosql8.4.0@sha256:50db708d0efab29433a7d9a379cb88bdbe6d7b8ec046599eb518982d1d484213
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DB_HOST: ampache-db
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: root
+      DB_PASSWORD: ${DB_ROOT_PASSWORD}
+      AMPACHE_DB_USER: ${AMPACHE_DB_USER}
+      AMPACHE_DB_PASSWORD: ${AMPACHE_DB_PASSWORD}
+      AMPACHE_ADMIN_USER: ${AMPACHE_ADMIN_USER}
+      AMPACHE_ADMIN_EMAIL: ${AMPACHE_ADMIN_EMAIL}
+      AMPACHE_ADMIN_PASSWORD: ${AMPACHE_ADMIN_PASSWORD}
+      DISABLE_INOTIFYWAIT_CLEAN: ${DISABLE_INOTIFYWAIT_CLEAN}
+    volumes:
+      - ampache-config:/var/www/config
+      - ampache-media:/media
+      - ampache-backup:/var/www/backup
+      - ampache-log:/var/log/ampache
+    depends_on:
+      ampache-db:
+        condition: service_healthy
+
+  ampache-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - ampache-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  ampache-config: {}
+  ampache-media: {}
+  ampache-backup: {}
+  ampache-log: {}
+  ampache-db: {}
