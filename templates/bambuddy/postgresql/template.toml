@@ -1,0 +1,14 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bambuddy"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+DB_PASSWORD = "${db_password}"

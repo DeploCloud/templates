@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Bambuddy print farm manager for Bambu Lab 3D printers backed by a PostgreSQL database, suited to large farms with many printers and high write concurrency.",
+  "category": "automation",
+  "developedBy": {
+    "label": "maziggy",
+    "url": "https://github.com/maziggy"
+  },
+  "links": {
+    "github": "https://github.com/maziggy/bambuddy",
+    "website": "https://bambuddy.cool/",
+    "docs": [
+      "https://wiki.bambuddy.cool/features/postgresql/",
+      "https://wiki.bambuddy.cool/getting-started/docker/",
+      "https://wiki.bambuddy.cool/features/authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is off until you set it up. On first visit, choose Enable Authentication on the setup page and create the admin account right away, otherwise anyone with the URL can control your printers.",
+      "link": "https://wiki.bambuddy.cool/features/authentication/"
+    },
+    {
+      "type": "warning",
+      "message": "Bambuddy talks to printers directly over the local network, so this server must reach each printer's IP address. Without host networking, automatic discovery and the virtual printer feature are unavailable: add printers manually by IP, serial number and access code, with LAN Only Mode and Developer Mode enabled on the printer.",
+      "link": "https://wiki.bambuddy.cool/getting-started/docker/"
+    }
+  ]
+}
