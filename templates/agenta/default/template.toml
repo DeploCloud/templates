@@ -1,0 +1,41 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "agenta-web"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "agenta-api"
+port = 8_000
+host = "${domain}"
+path = "/api"
+
+[[config.domains]]
+serviceName = "agenta-services"
+port = 8_080
+host = "${domain}"
+path = "/services"
+
+[[config.domains]]
+serviceName = "agenta-web-mobile"
+port = 3_000
+host = "${domain}"
+path = "/m"
+
+[config.env]
+AGENTA_WEB_URL = "https://${domain}"
+AGENTA_API_URL = "https://${domain}/api"
+AGENTA_SERVICES_URL = "https://${domain}/services"
+AGENTA_AUTH_KEY = "${hash:64}"
+AGENTA_CRYPT_KEY = "${hash:64}"
+AGENTA_SERVICES_INTERNAL_KEY = "${hash:64}"
+AGENTA_RUNNER_TOKEN = "${hash:64}"
+POSTGRES_PASSWORD = "${password:32}"
+AGENTA_STORE_ACCESS_KEY = "${hash:20}"
+AGENTA_STORE_SECRET_KEY = "${hash:40}"
+AGENTA_STORE_SIGNING_KEY = "${hash:44}"
+AGENTA_ACCESS_ALLOWED_DOMAINS = ""
+AGENTA_ACCESS_ALLOWED_OWNER_EMAILS = ""

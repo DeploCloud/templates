@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source LLMOps and agent platform with a prompt playground, evaluations, observability and an agent runner, backed by PostgreSQL, Redis, SeaweedFS and SuperTokens.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Agenta",
+    "url": "https://agenta.ai"
+  },
+  "links": {
+    "github": "https://github.com/Agenta-AI/agenta",
+    "website": "https://agenta.ai",
+    "docs": [
+      "https://agenta.ai/docs/self-host/quick-start",
+      "https://agenta.ai/docs/self-host/configuration",
+      "https://agenta.ai/docs/self-host/guides/restrict-organization-creation",
+      "https://agenta.ai/docs/self-host/agent-execution/run-agents-locally"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no default login: sign up with an email and password on first visit. Until you set AGENTA_ACCESS_ALLOWED_DOMAINS or AGENTA_ACCESS_ALLOWED_OWNER_EMAILS, anyone who can reach the URL can sign up and run custom code evaluators and agents on this server.",
+      "link": "https://agenta.ai/docs/self-host/guides/restrict-organization-creation"
+    },
+    {
+      "type": "warning",
+      "message": "Prompts, evaluations and agents need an LLM provider API key (OpenAI, Anthropic and others), added in the Agenta settings after sign-up."
+    },
+    {
+      "type": "info",
+      "message": "The agent runner runs without FUSE, so each agent run gets a fresh working directory that does not persist across turns.",
+      "link": "https://agenta.ai/docs/self-host/agent-execution/run-agents-locally"
+    }
+  ]
+}
