@@ -1,0 +1,24 @@
+services:
+  flatnotes:
+    image: dullage/flatnotes:v5.5.5@sha256:ca4b40ee7491aabf6b52bbb20ab140145cb96981d4b3fe96ab1e797ac6cd93e5
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PUID: 1000
+      PGID: 1000
+      FLATNOTES_AUTH_TYPE: password
+      FLATNOTES_USERNAME: ${FLATNOTES_USERNAME}
+      FLATNOTES_PASSWORD: ${FLATNOTES_PASSWORD}
+      FLATNOTES_SECRET_KEY: ${FLATNOTES_SECRET_KEY}
+    volumes:
+      - flatnotes-data:/data
+    healthcheck:
+      test: ["CMD", "/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  flatnotes-data: {}

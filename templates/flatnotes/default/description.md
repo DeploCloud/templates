@@ -1,0 +1,1 @@
+Flatnotes is a self-hosted note taking app that keeps each note as a plain Markdown file in a single folder, with no database. This template deploys the official image with password authentication and stores the notes, attachments and search index on a persistent volume mounted at `/data`. Sign in as `admin` with the generated `FLATNOTES_PASSWORD` from the environment variables.

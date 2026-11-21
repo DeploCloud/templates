@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:24}"
+secret_key = "${secret:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flatnotes"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+FLATNOTES_USERNAME = "admin"
+FLATNOTES_PASSWORD = "${admin_password}"
+FLATNOTES_SECRET_KEY = "${secret_key}"

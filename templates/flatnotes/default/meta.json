@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Database-less note taking web app that stores every note as a Markdown file in a flat folder, with full-text search and tags.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Adam Dullage",
+    "url": "https://github.com/dullage"
+  },
+  "links": {
+    "github": "https://github.com/dullage/flatnotes",
+    "docs": [
+      "https://github.com/dullage/flatnotes/wiki/Environment-Variables",
+      "https://github.com/dullage/flatnotes/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated FLATNOTES_PASSWORD from the environment variables. There is no in-app account management: change the credentials in the environment and redeploy.",
+      "link": "https://github.com/dullage/flatnotes/wiki/Environment-Variables"
+    }
+  ]
+}
