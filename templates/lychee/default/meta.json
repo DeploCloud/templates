@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted photo management and sharing with albums, a queue worker for image processing and a MariaDB database.",
+  "category": "media",
+  "developedBy": {
+    "label": "LycheeOrg",
+    "url": "https://github.com/LycheeOrg"
+  },
+  "links": {
+    "github": "https://github.com/LycheeOrg/Lychee",
+    "website": "https://lycheeorg.dev",
+    "docs": [
+      "https://lycheeorg.dev/docs/getting-started/docker/",
+      "https://lycheeorg.dev/docs/getting-started/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visit asks you to create the admin account. Open the app right after deploying and set it up before anyone else can.",
+      "link": "https://lycheeorg.dev/docs/getting-started/installation/"
+    }
+  ]
+}

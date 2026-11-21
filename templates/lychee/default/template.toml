@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+app_key = "${hash:42}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lychee"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+# 42 hex chars + "0=" decode to exactly 32 bytes, as the entrypoint requires
+APP_KEY = "base64:${app_key}0="
+APP_URL = "https://${domain}"
+TIMEZONE = "UTC"
+DB_DATABASE = "lychee"
+DB_USERNAME = "lychee"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"

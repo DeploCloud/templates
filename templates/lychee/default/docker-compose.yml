@@ -1,0 +1,84 @@
+x-lychee: &lychee
+  image: ghcr.io/lycheeorg/lychee:v7.13.1@sha256:836e3bb22f02295180b92d382191954845df9993bb73f81e71d394bf0dd0ece1
+  restart: unless-stopped
+  volumes:
+    - lychee-uploads:/app/public/uploads
+    - lychee-storage:/app/storage/app
+    - lychee-logs:/app/storage/logs
+    - lychee-tmp:/app/storage/tmp
+
+x-lychee-env: &lychee-env
+  APP_KEY: ${APP_KEY}
+  APP_NAME: Lychee
+  APP_ENV: production
+  APP_DEBUG: "false"
+  APP_URL: ${APP_URL}
+  APP_FORCE_HTTPS: "true"
+  TIMEZONE: ${TIMEZONE}
+  TRUSTED_PROXIES: "*"
+  DB_CONNECTION: mysql
+  DB_HOST: lychee-db
+  DB_PORT: "3306"
+  DB_DATABASE: ${DB_DATABASE}
+  DB_USERNAME: ${DB_USERNAME}
+  DB_PASSWORD: ${DB_PASSWORD}
+  QUEUE_CONNECTION: database
+  CACHE_STORE: database
+
+services:
+  lychee:
+    <<: *lychee
+    expose:
+      - 8000
+    environment:
+      <<: *lychee-env
+    depends_on:
+      lychee-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/up"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+  lychee-worker:
+    <<: *lychee
+    environment:
+      <<: *lychee-env
+      LYCHEE_MODE: worker
+    depends_on:
+      lychee-db:
+        condition: service_healthy
+      lychee:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f 'queue:work' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  lychee-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - lychee-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  lychee-uploads: {}
+  lychee-storage: {}
+  lychee-logs: {}
+  lychee-tmp: {}
+  lychee-db: {}
