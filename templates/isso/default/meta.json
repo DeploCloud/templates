@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted comment server for static sites and blogs, with a SQLite database and a moderation admin page.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Isso",
+    "url": "https://github.com/isso-comments"
+  },
+  "links": {
+    "github": "https://github.com/isso-comments/isso",
+    "website": "https://isso-comments.de",
+    "docs": [
+      "https://isso-comments.de/docs/guides/quickstart/",
+      "https://isso-comments.de/docs/reference/server-config/",
+      "https://isso-comments.de/docs/reference/client-config/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set ISSO_HOST to the URL of the website that embeds the comments (for example https://blog.example.com); Isso only accepts comments from that origin. The admin page at /admin/ uses the generated ISSO_ADMIN_PASSWORD.",
+      "link": "https://isso-comments.de/docs/reference/server-config/"
+    }
+  ]
+}
