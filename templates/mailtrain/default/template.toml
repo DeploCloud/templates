@@ -1,0 +1,35 @@
+[variables]
+sandbox_domain = "sandbox.${domain}"
+public_domain = "lists.${domain}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+www_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mailtrain"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "mailtrain"
+port = 3_003
+host = "${sandbox_domain}"
+
+[[config.domains]]
+serviceName = "mailtrain"
+port = 3_004
+host = "${public_domain}"
+
+[config.env]
+URL_BASE_TRUSTED = "https://${domain}"
+URL_BASE_SANDBOX = "https://${sandbox_domain}"
+URL_BASE_PUBLIC = "https://${public_domain}"
+WWW_SECRET = "${www_secret}"
+ADMIN_PASSWORD = "${admin_password}"
+MYSQL_PASSWORD = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${db_root_password}"

@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted newsletter app with subscriber lists, segmentation, templates and campaigns, served on admin, sandbox and public hostnames with MariaDB and Redis.",
+  "category": "email",
+  "developedBy": {
+    "label": "Mailtrain",
+    "url": "https://github.com/Mailtrain-org"
+  },
+  "links": {
+    "github": "https://github.com/Mailtrain-org/mailtrain",
+    "docs": [
+      "https://github.com/Mailtrain-org/mailtrain/blob/v2/README.md#deployment-with-docker-and-docker-compose",
+      "https://github.com/Mailtrain-org/mailtrain/blob/v2/README.md#docker-environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ADMIN_PASSWORD from the environment settings. The container applies it again on every start, so change the password there: a change made in the Mailtrain UI is reverted at the next restart."
+    },
+    {
+      "type": "warning",
+      "message": "Mailtrain also uses sandbox.<your domain> for the template editors and lists.<your domain> for subscription forms and unsubscribe links. Both must resolve to this server with HTTPS, otherwise the editors stay blank and links in sent emails break.",
+      "link": "https://github.com/Mailtrain-org/mailtrain/blob/v2/README.md#preparation"
+    },
+    {
+      "type": "warning",
+      "message": "The builtin mail transfer agent is disabled. Before sending, edit the System send configuration in Administration > Send Configurations and enter your SMTP server details."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
