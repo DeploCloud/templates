@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Subtitle manager for Sonarr and Radarr that searches and downloads subtitles for your series and movies based on language preferences.",
+  "category": "media",
+  "developedBy": {
+    "label": "Bazarr",
+    "url": "https://www.bazarr.media/"
+  },
+  "links": {
+    "github": "https://github.com/morpheus65535/bazarr",
+    "website": "https://www.bazarr.media/",
+    "docs": [
+      "https://wiki.bazarr.media/",
+      "https://wiki.bazarr.media/Getting-Started/Setup-Guide/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no login until you enable authentication under Settings > General > Security. Bazarr also needs the API keys of Sonarr and Radarr and access to the same media files they manage, mounted at /movies and /tv or matched with path mappings.",
+      "link": "https://wiki.bazarr.media/Getting-Started/Setup-Guide/"
+    }
+  ]
+}
