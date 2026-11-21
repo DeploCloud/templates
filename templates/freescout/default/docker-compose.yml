@@ -1,0 +1,48 @@
+services:
+  freescout:
+    image: nfrastack/freescout:2.2.25@sha256:0c27d6c21f7f48fb5b53f6302f8e33c97aec75f5f687fe5b19e7b9842d7c59f5
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_URL: ${APP_URL}
+      DB_TYPE: mariadb
+      DB_HOST: freescout-db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASSWORD}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASS: ${ADMIN_PASSWORD}
+      ADMIN_FIRST_NAME: ${ADMIN_FIRST_NAME}
+      ADMIN_LAST_NAME: ${ADMIN_LAST_NAME}
+      TIMEZONE: ${TIMEZONE}
+      FREESCOUT_APP_TRUSTED_PROXIES: ${FREESCOUT_APP_TRUSTED_PROXIES}
+    volumes:
+      - freescout-data:/data
+      - freescout-logs:/logs
+    depends_on:
+      freescout-db:
+        condition: service_healthy
+
+  freescout-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - freescout-db:/var/lib/mysql
+
+volumes:
+  freescout-data: {}
+  freescout-logs: {}
+  freescout-db: {}

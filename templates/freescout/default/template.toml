@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "freescout"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+DB_NAME = "freescout"
+DB_USER = "freescout"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"
+ADMIN_FIRST_NAME = "Admin"
+ADMIN_LAST_NAME = "User"
+TIMEZONE = "Etc/UTC"
+FREESCOUT_APP_TRUSTED_PROXIES = "*"
