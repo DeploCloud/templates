@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Countly Lite product analytics for mobile, web and desktop apps, with crash reporting, push, remote config and a bundled MongoDB.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Countly",
+    "url": "https://github.com/Countly"
+  },
+  "links": {
+    "github": "https://github.com/Countly/countly-server",
+    "website": "https://countly.com",
+    "docs": [
+      "https://support.countly.com/hc/en-us/articles/360037814511-Setting-Up-Countly-with-Docker",
+      "https://support.countly.com/hc/en-us/articles/360036862332-Installing-the-Countly-Server",
+      "https://support.countly.com/hc/en-us/articles/360037236571-Downloading-and-Installing-SDKs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the dashboard right after deploying: the first account created on the setup page becomes the global administrator."
+    }
+  ]
+}
