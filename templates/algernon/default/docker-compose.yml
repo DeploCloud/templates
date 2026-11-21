@@ -1,0 +1,25 @@
+services:
+  algernon:
+    image: xyproto/algernon:prod@sha256:923bcc23610338b99a020458129c6728ad234bbe837d62e0694a21fc02bbf624
+    restart: unless-stopped
+    # rate limiting is per client IP, which is the proxy IP here
+    entrypoint:
+      - /bin/algernon
+      - --noninteractive
+      - --httponly
+      - --nolimit
+      - --nocache
+      - --boltdb=/var/lib/algernon/algernon.db
+      - --dir=/srv/algernon
+      - --addr=:3000
+    expose:
+      - 3000
+    volumes:
+      - algernon-site:/srv/algernon
+      - algernon-config:/etc/algernon
+      - algernon-db:/var/lib/algernon
+
+volumes:
+  algernon-site: {}
+  algernon-config: {}
+  algernon-db: {}

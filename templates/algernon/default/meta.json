@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-contained Go web server that serves a persistent site directory and renders Markdown, Lua, Pongo2, JSX and TypeScript pages on the fly, with built-in users and permissions.",
+  "category": "development",
+  "developedBy": {
+    "label": "Alexander F. Rødseth",
+    "url": "https://github.com/xyproto"
+  },
+  "links": {
+    "github": "https://github.com/xyproto/algernon",
+    "website": "https://algernon.roboticoverlords.org",
+    "docs": [
+      "https://github.com/xyproto/algernon/blob/main/README.md",
+      "https://github.com/xyproto/algernon/blob/main/TUTORIAL.md",
+      "https://github.com/xyproto/algernon/tree/main/containers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    },
+    {
+      "type": "warning",
+      "message": "Algernon starts with an empty site and shows a directory listing until you add your files to the algernon-site volume (/srv/algernon). An index.lua, index.html or index.md there becomes the front page.",
+      "link": "https://github.com/xyproto/algernon/blob/main/TUTORIAL.md"
+    }
+  ]
+}
