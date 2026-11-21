@@ -1,0 +1,57 @@
+services:
+  svix:
+    image: svix/svix-server:v1.105.0@sha256:f6f562e4a5da5203ed7e974ff40f1764411f71c72b9bbe42101d809eddf7fee0
+    restart: unless-stopped
+    expose:
+      - 8071
+    environment:
+      WAIT_FOR: "true"
+      SVIX_JWT_SECRET: ${SVIX_JWT_SECRET}
+      SVIX_MAIN_SECRET: ${SVIX_MAIN_SECRET}
+      SVIX_DB_DSN: postgresql://svix:${SVIX_DB_PASSWORD}@svix-db:5432/svix
+      SVIX_DB_POOL_MAX_SIZE: ${SVIX_DB_POOL_MAX_SIZE}
+      SVIX_REDIS_DSN: redis://svix-redis:6379
+      SVIX_QUEUE_TYPE: redis
+      SVIX_CACHE_TYPE: memory
+    healthcheck:
+      test: ["CMD", "svix-server", "healthcheck", "http://localhost:8071"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      svix-db:
+        condition: service_healthy
+      svix-redis:
+        condition: service_healthy
+
+  svix-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: svix
+      POSTGRES_PASSWORD: ${SVIX_DB_PASSWORD}
+      POSTGRES_DB: svix
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U svix -d svix"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - svix-db:/var/lib/postgresql
+
+  svix-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "500", "--appendonly", "yes", "--appendfsync", "everysec", "--maxmemory-policy", "noeviction"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - svix-redis:/data
+
+volumes:
+  svix-db: {}
+  svix-redis: {}
