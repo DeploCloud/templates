@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based server management for SSH, VNC and RDP with SFTP file access, in one container with the bundled connection engine.",
+  "category": "networking",
+  "developedBy": {
+    "label": "gnmyt",
+    "url": "https://github.com/gnmyt"
+  },
+  "links": {
+    "github": "https://github.com/gnmyt/Nexterm",
+    "website": "https://nexterm.dev",
+    "docs": [
+      "https://docs.nexterm.dev/installation",
+      "https://docs.nexterm.dev/reverse-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created on the setup screen becomes the administrator. Open the app right after deployment to claim it.",
+      "link": "https://docs.nexterm.dev/installation"
+    },
+    {
+      "type": "warning",
+      "message": "The generated ENCRYPTION_KEY encrypts stored passwords and SSH keys. Keep it: changing or losing it makes saved credentials unreadable."
+    }
+  ]
+}

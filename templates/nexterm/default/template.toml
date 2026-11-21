@@ -1,0 +1,14 @@
+[variables]
+encryption_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nexterm"
+port = 6_989
+host = "${domain}"
+
+[config.env]
+ENCRYPTION_KEY = "${encryption_key}"
+TRUST_PROXY = "1"
