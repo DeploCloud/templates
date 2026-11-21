@@ -1,0 +1,16 @@
+services:
+  collabora-online:
+    image: collabora/code:26.04.6.2.1@sha256:a2f5d4e88addd46033d8440f7a13b82f7e6fe444bf8c6b5a3eadc789f0b5342b
+    restart: unless-stopped
+    expose:
+      - 9980
+    environment:
+      username: ${COLLABORA_ADMIN_USER}
+      password: ${COLLABORA_ADMIN_PASSWORD}
+      server_name: ${COLLABORA_SERVER_NAME}
+      extra_params: ${COLLABORA_EXTRA_PARAMS}
+    volumes:
+      - collabora-cache:/opt/cool/cache
+
+volumes:
+  collabora-cache: {}
