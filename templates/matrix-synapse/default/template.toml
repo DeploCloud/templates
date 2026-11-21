@@ -1,0 +1,55 @@
+[variables]
+db_password = "${hash:48}"
+registration_shared_secret = "${hash:64}"
+macaroon_secret_key = "${hash:64}"
+form_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "synapse"
+port = 8_008
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "homeserver.yaml"
+content = """server_name: "${domain}"
+public_baseurl: "https://${domain}/"
+serve_server_wellknown: true
+report_stats: false
+
+listeners:
+  - port: 8008
+    type: http
+    tls: false
+    x_forwarded: true
+    resources:
+      - names: [client, federation]
+        compress: false
+
+database:
+  name: psycopg2
+  args:
+    user: synapse
+    password: "${db_password}"
+    dbname: synapse
+    host: synapse-db
+    port: 5432
+    cp_min: 5
+    cp_max: 10
+
+signing_key_path: "/data/${domain}.signing.key"
+media_store_path: /data/media_store
+
+enable_registration: false
+registration_shared_secret: "${registration_shared_secret}"
+macaroon_secret_key: "${macaroon_secret_key}"
+form_secret: "${form_secret}"
+
+trusted_key_servers:
+  - server_name: matrix.org
+suppress_key_server_warning: true
+"""
