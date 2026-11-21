@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Native C++ inference server for local audio models with a built-in WebUI for text to speech, voice cloning, speech recognition, separation and music generation, running on CPU.",
+  "category": "ai",
+  "developedBy": {
+    "label": "0xShug0",
+    "url": "https://github.com/0xShug0"
+  },
+  "links": {
+    "github": "https://github.com/0xShug0/audio.cpp",
+    "docs": [
+      "https://github.com/0xShug0/audio.cpp/blob/main/docs/docker.md",
+      "https://github.com/0xShug0/audio.cpp/blob/main/app/server/README.md",
+      "https://github.com/0xShug0/audio.cpp/blob/main/webui/README.md",
+      "https://github.com/0xShug0/audio.cpp/blob/main/docs/model_manager.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "audio.cpp has no login of its own, so the template puts it behind HTTP basic auth: sign in with AUDIOCPP_USERNAME and AUDIOCPP_PASSWORD from the environment variables. API clients must send the same credentials."
+    },
+    {
+      "type": "warning",
+      "message": "No model ships with the image. Open the Models page after deploying and download a package before using Studio. Gated Hugging Face models also need HF_TOKEN set in the environment variables."
+    },
+    {
+      "type": "info",
+      "message": "This is the CPU build. Small TTS and ASR models such as Kokoro, PocketTTS or Moonshine run fine; large music and LLM-based models need many GB of RAM and are slow without a GPU."
+    }
+  ]
+}
