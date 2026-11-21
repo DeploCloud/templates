@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web service and REST API to track an inventory of 3D printer filament spools, with live usage tracking from Klipper (Moonraker) and OctoPrint.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Donkie",
+    "url": "https://github.com/Donkie"
+  },
+  "links": {
+    "github": "https://github.com/Donkie/Spoolman",
+    "docs": [
+      "https://github.com/Donkie/Spoolman/wiki/Installation",
+      "https://github.com/Donkie/Spoolman/wiki/Configuration",
+      "https://github.com/Donkie/Spoolman/wiki/Security",
+      "https://donkie.github.io/Spoolman/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Spoolman has no built-in authentication: anyone who can reach the domain can read and change the whole inventory. Protect the domain with an authenticating proxy or keep it private.",
+      "link": "https://github.com/Donkie/Spoolman/wiki/Security"
+    }
+  ]
+}
