@@ -1,0 +1,46 @@
+services:
+  drupal:
+    image: drupal:11.4.13-apache@sha256:5a063979095e03d05a9761c050ed9baeb11b852821d4ca10e4757b92960df4f4
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DRUPAL_DB_HOST: drupal-db
+      DRUPAL_DB_NAME: ${DRUPAL_DB_NAME}
+      DRUPAL_DB_USER: ${DRUPAL_DB_USER}
+      DRUPAL_DB_PASSWORD: ${DRUPAL_DB_PASSWORD}
+      DRUPAL_HASH_SALT: ${DRUPAL_HASH_SALT}
+      DRUPAL_CONFIG_SYNC_DIRECTORY: ${DRUPAL_CONFIG_SYNC_DIRECTORY}
+    volumes:
+      - drupal-modules:/opt/drupal/web/modules
+      - drupal-profiles:/opt/drupal/web/profiles
+      - drupal-themes:/opt/drupal/web/themes
+      - drupal-sites:/opt/drupal/web/sites
+      - ./settings.php:/opt/drupal/web/sites/default/settings.php:ro
+    depends_on:
+      drupal-db:
+        condition: service_healthy
+
+  drupal-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DRUPAL_DB_NAME}
+      MARIADB_USER: ${DRUPAL_DB_USER}
+      MARIADB_PASSWORD: ${DRUPAL_DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - drupal-db:/var/lib/mysql
+
+volumes:
+  drupal-modules: {}
+  drupal-profiles: {}
+  drupal-themes: {}
+  drupal-sites: {}
+  drupal-db: {}

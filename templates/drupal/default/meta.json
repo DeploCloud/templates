@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Drupal content management framework on the official Apache image with a MariaDB database and persistent sites, modules and themes.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Drupal",
+    "url": "https://www.drupal.org/"
+  },
+  "links": {
+    "github": "https://github.com/drupal/drupal",
+    "website": "https://www.drupal.org/",
+    "docs": [
+      "https://www.drupal.org/docs/getting-started/installing-drupal/run-the-installer",
+      "https://www.drupal.org/docs/getting-started/system-requirements",
+      "https://www.drupal.org/docs/updating-drupal"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deploying to finish the Drupal installer: pick a language and profile, then create the site and its administrator account. The database step is already filled in. Until the installer is done, anyone who reaches the URL can run it.",
+      "link": "https://www.drupal.org/docs/getting-started/installing-drupal/run-the-installer"
+    }
+  ]
+}
