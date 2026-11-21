@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Indexer that ingests Ethereum and EVM chain data into PostgreSQL and serves subgraphs over GraphQL, with a bundled IPFS node.",
+  "category": "development",
+  "developedBy": {
+    "label": "The Graph",
+    "url": "https://github.com/graphprotocol"
+  },
+  "links": {
+    "github": "https://github.com/graphprotocol/graph-node",
+    "website": "https://thegraph.com",
+    "docs": [
+      "https://github.com/graphprotocol/graph-node/blob/master/docker/README.md",
+      "https://github.com/graphprotocol/graph-node/blob/master/docs/environment-variables.md",
+      "https://thegraph.com/docs/en/subgraphs/developing/creating/graph-cli/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set ETHEREUM_RPC to NETWORK:URL of your own RPC endpoint (for example mainnet:https://your-provider/key) and redeploy. The network name must match the network in your subgraph manifests. Without a capability list Graph Node assumes an archive node with traces; declare the real ones as NETWORK:CAPABILITIES:URL (for example mainnet:archive:https://your-provider/key)."
+    },
+    {
+      "type": "warning",
+      "message": "Deploy subgraphs with graph-cli and the generated DEPLOY_KEY: graph create --node https://<domain>/deploy/node --access-token <DEPLOY_KEY> <name>, then graph deploy --node https://<domain>/deploy/node --deploy-key <DEPLOY_KEY> --ipfs https://<domain>/deploy/ipfs/api/v0 --headers '{\"Authorization\":\"Bearer <DEPLOY_KEY>\"}' <name>.",
+      "link": "https://thegraph.com/docs/en/subgraphs/developing/creating/graph-cli/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

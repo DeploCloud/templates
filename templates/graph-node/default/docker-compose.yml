@@ -1,0 +1,67 @@
+services:
+  graph-node:
+    image: graphprotocol/graph-node:v0.45.0@sha256:b0436347fb24f9ae45b6d3959cac97bf60b3238ad1633a875c118ff86a07a0d3
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      postgres_host: graph-node-db
+      postgres_user: graph-node
+      postgres_pass: ${POSTGRES_PASSWORD}
+      postgres_db: graph-node
+      ipfs: graph-node-ipfs:5001
+      ethereum: ${ETHEREUM_RPC}
+      GRAPH_LOG: ${GRAPH_LOG}
+    depends_on:
+      graph-node-db:
+        condition: service_healthy
+      graph-node-ipfs:
+        condition: service_healthy
+
+  graph-node-gateway:
+    image: nginx:1.30.7-alpine@sha256:caf4e1e032a20f9c3c5e28fc7f25ffd768ad8677b4975c54193075997b3a97e3
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DEPLOY_KEY: ${DEPLOY_KEY}
+    volumes:
+      - ./deploy-gateway.conf.template:/etc/nginx/templates/default.conf.template:ro
+    depends_on:
+      - graph-node
+      - graph-node-ipfs
+
+  graph-node-ipfs:
+    image: ipfs/kubo:v0.43.1@sha256:b293923d66e490e70ced64df42ea7a6cf7eac2740e3fb29101df18070fa7be48
+    restart: unless-stopped
+    environment:
+      IPFS_PROFILE: server
+    volumes:
+      - graph-node-ipfs:/data/ipfs
+    healthcheck:
+      test: ["CMD-SHELL", "ipfs --api=/ip4/127.0.0.1/tcp/5001 diag healthy > /dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  graph-node-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    command: ["postgres", "-cshared_preload_libraries=pg_stat_statements", "-cmax_connections=200"]
+    environment:
+      POSTGRES_USER: graph-node
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: graph-node
+      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
+    volumes:
+      - graph-node-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U graph-node -d graph-node"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  graph-node-ipfs: {}
+  graph-node-db: {}
