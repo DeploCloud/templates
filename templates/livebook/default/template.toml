@@ -1,0 +1,14 @@
+[variables]
+password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "livebook"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+LIVEBOOK_PASSWORD = "${password}"
+LIVEBOOK_SECRET_KEY_BASE = "${base64:64}"

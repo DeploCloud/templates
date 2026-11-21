@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Interactive and collaborative Elixir notebooks for code, data and machine learning workflows, with password access and persistent notebook storage.",
+  "category": "development",
+  "developedBy": {
+    "label": "Livebook",
+    "url": "https://github.com/livebook-dev"
+  },
+  "links": {
+    "github": "https://github.com/livebook-dev/livebook",
+    "website": "https://livebook.dev",
+    "docs": [
+      "https://livebook.hexdocs.pm/docker.html",
+      "https://livebook.hexdocs.pm/readme.html#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated LIVEBOOK_PASSWORD from the environment variables. Livebook is a single-user tool: anyone with the password can run arbitrary code inside the container."
+    }
+  ]
+}
