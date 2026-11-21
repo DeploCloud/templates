@@ -1,0 +1,21 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted reader that fetches article pages as a search engine crawler would, stripping ads, paywall overlays and other clutter.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Arian Mollik Wasi",
+    "url": "https://github.com/wasi-master"
+  },
+  "links": {
+    "github": "https://github.com/wasi-master/13ft",
+    "docs": [
+      "https://github.com/wasi-master/13ft/blob/main/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The instance has no login: anyone who knows its URL can use it to fetch pages through your server."
+    }
+  ]
+}

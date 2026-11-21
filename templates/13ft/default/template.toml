@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "13ft"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+LOCALE = "en"
+GUNICORN_CMD_ARGS = "--threads 4"
