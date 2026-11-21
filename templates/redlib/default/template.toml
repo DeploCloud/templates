@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "redlib"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+REDLIB_ROBOTS_DISABLE_INDEXING = "on"
+REDLIB_FULL_URL = "https://${domain}"

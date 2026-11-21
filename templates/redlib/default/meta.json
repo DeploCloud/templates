@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Private, JavaScript-free front-end for Reddit that proxies every request, including images and videos, through your server so visitors' browsers never contact Reddit.",
+  "category": "media",
+  "developedBy": {
+    "label": "Redlib",
+    "url": "https://github.com/redlib-org"
+  },
+  "links": {
+    "github": "https://github.com/redlib-org/redlib",
+    "docs": [
+      "https://github.com/redlib-org/redlib#instance-settings",
+      "https://github.com/redlib-org/redlib#default-user-settings",
+      "https://github.com/redlib-org/redlib#docker-compose"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The instance has no login: anyone who knows its URL can browse Reddit through your server, and Reddit may rate-limit or block the server's IP address under heavy use."
+    }
+  ]
+}
