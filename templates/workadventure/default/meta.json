@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Virtual office presented as a 16-bit RPG world where walking up to colleagues opens audio and video conversations in the browser.",
+  "category": "communication",
+  "developedBy": {
+    "label": "WorkAdventure",
+    "url": "https://github.com/workadventure"
+  },
+  "links": {
+    "github": "https://github.com/workadventure/workadventure",
+    "website": "https://workadventu.re",
+    "docs": [
+      "https://github.com/workadventure/workadventure/blob/master/contrib/docker/README.md",
+      "https://github.com/workadventure/workadventure/blob/master/docs/others/self-hosting/install.md",
+      "https://github.com/workadventure/workadventure/blob/master/docs/others/self-hosting/env-variables.md",
+      "https://github.com/workadventure/workadventure/blob/master/docs/others/self-hosting/self-hosted-access.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone with the URL can join anonymously and, by default, edit maps uploaded to map-storage with the inline map editor. Video calls are peer-to-peer with at most 4 people per bubble. Sign-in, a restricted map editor, larger meetings and users behind strict firewalls need OpenID Connect, LiveKit and TURN settings (OPENID_*, MAP_EDITOR_*, LIVEKIT_*, TURN_*), which you add to the play and back services yourself.",
+      "link": "https://github.com/workadventure/workadventure/blob/master/docs/others/self-hosting/self-hosted-access.md"
+    }
+  ]
+}

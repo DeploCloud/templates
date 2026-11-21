@@ -1,0 +1,103 @@
+services:
+  workadventure:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - workadventure-play
+      - workadventure-map-storage
+      - workadventure-icon
+
+  workadventure-play:
+    image: thecodingmachine/workadventure-play:v1.35.0@sha256:4e6cf9c9aefe3d344b35c91fd3960b70e3c26a1226368a4fbd5310eaf6a46d2d
+    restart: unless-stopped
+    expose:
+      - 3000
+      - 3001
+    environment:
+      SECRET_KEY: "${SECRET_KEY}"
+      PUSHER_URL: "https://${DOMAIN}/"
+      FRONT_URL: "/"
+      ICON_URL: "/icon"
+      API_URL: "workadventure-back:50051"
+      INTERNAL_MAP_STORAGE_URL: "http://workadventure-map-storage:3000"
+      PUBLIC_MAP_STORAGE_URL: "https://${DOMAIN}/map-storage"
+      MAP_STORAGE_API_TOKEN: "${MAP_STORAGE_API_TOKEN}"
+      REDIS_HOST: "workadventure-redis"
+      START_ROOM_URL: "${START_ROOM_URL}"
+      STUN_SERVER: "${STUN_SERVER}"
+      ENABLE_MAP_EDITOR: "true"
+      GRPC_VERBOSITY: "ERROR"
+    depends_on:
+      workadventure-redis:
+        condition: service_healthy
+      workadventure-back:
+        condition: service_healthy
+
+  workadventure-back:
+    image: thecodingmachine/workadventure-back:v1.35.0@sha256:7dd07fb4a87d10dd81b3ba96b04124d3872b3a24bae1e5256c7ab2e78384fe5d
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SECRET_KEY: "${SECRET_KEY}"
+      PLAY_URL: "https://${DOMAIN}"
+      REDIS_HOST: "workadventure-redis"
+      MAP_STORAGE_URL: "workadventure-map-storage:50053"
+      INTERNAL_MAP_STORAGE_URL: "http://workadventure-map-storage:3000"
+      PUBLIC_MAP_STORAGE_URL: "https://${DOMAIN}/map-storage"
+      STORE_VARIABLES_FOR_LOCAL_MAPS: "true"
+      ENABLE_MAP_EDITOR: "true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/ping"]
+      interval: 10s
+      timeout: 7s
+      retries: 15
+      start_period: 10s
+    depends_on:
+      workadventure-redis:
+        condition: service_healthy
+
+  workadventure-map-storage:
+    image: thecodingmachine/workadventure-map-storage:v1.35.0@sha256:ea1282f1235a8c9cbc5a6424e54604946dbd7f849343ed5943f200c148a4d91e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      API_URL: "workadventure-back:50051"
+      SECRET_KEY: "${SECRET_KEY}"
+      MAP_STORAGE_API_TOKEN: "${MAP_STORAGE_API_TOKEN}"
+      PUSHER_URL: "https://${DOMAIN}/"
+      PATH_PREFIX: "/map-storage"
+      ENTITY_COLLECTION_URLS: "https://${DOMAIN}/collections/FurnitureCollection.json,https://${DOMAIN}/collections/OfficeCollection.json"
+      ENABLE_BASIC_AUTHENTICATION: "true"
+      AUTHENTICATION_USER: "${MAP_STORAGE_USER}"
+      AUTHENTICATION_PASSWORD: "${MAP_STORAGE_PASSWORD}"
+      ENABLE_BEARER_AUTHENTICATION: "true"
+      AUTHENTICATION_TOKEN: "${MAP_STORAGE_UPLOAD_TOKEN}"
+    volumes:
+      - workadventure-maps:/maps
+
+  workadventure-icon:
+    image: matthiasluedtke/iconserver:v3.21.0@sha256:493c15fe3bbfbfc8cbe74a79f0105336360d1a34e2a63468167d1c3e960f9124
+    restart: unless-stopped
+    expose:
+      - 8080
+
+  workadventure-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - workadventure-redis:/data
+
+volumes:
+  workadventure-maps:
+  workadventure-redis:
