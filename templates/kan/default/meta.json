@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source Trello alternative with boards, lists, cards, labels, comments and workspace members, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kan",
+    "url": "https://github.com/kanbn"
+  },
+  "links": {
+    "github": "https://github.com/kanbn/kan",
+    "website": "https://kan.bn",
+    "docs": [
+      "https://docs.kan.bn/self-hosting/introduction",
+      "https://docs.kan.bn/self-hosting/configuration",
+      "https://docs.kan.bn/self-hosting/s3"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open to anyone who can reach the URL. Create your account first, then set NEXT_PUBLIC_DISABLE_SIGN_UP to true; invited people can still join.",
+      "link": "https://docs.kan.bn/self-hosting/configuration"
+    },
+    {
+      "type": "info",
+      "message": "Email (magic links, password resets, invites) is off until you add SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD and EMAIL_FROM to the environment and set NEXT_PUBLIC_DISABLE_EMAIL to false. Avatar and attachment uploads need an S3-compatible bucket configured with the S3_* variables.",
+      "link": "https://docs.kan.bn/self-hosting/s3"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+services:
+  kan:
+    image: ghcr.io/kanbn/kan:0.7.0@sha256:99d60e0b539ae70c76d1a02d04e96fd17cfe1d1a6c6bab6e9f9107e644dd8038
+    restart: unless-stopped
+    expose:
+      - 3000
+    # Passes optional keys you add, such as SMTP_*, S3_*, OIDC_* or OAuth providers.
+    env_file:
+      - .env
+    environment:
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      POSTGRES_URL: postgresql://kan:${POSTGRES_PASSWORD}@kan-db:5432/kan_db
+      RUN_MIGRATIONS: "true"
+      NEXT_PUBLIC_ALLOW_CREDENTIALS: ${NEXT_PUBLIC_ALLOW_CREDENTIALS}
+      NEXT_PUBLIC_DISABLE_SIGN_UP: ${NEXT_PUBLIC_DISABLE_SIGN_UP}
+      NEXT_PUBLIC_DISABLE_EMAIL: ${NEXT_PUBLIC_DISABLE_EMAIL}
+    depends_on:
+      kan-db:
+        condition: service_healthy
+
+  kan-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kan_db
+      POSTGRES_USER: kan
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kan -d kan_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - kan-db-data:/var/lib/postgresql/data
+
+volumes:
+  kan-db-data: {}

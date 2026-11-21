@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kan"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+NEXT_PUBLIC_BASE_URL = "https://${domain}"
+BETTER_AUTH_SECRET = "${base64:32}"
+POSTGRES_PASSWORD = "${db_password}"
+NEXT_PUBLIC_ALLOW_CREDENTIALS = "true"
+NEXT_PUBLIC_DISABLE_SIGN_UP = "false"
+NEXT_PUBLIC_DISABLE_EMAIL = "true"
