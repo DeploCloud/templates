@@ -1,0 +1,42 @@
+[variables]
+db_password = "${password:32}"
+write_key = "${hash:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "rudderstack"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+JOBS_DB_PASSWORD = "${db_password}"
+SOURCE_WRITE_KEY = "${write_key}"
+RSERVER_BACKEND_CONFIG_CONFIG_FROM_FILE = "true"
+WORKSPACE_TOKEN = ""
+
+[[config.mounts]]
+filePath = "workspaceConfig.json"
+content = """{
+  "enableMetrics": false,
+  "workspaceId": "self-hosted",
+  "sources": [
+    {
+      "id": "default-http-source",
+      "name": "HTTP",
+      "writeKey": "${write_key}",
+      "enabled": true,
+      "workspaceId": "self-hosted",
+      "config": {},
+      "sourceDefinition": {
+        "id": "http",
+        "name": "HTTP",
+        "displayName": "HTTP",
+        "category": ""
+      },
+      "destinations": []
+    }
+  ],
+  "libraries": []
+}
+"""

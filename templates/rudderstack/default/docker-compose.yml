@@ -1,0 +1,70 @@
+services:
+  rudderstack:
+    image: rudderlabs/rudder-server:1.93.1@sha256:2bae069d1a9e7b776cbcec96d4c1c5a9894dfd833ee7705064a89cad5113496c
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      JOBS_DB_HOST: rudderstack-db
+      JOBS_DB_PORT: "5432"
+      JOBS_DB_USER: rudder
+      JOBS_DB_PASSWORD: ${JOBS_DB_PASSWORD}
+      JOBS_DB_DB_NAME: jobsdb
+      JOBS_DB_SSL_MODE: disable
+      DEST_TRANSFORM_URL: http://rudderstack-transformer:9090
+      CONFIG_BACKEND_URL: https://api.rudderstack.com
+      WORKSPACE_TOKEN: ${WORKSPACE_TOKEN}
+      SOURCE_WRITE_KEY: ${SOURCE_WRITE_KEY}
+      RSERVER_BACKEND_CONFIG_CONFIG_FROM_FILE: ${RSERVER_BACKEND_CONFIG_CONFIG_FROM_FILE}
+      RSERVER_BACKEND_CONFIG_CONFIG_JSONPATH: /etc/rudderstack/workspaceConfig.json
+      RSERVER_GATEWAY_WEBHOOK_SOURCE_LIST_FOR_PARSING_PARAMS: Shopify
+      RSERVER_ENABLE_STATS: "false"
+      GO_ENV: production
+      LOG_LEVEL: INFO
+      RUDDER_TMPDIR: /data/rudderstack
+    volumes:
+      - rudderstack-data:/data/rudderstack
+      - ./workspaceConfig.json:/etc/rudderstack/workspaceConfig.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      rudderstack-db:
+        condition: service_healthy
+      rudderstack-transformer:
+        condition: service_healthy
+
+  rudderstack-transformer:
+    image: rudderstack/rudder-transformer:1.170.0@sha256:51d3081f70c0f9d1c9cbe2b91dcb8f1f36f4c63f9dd3282510c68359e96b7015
+    restart: unless-stopped
+    expose:
+      - 9090
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:9090/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  rudderstack-db:
+    image: postgres:15.20-alpine@sha256:e18480a22d6e48f4d816a6696769b1ec09ac73a824c5649e49c7d8b684913f3d
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: rudder
+      POSTGRES_PASSWORD: ${JOBS_DB_PASSWORD}
+      POSTGRES_DB: jobsdb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rudder -d jobsdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - rudderstack-db:/var/lib/postgresql/data
+
+volumes:
+  rudderstack-data: {}
+  rudderstack-db: {}

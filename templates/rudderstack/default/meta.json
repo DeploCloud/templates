@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted RudderStack data plane that collects customer events over a Segment-compatible HTTP API and routes them to tools and warehouses.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "RudderStack",
+    "url": "https://www.rudderstack.com/"
+  },
+  "links": {
+    "github": "https://github.com/rudderlabs/rudder-server",
+    "website": "https://www.rudderstack.com/",
+    "docs": [
+      "https://www.rudderstack.com/docs/get-started/rudderstack-open-source/data-plane-setup/docker/",
+      "https://www.rudderstack.com/docs/get-started/rudderstack-open-source/control-plane-setup/",
+      "https://www.rudderstack.com/docs/get-started/rudderstack-open-source/faq/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This is the data plane only and has no web UI. It starts with one HTTP source (write key in SOURCE_WRITE_KEY) and no destinations, so events are accepted but not forwarded. To manage sources and destinations in the RudderStack Open Source dashboard, generate a workspace token there, set WORKSPACE_TOKEN, set RSERVER_BACKEND_CONFIG_CONFIG_FROM_FILE to false and redeploy.",
+      "link": "https://www.rudderstack.com/docs/get-started/rudderstack-open-source/control-plane-setup/"
+    }
+  ]
+}
