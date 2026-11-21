@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "motioneye"
+port = 8_765
+host = "${domain}"
