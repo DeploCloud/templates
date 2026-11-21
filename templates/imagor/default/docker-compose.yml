@@ -1,0 +1,37 @@
+services:
+  imagor-init:
+    image: shumc/imagor:1.10.4@sha256:8169717dcf8ed32fdc908bb5e6f058c46d58efb9dd378a725ccb4964b671d073
+    restart: "no"
+    user: "0:0"
+    # the volume starts root-owned; imagor runs as nobody
+    entrypoint: ["chown", "65534:65534", "/mnt/data"]
+    volumes:
+      - imagor-data:/mnt/data
+
+  imagor:
+    image: shumc/imagor:1.10.4@sha256:8169717dcf8ed32fdc908bb5e6f058c46d58efb9dd378a725ccb4964b671d073
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      PORT: "8000"
+      IMAGOR_SECRET: ${IMAGOR_SECRET}
+      IMAGOR_SIGNER_TYPE: ${IMAGOR_SIGNER_TYPE}
+      IMAGOR_AUTO_WEBP: "1"
+      FILE_LOADER_BASE_DIR: /mnt/data
+      FILE_STORAGE_BASE_DIR: /mnt/data
+      FILE_RESULT_STORAGE_BASE_DIR: /mnt/data/result
+    volumes:
+      - imagor-data:/mnt/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      imagor-init:
+        condition: service_completed_successfully
+
+volumes:
+  imagor-data: {}
