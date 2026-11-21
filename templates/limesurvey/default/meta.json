@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source online survey platform with a visual survey editor, response management and statistics, backed by MariaDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "LimeSurvey",
+    "url": "https://www.limesurvey.org"
+  },
+  "links": {
+    "github": "https://github.com/LimeSurvey/LimeSurvey",
+    "website": "https://www.limesurvey.org",
+    "docs": [
+      "https://www.limesurvey.org/manual/LimeSurvey_Manual",
+      "https://www.limesurvey.org/manual/Optional_settings",
+      "https://www.limesurvey.org/manual/Data_encryption"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /index.php/admin as admin with the generated ADMIN_PASSWORD from the environment variables. Changing the ADMIN_* values after the first start has no effect; manage accounts inside LimeSurvey. Email invitations need SMTP settings and a real site administrator email in the global settings."
+    }
+  ]
+}

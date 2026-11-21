@@ -1,0 +1,47 @@
+services:
+  limesurvey:
+    image: martialblog/limesurvey:7.10.0-261119-apache@sha256:848e3e0dfd3b7c21acd093e0b3cff876b2c4f047badbdc268cc7ebef132b3be6
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - limesurvey-upload:/var/www/html/upload
+    environment:
+      DB_TYPE: mysql
+      DB_HOST: limesurvey-db
+      DB_PORT: "3306"
+      DB_NAME: limesurvey
+      DB_USERNAME: limesurvey
+      DB_PASSWORD: ${DB_PASSWORD}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_NAME: ${ADMIN_NAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      PUBLIC_URL: ${PUBLIC_URL}
+      HOST_INFO: ${PUBLIC_URL}
+      ENCRYPT_NONCE: ${ENCRYPT_NONCE}
+      ENCRYPT_SECRET_BOX_KEY: ${ENCRYPT_SECRET_BOX_KEY}
+    depends_on:
+      limesurvey-db:
+        condition: service_healthy
+
+  limesurvey-db:
+    image: mariadb:11.4.13@sha256:a8992b5e5404d11e03c54a31d0c1bdea3fd116d283aa6d1a627551f29045309b
+    restart: unless-stopped
+    volumes:
+      - limesurvey-db:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: limesurvey
+      MARIADB_USER: limesurvey
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  limesurvey-upload: {}
+  limesurvey-db: {}
