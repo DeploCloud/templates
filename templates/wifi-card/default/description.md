@@ -1,0 +1,1 @@
+This deploys WiFi Card, a small web app that generates a printable card with a QR code for joining a WiFi network, served as a static site by nginx. The QR code is built entirely in the browser, so network names and passwords are never sent to the server. There is no account, database or server-side state, so no volume is needed and no setup is required after deployment.

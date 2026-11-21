@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Static web app that prints a card with a QR code guests can scan to join your WiFi network. Details never leave the browser.",
+  "category": "networking",
+  "developedBy": {
+    "label": "bndw",
+    "url": "https://github.com/bndw"
+  },
+  "links": {
+    "github": "https://github.com/bndw/wifi-card",
+    "website": "https://wificard.io",
+    "docs": [
+      "https://github.com/bndw/wifi-card#self-host"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
