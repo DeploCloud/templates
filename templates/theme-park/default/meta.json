@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted server for the theme.park CSS themes and skins that restyle more than 50 self-hosted apps such as Sonarr, Radarr, Plex and qBittorrent.",
+  "category": "other",
+  "developedBy": {
+    "label": "theme.park",
+    "url": "https://github.com/themepark-dev"
+  },
+  "links": {
+    "github": "https://github.com/themepark-dev/theme.park",
+    "website": "https://theme-park.dev",
+    "docs": [
+      "https://docs.theme-park.dev/setup/#docker",
+      "https://docs.theme-park.dev/themes/",
+      "https://docs.theme-park.dev/custom/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This only serves the stylesheets. To apply a theme, set TP_DOMAIN to this domain in each app's theme.park Docker mod, or point your reverse proxy sub_filter at a file such as https://<domain>/css/base/sonarr/dark.css.",
+      "link": "https://docs.theme-park.dev/setup/"
+    }
+  ]
+}
