@@ -1,0 +1,18 @@
+services:
+  restreamer:
+    image: datarhei/restreamer:2.12.0@sha256:813acc9d41d2953b1e7fbb5b281f9a1f68d07fef4e1b30e34472b12d3db9426a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      CORE_HOST_NAME: ${CORE_HOST_NAME}
+      CORE_API_AUTH_ENABLE: ${CORE_API_AUTH_ENABLE}
+      CORE_API_AUTH_USERNAME: ${CORE_API_AUTH_USERNAME}
+      CORE_API_AUTH_PASSWORD: ${CORE_API_AUTH_PASSWORD}
+    volumes:
+      - restreamer-config:/core/config
+      - restreamer-data:/core/data
+
+volumes:
+  restreamer-config: {}
+  restreamer-data: {}
