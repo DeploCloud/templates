@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kokoro-fastapi"
+port = 8_880
+host = "${domain}"
+
+[config.env]
+API_LOG_LEVEL = "INFO"
+API_KEYS = "[]"
+DEFAULT_VOICE = "af_heart"

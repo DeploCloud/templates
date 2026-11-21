@@ -1,0 +1,16 @@
+services:
+  kokoro-fastapi:
+    image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.10.0@sha256:f54c5960c2b9387f6349080a9944f8bc7e8cdb98a4ef9238cb0b0f9ff9795f44
+    restart: unless-stopped
+    expose:
+      - 8880
+    environment:
+      API_LOG_LEVEL: ${API_LOG_LEVEL}
+      API_KEYS: ${API_KEYS}
+      DEFAULT_VOICE: ${DEFAULT_VOICE}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8880/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
