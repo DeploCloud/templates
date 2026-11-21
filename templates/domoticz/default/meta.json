@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source home automation system for lights, switches, sensors and meters, with dzVents scripting, Python plugins and MQTT support.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Domoticz",
+    "url": "https://www.domoticz.com/"
+  },
+  "links": {
+    "github": "https://github.com/domoticz/domoticz",
+    "website": "https://www.domoticz.com/",
+    "docs": [
+      "https://wiki.domoticz.com/Docker",
+      "https://wiki.domoticz.com/Getting_started",
+      "https://wiki.domoticz.com/Security",
+      "https://github.com/domoticz/domoticz-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated DOMOTICZ_ADMIN_PASSWORD from the environment. It is only applied on the first start, so change the password later under Setup > Users, not in the environment.",
+      "link": "https://wiki.domoticz.com/Security"
+    },
+    {
+      "type": "info",
+      "message": "USB radios (Z-Wave, Zigbee, RFXtrx) need host device access and are not passed through; use network-based hardware such as MQTT or IP gateways."
+    }
+  ]
+}

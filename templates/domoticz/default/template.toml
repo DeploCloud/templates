@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "domoticz"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+DOMOTICZ_ADMIN_USERNAME = "admin"
+DOMOTICZ_ADMIN_PASSWORD = "${admin_password}"

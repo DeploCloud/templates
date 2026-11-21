@@ -1,0 +1,23 @@
+services:
+  domoticz:
+    image: domoticz/domoticz:2026.4@sha256:ece392300d055395cac0b4edea4451b31f765ff5339e5597ca77371be8d7e93a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      DOMOTICZ_ADMIN_USERNAME: ${DOMOTICZ_ADMIN_USERNAME}
+      DOMOTICZ_ADMIN_PASSWORD: ${DOMOTICZ_ADMIN_PASSWORD}
+    volumes:
+      - domoticz-userdata:/opt/domoticz/userdata
+      - domoticz-templates:/opt/domoticz/www/templates
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/json.htm?type=command&param=getversion"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  domoticz-userdata: {}
+  domoticz-templates: {}
