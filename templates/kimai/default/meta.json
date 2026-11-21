@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Multi-user time tracking with timesheets, projects, reports and invoices, backed by MySQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kimai",
+    "url": "https://www.kimai.org/"
+  },
+  "links": {
+    "github": "https://github.com/kimai/kimai",
+    "website": "https://www.kimai.org/",
+    "docs": [
+      "https://www.kimai.org/documentation/docker.html",
+      "https://www.kimai.org/documentation/docker-compose.html",
+      "https://www.kimai.org/documentation/emails.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the password from the ADMINPASS environment variable. It is applied only on the first start, so change it later from the user profile."
+    }
+  ]
+}
