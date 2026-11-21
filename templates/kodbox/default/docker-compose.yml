@@ -1,0 +1,61 @@
+services:
+  kodbox:
+    image: kodcloud/kodbox:1.71.04@sha256:fc70642925a5c111e5531a821a92ff7413b2f900509155e6ea563cf03928c20f
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      MYSQL_HOST: kodbox-db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      REDIS_HOST: kodbox-redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      KODBOX_ADMIN_USER: ${KODBOX_ADMIN_USER}
+      KODBOX_ADMIN_PASSWORD: ${KODBOX_ADMIN_PASSWORD}
+    volumes:
+      - kodbox-site:/var/www/html
+    depends_on:
+      kodbox-db:
+        condition: service_healthy
+      kodbox-redis:
+        condition: service_healthy
+
+  kodbox-db:
+    image: mariadb:12.3.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MYSQL_DATABASE}
+      MARIADB_USER: ${MYSQL_USER}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD}
+      MARIADB_AUTO_UPGRADE: "1"
+      MARIADB_DISABLE_UPGRADE_BACKUP: "1"
+    volumes:
+      - kodbox-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  kodbox-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - kodbox-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kodbox-site: {}
+  kodbox-db: {}
+  kodbox-redis: {}

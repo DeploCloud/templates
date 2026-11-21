@@ -1,0 +1,22 @@
+[variables]
+db_password = "${hash:32}"
+db_root_password = "${hash:32}"
+redis_password = "${hash:32}"
+admin_password = "Kd1${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kodbox"
+port = 80
+host = "${domain}"
+
+[config.env]
+MYSQL_DATABASE = "kodbox"
+MYSQL_USER = "kodbox"
+MYSQL_PASSWORD = "${db_password}"
+MYSQL_ROOT_PASSWORD = "${db_root_password}"
+REDIS_PASSWORD = "${redis_password}"
+KODBOX_ADMIN_USER = "admin"
+KODBOX_ADMIN_PASSWORD = "${admin_password}"
