@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Zero-trust access management with WireGuard VPN, MFA and an OpenID Connect identity provider, deployed as Core, Edge and PostgreSQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "Defguard",
+    "url": "https://github.com/DefGuard"
+  },
+  "links": {
+    "github": "https://github.com/DefGuard/defguard",
+    "website": "https://defguard.net",
+    "docs": [
+      "https://docs.defguard.net/deployment-strategies/docker-compose",
+      "https://docs.defguard.net/tutorials/initial-setup-wizard-setting-up-from-scratch"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin account in the setup wizard, so finish it right after deploying. Use https://<your domain> as the Defguard URL, https://edge.<your domain> as the public Edge URL, choose \"Do not configure SSL\" for both, and adopt the Edge at host defguard-edge, gRPC port 50051. Edge accepts adoption for 60 minutes after it starts; restart the defguard-edge service if that window has passed.",
+      "link": "https://docs.defguard.net/tutorials/initial-setup-wizard-setting-up-from-scratch"
+    },
+    {
+      "type": "warning",
+      "message": "The WireGuard Gateway is not part of this stack: it needs NET_ADMIN and a public UDP port, so deploy it on your VPN host and make its gRPC port 50066 reachable from this server before adopting it.",
+      "link": "https://docs.defguard.net/deployment-strategies/docker-compose"
+    }
+  ]
+}
