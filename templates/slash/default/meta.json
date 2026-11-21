@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted link shortener for sharing human-readable s/ shortcuts and collections, stored in SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "yourselfhosted",
+    "url": "https://github.com/yourselfhosted"
+  },
+  "links": {
+    "github": "https://github.com/yourselfhosted/slash",
+    "docs": [
+      "https://github.com/yourselfhosted/slash/blob/main/docs/install.md",
+      "https://github.com/yourselfhosted/slash/blob/main/docs/getting-started/shortcuts.md",
+      "https://github.com/yourselfhosted/slash/blob/main/docs/getting-started/collections.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app and sign up right after deployment: the first account to register becomes the administrator. Disable sign-ups in the workspace settings afterwards if the instance is public."
+    }
+  ]
+}

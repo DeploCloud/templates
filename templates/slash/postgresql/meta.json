@@ -1,0 +1,22 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Slash link shortener backed by a bundled PostgreSQL database instead of the default SQLite file.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "yourselfhosted",
+    "url": "https://github.com/yourselfhosted"
+  },
+  "links": {
+    "github": "https://github.com/yourselfhosted/slash",
+    "docs": [
+      "https://github.com/yourselfhosted/slash/blob/main/docs/install.md#use-postgresql-as-database",
+      "https://github.com/yourselfhosted/slash/blob/main/docs/getting-started/shortcuts.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app and sign up right after deployment: the first account to register becomes the administrator. Disable sign-ups in the workspace settings afterwards if the instance is public."
+    }
+  ]
+}
