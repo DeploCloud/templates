@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Uptime, SSL and server monitoring with incident tracking, maintenance schedules, public status pages and notifications, backed by embedded PocketBase.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Operacle",
+    "url": "https://github.com/operacle"
+  },
+  "links": {
+    "github": "https://github.com/operacle/checkcle",
+    "docs": [
+      "https://docs.checkcle.io/getting-started/quickstart",
+      "https://docs.checkcle.io/getting-started/backup",
+      "https://docs.checkcle.io/getting-started/upgrading"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The instance ships with the default login admin@example.com / Admin123456. Sign in right after deployment and change the email and password in the settings panel.",
+      "link": "https://docs.checkcle.io/getting-started/quickstart"
+    }
+  ]
+}
