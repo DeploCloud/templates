@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Model-swapping proxy that runs local GGUF models on demand with llama.cpp on CPU, with an OpenAI compatible API and a web UI protected by an API key.",
+  "category": "ai",
+  "developedBy": {
+    "label": "mostlygeek",
+    "url": "https://github.com/mostlygeek"
+  },
+  "links": {
+    "github": "https://github.com/mostlygeek/llama-swap",
+    "website": "https://llama-swap.ai",
+    "docs": [
+      "https://github.com/mostlygeek/llama-swap/blob/main/docs/kb/guides/configuration/configuration-overview.md",
+      "https://github.com/mostlygeek/llama-swap/blob/main/docs/kb/guides/api-integration/api-keys-and-auth.md",
+      "https://github.com/mostlygeek/llama-swap/blob/main/docs/config.example.yaml"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI and API are protected by the generated LLAMA_SWAP_API_KEY. In the browser login prompt enter any username and the key as password; API clients send it as a Bearer token.",
+      "link": "https://github.com/mostlygeek/llama-swap/blob/main/docs/kb/guides/api-integration/api-keys-and-auth.md"
+    },
+    {
+      "type": "info",
+      "message": "Models are downloaded from Hugging Face on their first request, so the first answer from each model takes a while. Add or change models in config.yaml; larger models need more RAM."
+    }
+  ]
+}
