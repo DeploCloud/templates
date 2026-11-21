@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based point of sale with inventory, sales register, invoicing, customers and reporting, backed by MariaDB.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Open Source Point of Sale",
+    "url": "https://github.com/opensourcepos"
+  },
+  "links": {
+    "github": "https://github.com/opensourcepos/opensourcepos",
+    "website": "https://opensourcepos.org/",
+    "docs": [
+      "https://github.com/opensourcepos/opensourcepos/blob/master/docs/INSTALL.md",
+      "https://github.com/opensourcepos/opensourcepos/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On the first visit, click Initialize on the login page to create the database, then sign in with the default account admin / pointofsale and change its password right away.",
+      "link": "https://github.com/opensourcepos/opensourcepos/blob/master/docs/INSTALL.md"
+    }
+  ]
+}
