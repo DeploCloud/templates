@@ -1,0 +1,102 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "standard-notes-web"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "standard-notes"
+port = 3_000
+host = "${domain}"
+path = "/v1"
+
+[[config.domains]]
+serviceName = "standard-notes"
+port = 3_000
+host = "${domain}"
+path = "/v2"
+
+# Uploads go straight to the files server; the longer valet-token prefix still wins for the API
+[[config.domains]]
+serviceName = "standard-notes"
+port = 3_104
+host = "${domain}"
+path = "/v1/files"
+
+[[config.domains]]
+serviceName = "standard-notes"
+port = 3_000
+host = "${domain}"
+path = "/v1/files/valet-tokens"
+
+[[config.domains]]
+serviceName = "standard-notes"
+port = 3_104
+host = "${domain}"
+path = "/v1/shared-vault/files"
+
+[config.env]
+DB_DATABASE = "standard_notes_db"
+DB_USERNAME = "std_notes_user"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+AUTH_JWT_SECRET = "${hash:64}"
+AUTH_SERVER_ENCRYPTION_SERVER_KEY = "${hash:64}"
+AUTH_SERVER_ADMIN_KEY = "${hash:64}"
+VALET_TOKEN_SECRET = "${hash:64}"
+PUBLIC_FILES_SERVER_URL = "https://${domain}"
+AUTH_SERVER_DISABLE_USER_REGISTRATION = "false"
+AUTH_SERVER_U2F_RELYING_PARTY_ID = "${domain}"
+AUTH_SERVER_U2F_EXPECTED_ORIGIN = "https://${domain}"
+
+# Point the bundled web app at this server instead of the hosted one
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """server {
+    listen 80;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        sub_filter_once off;
+        sub_filter '"https://api.standardnotes.com"' '"https://${domain}"';
+        sub_filter '"https://files.standardnotes.com"' '"https://${domain}"';
+    }
+}
+"""
+
+[[config.mounts]]
+filePath = "localstack-bootstrap.sh"
+content = """#!/bin/bash
+set -euo pipefail
+
+awsl() { awslocal --endpoint-url=http://localhost:4566 --region us-east-1 "$@" > /dev/null; }
+ACCOUNT=us-east-1:000000000000
+
+for topic in payments syncing-server auth files analytics revisions-server scheduler; do
+  awsl sns create-topic --name "$topic-local-topic"
+done
+
+# queue <name> <topics it subscribes to>
+queue() {
+  local name=$1
+  shift
+  awsl sqs create-queue --queue-name "$name-local-queue"
+  for topic in "$@"; do
+    awsl sns subscribe --protocol sqs --topic-arn "arn:aws:sns:$ACCOUNT:$topic-local-topic" --notification-endpoint "arn:aws:sqs:$ACCOUNT:$name-local-queue"
+  done
+}
+
+queue analytics payments
+queue auth payments auth files revisions-server syncing-server
+queue files auth syncing-server
+queue syncing-server syncing-server files auth
+queue revisions-server syncing-server revisions-server
+queue scheduler
+"""
