@@ -1,0 +1,46 @@
+[variables]
+db_password = "${password:32}"
+secret_password = "${hash:64}"
+s3_access_key = "GK${hash:24}"
+s3_secret_key = "${hash:64}"
+garage_rpc_secret = "${hash:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "rallly"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+NEXT_PUBLIC_BASE_URL = "https://${domain}"
+POSTGRES_PASSWORD = "${db_password}"
+SECRET_PASSWORD = "${secret_password}"
+SUPPORT_EMAIL = "support@${domain}"
+INITIAL_ADMIN_EMAIL = ""
+ALLOWED_EMAILS = ""
+SMTP_HOST = ""
+SMTP_PORT = "587"
+SMTP_SECURE = "false"
+SMTP_USER = ""
+SMTP_PWD = ""
+S3_ACCESS_KEY_ID = "${s3_access_key}"
+S3_SECRET_ACCESS_KEY = "${s3_secret_key}"
+GARAGE_RPC_SECRET = "${garage_rpc_secret}"
+
+[[config.mounts]]
+filePath = "garage.toml"
+content = """metadata_dir = "/var/lib/garage/meta"
+data_dir = "/var/lib/garage/data"
+db_engine = "sqlite"
+replication_factor = 1
+rpc_bind_addr = "[::]:3901"
+
+[s3_api]
+api_bind_addr = "[::]:3900"
+s3_region = "garage"
+root_domain = ".s3.garage.localhost"
+
+[admin]
+api_bind_addr = "[::]:3903"
+"""

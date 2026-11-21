@@ -1,0 +1,68 @@
+services:
+  rallly:
+    image: lukevella/rallly:4.17.1@sha256:2c35b8ec567a403207b4681f037be967f1efd04f06f75d9801841f25b7504e45
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+      DATABASE_URL: postgres://rallly:${POSTGRES_PASSWORD}@rallly-db:5432/rallly
+      SECRET_PASSWORD: ${SECRET_PASSWORD}
+      SUPPORT_EMAIL: ${SUPPORT_EMAIL}
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL}
+      ALLOWED_EMAILS: ${ALLOWED_EMAILS}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_SECURE: ${SMTP_SECURE}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PWD: ${SMTP_PWD}
+      S3_ENDPOINT: http://rallly-garage:3900
+      S3_BUCKET_NAME: rallly
+      S3_REGION: garage
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+    depends_on:
+      rallly-db:
+        condition: service_healthy
+      rallly-garage:
+        condition: service_started
+
+  rallly-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rallly
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: rallly
+    volumes:
+      - rallly-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rallly -d rallly"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  rallly-garage:
+    image: dxflrs/garage:v2.5.0@sha256:677e5b758e4425a325b811c425c026bf35a4bf42f7ddbaa773de3f4fd779a5a5
+    restart: unless-stopped
+    command: ["/garage", "server", "--single-node", "--default-bucket"]
+    environment:
+      GARAGE_RPC_SECRET: ${GARAGE_RPC_SECRET}
+      GARAGE_DEFAULT_ACCESS_KEY: ${S3_ACCESS_KEY_ID}
+      GARAGE_DEFAULT_SECRET_KEY: ${S3_SECRET_ACCESS_KEY}
+      GARAGE_DEFAULT_BUCKET: rallly
+    volumes:
+      - ./garage.toml:/etc/garage.toml:ro
+      - rallly-garage-meta:/var/lib/garage/meta
+      - rallly-garage-data:/var/lib/garage/data
+    healthcheck:
+      test: ["CMD", "/garage", "stats", "-a"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  rallly-db: {}
+  rallly-garage-meta: {}
+  rallly-garage-data: {}
