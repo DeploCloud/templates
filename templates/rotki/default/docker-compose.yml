@@ -1,0 +1,25 @@
+services:
+  rotki:
+    image: rotki/rotki:v1.44.3@sha256:4f07e8114b4450665b64a964ffa106dfb3c36a50e3664c93b8aafe1c1e1a0735
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+      ROTKI_SESSION_KEY: ${ROTKI_SESSION_KEY}
+      ROTKI_SESSION_COOKIE_SECURE: forwarded
+    volumes:
+      - rotki-data:/data
+      - rotki-logs:/logs
+      - rotki-config:/config
+    healthcheck:
+      test: ["CMD", "/opt/rotki/starling", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  rotki-data: {}
+  rotki-logs: {}
+  rotki-config: {}
