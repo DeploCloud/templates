@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-friendly, cookie-free web analytics with a self-hosted dashboard and a bundled PostgreSQL database.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "R. Miles McCain",
+    "url": "https://github.com/milesmcc"
+  },
+  "links": {
+    "github": "https://github.com/milesmcc/shynet",
+    "docs": [
+      "https://github.com/milesmcc/shynet/blob/master/GUIDE.md",
+      "https://github.com/milesmcc/shynet/blob/master/TEMPLATE.env"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No account exists after deployment. Open a terminal in the shynet container and run ./manage.py registeradmin you@example.com; it prints a temporary password for the first login.",
+      "link": "https://github.com/milesmcc/shynet/blob/master/GUIDE.md#basic-installation"
+    }
+  ]
+}
