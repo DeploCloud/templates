@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Automated browser that claims free games on Epic Games Store, Amazon Prime Gaming and GOG once a day, with a noVNC web view for logging in.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Ralf Vogler",
+    "url": "https://github.com/vogler"
+  },
+  "links": {
+    "github": "https://github.com/vogler/free-games-claimer",
+    "docs": [
+      "https://github.com/vogler/free-games-claimer#how-to-run",
+      "https://github.com/vogler/free-games-claimer#configuration--options",
+      "https://github.com/vogler/free-games-claimer#notifications"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On the first run, open the app URL, connect with the VNC_PASSWORD value from the environment and log in to each store in the remote browser within LOGIN_TIMEOUT seconds. Restart the app to retry a missed login. Alternatively set EMAIL, PASSWORD and the OTP keys for automatic login.",
+      "link": "https://github.com/vogler/free-games-claimer#usage"
+    },
+    {
+      "type": "warning",
+      "message": "Epic Games may show a captcha when claiming from the container; solve it in the remote browser when it appears.",
+      "link": "https://github.com/vogler/free-games-claimer/issues/183"
+    }
+  ]
+}
