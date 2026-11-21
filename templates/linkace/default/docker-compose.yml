@@ -1,0 +1,115 @@
+x-linkace-env: &linkace-env
+  APP_KEY: ${APP_KEY}
+  APP_URL: ${APP_URL}
+  DB_CONNECTION: mysql
+  DB_HOST: linkace-db
+  DB_PORT: "3306"
+  DB_DATABASE: ${DB_DATABASE}
+  DB_USERNAME: ${DB_USERNAME}
+  DB_PASSWORD: ${DB_PASSWORD}
+  REDIS_HOST: linkace-redis
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: ${REDIS_PASSWORD}
+  CACHE_DRIVER: redis
+  SESSION_DRIVER: redis
+  APP_SEARCH_DRIVER: meilisearch
+  MEILISEARCH_HOST: http://linkace-meilisearch:7700
+  MEILISEARCH_KEY: ${MEILISEARCH_KEY}
+  MAIL_MAILER: ${MAIL_MAILER}
+  MAIL_HOST: ${MAIL_HOST}
+  MAIL_PORT: ${MAIL_PORT}
+  MAIL_USERNAME: ${MAIL_USERNAME}
+  MAIL_PASSWORD: ${MAIL_PASSWORD}
+  MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+  MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+
+x-linkace-depends: &linkace-depends
+  linkace-db:
+    condition: service_healthy
+  linkace-meilisearch:
+    condition: service_healthy
+  linkace-redis:
+    condition: service_healthy
+
+services:
+  linkace:
+    image: linkace/linkace:v2.6.3@sha256:7fad9fb69b421c7428bab8bc820cfd372df4da5f4ff06e9dd1149d20b3e4abd7
+    restart: unless-stopped
+    expose:
+      - 80
+    environment: *linkace-env
+    volumes:
+      - linkace-logs:/app/storage/logs
+      - linkace-backups:/app/storage/app/backups
+    depends_on: *linkace-depends
+    healthcheck:
+      # TrustHosts rejects any Host that is not the APP_URL host
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null -H \"Host: $${APP_URL#*://}\" http://127.0.0.1/_health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # Runs imports, link checks and backups; search:setup applies the Meilisearch index settings
+  linkace-cron:
+    image: linkace/linkace:v2.6.3@sha256:7fad9fb69b421c7428bab8bc820cfd372df4da5f4ff06e9dd1149d20b3e4abd7
+    restart: unless-stopped
+    command: ["sh", "-c", "php artisan search:setup; exec php artisan schedule:work"]
+    environment: *linkace-env
+    volumes:
+      - linkace-logs:/app/storage/logs
+      - linkace-backups:/app/storage/app/backups
+    depends_on: *linkace-depends
+
+  linkace-db:
+    image: mariadb:12.3.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - linkace-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  linkace-meilisearch:
+    image: getmeili/meilisearch:v1.57.0@sha256:91bf09897482c17205c8faeca8daa8d57999fb9de20d862763cdfa92ba4ec790
+    restart: unless-stopped
+    environment:
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_MASTER_KEY: ${MEILISEARCH_KEY}
+    volumes:
+      - linkace-meilisearch:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  linkace-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - linkace-redis:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  linkace-logs: {}
+  linkace-backups: {}
+  linkace-db: {}
+  linkace-meilisearch: {}
+  linkace-redis: {}
