@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Model Context Protocol server that gives AI agents schema exploration, read-only or full SQL access, explain plans, index tuning and health checks on an existing PostgreSQL database over SSE.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Crystal DBA",
+    "url": "https://github.com/crystaldba"
+  },
+  "links": {
+    "github": "https://github.com/crystaldba/postgres-mcp",
+    "docs": [
+      "https://github.com/crystaldba/postgres-mcp#sse-transport",
+      "https://github.com/crystaldba/postgres-mcp#access-mode",
+      "https://github.com/crystaldba/postgres-mcp#postgres-extension-installation-optional"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set DATABASE_URI to the connection URI of the PostgreSQL database the agents should work on (it must be reachable from this server), then redeploy. Until then every tool call fails.",
+      "link": "https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING-URIS"
+    },
+    {
+      "type": "warning",
+      "message": "Point your MCP client at https://<your-domain>/sse with the SSE transport and send an Authorization: Bearer header with the generated POSTGRES_MCP_TOKEN from the environment settings. Requests without it get 401.",
+      "link": "https://github.com/crystaldba/postgres-mcp#sse-transport"
+    }
+  ]
+}
