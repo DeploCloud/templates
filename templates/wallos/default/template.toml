@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wallos"
+port = 80
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
