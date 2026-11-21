@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based client for the Soulseek file sharing network to search, download, share and chat from the browser.",
+  "category": "media",
+  "developedBy": {
+    "label": "slskd",
+    "url": "https://github.com/slskd"
+  },
+  "links": {
+    "github": "https://github.com/slskd/slskd",
+    "website": "https://slskd.org",
+    "docs": [
+      "https://github.com/slskd/slskd/blob/master/docs/docker.md",
+      "https://github.com/slskd/slskd/blob/master/docs/config.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "slskd does not connect to the Soulseek network until you set your Soulseek username and password in SLSKD_SLSK_USERNAME and SLSKD_SLSK_PASSWORD, or in the YAML editor under System > Options in the web UI. Sign in to the web UI as slskd with the generated SLSKD_PASSWORD.",
+      "link": "https://github.com/slskd/slskd/blob/master/docs/config.md#username-and-password"
+    },
+    {
+      "type": "info",
+      "message": "Only the web UI is routed. The Soulseek listen port 50300 does not accept incoming peer connections, so transfers with peers that cannot accept incoming connections either may fail."
+    }
+  ]
+}
