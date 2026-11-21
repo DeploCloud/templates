@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source electronic health records and medical practice management with scheduling, billing and e-prescribing, backed by MariaDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "OpenEMR",
+    "url": "https://www.open-emr.org/"
+  },
+  "links": {
+    "github": "https://github.com/openemr/openemr",
+    "website": "https://www.open-emr.org/",
+    "docs": [
+      "https://github.com/openemr/openemr/blob/master/DOCKER_README.md",
+      "https://www.open-emr.org/wiki/index.php/OpenEMR_8.0.0_Users_Guide",
+      "https://www.open-emr.org/wiki/index.php/Administration_Globals"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start installs the database and takes about 5-10 minutes. Then log in as admin with the generated OE_PASS value from the environment and change it."
+    }
+  ]
+}
