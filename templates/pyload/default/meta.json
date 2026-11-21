@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight download manager with a web interface, plugin support for hosters and link decrypters, and persistent config and download storage.",
+  "category": "media",
+  "developedBy": {
+    "label": "pyLoad Team",
+    "url": "https://github.com/pyload"
+  },
+  "links": {
+    "github": "https://github.com/pyload/pyload",
+    "website": "https://pyload.net",
+    "docs": [
+      "https://github.com/pyload/pyload#readme",
+      "https://github.com/pyload/pyload/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web interface starts with the default login pyload / pyload, which anyone who reaches the URL can use. Sign in right after deployment and change the password under Settings > Users.",
+      "link": "https://github.com/pyload/pyload#web-interface"
+    }
+  ]
+}

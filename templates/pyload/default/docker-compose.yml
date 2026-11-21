@@ -1,0 +1,17 @@
+services:
+  pyload:
+    image: linuxserver/pyload-ng:0.5.0@sha256:35e6bb2eadf5aea1872ef88324ba9dffb26eccbe119832d5849c46a593c8935e
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - pyload-config:/config
+      - pyload-downloads:/downloads
+
+volumes:
+  pyload-config: {}
+  pyload-downloads: {}
