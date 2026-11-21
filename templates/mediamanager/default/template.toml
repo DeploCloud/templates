@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+token_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mediamanager"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+MEDIAMANAGER_MISC__FRONTEND_URL = "https://${domain}"
+MEDIAMANAGER_AUTH__TOKEN_SECRET = "${token_secret}"
+DB_PASSWORD = "${db_password}"
