@@ -1,0 +1,95 @@
+services:
+  lightdash:
+    image: lightdash/lightdash:3.359.1@sha256:d27ca90a8f02038020fc34c11210de0cc3fa08d015d67283fd9c07dfff3e19ae
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PORT: "8080"
+      SITE_URL: ${SITE_URL}
+      SECURE_COOKIES: "true"
+      TRUST_PROXY: "true"
+      LIGHTDASH_SECRET: ${LIGHTDASH_SECRET}
+      PGHOST: lightdash-db
+      PGPORT: "5432"
+      PGUSER: lightdash
+      PGPASSWORD: ${DB_PASSWORD}
+      PGDATABASE: lightdash
+      S3_ENDPOINT: http://lightdash-s3:9000
+      S3_REGION: us-east-1
+      S3_BUCKET: ${S3_BUCKET}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_FORCE_PATH_STYLE: "true"
+      # The bucket is internal only, so downloads are streamed through the app instead of presigned S3 links
+      PERSISTENT_DOWNLOAD_URLS_ENABLED: "true"
+      HEADLESS_BROWSER_HOST: lightdash-browser
+      HEADLESS_BROWSER_PORT: "3000"
+      SCHEDULER_ENABLED: "true"
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD}
+      EMAIL_SMTP_SENDER_EMAIL: ${EMAIL_SMTP_SENDER_EMAIL}
+    depends_on:
+      lightdash-db:
+        condition: service_healthy
+      lightdash-s3-init:
+        condition: service_completed_successfully
+      lightdash-browser:
+        condition: service_started
+
+  # Upstream ships this image as its database: migrations create the pgvector extension
+  lightdash-db:
+    image: pgvector/pgvector:0.8.7-pg15@sha256:e0b617fffc06dd37323ee99873c7a8683f19f1dce34633670262b0113ce32638
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lightdash
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: lightdash
+    volumes:
+      - lightdash-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lightdash -d lightdash"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  lightdash-s3:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY}
+    volumes:
+      - lightdash-s3:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health/ready"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  lightdash-s3-init:
+    image: rustfs/rc:v0.1.38@sha256:3c080aff53f0d3b06554fd08711d05c80be40bd7e56001874d7df5e18d5ec88a
+    restart: "no"
+    command: ["mb", "--ignore-existing", "s3/${S3_BUCKET}"]
+    environment:
+      RC_HOST_s3: http://${S3_ACCESS_KEY}:${S3_SECRET_KEY}@lightdash-s3:9000
+    depends_on:
+      lightdash-s3:
+        condition: service_healthy
+
+  # Renders chart and dashboard images for scheduled deliveries and Slack unfurls
+  lightdash-browser:
+    image: ghcr.io/browserless/chromium:v2.49.0@sha256:a0c024087a2625704ffe3644ea2d886324b57ab1cc9124fb15eacc6597429ca1
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      TIMEOUT: "180000"
+
+volumes:
+  lightdash-db: {}
+  lightdash-s3: {}
