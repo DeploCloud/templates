@@ -1,0 +1,24 @@
+services:
+  mirotalk:
+    image: mirotalk/p2p:latest@sha256:f36ba2d9468de2c37086d413afdc1846afa8e1d6f4bc03173d555196f53fa9d7
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 15s
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOST: ${HOST}
+      TRUST_PROXY: "true"
+      JWT_KEY: ${JWT_KEY}
+      API_KEY_SECRET: ${API_KEY_SECRET}
+      HOST_PROTECTED: ${HOST_PROTECTED}
+      HOST_USER_AUTH: ${HOST_USER_AUTH}
+      HOST_USERS: ${HOST_USERS}
+      TURN_SERVER_ENABLED: ${TURN_SERVER_ENABLED}
+      TURN_SERVER_URL: ${TURN_SERVER_URL}
+      TURN_SERVER_USERNAME: ${TURN_SERVER_USERNAME}
+      TURN_SERVER_CREDENTIAL: ${TURN_SERVER_CREDENTIAL}
+      STATS_ENABLED: ${STATS_ENABLED}
+      SURVEY_ENABLED: ${SURVEY_ENABLED}

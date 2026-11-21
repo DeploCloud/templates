@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted peer-to-peer WebRTC video meetings in the browser with screen sharing, chat, whiteboard and recording.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Miroslav Pejic",
+    "url": "https://github.com/miroslavpejic85"
+  },
+  "links": {
+    "github": "https://github.com/miroslavpejic85/mirotalk",
+    "website": "https://p2p.mirotalk.com",
+    "docs": [
+      "https://docs.mirotalk.com/mirotalk-p2p/self-hosting/",
+      "https://docs.mirotalk.com/mirotalk-p2p/host-protection/",
+      "https://docs.mirotalk.com/coturn/stun-turn/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; browsers block camera and microphone access on a plain HTTP URL."
+    },
+    {
+      "type": "warning",
+      "message": "Rooms are open to anyone with the URL by default. Set HOST_PROTECTED=true and HOST_USERS to require a login, and set TURN_SERVER_* to your own TURN server for participants behind strict NATs.",
+      "link": "https://docs.mirotalk.com/mirotalk-p2p/host-protection/"
+    }
+  ]
+}
