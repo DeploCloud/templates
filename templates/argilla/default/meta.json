@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative data annotation platform for building AI datasets, with PostgreSQL, Elasticsearch, Redis and a background worker.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Argilla",
+    "url": "https://github.com/argilla-io"
+  },
+  "links": {
+    "github": "https://github.com/argilla-io/argilla",
+    "website": "https://argilla.io",
+    "docs": [
+      "https://docs.argilla.io/latest/getting_started/how-to-deploy-argilla-with-docker/",
+      "https://docs.argilla.io/latest/reference/argilla-server/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the password from the OWNER_PASSWORD environment variable. The owner account is created on first start only, so changing the variable later does not change the password.",
+      "link": "https://docs.argilla.io/latest/reference/argilla-server/configuration/"
+    }
+  ]
+}
