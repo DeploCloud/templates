@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "xyops"
+port = 5_522
+host = "${domain}"
+
+[config.env]
+XYOPS_BASE_APP_URL = "https://${domain}"
+XYOPS_WORKER_HOST = "${domain}"
+TZ = "UTC"

@@ -1,0 +1,31 @@
+services:
+  xyops:
+    image: ghcr.io/pixlcore/xyops:v1.1.17@sha256:50441df2e0c1f9205fde492ba84871ccc31da42f80a4476cef7c5bc6026f1da1
+    restart: unless-stopped
+    init: true
+    hostname: xyops
+    expose:
+      - 5522
+    environment:
+      XYOPS_masters: xyops
+      XYOPS_xysat_local: "true"
+      XYOPS_base_app_url: ${XYOPS_BASE_APP_URL}
+      XYOPS_satellite__config__host: ${XYOPS_WORKER_HOST}
+      XYOPS_satellite__config__port: "443"
+      XYOPS_satellite__config__secure: "true"
+      TZ: ${TZ}
+    volumes:
+      - xyops-data:/opt/xyops/data
+      - xyops-conf:/opt/xyops/conf
+      - xyops-logs:/opt/xyops/logs
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:5522/api/app/ping || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  xyops-data: {}
+  xyops-conf: {}
+  xyops-logs: {}

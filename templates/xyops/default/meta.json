@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted job scheduler with visual workflows, server monitoring, alerting and incident tickets, running a conductor with a built-in local worker.",
+  "category": "automation",
+  "developedBy": {
+    "label": "PixlCore",
+    "url": "https://github.com/pixlcore"
+  },
+  "links": {
+    "github": "https://github.com/pixlcore/xyops",
+    "website": "https://xyops.io/",
+    "docs": [
+      "https://docs.xyops.io/hosting",
+      "https://docs.xyops.io/config",
+      "https://docs.xyops.io/servers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin and change its password right away, since the instance is reachable as soon as it starts.",
+      "link": "https://docs.xyops.io/hosting"
+    }
+  ]
+}
