@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source double-entry accounting with invoicing, bills, inventory and financial reports, backed by MariaDB, Redis and Gotenberg for PDF printing.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Bigcapital",
+    "url": "https://github.com/bigcapitalhq"
+  },
+  "links": {
+    "github": "https://github.com/bigcapitalhq/bigcapital",
+    "website": "https://bigcapital.app",
+    "docs": [
+      "https://docs.bigcapital.app/deployment/docker",
+      "https://docs.bigcapital.app/deployment/env_vars",
+      "https://github.com/bigcapitalhq/bigcapital/blob/develop/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No account exists on first start: open the app and sign up to create the first user and organization. Sign-up stays open to anyone until you set SIGNUP_DISABLED to true."
+    },
+    {
+      "type": "warning",
+      "message": "User invites and password resets need SMTP (MAIL_* variables), and document attachments need an external S3-compatible bucket (S3_* variables). Both are empty by default."
+    }
+  ]
+}
