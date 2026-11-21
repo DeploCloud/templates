@@ -1,0 +1,18 @@
+services:
+  zoraxy:
+    image: zoraxydocker/zoraxy:v3.3.5@sha256:2dfc5acf4c84e3e477a8f1fcb7d05a600a8c3cd5fd1296a848372375910ae9dd
+    restart: unless-stopped
+    expose:
+      - 8000
+      - 80
+    environment:
+      TZ: ${TZ}
+      MDNS: ${MDNS}
+      FASTGEOIP: ${FASTGEOIP}
+    volumes:
+      - zoraxy-config:/opt/zoraxy/config
+      - zoraxy-plugin:/opt/zoraxy/plugin
+
+volumes:
+  zoraxy-config: {}
+  zoraxy-plugin: {}

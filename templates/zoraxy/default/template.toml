@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zoraxy"
+port = 8000
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+MDNS = "false"
+FASTGEOIP = "false"
