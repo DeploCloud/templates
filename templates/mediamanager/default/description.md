@@ -1,0 +1,3 @@
+MediaManager tracks movies and TV shows, searches indexers for releases, hands them to a torrent or usenet client and moves the finished files into your library. This template runs the official image with PostgreSQL; the public URL, database credentials, token secret and admin email list are set as environment variables, which take precedence over `config.toml`.
+Media, downloads and cached images persist in the `/data` volume, `config.toml` and the log file in the config volume, and the database in its own volume.
+After the first start, sign in as admin@example.com with the password admin and change it, then configure your indexer and download client in `config.toml` or with `MEDIAMANAGER_*` variables.

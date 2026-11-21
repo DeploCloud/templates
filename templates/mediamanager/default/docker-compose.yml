@@ -1,0 +1,48 @@
+services:
+  mediamanager:
+    image: quay.io/maxdorninger/mediamanager:1.12.3@sha256:83b80dce26f8cdbbf8afec06784a85e7eedcba05ad4be57d2f70b006304d7a8c
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      CONFIG_DIR: /app/config
+      MEDIAMANAGER_MISC__FRONTEND_URL: ${MEDIAMANAGER_MISC__FRONTEND_URL}
+      MEDIAMANAGER_AUTH__TOKEN_SECRET: ${MEDIAMANAGER_AUTH__TOKEN_SECRET}
+      MEDIAMANAGER_AUTH__ADMIN_EMAILS: '["admin@example.com"]'
+      MEDIAMANAGER_DATABASE__HOST: mediamanager-db
+      MEDIAMANAGER_DATABASE__PORT: "5432"
+      MEDIAMANAGER_DATABASE__USER: mediamanager
+      MEDIAMANAGER_DATABASE__PASSWORD: ${DB_PASSWORD}
+      MEDIAMANAGER_DATABASE__DBNAME: mediamanager
+    volumes:
+      - mediamanager-config:/app/config
+      - mediamanager-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      mediamanager-db:
+        condition: service_healthy
+
+  mediamanager-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mediamanager
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: mediamanager
+    volumes:
+      - mediamanager-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mediamanager -d mediamanager"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mediamanager-config: {}
+  mediamanager-data: {}
+  mediamanager-db: {}

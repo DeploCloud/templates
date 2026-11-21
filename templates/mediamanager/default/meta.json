@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted manager for movie and TV libraries that searches indexers, sends downloads to torrent or usenet clients and organizes the files, backed by PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "Maximilian Dorninger",
+    "url": "https://github.com/maxdorninger"
+  },
+  "links": {
+    "github": "https://github.com/maxdorninger/MediaManager",
+    "website": "https://maxdorninger.github.io/MediaManager/",
+    "docs": [
+      "https://maxdorninger.github.io/MediaManager/latest/installation/docker/",
+      "https://maxdorninger.github.io/MediaManager/latest/configuration/",
+      "https://maxdorninger.github.io/MediaManager/latest/configuration/authentication/",
+      "https://maxdorninger.github.io/MediaManager/latest/configuration/download-clients/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first start MediaManager creates the admin account admin@example.com with the password admin. Sign in and change the password right away, and keep that email on the account: MEDIAMANAGER_AUTH__ADMIN_EMAILS lists it, and whoever registers with a listed email that is still free becomes admin.",
+      "link": "https://maxdorninger.github.io/MediaManager/latest/configuration/authentication/"
+    },
+    {
+      "type": "warning",
+      "message": "Indexers (Prowlarr or Jackett) and download clients (qBittorrent, Transmission or SABnzbd) must be set up in config.toml in the config volume or through MEDIAMANAGER_* environment variables. A download client must write into the same /data volume for imports to work.",
+      "link": "https://maxdorninger.github.io/MediaManager/latest/configuration/"
+    }
+  ]
+}
