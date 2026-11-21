@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight CalDAV and CardDAV server for calendars, tasks and contacts, with a web interface and file-based storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kozea",
+    "url": "https://github.com/Kozea"
+  },
+  "links": {
+    "github": "https://github.com/Kozea/Radicale",
+    "website": "https://radicale.org",
+    "docs": [
+      "https://radicale.org/v3.html#docker",
+      "https://radicale.org/v3.html#authentication",
+      "https://radicale.org/v3.html#configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated password stored in the users file mount. Add one name:password line per account (or an htpasswd bcrypt hash) to that file and redeploy to manage users.",
+      "link": "https://radicale.org/v3.html#authentication"
+    }
+  ]
+}
