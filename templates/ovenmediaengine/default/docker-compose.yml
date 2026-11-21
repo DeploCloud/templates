@@ -1,0 +1,16 @@
+services:
+  ovenmediaengine:
+    image: ovenmedialabs/ovenmediaengine:v0.21.0@sha256:172da9129d32093f3c92c426d385a318db38c7e70de0a3a685693e69614672a6
+    restart: unless-stopped
+    expose:
+      - 3333
+      - 8081
+    environment:
+      OME_HOST_IP: ${OME_HOST_IP}
+      OME_API_ACCESS_TOKEN: ${OME_API_ACCESS_TOKEN}
+    volumes:
+      - ./Server.xml:/opt/ovenmediaengine/bin/origin_conf/Server.xml:ro
+      - ovenmediaengine-logs:/var/log/ovenmediaengine
+
+volumes:
+  ovenmediaengine-logs: {}

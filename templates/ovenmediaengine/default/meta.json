@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Sub-second latency live streaming server that ingests RTMP, SRT, WebRTC and RTSP sources and delivers them over Low-Latency HLS, HLS and WebRTC, with a REST API.",
+  "category": "media",
+  "developedBy": {
+    "label": "OvenMediaLabs",
+    "url": "https://github.com/OvenMediaLabs"
+  },
+  "links": {
+    "github": "https://github.com/OvenMediaLabs/OvenMediaEngine",
+    "website": "https://ovenmedia.com",
+    "docs": [
+      "https://ovenmedia.com/docs/ome/getting-started/getting-started-with-docker",
+      "https://ovenmedia.com/docs/ome/rest-api",
+      "https://ovenmedia.com/docs/ome/rest-api/v1/virtualhost/application/stream",
+      "https://ovenmedia.com/docs/ome/live-source/rtsp-pull",
+      "https://ovenmedia.com/docs/ome/live-source/rtmp",
+      "https://ovenmedia.com/docs/ome/streaming/low-latency-hls",
+      "https://ovenmedia.com/docs/ome/streaming/webrtc-publishing"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Only HTTP is routed: play a stream at https://<your domain>/app/<stream>/llhls.m3u8 (LL-HLS) or /app/<stream>/ts:playlist.m3u8 (HLS). The domain root has no page of its own. WebRTC signaling answers at wss://<your domain>/app/<stream>, but WebRTC media also needs the ICE ports below. Without published ingest ports, create streams by pulling an RTSP or OVT source with POST https://<your domain>/v1/vhosts/default/apps/app/streams, using the OME_API_ACCESS_TOKEN value as Basic auth user:password. Pulled streams are not kept across restarts.",
+      "link": "https://ovenmedia.com/docs/ome/rest-api/v1/virtualhost/application/stream"
+    },
+    {
+      "type": "warning",
+      "message": "To push from OBS or an encoder, add ports to the ovenmediaengine service in the app's Compose file (this needs the Publish ports permission) and redeploy: 1935/tcp for RTMP (rtmp://<server IP>:1935/app/<stream>), 9999/udp for SRT, and 3478/tcp, 10000/tcp and 10000-10003/udp for WebRTC publishing and playback, which also needs OME_HOST_IP set to the server's public IP. Anyone who can reach these ports can publish unless you configure SignedPolicy or Admission Webhooks in Server.xml.",
+      "link": "https://deplo.build/docs/advanced/compose-apps"
+    }
+  ]
+}

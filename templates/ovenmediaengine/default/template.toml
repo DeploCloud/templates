@@ -1,0 +1,234 @@
+[variables]
+api_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "ovenmediaengine"
+port = 3_333
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "ovenmediaengine"
+port = 8_081
+host = "${domain}"
+path = "/v1"
+
+[config.env]
+OME_HOST_IP = "*"
+OME_API_ACCESS_TOKEN = "admin:${api_password}"
+
+[[config.mounts]]
+filePath = "Server.xml"
+content = """<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Based on the image's default origin config, with the REST API enabled; TLS is handled by the proxy. -->
+<!-- see https://ovenmedia.com/docs/ome/configuration -->
+<Server version="8">
+	<Name>OvenMediaEngine</Name>
+	<Type>origin</Type>
+	<IP>*</IP>
+	<PrivacyProtection>false</PrivacyProtection>
+	<StunServer>stun.ovenmediaengine.com:13478</StunServer>
+
+	<Modules>
+		<HTTP2>
+			<Enable>true</Enable>
+		</HTTP2>
+		<LLHLS>
+			<Enable>true</Enable>
+		</LLHLS>
+		<P2P>
+			<Enable>false</Enable>
+			<MaxClientPeersPerHostPeer>2</MaxClientPeersPerHostPeer>
+		</P2P>
+		<Jemalloc>
+			<BackgroundPurge>true</BackgroundPurge>
+		</Jemalloc>
+		<TaskPool>
+			<ThreadCount>4</ThreadCount>
+			<MaxTasks>128</MaxTasks>
+		</TaskPool>
+	</Modules>
+
+	<Bind>
+		<Managers>
+			<API>
+				<Port>8081</Port>
+				<WorkerCount>1</WorkerCount>
+			</API>
+		</Managers>
+		<Providers>
+			<RTSPC>
+				<WorkerCount>1</WorkerCount>
+			</RTSPC>
+			<OVT>
+				<WorkerCount>1</WorkerCount>
+			</OVT>
+			<RTMP>
+				<Port>1935</Port>
+				<WorkerCount>1</WorkerCount>
+			</RTMP>
+			<SRT>
+				<Port>9999</Port>
+				<WorkerCount>1</WorkerCount>
+			</SRT>
+			<WebRTC>
+				<Signalling>
+					<Port>3333</Port>
+					<WorkerCount>1</WorkerCount>
+				</Signalling>
+				<IceCandidates>
+					<IceCandidate>${env:OME_HOST_IP:*}:10000-10003/udp</IceCandidate>
+					<IceCandidate>${env:OME_HOST_IP:*}:10000/tcp</IceCandidate>
+					<TcpRelay>${env:OME_HOST_IP:*}:3478</TcpRelay>
+					<TcpRelayForce>false</TcpRelayForce>
+					<TcpIceWorkerCount>1</TcpIceWorkerCount>
+					<TcpRelayWorkerCount>1</TcpRelayWorkerCount>
+				</IceCandidates>
+			</WebRTC>
+		</Providers>
+
+		<Publishers>
+			<OVT>
+				<Port>9000</Port>
+				<WorkerCount>1</WorkerCount>
+			</OVT>
+			<LLHLS>
+				<Port>3333</Port>
+				<WorkerCount>1</WorkerCount>
+			</LLHLS>
+			<WebRTC>
+				<Signalling>
+					<Port>3333</Port>
+					<WorkerCount>1</WorkerCount>
+				</Signalling>
+				<IceCandidates>
+					<IceCandidate>${env:OME_HOST_IP:*}:10000-10003/udp</IceCandidate>
+					<IceCandidate>${env:OME_HOST_IP:*}:10000/tcp</IceCandidate>
+					<TcpRelay>${env:OME_HOST_IP:*}:3478</TcpRelay>
+					<TcpRelayForce>false</TcpRelayForce>
+					<TcpIceWorkerCount>1</TcpIceWorkerCount>
+					<TcpRelayWorkerCount>1</TcpRelayWorkerCount>
+				</IceCandidates>
+			</WebRTC>
+		</Publishers>
+	</Bind>
+
+	<Managers>
+		<Host>
+			<Names>
+				<Name>*</Name>
+			</Names>
+		</Host>
+		<API>
+			<!-- &#36; is "$", encoded so the deploy step leaves these placeholders to OME -->
+			<AccessToken>&#36;{env:OME_API_ACCESS_TOKEN}</AccessToken>
+		</API>
+	</Managers>
+
+	<Defaults>
+		<CrossDomains>
+			<Url>*</Url>
+		</CrossDomains>
+	</Defaults>
+
+	<VirtualHosts>
+		<VirtualHost>
+			<Name>default</Name>
+			<Distribution>ovenmediaengine.com</Distribution>
+			<Host>
+				<Names>
+					<Name>*</Name>
+				</Names>
+			</Host>
+			<CrossDomains>
+				<Url>*</Url>
+			</CrossDomains>
+
+			<Applications>
+				<Application>
+					<Name>app</Name>
+					<Type>live</Type>
+					<OutputProfiles>
+						<OutputProfile>
+							<Name>bypass_stream</Name>
+							<!-- &#36; is "$", encoded so the deploy step leaves these placeholders to OME -->
+							<OutputStreamName>&#36;{OriginStreamName}</OutputStreamName>
+							<Encodes>
+								<Video>
+									<Name>bypass_video</Name>
+									<Bypass>true</Bypass>
+								</Video>
+								<Audio>
+									<Name>aac_audio</Name>
+									<Codec>aac</Codec>
+									<Bitrate>128000</Bitrate>
+									<Samplerate>48000</Samplerate>
+									<Channel>2</Channel>
+									<BypassIfMatch>
+										<Codec>eq</Codec>
+									</BypassIfMatch>
+								</Audio>
+								<Audio>
+									<Name>opus_audio</Name>
+									<Codec>opus</Codec>
+									<Bitrate>128000</Bitrate>
+									<Samplerate>48000</Samplerate>
+									<Channel>2</Channel>
+									<BypassIfMatch>
+										<Codec>eq</Codec>
+									</BypassIfMatch>
+								</Audio>
+							</Encodes>
+						</OutputProfile>
+					</OutputProfiles>
+					<Providers>
+						<OVT />
+						<WebRTC>
+							<Timeout>30000</Timeout>
+							<CrossDomains>
+								<Url>*</Url>
+							</CrossDomains>
+						</WebRTC>
+						<RTMP />
+						<SRT />
+						<RTSPPull />
+					</Providers>
+					<Publishers>
+						<AppWorkerCount>1</AppWorkerCount>
+						<StreamWorkerCount>8</StreamWorkerCount>
+						<OVT />
+						<WebRTC>
+							<Timeout>30000</Timeout>
+							<Rtx>false</Rtx>
+							<Ulpfec>false</Ulpfec>
+							<JitterBuffer>false</JitterBuffer>
+							<CreateDefaultPlaylist>true</CreateDefaultPlaylist>
+						</WebRTC>
+						<LLHLS>
+							<OriginMode>true</OriginMode>
+							<ChunkDuration>0.5</ChunkDuration>
+							<PartHoldBack>1.5</PartHoldBack>
+							<SegmentDuration>6</SegmentDuration>
+							<SegmentCount>10</SegmentCount>
+							<CrossDomains>
+								<Url>*</Url>
+							</CrossDomains>
+							<CreateDefaultPlaylist>true</CreateDefaultPlaylist>
+						</LLHLS>
+						<HLS>
+							<SegmentCount>4</SegmentCount>
+							<SegmentDuration>4</SegmentDuration>
+							<CrossDomains>
+								<Url>*</Url>
+							</CrossDomains>
+							<CreateDefaultPlaylist>true</CreateDefaultPlaylist>
+						</HLS>
+					</Publishers>
+				</Application>
+			</Applications>
+		</VirtualHost>
+	</VirtualHosts>
+</Server>
+"""
