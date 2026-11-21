@@ -1,0 +1,21 @@
+services:
+  bark:
+    image: finab/bark-server:v2.4.0@sha256:f3fa583422f9e870cec2c619d714946f549fbf7fd2c822da4a4ef43893ed3159
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      BARK_SERVER_BASIC_AUTH_USER: ${BARK_SERVER_BASIC_AUTH_USER}
+      BARK_SERVER_BASIC_AUTH_PASSWORD: ${BARK_SERVER_BASIC_AUTH_PASSWORD}
+    volumes:
+      - bark-data:/data
+    healthcheck:
+      test: ["CMD", "bash", "-c", "</dev/tcp/127.0.0.1/8080"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  bark-data: {}

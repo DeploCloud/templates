@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted push server for the Bark iOS app: send custom notifications to your iPhone through a simple HTTP API, with an MCP endpoint for AI agents.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Finb",
+    "url": "https://github.com/Finb"
+  },
+  "links": {
+    "github": "https://github.com/Finb/bark-server",
+    "website": "https://bark.day.app",
+    "docs": [
+      "https://bark.day.app/#/en-us/deploy",
+      "https://github.com/Finb/bark-server/blob/master/docs/API_V2.md",
+      "https://github.com/Finb/bark-server/blob/master/docs/MCP.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web interface. Install the Bark app on your iPhone, add https://<your-domain> as a server, then push to the URL the app shows for that server."
+    }
+  ]
+}

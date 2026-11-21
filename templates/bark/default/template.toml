@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bark"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+BARK_SERVER_BASIC_AUTH_USER = ""
+BARK_SERVER_BASIC_AUTH_PASSWORD = ""
