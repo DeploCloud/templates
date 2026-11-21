@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "In-memory graph database queried with Cypher over Bolt, bundled with the MAGE algorithm library and the Memgraph Lab web UI, with persistent snapshots.",
+  "category": "database",
+  "developedBy": {
+    "label": "Memgraph",
+    "url": "https://memgraph.com"
+  },
+  "links": {
+    "github": "https://github.com/memgraph/memgraph",
+    "website": "https://memgraph.com",
+    "docs": [
+      "https://memgraph.com/docs/deployment/docker",
+      "https://memgraph.com/docs/getting-started/install-memgraph/docker",
+      "https://memgraph.com/docs/memgraph-lab/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Connect in Memgraph Lab with the prefilled host memgraph and port 7687, user memgraph and the generated MEMGRAPH_PASSWORD from the environment variables. The user is created only on the first start, so changing the variable later has no effect. The Bolt port 7687 is not published outside the stack.",
+      "link": "https://memgraph.com/docs/deployment/docker"
+    }
+  ]
+}
