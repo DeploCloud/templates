@@ -1,0 +1,16 @@
+services:
+  seanime:
+    image: umagistr/seanime:v3.10.4@sha256:99f9210c66eff284d3f4605d63ea129d0678eac5ec9ef74f0fee0a5c8ddf6871
+    restart: unless-stopped
+    command: ["/app/seanime", "--password", "${SEANIME_PASSWORD}"]
+    expose:
+      - 43211
+    environment:
+      SEANIME_SERVER_HOST: 0.0.0.0
+    volumes:
+      - seanime-data:/root/.config/Seanime
+      - seanime-library:/anime
+
+volumes:
+  seanime-data: {}
+  seanime-library: {}
