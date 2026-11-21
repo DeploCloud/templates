@@ -1,0 +1,37 @@
+services:
+  kitchenowl:
+    image: tombursch/kitchenowl:v0.8.1@sha256:6a048135399691da25aec04ea107666cb7ce8eb46f5fed9a46a5ac254fe23073
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      FRONT_URL: ${FRONT_URL}
+      DB_DRIVER: postgresql
+      DB_HOST: kitchenowl-db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - kitchenowl-data:/data
+    depends_on:
+      kitchenowl-db:
+        condition: service_healthy
+  kitchenowl-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - kitchenowl-db:/var/lib/postgresql
+
+volumes:
+  kitchenowl-data: {}
+  kitchenowl-db: {}
