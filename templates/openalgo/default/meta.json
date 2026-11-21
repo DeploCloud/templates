@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted algorithmic trading platform with a unified REST API, live market data WebSocket and web dashboard for Indian brokers.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Marketcalls",
+    "url": "https://github.com/marketcalls"
+  },
+  "links": {
+    "github": "https://github.com/marketcalls/openalgo",
+    "website": "https://openalgo.in",
+    "docs": [
+      "https://docs.openalgo.in/installation-guidelines/getting-started/docker-development",
+      "https://docs.openalgo.in/connect-brokers/broker-configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first account created on the setup page becomes the only admin. Then add your broker API key and secret under Broker Configuration and register https://<your-domain>/<broker>/callback as the redirect URL in your broker's developer console.",
+      "link": "https://docs.openalgo.in/connect-brokers/broker-configuration"
+    },
+    {
+      "type": "warning",
+      "message": "API_KEY_PEPPER and FERNET_SALT hash the login password and encrypt the stored broker keys and tokens. Back them up and never change them after the first start, or the saved data becomes unreadable."
+    }
+  ]
+}
