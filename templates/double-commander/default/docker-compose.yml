@@ -1,0 +1,18 @@
+services:
+  double-commander:
+    image: lscr.io/linuxserver/doublecommander:8426aaaf-ls333@sha256:59682e868b9ce3271379fa1254c16dfbae71d6af8b3ac2dff6ee022a25cf1405
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - double-commander-config:/config
+
+volumes:
+  double-commander-config: {}
