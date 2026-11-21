@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "MQTTX Web, a browser-based MQTT 5.0 client for connecting to brokers over WebSocket and testing publish and subscribe.",
+  "category": "development",
+  "developedBy": {
+    "label": "EMQ Technologies",
+    "url": "https://github.com/emqx"
+  },
+  "links": {
+    "github": "https://github.com/emqx/MQTTX",
+    "website": "https://mqttx.app",
+    "docs": [
+      "https://mqttx.app/docs/web",
+      "https://github.com/emqx/MQTTX/blob/main/web/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Connections and message history are stored in each visitor's browser, not on the server. Because the page is served over HTTPS, browsers only allow broker connections over secure WebSocket (wss://)."
+    }
+  ]
+}
