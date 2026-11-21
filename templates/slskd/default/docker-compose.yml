@@ -1,0 +1,21 @@
+services:
+  slskd:
+    image: slskd/slskd:0.26.2@sha256:d0963a3e5b16facd295bf4f2156dad0182f246b1b21a032cae12f5494c694843
+    restart: unless-stopped
+    expose:
+      - 5030
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      SLSKD_NO_HTTPS: "true"
+      SLSKD_REMOTE_CONFIGURATION: "${SLSKD_REMOTE_CONFIGURATION}"
+      SLSKD_USERNAME: "${SLSKD_USERNAME}"
+      SLSKD_PASSWORD: "${SLSKD_PASSWORD}"
+      SLSKD_JWT_KEY: "${SLSKD_JWT_KEY}"
+      SLSKD_SLSK_USERNAME: "${SLSKD_SLSK_USERNAME}"
+      SLSKD_SLSK_PASSWORD: "${SLSKD_SLSK_PASSWORD}"
+    volumes:
+      - slskd-data:/app
+
+volumes:
+  slskd-data: {}

@@ -1,0 +1,19 @@
+[variables]
+web_password = "${password:32}"
+jwt_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "slskd"
+port = 5_030
+host = "${domain}"
+
+[config.env]
+SLSKD_REMOTE_CONFIGURATION = "true"
+SLSKD_USERNAME = "slskd"
+SLSKD_PASSWORD = "${web_password}"
+SLSKD_JWT_KEY = "${jwt_key}"
+SLSKD_SLSK_USERNAME = ""
+SLSKD_SLSK_PASSWORD = ""
