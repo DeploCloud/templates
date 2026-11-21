@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hfs"
+port = 80
+host = "${domain}"
+
+[config.env]
+HFS_INITIAL_ADMIN_PASSWORD = "${admin_password}"
+HFS_PROXIES = "1"
+HFS_BASE_URL = "https://${domain}"

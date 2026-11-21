@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "HFS (HTTP File Server) shares folders and files over the web with a virtual file system, accounts, permissions, uploads and an admin panel.",
+  "category": "storage",
+  "developedBy": {
+    "label": "rejetto",
+    "url": "https://github.com/rejetto"
+  },
+  "links": {
+    "github": "https://github.com/rejetto/hfs",
+    "website": "https://www.rejetto.com/hfs/",
+    "docs": [
+      "https://github.com/rejetto/hfs/wiki/Docker",
+      "https://github.com/rejetto/hfs/blob/main/config.md",
+      "https://github.com/rejetto/hfs/wiki/Reverse-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /~/admin/ and log in as admin with the HFS_INITIAL_ADMIN_PASSWORD value from the environment settings. It is applied only on the first start; change the password later from the Admin-panel.",
+      "link": "https://github.com/rejetto/hfs/wiki/Docker"
+    }
+  ]
+}

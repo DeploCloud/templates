@@ -1,0 +1,17 @@
+services:
+  hfs:
+    image: rejetto/hfs:v3.4.1@sha256:42021b2e630fd6273970f8da6646f51dc051b7804ada127017509d65d5320369
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      HFS_INITIAL_ADMIN_PASSWORD: ${HFS_INITIAL_ADMIN_PASSWORD}
+      HFS_PROXIES: ${HFS_PROXIES}
+      HFS_BASE_URL: ${HFS_BASE_URL}
+    volumes:
+      - hfs-data:/data
+      - hfs-shares:/shares
+
+volumes:
+  hfs-data: {}
+  hfs-shares: {}
