@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source GPS tracking server with a web interface, backed by PostgreSQL with TimescaleDB, plus an HTTPS endpoint for the Traccar Client app.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Traccar",
+    "url": "https://www.traccar.org"
+  },
+  "links": {
+    "github": "https://github.com/traccar/traccar",
+    "website": "https://www.traccar.org",
+    "docs": [
+      "https://www.traccar.org/docker/",
+      "https://www.traccar.org/configuration-file/",
+      "https://www.traccar.org/client/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered in the web interface becomes the administrator. Register it right after deploying, then disable open registration in the server settings."
+    },
+    {
+      "type": "warning",
+      "message": "Only the HTTP-based OsmAnd protocol is reachable, on the osmand subdomain (use it as the server URL in the Traccar Client app). Hardware trackers that speak raw TCP or UDP protocols on ports 5000-5500 cannot connect through the HTTPS proxy.",
+      "link": "https://www.traccar.org/osmand/"
+    }
+  ]
+}

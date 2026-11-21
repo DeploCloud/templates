@@ -1,0 +1,47 @@
+services:
+  traccar:
+    image: traccar/traccar:6.17.0-alpine@sha256:b32d9346adf46df7c33c58577e17ad60f6feadd1f3cd87c876041f6c79317ef1
+    restart: unless-stopped
+    expose:
+      - 8082
+      - 5055
+    environment:
+      CONFIG_USE_ENVIRONMENT_VARIABLES: "true"
+      DATABASE_DRIVER: org.postgresql.Driver
+      DATABASE_URL: jdbc:postgresql://traccar-db:5432/traccar
+      DATABASE_USER: traccar
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      WEB_URL: ${WEB_URL}
+    volumes:
+      - traccar-logs:/opt/traccar/logs
+      - traccar-media:/opt/traccar/media
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8082/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 3m
+      retries: 5
+    depends_on:
+      traccar-db:
+        condition: service_healthy
+
+  traccar-db:
+    image: timescale/timescaledb:2.32.0-pg17@sha256:6a6b7d7a346d7c6be03a310c240706f3bbc6d7adbdf3fbc07823570b34337f5e
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: traccar
+      POSTGRES_USER: traccar
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TIMESCALEDB_TELEMETRY: "off"
+    volumes:
+      - traccar-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U traccar -d traccar"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  traccar-logs: {}
+  traccar-media: {}
+  traccar-db: {}
