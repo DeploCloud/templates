@@ -1,0 +1,46 @@
+services:
+  kroki:
+    image: yuzutech/kroki:0.36.0@sha256:de0f2fdc42e926d54706ac962aa5cfb38c5c387035a1b30d07ce297bbc37057b
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      KROKI_MERMAID_HOST: kroki-mermaid
+      KROKI_BPMN_HOST: kroki-bpmn
+      KROKI_EXCALIDRAW_HOST: kroki-excalidraw
+      KROKI_DIAGRAMSNET_HOST: kroki-diagramsnet
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health > /dev/null"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      - kroki-mermaid
+      - kroki-bpmn
+      - kroki-excalidraw
+      - kroki-diagramsnet
+
+  kroki-mermaid:
+    image: yuzutech/kroki-mermaid:0.36.0@sha256:0f9d9420d2577474f20909bb0679d398949561d5d88435e66e742b28db066bd2
+    restart: unless-stopped
+    expose:
+      - 8002
+
+  kroki-bpmn:
+    image: yuzutech/kroki-bpmn:0.36.0@sha256:f93ac1e457dacdf75c2d5fee66bb8e198cb5b82cbed618b8034caf047b699ef5
+    restart: unless-stopped
+    expose:
+      - 8003
+
+  kroki-excalidraw:
+    image: yuzutech/kroki-excalidraw:0.36.0@sha256:5d32b0fd58b311bf19ac1b1c7c779e003007638f501a05d1f57fa4a5e129856a
+    restart: unless-stopped
+    expose:
+      - 8004
+
+  kroki-diagramsnet:
+    image: yuzutech/kroki-diagramsnet:0.36.0@sha256:d6a143ae0ac3b1bbdee3ca0e35439c338d66d4756d82e75b54bb1c75f8b4e077
+    restart: unless-stopped
+    expose:
+      - 8005
