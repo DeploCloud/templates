@@ -1,0 +1,62 @@
+services:
+  countly-nginx:
+    image: nginx:1.30.7-alpine@sha256:caf4e1e032a20f9c3c5e28fc7f25ffd768ad8677b4975c54193075997b3a97e3
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./countly.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - countly-api
+      - countly-frontend
+
+  countly-api:
+    image: countly/api:25.03.59@sha256:78a3f4235cc345fd4cc8858094d3e0b0042ed817be1d0e17e4d30cf69a3dcc0a
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      COUNTLY_PLUGINS: ${COUNTLY_PLUGINS}
+      COUNTLY_CONFIG__MONGODB: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@countly-mongodb:27017/?authSource=admin
+      COUNTLY_CONFIG__FILESTORAGE: gridfs
+      COUNTLY_CONFIG_HOSTNAME: ${COUNTLY_HOSTNAME}
+      COUNTLY_CONFIG_PROTOCOL: https
+    depends_on:
+      countly-mongodb:
+        condition: service_healthy
+
+  countly-frontend:
+    image: countly/frontend:25.03.59@sha256:51a456d504a6b779b4d599dc41613937b15e3e139d4af105fa9251a296e4d65c
+    restart: unless-stopped
+    expose:
+      - 6001
+    environment:
+      COUNTLY_PLUGINS: ${COUNTLY_PLUGINS}
+      COUNTLY_CONFIG__MONGODB: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@countly-mongodb:27017/?authSource=admin
+      COUNTLY_CONFIG__FILESTORAGE: gridfs
+      COUNTLY_CONFIG_HOSTNAME: ${COUNTLY_HOSTNAME}
+      COUNTLY_CONFIG_PROTOCOL: https
+      COUNTLY_CONFIG_FRONTEND_WEB_SESSION_SECRET: ${SESSION_SECRET}
+    depends_on:
+      countly-mongodb:
+        condition: service_healthy
+
+  countly-mongodb:
+    image: mongo:9.0.8@sha256:b0c835c26e5997413e985000f1013c275377cd9607761c1784d486f6dd620b7f
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - countly-mongodb-data:/data/db
+      - countly-mongodb-config:/data/configdb
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  countly-mongodb-data: {}
+  countly-mongodb-config: {}
