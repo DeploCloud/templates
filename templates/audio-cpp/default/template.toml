@@ -1,0 +1,30 @@
+[config]
+
+[[config.domains]]
+serviceName = "audio-cpp-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	basic_auth {
+		{$AUDIOCPP_USERNAME} {$AUDIOCPP_PASSWORD_HASH}
+	}
+	reverse_proxy audio-cpp:8080 {
+		flush_interval -1
+	}
+}
+"""
+
+[config.env]
+AUDIOCPP_USERNAME = "admin"
+AUDIOCPP_PASSWORD = "${password:24}"
+AUDIOCPP_THREADS = "4"
+HF_TOKEN = ""
