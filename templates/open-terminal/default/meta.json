@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted REST API that gives AI agents a sandboxed Linux computer: run commands, manage files, execute code and drive a browser or desktop.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Open WebUI",
+    "url": "https://github.com/open-webui"
+  },
+  "links": {
+    "github": "https://github.com/open-webui/open-terminal",
+    "website": "https://openterminal.sh/",
+    "docs": [
+      "https://docs.openwebui.com/features/open-terminal/",
+      "https://github.com/open-webui/open-terminal/blob/main/docs/configuration.md",
+      "https://github.com/open-webui/open-terminal/blob/main/docs/deployment.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Every API call needs the generated OPEN_TERMINAL_API_KEY as a Bearer token. The key grants shell and file access inside the container, so share it only with trusted users and agents.",
+      "link": "https://docs.openwebui.com/features/open-terminal/setup/connecting/"
+    }
+  ]
+}
