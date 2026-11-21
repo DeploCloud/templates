@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+jwt_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tianji"
+port = 12_345
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+JWT_SECRET = "${jwt_secret}"
+PUBLIC_URL = "https://${domain}"
+ALLOW_REGISTER = "false"
+ALLOW_OPENAPI = "true"
+AUTH_USE_SECURE_COOKIES = "true"

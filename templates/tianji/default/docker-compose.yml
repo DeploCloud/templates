@@ -1,0 +1,34 @@
+services:
+  tianji:
+    image: ghcr.io/msgbyte/tianji:1.34.3@sha256:1fa262dcd64f6e9538bcd014392526ad67b27f60c7b07a6cff2b51c41345f368
+    restart: unless-stopped
+    expose:
+      - 12345
+    environment:
+      DATABASE_URL: postgresql://tianji:${DB_PASSWORD}@tianji-db:5432/tianji
+      JWT_SECRET: ${JWT_SECRET}
+      PUBLIC_URL: ${PUBLIC_URL}
+      ALLOW_REGISTER: ${ALLOW_REGISTER}
+      ALLOW_OPENAPI: ${ALLOW_OPENAPI}
+      AUTH_USE_SECURE_COOKIES: ${AUTH_USE_SECURE_COOKIES}
+    depends_on:
+      tianji-db:
+        condition: service_healthy
+
+  tianji-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tianji
+      POSTGRES_USER: tianji
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - tianji-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tianji -d tianji"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  tianji-db: {}
