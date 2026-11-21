@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Speed test analysis tool that runs scheduled Ookla, LibreSpeed or Cloudflare tests from the server and charts speed and ping history.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Mathias Wagner",
+    "url": "https://github.com/gnmyt"
+  },
+  "links": {
+    "github": "https://github.com/gnmyt/MySpeed",
+    "website": "https://myspeed.dev",
+    "docs": [
+      "https://docs.myspeed.dev/setup/linux",
+      "https://docs.myspeed.dev/instructions/settings"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard is open to anyone with the URL until you set a password in Settings > Change password.",
+      "link": "https://docs.myspeed.dev/instructions/settings"
+    }
+  ]
+}
