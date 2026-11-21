@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Kener status page backed by PostgreSQL, the database upstream recommends for production, with a bundled Redis queue.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Raj Nandan Sharma",
+    "url": "https://github.com/rajnandan1"
+  },
+  "links": {
+    "github": "https://github.com/rajnandan1/kener",
+    "website": "https://kener.ing/",
+    "docs": [
+      "https://kener.ing/docs/v4/setup/database-setup",
+      "https://kener.ing/docs/v4/setup/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /account/signin right after deployment: the first account created there becomes the administrator. Then set Site URL under Manage > Site Configurations to this app's https address; it starts as http://localhost:3000 and is used for links in notifications, emails and RSS feeds.",
+      "link": "https://kener.ing/docs/v4/getting-started/basic-setup"
+    }
+  ]
+}

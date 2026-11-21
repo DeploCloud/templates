@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kener"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+KENER_SECRET_KEY = "${base64:32}"
+ORIGIN = "https://${domain}"
+DB_PASSWORD = "${password:32}"
