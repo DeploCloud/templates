@@ -1,0 +1,11 @@
+services:
+  spoolman:
+    image: ghcr.io/donkie/spoolman:0.27.1@sha256:1ebb4f6a62c2e72a07f18b07ebfdbd96322f5bc2eb72570af3088f68d7c393b1
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - spoolman-data:/home/app/.local/share/spoolman
+
+volumes:
+  spoolman-data: {}
