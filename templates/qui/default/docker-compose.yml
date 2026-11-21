@@ -1,0 +1,18 @@
+services:
+  qui:
+    image: ghcr.io/autobrr/qui:v1.36.0@sha256:ecfd0f508f951f038b590f4fcfd33177d2ce0a8d4d33d86864b0d96e917caf59
+    restart: unless-stopped
+    expose:
+      - 7476
+    environment:
+      QUI__HOST: 0.0.0.0
+      QUI__PORT: 7476
+      QUI__SESSION_SECRET: ${QUI__SESSION_SECRET}
+      QUI__SESSION_COOKIE_SECURE: "true"
+      QUI__LOG_LEVEL: ${QUI__LOG_LEVEL}
+      TZ: ${TZ}
+    volumes:
+      - qui-config:/config
+
+volumes:
+  qui-config: {}
