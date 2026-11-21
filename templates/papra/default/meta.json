@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalistic document archiving platform with OCR, tags and full-text search, storing its SQLite database and documents on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Papra",
+    "url": "https://github.com/papra-hq"
+  },
+  "links": {
+    "github": "https://github.com/papra-hq/papra",
+    "website": "https://papra.app",
+    "docs": [
+      "https://docs.papra.app/self-hosting/using-docker-compose/",
+      "https://docs.papra.app/self-hosting/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you sign up with becomes the administrator and registration stays open. Create it right after deploying, then set AUTH_IS_REGISTRATION_ENABLED=false if the instance is private.",
+      "link": "https://docs.papra.app/self-hosting/configuration/"
+    }
+  ]
+}
