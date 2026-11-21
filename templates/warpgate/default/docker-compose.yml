@@ -1,0 +1,50 @@
+services:
+  warpgate-setup:
+    image: ghcr.io/warp-tech/warpgate:0.30.5@sha256:ccc0a47f3e9682f0eeba550a6be0e0b3db84783645230861481d3125f19facca
+    restart: "no"
+    command:
+      - unattended-setup
+      - --if-config-exists=bootstrap
+      - --data-path=/data
+      - --http-port=8888
+      - --listen-address=0.0.0.0
+      - --record-sessions
+    environment:
+      WARPGATE_ADMIN_PASSWORD: ${WARPGATE_ADMIN_PASSWORD}
+    volumes:
+      - warpgate-data:/data
+
+  warpgate:
+    image: ghcr.io/warp-tech/warpgate:0.30.5@sha256:ccc0a47f3e9682f0eeba550a6be0e0b3db84783645230861481d3125f19facca
+    restart: unless-stopped
+    command: ["--skip-securing-files", "run"]
+    expose:
+      - 8888
+    environment:
+      WARPGATE_CONFIG: /etc/warpgate/warpgate.yaml
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/warpgate", "--skip-securing-files", "healthcheck"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - warpgate-data:/data
+      - ./warpgate.yaml:/etc/warpgate/warpgate.yaml:ro
+    depends_on:
+      warpgate-setup:
+        condition: service_completed_successfully
+
+  warpgate-proxy:
+    image: nginx:1.30.7-alpine@sha256:bef154735288bc38d99fac41ae63730684bcc661503673a04a0f9bc526ba8598
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      warpgate:
+        condition: service_healthy
+
+volumes:
+  warpgate-data: {}
