@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted personal finance and bookkeeping app running as a single container with a built-in SQLite database.",
+  "category": "finance",
+  "developedBy": {
+    "label": "MaysWind",
+    "url": "https://github.com/mayswind"
+  },
+  "links": {
+    "github": "https://github.com/mayswind/ezbookkeeping",
+    "website": "https://ezbookkeeping.mayswind.net",
+    "docs": [
+      "https://ezbookkeeping.mayswind.net/installation/installation-docker",
+      "https://ezbookkeeping.mayswind.net/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can register an account. After creating your own account, set EBK_USER_ENABLE_REGISTER to false and redeploy.",
+      "link": "https://ezbookkeeping.mayswind.net/configuration/"
+    }
+  ]
+}

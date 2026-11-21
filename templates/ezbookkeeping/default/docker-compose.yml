@@ -1,0 +1,21 @@
+services:
+  ezbookkeeping:
+    image: mayswind/ezbookkeeping:2.1.1@sha256:584e4d7f6fc1642773e840b56296f8782912e3bb17abfe3c49097508b198cdb7
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      EBK_SERVER_DOMAIN: ${EBK_SERVER_DOMAIN}
+      EBK_SERVER_ROOT_URL: ${EBK_SERVER_ROOT_URL}
+      EBK_SERVER_ENABLE_GZIP: "true"
+      EBK_DATABASE_TYPE: sqlite3
+      EBK_LOG_MODE: console
+      EBK_SECURITY_SECRET_KEY: ${EBK_SECURITY_SECRET_KEY}
+      EBK_USER_ENABLE_REGISTER: ${EBK_USER_ENABLE_REGISTER}
+    volumes:
+      - ezbookkeeping-data:/ezbookkeeping/data
+      - ezbookkeeping-storage:/ezbookkeeping/storage
+
+volumes:
+  ezbookkeeping-data: {}
+  ezbookkeeping-storage: {}
