@@ -1,0 +1,95 @@
+[variables]
+db_password = "${password:32}"
+app_key = "${base64:32}"
+jwt_secret = "${password:40}"
+front_api_secret = "${password:40}"
+
+[config]
+
+[[config.domains]]
+serviceName = "opnform"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_KEY = "${app_key}"
+JWT_SECRET = "${jwt_secret}"
+FRONT_API_SECRET = "${front_api_secret}"
+LOG_LEVEL = "error"
+TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+DB_DATABASE = "opnform"
+DB_USERNAME = "opnform"
+DB_PASSWORD = "${db_password}"
+MAIL_MAILER = "log"
+MAIL_HOST = ""
+MAIL_PORT = "587"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_ENCRYPTION = "tls"
+MAIL_FROM_ADDRESS = "noreply@${domain}"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """map $request_uri $api_uri {
+    ~^/api(/.*$) $1;
+    default $request_uri;
+}
+
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html/public;
+    client_max_body_size 64m;
+
+    access_log /dev/stdout;
+    error_log /dev/stderr error;
+
+    index index.html index.htm index.php;
+
+    location / {
+        proxy_http_version 1.1;
+        proxy_pass http://opnform-client:3000;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+
+    location ^~ /api/_nuxt_icon/ {
+        proxy_http_version 1.1;
+        proxy_pass http://opnform-client:3000;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port $server_port;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+
+    location ~ /(api|open|local/temp|forms/assets)/ {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ [.]php$ {
+        fastcgi_split_path_info ^(.+[.]php)(/.+)$;
+        fastcgi_pass opnform-api:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+        fastcgi_param REQUEST_URI $api_uri;
+        fastcgi_param HTTP_X_FORWARDED_FOR $proxy_add_x_forwarded_for;
+        fastcgi_param HTTP_X_FORWARDED_HOST $http_x_forwarded_host;
+        fastcgi_param HTTP_X_FORWARDED_PORT $http_x_forwarded_port;
+        fastcgi_param HTTP_X_FORWARDED_PROTO $http_x_forwarded_proto;
+    }
+
+    location ~ ^/[.]well-known/(oauth-authorization-server|oauth-protected-resource(/mcp)?)$ {
+        rewrite ^ /index.php last;
+    }
+
+    location ~ /[.] {
+        deny all;
+    }
+}
+"""

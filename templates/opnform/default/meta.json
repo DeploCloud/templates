@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source form builder with a Nuxt frontend, Laravel API, queue worker and scheduler, backed by PostgreSQL and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "OpnForm",
+    "url": "https://github.com/OpnForm"
+  },
+  "links": {
+    "github": "https://github.com/OpnForm/OpnForm",
+    "website": "https://opnform.com",
+    "docs": [
+      "https://docs.opnform.com/deployment/docker",
+      "https://docs.opnform.com/configuration/environment-variables",
+      "https://docs.opnform.com/configuration/email-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploy: the first visit runs the setup page that creates the admin account. Emails are only written to the logs until you set MAIL_MAILER to smtp and fill in the MAIL_* variables.",
+      "link": "https://docs.opnform.com/configuration/email-setup"
+    },
+    {
+      "type": "info",
+      "message": "Self-hosted instances without an Enterprise license are limited to 2 users in total.",
+      "link": "https://docs.opnform.com/deployment/self-hosted-license"
+    }
+  ]
+}
