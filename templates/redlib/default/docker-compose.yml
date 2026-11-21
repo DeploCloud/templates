@@ -1,0 +1,19 @@
+services:
+  redlib:
+    image: quay.io/redlib/redlib:sha-ba116c1@sha256:37f624d87ce6cdd90d945af3688fdf0c195a0251d3b5ba62047792e8be2390df
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    expose:
+      - 8080
+    environment:
+      REDLIB_ROBOTS_DISABLE_INDEXING: ${REDLIB_ROBOTS_DISABLE_INDEXING}
+      REDLIB_FULL_URL: ${REDLIB_FULL_URL}
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "--tries=1", "http://localhost:8080/settings"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
