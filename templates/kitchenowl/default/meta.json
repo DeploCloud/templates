@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted grocery list, recipe manager and meal planner for households, using an embedded SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Tom Bursch",
+    "url": "https://github.com/TomBursch"
+  },
+  "links": {
+    "github": "https://github.com/TomBursch/kitchenowl",
+    "website": "https://kitchenowl.org/",
+    "docs": [
+      "https://docs.kitchenowl.org/latest/self-hosting/",
+      "https://docs.kitchenowl.org/latest/self-hosting/advanced/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created on the onboarding screen becomes the server admin. Create it right after deploying."
+    }
+  ]
+}

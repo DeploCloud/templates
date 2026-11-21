@@ -1,0 +1,14 @@
+[variables]
+jwt_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kitchenowl"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+JWT_SECRET_KEY = "${jwt_secret}"
+FRONT_URL = "https://${domain}"
