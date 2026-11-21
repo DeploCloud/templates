@@ -1,0 +1,29 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted music streaming server with a web player and mobile app API, backed by a bundled PostgreSQL database.",
+  "category": "media",
+  "developedBy": {
+    "label": "Black Candy",
+    "url": "https://github.com/blackcandy-org"
+  },
+  "links": {
+    "github": "https://github.com/blackcandy-org/blackcandy",
+    "docs": [
+      "https://github.com/blackcandy-org/blackcandy#use-postgresql-as-database",
+      "https://github.com/blackcandy-org/blackcandy#configuration",
+      "https://github.com/blackcandy-org/blackcandy/blob/master/docs/upgrade.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the initial admin account (email admin@admin.com, password foobar) and change its email and password right away.",
+      "link": "https://github.com/blackcandy-org/blackcandy#installation"
+    },
+    {
+      "type": "warning",
+      "message": "Black Candy has no upload feature: copy your music files into the media volume mounted at /media_data, then sync the library from the settings page.",
+      "link": "https://github.com/blackcandy-org/blackcandy#media-files-mounts"
+    }
+  ]
+}

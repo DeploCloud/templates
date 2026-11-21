@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "black-candy"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+MEDIA_PATH = "/media_data"
+# Single Puma process; the image default spawns one worker per CPU core.
+WEB_CONCURRENCY = "0"

@@ -1,0 +1,47 @@
+services:
+  black-candy:
+    image: ghcr.io/blackcandy-org/blackcandy:3.2.2@sha256:4d79ed83403e5ac67c08792afe590f738c00380033b2684aa0267a3c5bd53853
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      MEDIA_PATH: ${MEDIA_PATH}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+      DB_ADAPTER: postgresql
+      DB_URL: ${DB_URL}
+      CACHE_DB_URL: ${CACHE_DB_URL}
+      CABLE_DB_URL: ${CABLE_DB_URL}
+      QUEUE_DB_URL: ${QUEUE_DB_URL}
+    volumes:
+      - black-candy-storage:/rails/storage
+      - black-candy-media:/media_data
+    depends_on:
+      black-candy-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/up"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  black-candy-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: blackcandy
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: blackcandy
+    volumes:
+      - black-candy-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blackcandy -d blackcandy"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  black-candy-storage: {}
+  black-candy-media: {}
+  black-candy-postgres: {}
