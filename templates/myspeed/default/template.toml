@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "myspeed"
+port = 5_216
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
