@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "MediaWiki, the wiki engine behind Wikipedia, installed automatically on first start with a MariaDB database and persistent uploads.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Wikimedia Foundation",
+    "url": "https://wikimediafoundation.org"
+  },
+  "links": {
+    "github": "https://github.com/wikimedia/mediawiki",
+    "website": "https://www.mediawiki.org",
+    "docs": [
+      "https://www.mediawiki.org/wiki/Manual:Installation_guide",
+      "https://www.mediawiki.org/wiki/Manual:Install.php",
+      "https://www.mediawiki.org/wiki/Manual:LocalSettings.php"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start installs the wiki and creates the Admin account with the generated MW_ADMIN_PASSWORD from the environment. MW_SITE_NAME, MW_LANG and MW_ADMIN_USER only apply to that first install; later changes go in LocalSettings.php on the data volume.",
+      "link": "https://www.mediawiki.org/wiki/Manual:LocalSettings.php"
+    }
+  ]
+}
