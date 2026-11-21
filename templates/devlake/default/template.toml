@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+grafana_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "devlake-ui"
+port = 4_000
+host = "${domain}"
+
+[config.env]
+DEVLAKE_URL = "https://${domain}"
+ADMIN_USER = "admin"
+ADMIN_PASS = "${admin_password}"
+GRAFANA_ADMIN_PASSWORD = "${grafana_password}"
+ENCRYPTION_SECRET = "${secret:128}"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+TZ = "UTC"
