@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "goclaw"
+port = 18_790
+host = "${domain}"
+
+[config.env]
+GOCLAW_GATEWAY_TOKEN = "${hash:32}"
+GOCLAW_ENCRYPTION_KEY = "${hash:64}"
+POSTGRES_PASSWORD = "${db_password}"

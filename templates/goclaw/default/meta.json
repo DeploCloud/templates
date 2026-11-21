@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Multi-tenant AI agent gateway with a web dashboard for agents, teams, memory, tools and messaging channels, backed by PostgreSQL with pgvector and your own LLM provider keys.",
+  "category": "ai",
+  "developedBy": {
+    "label": "NextLevelBuilder",
+    "url": "https://github.com/nextlevelbuilder"
+  },
+  "links": {
+    "github": "https://github.com/nextlevelbuilder/goclaw",
+    "website": "https://goclaw.sh",
+    "docs": [
+      "https://docs.goclaw.sh/#quick-start",
+      "https://docs.goclaw.sh/#deploy-docker-compose",
+      "https://docs.goclaw.sh/#env-vars"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in to the dashboard with User ID `system` and the value of the GOCLAW_GATEWAY_TOKEN environment variable. Anyone holding this token has full access.",
+      "link": "https://docs.goclaw.sh/#quick-start"
+    },
+    {
+      "type": "warning",
+      "message": "An API key for an LLM provider (OpenRouter, Anthropic, OpenAI or another supported one) must be added in the setup wizard before agents can reply.",
+      "link": "https://docs.goclaw.sh/#providers-overview"
+    },
+    {
+      "type": "info",
+      "message": "GoClaw is licensed under CC BY-NC 4.0, which does not allow commercial use."
+    }
+  ]
+}

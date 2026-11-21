@@ -1,0 +1,47 @@
+services:
+  goclaw:
+    image: ghcr.io/nextlevelbuilder/goclaw:v3.14.0@sha256:46a89646d9f508ddff555bad88a5a40d8e7a002c27080a1c6a7b0379f62799c6
+    restart: unless-stopped
+    init: true
+    expose:
+      - 18790
+    environment:
+      GOCLAW_CONFIG: /app/data/config.json
+      GOCLAW_SKILLS_DIR: /app/data/skills
+      GOCLAW_GATEWAY_TOKEN: ${GOCLAW_GATEWAY_TOKEN}
+      GOCLAW_ENCRYPTION_KEY: ${GOCLAW_ENCRYPTION_KEY}
+      GOCLAW_POSTGRES_DSN: postgres://goclaw:${POSTGRES_PASSWORD}@goclaw-db:5432/goclaw?sslmode=disable
+      GOCLAW_AUTO_UPGRADE: "true"
+    volumes:
+      - goclaw-data:/app/data
+      - goclaw-workspace:/app/workspace
+      - goclaw-workspace:/app/.goclaw
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:18790/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      goclaw-db:
+        condition: service_healthy
+
+  goclaw-db:
+    image: pgvector/pgvector:0.8.7-pg18@sha256:38681dc6eaf55308e2a4c6de392d131652dcfac70e1263e35cd9b5ea3fe39782
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: goclaw
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: goclaw
+    volumes:
+      - goclaw-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U goclaw -d goclaw"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  goclaw-data: {}
+  goclaw-workspace: {}
+  goclaw-db-data: {}
