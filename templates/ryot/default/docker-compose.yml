@@ -1,0 +1,42 @@
+services:
+  ryot:
+    image: ignisda/ryot:v10.5.8@sha256:730e67eb16c04dbdab870b06dc0c73161e23596716f53406248a9c11863b1403
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      DATABASE_URL: postgres://ryot:${DB_PASSWORD}@ryot-db:5432/ryot
+      FRONTEND_URL: ${FRONTEND_URL}
+      SERVER_ADMIN_ACCESS_TOKEN: ${SERVER_ADMIN_ACCESS_TOKEN}
+      USERS_ALLOW_REGISTRATION: ${USERS_ALLOW_REGISTRATION}
+      MOVIES_AND_SHOWS_TMDB_ACCESS_TOKEN: ${MOVIES_AND_SHOWS_TMDB_ACCESS_TOKEN}
+      DISABLE_TELEMETRY: ${DISABLE_TELEMETRY}
+      TZ: ${TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      ryot-db:
+        condition: service_healthy
+
+  ryot-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ryot
+      POSTGRES_USER: ryot
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ryot -d ryot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ryot-db:/var/lib/postgresql
+
+volumes:
+  ryot-db: {}

@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ryot"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+FRONTEND_URL = "https://${domain}"
+SERVER_ADMIN_ACCESS_TOKEN = "${password:48}"
+USERS_ALLOW_REGISTRATION = "true"
+MOVIES_AND_SHOWS_TMDB_ACCESS_TOKEN = ""
+DISABLE_TELEMETRY = "false"
+TZ = "UTC"

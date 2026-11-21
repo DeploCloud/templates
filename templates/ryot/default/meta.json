@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted tracker for movies, shows, books, video games, music and workouts, backed by PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "IgnisDa",
+    "url": "https://github.com/IgnisDa"
+  },
+  "links": {
+    "github": "https://github.com/IgnisDa/ryot",
+    "website": "https://ryot.io",
+    "docs": [
+      "https://docs.ryot.io/",
+      "https://docs.ryot.io/configuration.html",
+      "https://docs.ryot.io/guides/file-storage.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the admin. Set USERS_ALLOW_REGISTRATION to false afterwards to close sign-ups.",
+      "link": "https://docs.ryot.io/configuration.html"
+    },
+    {
+      "type": "warning",
+      "message": "Movie and show tracking needs a TMDB access token in MOVIES_AND_SHOWS_TMDB_ACCESS_TOKEN; other providers such as video games need their own API keys.",
+      "link": "https://docs.ryot.io/guides/movies-and-shows.html"
+    }
+  ]
+}
