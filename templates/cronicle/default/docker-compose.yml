@@ -1,0 +1,27 @@
+services:
+  cronicle:
+    image: cronicle/cronicle:0.9.131@sha256:567736ad6ad464b5d66dc470e098f1472ac2bd74668d6af8c02bf39ecce939bd
+    restart: unless-stopped
+    command: ["manager"]
+    # Cronicle elects its primary server by hostname, so it must survive container recreation.
+    hostname: cronicle
+    expose:
+      - 3012
+    environment:
+      TZ: ${TZ}
+      CRONICLE_secret_key: ${CRONICLE_SECRET_KEY}
+      CRONICLE_base_app_url: ${CRONICLE_BASE_URL}
+      CRONICLE_custom_live_log_socket_url: ${CRONICLE_BASE_URL}
+    volumes:
+      - cronicle-data:/opt/cronicle/data
+      - cronicle-logs:/opt/cronicle/logs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3012/api/app/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  cronicle-data: {}
+  cronicle-logs: {}
