@@ -1,0 +1,21 @@
+[variables]
+vnc_password = "${password:8}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "free-games-claimer"
+port = 6_080
+host = "${domain}"
+
+[config.env]
+VNC_PASSWORD = "${vnc_password}"
+WIDTH = "1920"
+HEIGHT = "1080"
+LOGIN_TIMEOUT = "900"
+EMAIL = ""
+PASSWORD = ""
+EG_OTPKEY = ""
+PG_OTPKEY = ""
+NOTIFY = ""

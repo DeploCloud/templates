@@ -1,0 +1,29 @@
+services:
+  free-games-claimer:
+    image: ghcr.io/vogler/free-games-claimer:latest@sha256:d9847ba1f7e9c8212d2aaaf199bde424a98894440e0508e251a3e9448b30db5b
+    restart: unless-stopped
+    # claims once, then sleeps a day; the restart policy starts the next run
+    command: ["bash", "-c", "node epic-games; node prime-gaming; node gog; echo sleeping; sleep 1d"]
+    expose:
+      - 6080
+    environment:
+      VNC_PASSWORD: ${VNC_PASSWORD}
+      WIDTH: ${WIDTH}
+      HEIGHT: ${HEIGHT}
+      LOGIN_TIMEOUT: ${LOGIN_TIMEOUT}
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
+      EG_OTPKEY: ${EG_OTPKEY}
+      PG_OTPKEY: ${PG_OTPKEY}
+      NOTIFY: ${NOTIFY}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:6080/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - fgc-data:/fgc/data
+
+volumes:
+  fgc-data: {}
