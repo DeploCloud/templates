@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "shelfmark"
+port = 8_084
+host = "${domain}"

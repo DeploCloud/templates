@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web interface for searching and requesting books and audiobooks across configurable sources, with multi-user requests and a download queue.",
+  "category": "media",
+  "developedBy": {
+    "label": "calibrain",
+    "url": "https://github.com/calibrain"
+  },
+  "links": {
+    "github": "https://github.com/calibrain/shelfmark",
+    "docs": [
+      "https://github.com/calibrain/shelfmark/blob/main/docs/installation.md",
+      "https://github.com/calibrain/shelfmark/blob/main/docs/environment-variables.md",
+      "https://github.com/calibrain/shelfmark/blob/main/docs/users-and-requests.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is off by default, so anyone who reaches the URL can use the app. Right after deploying, create an admin under Settings > Users & Requests, then select Local under Settings > Security.",
+      "link": "https://github.com/calibrain/shelfmark/blob/main/docs/users-and-requests.md"
+    },
+    {
+      "type": "info",
+      "message": "Direct Download launches a bundled Chromium browser; give the server at least 2 GB of free RAM if you use it."
+    }
+  ]
+}
