@@ -1,0 +1,41 @@
+services:
+  spliit:
+    image: ghcr.io/spliit-app/spliit:1.30.0@sha256:cfaf0f84ef4f11cd3e4c46329039a0f1f51a7d7bf8cc218bf7c1b366e58a99f1
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      POSTGRES_PRISMA_URL: postgresql://spliit:${DB_PASSWORD}@spliit-db:5432/spliit
+      POSTGRES_URL_NON_POOLING: postgresql://spliit:${DB_PASSWORD}@spliit-db:5432/spliit
+      BASE_URL: ${BASE_URL}
+      DEFAULT_CURRENCY_CODE: ${DEFAULT_CURRENCY_CODE}
+    volumes:
+      - spliit-cache:/usr/app/.next/cache
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/api/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      spliit-db:
+        condition: service_healthy
+
+  spliit-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: spliit
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: spliit
+    volumes:
+      - spliit-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spliit -d spliit"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  spliit-cache: {}
+  spliit-db: {}

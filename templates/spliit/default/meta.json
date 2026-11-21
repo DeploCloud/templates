@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source expense sharing app for groups of friends and family, with balances, reimbursements and a PostgreSQL database.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Spliit",
+    "url": "https://github.com/spliit-app"
+  },
+  "links": {
+    "github": "https://github.com/spliit-app/spliit",
+    "website": "https://spliit.app",
+    "docs": [
+      "https://github.com/spliit-app/spliit#run-with-docker-compose",
+      "https://github.com/spliit-app/spliit#configuration",
+      "https://github.com/spliit-app/spliit#opt-in-features"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Spliit has no user accounts: anyone who can reach the instance can create groups, and anyone with a group link can read and edit that group.",
+      "link": "https://github.com/spliit-app/spliit#features"
+    }
+  ]
+}
