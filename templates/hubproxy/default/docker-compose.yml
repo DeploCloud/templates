@@ -1,0 +1,6 @@
+services:
+  hubproxy:
+    image: ghcr.io/sky22333/hubproxy:1.2.5@sha256:6c8d6f8dd600ad346db972be8c9c295c2a3a5eda8d80c4ab95697e537f0266d4
+    restart: unless-stopped
+    expose:
+      - 5000

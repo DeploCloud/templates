@@ -1,0 +1,19 @@
+{
+  "name": "Default",
+  "shortDescription": "Proxy for Docker registries, GitHub downloads and Hugging Face files, with a web UI for image search and offline image packages.",
+  "category": "networking",
+  "developedBy": {
+    "label": "sky22333",
+    "url": "https://github.com/sky22333"
+  },
+  "links": {
+    "github": "https://github.com/sky22333/hubproxy",
+    "website": "https://docs.52013120.xyz/en/",
+    "docs": [
+      "https://docs.52013120.xyz/en/deployment/docker/",
+      "https://docs.52013120.xyz/en/configuration/environment/",
+      "https://docs.52013120.xyz/en/guides/docker-mirror/",
+      "https://docs.52013120.xyz/en/guides/github-proxy/"
+    ]
+  }
+}
