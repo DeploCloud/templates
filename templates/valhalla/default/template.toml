@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "valhalla"
+port = 8_002
+host = "${domain}"
+
+[config.env]
+TILE_URLS = "https://download.geofabrik.de/europe/andorra-latest.osm.pbf"

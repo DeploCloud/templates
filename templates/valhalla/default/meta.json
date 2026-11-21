@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source OpenStreetMap routing engine with an HTTP API for routing, isochrones, matrices and map matching, building its graph from PBF extracts.",
+  "category": "development",
+  "developedBy": {
+    "label": "Valhalla",
+    "url": "https://github.com/valhalla"
+  },
+  "links": {
+    "github": "https://github.com/valhalla/valhalla",
+    "website": "https://valhalla.github.io/valhalla/",
+    "docs": [
+      "https://github.com/valhalla/valhalla/blob/master/docker/README.md",
+      "https://valhalla.github.io/valhalla/api/turn-by-turn/api-reference/",
+      "https://valhalla.github.io/valhalla/api/status/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set TILE_URLS to the OpenStreetMap PBF extracts you need before the first deploy. The default is the small Andorra extract. Tiles are only built once: to switch region later, empty the data volume and redeploy. Large regions can take hours and many GB of RAM to build.",
+      "link": "https://github.com/valhalla/valhalla/blob/master/docker/README.md"
+    }
+  ]
+}
