@@ -1,0 +1,53 @@
+services:
+  mydrive:
+    image: kylehoell/mydrive:sha-bae5dbb@sha256:15e3b13fdeea286204710f677e66d66b4d8e4c88b8f3c18a56785592e8e3e9eb
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DOCKER: "true"
+      MONGODB_URL: "${MONGODB_URL}"
+      DB_TYPE: fs
+      FS_DIRECTORY: /data/
+      TEMP_DIRECTORY: /temp/
+      KEY: "${KEY}"
+      PASSWORD_ACCESS: "${PASSWORD_ACCESS}"
+      PASSWORD_REFRESH: "${PASSWORD_REFRESH}"
+      PASSWORD_COOKIE: "${PASSWORD_COOKIE}"
+      VIDEO_THUMBNAILS_ENABLED: "true"
+      TEMP_VIDEO_THUMBNAIL_LIMIT: "5000000000"
+      BLOCK_CREATE_ACCOUNT: "${BLOCK_CREATE_ACCOUNT}"
+      SECURE_COOKIES: "true"
+      REMOTE_URL: "${REMOTE_URL}"
+    volumes:
+      - mydrive-data:/data
+      - mydrive-temp:/temp
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      mydrive-db:
+        condition: service_healthy
+
+  mydrive-db:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mydrive
+      MONGO_INITDB_ROOT_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - mydrive-db:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  mydrive-data: {}
+  mydrive-temp: {}
+  mydrive-db: {}

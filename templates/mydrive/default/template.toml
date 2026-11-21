@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mydrive"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+MONGODB_URL = "mongodb://mydrive:${db_password}@mydrive-db:27017/mydrive?authSource=admin"
+KEY = "${password:48}"
+PASSWORD_ACCESS = "${secret:64}"
+PASSWORD_REFRESH = "${secret:64}"
+PASSWORD_COOKIE = "${secret:64}"
+BLOCK_CREATE_ACCOUNT = "false"
+REMOTE_URL = "https://${domain}"

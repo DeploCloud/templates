@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted cloud file storage similar to Google Drive, with AES-256 encrypted files on disk, MongoDB metadata, sharing and media thumbnails.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Kyle Hoell",
+    "url": "https://github.com/subnub"
+  },
+  "links": {
+    "github": "https://github.com/subnub/myDrive",
+    "website": "https://mydrive-storage.com/",
+    "docs": [
+      "https://github.com/subnub/myDrive#docker",
+      "https://github.com/subnub/myDrive/blob/master/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can create an account. After signing up, set BLOCK_CREATE_ACCOUNT to true and redeploy to close registration.",
+      "link": "https://github.com/subnub/myDrive/blob/master/.env.example"
+    },
+    {
+      "type": "warning",
+      "message": "Files are encrypted with the generated KEY variable. Back it up and never change it, or every stored file becomes unreadable."
+    },
+    {
+      "type": "info",
+      "message": "MongoDB 8.0 needs a CPU with AVX support on x86_64 servers (ARMv8.2-A on arm64)."
+    }
+  ]
+}
