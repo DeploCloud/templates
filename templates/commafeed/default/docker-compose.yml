@@ -1,0 +1,15 @@
+services:
+  commafeed:
+    image: athou/commafeed:7.5.3-h2@sha256:7316411f57065f9aa9840bd431e4cdd29c922a02b321ee259ce1af7e59bde33b
+    restart: unless-stopped
+    expose:
+      - 8082
+    environment:
+      QUARKUS_HTTP_AUTH_SESSION_ENCRYPTION_KEY: ${QUARKUS_HTTP_AUTH_SESSION_ENCRYPTION_KEY}
+      QUARKUS_HTTP_PROXY_PROXY_ADDRESS_FORWARDING: "true"
+      QUARKUS_HTTP_PROXY_ALLOW_X_FORWARDED: "true"
+    volumes:
+      - commafeed-data:/commafeed/data
+
+volumes:
+  commafeed-data: {}

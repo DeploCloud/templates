@@ -1,0 +1,13 @@
+[variables]
+session_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "commafeed"
+port = 8_082
+host = "${domain}"
+
+[config.env]
+QUARKUS_HTTP_AUTH_SESSION_ENCRYPTION_KEY = "${session_key}"
