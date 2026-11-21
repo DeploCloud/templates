@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Dynamic DNS client that keeps A and AAAA records pointed at the server's public IP on Cloudflare, DuckDNS, Namecheap, OVH, Porkbun and 50+ other providers, with a status web UI.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Quentin McGaw",
+    "url": "https://github.com/qdm12"
+  },
+  "links": {
+    "github": "https://github.com/qdm12/ddns-updater",
+    "docs": [
+      "https://github.com/qdm12/ddns-updater#configuration",
+      "https://github.com/qdm12/ddns-updater#environment-variables",
+      "https://github.com/qdm12/ddns-updater/tree/master/docs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Nothing is updated until you add your records to the config.json mount (one entry per provider and domain, as described in the provider docs) and redeploy. Use \"ip_version\": \"ipv4\" unless the server's container network has IPv6.",
+      "link": "https://github.com/qdm12/ddns-updater#configuration"
+    },
+    {
+      "type": "warning",
+      "message": "The web UI has no login: anyone who reaches the domain can see your records and IP history and call /update to force an update. Restrict access if that matters."
+    }
+  ]
+}
