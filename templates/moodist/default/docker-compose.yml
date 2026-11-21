@@ -1,0 +1,6 @@
+services:
+  moodist:
+    image: ghcr.io/remvze/moodist:v3.1.1@sha256:44367c9ca0f1ec93a28dd3715ad39fa8e69e25cb64931ab655f86954c2ee4b93
+    restart: unless-stopped
+    expose:
+      - 8080

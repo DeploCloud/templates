@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Ambient sound mixer for focus and calm with layered soundscapes, presets, binaural beats, Pomodoro timer and notepad.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "remvze",
+    "url": "https://github.com/remvze"
+  },
+  "links": {
+    "github": "https://github.com/remvze/moodist",
+    "website": "https://moodist.mvze.net",
+    "docs": [
+      "https://github.com/remvze/moodist#self-hosting"
+    ]
+  }
+}
