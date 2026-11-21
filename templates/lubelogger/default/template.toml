@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lubelogger"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+LUBELOGGER_DOMAIN = "https://${domain}"

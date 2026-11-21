@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "LubeLogger vehicle maintenance and fuel mileage tracker with records stored in a PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Hargata Softworks",
+    "url": "https://github.com/hargata"
+  },
+  "links": {
+    "github": "https://github.com/hargata/lubelog",
+    "website": "https://lubelogger.com",
+    "docs": [
+      "https://docs.lubelogger.com/Advanced/Postgres/",
+      "https://docs.lubelogger.com/Installation/Authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is disabled by default, so anyone who can reach the URL can use the app. Right after deployment open Settings, check Enable Authentication and set the root user credentials.",
+      "link": "https://docs.lubelogger.com/Installation/Authentication/"
+    }
+  ]
+}

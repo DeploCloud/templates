@@ -1,0 +1,35 @@
+services:
+  lubelogger:
+    image: ghcr.io/hargata/lubelogger:v1.7.5@sha256:cdfd841eea84b652cca5401dc7edfca9f400970ab472025246f92323b2ce36e1
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      LUBELOGGER_DOMAIN: ${LUBELOGGER_DOMAIN}
+      POSTGRES_CONNECTION: Host=lubelogger-db:5432;Username=lubelogger;Password=${DB_PASSWORD};Database=lubelogger;
+    volumes:
+      - lubelogger-data:/App/data
+      - lubelogger-keys:/root/.aspnet/DataProtection-Keys
+    depends_on:
+      lubelogger-db:
+        condition: service_healthy
+
+  lubelogger-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lubelogger
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: lubelogger
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lubelogger -d lubelogger"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - lubelogger-postgres:/var/lib/postgresql
+
+volumes:
+  lubelogger-data: {}
+  lubelogger-keys: {}
+  lubelogger-postgres: {}
