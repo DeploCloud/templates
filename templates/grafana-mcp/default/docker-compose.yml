@@ -1,0 +1,11 @@
+services:
+  grafana-mcp:
+    image: grafana/mcp-grafana:2.3.0@sha256:c27248b5919d09d64ea273ca1b128b32902c6796f6e2dfcd11849d4f1363f9ed
+    restart: unless-stopped
+    command: ["-t", "streamable-http", "--allowed-hosts", "${MCP_ALLOWED_HOSTS}"]
+    expose:
+      - 8000
+    environment:
+      GRAFANA_URL: ${GRAFANA_URL}
+      GRAFANA_SERVICE_ACCOUNT_TOKEN: ${GRAFANA_SERVICE_ACCOUNT_TOKEN}
+      MCP_GRAFANA_SERVER_TOKEN: ${MCP_GRAFANA_SERVER_TOKEN}
