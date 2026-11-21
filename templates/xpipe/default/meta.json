@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "XPipe Webtop: a KDE desktop in the browser with the XPipe connection hub, terminals and editors preinstalled, behind basic auth, with connections and settings kept on a persistent volume.",
+  "category": "networking",
+  "developedBy": {
+    "label": "XPipe",
+    "url": "https://xpipe.io"
+  },
+  "links": {
+    "github": "https://github.com/xpipe-io/xpipe",
+    "website": "https://xpipe.io",
+    "docs": [
+      "https://docs.xpipe.io/guide/webtop",
+      "https://github.com/xpipe-io/xpipe-webtop",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container and access to every saved connection.",
+      "link": "https://docs.xpipe.io/guide/webtop"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.xpipe.io/guide/webtop"
+    },
+    {
+      "type": "info",
+      "message": "XPipe itself is downloaded and installed when the container starts, so the first start takes a few minutes and needs outbound internet access.",
+      "link": "https://github.com/xpipe-io/xpipe-webtop"
+    }
+  ]
+}
