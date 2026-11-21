@@ -1,0 +1,20 @@
+[variables]
+ssh_user = "term"
+ssh_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wetty"
+port = 3000
+host = "${domain}"
+
+[config.env]
+ALLOWEDORIGINS = "https://${domain}"
+SSHHOST = "wetty-ssh"
+SSHPORT = "2222"
+SSHUSER = "${ssh_user}"
+SSH_USER_NAME = "${ssh_user}"
+SSH_USER_PASSWORD = "${ssh_password}"
+TZ = "Etc/UTC"

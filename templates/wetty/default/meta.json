@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based terminal over HTTPS using xterm.js and websockets, bundled with an SSH server container you log into from the web page.",
+  "category": "development",
+  "developedBy": {
+    "label": "Cian Butler",
+    "url": "https://github.com/butlerx"
+  },
+  "links": {
+    "github": "https://github.com/butlerx/wetty",
+    "website": "https://butlerx.github.io/wetty",
+    "docs": [
+      "https://butlerx.github.io/wetty/flags",
+      "https://github.com/butlerx/wetty/blob/main/docs/docker.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The terminal logs in as the SSH user term and asks for its password: the generated SSH_USER_PASSWORD in the environment variables. Anyone who reaches the URL gets this prompt, so keep that password strong."
+    }
+  ]
+}
