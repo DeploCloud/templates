@@ -1,0 +1,30 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hi-events"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_NAME = "Hi.Events"
+VITE_FRONTEND_URL = "https://${domain}"
+VITE_API_URL_CLIENT = "https://${domain}/api"
+APP_CDN_URL = "https://${domain}/storage"
+APP_KEY = "${password:32}"
+JWT_SECRET = "${password:64}"
+DB_PASSWORD = "${db_password}"
+APP_DISABLE_REGISTRATION = "false"
+APP_PLATFORM_SUPPORT_EMAIL = "support@${domain}"
+MAIL_MAILER = "log"
+MAIL_HOST = ""
+MAIL_PORT = "587"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_FROM_ADDRESS = "noreply@${domain}"
+STRIPE_PUBLIC_KEY = ""
+STRIPE_SECRET_KEY = ""
+STRIPE_WEBHOOK_SECRET = ""

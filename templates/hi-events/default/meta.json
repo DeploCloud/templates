@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source event management and ticketing platform with checkout, attendee check-in and organizer pages, backed by PostgreSQL and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Hi.Events",
+    "url": "https://github.com/HiEventsDev"
+  },
+  "links": {
+    "github": "https://github.com/HiEventsDev/Hi.Events",
+    "website": "https://hi.events",
+    "docs": [
+      "https://hi.events/docs/getting-started/deploying",
+      "https://github.com/HiEventsDev/Hi.Events/blob/develop/docker/all-in-one/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open: create your account at /auth/register right after deploying, then set APP_DISABLE_REGISTRATION to true so nobody else can sign up. For the admin area, open a terminal in the hi-events container, run php /app/backend/artisan user:make-superadmin 1 and confirm both prompts."
+    },
+    {
+      "type": "warning",
+      "message": "Tickets, invitations and password resets are sent by email. Mail is only written to the log until you set MAIL_MAILER to smtp with MAIL_HOST, MAIL_PORT, MAIL_USERNAME and MAIL_PASSWORD. Card payments need STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY and a webhook to https://<your-domain>/api/public/webhooks/stripe with its STRIPE_WEBHOOK_SECRET.",
+      "link": "https://hi.events/docs/getting-started/deploying"
+    }
+  ]
+}

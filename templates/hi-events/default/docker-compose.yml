@@ -1,0 +1,79 @@
+services:
+  hi-events:
+    image: daveearley/hi.events-all-in-one:v2.2.0@sha256:435728539250541d69f4161804056aeb52e5b9d99ecd44960f7a1a2fb44e3b74
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      VITE_FRONTEND_URL: ${VITE_FRONTEND_URL}
+      VITE_API_URL_CLIENT: ${VITE_API_URL_CLIENT}
+      VITE_API_URL_SERVER: http://localhost:80/api
+      VITE_STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLIC_KEY}
+      VITE_APP_NAME: ${APP_NAME}
+      APP_NAME: ${APP_NAME}
+      APP_KEY: ${APP_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      APP_FRONTEND_URL: ${VITE_FRONTEND_URL}
+      APP_CDN_URL: ${APP_CDN_URL}
+      APP_DISABLE_REGISTRATION: ${APP_DISABLE_REGISTRATION}
+      APP_SAAS_MODE_ENABLED: "false"
+      APP_TRUSTED_PROXIES: "*"
+      APP_PLATFORM_SUPPORT_EMAIL: ${APP_PLATFORM_SUPPORT_EMAIL}
+      LOG_CHANNEL: stderr
+      QUEUE_CONNECTION: redis
+      WEBHOOK_QUEUE_NAME: webhook-queue
+      FILESYSTEM_PUBLIC_DISK: public
+      FILESYSTEM_PRIVATE_DISK: local
+      DB_CONNECTION: pgsql
+      DATABASE_URL: postgresql://hievents:${DB_PASSWORD}@hi-events-db:5432/hievents
+      REDIS_HOST: hi-events-redis
+      REDIS_PASSWORD: ""
+      REDIS_PORT: "6379"
+      MAIL_MAILER: ${MAIL_MAILER}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: ${APP_NAME}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+    volumes:
+      - hi-events-storage:/app/backend/storage/app
+    depends_on:
+      hi-events-db:
+        condition: service_healthy
+      hi-events-redis:
+        condition: service_healthy
+
+  hi-events-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hievents
+      POSTGRES_USER: hievents
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - hi-events-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hievents -d hievents"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  hi-events-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - hi-events-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  hi-events-storage: {}
+  hi-events-db: {}
+  hi-events-redis: {}
