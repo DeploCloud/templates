@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+secret_key = "${password:50}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mathesar"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+ALLOWED_HOSTS = "*"
+SECRET_KEY = "${secret_key}"
+WEB_CONCURRENCY = "3"
+POSTGRES_DB = "mathesar_django"
+POSTGRES_USER = "mathesar"
+POSTGRES_PASSWORD = "${db_password}"
