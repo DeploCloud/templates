@@ -1,0 +1,43 @@
+services:
+  oxicloud:
+    image: diocrafts/oxicloud:0.10.1@sha256:e51843bdb8967ca825bc9b14dd3a35519591b52d4f9beadedd86646129077cf6
+    restart: unless-stopped
+    expose:
+      - 8086
+    environment:
+      OXICLOUD_SERVER_HOST: 0.0.0.0
+      OXICLOUD_SERVER_PORT: "8086"
+      OXICLOUD_STORAGE_PATH: /app/storage
+      OXICLOUD_BASE_URL: ${OXICLOUD_BASE_URL}
+      OXICLOUD_DB_CONNECTION_STRING: ${OXICLOUD_DB_CONNECTION_STRING}
+      OXICLOUD_TRUST_PROXY_CIDR: ${OXICLOUD_TRUST_PROXY_CIDR}
+    volumes:
+      - oxicloud-storage:/app/storage
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8086/ready || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    depends_on:
+      oxicloud-db:
+        condition: service_healthy
+
+  oxicloud-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: oxicloud
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: oxicloud
+    volumes:
+      - oxicloud-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oxicloud -d oxicloud"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  oxicloud-storage: {}
+  oxicloud-db: {}
