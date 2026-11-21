@@ -1,0 +1,28 @@
+services:
+  stemdeck:
+    image: ghcr.io/stemdeckapp/stemdeck:0.21.0@sha256:e2ac3128b3208142712d5cf391490f1db6ab3bfdb52e15a92368456ac2922b46
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      # Settings, logs and extra models live beside the Demucs weights in /cache.
+      STEMDECK_DATA_DIR: /cache
+      STEMDECK_JOBS_DIR: /app/jobs
+      STEMDECK_PERSIST_LIBRARY: ${STEMDECK_PERSIST_LIBRARY}
+      STEMDECK_MAX_DURATION_SEC: ${STEMDECK_MAX_DURATION_SEC}
+      STEMDECK_MAX_PENDING_JOBS: ${STEMDECK_MAX_PENDING_JOBS}
+      STEMDECK_STEM_FORMAT: ${STEMDECK_STEM_FORMAT}
+      STEMDECK_IDLE_UNLOAD_MINUTES: ${STEMDECK_IDLE_UNLOAD_MINUTES}
+    volumes:
+      - stemdeck-jobs:/app/jobs
+      - stemdeck-cache:/cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  stemdeck-jobs: {}
+  stemdeck-cache: {}

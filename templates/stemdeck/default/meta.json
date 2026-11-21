@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Stem separation studio that splits songs into vocals, drums, bass, guitar, piano and other tracks with Demucs, with a mixer for practice, karaoke and export.",
+  "category": "media",
+  "developedBy": {
+    "label": "StemDeck",
+    "url": "https://stemdeck.app"
+  },
+  "links": {
+    "github": "https://github.com/stemdeckapp/stemdeck",
+    "website": "https://stemdeck.app",
+    "docs": [
+      "https://github.com/stemdeckapp/stemdeck/blob/main/docs/build-from-source.md#docker",
+      "https://github.com/stemdeckapp/stemdeck/blob/main/docs/configuration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "StemDeck has no authentication by design: anyone who can open the domain can import songs, change settings and delete the library. Keep the domain private or put access control in front of it.",
+      "link": "https://github.com/stemdeckapp/stemdeck/blob/main/docs/configuration.md#who-can-reach-stemdeck"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: requests from other devices over plain HTTP are refused with a 403, so the domain must be served over HTTPS.",
+      "link": "https://github.com/stemdeckapp/stemdeck/blob/main/docs/configuration.md#serving-other-devices-why-https-is-not-optional"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
