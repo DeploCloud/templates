@@ -1,0 +1,16 @@
+[variables]
+web_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "maildev"
+port = 1_080
+host = "${domain}"
+
+[config.env]
+MAILDEV_WEB_USER = "admin"
+MAILDEV_WEB_PASS = "${web_password}"
+MAILDEV_MAX_EMAILS = "5000"
+TZ = "UTC"
