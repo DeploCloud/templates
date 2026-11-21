@@ -1,0 +1,55 @@
+services:
+  mediacms:
+    image: mediacms/mediacms:latest@sha256:c7cb3abdf8086accadc1c0d13f08b8943ae13967259fe99c3f0180467a13ab7d
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      FRONTEND_HOST: ${FRONTEND_HOST}
+      PORTAL_NAME: ${PORTAL_NAME}
+      SECRET_KEY: ${SECRET_KEY}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      POSTGRES_HOST: mediacms-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_NAME: mediacms
+      POSTGRES_USER: mediacms
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_LOCATION: redis://mediacms-redis:6379/1
+    volumes:
+      - mediacms-media:/home/mediacms.io/mediacms/media_files
+      - ./local_settings.py:/home/mediacms.io/mediacms/deploy/docker/local_settings.py:ro
+    depends_on:
+      mediacms-db:
+        condition: service_healthy
+      mediacms-redis:
+        condition: service_healthy
+
+  mediacms-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mediacms
+      POSTGRES_USER: mediacms
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mediacms -d mediacms"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mediacms-db:/var/lib/postgresql/data
+
+  mediacms-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mediacms-media: {}
+  mediacms-db: {}
