@@ -1,0 +1,30 @@
+[variables]
+app_key = "${password:32}"
+anonaddy_secret = "${password:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "anonaddy"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+APP_KEY = "${app_key}"
+APP_URL = "https://${domain}"
+DB_DATABASE = "anonaddy"
+DB_USERNAME = "anonaddy"
+DB_PASSWORD = "${db_password}"
+ANONADDY_DOMAIN = "${domain}"
+ANONADDY_HOSTNAME = "${domain}"
+ANONADDY_SECRET = "${anonaddy_secret}"
+ANONADDY_ADMIN_USERNAME = ""
+ANONADDY_ENABLE_REGISTRATION = "true"
+RSPAMD_ENABLE = "false"
+POSTFIX_RELAYHOST = ""
+POSTFIX_RELAYHOST_AUTH_ENABLE = "false"
+POSTFIX_RELAYHOST_USERNAME = ""
+POSTFIX_RELAYHOST_PASSWORD = ""
