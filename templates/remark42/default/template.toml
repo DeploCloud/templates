@@ -1,0 +1,18 @@
+[variables]
+secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "remark42"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+REMARK_URL = "https://${domain}"
+SECRET = "${secret}"
+SITE = "remark"
+AUTH_ANON = "true"
+ADMIN_SHARED_ID = ""
+TRUSTED_PROXY = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

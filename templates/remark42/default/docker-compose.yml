@@ -1,0 +1,18 @@
+services:
+  remark42:
+    image: ghcr.io/umputun/remark42:v1.18.0@sha256:00a803ffdde34e8f239eef3e46adbeac44b9ef1a2f366e8b86b413d6908f3ac3
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      REMARK_URL: "${REMARK_URL}"
+      SECRET: "${SECRET}"
+      SITE: "${SITE}"
+      AUTH_ANON: "${AUTH_ANON}"
+      ADMIN_SHARED_ID: "${ADMIN_SHARED_ID}"
+      TRUSTED_PROXY: "${TRUSTED_PROXY}"
+    volumes:
+      - remark42-data:/srv/var
+
+volumes:
+  remark42-data: {}

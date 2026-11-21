@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-focused, self-hosted comment engine you embed into any website, with an embedded BoltDB store and no external database.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Umputun",
+    "url": "https://github.com/umputun"
+  },
+  "links": {
+    "github": "https://github.com/umputun/remark42",
+    "website": "https://remark42.com",
+    "docs": [
+      "https://remark42.com/docs/getting-started/installation/",
+      "https://remark42.com/docs/configuration/parameters/",
+      "https://remark42.com/docs/configuration/frontend/",
+      "https://remark42.com/docs/configuration/authorization/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Only anonymous login is enabled out of the box. To get an admin, sign in with a social or email provider, copy your user ID from the comment widget and set it in ADMIN_SHARED_ID, then redeploy.",
+      "link": "https://remark42.com/docs/configuration/authorization/"
+    }
+  ]
+}
