@@ -1,0 +1,69 @@
+services:
+  tube-archivist:
+    image: bbilly1/tubearchivist:v0.6.0@sha256:0cbc18aa953c72ec7dfdd6f8fa7c2fe89b5d04489857d7baa354fecbd6181e69
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      TA_HOST: ${TA_HOST}
+      TA_USERNAME: ${TA_USERNAME}
+      TA_PASSWORD: ${TA_PASSWORD}
+      ES_URL: http://tube-archivist-es:9200
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      REDIS_CON: redis://tube-archivist-redis:6379
+      TZ: ${TZ}
+    volumes:
+      - tube-archivist-media:/youtube
+      - tube-archivist-cache:/cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      tube-archivist-es:
+        condition: service_healthy
+      tube-archivist-redis:
+        condition: service_healthy
+
+  tube-archivist-es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.5.5@sha256:13b4a40bb095774f5fda635e45fd5677cc6a26565e42b24997b0c72b88e75984
+    restart: unless-stopped
+    expose:
+      - 9200
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS}
+      xpack.security.enabled: "true"
+      discovery.type: single-node
+      path.repo: /usr/share/elasticsearch/data/snapshot
+    volumes:
+      - tube-archivist-es:/usr/share/elasticsearch/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --silent --fail --output /dev/null -u "elastic:$${ELASTIC_PASSWORD}" http://localhost:9200/_cluster/health
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+
+  tube-archivist-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    expose:
+      - 6379
+    volumes:
+      - tube-archivist-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  tube-archivist-media: {}
+  tube-archivist-cache: {}
+  tube-archivist-es: {}
+  tube-archivist-redis: {}

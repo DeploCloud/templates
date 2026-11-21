@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted YouTube media server that downloads videos with yt-dlp, indexes their metadata in Elasticsearch and plays them in a web interface.",
+  "category": "media",
+  "developedBy": {
+    "label": "Tube Archivist",
+    "url": "https://github.com/tubearchivist"
+  },
+  "links": {
+    "github": "https://github.com/tubearchivist/tubearchivist",
+    "website": "https://www.tubearchivist.com",
+    "docs": [
+      "https://docs.tubearchivist.com/",
+      "https://docs.tubearchivist.com/installation/env-vars/",
+      "https://docs.tubearchivist.com/installation/docker-compose/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the generated TA_PASSWORD environment variable. Changing these variables after the first start has no effect: change the password in the app instead."
+    }
+  ]
+}
