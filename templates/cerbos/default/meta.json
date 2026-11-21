@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Stateless authorization policy decision point that evaluates YAML access policies over an HTTP API, with a built-in API explorer.",
+  "category": "security",
+  "developedBy": {
+    "label": "Cerbos",
+    "url": "https://www.cerbos.dev/"
+  },
+  "links": {
+    "github": "https://github.com/cerbos/cerbos",
+    "website": "https://www.cerbos.dev/",
+    "docs": [
+      "https://docs.cerbos.dev/cerbos/latest/installation/container",
+      "https://docs.cerbos.dev/cerbos/latest/configuration/storage",
+      "https://docs.cerbos.dev/cerbos/latest/policies/resource_policies",
+      "https://docs.cerbos.dev/cerbos/latest/api/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The Cerbos API has no authentication of its own: anyone who knows the URL can query authorization decisions. Replace the example policy with your own policies before connecting applications.",
+      "link": "https://docs.cerbos.dev/cerbos/latest/policies/"
+    },
+    {
+      "type": "info",
+      "message": "Only the HTTP API is routed to the domain; the gRPC API on port 3593 is not. Use an SDK's HTTP client, since gRPC-only SDKs cannot connect through the domain.",
+      "link": "https://docs.cerbos.dev/cerbos/latest/api/"
+    }
+  ]
+}
