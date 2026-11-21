@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "apache-guacamole"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRESQL_DATABASE = "guacamole"
+POSTGRESQL_USERNAME = "guacamole"
+POSTGRESQL_PASSWORD = "${db_password}"

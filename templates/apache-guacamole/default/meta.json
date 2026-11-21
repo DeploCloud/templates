@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Clientless remote desktop gateway for RDP, VNC, SSH and Telnet in the browser, with the guacd proxy and PostgreSQL for users and connections.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://www.apache.org/"
+  },
+  "links": {
+    "github": "https://github.com/apache/guacamole-server",
+    "website": "https://guacamole.apache.org/",
+    "docs": [
+      "https://guacamole.apache.org/doc/gug/guacamole-docker.html",
+      "https://guacamole.apache.org/doc/gug/postgresql-auth.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The database starts with the default administrator guacadmin / guacadmin. Sign in and change that password right after the first deploy.",
+      "link": "https://guacamole.apache.org/doc/gug/postgresql-auth.html"
+    }
+  ]
+}
