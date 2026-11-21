@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "HTPC and homelab services organizer that groups your web apps into tabs behind one login, with SSO, homepage widgets and an SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "causefx",
+    "url": "https://github.com/causefx"
+  },
+  "links": {
+    "github": "https://github.com/causefx/Organizr",
+    "docs": [
+      "https://docs.organizr.app/installation/installing-organizr",
+      "https://docs.organizr.app/first-time-setup",
+      "https://github.com/Organizr/docker-organizr#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor runs the setup wizard and creates the admin account. Keep the database location under /config (the suggested path is fine) so the SQLite database stays on the persistent volume.",
+      "link": "https://docs.organizr.app/first-time-setup"
+    },
+    {
+      "type": "info",
+      "message": "The container downloads the Organizr code from GitHub on every start, so the server needs outbound internet access and a restart updates the app."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+services:
+  organizr:
+    image: ghcr.io/organizr/organizr:latest@sha256:52183b1eeb25632e68b677adafbcbaa5436d62cbbbe049edd4fcfa527baa0b1d
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      branch: v2-master
+    volumes:
+      - organizr-config:/config
+
+volumes:
+  organizr-config: {}
