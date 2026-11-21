@@ -1,0 +1,18 @@
+[variables]
+db_root_password = "${password:32}"
+db_password = "${password:32}"
+admin_password = "${password:20}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openemr"
+port = 80
+host = "${domain}"
+
+[config.env]
+MYSQL_ROOT_PASS = "${db_root_password}"
+MYSQL_PASS = "${db_password}"
+OE_PASS = "${admin_password}"
+OPENEMR_SITE_ADDR = "https://${domain}"

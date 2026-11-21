@@ -1,0 +1,49 @@
+services:
+  openemr:
+    image: openemr/openemr:8.5.0-2026-11-19@sha256:7d6dad600cfadcd138687ac3e11088d3eecd7c9a14b9a827720f3e164a9ce12c
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - openemr-sites:/var/www/localhost/htdocs/openemr/sites
+      - openemr-logs:/var/log
+    environment:
+      MYSQL_HOST: openemr-db
+      MYSQL_ROOT_PASS: ${MYSQL_ROOT_PASS}
+      MYSQL_USER: openemr
+      MYSQL_PASS: ${MYSQL_PASS}
+      MYSQL_DATABASE: openemr
+      OE_USER: admin
+      OE_PASS: ${OE_PASS}
+      OPENEMR_SETTING_site_addr_oath: ${OPENEMR_SITE_ADDR}
+    depends_on:
+      openemr-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--show-error", "http://localhost/meta/health/readyz"]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 10m
+      start_interval: 10s
+
+  openemr-db:
+    image: mariadb:12.3.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    command: ["mariadbd", "--character-set-server=utf8mb4"]
+    volumes:
+      - openemr-db:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
+      MARIADB_AUTO_UPGRADE: "1"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 1m
+
+volumes:
+  openemr-sites: {}
+  openemr-logs: {}
+  openemr-db: {}
