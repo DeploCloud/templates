@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "securo"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+DATABASE_URL = "postgresql+asyncpg://securo:${db_password}@securo-db:5432/securo"
+SECRET_KEY = "${hash:64}"
+FRONTEND_URL = "https://${domain}"
+REGISTRATION_ENABLED = "false"

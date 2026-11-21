@@ -1,0 +1,103 @@
+x-securo-backend: &securo-backend
+  image: ghcr.io/securo-finance/securo-backend:0.21.0@sha256:bc3ebd62ddd725c9a457c53b0973c841457ed24b4a599ece9b56eff3a677b371
+  restart: unless-stopped
+  environment:
+    DATABASE_URL: ${DATABASE_URL}
+    REDIS_URL: redis://securo-redis:6379/0
+    SECRET_KEY: ${SECRET_KEY}
+    FRONTEND_URL: ${FRONTEND_URL}
+    REGISTRATION_ENABLED: ${REGISTRATION_ENABLED}
+    # Traefik and the bundled nginx both sit in front of the backend.
+    TRUSTED_PROXY_HOPS: "2"
+    STORAGE_PROVIDER: local
+    STORAGE_LOCAL_PATH: /app/data/attachments
+    AGENTS_KNOWLEDGE_STORAGE_PATH: /app/data/agent_knowledge
+  volumes:
+    - securo-attachments:/app/data/attachments
+    - securo-backups:/app/data/backups
+    - securo-agent-knowledge:/app/data/agent_knowledge
+    - securo-embedding-models:/app/data/embedding_models
+  depends_on:
+    securo-db:
+      condition: service_healthy
+    securo-redis:
+      condition: service_healthy
+    securo-migrate:
+      condition: service_completed_successfully
+
+services:
+  securo:
+    image: ghcr.io/securo-finance/securo-frontend:0.21.0@sha256:a825f53458f97a4d8802b1e625547b9f851f6e6dfff60bfa6d2a24811c9eba82
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      BACKEND_URL: http://securo-backend:8000
+    depends_on:
+      securo-backend:
+        condition: service_healthy
+
+  securo-backend:
+    <<: *securo-backend
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    expose:
+      - 8000
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      start_period: 30s
+      retries: 12
+
+  securo-migrate:
+    <<: *securo-backend
+    restart: "no"
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      securo-db:
+        condition: service_healthy
+      securo-redis:
+        condition: service_healthy
+
+  securo-worker:
+    <<: *securo-backend
+    command: ["celery", "-A", "app.worker", "worker", "--loglevel=info", "--concurrency=2"]
+
+  securo-beat:
+    <<: *securo-backend
+    command: ["celery", "-A", "app.worker", "beat", "--loglevel=info"]
+
+  securo-db:
+    # pgvector is required by the database migrations.
+    image: pgvector/pgvector:0.8.7-pg16@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: securo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: securo
+    volumes:
+      - securo-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securo -d securo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  securo-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - securo-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  securo-attachments: {}
+  securo-backups: {}
+  securo-agent-knowledge: {}
+  securo-embedding-models: {}
+  securo-db: {}
+  securo-redis: {}
