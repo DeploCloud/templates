@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal finance manager built on plain-text ledger accounting, with dashboards for assets, expenses, budgets, goals and taxes.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Anantha Kumaran",
+    "url": "https://github.com/ananthakumaran"
+  },
+  "links": {
+    "github": "https://github.com/ananthakumaran/paisa",
+    "website": "https://paisa.fyi/",
+    "docs": [
+      "https://paisa.fyi/getting-started/installation/",
+      "https://paisa.fyi/reference/config/",
+      "https://paisa.fyi/reference/user-authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Paisa starts without any login. Right after deploying, open Configuration, add a user account under User Accounts and save, otherwise anyone with the URL can read your finances.",
+      "link": "https://paisa.fyi/reference/user-authentication/"
+    }
+  ]
+}

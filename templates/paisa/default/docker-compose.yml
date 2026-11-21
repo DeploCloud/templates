@@ -1,0 +1,11 @@
+services:
+  paisa:
+    image: ananthakumaran/paisa:v0.8.0@sha256:edf314c931ea9672a0d26c94b269986e363e7c2461b9c19603147e810246a44f
+    restart: unless-stopped
+    expose:
+      - 7500
+    volumes:
+      - paisa-data:/root/Documents/paisa
+
+volumes:
+  paisa-data: {}

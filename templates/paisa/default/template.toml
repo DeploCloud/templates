@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "paisa"
+port = 7_500
+host = "${domain}"
