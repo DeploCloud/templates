@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Spreadsheet-like web interface to view, edit, query and collaborate on PostgreSQL data, bundled with its own PostgreSQL server.",
+  "category": "database",
+  "developedBy": {
+    "label": "Mathesar Foundation",
+    "url": "https://github.com/mathesar-foundation"
+  },
+  "links": {
+    "github": "https://github.com/mathesar-foundation/mathesar",
+    "website": "https://mathesar.org/",
+    "docs": [
+      "https://docs.mathesar.org/latest/administration/install-via-docker-compose/",
+      "https://docs.mathesar.org/latest/administration/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first person to open Mathesar is asked to create the admin account. Open the app right after deployment and set it up.",
+      "link": "https://docs.mathesar.org/latest/administration/install-via-docker-compose/"
+    }
+  ]
+}

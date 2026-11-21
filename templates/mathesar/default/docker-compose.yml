@@ -1,0 +1,47 @@
+services:
+  mathesar:
+    image: mathesar/mathesar:0.12.0@sha256:091757cb01fec9718d627aa672fdd565d76a2da6b53cdab6264e9fbc031472a4
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: "false"
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: mathesar-db
+      POSTGRES_PORT: "5432"
+    volumes:
+      - mathesar-media:/code/.media
+    depends_on:
+      mathesar-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz/ready/"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  mathesar-db:
+    image: postgres:17.12@sha256:b60e90042aa6b8dbecd58e224b3e36114dbf8ad754465264c2476ad58a86e45c
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - mathesar-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mathesar-media: {}
+  mathesar-db: {}
