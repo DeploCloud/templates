@@ -1,0 +1,6 @@
+services:
+  mqttx:
+    image: emqx/mqttx-web:v1.13.3@sha256:63f6ee50bc1b7dc6c9743d3571822ff13009ed41dc5de399645fb4a1340a5240
+    restart: unless-stopped
+    expose:
+      - 80
