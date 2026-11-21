@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Webhook and HTTP request inspector that gives you unique URLs and shows incoming requests in real time.",
+  "category": "development",
+  "developedBy": {
+    "label": "Webhook.site",
+    "url": "https://github.com/webhooksite"
+  },
+  "links": {
+    "github": "https://github.com/webhooksite/webhook.site",
+    "website": "https://webhook.site",
+    "docs": [
+      "https://docs.webhook.site/open-source.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The open-source edition has no login: anyone who can reach the domain can create URLs and read the requests sent to them."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
