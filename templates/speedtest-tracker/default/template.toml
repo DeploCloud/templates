@@ -1,0 +1,20 @@
+[variables]
+app_key = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "speedtest-tracker"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_KEY = "${app_key}"
+APP_URL = "https://${domain}"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"
+SPEEDTEST_SCHEDULE = "6 */6 * * *"
+DISPLAY_TIMEZONE = "Etc/UTC"
+PRUNE_RESULTS_OLDER_THAN = "0"

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted internet speed monitor that runs scheduled Ookla speed tests and charts download, upload and ping history.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Alex Justesen",
+    "url": "https://github.com/alexjustesen"
+  },
+  "links": {
+    "github": "https://github.com/alexjustesen/speedtest-tracker",
+    "website": "https://speedtest-tracker.dev/",
+    "docs": [
+      "https://docs.speedtest-tracker.dev/getting-started/installation/using-docker-compose",
+      "https://docs.speedtest-tracker.dev/getting-started/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin@example.com (ADMIN_EMAIL) with the generated ADMIN_PASSWORD, then change both in your profile. These variables only apply on the first start.",
+      "link": "https://docs.speedtest-tracker.dev/security/authentication"
+    }
+  ]
+}

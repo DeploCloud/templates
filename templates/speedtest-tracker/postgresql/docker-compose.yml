@@ -1,0 +1,47 @@
+services:
+  speedtest-tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:v1.15.1-ls183@sha256:132d35a355474be17822e2ff3df4866407187ca978a768935fea06f52ae24493
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      ASSET_URL: ${APP_URL}
+      DB_CONNECTION: pgsql
+      DB_HOST: speedtest-tracker-db
+      DB_PORT: "5432"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      SPEEDTEST_SCHEDULE: ${SPEEDTEST_SCHEDULE}
+      DISPLAY_TIMEZONE: ${DISPLAY_TIMEZONE}
+      PRUNE_RESULTS_OLDER_THAN: ${PRUNE_RESULTS_OLDER_THAN}
+    volumes:
+      - speedtest-tracker-config:/config
+    depends_on:
+      speedtest-tracker-db:
+        condition: service_healthy
+
+  speedtest-tracker-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - speedtest-tracker-db:/var/lib/postgresql
+
+volumes:
+  speedtest-tracker-config: {}
+  speedtest-tracker-db: {}
