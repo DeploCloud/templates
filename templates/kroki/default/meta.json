@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Unified HTTP API that renders PlantUML, Mermaid, GraphViz, D2, BPMN, Excalidraw, diagrams.net and many other text diagrams to SVG or PNG.",
+  "category": "development",
+  "developedBy": {
+    "label": "Yuzu tech",
+    "url": "https://github.com/yuzutech"
+  },
+  "links": {
+    "github": "https://github.com/yuzutech/kroki",
+    "website": "https://kroki.io",
+    "docs": [
+      "https://docs.kroki.io/kroki/setup/use-docker-or-podman/",
+      "https://docs.kroki.io/kroki/setup/configuration/",
+      "https://docs.kroki.io/kroki/setup/usage/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "The Kroki API has no authentication: anyone who knows the URL can render diagrams with this instance.",
+      "link": "https://docs.kroki.io/kroki/setup/configuration/"
+    }
+  ]
+}
