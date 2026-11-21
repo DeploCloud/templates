@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source email sending platform on top of AWS SES, with a REST API, domains, contacts, campaigns and delivery analytics, backed by PostgreSQL and Redis.",
+  "category": "email",
+  "developedBy": {
+    "label": "useSend",
+    "url": "https://github.com/usesend"
+  },
+  "links": {
+    "github": "https://github.com/usesend/useSend",
+    "website": "https://usesend.com",
+    "docs": [
+      "https://docs.usesend.com/self-hosting/overview",
+      "https://docs.usesend.com/get-started/set-up-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-in needs your own GitHub App. Create one with the callback URL https://<your-domain>/api/auth/callback/github and the account permission Email addresses set to read-only, set GITHUB_ID and GITHUB_SECRET (or GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET), then redeploy.",
+      "link": "https://docs.usesend.com/self-hosting/overview"
+    },
+    {
+      "type": "warning",
+      "message": "Sending needs an AWS account with SES and SNS access. Set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and AWS_DEFAULT_REGION, redeploy, add the SES settings in the app and request SES production access to leave the sandbox.",
+      "link": "https://docs.usesend.com/get-started/create-aws-credentials"
+    },
+    {
+      "type": "warning",
+      "message": "The first account to sign in becomes the instance admin; later accounts need a team invitation. Set ADMIN_EMAIL to pick a different admin."
+    }
+  ]
+}

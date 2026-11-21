@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "usesend"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+NEXTAUTH_URL = "https://${domain}"
+NEXTAUTH_SECRET = "${base64:32}"
+GITHUB_ID = "replace-with-github-client-id"
+GITHUB_SECRET = "replace-with-github-client-secret"
+GOOGLE_CLIENT_ID = ""
+GOOGLE_CLIENT_SECRET = ""
+AWS_ACCESS_KEY_ID = ""
+AWS_SECRET_ACCESS_KEY = ""
+AWS_DEFAULT_REGION = "us-east-1"
+ADMIN_EMAIL = ""
