@@ -1,0 +1,30 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "easy-appointments"
+port = 80
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+LANGUAGE = "english"
+DB_NAME = "easyappointments"
+DB_USERNAME = "easyappointments"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+PROXY_IPS = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+MAIL_PROTOCOL = "mail"
+MAIL_SMTP_AUTH = "1"
+MAIL_SMTP_HOST = ""
+MAIL_SMTP_USER = ""
+MAIL_SMTP_PASS = ""
+MAIL_SMTP_CRYPTO = "tls"
+MAIL_SMTP_PORT = "587"
+MAIL_FROM_ADDRESS = "noreply@${domain}"
+MAIL_FROM_NAME = "Easy!Appointments"
+MAIL_REPLY_TO_ADDRESS = "noreply@${domain}"

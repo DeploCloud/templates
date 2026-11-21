@@ -1,0 +1,51 @@
+services:
+  easy-appointments:
+    image: alextselegidis/easyappointments:1.6.1@sha256:6d3a927dc16db11827018bcbc708e6ee7d4be7f577e5d0967e90a1b08b71e2e0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BASE_URL: ${BASE_URL}
+      LANGUAGE: ${LANGUAGE}
+      DEBUG_MODE: "FALSE"
+      DB_HOST: easy-appointments-db
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PROXY_IPS: ${PROXY_IPS}
+      MAIL_PROTOCOL: ${MAIL_PROTOCOL}
+      MAIL_SMTP_AUTH: ${MAIL_SMTP_AUTH}
+      MAIL_SMTP_HOST: ${MAIL_SMTP_HOST}
+      MAIL_SMTP_USER: ${MAIL_SMTP_USER}
+      MAIL_SMTP_PASS: ${MAIL_SMTP_PASS}
+      MAIL_SMTP_CRYPTO: ${MAIL_SMTP_CRYPTO}
+      MAIL_SMTP_PORT: ${MAIL_SMTP_PORT}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME}
+      MAIL_REPLY_TO_ADDRESS: ${MAIL_REPLY_TO_ADDRESS}
+    volumes:
+      - easy-appointments-storage:/var/www/html/storage
+    depends_on:
+      easy-appointments-db:
+        condition: service_healthy
+
+  easy-appointments-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - easy-appointments-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  easy-appointments-storage: {}
+  easy-appointments-db: {}

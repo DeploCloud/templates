@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted appointment scheduler with a public booking page, provider calendars, working plans and email notifications, backed by MySQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Alex Tselegidis",
+    "url": "https://github.com/alextselegidis"
+  },
+  "links": {
+    "github": "https://github.com/alextselegidis/easyappointments",
+    "website": "https://easyappointments.org",
+    "docs": [
+      "https://github.com/alextselegidis/easyappointments/blob/main/docs/installation-guide.md",
+      "https://github.com/alextselegidis/easyappointments-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the setup wizard is public until it is completed, and it creates the admin account."
+    },
+    {
+      "type": "warning",
+      "message": "Email notifications need SMTP: set MAIL_PROTOCOL to smtp and fill in the MAIL_SMTP_* and MAIL_FROM_* variables, then redeploy.",
+      "link": "https://github.com/alextselegidis/easyappointments-docker#smtp-configuration"
+    }
+  ]
+}
