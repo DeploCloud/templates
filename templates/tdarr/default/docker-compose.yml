@@ -1,0 +1,35 @@
+services:
+  tdarr:
+    image: ghcr.io/haveagitgat/tdarr:3.08.00@sha256:84743e5ae433a5b49cb463b2dff2679eb02f0cac24fb88c830f49bf8aa9f1c04
+    restart: unless-stopped
+    expose:
+      - 8265
+    environment:
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
+      UMASK: "002"
+      serverIP: 0.0.0.0
+      serverPort: "8266"
+      webUIPort: "8265"
+      internalNode: "true"
+      inContainer: "true"
+      ffmpegVersion: "7"
+      nodeName: InternalNode
+      auth: "true"
+      seededApiKey: ${TDARR_API_KEY}
+      apiKey: ${TDARR_API_KEY}
+      maxLogSizeMB: "10"
+    volumes:
+      - tdarr-server:/app/server
+      - tdarr-configs:/app/configs
+      - tdarr-logs:/app/logs
+      - tdarr-media:/media
+      - tdarr-cache:/temp
+
+volumes:
+  tdarr-server: {}
+  tdarr-configs: {}
+  tdarr-logs: {}
+  tdarr-media: {}
+  tdarr-cache: {}
