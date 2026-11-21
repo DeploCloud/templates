@@ -1,0 +1,47 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[[config.domains]]
+serviceName = "suitecrm"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+ADMIN_PASSWORD = "${admin_password}"
+DB_PASSWORD = "${db_password}"
+TZ = "UTC"
+
+[[config.mounts]]
+filePath = "config_si.php"
+content = """<?php
+// Read by the silent installer on the first visit; ignored once SuiteCRM is installed.
+$sugar_config_si = array(
+    'setup_site_url' => 'https://${domain}',
+    'setup_system_name' => 'SuiteCRM',
+    'setup_site_admin_user_name' => 'admin',
+    'setup_site_admin_password' => '${admin_password}',
+    'setup_db_type' => 'mysql',
+    'setup_db_host_name' => 'suitecrm-db',
+    'setup_db_port_num' => '3306',
+    'setup_db_database_name' => 'suitecrm',
+    'setup_db_admin_user_name' => 'suitecrm',
+    'setup_db_admin_password' => '${db_password}',
+    'setup_db_drop_tables' => false,
+    'setup_db_options' => array('collation' => 'utf8mb4_general_ci', 'charset' => 'utf8mb4'),
+    'dbUSRData' => 'same',
+    'demoData' => 'no',
+    'default_currency_iso4217' => 'USD',
+    'default_currency_name' => 'US Dollars',
+    'default_currency_significant_digits' => '2',
+    'default_currency_symbol' => '$',
+    'default_date_format' => 'Y-m-d',
+    'default_time_format' => 'H:i',
+    'default_decimal_seperator' => '.',
+    'default_number_grouping_seperator' => ',',
+    'default_export_charset' => 'UTF-8',
+    'default_language' => 'en_us',
+    'default_locale_name_format' => 's f l',
+    'export_delimiter' => ',',
+);
+"""
