@@ -1,0 +1,26 @@
+services:
+  pomerium:
+    image: pomerium/pomerium:v0.34.1@sha256:386ba3b0b83b43146e3524f7579f02106ac36016aae06cd8af20af4880035a2f
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      # TLS ends at the platform proxy, so Pomerium serves plain HTTP inside the network.
+      ADDRESS: ":80"
+      INSECURE_SERVER: "true"
+      SHARED_SECRET: ${SHARED_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      DATABROKER_STORAGE_TYPE: file
+      DATABROKER_STORAGE_CONNECTION_STRING: file:///data/pomerium
+    volumes:
+      - ./config.yaml:/pomerium/config.yaml:ro
+      - pomerium-data:/data
+
+  pomerium-verify:
+    image: pomerium/verify:latest@sha256:97c3b808155a4fd4af46e023cbae212e2c88e3ef24da1b5c9cff1828282988d4
+    restart: unless-stopped
+    expose:
+      - 8000
+
+volumes:
+  pomerium-data: {}

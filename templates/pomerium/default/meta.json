@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Identity-aware access proxy that puts sign-in and per-route policies in front of internal apps, without a VPN.",
+  "category": "security",
+  "developedBy": {
+    "label": "Pomerium",
+    "url": "https://www.pomerium.com"
+  },
+  "links": {
+    "github": "https://github.com/pomerium/pomerium",
+    "website": "https://www.pomerium.com",
+    "docs": [
+      "https://www.pomerium.com/docs/get-started/quickstart",
+      "https://www.pomerium.com/docs/reference/routes",
+      "https://www.pomerium.com/docs/reference/routes/policy",
+      "https://www.pomerium.com/docs/capabilities/authentication#hosted-authenticate-service",
+      "https://www.pomerium.com/docs/integrations/user-identity/identity-providers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Edit config.yaml and replace you@example.com with the email you sign in with, then redeploy; anyone else gets a 403. Sign-in uses the free Pomerium hosted authenticate service (email, Google or GitHub) until you configure your own identity provider on a separate authenticate domain.",
+      "link": "https://www.pomerium.com/docs/capabilities/authentication#hosted-authenticate-service"
+    },
+    {
+      "type": "info",
+      "message": "Official Pomerium images from v0.34 ship under the Pomerium Community Edition License: free for individuals and organizations under US$10M yearly revenue and 100 staff, otherwise a commercial license or a self-built image is required.",
+      "link": "https://www.pomerium.com/blog/we-are-changing-how-we-license-pomerium-builds"
+    }
+  ]
+}

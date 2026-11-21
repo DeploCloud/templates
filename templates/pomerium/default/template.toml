@@ -1,0 +1,26 @@
+[config]
+
+[[config.domains]]
+serviceName = "pomerium"
+port = 80
+host = "${domain}"
+
+[config.env]
+# Pomerium wants standard base64 of 32 bytes: 43 hex chars plus "=" decode to exactly that.
+SHARED_SECRET = "${hash:43}="
+COOKIE_SECRET = "${hash:43}="
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """# Replace you@example.com with the email you sign in with, then redeploy.
+# To protect another app, point one more domain at the pomerium service (port 80) and add a route for it.
+routes:
+  - from: https://${domain}
+    to: http://pomerium-verify:8000
+    pass_identity_headers: true
+    policy:
+      - allow:
+          or:
+            - email:
+                is: you@example.com
+"""
