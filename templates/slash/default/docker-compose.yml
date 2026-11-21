@@ -1,0 +1,11 @@
+services:
+  slash:
+    image: yourselfhosted/slash:0.5.3@sha256:0658a3ea093c1c88d14f085272246dbbe98336581213dc258eb7c3581ac0f3ab
+    restart: unless-stopped
+    expose:
+      - 5231
+    volumes:
+      - slash-data:/var/opt/slash
+
+volumes:
+  slash-data: {}
