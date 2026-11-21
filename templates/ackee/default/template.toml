@@ -1,0 +1,18 @@
+[variables]
+admin_password = "${password:32}"
+mongo_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ackee"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ACKEE_USERNAME = "admin"
+ACKEE_PASSWORD = "${admin_password}"
+ACKEE_AUTO_ORIGIN = "true"
+MONGO_USER = "ackee"
+MONGO_PASSWORD = "${mongo_password}"

@@ -1,0 +1,32 @@
+services:
+  ackee:
+    image: electerious/ackee:3.7.1@sha256:ad7ef00b9552971177ef9deea02846aea512a6f28bbb32782fc66e62f13fac62
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ACKEE_MONGODB: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@ackee-db:27017/ackee?authSource=admin
+      ACKEE_USERNAME: ${ACKEE_USERNAME}
+      ACKEE_PASSWORD: ${ACKEE_PASSWORD}
+      ACKEE_AUTO_ORIGIN: ${ACKEE_AUTO_ORIGIN}
+    depends_on:
+      ackee-db:
+        condition: service_healthy
+
+  ackee-db:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - ackee-db:/data/db
+
+volumes:
+  ackee-db: {}
