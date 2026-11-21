@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Vector tile server that publishes PostGIS tables and functions plus MBTiles and PMTiles files, bundled with a PostGIS database.",
+  "category": "development",
+  "developedBy": {
+    "label": "MapLibre",
+    "url": "https://maplibre.org/"
+  },
+  "links": {
+    "github": "https://github.com/maplibre/martin",
+    "website": "https://maplibre.org/martin/",
+    "docs": [
+      "https://maplibre.org/martin/run-with-docker-compose/",
+      "https://maplibre.org/martin/sources-pg-tables/",
+      "https://maplibre.org/martin/sources-files/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Martin serves no tiles until you load spatial tables into the bundled PostGIS database or copy .mbtiles/.pmtiles files into the files volume.",
+      "link": "https://maplibre.org/martin/sources-pg-tables/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
