@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Single-executable application backend on SQLite with type-safe REST and realtime APIs, auth, a WebAssembly runtime and an admin UI.",
+  "category": "development",
+  "developedBy": {
+    "label": "TrailBase",
+    "url": "https://github.com/trailbaseio"
+  },
+  "links": {
+    "github": "https://github.com/trailbaseio/trailbase",
+    "website": "https://trailbase.io",
+    "docs": [
+      "https://trailbase.io/getting-started/install/",
+      "https://trailbase.io/documentation/production/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first start TrailBase creates the admin user admin@localhost with a random password and prints both to the container logs. Use them to sign in at /_/admin/ and change the email and password right away.",
+      "link": "https://trailbase.io/getting-started/install/"
+    }
+  ]
+}
