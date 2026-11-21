@@ -1,0 +1,26 @@
+[variables]
+api_domain = "api.${domain}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "chartbrew"
+port = 4_018
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "chartbrew"
+port = 4_019
+host = "${api_domain}"
+
+[config.env]
+CB_DB_PASSWORD = "${db_password}"
+CB_ENCRYPTION_KEY = "${hash:64}"
+CB_SECRET = "${password:48}"
+CB_BULLMQ_PASSWORD = "${password:32}"
+CB_RESTRICT_SIGNUP = "1"
+VITE_APP_CLIENT_HOST = "https://${domain}"
+VITE_APP_API_HOST = "https://${api_domain}"
