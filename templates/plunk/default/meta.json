@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source email platform for transactional emails, marketing campaigns and automated workflows, sending through AWS SES.",
+  "category": "email",
+  "developedBy": {
+    "label": "Plunk",
+    "url": "https://github.com/useplunk"
+  },
+  "links": {
+    "github": "https://github.com/useplunk/plunk",
+    "website": "https://www.useplunk.com",
+    "docs": [
+      "https://docs.useplunk.com/self-hosting/docker",
+      "https://docs.useplunk.com/self-hosting/environment-variables",
+      "https://docs.useplunk.com/self-hosting/email-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Plunk sends every email through AWS SES. Replace AWS_SES_ACCESS_KEY_ID, AWS_SES_SECRET_ACCESS_KEY, AWS_SES_REGION and SES_CONFIGURATION_SET with your own SES credentials and configuration set before sending, and subscribe the SNS topic to https://api.<your-domain>/webhooks/sns for bounce and open tracking.",
+      "link": "https://docs.useplunk.com/self-hosting/email-setup"
+    },
+    {
+      "type": "warning",
+      "message": "The API is served on the api. subdomain of the app domain, so that hostname must resolve to this server too. Sign-ups are open: create your account, then set DISABLE_SIGNUPS to true and redeploy."
+    }
+  ]
+}
