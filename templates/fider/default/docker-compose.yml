@@ -1,0 +1,37 @@
+services:
+  fider:
+    image: getfider/fider:v0.40.0@sha256:9b4a043595ad96e3064f8091d2734dbc4f0113fe0e1a908a778e9c4fa96971f7
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      BASE_URL: ${BASE_URL}
+      DATABASE_URL: postgres://fider:${DB_PASSWORD}@fider-db:5432/fider?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET}
+      EMAIL_NOREPLY: ${EMAIL_NOREPLY}
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
+      EMAIL_SMTP_USERNAME: ${EMAIL_SMTP_USERNAME}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD}
+      EMAIL_SMTP_ENABLE_STARTTLS: ${EMAIL_SMTP_ENABLE_STARTTLS}
+    depends_on:
+      fider-db:
+        condition: service_healthy
+
+  fider-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fider
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: fider
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fider -d fider"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - fider-db:/var/lib/postgresql/data
+
+volumes:
+  fider-db: {}

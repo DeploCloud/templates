@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+jwt_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fider"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+JWT_SECRET = "${jwt_secret}"
+EMAIL_NOREPLY = "noreply@${domain}"
+EMAIL_SMTP_HOST = "smtp.example.com"
+EMAIL_SMTP_PORT = "587"
+EMAIL_SMTP_USERNAME = ""
+EMAIL_SMTP_PASSWORD = ""
+EMAIL_SMTP_ENABLE_STARTTLS = "true"

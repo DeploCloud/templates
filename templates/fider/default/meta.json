@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Customer feedback portal where users post ideas, vote and comment, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Fider",
+    "url": "https://github.com/getfider"
+  },
+  "links": {
+    "github": "https://github.com/getfider/fider",
+    "website": "https://fider.io",
+    "docs": [
+      "https://docs.fider.io/hosting-instance/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Fider emails a confirmation link to activate the site you create on first visit. Replace the placeholder EMAIL_SMTP_* variables with a working SMTP server before creating your site; the account that creates the site becomes the administrator.",
+      "link": "https://docs.fider.io/hosting-instance/"
+    }
+  ]
+}
