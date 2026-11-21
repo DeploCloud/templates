@@ -1,0 +1,40 @@
+services:
+  baby-buddy:
+    image: lscr.io/linuxserver/babybuddy:v2.11.0-ls261@sha256:e0c9c6502c1b75ceb5e007b22a618bfe1ddc22aab15baef7e2ce0b1904461a32
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      SECURE_PROXY_SSL_HEADER: ${SECURE_PROXY_SSL_HEADER}
+      DB_ENGINE: django.db.backends.postgresql
+      DB_HOST: baby-buddy-db
+      DB_PORT: "5432"
+      DB_NAME: babybuddy
+      DB_USER: babybuddy
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - baby-buddy-config:/config
+    depends_on:
+      baby-buddy-db:
+        condition: service_healthy
+
+  baby-buddy-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: babybuddy
+      POSTGRES_USER: babybuddy
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U babybuddy -d babybuddy"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - baby-buddy-db:/var/lib/postgresql
+
+volumes:
+  baby-buddy-config: {}
+  baby-buddy-db: {}

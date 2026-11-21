@@ -1,0 +1,15 @@
+services:
+  baby-buddy:
+    image: lscr.io/linuxserver/babybuddy:v2.11.0-ls261@sha256:e0c9c6502c1b75ceb5e007b22a618bfe1ddc22aab15baef7e2ce0b1904461a32
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      SECURE_PROXY_SSL_HEADER: ${SECURE_PROXY_SSL_HEADER}
+    volumes:
+      - baby-buddy-config:/config
+
+volumes:
+  baby-buddy-config: {}

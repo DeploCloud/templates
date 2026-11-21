@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "baby-buddy"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${password:64}"
+DB_PASSWORD = "${password:32}"
+CSRF_TRUSTED_ORIGINS = "https://${domain}"
+SECURE_PROXY_SSL_HEADER = "True"
