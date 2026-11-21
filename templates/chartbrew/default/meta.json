@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source reporting platform that builds live dashboards and embeddable charts from SQL, NoSQL and API data sources.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Chartbrew",
+    "url": "https://github.com/chartbrew"
+  },
+  "links": {
+    "github": "https://github.com/chartbrew/chartbrew",
+    "website": "https://chartbrew.com",
+    "docs": [
+      "https://docs.chartbrew.com/deployment/run-on-docker",
+      "https://docs.chartbrew.com/environment-variables",
+      "https://docs.chartbrew.com/deployment/deploy-with-apache"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The client is rebuilt with your domains on every start, which takes a few minutes. Wait for the build to finish before signing up. Only the first account can sign up freely; later users need an invite link (set CB_RESTRICT_SIGNUP to 0 to open signups).",
+      "link": "https://docs.chartbrew.com/deployment/run-on-docker"
+    },
+    {
+      "type": "info",
+      "message": "The API is served on a second domain, api.<your domain>, which must resolve to the server as well."
+    }
+  ]
+}

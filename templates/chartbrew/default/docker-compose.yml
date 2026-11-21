@@ -1,0 +1,67 @@
+services:
+  chartbrew:
+    image: razvanilin/chartbrew:6.0.1@sha256:65d2fedffc0df3a928a0cb5ad7605c9a4d5bb00cf279b2fa142574417390be1e
+    restart: unless-stopped
+    expose:
+      - 4018
+      - 4019
+    environment:
+      CB_API_HOST: 0.0.0.0
+      CB_API_PORT: "4019"
+      CB_DB_DIALECT: postgres
+      CB_DB_HOST: chartbrew-db
+      CB_DB_PORT: "5432"
+      CB_DB_NAME: chartbrew
+      CB_DB_USERNAME: chartbrew
+      CB_DB_PASSWORD: ${CB_DB_PASSWORD}
+      CB_REDIS_HOST: chartbrew-redis
+      CB_REDIS_PORT: "6379"
+      CB_ENCRYPTION_KEY: ${CB_ENCRYPTION_KEY}
+      CB_SECRET: ${CB_SECRET}
+      CB_BULLMQ_USERNAME: chartbrew
+      CB_BULLMQ_PASSWORD: ${CB_BULLMQ_PASSWORD}
+      CB_RESTRICT_SIGNUP: ${CB_RESTRICT_SIGNUP}
+      VITE_APP_CLIENT_HOST: ${VITE_APP_CLIENT_HOST}
+      VITE_APP_CLIENT_PORT: "4018"
+      VITE_APP_API_HOST: ${VITE_APP_API_HOST}
+    volumes:
+      - chartbrew-uploads:/code/server/uploads
+      - chartbrew-connection-files:/code/server/.connectionFiles
+    depends_on:
+      chartbrew-db:
+        condition: service_healthy
+      chartbrew-redis:
+        condition: service_healthy
+
+  chartbrew-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: chartbrew
+      POSTGRES_USER: chartbrew
+      POSTGRES_PASSWORD: ${CB_DB_PASSWORD}
+    volumes:
+      - chartbrew-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chartbrew -d chartbrew"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  chartbrew-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - chartbrew-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  chartbrew-uploads: {}
+  chartbrew-connection-files: {}
+  chartbrew-db: {}
+  chartbrew-redis: {}
