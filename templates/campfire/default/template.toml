@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "campfire"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+DISABLE_SSL = "true"
+WEB_CONCURRENCY = "2"

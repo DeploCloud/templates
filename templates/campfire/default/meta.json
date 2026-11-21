@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted group chat by 37signals with rooms, direct messages, file attachments, search, @mentions, Web Push notifications and a bot API.",
+  "category": "communication",
+  "developedBy": {
+    "label": "37signals",
+    "url": "https://37signals.com"
+  },
+  "links": {
+    "github": "https://github.com/basecamp/once-campfire",
+    "website": "https://once.com/campfire",
+    "docs": [
+      "https://github.com/basecamp/once-campfire/blob/main/docs/self-hosting.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor is guided through creating the admin account. Open the app right after deploying, and note that the admin email is shown on the sign-in page.",
+      "link": "https://github.com/basecamp/once-campfire/blob/main/docs/self-hosting.md#first-run"
+    }
+  ]
+}
