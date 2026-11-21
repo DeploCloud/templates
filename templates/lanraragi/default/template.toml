@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lanraragi"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+LRR_UID = "9001"
+LRR_GID = "9001"
+TZ = "UTC"

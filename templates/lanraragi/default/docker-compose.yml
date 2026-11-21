@@ -1,0 +1,33 @@
+services:
+  lanraragi:
+    image: difegue/lanraragi:v.0.9.82@sha256:168916c6b34afc743db2311ee4254c00910e2e5f7f741a1813c81a90c2019fa2
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      LRR_UID: ${LRR_UID}
+      LRR_GID: ${LRR_GID}
+      TZ: ${TZ}
+    volumes:
+      - lanraragi-content:/home/koyomi/lanraragi/content
+      - lanraragi-thumb:/home/koyomi/lanraragi/thumb
+      - lanraragi-database:/home/koyomi/lanraragi/database
+      - lanraragi-plugins:/home/koyomi/lanraragi/lib/LANraragi/Plugin/Sideloaded
+    depends_on:
+      lanraragi-init:
+        condition: service_completed_successfully
+
+  # the content volume starts root-owned and the app never chowns it, so uploads would fail
+  lanraragi-init:
+    image: difegue/lanraragi:v.0.9.82@sha256:168916c6b34afc743db2311ee4254c00910e2e5f7f741a1813c81a90c2019fa2
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "${LRR_UID}:${LRR_GID}", "/home/koyomi/lanraragi/content"]
+    volumes:
+      - lanraragi-content:/home/koyomi/lanraragi/content
+
+volumes:
+  lanraragi-content: {}
+  lanraragi-thumb: {}
+  lanraragi-database: {}
+  lanraragi-plugins: {}
