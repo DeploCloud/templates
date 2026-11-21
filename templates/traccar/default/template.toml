@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+osmand_domain = "osmand.${domain}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "traccar"
+port = 8_082
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "traccar"
+port = 5_055
+host = "${osmand_domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+WEB_URL = "https://${domain}"
