@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted digital library for ebooks, comics and audiobooks with a built-in reader, metadata lookup, OPDS and Kobo/KOReader sync.",
+  "category": "media",
+  "developedBy": {
+    "label": "Grimmory",
+    "url": "https://github.com/grimmory-tools"
+  },
+  "links": {
+    "github": "https://github.com/grimmory-tools/grimmory",
+    "website": "https://grimmory.org",
+    "docs": [
+      "https://grimmory.org/docs/installation/",
+      "https://grimmory.org/docs/initial-setup/",
+      "https://grimmory.org/docs/library/setup-first-library/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the administrator account on the setup screen. Open the app right after deploying and create it; there is no password recovery flow.",
+      "link": "https://grimmory.org/docs/initial-setup/"
+    }
+  ]
+}
