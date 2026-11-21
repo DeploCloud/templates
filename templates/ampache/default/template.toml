@@ -1,0 +1,23 @@
+[variables]
+db_root_password = "${hash:32}"
+db_password = "${hash:32}"
+admin_password = "${hash:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ampache"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_PORT = "3306"
+DB_NAME = "ampache"
+DB_ROOT_PASSWORD = "${db_root_password}"
+AMPACHE_DB_USER = "ampache"
+AMPACHE_DB_PASSWORD = "${db_password}"
+AMPACHE_ADMIN_USER = "admin"
+AMPACHE_ADMIN_EMAIL = "admin@example.com"
+AMPACHE_ADMIN_PASSWORD = "${admin_password}"
+DISABLE_INOTIFYWAIT_CLEAN = "0"
