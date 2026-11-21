@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source customer service and ticketing system on the Frappe Framework, with agent and customer portals, SLAs, a knowledge base, MariaDB, Redis and background workers.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Frappe Technologies",
+    "url": "https://frappe.io/"
+  },
+  "links": {
+    "github": "https://github.com/frappe/helpdesk",
+    "website": "https://frappe.io/helpdesk",
+    "docs": [
+      "https://docs.frappe.io/helpdesk/installation",
+      "https://docs.frappe.io/helpdesk/setting-up",
+      "https://docs.frappe.io/helpdesk/email-communication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first deployment takes several minutes while the site is created. Then log in as Administrator with the generated ADMIN_PASSWORD, complete the setup wizard, open /helpdesk and add an email account so incoming mail becomes tickets.",
+      "link": "https://docs.frappe.io/helpdesk/setting-up"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
