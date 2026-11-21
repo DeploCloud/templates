@@ -1,0 +1,15 @@
+services:
+  flipt:
+    image: flipt/flipt:v2.14.2@sha256:121830e237c3a0d2b875f73905944d6ff301fdd7881c5abdec5f24f5549537e8
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      FLIPT_STORAGE_DEFAULT_BACKEND_TYPE: local
+      FLIPT_STORAGE_DEFAULT_BACKEND_PATH: /var/opt/flipt
+      FLIPT_AUTHENTICATION_SESSION_DOMAIN: "${FLIPT_AUTHENTICATION_SESSION_DOMAIN}"
+    volumes:
+      - flipt-data:/var/opt/flipt
+
+volumes:
+  flipt-data: {}
