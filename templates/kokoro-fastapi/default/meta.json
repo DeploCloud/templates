@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenAI-compatible text-to-speech API and web player for the Kokoro-82M model, running on CPU.",
+  "category": "ai",
+  "developedBy": {
+    "label": "remsky",
+    "url": "https://github.com/remsky"
+  },
+  "links": {
+    "github": "https://github.com/remsky/Kokoro-FastAPI",
+    "docs": [
+      "https://github.com/remsky/Kokoro-FastAPI/blob/master/README.md",
+      "https://github.com/remsky/Kokoro-FastAPI/blob/master/docs/configuration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "The domain root answers Not Found. Open /web for the player and /docs for the API reference."
+    },
+    {
+      "type": "warning",
+      "message": "The API and web player are public by default, so anyone with the URL can generate speech. Set API_KEYS to a JSON list of keys to require authentication; the web player then stops working.",
+      "link": "https://github.com/remsky/Kokoro-FastAPI/blob/master/docs/configuration.md"
+    }
+  ]
+}
