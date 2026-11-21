@@ -1,0 +1,67 @@
+services:
+  mailtrain:
+    image: mailtrain/mailtrain:v2.20210609.0@sha256:e498591b488e3162379a8c9457760e4059f8a2f4da961703bb876c0071e54143
+    restart: unless-stopped
+    expose:
+      - 3000
+      - 3003
+      - 3004
+    environment:
+      URL_BASE_TRUSTED: ${URL_BASE_TRUSTED}
+      URL_BASE_SANDBOX: ${URL_BASE_SANDBOX}
+      URL_BASE_PUBLIC: ${URL_BASE_PUBLIC}
+      WWW_PROXY: "true"
+      WWW_SECRET: ${WWW_SECRET}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      MYSQL_HOST: mailtrain-db
+      MYSQL_DATABASE: mailtrain
+      MYSQL_USER: mailtrain
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      WITH_REDIS: "true"
+      REDIS_HOST: mailtrain-redis
+      WITH_ZONE_MTA: "false"
+    volumes:
+      - mailtrain-files:/app/server/files
+    depends_on:
+      mailtrain-db:
+        condition: service_healthy
+      mailtrain-redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "3000"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 180s
+
+  mailtrain-db:
+    image: mariadb:10.11.19@sha256:e5fe75b2b9de0eb9f6f9a4d9c97272fb3a7480e389ccd487a786bab2a12cc0d7
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: mailtrain
+      MARIADB_USER: mailtrain
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mailtrain-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  mailtrain-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - mailtrain-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mailtrain-files: {}
+  mailtrain-db: {}
+  mailtrain-redis: {}
