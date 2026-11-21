@@ -1,0 +1,56 @@
+[variables]
+secret_key = "${secret:64}"
+map_storage_api_token = "${secret:64}"
+map_storage_password = "${password:32}"
+map_storage_upload_token = "${secret:64}"
+
+[config]
+
+[[config.domains]]
+serviceName = "workadventure"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+SECRET_KEY = "${secret_key}"
+MAP_STORAGE_API_TOKEN = "${map_storage_api_token}"
+MAP_STORAGE_USER = "admin"
+MAP_STORAGE_PASSWORD = "${map_storage_password}"
+MAP_STORAGE_UPLOAD_TOKEN = "${map_storage_upload_token}"
+START_ROOM_URL = "/_/global/workadventure.github.io/map-starter-kit/office.tmj"
+STUN_SERVER = "stun:stun.l.google.com:19302"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	handle /ws/* {
+		reverse_proxy workadventure-play:3001
+	}
+
+	redir /map-storage /map-storage/
+	handle_path /map-storage/* {
+		reverse_proxy workadventure-map-storage:3000
+	}
+
+	handle_path /icon/* {
+		reverse_proxy workadventure-icon:8080
+	}
+
+	handle /lettericons/* {
+		reverse_proxy workadventure-icon:8080
+	}
+
+	handle {
+		reverse_proxy workadventure-play:3000
+	}
+}
+"""
