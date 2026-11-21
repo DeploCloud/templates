@@ -1,0 +1,1 @@
+DokuWiki is a wiki engine that stores pages as plain text files, so it needs no database. The official image runs Apache with PHP on port 8080 and keeps pages, media, configuration, users and installed plugins and templates on a single persistent `/storage` volume. After the first deploy, open `/install.php` on your domain to name the wiki and create the superuser account.

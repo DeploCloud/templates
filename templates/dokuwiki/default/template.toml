@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dokuwiki"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PHP_TIMEZONE = "UTC"

@@ -1,0 +1,19 @@
+services:
+  dokuwiki:
+    image: dokuwiki/dokuwiki:2026-07-14c@sha256:463bcf631edb06d312a7009d422ac7b1b92816c6ef279ad08dc990107f5b91a8
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PHP_TIMEZONE: ${PHP_TIMEZONE}
+    volumes:
+      - dokuwiki-storage:/storage
+    healthcheck:
+      test: ["CMD", "curl", "--silent", "--fail", "http://localhost:8080/health.php"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  dokuwiki-storage: {}
