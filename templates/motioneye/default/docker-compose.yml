@@ -1,0 +1,20 @@
+services:
+  motioneye:
+    image: ghcr.io/motioneye-project/motioneye:0.44.0@sha256:7da31d62e6c46ee8b61280f872801e429ec6f3db81bb23aca11c83863939cade
+    restart: unless-stopped
+    hostname: motioneye
+    expose:
+      - 8765
+    volumes:
+      - motioneye-config:/etc/motioneye
+      - motioneye-media:/var/lib/motioneye
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8765/version"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  motioneye-config: {}
+  motioneye-media: {}

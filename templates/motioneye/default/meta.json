@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Web interface for the motion daemon: video surveillance with motion detection, recording and snapshots from network cameras.",
+  "category": "security",
+  "developedBy": {
+    "label": "motionEye Project",
+    "url": "https://github.com/motioneye-project"
+  },
+  "links": {
+    "github": "https://github.com/motioneye-project/motioneye",
+    "docs": [
+      "https://github.com/motioneye-project/motioneye/wiki",
+      "https://github.com/motioneye-project/motioneye/blob/dev/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first login is the user admin with an empty password. Set passwords for the admin and surveillance users right after the first login."
+    },
+    {
+      "type": "info",
+      "message": "This template has no access to host devices, so only network cameras (RTSP, HTTP/MJPEG or another motionEye server) can be added, not USB or CSI cameras."
+    }
+  ]
+}
