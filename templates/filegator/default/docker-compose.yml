@@ -1,0 +1,13 @@
+services:
+  filegator:
+    image: filegator/filegator:v7.16.9@sha256:55bf48495e371370c30bb29a32b2ca3ed9382596bae6c691f29c7e3b6c61ea4b
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - filegator-repository:/var/www/filegator/repository
+      - filegator-private:/var/www/filegator/private
+
+volumes:
+  filegator-repository: {}
+  filegator-private: {}
