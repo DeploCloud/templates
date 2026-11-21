@@ -1,0 +1,31 @@
+services:
+  cheshire-cat-ai:
+    image: ghcr.io/cheshire-cat-ai/core:1.9.2@sha256:79e27004db1ce034f62e4697ef198e0dcb7d6c61443e23c9783e24d384a03f80
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      CCAT_CORE_HOST: ${CCAT_CORE_HOST}
+      CCAT_CORE_PORT: ${CCAT_CORE_PORT}
+      CCAT_CORE_USE_SECURE_PROTOCOLS: ${CCAT_CORE_USE_SECURE_PROTOCOLS}
+      CCAT_HTTPS_PROXY_MODE: ${CCAT_HTTPS_PROXY_MODE}
+      CCAT_API_KEY: ${CCAT_API_KEY}
+      CCAT_API_KEY_WS: ${CCAT_API_KEY_WS}
+      CCAT_JWT_SECRET: ${CCAT_JWT_SECRET}
+      CCAT_DEBUG: ${CCAT_DEBUG}
+      CCAT_LOG_LEVEL: ${CCAT_LOG_LEVEL}
+    volumes:
+      - cheshire-cat-data:/app/cat/data
+      - cheshire-cat-plugins:/app/cat/plugins
+      - cheshire-cat-static:/app/cat/static
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost/auth/login"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  cheshire-cat-data: {}
+  cheshire-cat-plugins: {}
+  cheshire-cat-static: {}
