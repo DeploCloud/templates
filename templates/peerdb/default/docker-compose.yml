@@ -1,0 +1,136 @@
+x-flow-env: &flow-env
+  PEERDB_CATALOG_HOST: peerdb-db
+  PEERDB_CATALOG_PORT: 5432
+  PEERDB_CATALOG_USER: postgres
+  PEERDB_CATALOG_PASSWORD: ${DB_PASSWORD}
+  PEERDB_CATALOG_DATABASE: postgres
+  TEMPORAL_HOST_PORT: peerdb-temporal:7233
+  PEERDB_TEMPORAL_NAMESPACE: default
+
+services:
+  peerdb:
+    image: ghcr.io/peerdb-io/peerdb-ui:stable-v0.37.17@sha256:9c755662eb1d74c12de5618d520d7c9a0ae1ef5cfcddfd25f4924cf3dccfd8e4
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PEERDB_FLOW_SERVER_HTTP: http://peerdb-flow-api:8113
+      PEERDB_PASSWORD: ${PEERDB_PASSWORD}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      PEERDB_EXPERIMENTAL_ENABLE_SCRIPTING: "true"
+    depends_on:
+      - peerdb-flow-api
+
+  peerdb-flow-api:
+    image: ghcr.io/peerdb-io/flow-api:stable-v0.37.17@sha256:11c5b771c68c86890210ccd026fd5edb8517b919c0c481e17d6bdb2731be5937
+    restart: unless-stopped
+    expose:
+      - 8112
+      - 8113
+    environment:
+      <<: *flow-env
+    depends_on:
+      peerdb-migrate:
+        condition: service_completed_successfully
+      peerdb-temporal-admin:
+        condition: service_healthy
+
+  peerdb-flow-worker:
+    image: ghcr.io/peerdb-io/flow-worker:stable-v0.37.17@sha256:e464ed436a7d3038250ea68415cb74f1116c93482707f851db75f6a6c70ffe1e
+    restart: unless-stopped
+    environment:
+      <<: *flow-env
+    depends_on:
+      peerdb-migrate:
+        condition: service_completed_successfully
+      peerdb-temporal-admin:
+        condition: service_healthy
+
+  peerdb-snapshot-worker:
+    image: ghcr.io/peerdb-io/flow-snapshot-worker:stable-v0.37.17@sha256:e530fbad64841ce6776105915407d4c498740bb53c9fad2f2ab508e811c23dee
+    restart: unless-stopped
+    environment:
+      <<: *flow-env
+    depends_on:
+      peerdb-migrate:
+        condition: service_completed_successfully
+      peerdb-temporal-admin:
+        condition: service_healthy
+
+  # applies catalog schema migrations and exits
+  peerdb-migrate:
+    image: ghcr.io/peerdb-io/flow-api:stable-v0.37.17@sha256:11c5b771c68c86890210ccd026fd5edb8517b919c0c481e17d6bdb2731be5937
+    restart: "no"
+    entrypoint: ["/home/peerdb/peer-flow", "migrate"]
+    environment:
+      <<: *flow-env
+    depends_on:
+      peerdb-db:
+        condition: service_healthy
+
+  peerdb-temporal:
+    image: temporalio/auto-setup:1.29.7@sha256:f14912b699cf73015ad5c4fc18d522d4b014db90e794039214dfb7c022c2644f
+    restart: unless-stopped
+    expose:
+      - 7233
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PWD: ${DB_PASSWORD}
+      POSTGRES_SEEDS: peerdb-db
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/peerdb.yaml
+      ENABLE_ES: "false"
+      # keeps the SQL visibility Text slots free for MirrorName
+      SKIP_ADD_CUSTOM_SEARCH_ATTRIBUTES: "true"
+    volumes:
+      - ./temporal-dynamicconfig.yaml:/etc/temporal/config/dynamicconfig/peerdb.yaml:ro
+    depends_on:
+      peerdb-db:
+        condition: service_healthy
+
+  # registers the MirrorName search attribute PeerDB workflows require
+  peerdb-temporal-admin:
+    image: temporalio/admin-tools:1.25.2-tctl-1.18.1-cli-1.1.1@sha256:da0c7a7982b571857173ab8f058e7f139b3054800abb4dcb100445d29a563ee8
+    restart: unless-stopped
+    environment:
+      TEMPORAL_ADDRESS: peerdb-temporal:7233
+      TEMPORAL_CLI_ADDRESS: peerdb-temporal:7233
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        until temporal operator search-attribute list 2>/dev/null | grep -qw MirrorName; do
+          temporal operator search-attribute create --name MirrorName --type Text --namespace default >/dev/null 2>&1 || sleep 3
+        done
+        exec tini -s -- sleep infinity
+    healthcheck:
+      test: ["CMD-SHELL", "temporal operator search-attribute list | grep -qw MirrorName"]
+      interval: 5s
+      timeout: 10s
+      retries: 60
+      start_period: 30s
+    depends_on:
+      - peerdb-temporal
+
+  peerdb-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=500"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: --locale=C.UTF-8
+    volumes:
+      - peerdb-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  peerdb-db: {}
