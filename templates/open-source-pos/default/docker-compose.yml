@@ -1,0 +1,45 @@
+services:
+  open-source-pos:
+    image: jekkos/opensourcepos:3.4.3@sha256:3ed42c389b661ed73e73004c1de1b6f82fff6238cf5c9674b5ba3206ccdb5f72
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - open-source-pos-uploads:/app/public/uploads
+      - open-source-pos-logs:/app/writable/logs
+    environment:
+      CI_ENVIRONMENT: production
+      ALLOWED_HOSTNAMES: ${ALLOWED_HOSTNAMES}
+      FORCE_HTTPS: "true"
+      PHP_TIMEZONE: ${PHP_TIMEZONE}
+      MYSQL_HOST_NAME: open-source-pos-db
+      MYSQL_DB_NAME: ${DB_NAME}
+      MYSQL_USERNAME: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      THROTTLE_KEY: ${THROTTLE_KEY}
+    depends_on:
+      open-source-pos-db:
+        condition: service_healthy
+
+  open-source-pos-db:
+    image: mariadb:10.11.19@sha256:e5fe75b2b9de0eb9f6f9a4d9c97272fb3a7480e389ccd487a786bab2a12cc0d7
+    restart: unless-stopped
+    volumes:
+      - open-source-pos-db:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  open-source-pos-uploads: {}
+  open-source-pos-logs: {}
+  open-source-pos-db: {}

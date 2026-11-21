@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-source-pos"
+port = 80
+host = "${domain}"
+
+[config.env]
+ALLOWED_HOSTNAMES = "${domain}"
+PHP_TIMEZONE = "UTC"
+DB_NAME = "ospos"
+DB_USER = "ospos"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+ENCRYPTION_KEY = "${hash:64}"
+THROTTLE_KEY = "${hash:64}"
