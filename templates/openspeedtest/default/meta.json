@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted HTML5 network speed test that measures download, upload, ping and jitter from any browser against your own server.",
+  "category": "networking",
+  "developedBy": {
+    "label": "OpenSpeedTest",
+    "url": "https://openspeedtest.com"
+  },
+  "links": {
+    "github": "https://github.com/openspeedtest/Speed-Test",
+    "website": "https://openspeedtest.com",
+    "docs": [
+      "https://github.com/openspeedtest/Docker-Image#readme",
+      "https://hub.docker.com/r/openspeedtest/latest"
+    ]
+  }
+}
