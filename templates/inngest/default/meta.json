@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Durable workflow and background job engine for event-driven step functions, with a run dashboard, PostgreSQL history and a Redis queue.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Inngest",
+    "url": "https://github.com/inngest"
+  },
+  "links": {
+    "github": "https://github.com/inngest/inngest",
+    "website": "https://www.inngest.com",
+    "docs": [
+      "https://www.inngest.com/docs/self-hosting",
+      "https://www.inngest.com/docs/sdk/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard has no login: anyone who can reach this domain can browse runs, send test events and rerun functions. The event and REST APIs are protected by the generated INNGEST_EVENT_KEY and INNGEST_SIGNING_KEY, which your apps also need.",
+      "link": "https://www.inngest.com/docs/self-hosting"
+    }
+  ]
+}

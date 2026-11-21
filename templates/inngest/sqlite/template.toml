@@ -1,0 +1,15 @@
+[variables]
+event_key = "${hash:64}"
+signing_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "inngest"
+port = 8_288
+host = "${domain}"
+
+[config.env]
+INNGEST_EVENT_KEY = "${event_key}"
+INNGEST_SIGNING_KEY = "${signing_key}"

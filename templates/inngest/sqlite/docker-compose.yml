@@ -1,0 +1,23 @@
+services:
+  inngest:
+    image: inngest/inngest:v1.53.0@sha256:cae99a7f08bf0c5c4b94d311c51f8bb90c18ecf5d24595933243e97a22d35bb4
+    command: ["inngest", "start"]
+    restart: unless-stopped
+    expose:
+      - 8288
+      - 8289
+    environment:
+      INNGEST_EVENT_KEY: ${INNGEST_EVENT_KEY}
+      INNGEST_SIGNING_KEY: ${INNGEST_SIGNING_KEY}
+      INNGEST_SQLITE_DIR: /data
+    volumes:
+      - inngest-data:/data
+    healthcheck:
+      test: ["CMD", "inngest", "alpha", "doctor", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  inngest-data: {}

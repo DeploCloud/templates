@@ -1,0 +1,56 @@
+services:
+  inngest:
+    image: inngest/inngest:v1.53.0@sha256:cae99a7f08bf0c5c4b94d311c51f8bb90c18ecf5d24595933243e97a22d35bb4
+    command: ["inngest", "start"]
+    restart: unless-stopped
+    expose:
+      - 8288
+      - 8289
+    environment:
+      INNGEST_EVENT_KEY: ${INNGEST_EVENT_KEY}
+      INNGEST_SIGNING_KEY: ${INNGEST_SIGNING_KEY}
+      INNGEST_POSTGRES_URI: postgres://${DB_USER}:${DB_PASSWORD}@inngest-db:5432/${DB_NAME}
+      INNGEST_REDIS_URI: redis://inngest-redis:6379
+    healthcheck:
+      test: ["CMD", "inngest", "alpha", "doctor", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      inngest-db:
+        condition: service_healthy
+      inngest-redis:
+        condition: service_healthy
+
+  inngest-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - inngest-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  inngest-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: unless-stopped
+    volumes:
+      - inngest-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  inngest-db: {}
+  inngest-redis: {}
