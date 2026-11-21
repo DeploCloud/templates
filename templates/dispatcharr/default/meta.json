@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "IPTV and stream manager that imports M3U, Xtream Codes and EPG sources and serves channels as M3U, XMLTV, Xtream Codes API or HDHomeRun.",
+  "category": "media",
+  "developedBy": {
+    "label": "Dispatcharr",
+    "url": "https://github.com/Dispatcharr"
+  },
+  "links": {
+    "github": "https://github.com/Dispatcharr/Dispatcharr",
+    "website": "https://dispatcharr.github.io/Dispatcharr-Docs/",
+    "docs": [
+      "https://dispatcharr.github.io/Dispatcharr-Docs/installation/",
+      "https://dispatcharr.github.io/Dispatcharr-Docs/getting-started/",
+      "https://dispatcharr.github.io/Dispatcharr-Docs/reverse-proxies/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Web setup of the first admin account only accepts private network addresses. Open the site, note the IP shown on the setup page, set DISPATCHARR_SETUP_ALLOWED_IP to it and redeploy, or run python manage.py createsuperuser in the container terminal.",
+      "link": "https://github.com/Dispatcharr/Dispatcharr#-quick-start-with-docker-recommended"
+    }
+  ]
+}

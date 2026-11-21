@@ -1,0 +1,27 @@
+services:
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:0.34.1@sha256:3716ebb0aba133fe8b3d311505dc49966b7fddff742d9ab710ccd19d04658195
+    restart: unless-stopped
+    expose:
+      - 9191
+    volumes:
+      - dispatcharr-data:/data
+      - dispatcharr-media:/app/media
+    environment:
+      DISPATCHARR_ENV: aio
+      REDIS_HOST: localhost
+      CELERY_BROKER_URL: redis://localhost:6379/0
+      DISPATCHARR_LOG_LEVEL: info
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DISPATCHARR_SETUP_ALLOWED_IP: ${DISPATCHARR_SETUP_ALLOWED_IP}
+      TZ: ${TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:9191/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+
+volumes:
+  dispatcharr-data: {}
+  dispatcharr-media: {}
