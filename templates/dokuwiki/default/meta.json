@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "File-based wiki that needs no database, with plain-text pages, media, plugins and configuration kept on one persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "DokuWiki",
+    "url": "https://www.dokuwiki.org/"
+  },
+  "links": {
+    "github": "https://github.com/dokuwiki/dokuwiki",
+    "website": "https://www.dokuwiki.org/",
+    "docs": [
+      "https://www.dokuwiki.org/manual",
+      "https://www.dokuwiki.org/installer",
+      "https://github.com/dokuwiki/docker#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open https://<your-domain>/install.php right after the first deploy to name the wiki and create the superuser account. Until then anyone who reaches the URL can run the installer.",
+      "link": "https://www.dokuwiki.org/installer"
+    }
+  ]
+}
