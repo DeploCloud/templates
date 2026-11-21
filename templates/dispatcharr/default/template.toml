@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dispatcharr"
+port = 9_191
+host = "${domain}"
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+DISPATCHARR_SETUP_ALLOWED_IP = ""
+TZ = "UTC"
