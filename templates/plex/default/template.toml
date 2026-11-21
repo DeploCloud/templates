@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "plex"
+port = 32_400
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+PLEX_CLAIM = ""
+ADVERTISE_IP = "https://${domain}:443"

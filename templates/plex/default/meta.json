@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Plex Media Server for organizing and streaming movies, shows, music and photos to Plex apps and the web player.",
+  "category": "media",
+  "developedBy": {
+    "label": "Plex",
+    "url": "https://github.com/plexinc"
+  },
+  "links": {
+    "github": "https://github.com/plexinc/pms-docker",
+    "website": "https://www.plex.tv/",
+    "docs": [
+      "https://github.com/plexinc/pms-docker#readme",
+      "https://support.plex.tv/articles/200430283-network/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set PLEX_CLAIM to a claim token from plex.tv/claim right before deploying; it expires after 4 minutes. Without it the server cannot be signed in to your Plex account from the public domain. If it expired, set a fresh one and redeploy.",
+      "link": "https://www.plex.tv/claim/"
+    }
+  ]
+}
