@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Baby care tracker for sleep, feedings, diaper changes and tummy time, with a built-in SQLite database on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Baby Buddy",
+    "url": "https://github.com/babybuddy"
+  },
+  "links": {
+    "github": "https://github.com/babybuddy/babybuddy",
+    "website": "https://docs.baby-buddy.net/",
+    "docs": [
+      "https://docs.baby-buddy.net/setup/deployment/",
+      "https://docs.baby-buddy.net/setup/proxy/",
+      "https://docs.baby-buddy.net/configuration/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first login is admin / admin. Change this password immediately after the first sign-in.",
+      "link": "https://docs.baby-buddy.net/setup/deployment/"
+    }
+  ]
+}

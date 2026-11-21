@@ -1,0 +1,1 @@
+Baby Buddy helps caregivers track sleep, feedings, diaper changes, tummy time and growth to learn a baby's patterns. This variant runs the web app with its built-in SQLite database; the database, uploaded child photos and generated config live on the persistent `/config` volume. Sign in with the default `admin` / `admin` account and change the password right away.
