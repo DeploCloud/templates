@@ -1,0 +1,25 @@
+services:
+  tiddlywiki:
+    image: node:26.13.1-alpine@sha256:6bd9ab43c0ec0190ca7b2d193906cb8b7edf6e7f4afa43ddeccd6452710bffb5
+    restart: unless-stopped
+    init: true
+    user: node
+    working_dir: /home/node
+    expose:
+      - 8080
+    environment:
+      TW_USERNAME: ${TW_USERNAME}
+      TW_PASSWORD: ${TW_PASSWORD}
+    # TiddlyWiki publishes no image: run the official npm release, cached in the volume
+    command:
+      - sh
+      - -c
+      - |
+        tw="npx --yes --prefer-offline tiddlywiki@5.4.1"
+        [ -f wiki/tiddlywiki.info ] || $$tw wiki --init server
+        exec $$tw wiki --listen host=0.0.0.0 port=8080 "username=$$TW_USERNAME" "password=$$TW_PASSWORD"
+    volumes:
+      - tiddlywiki-data:/home/node
+
+volumes:
+  tiddlywiki-data: {}

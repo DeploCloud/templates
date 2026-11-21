@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tiddlywiki"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TW_USERNAME = "admin"
+TW_PASSWORD = "${admin_password}"

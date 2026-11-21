@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted TiddlyWiki Node.js server with password-protected access and tiddlers saved to a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "TiddlyWiki",
+    "url": "https://github.com/TiddlyWiki"
+  },
+  "links": {
+    "github": "https://github.com/TiddlyWiki/TiddlyWiki5",
+    "website": "https://tiddlywiki.com/",
+    "docs": [
+      "https://tiddlywiki.com/static/Installing%2520TiddlyWiki%2520on%2520Node.js.html",
+      "https://tiddlywiki.com/static/WebServer.html",
+      "https://tiddlywiki.com/static/WebServer%2520Basic%2520Authentication.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The wiki asks for a username and password: sign in as admin with the generated password from the TW_PASSWORD environment variable.",
+      "link": "https://tiddlywiki.com/static/WebServer%2520Basic%2520Authentication.html"
+    }
+  ]
+}
