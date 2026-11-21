@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based desktop publishing and page layout studio built in Rust and WebAssembly: spreads, parent pages, threaded text, styles, tables, IDML import and export, and PDF, EPUB and PNG export.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/designcraft",
+    "website": "https://getartcraft.com/apps/designcraft",
+    "docs": [
+      "https://github.com/storytold/designcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/designcraft/blob/main/docs/user/index.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Documents are not stored on the server: the web app runs in the browser and keeps only preferences there. Save or export your layouts to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}

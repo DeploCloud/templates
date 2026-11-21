@@ -1,0 +1,12 @@
+services:
+  designcraft:
+    image: ghcr.io/mikapst/designcraft-web:v0.20.1@sha256:a805a939c4e13ffb8c2cdf76c56a5528ba70908d1861317babe406bdd1b4dabe
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
