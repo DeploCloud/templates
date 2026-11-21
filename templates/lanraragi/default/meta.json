@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web reader and archive manager for manga and comics in zip, rar, cbz, 7z, PDF and EPUB formats, with tagging and an API.",
+  "category": "media",
+  "developedBy": {
+    "label": "Difegue",
+    "url": "https://github.com/Difegue"
+  },
+  "links": {
+    "github": "https://github.com/Difegue/LANraragi",
+    "website": "https://lrr.tvc-16.science",
+    "docs": [
+      "https://sugoi.gitbook.io/lanraragi/installing-lanraragi/docker",
+      "https://sugoi.gitbook.io/lanraragi/basic-operations/first-steps"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin password of a new install is \"kamimamita\". Log in and change it on the Configuration page right after the first start; anyone can read archives without logging in by default.",
+      "link": "https://sugoi.gitbook.io/lanraragi/basic-operations/first-steps"
+    }
+  ]
+}
