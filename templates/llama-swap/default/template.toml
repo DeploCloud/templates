@@ -1,0 +1,40 @@
+[variables]
+api_key = "${password:48}"
+
+[[config.domains]]
+serviceName = "llama-swap"
+port = 8080
+host = "${domain}"
+
+[config.env]
+LLAMA_SWAP_API_KEY = "sk-${api_key}"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """
+healthCheckTimeout: 900
+globalTTL: 600
+logLevel: info
+
+apiKeys:
+  - "${env.LLAMA_SWAP_API_KEY}"
+
+models:
+  "qwen2.5-0.5b":
+    name: "Qwen2.5 0.5B Instruct"
+    proxy: "http://127.0.0.1:9999"
+    cmd: >
+      /app/llama-server
+      -hf bartowski/Qwen2.5-0.5B-Instruct-GGUF:Q4_K_M
+      --ctx-size 8192
+      --port 9999
+
+  "smollm2-135m":
+    name: "SmolLM2 135M Instruct"
+    proxy: "http://127.0.0.1:9999"
+    cmd: >
+      /app/llama-server
+      -hf bartowski/SmolLM2-135M-Instruct-GGUF:Q4_K_M
+      --ctx-size 8192
+      --port 9999
+"""

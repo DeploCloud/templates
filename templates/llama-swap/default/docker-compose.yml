@@ -1,0 +1,21 @@
+services:
+  llama-swap:
+    image: ghcr.io/mostlygeek/llama-swap:v275-cpu-b12464@sha256:4af7afbcd87808c1bd5177e7cfa869dd869641895fce492072eb5d6f3a0d196d
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      LLAMA_SWAP_API_KEY: ${LLAMA_SWAP_API_KEY}
+      LLAMA_CACHE: /models
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - llama-swap-models:/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  llama-swap-models: {}
