@@ -1,0 +1,16 @@
+[variables]
+api_key = "tapi_${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tdarr"
+port = 8_265
+host = "${domain}"
+
+[config.env]
+TDARR_API_KEY = "${api_key}"
+PUID = "1000"
+PGID = "1000"
+TZ = "UTC"
