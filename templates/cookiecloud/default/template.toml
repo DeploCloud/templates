@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cookiecloud"
+port = 8_088
+host = "${domain}"
+
+[config.env]
+RATE_LIMIT_MAX = "100"
