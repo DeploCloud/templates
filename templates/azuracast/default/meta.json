@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted web radio management suite with built-in AutoDJ, Icecast, Liquidsoap, MariaDB and a web dashboard for running stations.",
+  "category": "media",
+  "developedBy": {
+    "label": "AzuraCast",
+    "url": "https://github.com/AzuraCast"
+  },
+  "links": {
+    "github": "https://github.com/AzuraCast/AzuraCast",
+    "website": "https://www.azuracast.com/",
+    "docs": [
+      "https://www.azuracast.com/docs/getting-started/installation/docker/",
+      "https://www.azuracast.com/docs/getting-started/settings/",
+      "https://www.azuracast.com/docs/administration/docker/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created in the setup wizard becomes the super administrator. Open the site right after deployment to claim it."
+    },
+    {
+      "type": "info",
+      "message": "Listener streams are served through the web proxy under /listen/ on the main domain. Direct station ports and SFTP are not exposed, so external source clients (such as a desktop broadcasting tool) cannot connect; use the built-in Web DJ instead."
+    }
+  ]
+}
