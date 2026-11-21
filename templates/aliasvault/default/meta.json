@@ -1,0 +1,40 @@
+{
+  "name": "Default",
+  "shortDescription": "End-to-end encrypted password manager with built-in email aliases, bundling the web app, API, admin panel and PostgreSQL in one container.",
+  "category": "security",
+  "developedBy": {
+    "label": "AliasVault",
+    "url": "https://github.com/aliasvault"
+  },
+  "links": {
+    "github": "https://github.com/aliasvault/aliasvault",
+    "website": "https://www.aliasvault.com",
+    "docs": [
+      "https://docs.aliasvault.com/installation/docker-compose/",
+      "https://docs.aliasvault.com/installation/docker-compose/troubleshooting",
+      "https://docs.aliasvault.com/installation/docker-compose/advanced/admin-access",
+      "https://docs.aliasvault.com/installation/docs/private-vs-public-email"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the web app only works from a secure origin, and the mobile apps need a publicly trusted certificate.",
+      "link": "https://docs.aliasvault.com/installation/docker-compose/"
+    },
+    {
+      "type": "warning",
+      "message": "The admin panel has no password by default. Open the aliasvault container terminal, run `aliasvault reset-admin-password`, copy the printed password and restart the app; then sign in at /admin as admin.",
+      "link": "https://docs.aliasvault.com/installation/docker-compose/troubleshooting"
+    },
+    {
+      "type": "warning",
+      "message": "Anyone can register while PUBLIC_REGISTRATION_ENABLED is true. Set it to false after creating your accounts; further users can join through invite links from the admin panel."
+    },
+    {
+      "type": "info",
+      "message": "SMTP ports 25 and 587 are not published, so aliases use the public email domains. Receiving mail on your own domain needs those ports, MX records and PRIVATE_EMAIL_DOMAINS.",
+      "link": "https://docs.aliasvault.com/installation/docs/private-vs-public-email"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+services:
+  aliasvault:
+    image: ghcr.io/aliasvault/aliasvault:0.31.4@sha256:5d118f471ef782a70de69d92c95c7c4245d2ecaf910f72626ef255768d160aec
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      FORCE_HTTPS_REDIRECT: "false"
+      PUBLIC_REGISTRATION_ENABLED: ${PUBLIC_REGISTRATION_ENABLED}
+      PRIVATE_EMAIL_DOMAINS: ${PRIVATE_EMAIL_DOMAINS}
+    volumes:
+      - aliasvault-database:/database
+      - aliasvault-logs:/logs
+      - aliasvault-secrets:/secrets
+      - aliasvault-certificates:/certificates
+
+volumes:
+  aliasvault-database: {}
+  aliasvault-logs: {}
+  aliasvault-secrets: {}
+  aliasvault-certificates: {}
