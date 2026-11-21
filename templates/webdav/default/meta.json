@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Simple standalone WebDAV server that shares a persistent directory over HTTPS with password-protected access.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Henrique Dias",
+    "url": "https://github.com/hacdias"
+  },
+  "links": {
+    "github": "https://github.com/hacdias/webdav",
+    "docs": [
+      "https://github.com/hacdias/webdav#configuration",
+      "https://github.com/hacdias/webdav#container"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username from WEBDAV_USERNAME (admin by default) and the password generated in WEBDAV_PASSWORD. There is no web app: connect a WebDAV client to https://<your domain>/; a browser only shows a read-only file listing."
+    }
+  ]
+}

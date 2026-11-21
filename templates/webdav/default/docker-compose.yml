@@ -1,0 +1,16 @@
+services:
+  webdav:
+    image: ghcr.io/hacdias/webdav:v5.17.3@sha256:3b70d2a3afd5bb2f8b3aadb621baa3788c2248b30da3a4698352fc96fef0de40
+    restart: unless-stopped
+    command: ["-c", "/config.yml"]
+    expose:
+      - 6065
+    environment:
+      WEBDAV_USERNAME: ${WEBDAV_USERNAME}
+      WEBDAV_PASSWORD: ${WEBDAV_PASSWORD}
+    volumes:
+      - webdav-data:/data
+      - ./config.yml:/config.yml:ro
+
+volumes:
+  webdav-data: {}
