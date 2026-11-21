@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "papra"
+port = 1_221
+host = "${domain}"
+
+[config.env]
+APP_BASE_URL = "https://${domain}"
+AUTH_SECRET = "${secret:64}"
