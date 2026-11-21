@@ -1,0 +1,50 @@
+[config]
+
+[[config.domains]]
+serviceName = "alloy"
+port = 12_345
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "alloy"
+port = 4_318
+host = "${domain}"
+path = "/v1"
+
+[[config.mounts]]
+filePath = "config.alloy"
+content = """// Replace otelcol.exporter.debug with an exporter for your backend.
+// see https://grafana.com/docs/alloy/latest/reference/components/
+
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+otelcol.receiver.otlp "default" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  output {
+    metrics = [otelcol.exporter.debug.default.input]
+    logs    = [otelcol.exporter.debug.default.input]
+    traces  = [otelcol.exporter.debug.default.input]
+  }
+}
+
+otelcol.exporter.debug "default" {}
+"""

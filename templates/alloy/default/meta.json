@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenTelemetry Collector distribution with programmable pipelines, an OTLP endpoint and the Alloy debugging UI.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Grafana Labs",
+    "url": "https://github.com/grafana"
+  },
+  "links": {
+    "github": "https://github.com/grafana/alloy",
+    "website": "https://grafana.com/oss/alloy/",
+    "docs": [
+      "https://grafana.com/docs/alloy/latest/set-up/install/docker/",
+      "https://grafana.com/docs/alloy/latest/reference/cli/run/",
+      "https://grafana.com/docs/alloy/latest/reference/components/otelcol/otelcol.receiver.otlp/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The default config.alloy only logs the telemetry it receives. Edit it to forward data to your backend (for example otelcol.exporter.otlphttp) and redeploy.",
+      "link": "https://grafana.com/docs/alloy/latest/reference/components/"
+    },
+    {
+      "type": "warning",
+      "message": "Alloy has no built-in authentication: anyone who knows the domain can open the UI and send OTLP data to https://<domain>/v1/. Restrict access in front of the app or add auth to the receiver."
+    }
+  ]
+}
