@@ -1,0 +1,18 @@
+services:
+  kicad:
+    image: lscr.io/linuxserver/kicad:10.0.3-r0-ls158@sha256:c7fcfc41f95eb29baa0c4f80ba2d03253f0792b09c2e362e6b8393d647850d77
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - kicad-config:/config
+
+volumes:
+  kicad-config: {}
