@@ -1,0 +1,58 @@
+services:
+  contextforge:
+    image: ghcr.io/ibm/mcp-context-forge:v1.1.1@sha256:16c7a8985c1a3528ba49fcab32951e06c9a41a171fc5c41d24b085283c4556a5
+    restart: unless-stopped
+    expose:
+      - 4444
+    environment:
+      HOST: 0.0.0.0
+      PORT: "4444"
+      ENVIRONMENT: production
+      APP_DOMAIN: ${APP_DOMAIN}
+      DATABASE_URL: postgresql+psycopg://contextforge:${DB_PASSWORD}@contextforge-db:5432/contextforge
+      CACHE_TYPE: redis
+      REDIS_URL: redis://contextforge-redis:6379/0
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      AUTH_ENCRYPTION_SECRET: ${AUTH_ENCRYPTION_SECRET}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD}
+      PLATFORM_ADMIN_EMAIL: ${PLATFORM_ADMIN_EMAIL}
+      PLATFORM_ADMIN_PASSWORD: ${PLATFORM_ADMIN_PASSWORD}
+      DEFAULT_USER_PASSWORD: ${DEFAULT_USER_PASSWORD}
+      MCPGATEWAY_UI_ENABLED: "true"
+      MCPGATEWAY_ADMIN_API_ENABLED: "true"
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS}
+    depends_on:
+      contextforge-db:
+        condition: service_healthy
+      contextforge-redis:
+        condition: service_healthy
+
+  contextforge-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: contextforge
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: contextforge
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U contextforge -d contextforge"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - contextforge-db:/var/lib/postgresql
+
+  contextforge-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - contextforge-redis:/data
+
+volumes:
+  contextforge-db: {}
+  contextforge-redis: {}

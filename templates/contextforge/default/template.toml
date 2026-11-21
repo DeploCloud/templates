@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "contextforge"
+port = 4_444
+host = "${domain}"
+
+[config.env]
+APP_DOMAIN = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+JWT_SECRET_KEY = "${password:64}"
+AUTH_ENCRYPTION_SECRET = "${password:64}"
+BASIC_AUTH_PASSWORD = "${password:32}"
+PLATFORM_ADMIN_EMAIL = "admin@example.com"
+PLATFORM_ADMIN_PASSWORD = "${admin_password}"
+DEFAULT_USER_PASSWORD = "${password:32}"
+GUNICORN_WORKERS = "2"
