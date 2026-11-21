@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "limesurvey"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+ADMIN_USER = "admin"
+ADMIN_NAME = "Administrator"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"
+PUBLIC_URL = "https://${domain}"
+ENCRYPT_NONCE = "${hash:48}"
+ENCRYPT_SECRET_BOX_KEY = "${hash:64}"
