@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source map server that publishes geospatial data over WMS, WFS, WCS and WMTS, with a web admin console and a persistent data directory.",
+  "category": "development",
+  "developedBy": {
+    "label": "GeoServer",
+    "url": "https://geoserver.org/"
+  },
+  "links": {
+    "github": "https://github.com/geoserver/geoserver",
+    "website": "https://geoserver.org/",
+    "docs": [
+      "https://docs.geoserver.org/stable/en/user/installation/docker/",
+      "https://github.com/geoserver/docker#readme",
+      "https://docs.geoserver.org/stable/en/user/gettingstarted/web-admin-quickstart/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated GEOSERVER_ADMIN_PASSWORD. On every start the image rewrites the admin account from these variables and resets users and roles added in the web console; remove GEOSERVER_ADMIN_USER and GEOSERVER_ADMIN_PASSWORD after first login if you manage users in GeoServer.",
+      "link": "https://github.com/geoserver/docker#environment-variables"
+    }
+  ]
+}

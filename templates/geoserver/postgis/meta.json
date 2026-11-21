@@ -1,0 +1,29 @@
+{
+  "name": "PostGIS",
+  "shortDescription": "GeoServer map server with a bundled PostGIS database exposed as a JNDI connection pool for storing and publishing vector data.",
+  "category": "development",
+  "developedBy": {
+    "label": "GeoServer",
+    "url": "https://geoserver.org/"
+  },
+  "links": {
+    "github": "https://github.com/geoserver/geoserver",
+    "website": "https://geoserver.org/",
+    "docs": [
+      "https://github.com/geoserver/docker#how-to-enable-a-postgresql-jndi-resource",
+      "https://docs.geoserver.org/stable/en/user/data/database/jndi/",
+      "https://docs.geoserver.org/stable/en/user/data/database/postgis/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated GEOSERVER_ADMIN_PASSWORD. On every start the image rewrites the admin account from these variables and resets users and roles added in the web console; remove GEOSERVER_ADMIN_USER and GEOSERVER_ADMIN_PASSWORD after first login if you manage users in GeoServer.",
+      "link": "https://github.com/geoserver/docker#environment-variables"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "geoserver"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+GEOSERVER_ADMIN_USER = "admin"
+GEOSERVER_ADMIN_PASSWORD = "${admin_password}"
+PROXY_BASE_URL = "https://${domain}/geoserver"
+GEOSERVER_CSRF_WHITELIST = "${domain}"
+SKIP_DEMO_DATA = "false"
+EXTRA_JAVA_OPTS = "-Xms256m -Xmx1g"
