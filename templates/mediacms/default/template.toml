@@ -1,0 +1,77 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:20}"
+
+[config]
+
+[[config.domains]]
+serviceName = "mediacms"
+port = 80
+host = "${domain}"
+
+[config.env]
+FRONTEND_HOST = "https://${domain}"
+PORTAL_NAME = "MediaCMS"
+SECRET_KEY = "${password:64}"
+ADMIN_USER = "admin"
+ADMIN_EMAIL = "admin@localhost"
+ADMIN_PASSWORD = "${admin_password}"
+POSTGRES_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "local_settings.py"
+content = """import os
+
+FRONTEND_HOST = os.getenv("FRONTEND_HOST", "http://localhost")
+PORTAL_NAME = os.getenv("PORTAL_NAME", "MediaCMS")
+REDIS_LOCATION = os.getenv("REDIS_LOCATION", "redis://mediacms-redis:6379/1")
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_NAME", "mediacms"),
+        "HOST": os.getenv("POSTGRES_HOST", "mediacms-db"),
+        "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        "USER": os.getenv("POSTGRES_USER", "mediacms"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),
+        "OPTIONS": {
+            "pool": {
+                "min_size": 2,
+                "max_size": 8,
+                "timeout": 10,
+                "max_lifetime": 30 * 60,
+                "max_idle": 10 * 60,
+            }
+        },
+    }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_LOCATION,
+        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+    }
+}
+
+BROKER_URL = REDIS_LOCATION
+CELERY_RESULT_BACKEND = BROKER_URL
+
+MP4HLS_COMMAND = "/home/mediacms.io/bento4/bin/mp4hls"
+
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# TLS ends at the reverse proxy, which sends X-Forwarded-Proto.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+CSRF_TRUSTED_ORIGINS = [FRONTEND_HOST]
+
+# SMTP for verification and password reset emails.
+# EMAIL_HOST = "smtp.example.com"
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "user"
+# EMAIL_HOST_PASSWORD = "password"
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = "MediaCMS <noreply@example.com>"
+# SERVER_EMAIL = DEFAULT_FROM_EMAIL
+# ADMIN_EMAIL_LIST = ["admin@example.com"]
+"""

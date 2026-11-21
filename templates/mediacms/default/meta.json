@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Video and media CMS with HLS transcoding, playlists, categories and a REST API, backed by PostgreSQL and Redis.",
+  "category": "media",
+  "developedBy": {
+    "label": "MediaCMS",
+    "url": "https://github.com/mediacms-io"
+  },
+  "links": {
+    "github": "https://github.com/mediacms-io/mediacms",
+    "website": "https://mediacms.io",
+    "docs": [
+      "https://github.com/mediacms-io/mediacms/blob/main/docs/admins_docs.md",
+      "https://github.com/mediacms-io/mediacms/blob/main/docs/user_docs.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the generated ADMIN_PASSWORD from the environment. Self-registration is open by default and email is not configured: set the SMTP options in local_settings.py to send verification and reset emails.",
+      "link": "https://github.com/mediacms-io/mediacms/blob/main/docs/admins_docs.md"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
