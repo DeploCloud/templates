@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "restreamer"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+CORE_HOST_NAME = "${domain}"
+CORE_API_AUTH_ENABLE = "true"
+CORE_API_AUTH_USERNAME = "admin"
+CORE_API_AUTH_PASSWORD = "${admin_password}"

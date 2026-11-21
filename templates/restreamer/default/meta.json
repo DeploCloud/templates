@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted live streaming server with a web UI that pulls network video sources, serves HLS to a built-in player and restreams to YouTube, Twitch and other RTMP/SRT targets.",
+  "category": "media",
+  "developedBy": {
+    "label": "datarhei",
+    "url": "https://datarhei.com"
+  },
+  "links": {
+    "github": "https://github.com/datarhei/restreamer",
+    "website": "https://datarhei.com",
+    "docs": [
+      "https://docs.datarhei.com/restreamer/getting-started/quick-start",
+      "https://docs.datarhei.com/restreamer/knowledge-base/user-guides/proxying",
+      "https://docs.datarhei.com/restreamer/api/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open https://<your-domain>/ui and log in as admin with the generated CORE_API_AUTH_PASSWORD from the environment; login settings are locked to these variables in the UI."
+    },
+    {
+      "type": "warning",
+      "message": "Only HTTP is routed. RTMP (1935/tcp) and SRT (6000/udp) ingest from OBS or encoders needs those ports published separately; network sources such as RTSP or HLS cameras work without them.",
+      "link": "https://docs.datarhei.com/restreamer/knowledge-base/user-guides/proxying"
+    }
+  ]
+}
