@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "algernon"
+port = 3000
+host = "${domain}"
