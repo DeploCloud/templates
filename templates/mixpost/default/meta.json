@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted social media scheduler to create, schedule and publish posts across social networks, with MySQL and Redis included.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Inovector",
+    "url": "https://github.com/inovector"
+  },
+  "links": {
+    "github": "https://github.com/inovector/mixpost",
+    "website": "https://mixpost.app",
+    "docs": [
+      "https://docs.mixpost.app/lite/installation/docker",
+      "https://docs.mixpost.app/services/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates an administrator with the email admin@example.com and the password changeme. Sign in right after deploying and change the password under Profile, but keep that email: if no account uses it, every restart recreates it with the default password.",
+      "link": "https://docs.mixpost.app/lite/installation/docker"
+    },
+    {
+      "type": "warning",
+      "message": "Connecting a social network needs a developer app and API keys from that network, entered in Mixpost under Services.",
+      "link": "https://docs.mixpost.app/services/"
+    }
+  ]
+}

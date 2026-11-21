@@ -1,0 +1,31 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "mixpost"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_KEY = "${password:32}"
+APP_URL = "https://${domain}"
+DB_DATABASE = "mixpost"
+DB_USERNAME = "mixpost"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+MAIL_HOST = ""
+MAIL_PORT = "587"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_ENCRYPTION = "tls"
+MAIL_FROM_ADDRESS = "noreply@${domain}"
+
+[[config.mounts]]
+filePath = "trustedproxy.php"
+content = """<?php
+
+return ['proxies' => '*'];
+"""
