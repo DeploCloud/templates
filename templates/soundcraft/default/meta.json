@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based digital audio workstation built in Rust and WebAssembly: multitrack editing, a mixer with inserts, sends and automation, MIDI and a piano roll, and bouncing to audio files.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/soundcraft",
+    "website": "https://getartcraft.com/apps/soundcraft",
+    "docs": [
+      "https://github.com/storytold/soundcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/soundcraft/blob/main/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sessions and audio are not stored on the server: the DAW runs in the browser, opens files from your device and saves or exports them as downloads. The web build cannot record audio."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image; this one is built by a community maintainer from the source of the official release tags."
+    }
+  ]
+}

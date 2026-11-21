@@ -1,0 +1,12 @@
+services:
+  soundcraft:
+    image: ghcr.io/mikapst/soundcraft-web:v0.20.1@sha256:ce831c74873d19a4f2984dd95ddfade36ff6cd119e92075a2476b6e88e70f53a
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
