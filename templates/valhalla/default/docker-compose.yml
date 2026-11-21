@@ -1,0 +1,19 @@
+services:
+  valhalla:
+    image: ghcr.io/valhalla/valhalla-scripted:3.9.3@sha256:d438516425e785442562852d2f38d048478b6895bb15850491b81332f85bc4be
+    restart: unless-stopped
+    expose:
+      - 8002
+    environment:
+      tile_urls: ${TILE_URLS}
+    volumes:
+      - valhalla-data:/custom_files
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8002/status || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 600s
+
+volumes:
+  valhalla-data: {}
