@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "Turns a media library into scheduled live TV channels, served to IPTV clients as M3U playlists with an XMLTV guide.",
+  "category": "media",
+  "developedBy": {
+    "label": "ErsatzTV",
+    "url": "https://github.com/ErsatzTV"
+  },
+  "links": {
+    "github": "https://github.com/ErsatzTV/legacy",
+    "website": "https://ersatztv.org/",
+    "docs": [
+      "https://ersatztv.org/docs/installation/docker",
+      "https://ersatztv.org/docs/networking/",
+      "https://ersatztv.org/docs/media/",
+      "https://ersatztv.org/docs/clients/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no login by default: anyone with the URL can manage channels and media sources. Set OIDC__AUTHORITY, OIDC__CLIENTID and OIDC__CLIENTSECRET to an OpenID Connect provider and register https://<your domain>/callback as its redirect URI to require sign-in.",
+      "link": "https://ersatztv.org/docs/networking/"
+    },
+    {
+      "type": "warning",
+      "message": "IPTV endpoints (M3U, XMLTV, HDHomeRun and the streams themselves) are never authenticated, even with OIDC enabled. Anyone who knows the URL can watch your channels.",
+      "link": "https://github.com/ErsatzTV/legacy/releases/tag/v26.13.0"
+    },
+    {
+      "type": "warning",
+      "message": "No host media folder is mounted. Add a Plex, Jellyfin or Emby server as a media source; its items are streamed from that server by default.",
+      "link": "https://ersatztv.org/docs/media/"
+    }
+  ]
+}

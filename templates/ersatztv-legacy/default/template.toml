@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ersatztv"
+port = 8_409
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+OIDC__AUTHORITY = ""
+OIDC__CLIENTID = ""
+OIDC__CLIENTSECRET = ""
+OIDC__LOGOUTURI = ""

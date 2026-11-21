@@ -1,0 +1,19 @@
+services:
+  ersatztv:
+    image: ghcr.io/ersatztv/legacy:v26.13.0@sha256:834dd0e086ec1fab4fd06bf0c33195c6424cff6636672c051a9fab245b85bc7f
+    restart: unless-stopped
+    expose:
+      - 8409
+    environment:
+      TZ: ${TZ}
+      OIDC__AUTHORITY: ${OIDC__AUTHORITY}
+      OIDC__CLIENTID: ${OIDC__CLIENTID}
+      OIDC__CLIENTSECRET: ${OIDC__CLIENTSECRET}
+      OIDC__LOGOUTURI: ${OIDC__LOGOUTURI}
+    volumes:
+      - ersatztv-config:/config
+    tmpfs:
+      - /transcode
+
+volumes:
+  ersatztv-config: {}
