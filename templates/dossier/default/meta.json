@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted job search workspace that keeps one career profile, drafts tailored resumes and cover letters with AI and tracks every application, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "AienTech",
+    "url": "https://github.com/AienTech"
+  },
+  "links": {
+    "github": "https://github.com/AienTech/dossier",
+    "website": "https://dossier.aien.me",
+    "docs": [
+      "https://github.com/AienTech/dossier/wiki/Run-locally-with-Docker-Compose",
+      "https://github.com/AienTech/dossier/wiki/Environment-variables",
+      "https://github.com/AienTech/dossier/wiki/Choosing-an-AI-provider"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated DOSSIER_LOGIN_PASSWORD from this app's environment settings. To change it, edit that value and redeploy; every restart signs you out."
+    },
+    {
+      "type": "warning",
+      "message": "Drafting resumes and cover letters needs an AI provider. After signing in, set one under Settings, AI provider: an API key for a hosted model or the URL of a model server you run.",
+      "link": "https://github.com/AienTech/dossier/wiki/Choosing-an-AI-provider"
+    }
+  ]
+}

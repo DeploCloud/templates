@@ -1,0 +1,41 @@
+services:
+  dossier:
+    image: ghcr.io/aientech/dossier:v1.15.1@sha256:e97f87523940ffb72fef127d0b1ecf517d47693368b3379a0587e93094951680
+    restart: unless-stopped
+    # DOSSIER_PASSWORD must be an argon2id hash: make it from the generated password on each start.
+    command:
+      - sh
+      - -c
+      - DOSSIER_PASSWORD="$$(printf '%s' "$$DOSSIER_LOGIN_PASSWORD" | hash-password)" && export DOSSIER_PASSWORD && exec ./start.sh
+    expose:
+      - 3000
+    environment:
+      DATABASE_URL: postgresql://dossier:${POSTGRES_PASSWORD}@dossier-db:5432/dossier
+      DOSSIER_LOGIN_PASSWORD: ${DOSSIER_LOGIN_PASSWORD}
+      DOSSIER_SECRET: ${DOSSIER_SECRET}
+      DOSSIER_PUBLIC_URL: ${DOSSIER_PUBLIC_URL}
+      TZ: ${TZ}
+    volumes:
+      - dossier-data:/data
+    depends_on:
+      dossier-db:
+        condition: service_healthy
+
+  dossier-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dossier
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: dossier
+    volumes:
+      - dossier-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dossier -d dossier"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dossier-data: {}
+  dossier-db-data: {}
