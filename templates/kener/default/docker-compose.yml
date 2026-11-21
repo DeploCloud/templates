@@ -1,0 +1,30 @@
+services:
+  kener:
+    image: rajnandan1/kener:4.2.2@sha256:69352c486147816d5236c42ca55b08747365441f63bbf1a8c13d2941a72a088d
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      KENER_SECRET_KEY: ${KENER_SECRET_KEY}
+      ORIGIN: ${ORIGIN}
+      REDIS_URL: redis://kener-redis:6379
+    volumes:
+      - kener-data:/app/database
+    depends_on:
+      kener-redis:
+        condition: service_healthy
+
+  kener-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - kener-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  kener-data: {}
+  kener-redis: {}
