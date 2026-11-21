@@ -1,0 +1,18 @@
+[variables]
+secret_key_base = "${hash:128}"
+master_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "password-pusher"
+port = 5_100
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${secret_key_base}"
+PWPUSH_MASTER_KEY = "${master_key}"
+PWP__HOST_DOMAIN = "${domain}"
+PWP__OVERRIDE_BASE_URL = "https://${domain}"
+PWP__DISABLE_SIGNUPS = "false"

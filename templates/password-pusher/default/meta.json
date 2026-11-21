@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Share passwords, text, files and URLs through links that expire after a set number of views or days, with audit logs. Uses SQLite.",
+  "category": "security",
+  "developedBy": {
+    "label": "Peter Giacomo Lombardo",
+    "url": "https://github.com/pglombardo"
+  },
+  "links": {
+    "github": "https://github.com/pglombardo/PasswordPusher",
+    "website": "https://pwpush.com",
+    "docs": [
+      "https://docs.pwpush.com/docs/installation/",
+      "https://docs.pwpush.com/docs/self-hosted-configuration/",
+      "https://docs.pwpush.com/docs/admin-dashboard/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    },
+    {
+      "type": "warning",
+      "message": "Anyone can sign up and no account is an administrator by default. After creating your account, run ./bin/promote_to_admin you@example.com in /opt/PasswordPusher inside the container, then set PWP__DISABLE_SIGNUPS to true and redeploy to close registration. Anonymous visitors can create pushes unless PWP__ALLOW_ANONYMOUS is set to false.",
+      "link": "https://docs.pwpush.com/docs/admin-dashboard/"
+    }
+  ]
+}
