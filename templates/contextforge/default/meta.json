@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "MCP and A2A gateway and registry that federates tools, agents and REST APIs behind one endpoint, with an admin UI, PostgreSQL and Redis.",
+  "category": "ai",
+  "developedBy": {
+    "label": "IBM",
+    "url": "https://github.com/IBM"
+  },
+  "links": {
+    "github": "https://github.com/IBM/mcp-context-forge",
+    "website": "https://ibm.github.io/mcp-context-forge/",
+    "docs": [
+      "https://ibm.github.io/mcp-context-forge/deployment/container/",
+      "https://ibm.github.io/mcp-context-forge/manage/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /admin with PLATFORM_ADMIN_EMAIL (admin@example.com) and the generated PLATFORM_ADMIN_PASSWORD from the environment. The account is created on first start; changing these variables later does not update it, so change the password from the admin UI."
+    }
+  ]
+}
