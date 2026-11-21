@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted WhatsApp HTTP API with a web dashboard, Swagger docs and webhooks, storing sessions and media on persistent volumes.",
+  "category": "communication",
+  "developedBy": {
+    "label": "devlikeapro",
+    "url": "https://github.com/devlikeapro"
+  },
+  "links": {
+    "github": "https://github.com/devlikeapro/waha",
+    "website": "https://waha.devlike.pro/",
+    "docs": [
+      "https://waha.devlike.pro/docs/overview/quick-start/",
+      "https://waha.devlike.pro/docs/how-to/config/",
+      "https://waha.devlike.pro/docs/how-to/dashboard/",
+      "https://waha.devlike.pro/docs/how-to/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After deploying, sign in to /dashboard with WAHA_DASHBOARD_USERNAME and WAHA_DASHBOARD_PASSWORD, enter WAHA_API_KEY, then start a session and scan its QR code with the WhatsApp app on your phone.",
+      "link": "https://waha.devlike.pro/docs/how-to/dashboard/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

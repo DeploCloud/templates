@@ -1,0 +1,37 @@
+services:
+  waha:
+    image: devlikeapro/waha:latest-2026.10.1@sha256:2fc1787ddbd343ed2e7d59482846d1b22aa5ca134e29aa8d42d0e88c54e24779
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      WAHA_API_KEY: ${WAHA_API_KEY}
+      WAHA_DASHBOARD_ENABLED: "True"
+      WAHA_DASHBOARD_USERNAME: ${WAHA_DASHBOARD_USERNAME}
+      WAHA_DASHBOARD_PASSWORD: ${WAHA_DASHBOARD_PASSWORD}
+      WHATSAPP_SWAGGER_ENABLED: "True"
+      WHATSAPP_SWAGGER_USERNAME: ${WAHA_DASHBOARD_USERNAME}
+      WHATSAPP_SWAGGER_PASSWORD: ${WAHA_DASHBOARD_PASSWORD}
+      WHATSAPP_DEFAULT_ENGINE: ${WHATSAPP_DEFAULT_ENGINE}
+      WAHA_NAMESPACE: all
+      WAHA_BASE_URL: ${WAHA_BASE_URL}
+      WAHA_LOG_FORMAT: JSON
+      WAHA_LOG_LEVEL: ${WAHA_LOG_LEVEL}
+      WAHA_PRINT_QR: "False"
+      WAHA_MEDIA_STORAGE: LOCAL
+      WHATSAPP_FILES_LIFETIME: "0"
+      WHATSAPP_FILES_FOLDER: /app/.media
+      TZ: ${TZ}
+    volumes:
+      - waha-sessions:/app/.sessions
+      - waha-media:/app/.media
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  waha-sessions: {}
+  waha-media: {}
