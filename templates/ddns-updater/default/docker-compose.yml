@@ -1,0 +1,22 @@
+services:
+  ddns-updater:
+    image: ghcr.io/qdm12/ddns-updater:v2.10.0@sha256:3e2aa558946b5a293def4d73008fa4651c072b2c12932cecd02126fb23979831
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      CONFIG_FILEPATH: /updater/config.json
+      PERIOD: ${PERIOD}
+      UPDATE_COOLDOWN_PERIOD: ${UPDATE_COOLDOWN_PERIOD}
+      SHOUTRRR_ADDRESSES: ${SHOUTRRR_ADDRESSES}
+      LOG_LEVEL: ${LOG_LEVEL}
+      TZ: ${TZ}
+    volumes:
+      - ddns-updater-data:/updater/data
+      - ./config.json:/updater/config.json:ro
+    # The image check turns unhealthy on any failed record, which would take the status page off the router.
+    healthcheck:
+      disable: true
+
+volumes:
+  ddns-updater-data: {}
