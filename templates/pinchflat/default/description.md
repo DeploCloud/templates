@@ -1,0 +1,1 @@
+Pinchflat watches YouTube channels and playlists and downloads new videos automatically with yt-dlp, following rules set per media profile. Its SQLite database, metadata and logs persist on the config volume and downloaded media on the downloads volume. HTTP basic authentication is enabled: sign in as admin with the generated BASIC_AUTH_PASSWORD from the environment settings.

@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted YouTube media manager that indexes channels and playlists and downloads new videos with yt-dlp, with optional podcast RSS feeds.",
+  "category": "media",
+  "developedBy": {
+    "label": "Kieran Eglin",
+    "url": "https://github.com/kieraneglin"
+  },
+  "links": {
+    "github": "https://github.com/kieraneglin/pinchflat",
+    "docs": [
+      "https://github.com/kieraneglin/pinchflat#installation",
+      "https://github.com/kieraneglin/pinchflat/wiki/Username-and-Password",
+      "https://github.com/kieraneglin/pinchflat#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI is protected by HTTP basic authentication. Sign in as admin with the generated BASIC_AUTH_PASSWORD from the environment settings.",
+      "link": "https://github.com/kieraneglin/pinchflat/wiki/Username-and-Password"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
