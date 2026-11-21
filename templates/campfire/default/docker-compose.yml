@@ -1,0 +1,30 @@
+services:
+  campfire:
+    image: ghcr.io/basecamp/once-campfire:1.5.13@sha256:64dfb3be216a6db904df064637ee6b323b7d5183ce14771b1e16dcab0f537745
+    restart: unless-stopped
+    # Generate the Web Push key pair once and keep it in the volume.
+    command:
+      - bash
+      - -c
+      - |
+        f=storage/vapid.env
+        [ -s $$f ] || script/admin/generate-secrets | grep ^VAPID_ > $$f
+        set -a; . ./$$f; set +a
+        exec bin/boot
+    expose:
+      - 80
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DISABLE_SSL: ${DISABLE_SSL}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+    volumes:
+      - campfire-storage:/rails/storage
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/up"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  campfire-storage: {}
