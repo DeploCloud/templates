@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Long-term Prometheus metrics storage in monolithic mode, with a remote write endpoint, a PromQL query API for Grafana and persistent local block storage.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Grafana Labs",
+    "url": "https://github.com/grafana"
+  },
+  "links": {
+    "github": "https://github.com/grafana/mimir",
+    "website": "https://grafana.com/oss/mimir/",
+    "docs": [
+      "https://grafana.com/docs/mimir/latest/",
+      "https://grafana.com/docs/mimir/latest/get-started/",
+      "https://grafana.com/docs/mimir/latest/configure/configuration-parameters/",
+      "https://grafana.com/docs/mimir/latest/references/http-api/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Mimir runs with multi-tenancy disabled and has no built-in authentication: anyone who knows the domain can push metrics to https://<domain>/api/v1/push and query them. Do not store sensitive data, or restrict access in front of the app."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+services:
+  mimir:
+    image: grafana/mimir:3.2.6@sha256:32d79dc873a804d4dbf2724afcbb7b141553b5ed9118f9295972c4bb2982d6fd
+    restart: unless-stopped
+    command: ["-target=all", "-config.file=/etc/mimir/mimir.yaml"]
+    expose:
+      - 8080
+    volumes:
+      # distroless image runs as root, so the volume needs no chown
+      - mimir-data:/data
+      - ./mimir.yaml:/etc/mimir/mimir.yaml:ro
+
+volumes:
+  mimir-data: {}
