@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Distributed task scheduler and runner with a web UI for cron-style jobs, live job logs, run history, performance graphs and plugins in any language.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Joseph Huckaby",
+    "url": "https://github.com/jhuckaby"
+  },
+  "links": {
+    "github": "https://github.com/jhuckaby/Cronicle",
+    "website": "https://cronicle.net",
+    "docs": [
+      "https://github.com/jhuckaby/Cronicle/blob/master/docs/Setup.md",
+      "https://github.com/jhuckaby/Cronicle/blob/master/docs/Configuration.md",
+      "https://github.com/jhuckaby/Cronicle/blob/master/docs/WebUI.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Setup creates an administrator account with username admin and password admin. Sign in right after deployment and change the password.",
+      "link": "https://github.com/jhuckaby/Cronicle/blob/master/docs/Setup.md"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

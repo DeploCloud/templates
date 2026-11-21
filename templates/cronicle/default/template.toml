@@ -1,0 +1,15 @@
+[variables]
+secret_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cronicle"
+port = 3_012
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+CRONICLE_SECRET_KEY = "${secret_key}"
+CRONICLE_BASE_URL = "https://${domain}"
