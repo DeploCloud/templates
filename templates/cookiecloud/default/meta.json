@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted sync server for the CookieCloud browser extension, storing end-to-end encrypted cookies and local storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "easychen",
+    "url": "https://github.com/easychen"
+  },
+  "links": {
+    "github": "https://github.com/easychen/CookieCloud",
+    "website": "https://cc.ft07.com",
+    "docs": [
+      "https://github.com/easychen/CookieCloud/blob/master/README.md#self-hosting",
+      "https://github.com/easychen/CookieCloud#api-interface"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This server has no web interface. Install the CookieCloud browser extension and set its server address to https://<your-domain>, then choose a UUID and an end-to-end encryption password there.",
+      "link": "https://github.com/easychen/CookieCloud#browser-plugin"
+    }
+  ]
+}

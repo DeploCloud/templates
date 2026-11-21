@@ -1,0 +1,14 @@
+services:
+  cookiecloud:
+    image: easychen/cookiecloud:2026.11.13@sha256:23494e58e223100f92c88b855c6d09c5854c852c05f51aca2e0f0fd1042f7e27
+    restart: unless-stopped
+    expose:
+      - 8088
+    environment:
+      TRUST_PROXY: "1"
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX}
+    volumes:
+      - cookiecloud-data:/data/api/data
+
+volumes:
+  cookiecloud-data: {}
