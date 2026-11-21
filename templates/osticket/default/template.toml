@@ -1,0 +1,26 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+install_secret = "${password:48}"
+admin_password = "${password:20}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "osticket"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+INSTALL_NAME = "Support Helpdesk"
+INSTALL_EMAIL = "support@${domain}"
+INSTALL_URL = "https://${domain}/"
+INSTALL_SECRET = "${install_secret}"
+ADMIN_USER = "ostadmin"
+ADMIN_PASS = "${admin_password}"
+ADMIN_EMAIL = "admin@${domain}"
+TRUSTED_PROXIES = "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+TZ = "UTC"

@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source helpdesk ticketing system that turns email, web forms and API requests into tracked support tickets, backed by MariaDB.",
+  "category": "communication",
+  "developedBy": {
+    "label": "osTicket",
+    "url": "https://github.com/osTicket"
+  },
+  "links": {
+    "github": "https://github.com/osTicket/osTicket",
+    "website": "https://osticket.com/",
+    "docs": [
+      "https://docs.osticket.com/en/latest/Getting%20Started/Post-Installation.html",
+      "https://docs.osticket.com/en/latest/Admin/Emails/Emails.html",
+      "https://github.com/HomeLabHD/osticket/blob/main/docs/Environment_Variables.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set INSTALL_EMAIL and ADMIN_EMAIL to real addresses before the first deploy: the first-start install uses them for the help desk and admin accounts, and later changes are made in the admin panel. Then sign in to the staff panel at /scp as ADMIN_USER (ostadmin) with the generated ADMIN_PASS, and add SMTP and mailbox settings to send and fetch ticket mail."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
