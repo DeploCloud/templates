@@ -1,0 +1,47 @@
+[config]
+
+[[config.domains]]
+serviceName = "tempo"
+port = 3_200
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "tempo"
+port = 4_318
+host = "${domain}"
+path = "/v1/traces"
+
+[[config.mounts]]
+filePath = "tempo.yaml"
+content = """stream_over_http_enabled: true
+
+server:
+  http_listen_port: 3200
+  log_level: info
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: "0.0.0.0:4317"
+        http:
+          endpoint: "0.0.0.0:4318"
+
+storage:
+  trace:
+    backend: local
+    wal:
+      path: /var/tempo/wal
+    local:
+      path: /var/tempo/blocks
+
+overrides:
+  defaults:
+    compaction:
+      block_retention: 336h
+
+usage_report:
+  reporting_enabled: false
+"""
