@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "silex"
+port = 6_805
+host = "${domain}"
+
+[config.env]
+SILEX_URL = "https://${domain}"
+SILEX_SESSION_SECRET = "${password:48}"
+GITLAB_DISPLAY_NAME = "GitLab"
+GITLAB_DOMAIN = "https://gitlab.com"
+GITLAB_CLIENT_ID = "replace-with-application-id"
+GITLAB_CLIENT_SECRET = "replace-with-application-secret"

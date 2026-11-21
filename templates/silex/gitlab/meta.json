@@ -1,0 +1,28 @@
+{
+  "name": "GitLab",
+  "shortDescription": "Visual no-code builder for static websites with GitLab sign-in: sites are stored in GitLab repositories and published to GitLab Pages.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Silex Labs",
+    "url": "https://www.silexlabs.org/"
+  },
+  "links": {
+    "github": "https://github.com/silexlabs/Silex",
+    "website": "https://www.silex.me/",
+    "docs": [
+      "https://docs.silex.me/developer/self-hosting/docker/",
+      "https://docs.silex.me/developer/configuration/storage/#oauth-app-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Silex needs a GitLab OAuth application. Create one on your GitLab instance with the redirect URI https://<your domain>/api/connector/login/callback and the scopes api, write_repository and read_user, then set GITLAB_CLIENT_ID and GITLAB_CLIENT_SECRET to its application ID and secret and redeploy. For a self-managed GitLab, also change GITLAB_DOMAIN.",
+      "link": "https://docs.silex.me/developer/configuration/storage/#oauth-app-setup"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
