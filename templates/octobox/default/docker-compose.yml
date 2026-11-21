@@ -1,0 +1,67 @@
+services:
+  octobox:
+    image: octoboxio/octobox:november-2026@sha256:5fc1dba65035460b23ddaa79754a81a3307fb2bbcd59964733967e5d64ce5e84
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      RAILS_ENV: production
+      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_LOG_TO_STDOUT: "true"
+      PORT: "3000"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      OCTOBOX_ATTRIBUTE_ENCRYPTION_KEY: ${OCTOBOX_ATTRIBUTE_ENCRYPTION_KEY}
+      OCTOBOX_DATABASE_HOST: octobox-db
+      OCTOBOX_DATABASE_NAME: octobox
+      OCTOBOX_DATABASE_USERNAME: octobox
+      OCTOBOX_DATABASE_PASSWORD: ${DB_PASSWORD}
+      REDIS_URL: redis://octobox-redis:6379
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      ADMIN_GITHUB_IDS: ${ADMIN_GITHUB_IDS}
+      RESTRICTED_ACCESS_ENABLED: ${RESTRICTED_ACCESS_ENABLED}
+      GITHUB_ORGANIZATION_ID: ${GITHUB_ORGANIZATION_ID}
+      GITHUB_TEAM_ID: ${GITHUB_TEAM_ID}
+      # puma_worker_killer falls back to a 512 MB budget on cgroup v2 hosts
+      DYNO_RAM: "1024"
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 3000"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+    depends_on:
+      octobox-db:
+        condition: service_healthy
+      octobox-redis:
+        condition: service_healthy
+
+  octobox-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: octobox
+      POSTGRES_USER: octobox
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U octobox -d octobox"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - octobox-db:/var/lib/postgresql
+
+  octobox-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - octobox-redis:/data
+
+volumes:
+  octobox-db: {}
+  octobox-redis: {}

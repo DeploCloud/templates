@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "octobox"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+OCTOBOX_ATTRIBUTE_ENCRYPTION_KEY = "${password:32}"
+DB_PASSWORD = "${db_password}"
+GITHUB_CLIENT_ID = ""
+GITHUB_CLIENT_SECRET = ""
+ADMIN_GITHUB_IDS = ""
+RESTRICTED_ACCESS_ENABLED = "false"
+GITHUB_ORGANIZATION_ID = ""
+GITHUB_TEAM_ID = ""
