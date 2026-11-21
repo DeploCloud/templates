@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Synapse, the Matrix homeserver by Element, with PostgreSQL, federation on port 443 through a served .well-known and a persistent media store.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Element",
+    "url": "https://element.io"
+  },
+  "links": {
+    "github": "https://github.com/element-hq/synapse",
+    "website": "https://element-hq.github.io/synapse/latest/",
+    "docs": [
+      "https://github.com/element-hq/synapse/blob/develop/docker/README.md",
+      "https://element-hq.github.io/synapse/latest/usage/configuration/config_documentation.html",
+      "https://element-hq.github.io/synapse/latest/postgres.html",
+      "https://element-hq.github.io/synapse/latest/reverse_proxy.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Public registration is disabled. Create the first (admin) account from the synapse container terminal with: register_new_matrix_user -c /config/homeserver.yaml --admin http://localhost:8008",
+      "link": "https://element-hq.github.io/synapse/latest/setup/installation.html#registering-a-user"
+    },
+    {
+      "type": "warning",
+      "message": "The domain becomes the Matrix server name (user IDs look like @alice:your-domain) and is stored in every event and the signing key. Set the final domain before the first start; it cannot be changed later.",
+      "link": "https://element-hq.github.io/synapse/latest/setup/installation.html#choosing-your-server-name"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+services:
+  synapse:
+    image: matrixdotorg/synapse:v1.165.0@sha256:673b4223c81a7634fd07d832b939a58f97081cfdaae7cdd2d1664cdcf7611b62
+    restart: unless-stopped
+    # /data starts root-owned; start.py drops to uid 991 before Synapse writes the signing key and media
+    entrypoint: ["/bin/sh", "-c", "chown 991:991 /data && exec /start.py run"]
+    expose:
+      - 8008
+    environment:
+      SYNAPSE_CONFIG_PATH: /config/homeserver.yaml
+    volumes:
+      - synapse-data:/data
+      - ./homeserver.yaml:/config/homeserver.yaml:ro
+    depends_on:
+      synapse-db:
+        condition: service_healthy
+
+  synapse-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: synapse
+      POSTGRES_USER: synapse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U synapse -d synapse"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - synapse-postgres:/var/lib/postgresql
+
+volumes:
+  synapse-data: {}
+  synapse-postgres: {}
