@@ -1,0 +1,12 @@
+[variables]
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gokapi"
+port = 53_842
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
