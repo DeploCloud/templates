@@ -1,0 +1,41 @@
+services:
+  fluxdown:
+    image: ghcr.io/zerx-lab/fluxdown-server:0.6.8@sha256:31ca2c23e8c7f60287b12e95f7b6f285cddeb8ef0ffecb0135330327ef8405f8
+    restart: unless-stopped
+    expose:
+      - 17800
+    environment:
+      FLUXDOWN_TOKEN: ${FLUXDOWN_TOKEN}
+      FLUXDOWN_DATABASE_URL: postgres://fluxdown:${DB_PASSWORD}@fluxdown-db:5432/fluxdown
+    volumes:
+      - fluxdown-data:/data
+      - fluxdown-downloads:/root/Downloads
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:17800/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      fluxdown-db:
+        condition: service_healthy
+
+  fluxdown-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: fluxdown
+      POSTGRES_USER: fluxdown
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - fluxdown-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fluxdown -d fluxdown"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  fluxdown-data: {}
+  fluxdown-downloads: {}
+  fluxdown-db: {}

@@ -1,0 +1,21 @@
+services:
+  fluxdown:
+    image: ghcr.io/zerx-lab/fluxdown-server:0.6.8@sha256:31ca2c23e8c7f60287b12e95f7b6f285cddeb8ef0ffecb0135330327ef8405f8
+    restart: unless-stopped
+    expose:
+      - 17800
+    environment:
+      FLUXDOWN_TOKEN: ${FLUXDOWN_TOKEN}
+    volumes:
+      - fluxdown-data:/data
+      - fluxdown-downloads:/root/Downloads
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:17800/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  fluxdown-data: {}
+  fluxdown-downloads: {}
