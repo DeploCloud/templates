@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Double Commander two-panel file manager streamed to the browser behind a password, with settings and files in the home directory kept on a persistent volume.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Double Commander",
+    "url": "https://doublecmd.sourceforge.io/"
+  },
+  "links": {
+    "github": "https://github.com/doublecmd/doublecmd",
+    "website": "https://doublecmd.sourceforge.io/",
+    "docs": [
+      "https://doublecmd.github.io/doc/en/index.html",
+      "https://docs.linuxserver.io/images/docker-doublecommander/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. Keep files under /config so they persist.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-doublecommander/"
+    }
+  ]
+}
