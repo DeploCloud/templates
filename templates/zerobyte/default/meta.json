@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Backup automation built on restic: schedule encrypted, deduplicated backups to S3, GCS, Azure, rclone or local repositories, apply retention policies and restore snapshots from a web UI.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Nicolas Meienberger (nicotsx)",
+    "url": "https://github.com/nicotsx"
+  },
+  "links": {
+    "github": "https://github.com/nicotsx/zerobyte",
+    "website": "https://zerobyte.app",
+    "docs": [
+      "https://zerobyte.app/docs/installation",
+      "https://zerobyte.app/docs/quickstart",
+      "https://zerobyte.app/docs/configuration",
+      "https://zerobyte.app/docs/guides/reverse-proxy",
+      "https://zerobyte.app/docs/guides/rclone"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin user and is then asked to download the recovery key. Open the app right after deployment, finish onboarding and store the recovery key safely.",
+      "link": "https://zerobyte.app/docs/quickstart"
+    },
+    {
+      "type": "info",
+      "message": "This template uses the reduced-privilege setup without SYS_ADMIN and /dev/fuse, so NFS, SMB, WebDAV, SFTP and rclone shares cannot be mounted as sources, and Zerobyte only sees files inside its container. Mount the volumes you want to back up into the service. Local, S3, GCS and Azure repositories work as is; rclone repositories need `rclone config` run in the container, then a restart.",
+      "link": "https://zerobyte.app/docs/installation"
+    }
+  ]
+}
