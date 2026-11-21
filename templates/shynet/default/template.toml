@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+secret_key = "${secret:50}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "shynet"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DB_NAME = "shynet"
+DB_USER = "shynet"
+DB_PASSWORD = "${db_password}"
+DJANGO_SECRET_KEY = "${secret_key}"
+ALLOWED_HOSTS = "${domain}"
+CSRF_TRUSTED_ORIGINS = "https://${domain}"
+TIME_ZONE = "Etc/UTC"
+ACCOUNT_SIGNUPS_ENABLED = "False"

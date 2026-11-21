@@ -1,0 +1,41 @@
+services:
+  shynet:
+    # v0.14.0 release build; upstream's release workflow published it only under this tag
+    image: milesmcc/shynet:latest-type-ref@sha256:fa98c732e07db0fd431248a8cf90583d10d3ea6e3926beae60d7183389f8ceb0
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: shynet-db
+      DB_PORT: "5432"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      TIME_ZONE: ${TIME_ZONE}
+      ACCOUNT_SIGNUPS_ENABLED: ${ACCOUNT_SIGNUPS_ENABLED}
+      SCRIPT_USE_HTTPS: "True"
+      PORT: "8080"
+    depends_on:
+      shynet-db:
+        condition: service_healthy
+
+  shynet-db:
+    image: postgres:17-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - shynet-db:/var/lib/postgresql/data
+
+volumes:
+  shynet-db: {}
