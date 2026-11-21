@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "openspeedtest"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+SERVER_NAME = ""
