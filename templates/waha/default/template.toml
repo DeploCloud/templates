@@ -1,0 +1,20 @@
+[variables]
+api_key = "${password:32}"
+dashboard_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "waha"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+WAHA_API_KEY = "${api_key}"
+WAHA_DASHBOARD_USERNAME = "admin"
+WAHA_DASHBOARD_PASSWORD = "${dashboard_password}"
+WHATSAPP_DEFAULT_ENGINE = "WEBJS"
+WAHA_BASE_URL = "https://${domain}"
+WAHA_LOG_LEVEL = "info"
+TZ = "UTC"
