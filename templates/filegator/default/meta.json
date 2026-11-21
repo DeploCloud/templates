@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Multi-user web file manager to upload, download, zip, move, copy, rename and edit files with per-user home folders and permissions.",
+  "category": "storage",
+  "developedBy": {
+    "label": "FileGator",
+    "url": "https://github.com/filegator"
+  },
+  "links": {
+    "github": "https://github.com/filegator/filegator",
+    "website": "https://filegator.io",
+    "docs": [
+      "https://docs.filegator.io/install.html",
+      "https://docs.filegator.io/accounts.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin123 and change its password right after the first deploy.",
+      "link": "https://docs.filegator.io/install.html"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
