@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pgadmin"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PGADMIN_DEFAULT_EMAIL = "admin@example.com"
+PGADMIN_DEFAULT_PASSWORD = "${admin_password}"

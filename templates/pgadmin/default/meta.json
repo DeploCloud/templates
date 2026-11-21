@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based administration and development platform for PostgreSQL, with a query tool, schema browser, backups and server dashboards.",
+  "category": "database",
+  "developedBy": {
+    "label": "pgAdmin Development Team",
+    "url": "https://github.com/pgadmin-org"
+  },
+  "links": {
+    "github": "https://github.com/pgadmin-org/pgadmin4",
+    "website": "https://www.pgadmin.org",
+    "docs": [
+      "https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html",
+      "https://www.pgadmin.org/docs/pgadmin4/latest/config_py.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with PGADMIN_DEFAULT_EMAIL (admin@example.com unless you change it before the first deploy) and the generated PGADMIN_DEFAULT_PASSWORD. Both only create the first account on the first start; change them later from the pgAdmin UI. No database is included: add your PostgreSQL servers from the UI."
+    }
+  ]
+}
