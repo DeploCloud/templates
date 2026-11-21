@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "shaarli"
+port = 80
+host = "${domain}"
