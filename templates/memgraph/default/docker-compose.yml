@@ -1,0 +1,36 @@
+services:
+  memgraph:
+    image: memgraph/memgraph-mage:3.14.0@sha256:2ad342a011fb463c43af821f72ca627eee2b63a39dc663f5928355a9fd01d20a
+    restart: unless-stopped
+    command: ["--also-log-to-stderr=true"]
+    expose:
+      - 7687
+      - 7444
+    environment:
+      MEMGRAPH_USER: ${MEMGRAPH_USER}
+      MEMGRAPH_PASSWORD: ${MEMGRAPH_PASSWORD}
+    volumes:
+      - memgraph-data:/var/lib/memgraph
+      - memgraph-log:/var/log/memgraph
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'RETURN 0;' | mgconsole --username \"$$MEMGRAPH_USER\" --password \"$$MEMGRAPH_PASSWORD\" > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  memgraph-lab:
+    image: memgraph/lab:3.14.3@sha256:0d3fa0897b92247532fd6664aae00d7bddf8af77626f24915dd4c9c406899336
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      QUICK_CONNECT_MG_HOST: memgraph
+      QUICK_CONNECT_MG_PORT: 7687
+    depends_on:
+      memgraph:
+        condition: service_healthy
+
+volumes:
+  memgraph-data: {}
+  memgraph-log: {}

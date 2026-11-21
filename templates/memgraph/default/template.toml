@@ -1,0 +1,14 @@
+[variables]
+memgraph_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "memgraph-lab"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+MEMGRAPH_USER = "memgraph"
+MEMGRAPH_PASSWORD = "${memgraph_password}"
