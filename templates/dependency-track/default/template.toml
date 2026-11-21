@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dependency-track"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "dependency-track-apiserver"
+port = 8_080
+host = "${domain}"
+path = "/api"
+
+[config.env]
+API_BASE_URL = "https://${domain}"
+DB_NAME = "dtrack"
+DB_USER = "dtrack"
+DB_PASSWORD = "${db_password}"
