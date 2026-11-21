@@ -1,0 +1,25 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "speakr"
+port = 8_899
+host = "${domain}"
+
+[config.env]
+TRANSCRIPTION_BASE_URL = "https://api.openai.com/v1"
+TRANSCRIPTION_API_KEY = "replace-with-your-api-key"
+TRANSCRIPTION_MODEL = "gpt-4o-transcribe-diarize"
+TEXT_MODEL_BASE_URL = "https://api.openai.com/v1"
+TEXT_MODEL_API_KEY = "replace-with-your-api-key"
+TEXT_MODEL_NAME = "gpt-4o-mini"
+ADMIN_USERNAME = "admin"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"
+ALLOW_REGISTRATION = "false"
+SECRET_KEY = "${hash:64}"
+APP_BASE_URL = "https://${domain}"
+LOG_LEVEL = "ERROR"

@@ -1,0 +1,28 @@
+services:
+  speakr:
+    image: learnedmachine/speakr:0.11.2-lite@sha256:92a1cdf7e6e015dfb322e57145fb86314eea82bdbfc1c5df77802df29e6516b3
+    restart: unless-stopped
+    expose:
+      - 8899
+    environment:
+      TRANSCRIPTION_BASE_URL: ${TRANSCRIPTION_BASE_URL}
+      TRANSCRIPTION_API_KEY: ${TRANSCRIPTION_API_KEY}
+      TRANSCRIPTION_MODEL: ${TRANSCRIPTION_MODEL}
+      TEXT_MODEL_BASE_URL: ${TEXT_MODEL_BASE_URL}
+      TEXT_MODEL_API_KEY: ${TEXT_MODEL_API_KEY}
+      TEXT_MODEL_NAME: ${TEXT_MODEL_NAME}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION}
+      SECRET_KEY: ${SECRET_KEY}
+      SESSION_COOKIE_SECURE: "true"
+      APP_BASE_URL: ${APP_BASE_URL}
+      LOG_LEVEL: ${LOG_LEVEL}
+    volumes:
+      - speakr-uploads:/data/uploads
+      - speakr-instance:/data/instance
+
+volumes:
+  speakr-uploads: {}
+  speakr-instance: {}
