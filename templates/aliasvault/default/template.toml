@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "aliasvault"
+port = 80
+host = "${domain}"
+
+[config.env]
+PUBLIC_REGISTRATION_ENABLED = "true"
+PRIVATE_EMAIL_DOMAINS = ""
