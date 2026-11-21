@@ -1,0 +1,87 @@
+services:
+  devlake:
+    image: apache/devlake:v1.0.2@sha256:bae4e753959584b152fd2d66b2b13c4bc6c5ce02b9bd7c4a000e3e1296b09343
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DB_URL: mysql://devlake:${DB_PASSWORD}@devlake-db:3306/lake?charset=utf8mb4&parseTime=True&loc=UTC
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+      PORT: "8080"
+      MODE: release
+      PIPELINE_MAX_PARALLEL: "1"
+      LOGGING_DIR: /app/logs
+      TZ: ${TZ}
+    volumes:
+      - devlake-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8080/ping"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 2m
+    depends_on:
+      devlake-db:
+        condition: service_healthy
+
+  devlake-ui:
+    image: apache/devlake-config-ui:v1.0.2@sha256:3527bd205d0c0bd74f1c1687d124cb26ae73681376ebd1c6cc656b8d78a86584
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      DEVLAKE_ENDPOINT: devlake:8080
+      GRAFANA_ENDPOINT: devlake-grafana:3000
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+      TZ: ${TZ}
+    depends_on:
+      - devlake
+      - devlake-grafana
+
+  devlake-grafana:
+    image: apache/devlake-dashboard:v1.0.2@sha256:dd4c7f416507970d3e17b1d0659958eecc08f339c59468dbdcda76f577752986
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      GF_SERVER_ROOT_URL: ${DEVLAKE_URL}/grafana
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_USERS_DEFAULT_THEME: light
+      MYSQL_URL: devlake-db:3306
+      MYSQL_DATABASE: lake
+      MYSQL_USER: devlake
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - devlake-grafana:/var/lib/grafana
+    depends_on:
+      devlake-db:
+        condition: service_healthy
+
+  devlake-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+      - --skip-log-bin
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: lake
+      MYSQL_USER: devlake
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - devlake-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+volumes:
+  devlake-logs: {}
+  devlake-grafana: {}
+  devlake-db: {}

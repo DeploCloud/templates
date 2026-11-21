@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Dev data platform that collects data from GitHub, GitLab, Jira, Jenkins and other DevOps tools and shows DORA and engineering metrics in bundled Grafana dashboards.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://github.com/apache"
+  },
+  "links": {
+    "github": "https://github.com/apache/devlake",
+    "website": "https://devlake.apache.org/",
+    "docs": [
+      "https://devlake.apache.org/docs/GettingStarted/DockerComposeSetup",
+      "https://devlake.apache.org/docs/Configuration/Tutorial",
+      "https://devlake.apache.org/docs/GettingStarted/Authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The config UI asks for HTTP basic auth: sign in as ADMIN_USER with the generated ADMIN_PASS. On the first visit it shows a database migration page: click Proceed to Database Migration to create the tables. The Grafana dashboards under /grafana have their own login: admin with the generated GRAFANA_ADMIN_PASSWORD, which only applies on the first start.",
+      "link": "https://devlake.apache.org/docs/GettingStarted/Authentication"
+    }
+  ]
+}
