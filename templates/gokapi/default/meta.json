@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight file sharing server with expiring download links, file requests and optional end-to-end encryption, using SQLite and local storage.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Forceu",
+    "url": "https://github.com/Forceu"
+  },
+  "links": {
+    "github": "https://github.com/Forceu/Gokapi",
+    "website": "https://gokapi.readthedocs.io/en/latest/",
+    "docs": [
+      "https://gokapi.readthedocs.io/en/latest/setup.html",
+      "https://gokapi.readthedocs.io/en/latest/advanced.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open https://<your-domain>/setup right after deploying and finish the setup wizard: until it is completed the wizard is reachable without authentication. Set the Public Facing URL to https://<your-domain>/, leave Use SSL disabled (HTTPS is handled in front of the app) and create the admin account there.",
+      "link": "https://gokapi.readthedocs.io/en/latest/setup.html#initial-setup"
+    }
+  ]
+}

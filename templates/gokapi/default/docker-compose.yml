@@ -1,0 +1,20 @@
+services:
+  gokapi:
+    image: f0rc3/gokapi:v2.2.4@sha256:43cd93b9e1f02d760923f67f6e74e1c4d4a9cccb9b08fa42ad60770333f231eb
+    restart: unless-stopped
+    expose:
+      - 53842
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - gokapi-data:/app/data
+      - gokapi-config:/app/config
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:53842"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  gokapi-data: {}
+  gokapi-config: {}
