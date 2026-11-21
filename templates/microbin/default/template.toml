@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "microbin"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+MICROBIN_PUBLIC_PATH = "https://${domain}"
+MICROBIN_ADMIN_USERNAME = "admin"
+MICROBIN_ADMIN_PASSWORD = "${admin_password}"
+MICROBIN_QR = "true"
