@@ -1,0 +1,1 @@
+Sshwifty is a web SSH and Telnet client: it serves a browser terminal and opens connections to remote hosts on your behalf. Access is guarded by the generated SSHWIFTY_SHAREDKEY password, found in the environment variables. The server is stateless, so no volume is needed; saved remotes and session settings live in each browser's local storage.

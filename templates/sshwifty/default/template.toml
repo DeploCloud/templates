@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sshwifty"
+port = 8_182
+host = "${domain}"
+
+[config.env]
+SSHWIFTY_SHAREDKEY = "${password:24}"

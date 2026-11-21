@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web SSH and Telnet client that opens terminal sessions to remote hosts right from the browser, protected by a shared access password.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Ni Rui",
+    "url": "https://github.com/nirui"
+  },
+  "links": {
+    "github": "https://github.com/nirui/sshwifty",
+    "website": "https://sshwifty-demo.nirui.org",
+    "docs": [
+      "https://github.com/nirui/sshwifty#configuration",
+      "https://github.com/nirui/sshwifty#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web interface asks for the generated SSHWIFTY_SHAREDKEY password from the environment variables. Keep it set: without it anyone can use this server to open SSH and Telnet connections.",
+      "link": "https://github.com/nirui/sshwifty#configuration-file-option-and-descriptions"
+    }
+  ]
+}

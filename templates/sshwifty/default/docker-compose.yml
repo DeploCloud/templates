@@ -1,0 +1,15 @@
+services:
+  sshwifty:
+    image: niruix/sshwifty:0.4.12-beta-release@sha256:1a3ef74bd2e2dea175dee02763f918933f5f28954c3f7788883daede382c3f6b
+    restart: unless-stopped
+    expose:
+      - 8182
+    environment:
+      SSHWIFTY_SHAREDKEY: ${SSHWIFTY_SHAREDKEY}
+      SSHWIFTY_LISTENINTERFACE: 0.0.0.0
+      SSHWIFTY_LISTENPORT: 8182
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://127.0.0.1:8182/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
