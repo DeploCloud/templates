@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Drag-and-drop dashboard for an existing Home Assistant instance, with live state over WebSocket and layouts saved as YAML.",
+  "category": "automation",
+  "developedBy": {
+    "label": "matt8707",
+    "url": "https://github.com/matt8707"
+  },
+  "links": {
+    "github": "https://github.com/matt8707/ha-fusion",
+    "docs": [
+      "https://github.com/knowald/ha-fusion#installation",
+      "https://github.com/knowald/ha-fusion#configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set HASS_URL to the HTTPS address of an existing Home Assistant instance before deploying. Browsers block a plain HTTP Home Assistant URL from this HTTPS dashboard.",
+      "link": "https://github.com/knowald/ha-fusion#configuration"
+    },
+    {
+      "type": "warning",
+      "message": "HA-Fusion has no login of its own: anyone who can open the URL can edit the dashboard, and a long-lived access token saved in its settings is served to every visitor. Sign in through Home Assistant instead of saving a token, or restrict access to the domain."
+    }
+  ]
+}

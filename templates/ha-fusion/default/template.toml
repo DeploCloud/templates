@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ha-fusion"
+port = 5_050
+host = "${domain}"
+
+[config.env]
+# Public HTTPS URL of your Home Assistant instance, reachable from the browser and this server.
+HASS_URL = "https://homeassistant.example.com"
+TZ = "UTC"
