@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted link-in-bio profile pages with an admin panel, themes and a built-in SQLite database.",
+  "category": "cms",
+  "developedBy": {
+    "label": "LinkStack",
+    "url": "https://github.com/LinkStackOrg"
+  },
+  "links": {
+    "github": "https://github.com/LinkStackOrg/LinkStack",
+    "website": "https://linkstack.org",
+    "docs": [
+      "https://docs.linkstack.org/docker/setup/",
+      "https://github.com/LinkStackOrg/linkstack-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deploying: the setup wizard asks for the database type (keep SQLite) and creates the admin account, and anyone who reaches it first can claim it."
+    }
+  ]
+}
