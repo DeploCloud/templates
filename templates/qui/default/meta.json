@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI for managing several qBittorrent instances, with cross-seed, automations and backups, storing its data in SQLite.",
+  "category": "media",
+  "developedBy": {
+    "label": "autobrr",
+    "url": "https://github.com/autobrr"
+  },
+  "links": {
+    "github": "https://github.com/autobrr/qui",
+    "website": "https://getqui.com",
+    "docs": [
+      "https://getqui.com/docs/getting-started/docker/",
+      "https://getqui.com/docs/configuration/environment/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor of a fresh instance creates the only account. Open the app and finish the setup right after deploying.",
+      "link": "https://getqui.com/docs/configuration/reference/#sessions"
+    },
+    {
+      "type": "warning",
+      "message": "qui does not include qBittorrent. Add your existing qBittorrent instances in the UI; they must be reachable from this server with Web UI access enabled."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+services:
+  qui:
+    image: ghcr.io/autobrr/qui:v1.36.0@sha256:ecfd0f508f951f038b590f4fcfd33177d2ce0a8d4d33d86864b0d96e917caf59
+    restart: unless-stopped
+    expose:
+      - 7476
+    environment:
+      QUI__HOST: 0.0.0.0
+      QUI__PORT: 7476
+      QUI__SESSION_SECRET: ${QUI__SESSION_SECRET}
+      QUI__SESSION_COOKIE_SECURE: "true"
+      QUI__LOG_LEVEL: ${QUI__LOG_LEVEL}
+      QUI__DATABASE_ENGINE: postgres
+      QUI__DATABASE_HOST: qui-db
+      QUI__DATABASE_PORT: 5432
+      QUI__DATABASE_NAME: qui
+      QUI__DATABASE_USER: qui
+      QUI__DATABASE_PASSWORD: ${DB_PASSWORD}
+      QUI__DATABASE_SSL_MODE: disable
+      TZ: ${TZ}
+    volumes:
+      - qui-config:/config
+    depends_on:
+      qui-db:
+        condition: service_healthy
+
+  qui-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: qui
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: qui
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qui -d qui"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - qui-db:/var/lib/postgresql/data
+
+volumes:
+  qui-config: {}
+  qui-db: {}

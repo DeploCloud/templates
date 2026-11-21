@@ -1,0 +1,15 @@
+[variables]
+session_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "qui"
+port = 7_476
+host = "${domain}"
+
+[config.env]
+QUI__SESSION_SECRET = "${session_secret}"
+QUI__LOG_LEVEL = "INFO"
+TZ = "UTC"
