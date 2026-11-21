@@ -1,0 +1,17 @@
+[variables]
+password = "${password:32}"
+webhook_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gowa"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+GOWA_USERNAME = "admin"
+GOWA_PASSWORD = "${password}"
+APP_OS = "GOWA"
+WHATSAPP_WEBHOOK_SECRET = "${webhook_secret}"
