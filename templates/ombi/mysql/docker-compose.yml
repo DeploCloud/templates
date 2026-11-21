@@ -1,0 +1,38 @@
+services:
+  ombi:
+    image: lscr.io/linuxserver/ombi:v4.53.10-ls277@sha256:617c872fd5a05b1cabbb052c58974cf8dd90d972d18417d28cf137fd7579a17b
+    restart: unless-stopped
+    expose:
+      - 3579
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - ombi-config:/config
+      - ./database.json:/config/database.json
+    depends_on:
+      ombi-db:
+        condition: service_healthy
+
+  ombi-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ombi
+      MYSQL_USER: ombi
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - ombi-db:/var/lib/mysql
+
+volumes:
+  ombi-config: {}
+  ombi-db: {}

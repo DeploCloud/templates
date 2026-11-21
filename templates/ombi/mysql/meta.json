@@ -1,0 +1,25 @@
+{
+  "name": "MySQL",
+  "shortDescription": "Ombi media request portal backed by a bundled MySQL 8.4 database, the faster option upstream recommends for larger libraries and many users.",
+  "category": "media",
+  "developedBy": {
+    "label": "Ombi",
+    "url": "https://github.com/Ombi-app"
+  },
+  "links": {
+    "github": "https://github.com/Ombi-app/Ombi",
+    "website": "https://ombi.io",
+    "docs": [
+      "https://docs.ombi.app/info/alternate-databases/",
+      "https://docs.ombi.app/info/docker-containers/",
+      "https://docs.ombi.app/guides/installation/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the setup wizard lets the first visitor connect a media server and create the admin account.",
+      "link": "https://docs.ombi.app/guides/installation/"
+    }
+  ]
+}
