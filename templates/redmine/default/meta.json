@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Flexible project management and issue tracking with wikis, Gantt charts and time tracking, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Redmine",
+    "url": "https://www.redmine.org/"
+  },
+  "links": {
+    "github": "https://github.com/redmine/redmine",
+    "website": "https://www.redmine.org/",
+    "docs": [
+      "https://www.redmine.org/projects/redmine/wiki/Guide",
+      "https://www.redmine.org/projects/redmine/wiki/RedmineInstall",
+      "https://github.com/docker-library/docs/tree/master/redmine"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin and change the password right away. Then open Administration and load the default configuration to create trackers, statuses and roles.",
+      "link": "https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Step-11-Logging-into-the-application"
+    }
+  ]
+}

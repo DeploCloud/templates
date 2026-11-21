@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+secret_key_base = "${hash:128}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "redmine"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+REDMINE_DB_DATABASE = "redmine"
+REDMINE_DB_USERNAME = "redmine"
+REDMINE_DB_PASSWORD = "${db_password}"
+SECRET_KEY_BASE = "${secret_key_base}"

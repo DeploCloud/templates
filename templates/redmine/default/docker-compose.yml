@@ -1,0 +1,47 @@
+services:
+  redmine:
+    image: redmine:7.0.3@sha256:d73994dbe634fb8eef5add6ddaf70639285009156e8b0eb2a151a5eddb1e2cfb
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      REDMINE_DB_POSTGRES: redmine-db
+      REDMINE_DB_DATABASE: ${REDMINE_DB_DATABASE}
+      REDMINE_DB_USERNAME: ${REDMINE_DB_USERNAME}
+      REDMINE_DB_PASSWORD: ${REDMINE_DB_PASSWORD}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      REDMINE_PLUGINS_MIGRATE: "true"
+    volumes:
+      - redmine-files:/usr/src/redmine/files
+      - redmine-plugins:/usr/src/redmine/plugins
+      - redmine-themes:/usr/src/redmine/themes
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/login || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 180s
+    depends_on:
+      redmine-db:
+        condition: service_healthy
+
+  redmine-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${REDMINE_DB_DATABASE}
+      POSTGRES_USER: ${REDMINE_DB_USERNAME}
+      POSTGRES_PASSWORD: ${REDMINE_DB_PASSWORD}
+    volumes:
+      - redmine-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  redmine-files: {}
+  redmine-plugins: {}
+  redmine-themes: {}
+  redmine-db: {}
