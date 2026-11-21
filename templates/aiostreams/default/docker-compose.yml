@@ -1,0 +1,16 @@
+services:
+  aiostreams:
+    image: ghcr.io/viren070/aiostreams:v2.38.1@sha256:1b90bc2fda70f365dff2ce98fc311a24708cca9841efe09aefe309cd4da1fb2c
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      BASE_URL: ${BASE_URL}
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URI: ${DATABASE_URI}
+      AIOSTREAMS_AUTH: ${AIOSTREAMS_AUTH}
+    volumes:
+      - aiostreams-data:/app/data
+
+volumes:
+  aiostreams-data: {}

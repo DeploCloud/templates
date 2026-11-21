@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Stremio addon that merges addons, debrid services and Usenet into one filtered, sorted stream list, with a built-in web app.",
+  "category": "media",
+  "developedBy": {
+    "label": "Viren070",
+    "url": "https://github.com/Viren070"
+  },
+  "links": {
+    "github": "https://github.com/Viren070/AIOStreams",
+    "website": "https://aiostreams.org/",
+    "docs": [
+      "https://aiostreams.org/getting-started/deployment/",
+      "https://aiostreams.org/configuration/environment-variables/",
+      "https://aiostreams.org/configuration/setup/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard at /dashboard as admin with the password after the colon in the AIOSTREAMS_AUTH environment variable. Keep SECRET_KEY unchanged after the first start, or stored configurations can no longer be decrypted.",
+      "link": "https://aiostreams.org/configuration/environment-variables/"
+    }
+  ]
+}
