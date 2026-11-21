@@ -1,0 +1,96 @@
+services:
+  argilla:
+    image: argilla/argilla-server:v2.8.0@sha256:6f4af8fcf4b809d25aa88a6a4f8838dbacab9296c83b055a9a58f1db7526431a
+    restart: unless-stopped
+    expose:
+      - 6900
+    environment:
+      ARGILLA_HOME_PATH: /var/lib/argilla
+      ARGILLA_DATABASE_URL: postgresql+asyncpg://argilla:${DB_PASSWORD}@argilla-db:5432/argilla
+      ARGILLA_ELASTICSEARCH: http://argilla-elasticsearch:9200
+      ARGILLA_REDIS_URL: redis://argilla-redis:6379/0
+      ARGILLA_AUTH_SECRET_KEY: ${AUTH_SECRET_KEY}
+      USERNAME: ${OWNER_USERNAME}
+      PASSWORD: ${OWNER_PASSWORD}
+      API_KEY: ${OWNER_API_KEY}
+      WORKSPACE: default
+    volumes:
+      - argilla-data:/var/lib/argilla
+    depends_on:
+      argilla-db:
+        condition: service_healthy
+      argilla-elasticsearch:
+        condition: service_healthy
+      argilla-redis:
+        condition: service_healthy
+
+  argilla-worker:
+    image: argilla/argilla-server:v2.8.0@sha256:6f4af8fcf4b809d25aa88a6a4f8838dbacab9296c83b055a9a58f1db7526431a
+    restart: unless-stopped
+    command: python -m argilla_server worker --num-workers 2
+    environment:
+      ARGILLA_HOME_PATH: /var/lib/argilla
+      ARGILLA_DATABASE_URL: postgresql+asyncpg://argilla:${DB_PASSWORD}@argilla-db:5432/argilla
+      ARGILLA_ELASTICSEARCH: http://argilla-elasticsearch:9200
+      ARGILLA_REDIS_URL: redis://argilla-redis:6379/0
+    volumes:
+      - argilla-worker-data:/var/lib/argilla
+    depends_on:
+      argilla-db:
+        condition: service_healthy
+      argilla-elasticsearch:
+        condition: service_healthy
+      argilla-redis:
+        condition: service_healthy
+
+  argilla-db:
+    image: postgres:17.12@sha256:b60e90042aa6b8dbecd58e224b3e36114dbf8ad754465264c2476ad58a86e45c
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: argilla
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: argilla
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U argilla -d argilla"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - argilla-postgres:/var/lib/postgresql/data
+
+  argilla-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.25@sha256:5bfdf4313b9bc05c0d46fe219d6e67710eb0c7654ed6c275167bdf9beefc56f0
+    restart: unless-stopped
+    environment:
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - node.name=argilla-elasticsearch
+      - cluster.name=es-argilla
+      - discovery.type=single-node
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - xpack.security.enabled=false
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    volumes:
+      - argilla-elasticsearch:/usr/share/elasticsearch/data
+
+  argilla-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - argilla-redis:/data
+
+volumes:
+  argilla-data: {}
+  argilla-worker-data: {}
+  argilla-postgres: {}
+  argilla-elasticsearch: {}
+  argilla-redis: {}
