@@ -1,0 +1,21 @@
+services:
+  checkcle:
+    image: operacle/checkcle:v1.6.0@sha256:c3d1729d4044898817c4615929252caf913a0077a3a1dc632adb342c2e0871b7
+    restart: unless-stopped
+    expose:
+      - 8090
+    volumes:
+      - checkcle-data:/mnt/pb_data
+    ulimits:
+      nofile:
+        soft: 4096
+        hard: 8192
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8090/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  checkcle-data: {}

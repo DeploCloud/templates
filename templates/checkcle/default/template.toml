@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "checkcle"
+port = 8_090
+host = "${domain}"
