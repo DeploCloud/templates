@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted, cookie-free website analytics with a minimal dashboard and GraphQL API, backed by MongoDB.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Tobias Reich",
+    "url": "https://github.com/electerious"
+  },
+  "links": {
+    "github": "https://github.com/electerious/Ackee",
+    "website": "https://ackee.electerious.com",
+    "docs": [
+      "https://github.com/electerious/Ackee/blob/master/docs/Get%20started.md",
+      "https://github.com/electerious/Ackee/blob/master/docs/Options.md",
+      "https://github.com/electerious/Ackee/blob/master/docs/CORS%20headers.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ACKEE_PASSWORD from the environment variables. Add each tracked site as a domain whose title is its bare hostname (for example example.com): Ackee only sends CORS headers to sites listed that way, otherwise the tracker cannot reach the server.",
+      "link": "https://github.com/electerious/Ackee/blob/master/docs/CORS%20headers.md"
+    }
+  ]
+}
