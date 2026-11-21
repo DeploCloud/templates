@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Image processing server built on libvips that resizes, crops, filters and converts images on the fly through thumbor-compatible URLs.",
+  "category": "media",
+  "developedBy": {
+    "label": "Adrian Shum",
+    "url": "https://github.com/cshum"
+  },
+  "links": {
+    "github": "https://github.com/cshum/imagor",
+    "website": "https://docs.imagor.net/",
+    "docs": [
+      "https://docs.imagor.net/image-endpoint/",
+      "https://docs.imagor.net/security/",
+      "https://docs.imagor.net/configuration/",
+      "https://docs.imagor.net/storage-filesystem/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Image URLs must be signed with the generated IMAGOR_SECRET using HMAC-SHA256 (IMAGOR_SIGNER_TYPE). Unsigned /unsafe/ URLs are rejected.",
+      "link": "https://docs.imagor.net/security/"
+    }
+  ]
+}

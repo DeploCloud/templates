@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "imagor"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+IMAGOR_SECRET = "${secret:64}"
+IMAGOR_SIGNER_TYPE = "sha256"
