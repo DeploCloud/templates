@@ -1,0 +1,24 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+secret_key = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "adventurelog"
+port = 80
+host = "${domain}"
+
+[config.env]
+SITE_URL = "https://${domain}"
+SECRET_KEY = "${secret_key}"
+POSTGRES_DB = "adventurelog"
+POSTGRES_USER = "adventurelog"
+POSTGRES_PASSWORD = "${db_password}"
+DJANGO_ADMIN_USERNAME = "admin"
+DJANGO_ADMIN_PASSWORD = "${admin_password}"
+DJANGO_ADMIN_EMAIL = "admin@example.com"
+DISABLE_REGISTRATION = "False"
+GUNICORN_WORKERS = "2"
