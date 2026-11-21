@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "stemdeck"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+STEMDECK_PERSIST_LIBRARY = "1"
+STEMDECK_MAX_DURATION_SEC = "1200"
+STEMDECK_MAX_PENDING_JOBS = "3"
+STEMDECK_STEM_FORMAT = "mp3"
+STEMDECK_IDLE_UNLOAD_MINUTES = "10"
