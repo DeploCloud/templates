@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source BI tool that turns a dbt project into explorable metrics, charts, dashboards and scheduled deliveries.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Lightdash",
+    "url": "https://github.com/lightdash"
+  },
+  "links": {
+    "github": "https://github.com/lightdash/lightdash",
+    "website": "https://www.lightdash.com",
+    "docs": [
+      "https://docs.lightdash.com/self-host/self-host-lightdash-docker-compose",
+      "https://docs.lightdash.com/self-host/customize-deployment/environment-variables",
+      "https://docs.lightdash.com/integrations/connect-project"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the organization admin, so sign up right after deployment. Then connect a data warehouse and a dbt project to start exploring data.",
+      "link": "https://docs.lightdash.com/integrations/connect-project"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

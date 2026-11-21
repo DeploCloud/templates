@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+s3_access_key = "${hash:20}"
+s3_secret_key = "${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lightdash"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SITE_URL = "https://${domain}"
+LIGHTDASH_SECRET = "${hash:64}"
+DB_PASSWORD = "${db_password}"
+S3_BUCKET = "lightdash"
+S3_ACCESS_KEY = "${s3_access_key}"
+S3_SECRET_KEY = "${s3_secret_key}"
+EMAIL_SMTP_HOST = ""
+EMAIL_SMTP_PORT = "587"
+EMAIL_SMTP_USER = ""
+EMAIL_SMTP_PASSWORD = ""
+EMAIL_SMTP_SENDER_EMAIL = "noreply@${domain}"
