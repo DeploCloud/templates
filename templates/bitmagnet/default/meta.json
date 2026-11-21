@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted BitTorrent indexer that crawls the DHT, classifies content and serves a search web UI, GraphQL API and Torznab endpoint, backed by PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "bitmagnet",
+    "url": "https://github.com/bitmagnet-io"
+  },
+  "links": {
+    "github": "https://github.com/bitmagnet-io/bitmagnet",
+    "website": "https://bitmagnet.io/",
+    "docs": [
+      "https://bitmagnet.io/setup/installation.html",
+      "https://bitmagnet.io/setup/configuration.html",
+      "https://bitmagnet.io/guides/servarr-integration.html",
+      "https://bitmagnet.io/faq.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "bitmagnet has no login of its own, so the template puts it behind HTTP basic auth: sign in with BITMAGNET_USERNAME and BITMAGNET_PASSWORD from the environment variables. For Prowlarr, Sonarr or Radarr, add a Generic Torznab indexer with the URL https://<domain>/torznab and TORZNAB_API_KEY as its API key; requests without that key need basic auth.",
+      "link": "https://bitmagnet.io/guides/servarr-integration.html"
+    },
+    {
+      "type": "info",
+      "message": "The crawler downloads metadata about torrents found on the public DHT, which can include copyrighted content. Upstream recommends running it behind a VPN; this template connects directly from the server.",
+      "link": "https://bitmagnet.io/faq.html"
+    }
+  ]
+}

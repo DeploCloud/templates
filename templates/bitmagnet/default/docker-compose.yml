@@ -1,0 +1,63 @@
+services:
+  bitmagnet:
+    image: ghcr.io/bitmagnet-io/bitmagnet:v0.10.1@sha256:b6373349a30193b436ce6b05e21f91aa4934074268105dded1f3b065b8c86f19
+    restart: unless-stopped
+    command: ["worker", "run", "--all"]
+    expose:
+      - 3333
+    environment:
+      POSTGRES_HOST: bitmagnet-db
+      POSTGRES_NAME: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - bitmagnet-config:/root/.config/bitmagnet
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:3333/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      bitmagnet-db:
+        condition: service_healthy
+
+  bitmagnet-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    shm_size: 1g
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - bitmagnet-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  # bitmagnet has no login and its UI and API allow destructive actions
+  bitmagnet-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BITMAGNET_USERNAME: ${BITMAGNET_USERNAME}
+      BITMAGNET_PASSWORD: ${BITMAGNET_PASSWORD}
+      TORZNAB_API_KEY: ${TORZNAB_API_KEY}
+    entrypoint: ["/bin/sh", "-c"]
+    # an empty key would make the Caddyfile's apikey matcher accept ?apikey= unauthenticated
+    command:
+      - test -n "$$BITMAGNET_PASSWORD" && test -n "$$TORZNAB_API_KEY" && export BITMAGNET_PASSWORD_HASH="$$(caddy hash-password --plaintext="$$BITMAGNET_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - bitmagnet
+
+volumes:
+  bitmagnet-config: {}
+  bitmagnet-db: {}
