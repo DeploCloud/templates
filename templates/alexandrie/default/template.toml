@@ -1,0 +1,47 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+jwt_secret = "${password:64}"
+s3_access_key = "${password:20}"
+s3_secret_key = "${password:40}"
+cdn_domain = "cdn.${domain}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "alexandrie"
+port = 8_200
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "alexandrie-api"
+port = 8_201
+host = "${domain}"
+path = "/api"
+
+[[config.domains]]
+serviceName = "alexandrie-s3"
+port = 9_000
+host = "${cdn_domain}"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+CDN_URL = "https://${cdn_domain}"
+COOKIE_DOMAIN = "${domain}"
+JWT_SECRET = "${jwt_secret}"
+ADMIN_ACCOUNTS = ""
+CONFIG_DISABLE_SIGNUP = "false"
+CONFIG_DISABLE_NATIVE_LOGIN = "false"
+CONFIG_DISABLE_LANDING = "false"
+DB_NAME = "alexandrie"
+DB_USER = "alexandrie"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+S3_ACCESS_KEY = "${s3_access_key}"
+S3_SECRET_KEY = "${s3_secret_key}"
+SMTP_HOST = ""
+SMTP_MAIL = ""
+SMTP_MAIL_FROM = ""
+SMTP_PASSWORD = ""

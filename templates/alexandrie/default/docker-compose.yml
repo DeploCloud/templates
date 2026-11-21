@@ -1,0 +1,92 @@
+services:
+  alexandrie:
+    image: ghcr.io/smaug6739/alexandrie-frontend:v8.14.4@sha256:b16d27fcbb235164c720125c1ba1a30ca64e025844f866913726bbae1c7f5c79
+    restart: unless-stopped
+    expose:
+      - 8200
+    environment:
+      PORT: "8200"
+      NUXT_PUBLIC_CONFIG_DISABLE_SIGNUP_PAGE: ${CONFIG_DISABLE_SIGNUP}
+      NUXT_PUBLIC_CONFIG_DISABLE_LANDING_PAGE: ${CONFIG_DISABLE_LANDING}
+      NUXT_PUBLIC_BASE_API: ${PUBLIC_URL}
+      NUXT_PUBLIC_BASE_CDN: ${CDN_URL}
+      NUXT_PUBLIC_CDN_ENDPOINT: /alexandrie/
+      NUXT_PUBLIC_BASE_URL: ${PUBLIC_URL}
+    depends_on:
+      - alexandrie-api
+
+  alexandrie-api:
+    image: ghcr.io/smaug6739/alexandrie-backend:v8.14.4@sha256:4a9cee27c9b6b75367d1450feedf4f0ed3f74d0835b80a775c7b930944b2e4fe
+    restart: unless-stopped
+    expose:
+      - 8201
+    environment:
+      BACKEND_PORT: "8201"
+      GIN_MODE: release
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      FRONTEND_URL: ${PUBLIC_URL}
+      ALLOW_UNSECURE: "false"
+      ADMIN_ACCOUNTS: ${ADMIN_ACCOUNTS}
+      CONFIG_DISABLE_SIGNUP: ${CONFIG_DISABLE_SIGNUP}
+      CONFIG_DISABLE_NATIVE_LOGIN: ${CONFIG_DISABLE_NATIVE_LOGIN}
+      DATABASE_HOST: alexandrie-db
+      DATABASE_PORT: "3306"
+      DATABASE_NAME: ${DB_NAME}
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      MINIO_ENDPOINT: alexandrie-s3:9000
+      MINIO_PUBLIC_URL: ${CDN_URL}
+      MINIO_SECURE: "false"
+      MINIO_ACCESSKEY: ${S3_ACCESS_KEY}
+      MINIO_SECRETKEY: ${S3_SECRET_KEY}
+      MINIO_BUCKET: alexandrie
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_MAIL: ${SMTP_MAIL}
+      SMTP_MAIL_FROM: ${SMTP_MAIL_FROM}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+    depends_on:
+      alexandrie-db:
+        condition: service_healthy
+      alexandrie-s3:
+        condition: service_healthy
+
+  alexandrie-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - alexandrie-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  alexandrie-s3:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY}
+      RUSTFS_CONSOLE_ENABLE: "false"
+    volumes:
+      - alexandrie-s3:/data
+      - alexandrie-s3-logs:/logs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  alexandrie-db: {}
+  alexandrie-s3: {}
+  alexandrie-s3-logs: {}
