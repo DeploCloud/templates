@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based continuous localization platform with version control integration, backed by PostgreSQL and Valkey.",
+  "category": "development",
+  "developedBy": {
+    "label": "Weblate",
+    "url": "https://weblate.org/"
+  },
+  "links": {
+    "github": "https://github.com/WeblateOrg/weblate",
+    "website": "https://weblate.org/",
+    "docs": [
+      "https://docs.weblate.org/en/latest/admin/install/docker.html",
+      "https://docs.weblate.org/en/latest/admin/install.html#production-email"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated WEBLATE_ADMIN_PASSWORD. Weblate resets the admin password to this value on every start, so change it in the environment, not in the UI.",
+      "link": "https://docs.weblate.org/en/latest/admin/install/docker.html#envvar-WEBLATE_ADMIN_PASSWORD"
+    },
+    {
+      "type": "warning",
+      "message": "Notifications, password resets and sign-up confirmations need an SMTP server: set WEBLATE_EMAIL_HOST, WEBLATE_EMAIL_HOST_USER and WEBLATE_EMAIL_HOST_PASSWORD. Public registration is off until you set WEBLATE_REGISTRATION_OPEN to 1.",
+      "link": "https://docs.weblate.org/en/latest/admin/install.html#production-email"
+    }
+  ]
+}
