@@ -1,0 +1,30 @@
+[variables]
+webdav_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "webdav"
+port = 6_065
+host = "${domain}"
+
+[config.env]
+WEBDAV_USERNAME = "admin"
+WEBDAV_PASSWORD = "${webdav_password}"
+
+[[config.mounts]]
+filePath = "config.yml"
+content = """address: 0.0.0.0
+port: 6065
+directory: /data
+permissions: CRUD
+behindProxy: true
+log:
+  format: console
+  colors: false
+listing:
+  enabled: true
+users:
+  - username: "{env}WEBDAV_USERNAME"
+    password: "{env}WEBDAV_PASSWORD"
+"""
