@@ -1,0 +1,65 @@
+services:
+  snapotter:
+    image: snapotter/snapotter:2.3.0@sha256:8fa3520ac018e717e2009ee461f84835562e0f18b09c759ffd7cc4d46e792c20
+    restart: unless-stopped
+    expose:
+      - 1349
+    shm_size: 2gb
+    environment:
+      AUTH_ENABLED: "true"
+      DEFAULT_USERNAME: ${DEFAULT_USERNAME}
+      DEFAULT_PASSWORD: ${DEFAULT_PASSWORD}
+      DATABASE_URL: postgres://snapotter_app:${POSTGRES_APP_PASSWORD}@snapotter-db:5432/snapotter
+      DATABASE_MIGRATION_URL: postgres://snapotter:${POSTGRES_PASSWORD}@snapotter-db:5432/snapotter
+      REDIS_URL: redis://:${REDIS_PASSWORD}@snapotter-redis:6379
+    volumes:
+      - snapotter-data:/data
+      - snapotter-workspace:/tmp/workspace
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "--max-time", "5", "http://localhost:1349/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 180s
+      retries: 3
+    depends_on:
+      snapotter-db:
+        condition: service_healthy
+      snapotter-redis:
+        condition: service_healthy
+
+  snapotter-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: snapotter
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: snapotter
+    volumes:
+      - snapotter-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U snapotter -d snapotter"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+  snapotter-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: redis-server --maxmemory-policy noeviction --maxmemory 512mb --appendonly yes --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - snapotter-redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+volumes:
+  snapotter-data: {}
+  snapotter-workspace: {}
+  snapotter-pgdata: {}
+  snapotter-redisdata: {}

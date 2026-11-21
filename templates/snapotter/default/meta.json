@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file toolkit to convert, compress, edit, OCR and transcribe images, video, audio, PDFs and documents through a web UI, REST API and pipelines.",
+  "category": "media",
+  "developedBy": {
+    "label": "SnapOtter",
+    "url": "https://github.com/snapotter-hq"
+  },
+  "links": {
+    "github": "https://github.com/snapotter-hq/SnapOtter",
+    "website": "https://snapotter.com",
+    "docs": [
+      "https://docs.snapotter.com/guide/getting-started",
+      "https://docs.snapotter.com/guide/configuration",
+      "https://docs.snapotter.com/guide/deployment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated DEFAULT_PASSWORD from this app's environment settings; you are asked to choose a new password on first login. The variable only seeds the first admin, so changing it later has no effect.",
+      "link": "https://docs.snapotter.com/guide/getting-started"
+    },
+    {
+      "type": "info",
+      "message": "The image is several GB and the server needs at least 2 GB of RAM. Optional AI bundles are downloaded from Settings into the data volume, and most of them need 4 GB of RAM or more.",
+      "link": "https://docs.snapotter.com/guide/deployment"
+    }
+  ]
+}
