@@ -1,0 +1,59 @@
+services:
+  webhook-site:
+    image: webhooksite/webhook.site:latest@sha256:079b3d94111779611a5e99bf8270e04adac5a84610bd08156283fa841b9d369f
+    restart: unless-stopped
+    # nginx and php-fpm run under the image's s6 init; the queue worker broadcasts new requests
+    command: php artisan queue:work --daemon --tries=3 --timeout=10
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      APP_LOG: errorlog
+      DB_CONNECTION: sqlite
+      REDIS_HOST: webhook-site-redis
+      BROADCAST_DRIVER: redis
+      CACHE_DRIVER: redis
+      QUEUE_DRIVER: redis
+      ECHO_HOST_MODE: path
+      WEBHOOK_MAX_REQUESTS: ${WEBHOOK_MAX_REQUESTS}
+      WEBHOOK_EXPIRY: ${WEBHOOK_EXPIRY}
+    depends_on:
+      webhook-site-redis:
+        condition: service_healthy
+
+  webhook-site-echo:
+    image: webhooksite/laravel-echo-server:latest@sha256:b013ed5b591c800f78cb89c4bb49de64316eb650277fa898d372e24b2fc5f576
+    restart: unless-stopped
+    command: ["exec", "laravel-echo-server", "start", "--force"]
+    expose:
+      - 6001
+    environment:
+      LARAVEL_ECHO_SERVER_AUTH_HOST: http://webhook-site
+      LARAVEL_ECHO_SERVER_HOST: 0.0.0.0
+      LARAVEL_ECHO_SERVER_PORT: 6001
+      ECHO_REDIS_HOSTNAME: webhook-site-redis
+      ECHO_REDIS_PORT: 6379
+      ECHO_PROTOCOL: http
+    depends_on:
+      webhook-site-redis:
+        condition: service_healthy
+
+  webhook-site-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - webhook-site-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  webhook-site-redis: {}
