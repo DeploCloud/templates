@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Rust download manager server with a web UI for HTTP, FTP, BitTorrent, magnet links and HLS/DASH streams, storing its data in SQLite.",
+  "category": "media",
+  "developedBy": {
+    "label": "zerx-lab",
+    "url": "https://github.com/zerx-lab"
+  },
+  "links": {
+    "github": "https://github.com/zerx-lab/FluxDown",
+    "website": "https://fluxdown.com",
+    "docs": [
+      "https://fluxdown.com/docs/en/headless-server/docker/",
+      "https://fluxdown.com/docs/en/headless-server/setup/",
+      "https://fluxdown.com/docs/en/headless-server/web-ui/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web UI with the access key in FLUXDOWN_TOKEN from the environment. It only seeds the key on first start: once you change it under Settings, Security & Access, the new key is the one that counts.",
+      "link": "https://fluxdown.com/docs/en/headless-server/setup/"
+    }
+  ]
+}

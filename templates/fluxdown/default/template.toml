@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fluxdown"
+port = 17_800
+host = "${domain}"
+
+[config.env]
+FLUXDOWN_TOKEN = "${password:30}a1"
