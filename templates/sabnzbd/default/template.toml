@@ -1,0 +1,18 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sabnzbd"
+port = 8080
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "UTC"
+SABNZBD_HOST = "${domain}"
+SABNZBD_USERNAME = "admin"
+SABNZBD_PASSWORD = "${admin_password}"
