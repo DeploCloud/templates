@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted help desk and shared mailbox that turns support email into tickets, with a MariaDB database and persistent attachments.",
+  "category": "communication",
+  "developedBy": {
+    "label": "FreeScout",
+    "url": "https://freescout.net"
+  },
+  "links": {
+    "github": "https://github.com/freescout-help-desk/freescout",
+    "website": "https://freescout.net",
+    "docs": [
+      "https://github.com/nfrastack/container-freescout#readme",
+      "https://github.com/freescout-help-desk/freescout/wiki/Fetching-Emails",
+      "https://github.com/freescout-help-desk/freescout/wiki/Sending-Emails",
+      "https://github.com/freescout-help-desk/freescout/wiki/Configuration-Options"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL (admin@<your domain>) and the generated ADMIN_PASSWORD from the environment variables, then change them in your profile. The admin account is created only on the first start, which can take a few minutes while the schema is built. Each mailbox needs your own IMAP and SMTP account to fetch and send email, and system emails such as password resets need SMTP set under Manage > Settings > Mail Settings."
+    }
+  ]
+}
