@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source platform for marketing, sales, operations and customer support, with the Frontline, Sales and Operation plugins, MongoDB and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "erxes",
+    "url": "https://erxes.io"
+  },
+  "links": {
+    "github": "https://github.com/erxes/erxes",
+    "website": "https://erxes.io",
+    "docs": [
+      "https://erxes.io/docs/self-hosting",
+      "https://erxes.io/docs/self-hosting-configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: a fresh install redirects to /create-owner, and the first account created there becomes the owner."
+    },
+    {
+      "type": "warning",
+      "message": "Uploads fail until a storage provider is chosen under Settings > File upload. Pick Local to keep files on the uploads volume, or connect your own S3-compatible, Google Cloud, Cloudflare or Azure bucket.",
+      "link": "https://erxes.io/docs/self-hosting-configuration"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

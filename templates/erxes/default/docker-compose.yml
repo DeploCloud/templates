@@ -1,0 +1,166 @@
+x-erxes-env: &erxes-env
+  NODE_ENV: production
+  VERSION: os
+  RELEASE_VERSION: ${ERXES_VERSION}
+  MONGO_URL: mongodb://erxes-mongo:27017/erxes?replicaSet=rs0
+  REDIS_HOST: erxes-redis
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: ${REDIS_PASSWORD}
+  JWT_TOKEN_SECRET: ${JWT_TOKEN_SECRET}
+  DOMAIN: ${ERXES_URL}
+  ENABLED_PLUGINS: ${ENABLED_PLUGINS}
+
+x-erxes-depends-on: &erxes-depends-on
+  erxes-mongo:
+    condition: service_healthy
+  erxes-redis:
+    condition: service_healthy
+
+services:
+  erxes-proxy:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      gateway:
+        condition: service_healthy
+      core-ui:
+        condition: service_healthy
+
+  core-ui:
+    image: erxes/erxes-next-ui:3.4.25@sha256:4dea493c1520db4b5038753e5b04112a8bc8c5a0f0b764f35cc198afcf8b52e1
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      REACT_APP_API_URL: ${ERXES_URL}/gateway
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  gateway:
+    image: erxes/erxes-next-gateway:3.4.25@sha256:b0e4f847f965366adcade2132a6c1d44526706b2cf8e2d88533042d726fe7e33
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment: *erxes-env
+    depends_on:
+      erxes-redis:
+        condition: service_healthy
+      plugin-core-api:
+        condition: service_healthy
+    healthcheck: &erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4000/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+      start_period: 20s
+
+  # service names are fixed: plugins register as http://plugin-<name>-api:<port>
+  plugin-core-api:
+    image: erxes/erxes-next-core-api:3.4.25@sha256:7029a8292c5a30f018df092ff16f489aaffa177bac38d6a91ddb803b707a4747
+    restart: unless-stopped
+    expose:
+      - 3300
+    environment:
+      <<: *erxes-env
+      LOCAL_UPLOADS_DIR: /home/node/uploads
+    # "Local" storage (Settings > File upload); the image runs as uid 1000, which owns only /home/node
+    volumes:
+      - erxes-uploads:/home/node
+    depends_on: *erxes-depends-on
+    healthcheck:
+      <<: *erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3300/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+
+  logs-service:
+    image: erxes/erxes-next-logs:3.4.25@sha256:0ea61b67b095c4fed150f60677a936e3b2dcd7ca612d77422cc8b3c402e56a61
+    restart: unless-stopped
+    expose:
+      - 3301
+    environment: *erxes-env
+    depends_on: *erxes-depends-on
+    healthcheck:
+      <<: *erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3301/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+
+  automations-service:
+    image: erxes/erxes-next-automations:3.4.25@sha256:03258ecfb6ebcb79a4dccb388b91c4f6f3dd5d6d83261ce5cb584977caace1a3
+    restart: unless-stopped
+    expose:
+      - 3302
+    environment: *erxes-env
+    depends_on: *erxes-depends-on
+    healthcheck:
+      <<: *erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3302/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+
+  plugin-frontline-api:
+    image: erxes/erxes-next-frontline_api:3.4.25@sha256:d0da465404665a4a28fcac4fe0861d221c9e5d4fcefc249ac8a5a177e60be77e
+    restart: unless-stopped
+    expose:
+      - 3304
+    environment: *erxes-env
+    depends_on: *erxes-depends-on
+    healthcheck:
+      <<: *erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3304/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+
+  plugin-sales-api:
+    image: erxes/erxes-next-sales_api:3.4.25@sha256:0f954a6cf4b6240ed5eb8bd2b70720e29f3203cd5a6f944fb1080881c690e18f
+    restart: unless-stopped
+    expose:
+      - 3305
+    environment: *erxes-env
+    depends_on: *erxes-depends-on
+    healthcheck:
+      <<: *erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3305/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+
+  plugin-operation-api:
+    image: erxes/erxes-next-operation_api:3.4.25@sha256:d35469af6ef9f9d072818c22deb6c7ffeed08d6e46384a3a88bed7ca319caad7
+    restart: unless-stopped
+    expose:
+      - 3307
+    environment: *erxes-env
+    depends_on: *erxes-depends-on
+    healthcheck:
+      <<: *erxes-health
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3307/health').then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))"]
+
+  erxes-mongo:
+    image: mongo:7.0.48@sha256:41e8195b2791692695e1dc9bd21cd51d0a3af05fff8ace9304a5c1acf94f1ae1
+    restart: unless-stopped
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - erxes-mongo:/data/db
+    # erxes needs a replica set; the first healthcheck initiates it
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "let ok = false; try { rs.status(); ok = db.hello().isWritablePrimary } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'erxes-mongo:27017' }] }) } if (!ok) quit(1)"]
+      interval: 5s
+      timeout: 10s
+      retries: 60
+
+  erxes-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - erxes-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 60
+
+volumes:
+  erxes-mongo: {}
+  erxes-redis: {}
+  erxes-uploads: {}
