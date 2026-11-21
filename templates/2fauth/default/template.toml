@@ -1,0 +1,15 @@
+[variables]
+app_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "2fauth"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+APP_KEY = "${app_key}"
+APP_URL = "https://${domain}"
+TRUSTED_PROXIES = "*"

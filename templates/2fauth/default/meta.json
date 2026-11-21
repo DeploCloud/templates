@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app to store your two-factor authentication accounts and generate their TOTP, HOTP and Steam Guard codes, backed by SQLite.",
+  "category": "security",
+  "developedBy": {
+    "label": "Bubka",
+    "url": "https://github.com/Bubka"
+  },
+  "links": {
+    "github": "https://github.com/Bubka/2FAuth",
+    "website": "https://docs.2fauth.app/",
+    "docs": [
+      "https://docs.2fauth.app/getting-started/installation/docker/docker-compose/",
+      "https://docs.2fauth.app/getting-started/config/env-vars/",
+      "https://docs.2fauth.app/usage/administration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Create it right after deployment, then disable registration in Admin > App Setup if nobody else should sign up.",
+      "link": "https://docs.2fauth.app/usage/administration/"
+    },
+    {
+      "type": "warning",
+      "message": "Data is encrypted with the generated APP_KEY. Keep it: if it is lost or changed, encrypted data cannot be recovered.",
+      "link": "https://docs.2fauth.app/getting-started/config/env-vars/#app_key"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+services:
+  2fauth:
+    image: 2fauth/2fauth:9.0.2@sha256:6774efa7c612e424eb17a54e2373524d9a04af6cad7e38d85d76fed87f6a48bd
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      APP_NAME: 2FAuth
+      APP_ENV: production
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      AUTHENTICATION_GUARD: web-guard
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /srv/database/database.sqlite
+    volumes:
+      - 2fauth-data:/2fauth
+
+volumes:
+  2fauth-data: {}
