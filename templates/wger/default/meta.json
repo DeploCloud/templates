@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted workout, nutrition and weight tracker with PostgreSQL, Redis, Celery workers and the PowerSync service for the mobile app.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "wger project",
+    "url": "https://github.com/wger-project"
+  },
+  "links": {
+    "github": "https://github.com/wger-project/wger",
+    "website": "https://wger.de",
+    "docs": [
+      "https://wger.readthedocs.io/en/latest/installation/docker.html",
+      "https://wger.readthedocs.io/en/latest/administration/sync-data.html",
+      "https://wger.readthedocs.io/en/latest/administration/settings.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates the user admin with the password adminadmin. Log in and change it right away; public sign-up is open unless ALLOW_REGISTRATION is set to False.",
+      "link": "https://wger.readthedocs.io/en/latest/installation/docker.html"
+    },
+    {
+      "type": "warning",
+      "message": "A new instance has no ingredients. Load them once from the wger service console with: wger load-online-fixtures",
+      "link": "https://wger.readthedocs.io/en/latest/administration/sync-data.html"
+    }
+  ]
+}
