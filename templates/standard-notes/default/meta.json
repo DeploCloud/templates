@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "End-to-end encrypted notes with the official web app, sync and files server, MySQL, Redis and a LocalStack queue on one domain.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Standard Notes",
+    "url": "https://standardnotes.com"
+  },
+  "links": {
+    "github": "https://github.com/standardnotes/app",
+    "website": "https://standardnotes.com",
+    "docs": [
+      "https://standardnotes.com/help/self-hosting/docker",
+      "https://standardnotes.com/help/self-hosting/web-app",
+      "https://standardnotes.com/help/self-hosting/subscriptions",
+      "https://standardnotes.com/help/self-hosting/files"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    },
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the domain can register an account. Create your own accounts first, then set AUTH_SERVER_DISABLE_USER_REGISTRATION to true and redeploy.",
+      "link": "https://standardnotes.com/help/self-hosting/docker"
+    },
+    {
+      "type": "warning",
+      "message": "Premium server features such as two-factor authentication and file uploads need a subscription record inserted into the database for each account with the SQL commands from the upstream guide, run in the standard-notes-db service.",
+      "link": "https://standardnotes.com/help/self-hosting/subscriptions"
+    }
+  ]
+}
