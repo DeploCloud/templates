@@ -1,0 +1,74 @@
+services:
+  weblate:
+    image: weblate/weblate:2026.11.2.0@sha256:559bb57e2cae8471386ac646cb852c615996d199d02a3f8894d004acb03a1b77
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    expose:
+      - 8080
+    volumes:
+      - weblate-data:/app/data
+      - weblate-cache:/app/cache
+    environment:
+      WEBLATE_SITE_DOMAIN: ${WEBLATE_SITE_DOMAIN}
+      WEBLATE_SITE_TITLE: ${WEBLATE_SITE_TITLE}
+      WEBLATE_ADMIN_NAME: ${WEBLATE_ADMIN_NAME}
+      WEBLATE_ADMIN_EMAIL: ${WEBLATE_ADMIN_EMAIL}
+      WEBLATE_ADMIN_PASSWORD: ${WEBLATE_ADMIN_PASSWORD}
+      WEBLATE_REGISTRATION_OPEN: ${WEBLATE_REGISTRATION_OPEN}
+      WEBLATE_ENABLE_HTTPS: ${WEBLATE_ENABLE_HTTPS}
+      WEBLATE_SECURE_PROXY_SSL_HEADER: ${WEBLATE_SECURE_PROXY_SSL_HEADER}
+      WEBLATE_IP_PROXY_HEADER: ${WEBLATE_IP_PROXY_HEADER}
+      WEBLATE_TRUSTED_PROXY_ADDRESSES: ${WEBLATE_TRUSTED_PROXY_ADDRESSES}
+      WEBLATE_SERVER_EMAIL: ${WEBLATE_SERVER_EMAIL}
+      WEBLATE_DEFAULT_FROM_EMAIL: ${WEBLATE_DEFAULT_FROM_EMAIL}
+      WEBLATE_EMAIL_HOST: ${WEBLATE_EMAIL_HOST}
+      WEBLATE_EMAIL_HOST_USER: ${WEBLATE_EMAIL_HOST_USER}
+      WEBLATE_EMAIL_HOST_PASSWORD: ${WEBLATE_EMAIL_HOST_PASSWORD}
+      POSTGRES_HOST: weblate-db
+      POSTGRES_DB: weblate
+      POSTGRES_USER: weblate
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: weblate-valkey
+      REDIS_PORT: 6379
+    depends_on:
+      weblate-db:
+        condition: service_healthy
+      weblate-valkey:
+        condition: service_healthy
+
+  weblate-db:
+    image: postgres:19.0-alpine@sha256:8b0ff4cdf221f0c53d7fcda681d3b461be725c492cd881c5ec9c0ad25023f188
+    restart: unless-stopped
+    volumes:
+      - weblate-db-data:/var/lib/postgresql
+    environment:
+      POSTGRES_DB: weblate
+      POSTGRES_USER: weblate
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U weblate -d weblate"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  weblate-valkey:
+    image: valkey/valkey:9.2.0@sha256:1c2b25b09f354c66fe994733acdf12fcfd4bdf6f3bd92b88a93a70378d884056
+    restart: unless-stopped
+    read_only: true
+    command: ["valkey-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - weblate-valkey-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  weblate-data: {}
+  weblate-cache: {}
+  weblate-db-data: {}
+  weblate-valkey-data: {}

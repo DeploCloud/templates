@@ -1,0 +1,29 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "weblate"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+WEBLATE_SITE_DOMAIN = "${domain}"
+WEBLATE_SITE_TITLE = "Weblate"
+WEBLATE_ADMIN_NAME = "Weblate Admin"
+WEBLATE_ADMIN_EMAIL = "admin@${domain}"
+WEBLATE_ADMIN_PASSWORD = "${admin_password}"
+WEBLATE_REGISTRATION_OPEN = "0"
+WEBLATE_ENABLE_HTTPS = "1"
+WEBLATE_SECURE_PROXY_SSL_HEADER = "HTTP_X_FORWARDED_PROTO,https"
+WEBLATE_IP_PROXY_HEADER = "HTTP_X_FORWARDED_FOR"
+WEBLATE_TRUSTED_PROXY_ADDRESSES = "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+WEBLATE_SERVER_EMAIL = "weblate@${domain}"
+WEBLATE_DEFAULT_FROM_EMAIL = "weblate@${domain}"
+WEBLATE_EMAIL_HOST = "localhost"
+WEBLATE_EMAIL_HOST_USER = ""
+WEBLATE_EMAIL_HOST_PASSWORD = ""
+POSTGRES_PASSWORD = "${db_password}"
