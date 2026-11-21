@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted travel tracker and trip planner with an interactive world map, itineraries and a bundled PostGIS database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Sean Morley",
+    "url": "https://github.com/seanmorley15"
+  },
+  "links": {
+    "github": "https://github.com/seanmorley15/AdventureLog",
+    "website": "https://adventurelog.app",
+    "docs": [
+      "https://adventurelog.app/docs/install/standard.html",
+      "https://adventurelog.app/docs/configuration/environment_variables.html",
+      "https://adventurelog.app/docs/configuration/disable_registration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the generated DJANGO_ADMIN_PASSWORD from the environment. The account is created once if missing, so changing DJANGO_ADMIN_PASSWORD later does not change its password. Public registration stays open until you set DISABLE_REGISTRATION to True.",
+      "link": "https://adventurelog.app/docs/configuration/disable_registration.html"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

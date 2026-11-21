@@ -1,0 +1,49 @@
+services:
+  adventurelog:
+    image: ghcr.io/seanmorley15/adventurelog:v0.13.1@sha256:67ff66e4a2b46b3ca4806a3ecb47cb71c42443ea2d88c18e1ea3dba3ae0d2cf5
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SITE_URL: ${SITE_URL}
+      SECRET_KEY: ${SECRET_KEY}
+      PGHOST: adventurelog-db
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DJANGO_ADMIN_USERNAME: ${DJANGO_ADMIN_USERNAME}
+      DJANGO_ADMIN_PASSWORD: ${DJANGO_ADMIN_PASSWORD}
+      DJANGO_ADMIN_EMAIL: ${DJANGO_ADMIN_EMAIL}
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS}
+    volumes:
+      - adventurelog-media:/code/media
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:80/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 5m
+    depends_on:
+      adventurelog-db:
+        condition: service_healthy
+
+  adventurelog-db:
+    image: postgis/postgis:16-3.5@sha256:94146ac37bc61e2322f88016056c5920729cb8c64c8542ed590af8fc2abdac07
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - adventurelog-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  adventurelog-media: {}
+  adventurelog-db: {}
