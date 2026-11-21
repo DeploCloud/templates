@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Share passwords and other sensitive text through encrypted links that self-destruct after a single view, backed by Valkey.",
+  "category": "security",
+  "developedBy": {
+    "label": "Onetime Secret",
+    "url": "https://github.com/onetimesecret"
+  },
+  "links": {
+    "github": "https://github.com/onetimesecret/onetimesecret",
+    "website": "https://onetimesecret.com",
+    "docs": [
+      "https://docs.onetimesecret.com/en/self-hosting/",
+      "https://docs.onetimesecret.com/en/self-hosting/simple-or-full-auth",
+      "https://github.com/onetimesecret/onetimesecret/blob/main/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Create the first admin account from the app container console with: bin/ots customers create you@example.com --role colonel (it prints a generated password). Open signup is on and accounts are verified without email; set AUTH_SIGNUP to false to close it.",
+      "link": "https://github.com/onetimesecret/onetimesecret#quick-start-docker"
+    },
+    {
+      "type": "warning",
+      "message": "Back up the generated SECRET value. Losing or changing it makes every stored secret unreadable."
+    }
+  ]
+}

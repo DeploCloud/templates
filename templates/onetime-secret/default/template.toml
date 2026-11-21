@@ -1,0 +1,23 @@
+[variables]
+secret = "${hash:64}"
+valkey_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "onetime-secret"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+HOST = "${domain}"
+SECRET = "${secret}"
+VALKEY_PASSWORD = "${valkey_password}"
+AUTH_SIGNUP = "true"
+AUTH_AUTOVERIFY = "true"
+SMTP_HOST = ""
+SMTP_PORT = "587"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+FROM_EMAIL = "noreply@${domain}"
