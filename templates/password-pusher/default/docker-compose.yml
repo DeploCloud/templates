@@ -1,0 +1,24 @@
+services:
+  password-pusher:
+    image: pglombardo/pwpush:2.17.4@sha256:3f0d7fc9d39424763b53dc40648e0f8fac3979c7236711a37579b305abc5ab04
+    restart: unless-stopped
+    expose:
+      - 5100
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      PWPUSH_MASTER_KEY: ${PWPUSH_MASTER_KEY}
+      PWP__HOST_DOMAIN: ${PWP__HOST_DOMAIN}
+      PWP__HOST_PROTOCOL: https
+      PWP__OVERRIDE_BASE_URL: ${PWP__OVERRIDE_BASE_URL}
+      PWP__DISABLE_SIGNUPS: ${PWP__DISABLE_SIGNUPS}
+    volumes:
+      - password-pusher-storage:/opt/PasswordPusher/storage
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:5100/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  password-pusher-storage: {}

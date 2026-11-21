@@ -1,0 +1,45 @@
+services:
+  password-pusher:
+    image: pglombardo/pwpush:2.17.4@sha256:3f0d7fc9d39424763b53dc40648e0f8fac3979c7236711a37579b305abc5ab04
+    restart: unless-stopped
+    expose:
+      - 5100
+    environment:
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@password-pusher-db:5432/${DB_NAME}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      PWPUSH_MASTER_KEY: ${PWPUSH_MASTER_KEY}
+      PWP__HOST_DOMAIN: ${PWP__HOST_DOMAIN}
+      PWP__HOST_PROTOCOL: https
+      PWP__OVERRIDE_BASE_URL: ${PWP__OVERRIDE_BASE_URL}
+      PWP__DISABLE_SIGNUPS: ${PWP__DISABLE_SIGNUPS}
+    volumes:
+      - password-pusher-storage:/opt/PasswordPusher/storage
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:5100/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      password-pusher-db:
+        condition: service_healthy
+
+  password-pusher-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - password-pusher-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  password-pusher-storage: {}
+  password-pusher-db: {}
