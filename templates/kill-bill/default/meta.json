@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source subscription billing and payments platform with the Kaui admin UI, a REST API and a bundled MariaDB database.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Kill Bill",
+    "url": "https://killbill.io"
+  },
+  "links": {
+    "github": "https://github.com/killbill/killbill",
+    "website": "https://killbill.io",
+    "docs": [
+      "https://docs.killbill.io/latest/getting_started",
+      "https://docs.killbill.io/latest/userguide_configuration",
+      "https://docs.killbill.io/latest/plugin_installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to Kaui as admin with the KB_ADMIN_PASSWORD value from the environment, then create a tenant before adding accounts or catalogs.",
+      "link": "https://docs.killbill.io/latest/getting_started"
+    },
+    {
+      "type": "info",
+      "message": "Kill Bill and Kaui each run in their own JVM. Upstream recommends at least 4 GB of RAM on the server, otherwise the containers can crash on startup."
+    }
+  ]
+}

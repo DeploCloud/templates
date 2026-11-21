@@ -1,0 +1,30 @@
+[variables]
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kaui"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "killbill"
+port = 8_080
+host = "${domain}"
+path = "/1.0/kb"
+
+[[config.domains]]
+serviceName = "killbill"
+port = 8_080
+host = "${domain}"
+path = "/plugins"
+
+[config.env]
+DB_ROOT_PASSWORD = "${db_root_password}"
+KB_ADMIN_PASSWORD = "${admin_password}"
+KAUI_SECRET_KEY_BASE = "${hash:128}"
+KILLBILL_BASE_URL = "https://${domain}"
