@@ -1,0 +1,43 @@
+[variables]
+api_domain = "api.${domain}"
+db_password = "${password:32}"
+minio_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "plunk"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "plunk-minio"
+port = 9_000
+host = "${domain}"
+path = "/uploads"
+
+[[config.domains]]
+serviceName = "plunk"
+port = 80
+host = "${api_domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+JWT_SECRET = "${base64:48}"
+DASHBOARD_DOMAIN = "${domain}"
+API_DOMAIN = "${api_domain}"
+DASHBOARD_URI = "https://${domain}"
+API_URI = "https://${api_domain}"
+LANDING_URI = "https://www.useplunk.com"
+WIKI_URI = "https://docs.useplunk.com"
+MINIO_ROOT_USER = "plunk"
+MINIO_ROOT_PASSWORD = "${minio_password}"
+S3_PUBLIC_URL = "https://${domain}/uploads"
+AWS_SES_REGION = "us-east-1"
+AWS_SES_ACCESS_KEY_ID = "replace-with-ses-access-key-id"
+AWS_SES_SECRET_ACCESS_KEY = "replace-with-ses-secret-access-key"
+SES_CONFIGURATION_SET = "plunk-tracking"
+AUTO_PROJECT_DISABLE = "false"
+DISABLE_SIGNUPS = "false"
