@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Markdown knowledge base with team workspaces, offline PWA support, MySQL storage and an S3-compatible file store.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Smaug6739",
+    "url": "https://github.com/Smaug6739"
+  },
+  "links": {
+    "github": "https://github.com/Smaug6739/Alexandrie",
+    "website": "https://alexandrie-hub.fr",
+    "docs": [
+      "https://docs.alexandrie-hub.fr/deploy/selfhost",
+      "https://docs.alexandrie-hub.fr/deploy/configurations-list",
+      "https://docs.alexandrie-hub.fr/administer/manage-admins"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open and new accounts are regular users. To get the admin panel, copy your user ID from the profile page (enable developer mode in settings), set ADMIN_ACCOUNTS to it and redeploy. Set CONFIG_DISABLE_SIGNUP to true to close registrations.",
+      "link": "https://docs.alexandrie-hub.fr/administer/manage-admins"
+    },
+    {
+      "type": "warning",
+      "message": "Uploaded files are served from the cdn. subdomain of your app domain, kept separate from the app for security. When you use your own domain, point cdn.<your domain> to the server too, or images and attachments will not load."
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; login cookies are marked Secure and the app calls its API and file store over https://, so a plain HTTP domain will not work."
+    }
+  ]
+}
