@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Authentication server with a login page, OAuth, LDAP and TOTP support that works as an OpenID Connect provider or as forward-auth middleware for other apps.",
+  "category": "security",
+  "developedBy": {
+    "label": "Tinyauth",
+    "url": "https://github.com/tinyauthapp"
+  },
+  "links": {
+    "github": "https://github.com/tinyauthapp/tinyauth",
+    "website": "https://tinyauth.app",
+    "docs": [
+      "https://tinyauth.app/docs/getting-started",
+      "https://tinyauth.app/docs/reference/configuration",
+      "https://tinyauth.app/docs/guides/oidc"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ADMIN_PASSWORD from the environment variables. The session cookie is limited to this host, which is enough for OpenID Connect. To protect sibling apps with forward auth, move Tinyauth to your own subdomain (for example auth.example.com), update TINYAUTH_APPURL and set TINYAUTH_AUTH_SUBDOMAINSENABLED to true: the cookie is then shared with the whole parent domain.",
+      "link": "https://tinyauth.app/docs/reference/configuration"
+    }
+  ]
+}
