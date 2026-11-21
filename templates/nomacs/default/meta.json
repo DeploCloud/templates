@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Nomacs image viewer and light photo editor streamed to the browser behind a password, with settings and images kept on a persistent volume.",
+  "category": "media",
+  "developedBy": {
+    "label": "nomacs",
+    "url": "https://github.com/nomacs"
+  },
+  "links": {
+    "github": "https://github.com/nomacs/nomacs",
+    "website": "https://nomacs.org/",
+    "docs": [
+      "https://nomacs.org/docs/getting-started/introduction/",
+      "https://nomacs.org/docs/documentation/features/",
+      "https://docs.linuxserver.io/images/docker-nomacs/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. Keep images under /config so they persist.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-nomacs/"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+services:
+  nomacs:
+    image: lscr.io/linuxserver/nomacs:3.22.4-ls7@sha256:237404b85a642845505b7b97b496997791d1ec1de0b54df237ccf2230fa9177b
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - nomacs-config:/config
+
+volumes:
+  nomacs-config: {}
