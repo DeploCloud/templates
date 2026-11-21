@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Bastion host and access gateway with a web admin UI, browser-based SSH and remote desktop, HTTP target proxying and session recording.",
+  "category": "security",
+  "developedBy": {
+    "label": "Warptech Industries",
+    "url": "https://github.com/warp-tech"
+  },
+  "links": {
+    "github": "https://github.com/warp-tech/warpgate",
+    "website": "https://warpgate.null.page",
+    "docs": [
+      "https://warpgate.null.page/getting-started-on-docker",
+      "https://warpgate.null.page/reverse-proxy/",
+      "https://warpgate.null.page/production-checklist/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated WARPGATE_ADMIN_PASSWORD from the environment variables. Only the HTTPS listener is routed: native SSH, MySQL and PostgreSQL clients need their listeners enabled in warpgate.yaml and their ports published separately.",
+      "link": "https://warpgate.null.page/getting-started-on-docker"
+    }
+  ]
+}
