@@ -1,0 +1,36 @@
+services:
+  olivetin:
+    image: ghcr.io/olivetin/olivetin:3000.22.0@sha256:e8441343ab8e3d13daa83f4cb2a00d9fa3510953a6040a556a805918f5636264
+    restart: unless-stopped
+    expose:
+      - 1337
+    volumes:
+      - olivetin-config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:1337/readyz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      olivetin-init:
+        condition: service_completed_successfully
+
+  # OliveTin only accepts argon2id hashes, so the admin password is hashed here on every deploy.
+  olivetin-init:
+    image: php:8.5.13-cli-alpine@sha256:b9d7db51a2b83c41420ba04de0b90e6078d4b6440e5cc480fc4dc51b18e0b6db
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >-
+        test -n "$$OLIVETIN_ADMIN_PASSWORD" &&
+        php -r "exit(file_put_contents('/config/config.yaml', str_replace('__OLIVETIN_ADMIN_PASSWORD_HASH__', password_hash(getenv('OLIVETIN_ADMIN_PASSWORD'), PASSWORD_ARGON2ID), file_get_contents('/template/config.yaml'))) === false ? 1 : 0);" &&
+        chown -R 1000:1000 /config
+    environment:
+      OLIVETIN_ADMIN_PASSWORD: ${OLIVETIN_ADMIN_PASSWORD}
+    volumes:
+      - ./config.yaml:/template/config.yaml:ro
+      - olivetin-config:/config
+
+volumes:
+  olivetin-config: {}

@@ -1,0 +1,63 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "olivetin"
+port = 1_337
+host = "${domain}"
+
+[config.env]
+OLIVETIN_ADMIN_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """# Edit this file and redeploy; it replaces /config/config.yaml on every deploy.
+# Actions run inside the container. Docs: https://docs.olivetin.app/
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337
+logLevel: "INFO"
+
+authRequireGuestsToLogin: true
+
+authLocalUsers:
+  enabled: true
+  users:
+    - username: admin
+      usergroup: admins
+      password: "__OLIVETIN_ADMIN_PASSWORD_HASH__"
+
+accessControlLists:
+  - name: admins
+    matchUsergroups: ["admins"]
+    addToEveryAction: true
+    policy:
+      showDiagnostics: true
+      showLogList: true
+    permissions:
+      view: true
+      exec: true
+      logs: true
+      kill: true
+
+actions:
+  - title: Check disk space
+    icon: disk
+    shell: df -h /config
+    onclick: execution-dialog
+
+  - title: Ping host
+    icon: ping
+    shell: ping -c {{ count }} {{ host }}
+    timeout: 30
+    onclick: execution-dialog
+    arguments:
+      - name: host
+        title: Host
+        type: ascii_identifier
+        default: example.com
+      - name: count
+        title: Count
+        type: int
+        default: 3
+"""

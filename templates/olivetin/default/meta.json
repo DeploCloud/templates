@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Web interface and API that turns predefined shell commands into buttons, with login required and an editable config file.",
+  "category": "automation",
+  "developedBy": {
+    "label": "OliveTin",
+    "url": "https://github.com/OliveTin"
+  },
+  "links": {
+    "github": "https://github.com/OliveTin/OliveTin",
+    "website": "https://olivetin.app",
+    "docs": [
+      "https://docs.olivetin.app/install/docker_compose.html",
+      "https://docs.olivetin.app/action_buttons/create_your_first.html",
+      "https://docs.olivetin.app/security/local.html",
+      "https://docs.olivetin.app/security/acl.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated OLIVETIN_ADMIN_PASSWORD from the environment settings. Actions are defined in the config.yaml mount: edit it and redeploy, since it overwrites /config/config.yaml on every deploy. Commands run inside the container, with no access to the host or its Docker daemon.",
+      "link": "https://docs.olivetin.app/action_buttons/create_your_first.html"
+    }
+  ]
+}
