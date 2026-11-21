@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted workflow orchestrator that runs YAML-defined DAGs of shell commands, SSH and HTTP steps, with a built-in scheduler and web UI.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Dagu",
+    "url": "https://github.com/dagucloud"
+  },
+  "links": {
+    "github": "https://github.com/dagucloud/dagu",
+    "website": "https://dagu.sh",
+    "docs": [
+      "https://docs.dagu.sh/server-admin/deployment/docker",
+      "https://docs.dagu.sh/server-admin/authentication/builtin",
+      "https://docs.dagu.sh/server-admin/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the admin account created on first start: the username is ADMIN_USERNAME and the generated password is ADMIN_PASSWORD in the environment settings. Changing them later has no effect; change the password from the web UI instead.",
+      "link": "https://docs.dagu.sh/server-admin/authentication/builtin"
+    }
+  ]
+}
