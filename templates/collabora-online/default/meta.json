@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Collabora Online Development Edition (CODE): LibreOffice-based online editors for documents, spreadsheets and presentations with real-time co-editing, embedded by WOPI hosts such as Nextcloud.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Collabora Productivity",
+    "url": "https://www.collaboraonline.com"
+  },
+  "links": {
+    "github": "https://github.com/CollaboraOnline/online",
+    "website": "https://www.collaboraonline.com",
+    "docs": [
+      "https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html",
+      "https://sdk.collaboraonline.com/docs/installation/Configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Collabora Online has no file storage or user accounts of its own. Connect it from Nextcloud, ownCloud, Seafile or another WOPI host by entering this domain as the server URL. Until you pin one, the first WOPI host that connects after each start becomes the only trusted host; to restrict it, add aliasgroup1 with your host URL (for example https://cloud.example.com:443) to the service environment.",
+      "link": "https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html"
+    }
+  ]
+}

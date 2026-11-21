@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "collabora-online"
+port = 9_980
+host = "${domain}"
+
+[config.env]
+COLLABORA_ADMIN_USER = "admin"
+COLLABORA_ADMIN_PASSWORD = "${admin_password}"
+COLLABORA_SERVER_NAME = "${domain}"
+COLLABORA_EXTRA_PARAMS = "--o:ssl.enable=false --o:ssl.termination=true"
