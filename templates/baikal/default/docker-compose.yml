@@ -1,0 +1,19 @@
+services:
+  baikal:
+    image: ghcr.io/aalmenar/baikal:0.13.0-r4@sha256:a059a19e532d4cee63435cced5f084837b0732f802456151013d417ea1683498
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - baikal-config:/var/www/baikal/config
+      - baikal-data:/var/www/baikal/Specific
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  baikal-config: {}
+  baikal-data: {}

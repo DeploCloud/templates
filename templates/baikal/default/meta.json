@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight CalDAV and CardDAV server for calendars and contacts, with a web admin panel and a SQLite database on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "sabre.io",
+    "url": "https://sabre.io/"
+  },
+  "links": {
+    "github": "https://github.com/sabre-io/Baikal",
+    "website": "https://sabre.io/baikal/",
+    "docs": [
+      "https://sabre.io/baikal/install/",
+      "https://sabre.io/baikal/upgrade/",
+      "https://github.com/aalmenar/baikal-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deploying: the first visitor runs the install wizard and sets the admin password. After an image upgrade, open /admin/ and complete the upgrade wizard if prompted.",
+      "link": "https://sabre.io/baikal/install/"
+    }
+  ]
+}
