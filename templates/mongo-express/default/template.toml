@@ -1,0 +1,18 @@
+[variables]
+mongo_root_password = "${password:32}"
+basicauth_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mongo-express"
+port = 8_081
+host = "${domain}"
+
+[config.env]
+MONGO_ROOT_PASSWORD = "${mongo_root_password}"
+ME_CONFIG_BASICAUTH_USERNAME = "admin"
+ME_CONFIG_BASICAUTH_PASSWORD = "${basicauth_password}"
+ME_CONFIG_SITE_COOKIESECRET = "${secret:32}"
+ME_CONFIG_SITE_SESSIONSECRET = "${secret:32}"

@@ -1,0 +1,1 @@
+Deploys mongo-express, a web admin interface for MongoDB, together with a MongoDB 8.0 server it connects to as the root user. The MongoDB data and config directories are kept on persistent volumes; mongo-express itself is stateless. The UI is protected by basic auth with the user admin and the generated ME_CONFIG_BASICAUTH_PASSWORD from the environment settings.
