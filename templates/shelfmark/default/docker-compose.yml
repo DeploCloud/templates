@@ -1,0 +1,17 @@
+services:
+  shelfmark:
+    image: ghcr.io/calibrain/shelfmark:1.7.0@sha256:6544e02595271b0267b9acda58fa7f3db6f14942bece51b7aadfe4000cf34f1c
+    restart: unless-stopped
+    expose:
+      - 8084
+    environment:
+      PUID: 1000
+      PGID: 1000
+      SESSION_COOKIE_SECURE: "true"
+    volumes:
+      - shelfmark-config:/config
+      - shelfmark-books:/books
+
+volumes:
+  shelfmark-config: {}
+  shelfmark-books: {}
