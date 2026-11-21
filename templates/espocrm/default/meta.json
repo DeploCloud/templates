@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source CRM for leads, contacts, accounts, opportunities, email and calendars, with a MariaDB database, background job daemon and WebSocket server.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "EspoCRM",
+    "url": "https://github.com/espocrm"
+  },
+  "links": {
+    "github": "https://github.com/espocrm/espocrm",
+    "website": "https://www.espocrm.com",
+    "docs": [
+      "https://docs.espocrm.com/administration/docker/installation/",
+      "https://docs.espocrm.com/administration/docker/traefik/",
+      "https://docs.espocrm.com/administration/websocket/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as ADMIN_USERNAME with the generated ADMIN_PASSWORD from the environment. Both are applied only on the first installation, so editing them later has no effect; change the password under your user profile instead.",
+      "link": "https://docs.espocrm.com/administration/docker/installation/#installation-environments"
+    }
+  ]
+}
