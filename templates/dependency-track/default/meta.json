@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Software supply chain risk platform that analyzes SBOMs for vulnerable, outdated and policy-violating components, with a web UI, REST API and PostgreSQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "OWASP Dependency-Track",
+    "url": "https://github.com/DependencyTrack"
+  },
+  "links": {
+    "github": "https://github.com/DependencyTrack/dependency-track",
+    "website": "https://dependencytrack.org/",
+    "docs": [
+      "https://dependencytrack.github.io/docs/next/tutorials/quickstart/",
+      "https://dependencytrack.github.io/docs/next/guides/administration/deploying-to-production/",
+      "https://dependencytrack.github.io/docs/next/reference/configuration/database/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin right after deployment; Dependency-Track forces a password change on first login.",
+      "link": "https://dependencytrack.github.io/docs/next/tutorials/quickstart/"
+    }
+  ]
+}

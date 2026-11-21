@@ -1,0 +1,45 @@
+services:
+  dependency-track:
+    image: ghcr.io/dependencytrack/frontend:5.2.2@sha256:fd15b6cdc38692518a703eab0ed2867fa34e1276034cbe00773c61a9975cf719
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      API_BASE_URL: ${API_BASE_URL}
+    depends_on:
+      - dependency-track-apiserver
+
+  dependency-track-apiserver:
+    image: ghcr.io/dependencytrack/apiserver:5.2.2@sha256:cd5bed12ff30fd36980dbee2d6c3b177c37b99c63b60f5a5b15fbca0b31d0f38
+    restart: unless-stopped
+    mem_limit: 2g
+    expose:
+      - 8080
+    environment:
+      DT_DATASOURCE_URL: jdbc:postgresql://dependency-track-db:5432/${DB_NAME}
+      DT_DATASOURCE_USERNAME: ${DB_USER}
+      DT_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dependency-track-data:/data
+    depends_on:
+      dependency-track-db:
+        condition: service_healthy
+
+  dependency-track-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - dependency-track-db:/var/lib/postgresql
+
+volumes:
+  dependency-track-data: {}
+  dependency-track-db: {}
