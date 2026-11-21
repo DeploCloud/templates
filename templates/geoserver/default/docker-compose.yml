@@ -1,0 +1,26 @@
+services:
+  geoserver:
+    image: docker.osgeo.org/geoserver:3.0.2@sha256:5a372d4988116e8f62c71ae5ff6eb8d433967697670fb1dec15379bf476721fe
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      GEOSERVER_ADMIN_USER: ${GEOSERVER_ADMIN_USER}
+      GEOSERVER_ADMIN_PASSWORD: ${GEOSERVER_ADMIN_PASSWORD}
+      PROXY_BASE_URL: ${PROXY_BASE_URL}
+      GEOSERVER_CSRF_WHITELIST: ${GEOSERVER_CSRF_WHITELIST}
+      ROOT_WEBAPP_REDIRECT: "true"
+      RUN_UNPRIVILEGED: "true"
+      SKIP_DEMO_DATA: ${SKIP_DEMO_DATA}
+      EXTRA_JAVA_OPTS: ${EXTRA_JAVA_OPTS}
+    volumes:
+      - geoserver-data:/opt/geoserver_data
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent --output /dev/null http://localhost:8080/geoserver/web/wicket/resource/org.geoserver.web.GeoServerBasePage/img/logo.png || exit 1"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  geoserver-data: {}
