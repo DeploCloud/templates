@@ -1,0 +1,13 @@
+[variables]
+api_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-terminal"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+OPEN_TERMINAL_API_KEY = "${api_key}"
