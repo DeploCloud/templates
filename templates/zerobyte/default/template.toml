@@ -1,0 +1,16 @@
+[variables]
+app_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zerobyte"
+port = 4_096
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+APP_SECRET = "${app_secret}"
+TRUST_PROXY = "true"
+TZ = "UTC"
