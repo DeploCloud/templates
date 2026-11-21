@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "black-candy"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+MEDIA_PATH = "/media_data"
+# Single Puma process; the image default spawns one worker per CPU core.
+WEB_CONCURRENCY = "0"
+DB_PASSWORD = "${db_password}"
+DB_URL = "postgresql://blackcandy:${db_password}@black-candy-db:5432/blackcandy"
+CACHE_DB_URL = "postgresql://blackcandy:${db_password}@black-candy-db:5432/blackcandy_cache"
+CABLE_DB_URL = "postgresql://blackcandy:${db_password}@black-candy-db:5432/blackcandy_cable"
+QUEUE_DB_URL = "postgresql://blackcandy:${db_password}@black-candy-db:5432/blackcandy_queue"

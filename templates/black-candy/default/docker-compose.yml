@@ -1,0 +1,23 @@
+services:
+  black-candy:
+    image: ghcr.io/blackcandy-org/blackcandy:3.2.2@sha256:4d79ed83403e5ac67c08792afe590f738c00380033b2684aa0267a3c5bd53853
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      MEDIA_PATH: ${MEDIA_PATH}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+    volumes:
+      - black-candy-storage:/rails/storage
+      - black-candy-media:/media_data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/up"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  black-candy-storage: {}
+  black-candy-media: {}
