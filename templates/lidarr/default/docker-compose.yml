@@ -1,0 +1,29 @@
+services:
+  lidarr-init:
+    image: lscr.io/linuxserver/lidarr:3.1.6.5079-ls49@sha256:8fb40ada166dd1880cb1b166df5bcbb081107523f20ab60df05c313e2052a467
+    restart: "no"
+    user: "0:0"
+    # the image only chowns /config, so the library volume starts root-owned
+    entrypoint: ["sh", "-c", "mkdir -p /data/music && chown ${PUID}:${PGID} /data /data/music"]
+    volumes:
+      - lidarr-data:/data
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:3.1.6.5079-ls49@sha256:8fb40ada166dd1880cb1b166df5bcbb081107523f20ab60df05c313e2052a467
+    restart: unless-stopped
+    expose:
+      - 8686
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - lidarr-config:/config
+      - lidarr-data:/data
+    depends_on:
+      lidarr-init:
+        condition: service_completed_successfully
+
+volumes:
+  lidarr-config: {}
+  lidarr-data: {}

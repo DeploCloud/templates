@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Music collection manager that monitors artists, grabs new releases through your indexers and download clients, and organizes the library.",
+  "category": "media",
+  "developedBy": {
+    "label": "Lidarr",
+    "url": "https://lidarr.audio/"
+  },
+  "links": {
+    "github": "https://github.com/Lidarr/Lidarr",
+    "website": "https://lidarr.audio/",
+    "docs": [
+      "https://wiki.servarr.com/lidarr",
+      "https://wiki.servarr.com/lidarr/quick-start-guide",
+      "https://wiki.servarr.com/lidarr/installation/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit Lidarr asks you to create the login username and password. Open the app right after deploying so nobody else claims it, and keep Authentication Required set to Enabled: behind the proxy every visitor counts as a local address, so Disabled for Local Addresses leaves the app open.",
+      "link": "https://wiki.servarr.com/lidarr/quick-start-guide"
+    }
+  ]
+}
