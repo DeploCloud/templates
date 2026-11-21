@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-focused crypto and traditional asset portfolio tracker with accounting, tax reports and encrypted local accounts, served as a web app.",
+  "category": "finance",
+  "developedBy": {
+    "label": "rotki",
+    "url": "https://rotki.com"
+  },
+  "links": {
+    "github": "https://github.com/rotki/rotki",
+    "website": "https://rotki.com",
+    "docs": [
+      "https://docs.rotki.com/requirement-and-installation/docker",
+      "https://docs.rotki.com/usage-guides/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can list account names and create new accounts, and sign-in has no brute-force protection. Upstream recommends keeping rotki private, behind an authenticating proxy, a VPN or an IP allowlist.",
+      "link": "https://docs.rotki.com/requirement-and-installation/docker"
+    }
+  ]
+}

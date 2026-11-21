@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rotki"
+port = 80
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+ROTKI_SESSION_KEY = "${hash:64}"
