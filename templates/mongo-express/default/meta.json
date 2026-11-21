@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based MongoDB admin interface to browse databases, collections and documents, bundled with a MongoDB server.",
+  "category": "database",
+  "developedBy": {
+    "label": "mongo-express",
+    "url": "https://github.com/mongo-express"
+  },
+  "links": {
+    "github": "https://github.com/mongo-express/mongo-express",
+    "docs": [
+      "https://github.com/mongo-express/mongo-express#usage-docker",
+      "https://hub.docker.com/_/mongo-express"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI asks for basic auth: sign in as admin with the generated ME_CONFIG_BASICAUTH_PASSWORD from the environment settings. Documents are evaluated as JavaScript on the server, so keep the credentials private.",
+      "link": "https://github.com/mongo-express/mongo-express#not-tested"
+    },
+    {
+      "type": "info",
+      "message": "MongoDB 8.0 needs a CPU with AVX support on x86_64 servers (ARMv8.2-A on arm64)."
+    }
+  ]
+}
