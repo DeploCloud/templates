@@ -1,0 +1,22 @@
+services:
+  ha-fusion:
+    image: ghcr.io/knowald/ha-fusion:2026.8.2@sha256:9b19dcfc1d8703429117c428091f97fbd755a12269ab51139b963961edf97020
+    restart: unless-stopped
+    expose:
+      - 5050
+    environment:
+      HASS_URL: ${HASS_URL}
+      TZ: ${TZ}
+      PORT: 5050
+      NODE_ENV: production
+    volumes:
+      - ha-fusion-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:5050"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  ha-fusion-data: {}
