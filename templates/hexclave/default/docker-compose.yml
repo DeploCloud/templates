@@ -1,0 +1,87 @@
+services:
+  hexclave:
+    image: stackauth/server:7309015@sha256:a3faf3844783611e88b68a2a3a0669983f487549ea875b22aebd3a94a6ed9399
+    restart: unless-stopped
+    expose:
+      - 8101
+      - 8102
+    environment:
+      NEXT_PUBLIC_HEXCLAVE_DASHBOARD_URL: ${NEXT_PUBLIC_HEXCLAVE_DASHBOARD_URL}
+      NEXT_PUBLIC_HEXCLAVE_API_URL: ${NEXT_PUBLIC_HEXCLAVE_API_URL}
+      HEXCLAVE_TRUSTED_PROXY: generic
+      HEXCLAVE_DATABASE_CONNECTION_STRING: postgres://hexclave:${DB_PASSWORD}@hexclave-db:5432/hexclave
+      HEXCLAVE_SERVER_SECRET: ${HEXCLAVE_SERVER_SECRET}
+      CRON_SECRET: ${CRON_SECRET}
+      HEXCLAVE_CLICKHOUSE_URL: http://hexclave-clickhouse:8123
+      HEXCLAVE_CLICKHOUSE_DATABASE: analytics
+      HEXCLAVE_CLICKHOUSE_ADMIN_USER: hexclave
+      HEXCLAVE_CLICKHOUSE_ADMIN_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      HEXCLAVE_CLICKHOUSE_EXTERNAL_PASSWORD: ${CLICKHOUSE_EXTERNAL_PASSWORD}
+      HEXCLAVE_SEED_INTERNAL_PROJECT_USER_EMAIL: ${ADMIN_EMAIL}
+      HEXCLAVE_SEED_INTERNAL_PROJECT_USER_PASSWORD: ${ADMIN_PASSWORD}
+      HEXCLAVE_SEED_INTERNAL_PROJECT_USER_INTERNAL_ACCESS: "true"
+      HEXCLAVE_SEED_INTERNAL_PROJECT_SIGN_UP_ENABLED: "false"
+      HEXCLAVE_EMAILABLE_API_KEY: disable_email_validation
+      HEXCLAVE_DISABLE_PLAN_LIMITS: "true"
+      HEXCLAVE_FREESTYLE_API_KEY: ${HEXCLAVE_FREESTYLE_API_KEY}
+      HEXCLAVE_FREESTYLE_SNAPSHOT_ID: ${HEXCLAVE_FREESTYLE_SNAPSHOT_ID}
+    depends_on:
+      hexclave-db:
+        condition: service_healthy
+      hexclave-clickhouse:
+        condition: service_healthy
+
+  # The image runs no scheduler; upstream requires one for the email queue and DB sync jobs.
+  hexclave-cron:
+    image: curlimages/curl:8.23.0@sha256:3fb7e13e5d179a845c97d78204f3f1064d1907037f26a3ebf91710571151fd93
+    restart: unless-stopped
+    environment:
+      CRON_SECRET: ${CRON_SECRET}
+    # Each job loops for 2-3 minutes per call, so every job gets its own back-to-back loop.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        trap 'exit 0' TERM INT
+        for job in email-queue-step external-db-sync/sequencer external-db-sync/poller; do
+          while true; do
+            curl -fsS -o /dev/null -m 300 -H "Authorization: Bearer $$CRON_SECRET" "http://hexclave:8102/api/latest/internal/$$job" && sleep 5 || { echo "cron job $$job failed"; sleep 60; }
+          done &
+        done
+        wait
+    depends_on:
+      - hexclave
+
+  hexclave-db:
+    image: postgres:18.7@sha256:e754b839f447639b7004895f4d8a4bfcb4e9dbe3a1bc035f27f646562a16fd61
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: hexclave
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: hexclave
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hexclave -d hexclave"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - hexclave-db:/var/lib/postgresql
+
+  hexclave-clickhouse:
+    image: clickhouse/clickhouse-server:25.10.7.6@sha256:f9892befd74a031d7ff9c0410613480b77b728c2ea9d4950b8ef282f5dade87b
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: analytics
+      CLICKHOUSE_USER: hexclave
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8123/ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - hexclave-clickhouse:/var/lib/clickhouse
+
+volumes:
+  hexclave-db: {}
+  hexclave-clickhouse: {}
