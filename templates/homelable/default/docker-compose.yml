@@ -1,0 +1,44 @@
+services:
+  homelable:
+    image: ghcr.io/pouzor/homelable-frontend:3.7.1@sha256:2e52e1ba1cd0142c03988b247ca38f1fcbcf668efe39fb5849d432298a56a518
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BACKEND_UPSTREAM: homelable-backend:8000
+    depends_on:
+      homelable-backend:
+        condition: service_healthy
+
+  homelable-backend:
+    image: ghcr.io/pouzor/homelable-backend:3.7.1@sha256:f0f5f26461991bb8c14bd835f06244755fed9e63f818fa184b237f2d55f7f188
+    restart: unless-stopped
+    expose:
+      - 8000
+    # The login needs a bcrypt hash, so it is derived from the generated password at start.
+    command:
+      - /bin/sh
+      - -c
+      - |
+        AUTH_PASSWORD_HASH="$$(python -c 'import bcrypt, os; print(bcrypt.hashpw(os.environ["ADMIN_PASSWORD"].encode(), bcrypt.gensalt()).decode())')"
+        export AUTH_PASSWORD_HASH
+        exec uvicorn app.main:app --host 0.0.0.0 --port 8000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      SQLITE_PATH: /app/data/homelab.db
+      CORS_ORIGINS: '["https://${APP_DOMAIN}"]'
+      AUTH_MODE: local
+      AUTH_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      STATUS_CHECKER_INTERVAL: ${STATUS_CHECKER_INTERVAL}
+    volumes:
+      - homelable-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+
+volumes:
+  homelable-data: {}

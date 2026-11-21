@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Homelab infrastructure visualizer with an interactive network diagram, network scanning and live status monitoring of your nodes.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Pouzor",
+    "url": "https://github.com/Pouzor"
+  },
+  "links": {
+    "github": "https://github.com/Pouzor/homelable",
+    "website": "https://homelable.net",
+    "docs": [
+      "https://github.com/Pouzor/homelable/blob/main/INSTALLATION.md",
+      "https://github.com/Pouzor/homelable/blob/main/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ADMIN_PASSWORD from the environment variables. The scanner runs from a container network, so it only reaches hosts routable from the server and never reports MAC addresses."
+    }
+  ]
+}
