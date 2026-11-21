@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source password manager for teams with GPG-based end-to-end encryption, backed by MariaDB with persistent server keys.",
+  "category": "security",
+  "developedBy": {
+    "label": "Passbolt",
+    "url": "https://github.com/passbolt"
+  },
+  "links": {
+    "github": "https://github.com/passbolt/passbolt_api",
+    "website": "https://www.passbolt.com",
+    "docs": [
+      "https://www.passbolt.com/docs/hosting/install/ce/docker/",
+      "https://www.passbolt.com/docs/hosting/environment-reference/",
+      "https://www.passbolt.com/docs/hosting/backup/from-docker/",
+      "https://github.com/passbolt/passbolt_docker#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no sign-up page. Create the first administrator from a terminal in the passbolt container with: su -m -c \"/usr/share/php/passbolt/bin/cake passbolt register_user -u you@example.com -f First -l Last -r admin\" -s /bin/sh www-data, then open the setup link it prints. The Passbolt browser extension is required to finish setup.",
+      "link": "https://www.passbolt.com/docs/hosting/install/ce/docker/"
+    },
+    {
+      "type": "warning",
+      "message": "User invitations and account recovery are sent by email. Configure an SMTP server in Organisation settings > Email server after the first login.",
+      "link": "https://www.passbolt.com/docs/admin/emails/email-server/"
+    }
+  ]
+}

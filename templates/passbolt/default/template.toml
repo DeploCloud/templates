@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+security_salt = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "passbolt"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_FULL_BASE_URL = "https://${domain}"
+DB_NAME = "passbolt"
+DB_USER = "passbolt"
+DB_PASSWORD = "${db_password}"
+SECURITY_SALT = "${security_salt}"
