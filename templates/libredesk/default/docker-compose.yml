@@ -1,0 +1,55 @@
+services:
+  libredesk:
+    image: libredesk/libredesk:v2.9.2@sha256:1c5a234b113b6fa7b4170219a4e1063d8a9e4a396d4811b2ea03fdfcd02c63de
+    restart: unless-stopped
+    command: [sh, -c, "./libredesk --install --idempotent-install --yes && ./libredesk --upgrade --yes && ./libredesk"]
+    expose:
+      - 9000
+    environment:
+      LIBREDESK_SYSTEM_USER_PASSWORD: ${LIBREDESK_SYSTEM_USER_PASSWORD}
+      LIBREDESK_APP__ENV: prod
+      LIBREDESK_APP__LOG_LEVEL: info
+      LIBREDESK_APP__ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      LIBREDESK_DB__HOST: libredesk-db
+      LIBREDESK_DB__USER: libredesk
+      LIBREDESK_DB__PASSWORD: ${DB_PASSWORD}
+      LIBREDESK_DB__DATABASE: libredesk
+      LIBREDESK_REDIS__ADDRESS: libredesk-redis:6379
+    volumes:
+      - libredesk-uploads:/libredesk/uploads
+    depends_on:
+      libredesk-db:
+        condition: service_healthy
+      libredesk-redis:
+        condition: service_healthy
+
+  libredesk-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: libredesk
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: libredesk
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U libredesk -d libredesk"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    volumes:
+      - libredesk-db:/var/lib/postgresql/data
+
+  libredesk-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    volumes:
+      - libredesk-redis:/data
+
+volumes:
+  libredesk-uploads: {}
+  libredesk-db: {}
+  libredesk-redis: {}

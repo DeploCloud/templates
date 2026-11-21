@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted customer support desk for email, live chat and WhatsApp, with PostgreSQL, Redis and persistent uploads.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Abhinav Raut",
+    "url": "https://github.com/abhinavxd"
+  },
+  "links": {
+    "github": "https://github.com/abhinavxd/libredesk",
+    "website": "https://libredesk.io",
+    "docs": [
+      "https://docs.libredesk.io/getting-started/installation",
+      "https://docs.libredesk.io/getting-started/upgrade",
+      "https://docs.libredesk.io/configuration/connecting-inboxes"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the email System and the password from the LIBREDESK_SYSTEM_USER_PASSWORD variable (applied only on the first start). Then set the Root URL in the admin General settings to https://<your domain>, since it defaults to http://localhost:9000.",
+      "link": "https://docs.libredesk.io/getting-started/installation"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: session cookies are secure-only and the realtime websocket rejects non-HTTPS origins."
+    }
+  ]
+}
