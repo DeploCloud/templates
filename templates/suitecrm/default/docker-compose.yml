@@ -1,0 +1,44 @@
+services:
+  suitecrm:
+    image: ghcr.io/leastauthority/suitecrm:7.15.2@sha256:a2a83793fa2ee90de2db02fa2688101104a3f25de81d4951aa9e0216cddfcf77
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SUITECRM_HTTP_PORT: "8080"
+      SUITECRM_ADMIN_USER: admin
+      SUITECRM_DATABASE_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - suitecrm-data:/var/lib/suitecrm
+      - suitecrm-logs:/var/log/suitecrm
+      - ./config_si.php:/var/lib/suitecrm/config_si.php
+    depends_on:
+      suitecrm-db:
+        condition: service_healthy
+
+  suitecrm-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+    environment:
+      MARIADB_DATABASE: suitecrm
+      MARIADB_USER: suitecrm
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+      TZ: ${TZ}
+    volumes:
+      - suitecrm-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  suitecrm-data: {}
+  suitecrm-logs: {}
+  suitecrm-db: {}

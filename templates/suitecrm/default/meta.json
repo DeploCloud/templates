@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source CRM for sales, marketing and customer service, with a MariaDB database and an automatic first-run install.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "SalesAgility",
+    "url": "https://suitecrm.com"
+  },
+  "links": {
+    "github": "https://github.com/SuiteCRM/SuiteCRM",
+    "website": "https://suitecrm.com",
+    "docs": [
+      "https://docs.suitecrm.com/admin/",
+      "https://docs.suitecrm.com/admin/compatibility-matrix/",
+      "https://github.com/LeastAuthority/suitecrm-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visit to the site runs the installer, which takes a minute or two; keep the page open until it finishes. Then log in as admin with the password from the ADMIN_PASSWORD environment variable. Editing that variable later does not change the password; change it in SuiteCRM instead."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
