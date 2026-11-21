@@ -1,0 +1,29 @@
+services:
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:5.1.3-ls282@sha256:d225bbab93f54784c115a3b1d89711e469b1969c9f32aa6ebb11fb03b5804431
+    restart: unless-stopped
+    # First start only: seed login, public hostname and folders so the UI is reachable through the proxy.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        [ -f /config/sabnzbd.ini ] || printf '[misc]\nhost_whitelist = %s\ninet_exposure = 4\nusername = %s\npassword = %s\ndownload_dir = /incomplete-downloads\ncomplete_dir = /downloads\n' "$$SABNZBD_HOST" "$$SABNZBD_USERNAME" "$$SABNZBD_PASSWORD" > /config/sabnzbd.ini
+        exec /init
+    expose:
+      - 8080
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      SABNZBD_HOST: ${SABNZBD_HOST}
+      SABNZBD_USERNAME: ${SABNZBD_USERNAME}
+      SABNZBD_PASSWORD: ${SABNZBD_PASSWORD}
+    volumes:
+      - sabnzbd-config:/config
+      - sabnzbd-downloads:/downloads
+      - sabnzbd-incomplete:/incomplete-downloads
+
+volumes:
+  sabnzbd-config: {}
+  sabnzbd-downloads: {}
+  sabnzbd-incomplete: {}

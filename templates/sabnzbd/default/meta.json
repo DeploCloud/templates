@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Usenet binary newsreader that downloads, verifies, repairs and extracts NZB downloads automatically, managed from a web interface.",
+  "category": "media",
+  "developedBy": {
+    "label": "SABnzbd",
+    "url": "https://sabnzbd.org/"
+  },
+  "links": {
+    "github": "https://github.com/sabnzbd/sabnzbd",
+    "website": "https://sabnzbd.org/",
+    "docs": [
+      "https://sabnzbd.org/wiki/",
+      "https://sabnzbd.org/wiki/introduction/quick-setup",
+      "https://sabnzbd.org/wiki/configuration/5.1/general"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated SABNZBD_PASSWORD from the environment settings. It is written only on first start, so change it later in Config > General. The first-run wizard asks for your Usenet provider's server, username and password, which you need an account for.",
+      "link": "https://sabnzbd.org/wiki/introduction/quick-setup"
+    }
+  ]
+}
