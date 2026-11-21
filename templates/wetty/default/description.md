@@ -1,0 +1,2 @@
+WeTTY serves a full terminal in the browser and opens an SSH session for each visitor. This template pairs it with a small OpenSSH server container, so the page connects to a ready shell box as the user term with a generated password, and sudo asks for that same password.
+The SSH user's home directory lives in a persistent volume; WeTTY itself is stateless. To reach another machine instead, point SSHHOST, SSHPORT and SSHUSER at that server and redeploy.

@@ -1,0 +1,32 @@
+services:
+  wetty:
+    image: wettyoss/wetty:sha-1161894@sha256:17a07724594f04e7c4c0b3b8d07c6feb882dfe65b869831f280fff0d882e6075
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      SSHHOST: ${SSHHOST}
+      SSHPORT: ${SSHPORT}
+      SSHUSER: ${SSHUSER}
+      ALLOWEDORIGINS: ${ALLOWEDORIGINS}
+    depends_on:
+      - wetty-ssh
+
+  wetty-ssh:
+    image: linuxserver/openssh-server:10.3_p1-r2-ls243@sha256:161e0b670b31d9539ca1718bc5943e981779331b4e1c9d32e8929d7652a1f22f
+    restart: unless-stopped
+    expose:
+      - 2222
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: ${TZ}
+      USER_NAME: ${SSH_USER_NAME}
+      USER_PASSWORD: ${SSH_USER_PASSWORD}
+      PASSWORD_ACCESS: "true"
+      SUDO_ACCESS: "true"
+    volumes:
+      - wetty-ssh-config:/config
+
+volumes:
+  wetty-ssh-config: {}
