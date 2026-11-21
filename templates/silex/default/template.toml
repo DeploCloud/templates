@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "silex"
+port = 6_805
+host = "${domain}"
+
+[config.env]
+SILEX_URL = "https://${domain}"
+SILEX_SESSION_SECRET = "${password:48}"

@@ -1,0 +1,15 @@
+services:
+  silex:
+    image: silexlabs/silex-platform:3.10.0@sha256:e8d2a1b9ccd637d4f91e6fb68530182513398cf523dfd70f76891446f4cae520
+    restart: unless-stopped
+    expose:
+      - 6805
+    environment:
+      SILEX_URL: ${SILEX_URL}
+      SILEX_SESSION_SECRET: ${SILEX_SESSION_SECRET}
+      STORAGE_CONNECTORS: gitlab
+      HOSTING_CONNECTORS: gitlab
+      GITLAB_DISPLAY_NAME: ${GITLAB_DISPLAY_NAME}
+      GITLAB_DOMAIN: ${GITLAB_DOMAIN}
+      GITLAB_CLIENT_ID: ${GITLAB_CLIENT_ID}
+      GITLAB_CLIENT_SECRET: ${GITLAB_CLIENT_SECRET}

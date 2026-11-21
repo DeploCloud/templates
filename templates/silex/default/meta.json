@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Visual no-code website builder that exports static HTML and CSS, storing sites on the server's own disk.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Silex Labs",
+    "url": "https://www.silexlabs.org/"
+  },
+  "links": {
+    "github": "https://github.com/silexlabs/Silex",
+    "website": "https://www.silex.me/",
+    "docs": [
+      "https://docs.silex.me/developer/self-hosting/docker/",
+      "https://docs.silex.me/developer/configuration/storage/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The filesystem connector has no login: anyone who can reach this domain can open the editor, change or delete every site and upload files. Upstream documents it for development only; use the GitLab variant for a public instance.",
+      "link": "https://docs.silex.me/developer/configuration/storage/#filesystem-storage-development-only"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
