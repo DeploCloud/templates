@@ -1,0 +1,35 @@
+services:
+  martin:
+    image: ghcr.io/maplibre/martin:1.16.1@sha256:59902019bf9038926ff0c71174237d6852e64c457830a6349abe7090be8818ca
+    restart: unless-stopped
+    command:
+      - --webui
+      - enable-for-all
+      - postgres://${DB_USER}:${DB_PASSWORD}@martin-db:5432/${DB_NAME}
+      - /files
+    expose:
+      - 3000
+    volumes:
+      - martin-files:/files
+    depends_on:
+      martin-db:
+        condition: service_healthy
+
+  martin-db:
+    image: postgis/postgis:18-3.6-alpine@sha256:c53a483fc274072dfa02cd491efa79f3c8ae0a10774a0ece6c9c53b6a632cdef
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - martin-db:/var/lib/postgresql
+
+volumes:
+  martin-files: {}
+  martin-db: {}
