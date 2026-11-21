@@ -1,0 +1,16 @@
+[variables]
+server_token = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "grafana-mcp"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+GRAFANA_URL = "https://grafana.example.com"
+GRAFANA_SERVICE_ACCOUNT_TOKEN = ""
+MCP_GRAFANA_SERVER_TOKEN = "${server_token}"
+MCP_ALLOWED_HOSTS = "${domain}"

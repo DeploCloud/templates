@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Model Context Protocol server that lets AI agents search dashboards, query Prometheus and Loki, manage alerts and incidents in an existing Grafana instance over streamable HTTP.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Grafana Labs",
+    "url": "https://github.com/grafana"
+  },
+  "links": {
+    "github": "https://github.com/grafana/mcp-grafana",
+    "website": "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/oss-mcp/",
+    "docs": [
+      "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/oss-mcp/set-up/install-with-docker/",
+      "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/oss-mcp/configure/authentication/",
+      "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/oss-mcp/configure/transports-and-addresses/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set GRAFANA_URL to your Grafana 9.0+ instance and GRAFANA_SERVICE_ACCOUNT_TOKEN to a service account token from that instance (the Editor role covers most tools), then redeploy. Until then every tool call fails.",
+      "link": "https://grafana.com/docs/grafana-cloud/ai-tools/mcp-servers/oss-mcp/configure/authentication/"
+    },
+    {
+      "type": "warning",
+      "message": "Point your MCP client at https://<your-domain>/mcp and send an Authorization: Bearer header with the generated MCP_GRAFANA_SERVER_TOKEN from the environment settings. A custom domain must also be added to MCP_ALLOWED_HOSTS (comma-separated) or requests are rejected with 403."
+    }
+  ]
+}
