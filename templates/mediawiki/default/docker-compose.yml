@@ -1,0 +1,46 @@
+services:
+  mediawiki:
+    image: mediawiki:1.46.2@sha256:0a8ee92de731b38ea6b03699e5d1458342b0a17c8a2adcd2c2306a9273126765
+    restart: unless-stopped
+    command: ["bash", "/mw-start.sh"]
+    expose:
+      - 80
+    environment:
+      MW_SERVER: ${MW_SERVER}
+      MW_SITE_NAME: ${MW_SITE_NAME}
+      MW_LANG: ${MW_LANG}
+      MW_ADMIN_USER: ${MW_ADMIN_USER}
+      MW_ADMIN_PASSWORD: ${MW_ADMIN_PASSWORD}
+      MW_DB_HOST: mediawiki-db
+      MW_DB_NAME: ${MW_DB_NAME}
+      MW_DB_USER: ${MW_DB_USER}
+      MW_DB_PASSWORD: ${MW_DB_PASSWORD}
+    volumes:
+      - mediawiki-data:/var/www/data
+      - mediawiki-images:/var/www/html/images
+      - ./mw-start.sh:/mw-start.sh:ro
+    depends_on:
+      mediawiki-db:
+        condition: service_healthy
+
+  mediawiki-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${MW_DB_NAME}
+      MARIADB_USER: ${MW_DB_USER}
+      MARIADB_PASSWORD: ${MW_DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - mediawiki-db:/var/lib/mysql
+
+volumes:
+  mediawiki-data: {}
+  mediawiki-images: {}
+  mediawiki-db: {}

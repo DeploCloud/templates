@@ -1,0 +1,41 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "mediawiki"
+port = 80
+host = "${domain}"
+
+[config.env]
+MW_SERVER = "https://${domain}"
+MW_SITE_NAME = "My Wiki"
+MW_LANG = "en"
+MW_ADMIN_USER = "Admin"
+MW_ADMIN_PASSWORD = "${admin_password}"
+MW_DB_NAME = "mediawiki"
+MW_DB_USER = "mediawiki"
+MW_DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "mw-start.sh"
+content = """#!/bin/bash
+# First start runs the CLI installer; LocalSettings.php lives on the data volume.
+set -e
+cd /var/www/html
+if [ ! -f /var/www/data/LocalSettings.php ]; then
+  php maintenance/run.php install --server="$MW_SERVER" --scriptpath= --lang="$MW_LANG" --dbtype=mysql --dbserver="$MW_DB_HOST" --dbname="$MW_DB_NAME" --dbuser="$MW_DB_USER" --dbpass="$MW_DB_PASSWORD" --pass="$MW_ADMIN_PASSWORD" --confpath=/var/www/data "$MW_SITE_NAME" "$MW_ADMIN_USER"
+  # Follow domain changes and trust the private-network proxy for client IPs.
+  cat >> /var/www/data/LocalSettings.php <<'EOF'
+$wgEnableUploads = true;
+$wgServer = getenv( 'MW_SERVER' ) ?: $wgServer;
+$wgCdnServersNoPurge = [ '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16' ];
+EOF
+fi
+ln -sf /var/www/data/LocalSettings.php LocalSettings.php
+# Applies schema changes after an image upgrade; a no-op otherwise.
+php maintenance/run.php update --quick
+exec apache2-foreground
+"""
