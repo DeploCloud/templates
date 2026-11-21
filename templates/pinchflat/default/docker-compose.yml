@@ -1,0 +1,25 @@
+services:
+  pinchflat:
+    # latest is the v2025.9.26 build; the versioned v2025.6.6 image lacks Deno, which yt-dlp now needs for YouTube
+    image: ghcr.io/kieraneglin/pinchflat:latest@sha256:01b4f98aabaf3f5fe394213f7a32578c9e84e42080f52e2f8334021a4473b202
+    restart: unless-stopped
+    expose:
+      - 8945
+    environment:
+      TZ: ${TZ}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      BASIC_AUTH_USERNAME: ${BASIC_AUTH_USERNAME}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD}
+    volumes:
+      - pinchflat-config:/config
+      - pinchflat-downloads:/downloads
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8945/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  pinchflat-config: {}
+  pinchflat-downloads: {}
