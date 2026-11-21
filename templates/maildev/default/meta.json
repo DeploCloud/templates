@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "SMTP server and web interface for testing email during development: catches every message your apps send and shows HTML, text, headers and attachments.",
+  "category": "development",
+  "developedBy": {
+    "label": "MailDev",
+    "url": "https://github.com/maildev"
+  },
+  "links": {
+    "github": "https://github.com/maildev/maildev",
+    "website": "https://maildev.github.io/maildev/",
+    "docs": [
+      "https://maildev.github.io/maildev/docs/guides/docker/",
+      "https://maildev.github.io/maildev/docs/reference/cli/",
+      "https://maildev.github.io/maildev/docs/reference/rest-api/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the MAILDEV_WEB_PASS value from the environment variables. The same credentials protect the REST API."
+    },
+    {
+      "type": "warning",
+      "message": "Only the web UI and API are published. The SMTP server is reachable only from apps in the same environment at maildev:1025, with no authentication and no TLS."
+    }
+  ]
+}

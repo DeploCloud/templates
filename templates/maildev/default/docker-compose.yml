@@ -1,0 +1,38 @@
+services:
+  maildev:
+    image: maildev/maildev:3.0.0@sha256:6e09695961f4aef9016a390ad391314a078220216601b15a35d389a7df2a3855
+    restart: unless-stopped
+    expose:
+      - 1080
+      - 1025
+    environment:
+      MAILDEV_WEB_PORT: 1080
+      MAILDEV_SMTP_PORT: 1025
+      MAILDEV_WEB_USER: ${MAILDEV_WEB_USER}
+      MAILDEV_WEB_PASS: ${MAILDEV_WEB_PASS}
+      MAILDEV_MAIL_DIRECTORY: /home/node/mail
+      MAILDEV_MAX_EMAILS: ${MAILDEV_MAX_EMAILS}
+      TZ: ${TZ}
+    volumes:
+      - maildev-mail:/home/node/mail
+    healthcheck:
+      test: ["CMD", "node", "dist/bin/healthcheck.js"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      maildev-init:
+        condition: service_completed_successfully
+
+  # /home/node/mail is not in the image, so the volume starts root-owned; MailDev runs as node (1000)
+  maildev-init:
+    image: maildev/maildev:3.0.0@sha256:6e09695961f4aef9016a390ad391314a078220216601b15a35d389a7df2a3855
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "1000:1000", "/home/node/mail"]
+    volumes:
+      - maildev-mail:/home/node/mail
+
+volumes:
+  maildev-mail: {}
