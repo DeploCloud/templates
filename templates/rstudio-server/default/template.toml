@@ -1,0 +1,13 @@
+[variables]
+rstudio_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rstudio-server"
+port = 8_787
+host = "${domain}"
+
+[config.env]
+PASSWORD = "${rstudio_password}"
