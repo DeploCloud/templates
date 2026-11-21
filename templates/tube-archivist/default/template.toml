@@ -1,0 +1,19 @@
+[variables]
+ta_password = "${password:32}"
+elastic_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tube-archivist"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+TA_HOST = "https://${domain}"
+TA_USERNAME = "admin"
+TA_PASSWORD = "${ta_password}"
+ELASTIC_PASSWORD = "${elastic_password}"
+ES_JAVA_OPTS = "-Xms1g -Xmx1g"
+TZ = "UTC"
