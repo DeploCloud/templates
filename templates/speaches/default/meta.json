@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenAI-compatible speech-to-text, translation and text-to-speech API on CPU, powered by faster-whisper, Kokoro and Piper, protected by a generated API key.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Speaches",
+    "url": "https://github.com/speaches-ai"
+  },
+  "links": {
+    "github": "https://github.com/speaches-ai/speaches",
+    "website": "https://speaches.ai/",
+    "docs": [
+      "https://speaches.ai/installation/",
+      "https://speaches.ai/configuration/",
+      "https://speaches.ai/usage/model-discovery/",
+      "https://speaches.ai/usage/speech-to-text/",
+      "https://speaches.ai/usage/text-to-speech/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No models are installed on first start. Download them with the generated API_KEY as a bearer token, for example: curl -X POST https://<your-domain>/v1/models/Systran/faster-distil-whisper-small.en -H \"Authorization: Bearer <API_KEY>\" for speech-to-text, and the same call with speaches-ai/Kokoro-82M-v1.0-ONNX for text-to-speech.",
+      "link": "https://speaches.ai/usage/model-discovery/"
+    },
+    {
+      "type": "info",
+      "message": "The domain root answers Not Found: use /docs to try the API. The Gradio playground is off because in 0.8.3 it cannot send the API key, so its transcription and voice requests fail. To use it, set ENABLE_UI to true and delete the API_KEY line from the compose file, which leaves the whole API public."
+    },
+    {
+      "type": "info",
+      "message": "Inference runs on the CPU and models are downloaded from Hugging Face, so larger Whisper models are slow and need several GB of RAM and disk."
+    }
+  ]
+}
