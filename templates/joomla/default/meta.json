@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Joomla content management system on Apache with a bundled MariaDB database and an administrator account created on first start.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Joomla! Project",
+    "url": "https://www.joomla.org/"
+  },
+  "links": {
+    "github": "https://github.com/joomla/joomla-cms",
+    "website": "https://www.joomla.org/",
+    "docs": [
+      "https://docs.joomla.org/",
+      "https://github.com/joomla-docker/docker-joomla/blob/master/docs/usage.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /administrator with the username admin and the password from the JOOMLA_ADMIN_PASSWORD variable, then change the placeholder email admin@example.com in your user profile. Outgoing mail needs SMTP settings in Global Configuration."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+admin_email = "${email}"
+
+[config]
+
+[[config.domains]]
+serviceName = "joomla"
+port = 80
+host = "${domain}"
+
+[config.env]
+JOOMLA_DB_NAME = "joomla"
+JOOMLA_DB_USER = "joomla"
+JOOMLA_DB_PASSWORD = "${db_password}"
+JOOMLA_SITE_NAME = "Joomla"
+JOOMLA_ADMIN_USER = "Administrator"
+JOOMLA_ADMIN_USERNAME = "admin"
+JOOMLA_ADMIN_PASSWORD = "${admin_password}"
+JOOMLA_ADMIN_EMAIL = "${admin_email}"
+
+[[config.mounts]]
+filePath = "uploads.ini"
+content = """upload_max_filesize = 64M
+post_max_size = 64M
+memory_limit = 256M
+max_execution_time = 300
+"""
