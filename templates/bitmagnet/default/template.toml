@@ -1,0 +1,45 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "bitmagnet-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	@torznab {
+		path /torznab /torznab/*
+		query apikey={$TORZNAB_API_KEY}
+	}
+	handle @torznab {
+		reverse_proxy bitmagnet:3333
+	}
+	handle {
+		basic_auth {
+			{$BITMAGNET_USERNAME} {$BITMAGNET_PASSWORD_HASH}
+		}
+		reverse_proxy bitmagnet:3333
+	}
+}
+"""
+
+[config.env]
+DB_NAME = "bitmagnet"
+DB_USER = "bitmagnet"
+DB_PASSWORD = "${db_password}"
+BITMAGNET_USERNAME = "admin"
+BITMAGNET_PASSWORD = "${password:24}"
+TORZNAB_API_KEY = "${hash:32}"
