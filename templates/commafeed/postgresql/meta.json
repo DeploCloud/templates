@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "CommaFeed RSS reader backed by a bundled PostgreSQL database instead of the embedded H2 database, for more control over the data.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Athou",
+    "url": "https://github.com/Athou"
+  },
+  "links": {
+    "github": "https://github.com/Athou/commafeed",
+    "website": "https://www.commafeed.com",
+    "docs": [
+      "https://github.com/Athou/commafeed/blob/master/commafeed-server/src/main/docker/README.md",
+      "https://athou.github.io/commafeed/documentation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit CommaFeed shows an Initial Setup page that creates the administrator account. Open the app and complete it right after deployment."
+    }
+  ]
+}
