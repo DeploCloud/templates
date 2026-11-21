@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted media server for anime and manga with AniList sync, torrent and debrid streaming, a manga reader and a password-protected web UI.",
+  "category": "media",
+  "developedBy": {
+    "label": "5rahim",
+    "url": "https://github.com/5rahim"
+  },
+  "links": {
+    "github": "https://github.com/5rahim/seanime",
+    "website": "https://seanime.app",
+    "docs": [
+      "https://seanime.app/docs/config",
+      "https://seanime.app/docs/access",
+      "https://seanime.app/docs/local-anime-library",
+      "https://github.com/umag/seanime-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI asks for the server password: use the generated SEANIME_PASSWORD from the environment variables. On the setup screen, set the library path to /anime. AniList is optional; to link it from a remote domain, click Get AniList token and paste the token into the form."
+    }
+  ]
+}

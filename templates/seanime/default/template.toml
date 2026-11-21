@@ -1,0 +1,13 @@
+[variables]
+server_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "seanime"
+port = 43_211
+host = "${domain}"
+
+[config.env]
+SEANIME_PASSWORD = "${server_password}"
