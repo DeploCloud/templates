@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Svix webhooks server: send webhooks through one API call with retries, signatures and delivery logs, backed by PostgreSQL and Redis.",
+  "category": "development",
+  "developedBy": {
+    "label": "Svix",
+    "url": "https://www.svix.com"
+  },
+  "links": {
+    "github": "https://github.com/svix/svix-webhooks",
+    "website": "https://www.svix.com",
+    "docs": [
+      "https://github.com/svix/svix-webhooks#running-the-server",
+      "https://docs.svix.com/quickstart",
+      "https://api.svix.com/docs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Svix is API-only and has no web UI. Generate an API token by running `svix-server jwt generate` in the svix container terminal, then send it as a Bearer token to https://<your domain>/api/v1/.",
+      "link": "https://github.com/svix/svix-webhooks#authentication"
+    }
+  ]
+}
