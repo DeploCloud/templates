@@ -1,0 +1,15 @@
+services:
+  rstudio-server:
+    image: rocker/rstudio:4.6.2@sha256:ab667f419a10edc60f95da38149644d6f9eea266216b51dcce1d4df9e36dfcd6
+    restart: unless-stopped
+    expose:
+      - 8787
+    environment:
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - rstudio-server-home:/home/rstudio
+      - rstudio-server-library:/usr/local/lib/R/site-library
+
+volumes:
+  rstudio-server-home: {}
+  rstudio-server-library: {}

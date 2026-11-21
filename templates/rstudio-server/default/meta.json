@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "RStudio Server IDE for R in the browser, with password login, a persistent home directory and persistent R package library.",
+  "category": "development",
+  "developedBy": {
+    "label": "Posit",
+    "url": "https://posit.co/"
+  },
+  "links": {
+    "github": "https://github.com/rstudio/rstudio",
+    "website": "https://posit.co/products/open-source/rstudio-server/",
+    "docs": [
+      "https://docs.posit.co/ide/user/",
+      "https://rocker-project.org/images/versioned/rstudio.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as user rstudio with the password stored in the PASSWORD environment variable. Anyone holding it can run arbitrary code and open a terminal inside the container.",
+      "link": "https://rocker-project.org/images/versioned/rstudio.html"
+    }
+  ]
+}
