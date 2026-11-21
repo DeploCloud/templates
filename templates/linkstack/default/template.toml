@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "linkstack"
+port = 80
+host = "${domain}"
+
+[config.env]
+HTTP_SERVER_NAME = "${domain}"
+TZ = "UTC"
+FORCE_HTTPS = "true"

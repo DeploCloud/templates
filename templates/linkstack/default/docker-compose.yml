@@ -1,0 +1,17 @@
+services:
+  linkstack:
+    image: linkstackorg/linkstack:v4.8.8@sha256:deba986fc1f7391af629c0bbcca67a1508284176bd3accf69d041ecc887dc7dd
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      HTTP_SERVER_NAME: ${HTTP_SERVER_NAME}
+      HTTPS_SERVER_NAME: ${HTTP_SERVER_NAME}
+      TZ: ${TZ}
+      # TLS ends at the proxy: make links https without redirecting
+      FORCE_HTTPS: ${FORCE_HTTPS}
+    volumes:
+      - linkstack-data:/htdocs
+
+volumes:
+  linkstack-data: {}
