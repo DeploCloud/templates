@@ -1,0 +1,56 @@
+services:
+  onetime-secret:
+    image: onetimesecret/onetimesecret:v0.26.19@sha256:eb630051046042195a1dee73367f4f02a33ab3275bdc4d77a5d2c3dba88d3f0e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      RACK_ENV: production
+      HOST: ${HOST}
+      SSL: "true"
+      SECRET: ${SECRET}
+      VALKEY_URL: redis://:${VALKEY_PASSWORD}@onetime-secret-valkey:6379/0
+      AUTHENTICATION_MODE: simple
+      AUTH_SIGNUP: ${AUTH_SIGNUP}
+      AUTH_AUTOVERIFY: ${AUTH_AUTOVERIFY}
+      TRUSTED_PROXY_ENABLED: "true"
+      TRUSTED_PROXY_MODE: depth
+      TRUSTED_PROXY_DEPTH: "1"
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      FROM_EMAIL: ${FROM_EMAIL}
+    healthcheck:
+      test: ["CMD", "bin/healthcheck.sh"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      onetime-secret-valkey:
+        condition: service_healthy
+
+  onetime-secret-valkey:
+    image: valkey/valkey:8.1.12@sha256:5032c4dd7abe08d6fd9382054608183e2bf1f7e3895ef619b8784698454325f7
+    restart: unless-stopped
+    command: >
+      valkey-server
+      --appendonly yes
+      --appendfilename onetime.aof
+      --dbfilename onetime.rdb
+      --requirepass ${VALKEY_PASSWORD}
+      --databases 1
+    environment:
+      REDISCLI_AUTH: ${VALKEY_PASSWORD}
+    volumes:
+      - onetime-secret-valkey:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  onetime-secret-valkey: {}
