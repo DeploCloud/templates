@@ -1,0 +1,12 @@
+services:
+  hound:
+    image: ghcr.io/hound-search/hound:0.6.0@sha256:5b7fd0982ce12ebf41cfdbb8ab7aac081679667e778a8641bcd3026c98fc470e
+    restart: unless-stopped
+    expose:
+      - 6080
+    volumes:
+      - hound-data:/data
+      - ./config.json:/data/config.json:ro
+
+volumes:
+  hound-data: {}

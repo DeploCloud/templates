@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Regular expression code search across Git, Mercurial, SVN and Bazaar repositories, served through a web UI and a JSON API.",
+  "category": "development",
+  "developedBy": {
+    "label": "Hound",
+    "url": "https://github.com/hound-search"
+  },
+  "links": {
+    "github": "https://github.com/hound-search/hound",
+    "docs": [
+      "https://github.com/hound-search/hound#readme",
+      "https://github.com/hound-search/hound/blob/main/docs/config-options.md",
+      "https://github.com/hound-search/hound/blob/main/config-example.json"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The repositories to index are listed in the mounted config.json, which starts with Hound's own source as an example. Edit it and redeploy to index your own code.",
+      "link": "https://github.com/hound-search/hound/blob/main/docs/config-options.md"
+    },
+    {
+      "type": "warning",
+      "message": "Hound has no login: anyone who can reach the domain can search every indexed repository."
+    }
+  ]
+}

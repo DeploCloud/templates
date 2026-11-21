@@ -1,0 +1,25 @@
+[config]
+
+[[config.domains]]
+serviceName = "hound"
+port = 6_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+  "dbpath": "db",
+  "title": "Hound",
+  "max-concurrent-indexers": 2,
+  "vcs-config": {
+    "git": {
+      "detect-ref": true
+    }
+  },
+  "repos": {
+    "Hound": {
+      "url": "https://github.com/hound-search/hound.git"
+    }
+  }
+}
+"""
