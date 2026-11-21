@@ -1,0 +1,94 @@
+services:
+  espocrm:
+    image: espocrm/espocrm:10.1.4@sha256:5f8fa9a708893b9fbfe55a778f24c952a6a73b94c97fb126eccd21aa936c878c
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      ESPOCRM_DATABASE_PLATFORM: Mysql
+      ESPOCRM_DATABASE_HOST: espocrm-db
+      ESPOCRM_DATABASE_NAME: ${DB_NAME}
+      ESPOCRM_DATABASE_USER: ${DB_USER}
+      ESPOCRM_DATABASE_PASSWORD: ${DB_PASSWORD}
+      ESPOCRM_ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ESPOCRM_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ESPOCRM_SITE_URL: ${SITE_URL}
+    volumes:
+      - espocrm-data:/var/www/html/data
+      - espocrm-custom:/var/www/html/custom
+      - espocrm-custom-client:/var/www/html/client/custom
+    healthcheck:
+      test: ["CMD", "bin/command", "app-check"]
+      interval: 60s
+      timeout: 20s
+      retries: 3
+      start_period: 120s
+    depends_on:
+      espocrm-db:
+        condition: service_healthy
+
+  espocrm-daemon:
+    image: espocrm/espocrm:10.1.4@sha256:5f8fa9a708893b9fbfe55a778f24c952a6a73b94c97fb126eccd21aa936c878c
+    restart: unless-stopped
+    entrypoint: docker-daemon.sh
+    volumes:
+      - espocrm-data:/var/www/html/data
+      - espocrm-custom:/var/www/html/custom
+      - espocrm-custom-client:/var/www/html/client/custom
+    healthcheck:
+      test: ["CMD", "bin/command", "app-check"]
+      interval: 180s
+      timeout: 20s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      espocrm:
+        condition: service_healthy
+
+  espocrm-websocket:
+    image: espocrm/espocrm:10.1.4@sha256:5f8fa9a708893b9fbfe55a778f24c952a6a73b94c97fb126eccd21aa936c878c
+    restart: unless-stopped
+    entrypoint: docker-websocket.sh
+    expose:
+      - 8080
+    environment:
+      ESPOCRM_CONFIG_USE_WEB_SOCKET: "true"
+      ESPOCRM_CONFIG_WEB_SOCKET_URL: ${WEB_SOCKET_URL}
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN: "tcp://*:7777"
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN: "tcp://espocrm-websocket:7777"
+    volumes:
+      - espocrm-data:/var/www/html/data
+      - espocrm-custom:/var/www/html/custom
+      - espocrm-custom-client:/var/www/html/client/custom
+    healthcheck:
+      test: ["CMD", "bin/command", "app-check"]
+      interval: 180s
+      timeout: 20s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      espocrm:
+        condition: service_healthy
+
+  espocrm-db:
+    image: mariadb:12.3.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - espocrm-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  espocrm-data: {}
+  espocrm-custom: {}
+  espocrm-custom-client: {}
+  espocrm-db: {}

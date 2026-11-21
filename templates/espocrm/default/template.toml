@@ -1,0 +1,29 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "espocrm"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "espocrm-websocket"
+port = 8_080
+host = "${domain}"
+path = "/wss"
+
+[config.env]
+DB_NAME = "espocrm"
+DB_USER = "espocrm"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "${admin_password}"
+SITE_URL = "https://${domain}"
+WEB_SOCKET_URL = "wss://${domain}/wss"
