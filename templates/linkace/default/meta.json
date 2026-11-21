@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted bookmark archive with tags, lists, dead-link checks and Wayback Machine backups, backed by MariaDB, Meilisearch and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Kevin Woblick",
+    "url": "https://github.com/Kovah"
+  },
+  "links": {
+    "github": "https://github.com/Kovah/LinkAce",
+    "website": "https://www.linkace.org",
+    "docs": [
+      "https://www.linkace.org/docs/v2/setup/setup-with-docker/",
+      "https://www.linkace.org/docs/v2/setup/post-setup/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app after the first deploy and finish the setup wizard: keep the prefilled database values (leave the password field empty) and create the account that becomes the administrator.",
+      "link": "https://www.linkace.org/docs/v2/setup/setup-with-docker/"
+    },
+    {
+      "type": "warning",
+      "message": "Email is only logged by default. Set MAIL_MAILER to smtp and fill the MAIL_* variables to enable password resets, invitations and notifications.",
+      "link": "https://www.linkace.org/docs/v2/setup/post-setup/"
+    }
+  ]
+}

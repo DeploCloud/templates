@@ -1,0 +1,32 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+# Hex keeps the value safe as a redis-server CLI argument
+redis_password = "${hash:32}"
+meilisearch_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "linkace"
+port = 80
+host = "${domain}"
+
+[config.env]
+# 32 hex chars are a valid raw 32-byte AES-256 key
+APP_KEY = "${hash:32}"
+APP_URL = "https://${domain}"
+DB_DATABASE = "linkace"
+DB_USERNAME = "linkace"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+REDIS_PASSWORD = "${redis_password}"
+MEILISEARCH_KEY = "${meilisearch_key}"
+MAIL_MAILER = "log"
+MAIL_HOST = ""
+MAIL_PORT = "587"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_ENCRYPTION = "tls"
+MAIL_FROM_ADDRESS = "linkace@${domain}"
