@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted audio transcription with speaker diarization, AI summaries and chat over recordings, using an OpenAI-compatible or self-hosted speech API.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Murtaza Nasir",
+    "url": "https://github.com/murtaza-nasir"
+  },
+  "links": {
+    "github": "https://github.com/murtaza-nasir/speakr",
+    "website": "https://murtaza-nasir.github.io/speakr",
+    "docs": [
+      "https://murtaza-nasir.github.io/speakr/getting-started/installation",
+      "https://murtaza-nasir.github.io/speakr/admin-guide/model-configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Transcription and summaries need an external API. Replace TRANSCRIPTION_API_KEY and TEXT_MODEL_API_KEY (OpenAI by default; any OpenAI-compatible service or a self-hosted ASR endpoint works) and redeploy before uploading audio.",
+      "link": "https://murtaza-nasir.github.io/speakr/getting-started/installation"
+    },
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL (admin@example.com unless you change it before the first deploy) and the generated ADMIN_PASSWORD from the environment. Public registration is disabled; the admin creates other users."
+    }
+  ]
+}
