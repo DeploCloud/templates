@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source, privacy-first analytics for mobile, desktop and web apps, backed by PostgreSQL and ClickHouse.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Aptabase",
+    "url": "https://github.com/aptabase"
+  },
+  "links": {
+    "github": "https://github.com/aptabase/aptabase",
+    "website": "https://aptabase.com",
+    "docs": [
+      "https://github.com/aptabase/self-hosting",
+      "https://github.com/aptabase/aptabase/blob/main/src/Features/EnvSettings.cs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no default account: register on the sign-up page. Sign-in and activation links are sent by email; until SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD and SMTP_FROM_ADDRESS are set, they are only printed in the aptabase service logs.",
+      "link": "https://github.com/aptabase/self-hosting#first-login--account"
+    }
+  ]
+}
