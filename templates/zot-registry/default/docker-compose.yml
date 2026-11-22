@@ -1,0 +1,29 @@
+services:
+  zot-registry:
+    image: ghcr.io/project-zot/zot:v2.1.23@sha256:9d3de83ac2099e6f4843045b4c9b65b7e8baf40f92d28f54906dee9d4d390fd7
+    restart: unless-stopped
+    expose:
+      - 5000
+    volumes:
+      - ./config.json:/etc/zot/config.json:ro
+      - zot-data:/var/lib/registry
+      - zot-auth:/etc/zot/auth
+    depends_on:
+      zot-registry-auth:
+        condition: service_completed_successfully
+
+  zot-registry-auth:
+    image: httpd:2.4.71-alpine@sha256:32bd0639bcc4917ef1fd9363a1d9dd2dd9c498565118b062a10d51e43a5c3a24
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - htpasswd -Bbc /auth/htpasswd "$$ZOT_USERNAME" "$$ZOT_PASSWORD"
+    environment:
+      ZOT_USERNAME: ${ZOT_USERNAME}
+      ZOT_PASSWORD: ${ZOT_PASSWORD}
+    volumes:
+      - zot-auth:/auth
+
+volumes:
+  zot-data: {}
+  zot-auth: {}

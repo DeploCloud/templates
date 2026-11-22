@@ -1,0 +1,45 @@
+[variables]
+zot_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "zot-registry"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+ZOT_USERNAME = "admin"
+ZOT_PASSWORD = "${zot_password}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+  "storage": {
+    "rootDirectory": "/var/lib/registry"
+  },
+  "http": {
+    "address": "0.0.0.0",
+    "port": "5000",
+    "realm": "zot",
+    "compat": ["docker2s2"],
+    "auth": {
+      "htpasswd": {
+        "path": "/etc/zot/auth/htpasswd"
+      },
+      "secureSession": true
+    }
+  },
+  "log": {
+    "level": "info"
+  },
+  "extensions": {
+    "search": {
+      "enable": true
+    },
+    "ui": {
+      "enable": true
+    }
+  }
+}
+"""
