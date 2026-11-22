@@ -1,0 +1,13 @@
+services:
+  vertex:
+    image: lswl/vertex:sha-ec6fa1e6de50@sha256:c62ce1ae12b0ee6f84d6480b6eed4ed81378f4d3f369e1b99da0f0b92c914cb8
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - vertex-data:/vertex
+
+volumes:
+  vertex-data: {}
