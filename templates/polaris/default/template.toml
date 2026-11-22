@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "polaris"
+port = 5_050
+host = "${domain}"
