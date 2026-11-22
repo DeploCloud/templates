@@ -1,0 +1,16 @@
+services:
+  birdnet-go:
+    image: ghcr.io/tphakala/birdnet-go:20261031@sha256:5eebc826c137a78aa7f91f0a4f3a02d9775f1a19d720f63b309ec5ae608b8698
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      BIRDNET_URL: ${BIRDNET_URL}
+    volumes:
+      - birdnet-config:/config
+      - birdnet-data:/data
+
+volumes:
+  birdnet-config: {}
+  birdnet-data: {}

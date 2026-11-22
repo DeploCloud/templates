@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Realtime bird and wildlife sound identification with local AI models, fed by RTSP, HTTP or HLS audio streams, with a web dashboard.",
+  "category": "ai",
+  "developedBy": {
+    "label": "tphakala",
+    "url": "https://github.com/tphakala"
+  },
+  "links": {
+    "github": "https://github.com/tphakala/birdnet-go",
+    "docs": [
+      "https://github.com/tphakala/birdnet-go/wiki/installation",
+      "https://github.com/tphakala/birdnet-go/wiki/docker_compose_guide",
+      "https://github.com/tphakala/birdnet-go/wiki/rtsp-troubleshooting",
+      "https://github.com/tphakala/birdnet-go/wiki/security",
+      "https://github.com/tphakala/birdnet-go/wiki/faq"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI and its settings are open to anyone until you enable a password in Settings > Security. Do this right after the first visit.",
+      "link": "https://github.com/tphakala/birdnet-go/wiki/security"
+    },
+    {
+      "type": "warning",
+      "message": "No sound card is passed to the container. Add a network audio stream, such as an IP camera or a network microphone: the first-run wizard takes an RTSP URL, and Settings > Audio also accepts RTMP, HTTP and HLS streams.",
+      "link": "https://github.com/tphakala/birdnet-go/wiki/rtsp-troubleshooting"
+    }
+  ]
+}
