@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AT Protocol Personal Data Server that hosts your Bluesky accounts, posts and media and federates them with the Bluesky network.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Bluesky",
+    "url": "https://github.com/bluesky-social"
+  },
+  "links": {
+    "github": "https://github.com/bluesky-social/pds",
+    "website": "https://atproto.com/",
+    "docs": [
+      "https://github.com/bluesky-social/pds#readme",
+      "https://atproto.com/guides/self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No account exists after deploy and sign-up requires an invite code. Create the first account with `goat pds admin account create` (or an invite code with `goat pds admin create-invites`) from a terminal in the pds container.",
+      "link": "https://github.com/bluesky-social/pds#creating-an-account"
+    },
+    {
+      "type": "warning",
+      "message": "Handles under the PDS domain (e.g. alice.<your-domain>) only resolve when a wildcard DNS record and route point to this service. Without it, create the account under the PDS domain anyway, then change its handle to a domain you own (DNS TXT record) in the Bluesky app settings.",
+      "link": "https://github.com/bluesky-social/pds#configure-dns-for-your-domain"
+    },
+    {
+      "type": "destructive",
+      "message": "The PDS must be served over HTTPS on a stable domain. Changing the domain after accounts are created breaks their identities on the network."
+    }
+  ]
+}
