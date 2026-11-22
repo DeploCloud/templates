@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Two-panel web file manager with a built-in editor, viewer, console and terminal, protected by password authentication.",
+  "category": "storage",
+  "developedBy": {
+    "label": "coderaiser",
+    "url": "https://github.com/coderaiser"
+  },
+  "links": {
+    "github": "https://github.com/coderaiser/cloudcmd",
+    "website": "https://cloudcmd.io",
+    "docs": [
+      "https://cloudcmd.io/#docker",
+      "https://cloudcmd.io/#environment-variables-1"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin and the generated CLOUDCMD_PASSWORD from the environment variables. Anyone who signs in gets a root shell inside the container through the web console and terminal.",
+      "link": "https://cloudcmd.io/#environment-variables-1"
+    }
+  ]
+}
