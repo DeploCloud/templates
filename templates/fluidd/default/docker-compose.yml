@@ -1,0 +1,6 @@
+services:
+  fluidd:
+    image: ghcr.io/fluidd-core/fluidd:v1.38.1@sha256:09fde7bbec2d0016c2ad3270a715b632ddd0ef91d6898ed282ea0a9055aaec6c
+    restart: unless-stopped
+    expose:
+      - 80
