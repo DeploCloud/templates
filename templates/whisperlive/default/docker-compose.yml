@@ -1,0 +1,38 @@
+services:
+  whisperlive:
+    image: ghcr.io/collabora/whisperlive-cpu:latest@sha256:69f0bf2d226217c82417de9fd8add1fee0d87960d3cbd28981de55dbb79eba05
+    restart: unless-stopped
+    command:
+      - python
+      - run_server.py
+      - --port
+      - "9090"
+      - --backend
+      - faster_whisper
+      - --enable_rest
+      - --rest_port
+      - "8000"
+      - --api_key
+      - ${WHISPERLIVE_API_KEY}
+      - --default_model
+      - ${WHISPERLIVE_DEFAULT_MODEL}
+      - --max_clients
+      - ${WHISPERLIVE_MAX_CLIENTS}
+      - --max_connection_time
+      - ${WHISPERLIVE_MAX_CONNECTION_TIME}
+      - --omp_num_threads
+      - ${WHISPERLIVE_OMP_NUM_THREADS}
+    expose:
+      - 9090
+      - 8000
+    volumes:
+      - whisperlive-cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  whisperlive-cache: {}

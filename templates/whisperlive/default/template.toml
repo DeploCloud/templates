@@ -1,0 +1,42 @@
+[variables]
+api_key = "${hash:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "whisperlive"
+port = 9_090
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "whisperlive"
+port = 8_000
+host = "${domain}"
+path = "/v1"
+
+[[config.domains]]
+serviceName = "whisperlive"
+port = 8_000
+host = "${domain}"
+path = "/health"
+
+[[config.domains]]
+serviceName = "whisperlive"
+port = 8_000
+host = "${domain}"
+path = "/docs"
+
+[[config.domains]]
+serviceName = "whisperlive"
+port = 8_000
+host = "${domain}"
+path = "/openapi.json"
+
+[config.env]
+WHISPERLIVE_API_KEY = "${api_key}"
+WHISPERLIVE_DEFAULT_MODEL = "small"
+WHISPERLIVE_MAX_CLIENTS = "4"
+WHISPERLIVE_MAX_CONNECTION_TIME = "600"
+WHISPERLIVE_OMP_NUM_THREADS = "4"
