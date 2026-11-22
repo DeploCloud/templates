@@ -1,0 +1,16 @@
+[variables]
+admin_pass = "${password:24}"
+upload_pass = "${password:16}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "psitransfer"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PSITRANSFER_ADMIN_PASS = "${admin_pass}"
+PSITRANSFER_UPLOAD_PASS = "${upload_pass}"
+PSITRANSFER_TRUST_PROXY = "loopback,uniquelocal"
