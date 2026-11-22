@@ -1,0 +1,97 @@
+x-loomio: &loomio
+  image: loomio/loomio:3.17.0@sha256:fe86898b62ddcee6cb2ae01669b795aa3e2cc83a14de5a06945e121dbf10c583
+  restart: unless-stopped
+  environment: &loomio-env
+    RAILS_ENV: production
+    SITE_NAME: ${SITE_NAME}
+    CANONICAL_HOST: ${CANONICAL_HOST}
+    SUPPORT_EMAIL: ${SUPPORT_EMAIL}
+    REPLY_HOSTNAME: ${CANONICAL_HOST}
+    NOTIFICATIONS_EMAIL_ADDRESS: ${NOTIFICATIONS_EMAIL_ADDRESS}
+    DATABASE_URL: postgresql://postgres:${DB_PASSWORD}@loomio-db:5432/loomio_production
+    REDIS_CACHE_URL: redis://loomio-redis:6379/0
+    SECRET_COOKIE_TOKEN: ${SECRET_COOKIE_TOKEN}
+    RAILS_INBOUND_EMAIL_PASSWORD: ${RAILS_INBOUND_EMAIL_PASSWORD}
+    SERVER_API_KEY: ${SERVER_API_KEY}
+    SMTP_SERVER: ${SMTP_SERVER}
+    SMTP_PORT: ${SMTP_PORT}
+    SMTP_AUTH: ${SMTP_AUTH}
+    SMTP_USERNAME: ${SMTP_USERNAME}
+    SMTP_PASSWORD: ${SMTP_PASSWORD}
+    SMTP_DOMAIN: ${CANONICAL_HOST}
+    SMTP_USE_SSL: ${SMTP_USE_SSL}
+    ACTIVE_STORAGE_SERVICE: local
+    FORCE_SSL: "1"
+    ASSUME_SSL: "1"
+    USE_RACK_ATTACK: "1"
+    LOOMIO_SYSTEM_RELOAD: "1"
+    WEB_CONCURRENCY: ${WEB_CONCURRENCY}
+  volumes:
+    - loomio-uploads:/loomio/public/system
+    - loomio-storage:/loomio/storage
+    - loomio-files:/loomio/public/files
+    - loomio-tmp:/loomio/tmp
+
+services:
+  loomio:
+    <<: *loomio
+    expose:
+      - 3000
+    volumes:
+      - loomio-uploads:/loomio/public/system
+      - loomio-storage:/loomio/storage
+      - loomio-files:/loomio/public/files
+      - loomio-tmp:/loomio/tmp
+      - loomio-client:/loomio/public/client3
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/up"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 180s
+    depends_on:
+      loomio-db:
+        condition: service_healthy
+      loomio-redis:
+        condition: service_healthy
+
+  loomio-worker:
+    <<: *loomio
+    environment:
+      <<: *loomio-env
+      TASK: worker
+    depends_on:
+      loomio:
+        condition: service_healthy
+
+  loomio-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: loomio_production
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d loomio_production"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - loomio-db:/var/lib/postgresql/data
+
+  loomio-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  loomio-uploads: {}
+  loomio-storage: {}
+  loomio-files: {}
+  loomio-tmp: {}
+  loomio-client: {}
+  loomio-db: {}
