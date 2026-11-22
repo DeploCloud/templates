@@ -1,0 +1,55 @@
+[config]
+
+[[config.domains]]
+serviceName = "figcraft"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """
+server {
+    listen 8080;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+    types {
+        text/html html;
+        text/css css;
+        text/javascript js mjs;
+        application/wasm wasm;
+        application/json json;
+        image/svg+xml svg;
+        image/png png;
+        image/jpeg jpg jpeg;
+        image/webp webp;
+        font/woff2 woff2;
+        font/woff woff;
+        application/octet-stream bin;
+    }
+    default_type application/octet-stream;
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types application/wasm text/javascript application/javascript application/json text/css text/plain image/svg+xml;
+    add_header X-Content-Type-Options nosniff always;
+
+    location = /healthz {
+        access_log off;
+        default_type text/plain;
+        return 200 "ok";
+    }
+    location = /index.html {
+        add_header Cache-Control "no-cache" always;
+        add_header X-Content-Type-Options nosniff always;
+    }
+    location ~* "[.][0-9a-f]{8,}[.](js|wasm|css|png|jpg|jpeg|svg|woff2?)$" {
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+        add_header X-Content-Type-Options nosniff always;
+        try_files $uri =404;
+    }
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+"""

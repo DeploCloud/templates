@@ -1,0 +1,18 @@
+services:
+  figcraft:
+    image: ghcr.io/mikapst/figcraft-web:v0.18.1@sha256:25c648311f1cc22199749022647c0b8a622da24c22e7b7a131e149f3f62cab9c
+    restart: unless-stopped
+    # As USER nginx the master can't write /run/nginx.pid (root-owned), so start as root;
+    # workers still drop to the nginx user.
+    user: root
+    expose:
+      - 8080
+    volumes:
+      # The image's own config has an unquoted {8,} regex that nginx rejects.
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

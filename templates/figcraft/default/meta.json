@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based interface design and prototyping tool built in Rust and WebAssembly: frames, auto layout, components and variants, styles, variables, prototypes and SVG, PNG and PDF export.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ArtCraft",
+    "url": "https://getartcraft.com/"
+  },
+  "links": {
+    "github": "https://github.com/storytold/figcraft",
+    "website": "https://getartcraft.com/apps/figcraft",
+    "docs": [
+      "https://github.com/storytold/figcraft/blob/main/packaging/web/README.md",
+      "https://github.com/storytold/figcraft/blob/main/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Designs are not stored on the server: the editor runs in the browser and keeps only your name and crash recovery copies in that browser's local storage. Save or export your files to your own device before closing the tab."
+    },
+    {
+      "type": "info",
+      "message": "The upstream project publishes no container image for its web build; this one is built by a community maintainer from the official releases."
+    }
+  ]
+}
