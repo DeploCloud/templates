@@ -1,0 +1,19 @@
+[variables]
+db_file_password = "${password:32}"
+db_user_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "clipcascade"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+CC_MAX_MESSAGE_SIZE_IN_MiB = "1"
+CC_P2P_ENABLED = "false"
+CC_SIGNUP_ENABLED = "false"
+CC_SESSION_PERSISTENCE_ENABLED = "true"
+DB_FILE_PASSWORD = "${db_file_password}"
+DB_USER_PASSWORD = "${db_user_password}"

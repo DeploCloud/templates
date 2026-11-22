@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "ClipCascade clipboard sync server backed by a PostgreSQL database, suited to multi-user instances.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Sathvik Rao",
+    "url": "https://github.com/Sathvik-Rao"
+  },
+  "links": {
+    "github": "https://github.com/Sathvik-Rao/ClipCascade",
+    "website": "https://clipcascade.sathvik.dev",
+    "docs": [
+      "https://github.com/Sathvik-Rao/ClipCascade/blob/main/ClipCascade_Server/docker-compose/docker-compose-multi-users.yml",
+      "https://github.com/Sathvik-Rao/ClipCascade#%EF%B8%8F-advanced-details"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The server starts with the default admin account admin / admin123. Sign in and change this password immediately after deployment."
+    }
+  ]
+}
