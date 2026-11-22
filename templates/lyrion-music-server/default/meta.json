@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Music streaming server for Squeezebox and compatible players, with a password-protected web UI, library scanning, playlists, internet radio and streaming service plugins.",
+  "category": "media",
+  "developedBy": {
+    "label": "LMS Community",
+    "url": "https://github.com/LMS-Community"
+  },
+  "links": {
+    "github": "https://github.com/LMS-Community/slimserver",
+    "website": "https://lyrion.org",
+    "docs": [
+      "https://lyrion.org/getting-started/",
+      "https://github.com/LMS-Community/slimserver-platforms/blob/HEAD/Docker/README.md",
+      "https://lyrion.org/players-and-controllers/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with LMS_USERNAME and LMS_PASSWORD from the environment variables. They are written on first start only; change them later under Settings > Advanced > Security."
+    },
+    {
+      "type": "warning",
+      "message": "Only the web port is published. Squeezebox and squeezelite players connect on port 3483 (TCP and UDP), which is not published, so they cannot reach this server; an HTTP player such as VLC can play https://<domain>/stream.mp3 with the same login.",
+      "link": "https://github.com/LMS-Community/slimserver-platforms/blob/HEAD/Docker/README.md"
+    }
+  ]
+}
