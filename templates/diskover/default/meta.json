@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source file system indexer and search engine that crawls storage into Elasticsearch and shows usage, file types and ages in a web dashboard.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Diskover Data",
+    "url": "https://diskoverdata.com"
+  },
+  "links": {
+    "github": "https://github.com/diskoverdata/diskover-community",
+    "website": "https://diskoverdata.com",
+    "docs": [
+      "https://github.com/diskoverdata/diskover-community/blob/master/README.md",
+      "https://github.com/diskoverdata/diskover-community/blob/master/INSTALL.md",
+      "https://github.com/linuxserver/docker-diskover#application-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in right after deploy with the default user diskover and password darkdata: the first login forces you to set a new password, and until then anyone who reaches the domain can do it."
+    },
+    {
+      "type": "warning",
+      "message": "Nothing is indexed on first start. Put the files to scan in the /data volume, run a crawl from the diskover container terminal with: python3 /app/diskover/diskover.py -i diskover-data /data, then select the diskover-data index under Settings > Indices. Scheduled crawls go in /config/crontabs/abc and apply after a restart.",
+      "link": "https://github.com/linuxserver/docker-diskover#application-setup"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+[variables]
+elastic_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "diskover"
+port = 80
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+ELASTIC_PASSWORD = "${elastic_password}"
+ES_JAVA_OPTS = "-Xms1g -Xmx1g"

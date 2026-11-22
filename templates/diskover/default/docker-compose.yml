@@ -1,0 +1,49 @@
+services:
+  diskover:
+    image: lscr.io/linuxserver/diskover:v2.3.5-ls254@sha256:b3088fa68d2f4e2fce056ac5b3fbdbd37c7b68d18ee5135d35f01243c50fa76b
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      ES_HOST: diskover-elasticsearch
+      ES_PORT: 9200
+      ES_USER: elastic
+      ES_PASS: ${ELASTIC_PASSWORD}
+    volumes:
+      - diskover-config:/config
+      - diskover-data:/data
+    depends_on:
+      diskover-elasticsearch:
+        condition: service_healthy
+
+  diskover-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.25@sha256:5bfdf4313b9bc05c0d46fe219d6e67710eb0c7654ed6c275167bdf9beefc56f0
+    restart: unless-stopped
+    expose:
+      - 9200
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "true"
+      xpack.security.http.ssl.enabled: "false"
+      xpack.security.transport.ssl.enabled: "false"
+      xpack.ml.enabled: "false"
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS}
+    volumes:
+      - diskover-elasticsearch:/usr/share/elasticsearch/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --silent --fail --output /dev/null -u "elastic:$${ELASTIC_PASSWORD}" "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s"
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+
+volumes:
+  diskover-config: {}
+  diskover-data: {}
+  diskover-elasticsearch: {}
