@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "LLM companion for Paperless-ngx that suggests titles, tags, correspondents, dates and custom fields, runs LLM-based OCR and links related documents.",
+  "category": "ai",
+  "developedBy": {
+    "label": "icereed",
+    "url": "https://github.com/icereed"
+  },
+  "links": {
+    "github": "https://github.com/icereed/paperless-gpt",
+    "docs": [
+      "https://github.com/icereed/paperless-gpt#docker-compose",
+      "https://github.com/icereed/paperless-gpt#environment-variables",
+      "https://github.com/icereed/paperless-gpt/blob/main/docs/workflows.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Replace the placeholder PAPERLESS_API_TOKEN and OPENAI_API_KEY in the environment variables, point PAPERLESS_BASE_URL at your Paperless-ngx instance and set PAPERLESS_PUBLIC_URL to its public address so document links open, then redeploy. The default PAPERLESS_BASE_URL reaches a Paperless-ngx template deployed in the same environment. To use Anthropic, Mistral, Google AI or Ollama instead, change LLM_PROVIDER, LLM_MODEL and the vision settings and fill in that provider's key or OLLAMA_HOST.",
+      "link": "https://github.com/icereed/paperless-gpt#environment-variables"
+    },
+    {
+      "type": "warning",
+      "message": "paperless-gpt has no login of its own, so the template puts it behind HTTP basic auth: sign in with PAPERLESS_GPT_USERNAME and PAPERLESS_GPT_PASSWORD from the environment variables.",
+      "link": "https://github.com/icereed/paperless-gpt#security"
+    }
+  ]
+}
