@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source DORA metrics dashboard that measures deployment frequency, lead time, change failure rate and recovery time from your Git repositories.",
+  "category": "development",
+  "developedBy": {
+    "label": "Middleware",
+    "url": "https://www.middlewarehq.com/"
+  },
+  "links": {
+    "github": "https://github.com/middlewarehq/middleware",
+    "website": "https://www.middlewarehq.com/",
+    "docs": [
+      "https://middlewarehq.com/docs/product/oss/quick-start",
+      "https://middlewarehq.com/docs/product/oss/how-to-use",
+      "https://middlewarehq.com/docs/product/oss/calculations"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Middleware has no login: anyone who can reach the URL can view the metrics and change integrations. Keep the domain private or put it behind an access-controlled proxy."
+    },
+    {
+      "type": "warning",
+      "message": "After the first start, link GitHub or GitLab with a personal access token from the onboarding screen, then pick the repositories to sync.",
+      "link": "https://middlewarehq.com/docs/product/oss/how-to-use"
+    }
+  ]
+}

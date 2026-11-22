@@ -1,0 +1,19 @@
+services:
+  middleware:
+    image: middlewareeng/middleware:0.3.1@sha256:747d880812f1f59b0aee50da23aedb33fc2478b8cc4269cd25e4d0ff54efa76f
+    restart: unless-stopped
+    expose:
+      - 3333
+    environment:
+      DB_PASS: ${DB_PASS}
+      DEFAULT_SYNC_DAYS: ${DEFAULT_SYNC_DAYS}
+    volumes:
+      - middleware-postgres:/var/lib/postgresql/15/main
+      - middleware-keys:/app/backend/analytics_server/mhq/config
+      # start.sh reads config.ini from a wrong path, so the web server gets its keys from ~/.bashrc
+      - middleware-root:/root
+
+volumes:
+  middleware-postgres: {}
+  middleware-keys: {}
+  middleware-root: {}
