@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source backend with a real-time engine, document storage, advanced search and user management, backed by Elasticsearch and Redis.",
+  "category": "development",
+  "developedBy": {
+    "label": "Kuzzle",
+    "url": "https://github.com/kuzzleio"
+  },
+  "links": {
+    "github": "https://github.com/kuzzleio/kuzzle",
+    "website": "https://kuzzle.io",
+    "docs": [
+      "https://docs.kuzzle.io/core/2/guides/getting-started/deploy-your-application/",
+      "https://docs.kuzzle.io/core/2/guides/advanced/configuration/",
+      "https://docs.kuzzle.io/core/2/guides/main-concepts/permissions/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Until an administrator exists, anonymous users can run every API action. Create one right after deploying with a POST to /_createFirstAdmin?reset=true, which also removes the anonymous rights.",
+      "link": "https://docs.kuzzle.io/core/2/api/controllers/security/create-first-admin/"
+    }
+  ]
+}

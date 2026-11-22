@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "kuzzle"
+port = 7_512
+host = "${domain}"
+
+[config.env]
+AUTH_TOKEN_SECRET = "${secret:64}"
+ES_JAVA_OPTS = "-Xms512m -Xmx512m"

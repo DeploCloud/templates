@@ -1,0 +1,56 @@
+services:
+  kuzzle:
+    image: kuzzleio/kuzzle:2.61.3@sha256:21882d7c717aa8e547a8c07d2aa1672bd812f81de23add4ff34259a75e5b4147
+    restart: unless-stopped
+    expose:
+      - 7512
+    environment:
+      kuzzle_services__storageEngine__client__node: http://kuzzle-elasticsearch:9200
+      kuzzle_services__internalCache__node__host: kuzzle-redis
+      kuzzle_services__memoryStorage__node__host: kuzzle-redis
+      kuzzle_security__authToken__secret: ${AUTH_TOKEN_SECRET}
+      NODE_ENV: production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7512/_healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 1m
+    depends_on:
+      kuzzle-elasticsearch:
+        condition: service_healthy
+      kuzzle-redis:
+        condition: service_healthy
+
+  kuzzle-elasticsearch:
+    image: kuzzleio/elasticsearch:7.17.26@sha256:34ac6a1c5a74cf4166da869d5e332187a00e538087ff652dd846982a89d17bc4
+    restart: unless-stopped
+    ulimits:
+      nofile: 65536
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    volumes:
+      - kuzzle-elasticsearch:/usr/share/elasticsearch/data
+
+  kuzzle-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - kuzzle-redis:/data
+
+volumes:
+  kuzzle-elasticsearch: {}
+  kuzzle-redis: {}
