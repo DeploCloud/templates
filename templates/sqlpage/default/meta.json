@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "SQL-only web application builder that renders .sql files as pages, with a persistent SQLite database and web root.",
+  "category": "development",
+  "developedBy": {
+    "label": "SQLPage",
+    "url": "https://github.com/sqlpage"
+  },
+  "links": {
+    "github": "https://github.com/sqlpage/SQLPage",
+    "website": "https://sql-page.com",
+    "docs": [
+      "https://sql-page.com/your-first-sql-website/",
+      "https://github.com/sqlpage/SQLPage/blob/main/configuration.md",
+      "https://sql-page.com/documentation.sql",
+      "https://sql-page.com/component.sql?component=authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "SQLPage has no admin panel or file editor: copy your .sql files into the /var/www volume (or store them in a sqlpage_files table). Pages are public unless you protect them with the authentication component or OIDC single sign-on.",
+      "link": "https://sql-page.com/your-first-sql-website/"
+    }
+  ]
+}
