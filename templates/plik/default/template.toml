@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "plik"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PLIK_DOMAIN = "${domain}"
+PLIK_FEATURE_AUTHENTICATION = "forced"
+PLIK_ADMIN_LOGIN = "admin"
+PLIK_ADMIN_PASSWORD = "${admin_password}"

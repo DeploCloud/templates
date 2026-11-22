@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Temporary file upload and sharing service with expiring links, one-shot downloads, streaming and password-protected uploads.",
+  "category": "storage",
+  "developedBy": {
+    "label": "root-gg",
+    "url": "https://github.com/root-gg"
+  },
+  "links": {
+    "github": "https://github.com/root-gg/plik",
+    "website": "https://root-gg.github.io/plik/",
+    "docs": [
+      "https://root-gg.github.io/plik/guide/docker",
+      "https://root-gg.github.io/plik/guide/configuration",
+      "https://root-gg.github.io/plik/features/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Uploads require an account. Sign in as admin with the PLIK_ADMIN_PASSWORD value from the environment, then create users from the admin page. Set PLIK_FEATURE_AUTHENTICATION to enabled to also allow anonymous uploads.",
+      "link": "https://root-gg.github.io/plik/features/authentication"
+    }
+  ]
+}
