@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+# Hex is valid base64; 42 hex chars plus "A=" decode canonically to the 32-byte key the app requires
+credential_key = "${hash:42}A="
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mail-archiver"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "${admin_password}"
+CREDENTIAL_ENCRYPTION_KEY = "${credential_key}"
+TIMEZONE = "Etc/UTC"

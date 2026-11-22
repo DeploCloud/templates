@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web application that archives, searches and exports email from IMAP, Microsoft 365 and imported mailboxes, backed by PostgreSQL.",
+  "category": "email",
+  "developedBy": {
+    "label": "s1t5",
+    "url": "https://github.com/s1t5"
+  },
+  "links": {
+    "github": "https://github.com/s1t5/mail-archiver",
+    "website": "https://mail-archiver.org",
+    "docs": [
+      "https://s1t5.github.io/mail-archiver/Setup/",
+      "https://s1t5.github.io/mail-archiver/UserManagement/",
+      "https://s1t5.github.io/mail-archiver/BackupRestore/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ADMIN_PASSWORD from this app's environment settings; the app then makes you set a new password. The admin account is created only on the first start, so editing ADMIN_PASSWORD later has no effect. Keep CREDENTIAL_ENCRYPTION_KEY unchanged, or the stored mailbox credentials have to be entered again."
+    }
+  ]
+}
