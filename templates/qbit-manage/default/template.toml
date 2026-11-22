@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "qbit-manage"
+port = 8_181
+host = "${domain}"
+
+[config.env]
+QBT_SCHEDULE = "1440"
+TZ = "UTC"

@@ -1,0 +1,23 @@
+services:
+  qbit-manage:
+    image: ghcr.io/stuffanthings/qbit_manage:v4.15.0@sha256:f8db47d6533bac7c7f71d367545c5059d7228bcca188db1e059dbf4a693d8362
+    restart: unless-stopped
+    expose:
+      - 8181
+    environment:
+      QBT_WEB_SERVER: "true"
+      QBT_PORT: 8181
+      QBT_CONFIG_DIR: /config
+      QBT_SCHEDULE: ${QBT_SCHEDULE}
+      TZ: ${TZ}
+    volumes:
+      - qbit-manage-config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8181/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  qbit-manage-config: {}

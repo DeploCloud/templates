@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Automation companion for qBittorrent that tags, categorizes and cleans up torrents on a schedule, with a web UI for editing its config and running commands.",
+  "category": "automation",
+  "developedBy": {
+    "label": "StuffAnThings",
+    "url": "https://github.com/StuffAnThings"
+  },
+  "links": {
+    "github": "https://github.com/StuffAnThings/qbit_manage",
+    "docs": [
+      "https://github.com/StuffAnThings/qbit_manage/wiki/Docker-Installation",
+      "https://github.com/StuffAnThings/qbit_manage/wiki/Web-UI",
+      "https://github.com/StuffAnThings/qbit_manage/wiki/Config-Setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no authentication by default. Right after deploying, open the Security section and enable Basic authentication, leaving \"Allow local/private IPs without authentication\" unchecked because requests arrive through the proxy from a private IP. Then enter your qBittorrent URL and credentials in the qBittorrent Connection section.",
+      "link": "https://github.com/StuffAnThings/qbit_manage/wiki/Web-UI"
+    }
+  ]
+}
