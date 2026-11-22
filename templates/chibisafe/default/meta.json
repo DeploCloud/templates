@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "File uploader and vault with shareable links, albums, snippets, a URL shortener, user quotas and ShareX support.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Chibisafe",
+    "url": "https://github.com/chibisafe"
+  },
+  "links": {
+    "github": "https://github.com/chibisafe/chibisafe",
+    "website": "https://chibisafe.app",
+    "docs": [
+      "https://chibisafe.app/docs/installation/running-with-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated ADMIN_PASSWORD from the environment (the startup log always prints admin as the password, ignore it) and change it. Then set Serve Uploads From to https://<your domain> in the admin settings, or shared file links will not point to your domain."
+    }
+  ]
+}
