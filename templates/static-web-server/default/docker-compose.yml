@@ -1,0 +1,23 @@
+services:
+  static-web-server:
+    image: joseluisq/static-web-server:2.44.3-alpine@sha256:b3f7db31db9a68754205b3c0831fe5b066bd1daeb4f45aaa5007847a8c29ede2
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: "8080"
+      SERVER_ROOT: /home/sws/public
+      SERVER_HEALTH: "true"
+      SERVER_LOG_LEVEL: ${SERVER_LOG_LEVEL}
+      SERVER_DIRECTORY_LISTING: ${SERVER_DIRECTORY_LISTING}
+    volumes:
+      - static-web-server-public:/home/sws/public
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  static-web-server-public: {}
