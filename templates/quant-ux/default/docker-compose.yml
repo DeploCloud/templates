@@ -1,0 +1,79 @@
+services:
+  quant-ux:
+    image: klausenschaefersinho/quant-ux:latest@sha256:0ba160dcd24c64152ba97c410e3ed1ba8b6c8ca6110d4c2e73d966b032b812e5
+    restart: unless-stopped
+    expose:
+      - 8082
+    environment:
+      QUX_PROXY_URL: http://quant-ux-backend:8080
+      QUX_WS_URL: wss://${QUX_DOMAIN}/ws
+      QUX_AUTH: qux
+      QUX_USER_ALLOW_SIGNUP: ${QUX_USER_ALLOW_SIGNUP}
+      QUX_USER_ALLOWED_DOMAINS: ${QUX_USER_ALLOWED_DOMAINS}
+    depends_on:
+      - quant-ux-backend
+
+  quant-ux-backend:
+    image: klausenschaefersinho/quant-ux-backend:latest@sha256:5b4507acb2bdc2c81a908b87ec9d1f39ec0ca9977258bc339fe0ef5762b33864
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - quant-ux-data:/app-data
+    environment:
+      QUX_HTTP_HOST: https://${QUX_DOMAIN}
+      QUX_HTTP_PORT: "8080"
+      QUX_MONGO_DB_NAME: quantux
+      QUX_MONGO_TABLE_PREFIX: quantux
+      QUX_MONGO_CONNECTION_STRING: mongodb://quantux:${MONGO_PASSWORD}@quant-ux-db:27017
+      QUX_JWT_PASSWORD: ${QUX_JWT_PASSWORD}
+      QUX_IMAGE_FOLDER_USER: /app-data/qux-images
+      QUX_IMAGE_FOLDER_APPS: /app-data/qux-image-apps
+      QUX_AUTH_SERVICE: qux
+      QUX_USER_ALLOW_SIGNUP: ${QUX_USER_ALLOW_SIGNUP}
+      QUX_USER_ALLOWED_DOMAINS: ${QUX_USER_ALLOWED_DOMAINS}
+      QUX_MAIL_HOST: ${QUX_MAIL_HOST}
+      QUX_MAIL_PORT: ${QUX_MAIL_PORT}
+      QUX_MAIL_SSL: ${QUX_MAIL_SSL}
+      QUX_MAIL_USER: ${QUX_MAIL_USER}
+      QUX_MAIL_PASSWORD: ${QUX_MAIL_PASSWORD}
+      QUX_AI_TOKEN: ${QUX_AI_TOKEN}
+      QUX_AI_ALLOWED_URLS: https://api.openai.com/v1/
+    depends_on:
+      quant-ux-db:
+        condition: service_healthy
+
+  quant-ux-websocket:
+    image: klausenschaefersinho/quant-ux-websocket:latest@sha256:cf663d6c001bbaa57cda9db6f9508eb96df33960980e3174c0158cf969c51cbc
+    restart: unless-stopped
+    # Upstream only handles upgrades, so a plain GET on /ws hangs; answer it with 426.
+    command:
+      - node
+      - -e
+      - "const h=require('http'),c=h.createServer;h.createServer=(...a)=>c(...a).on('request',(q,r)=>r.writeHead(426).end());require('/home/node/build/src/qux-websocket-server.js')"
+    expose:
+      - 8086
+    environment:
+      QUX_SERVER: http://quant-ux-backend:8080
+      QUX_SERVER_PORT: "8086"
+    depends_on:
+      - quant-ux-backend
+
+  quant-ux-db:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    volumes:
+      - quant-ux-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: quantux
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+volumes:
+  quant-ux-data: {}
+  quant-ux-db: {}
