@@ -1,0 +1,37 @@
+services:
+  formio:
+    image: formio/formio:4.11.2@sha256:5e3f409ad0ab24aec3100c9eb2f95aa31652f955935526ec9c9a6662a5f79d29
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      NODE_CONFIG: '{"port":3001,"mongo":"mongodb://${MONGO_USER}:${MONGO_PASSWORD}@formio-db:27017/formio-ce?authSource=admin","jwt":{"secret":"${JWT_SECRET}"},"mongoSecret":"${MONGO_SECRET}","host":"${FORMIO_HOST}","protocol":"https","domain":"https://${FORMIO_HOST}"}'
+      ROOT_EMAIL: ${ROOT_EMAIL}
+      ROOT_PASSWORD: ${ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/access').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      formio-db:
+        condition: service_healthy
+
+  formio-db:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - formio-db:/data/db
+
+volumes:
+  formio-db: {}

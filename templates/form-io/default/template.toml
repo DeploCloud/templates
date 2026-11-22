@@ -1,0 +1,20 @@
+[variables]
+mongo_password = "${password:32}"
+root_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "formio"
+port = 3_001
+host = "${domain}"
+
+[config.env]
+FORMIO_HOST = "${domain}"
+ROOT_EMAIL = "admin@example.com"
+ROOT_PASSWORD = "${root_password}"
+JWT_SECRET = "${secret:64}"
+MONGO_SECRET = "${secret:64}"
+MONGO_USER = "formio"
+MONGO_PASSWORD = "${mongo_password}"
