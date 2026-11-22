@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "immichframe"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+IMMICHFRAME_ADMIN_PASSWORD = "${password:24}"
+TZ = "UTC"
+LOG_LEVEL = "Information"
