@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Rust web server for static files with compression, cache control headers and optional directory listing, serving a site from a persistent volume.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Jose Quintana",
+    "url": "https://github.com/joseluisq"
+  },
+  "links": {
+    "github": "https://github.com/static-web-server/static-web-server",
+    "website": "https://static-web-server.net",
+    "docs": [
+      "https://static-web-server.net/v2/features/docker",
+      "https://static-web-server.net/v2/configuration/environment-variables",
+      "https://static-web-server.net/v2/getting-started"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Static Web Server shows its sample page until you replace the files in the static-web-server-public volume (/home/sws/public). Files must be readable by UID 1000, the non-root user the image runs as.",
+      "link": "https://static-web-server.net/v2/features/docker"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "static-web-server"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SERVER_LOG_LEVEL = "info"
+SERVER_DIRECTORY_LISTING = "false"
