@@ -1,0 +1,58 @@
+[variables]
+admin_password = "${password:24}"
+
+[[config.domains]]
+serviceName = "chibisafe-caddy"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	servers {
+		trusted_proxies static private_ranges
+		client_ip_headers X-Forwarded-For X-Real-IP
+	}
+}
+
+:80 {
+	route {
+		@uploadedFile file {
+			root /app/uploads
+			try_files {path} {path}/index.html {path}/index.txt
+		}
+		handle @uploadedFile {
+			header {
+				Content-Security-Policy "sandbox; script-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+				X-Content-Type-Options nosniff
+				Access-Control-Allow-Origin *
+			}
+			file_server {
+				root /app/uploads
+				pass_thru
+			}
+		}
+
+		@api path /api/*
+		reverse_proxy @api http://chibisafe-server:8000 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			header_up X-Real-IP {http.request.header.X-Real-IP}
+		}
+
+		@docs path /docs*
+		reverse_proxy @docs http://chibisafe-server:8000 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			header_up X-Real-IP {http.request.header.X-Real-IP}
+		}
+
+		reverse_proxy http://chibisafe:8001 {
+			header_up Host {http.reverse_proxy.upstream.hostport}
+			header_up X-Real-IP {http.request.header.X-Real-IP}
+		}
+	}
+}
+"""
+
+[config.env]
+ADMIN_PASSWORD = "${admin_password}"

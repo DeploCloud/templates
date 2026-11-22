@@ -1,0 +1,38 @@
+services:
+  chibisafe:
+    image: chibisafe/chibisafe:v6.7.0@sha256:6a970d9d88647171e212e355bf3efd16909cbb31db133ef111684c2b1a0259a3
+    restart: unless-stopped
+    expose:
+      - 8001
+    environment:
+      BASE_API_URL: http://chibisafe-server:8000
+
+  chibisafe-server:
+    image: chibisafe/chibisafe-server:v6.7.0@sha256:db8a632617e0c2e668f8302dac1dcebf2a169d1347b126ddf0ceb3ce03f69f32
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      - chibisafe-database:/app/database
+      - chibisafe-uploads:/app/uploads
+      - chibisafe-logs:/app/logs
+
+  # serves uploads straight from disk and joins frontend and API under one origin
+  chibisafe-caddy:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - chibisafe-uploads:/app/uploads:ro
+    depends_on:
+      - chibisafe
+      - chibisafe-server
+
+volumes:
+  chibisafe-database: {}
+  chibisafe-uploads: {}
+  chibisafe-logs: {}
