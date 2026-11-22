@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app and CLI for documenting home lab and small IT infrastructure, keeping hardware, systems, services and connections in a portable YAML inventory.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Timmoth",
+    "url": "https://github.com/Timmoth"
+  },
+  "links": {
+    "github": "https://github.com/Timmoth/RackPeek",
+    "website": "https://timmoth.github.io/RackPeek/",
+    "docs": [
+      "https://github.com/Timmoth/RackPeek/blob/main/Shared.Rcl/wwwroot/raw_docs/install-guide.md",
+      "https://github.com/Timmoth/RackPeek/blob/main/Shared.Rcl/wwwroot/raw_docs/inventory-api.md",
+      "https://github.com/Timmoth/RackPeek/blob/main/Shared.Rcl/wwwroot/raw_docs/git-integration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no login: anyone who can reach the domain can view and edit the inventory. Keep the domain private or put an authentication layer in front of it.",
+      "link": "https://github.com/Timmoth/RackPeek/blob/main/Shared.Rcl/wwwroot/raw_docs/install-guide.md"
+    }
+  ]
+}

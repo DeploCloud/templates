@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rackpeek"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+RPK_API_KEY = "${secret:48}"
