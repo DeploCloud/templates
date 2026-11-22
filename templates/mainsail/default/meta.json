@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Mainsail web interface for Klipper 3D printers, connecting from the browser to one or more Moonraker instances you add in the UI.",
+  "category": "other",
+  "developedBy": {
+    "label": "Mainsail Crew",
+    "url": "https://github.com/mainsail-crew"
+  },
+  "links": {
+    "github": "https://github.com/mainsail-crew/mainsail",
+    "website": "https://docs.mainsail.xyz",
+    "docs": [
+      "https://docs.mainsail.xyz/setup/docker/",
+      "https://docs.mainsail.xyz/configuration/config-json/",
+      "https://moonraker.readthedocs.io/en/latest/configuration/#authorization"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This deploys only the web interface; your browser connects directly to each printer's Moonraker API. Because the page is served over HTTPS, Moonraker must be reachable from your browser over a secure WebSocket (wss), its cors_domains setting must include this domain, and your browser must be allowed by trusted_clients or a Moonraker login.",
+      "link": "https://moonraker.readthedocs.io/en/latest/configuration/#authorization"
+    }
+  ]
+}
