@@ -1,0 +1,34 @@
+services:
+  qdirstat-init:
+    image: jlesage/qdirstat:v26.09.1@sha256:e7daf42e334e9bb29d516a468b2280055f4657cdd74d9dc7410cd941397e5c3a
+    restart: "no"
+    user: "0:0"
+    # /storage starts root-owned; the app and file manager run as uid 1000
+    entrypoint: ["chown", "1000:1000", "/storage"]
+    volumes:
+      - qdirstat-storage:/storage
+
+  qdirstat:
+    image: jlesage/qdirstat:v26.09.1@sha256:e7daf42e334e9bb29d516a468b2280055f4657cdd74d9dc7410cd941397e5c3a
+    restart: unless-stopped
+    expose:
+      - 5800
+    environment:
+      TZ: ${TZ}
+      KEEP_APP_RUNNING: ${KEEP_APP_RUNNING}
+      WEB_AUTHENTICATION: ${WEB_AUTHENTICATION}
+      WEB_AUTHENTICATION_ALLOW_INSECURE: ${WEB_AUTHENTICATION_ALLOW_INSECURE}
+      WEB_AUTHENTICATION_USERNAME: ${WEB_AUTHENTICATION_USERNAME}
+      WEB_AUTHENTICATION_PASSWORD: ${WEB_AUTHENTICATION_PASSWORD}
+      WEB_FILE_MANAGER: ${WEB_FILE_MANAGER}
+      QDIRSTAT_STARTUP_SCAN_FOLDER: ${QDIRSTAT_STARTUP_SCAN_FOLDER}
+    volumes:
+      - qdirstat-config:/config
+      - qdirstat-storage:/storage
+    depends_on:
+      qdirstat-init:
+        condition: service_completed_successfully
+
+volumes:
+  qdirstat-config: {}
+  qdirstat-storage: {}
