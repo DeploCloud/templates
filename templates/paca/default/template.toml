@@ -1,0 +1,81 @@
+[config]
+
+[[config.domains]]
+serviceName = "paca"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	encode gzip
+
+	header {
+		X-Frame-Options "DENY"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	@notStorage not path /storage/*
+	request_body @notStorage {
+		max_size 10MB
+	}
+
+	handle_path /storage/* {
+		reverse_proxy paca-storage:9000 {
+			header_up Host paca-storage:9000
+		}
+	}
+
+	handle_path /ws/* {
+		reverse_proxy paca-realtime:3001
+	}
+
+	handle_path /plugins/* {
+		root * /var/www/plugins
+		@wasm path *.wasm
+		header @wasm Content-Type "application/wasm"
+		@remote_entry path */remoteEntry.js
+		header @remote_entry Cache-Control "no-cache"
+		file_server
+	}
+
+	handle_path /plugins-mcp/* {
+		root * /var/www/plugins-mcp
+		file_server
+	}
+
+	handle_path /plugins-skills/* {
+		root * /var/www/plugins-skills
+		file_server
+	}
+
+	handle /api/* {
+		reverse_proxy paca-api:8080
+	}
+
+	handle {
+		reverse_proxy paca-web:3000
+	}
+}
+"""
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "${password:24}"
+POSTGRES_PASSWORD = "${hash:32}"
+VALKEY_PASSWORD = "${hash:32}"
+JWT_SECRET = "${hash:64}"
+ENCRYPTION_KEY = "${hash:64}"
+INTERNAL_API_KEY = "${hash:64}"
+STORAGE_ACCESS_KEY_ID = "${hash:20}"
+STORAGE_SECRET_ACCESS_KEY = "${hash:40}"

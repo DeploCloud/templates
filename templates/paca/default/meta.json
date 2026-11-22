@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source Scrum and project management board with sprints, tasks and plugins, backed by PostgreSQL, Valkey and RustFS object storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Paca AI",
+    "url": "https://github.com/Paca-AI"
+  },
+  "links": {
+    "github": "https://github.com/Paca-AI/paca",
+    "website": "https://paca-ai.org",
+    "docs": [
+      "https://github.com/Paca-AI/paca/blob/master/deploy/README.md",
+      "https://github.com/Paca-AI/paca/blob/master/docs/deployment/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the ADMIN_USERNAME and ADMIN_PASSWORD values from the environment variables. The admin account is created on first start only; changing ADMIN_PASSWORD later does not update it, so change the password from the app instead."
+    },
+    {
+      "type": "info",
+      "message": "The AI agent runner is not included because it needs direct access to the host's container engine, so AI agents cannot run tasks. Boards, sprints, docs and plugins work normally."
+    }
+  ]
+}
