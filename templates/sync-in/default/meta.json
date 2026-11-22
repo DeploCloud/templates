@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted platform for file storage, sharing, synchronization and collaboration, with spaces, share links, WebDAV and desktop sync, backed by MariaDB.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Sync-in",
+    "url": "https://sync-in.com"
+  },
+  "links": {
+    "github": "https://github.com/Sync-in/server",
+    "website": "https://sync-in.com",
+    "docs": [
+      "https://sync-in.com/docs/setup-guide/docker/",
+      "https://sync-in.com/docs/setup-guide/docker/variables-secrets",
+      "https://sync-in.com/docs/setup-guide/server"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "An administrator account is created on first start with the login \"admin\" and the generated INIT_ADMIN_PASSWORD from the environment variables. Change the password after the first login. If you change both the login \"admin\" and the email \"admin@sync-in.com\" of this account, a new \"admin\" account is created the next time the container is recreated; remove INIT_ADMIN from the compose file to avoid it.",
+      "link": "https://sync-in.com/docs/setup-guide/docker/variables-secrets"
+    }
+  ]
+}
