@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "jellyfin-vue"
+port = 80
+host = "${domain}"
+
+[config.env]
+DEFAULT_SERVERS = ""
