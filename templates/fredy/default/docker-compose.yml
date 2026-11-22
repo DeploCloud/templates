@@ -1,0 +1,22 @@
+services:
+  fredy:
+    image: ghcr.io/orangecoding/fredy:31.3.0@sha256:b81a4dd15cffae13edf58cf48969fef744406b86a1ce533a5346dde1b8207349
+    restart: unless-stopped
+    mem_limit: 1g
+    expose:
+      - 9998
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    volumes:
+      - fredy-conf:/conf
+      - fredy-db:/db
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--max-time", "5", "http://localhost:9998/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  fredy-conf: {}
+  fredy-db: {}

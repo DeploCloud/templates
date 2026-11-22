@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted real estate finder that watches European property portals and sends new listings to Slack, Telegram, email, ntfy or Discord.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Christian Kellner (orangecoding)",
+    "url": "https://github.com/orangecoding"
+  },
+  "links": {
+    "github": "https://github.com/orangecoding/fredy",
+    "website": "https://fredy.orange-coding.net/",
+    "docs": [
+      "https://github.com/orangecoding/fredy#readme",
+      "https://github.com/orangecoding/fredy/blob/master/doc/providers.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default credentials admin / admin and change the password right away. Then set the Base URL under Administration > System > Reachability to this app's HTTPS address so notification links point to it.",
+      "link": "https://github.com/orangecoding/fredy#-quick-start"
+    }
+  ]
+}
