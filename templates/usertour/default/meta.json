@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source user onboarding platform for building in-app product tours, checklists, launchers and surveys, with PostgreSQL and Redis.",
+  "category": "development",
+  "developedBy": {
+    "label": "Usertour",
+    "url": "https://www.usertour.io"
+  },
+  "links": {
+    "github": "https://github.com/usertour/usertour",
+    "website": "https://www.usertour.io",
+    "docs": [
+      "https://docs.usertour.io/open-source/self-hosting",
+      "https://docs.usertour.io/open-source/env",
+      "https://docs.usertour.io/open-source/system-admin"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first visit Usertour asks you to create the System Admin account; do it right after deploying. Inviting members, sign-up links and password resets need SMTP (EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS, EMAIL_SENDER), and image uploads need S3-compatible storage (AWS_S3_*), both added as environment variables.",
+      "link": "https://docs.usertour.io/open-source/env"
+    }
+  ]
+}
