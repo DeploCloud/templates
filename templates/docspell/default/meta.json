@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal document management with OCR, automatic tagging and Solr full-text search, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Eike Kettner",
+    "url": "https://github.com/eikek"
+  },
+  "links": {
+    "github": "https://github.com/eikek/docspell",
+    "website": "https://docspell.org",
+    "docs": [
+      "https://docspell.org/docs/install/docker/",
+      "https://docspell.org/docs/configure/",
+      "https://docspell.org/docs/configure/registration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Signup is open after deployment. Register your account (use the same name for collective and user), then set SIGNUP_MODE to closed and redeploy so strangers cannot create accounts.",
+      "link": "https://docspell.org/docs/configure/registration/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+services:
+  docspell:
+    image: ghcr.io/docspell/restserver:v0.43.0@sha256:bc8f0c0e072726aca121f07b9f4519ea8360ee3e0a6464f4cd960d3260093826
+    restart: unless-stopped
+    expose:
+      - 7880
+    environment:
+      TZ: ${TZ}
+      DOCSPELL_SERVER_BASE__URL: ${BASE_URL}
+      DOCSPELL_SERVER_INTERNAL__URL: http://docspell:7880
+      DOCSPELL_SERVER_BIND_ADDRESS: 0.0.0.0
+      DOCSPELL_SERVER_AUTH_SERVER__SECRET: ${SERVER_SECRET}
+      DOCSPELL_SERVER_ADMIN__ENDPOINT_SECRET: ${ADMIN_SECRET}
+      DOCSPELL_SERVER_BACKEND_JDBC_URL: jdbc:postgresql://docspell-db:5432/${DB_NAME}
+      DOCSPELL_SERVER_BACKEND_JDBC_USER: ${DB_USER}
+      DOCSPELL_SERVER_BACKEND_JDBC_PASSWORD: ${DB_PASSWORD}
+      DOCSPELL_SERVER_BACKEND_SIGNUP_MODE: ${SIGNUP_MODE}
+      DOCSPELL_SERVER_BACKEND_ADDONS_ENABLED: "false"
+      DOCSPELL_SERVER_FULL__TEXT__SEARCH_ENABLED: "true"
+      DOCSPELL_SERVER_FULL__TEXT__SEARCH_SOLR_URL: http://docspell-solr:8983/solr/docspell
+    depends_on:
+      docspell-db:
+        condition: service_healthy
+      docspell-solr:
+        condition: service_healthy
+
+  docspell-joex:
+    image: ghcr.io/docspell/joex:v0.43.0@sha256:19c8daf22de5ff7625c16abb319c6bcb1354ada0782bd546d91b2be72acbb34f
+    restart: unless-stopped
+    expose:
+      - 7878
+    environment:
+      TZ: ${TZ}
+      DOCSPELL_JOEX_BASE__URL: http://docspell-joex:7878
+      DOCSPELL_JOEX_BIND_ADDRESS: 0.0.0.0
+      DOCSPELL_JOEX_JDBC_URL: jdbc:postgresql://docspell-db:5432/${DB_NAME}
+      DOCSPELL_JOEX_JDBC_USER: ${DB_USER}
+      DOCSPELL_JOEX_JDBC_PASSWORD: ${DB_PASSWORD}
+      DOCSPELL_JOEX_FULL__TEXT__SEARCH_ENABLED: "true"
+      DOCSPELL_JOEX_FULL__TEXT__SEARCH_SOLR_URL: http://docspell-solr:8983/solr/docspell
+      DOCSPELL_JOEX_CONVERT_HTML__CONVERTER: weasyprint
+    depends_on:
+      docspell-db:
+        condition: service_healthy
+      docspell-solr:
+        condition: service_healthy
+
+  docspell-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - docspell-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  docspell-solr:
+    image: solr:10.1.0@sha256:3b75fc84c3222052b16b8b08dcacaefc581d50d7d9b930b3107ead1952ae4cef
+    restart: unless-stopped
+    environment:
+      SOLR_OPTS: -Dsolr.modules=analysis-extras
+    command:
+      - bash
+      - -c
+      - precreate-core docspell; exec solr start -f --user-managed
+    volumes:
+      - docspell-solr:/var/solr
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8983/solr/docspell/admin/ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
+
+volumes:
+  docspell-db: {}
+  docspell-solr: {}
