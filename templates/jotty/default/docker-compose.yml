@@ -1,0 +1,27 @@
+services:
+  jotty:
+    image: ghcr.io/fccview/jotty:1.30.0@sha256:4face8fd1049d1ec3813f3da949d69fb68703f0f8421902a7a2de8ba3f1d61a6
+    restart: unless-stopped
+    user: "1000:1000"
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      HTTPS: "true"
+      APP_URL: ${APP_URL}
+      INTERNAL_API_URL: http://localhost:3000
+    volumes:
+      - jotty-data:/app/data
+      - jotty-config:/app/config
+      - jotty-cache:/app/.next/cache
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  jotty-data: {}
+  jotty-config: {}
+  jotty-cache: {}
