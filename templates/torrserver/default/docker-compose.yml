@@ -1,0 +1,22 @@
+services:
+  torrserver:
+    image: ghcr.io/yourok/torrserver:MatriX.151@sha256:6adc851f5ce2f523b6b95998f1fdb1e172deef1c001c1419abcdc5788d77be5a
+    restart: unless-stopped
+    expose:
+      - 8090
+    environment:
+      TS_PORT: 8090
+      TS_HTTPAUTH: 1
+      TORRSERVER_USER: ${TORRSERVER_USER}
+      TORRSERVER_PASSWORD: ${TORRSERVER_PASSWORD}
+    # accs.db is rebuilt from the env on every start, so a password change applies on redeploy
+    command:
+      - /bin/sh
+      - -c
+      - >-
+        mkdir -p "$$TS_CONF_PATH" && printf '{"%s": "%s"}\n' "$$TORRSERVER_USER" "$$TORRSERVER_PASSWORD" > "$$TS_CONF_PATH/accs.db" && exec /docker-entrypoint.sh
+    volumes:
+      - torrserver-data:/opt/ts
+
+volumes:
+  torrserver-data: {}
