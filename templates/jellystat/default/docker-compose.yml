@@ -1,0 +1,43 @@
+services:
+  jellystat:
+    image: cyfershepard/jellystat:1.1.12@sha256:e61c759ec706da378bc8374e797da1dfd298ab30f804cefd82d192c301a888c7
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      POSTGRES_USER: jellystat
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_IP: jellystat-db
+      POSTGRES_PORT: 5432
+      JWT_SECRET: ${JWT_SECRET}
+      TZ: ${TZ}
+    volumes:
+      - jellystat-backup-data:/app/backend/backup-data
+    depends_on:
+      jellystat-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/auth/isConfigured"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  jellystat-db:
+    image: postgres:18.7@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    restart: unless-stopped
+    shm_size: 1gb
+    environment:
+      POSTGRES_USER: jellystat
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - jellystat-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jellystat -d jellystat"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  jellystat-backup-data: {}
+  jellystat-db-data: {}
