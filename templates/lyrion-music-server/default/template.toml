@@ -1,0 +1,29 @@
+[config]
+
+[[config.domains]]
+serviceName = "lyrion"
+port = 9_000
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "custom-init.sh"
+content = """# Seeds the web UI login on first start only; change it later under Settings > Advanced > Security.
+prefs=/config/prefs/server.prefs
+if [ ! -f "$prefs" ] && [ -n "$LMS_PASSWORD" ]; then
+  mkdir -p /config/prefs
+  hash=$(perl -MDigest::SHA=sha1_base64 -e 'print sha1_base64($ENV{LMS_PASSWORD})')
+  cat > "$prefs" <<PREFS
+---
+_version: 0
+authorize: 1
+username: '$LMS_USERNAME'
+password: '$hash'
+PREFS
+  chown -R squeezeboxserver:squeezeboxserver /config/prefs
+fi
+"""
+
+[config.env]
+TZ = "UTC"
+LMS_USERNAME = "admin"
+LMS_PASSWORD = "${password:24}"
