@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Web tool to bulk unsubscribe from newsletters, delete, archive, label and mark Gmail messages as read by sender, using your own Google OAuth client.",
+  "category": "email",
+  "developedBy": {
+    "label": "Gururagavendra",
+    "url": "https://github.com/Gururagavendra"
+  },
+  "links": {
+    "github": "https://github.com/Gururagavendra/gmail-cleaner",
+    "website": "https://gururagavendra.github.io/gmail-cleaner/",
+    "docs": [
+      "https://github.com/Gururagavendra/gmail-cleaner#setup",
+      "https://github.com/Gururagavendra/gmail-cleaner#custom-domain--reverse-proxy--remote-server"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Requires your own Google Cloud OAuth client: enable the Gmail API, add your address as a test user, create a Web application client with the authorized redirect URI http://oauth.<your domain>:80/ and replace the credentials.json mount with the downloaded JSON.",
+      "link": "https://github.com/Gururagavendra/gmail-cleaner#1-get-google-oauth-credentials"
+    },
+    {
+      "type": "warning",
+      "message": "After clicking Sign In, the Google authorization URL is printed in the container logs. Open it within 5 minutes to finish signing in."
+    },
+    {
+      "type": "warning",
+      "message": "The web UI has no login of its own: anyone who can reach the URL can act on the connected Gmail account. Sign out when you are done."
+    }
+  ]
+}
