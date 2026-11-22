@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fusion"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+FUSION_PASSWORD = "${password:24}"
+FUSION_DB_PATH = "/data/fusion.db"
+FUSION_TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+FUSION_CORS_ALLOWED_ORIGINS = "https://${domain}"

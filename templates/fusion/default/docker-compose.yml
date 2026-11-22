@@ -1,0 +1,22 @@
+services:
+  fusion:
+    image: ghcr.io/0x2e/fusion:1.3.0@sha256:67e39cd0023f1ff638be2ec5f601571fde63177d98cb55a9969cd7ed6704c686
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      FUSION_PASSWORD: ${FUSION_PASSWORD}
+      FUSION_DB_PATH: ${FUSION_DB_PATH}
+      FUSION_TRUSTED_PROXIES: ${FUSION_TRUSTED_PROXIES}
+      FUSION_CORS_ALLOWED_ORIGINS: ${FUSION_CORS_ALLOWED_ORIGINS}
+    volumes:
+      - fusion-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/api/oidc/enabled"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  fusion-data: {}
