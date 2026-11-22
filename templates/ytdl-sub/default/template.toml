@@ -1,0 +1,18 @@
+[variables]
+password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ytdl-sub"
+port = 8_443
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+PASSWORD = "${password}"
+CRON_SCHEDULE = "0 */6 * * *"
+UPDATE_YT_DLP_ON_START = "stable"

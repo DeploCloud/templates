@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Automated yt-dlp downloads of channels, playlists and music into Plex, Jellyfin, Emby and Kodi ready libraries, managed from a browser-based VS Code editor.",
+  "category": "media",
+  "developedBy": {
+    "label": "Jesse Bannon",
+    "url": "https://github.com/jmbannon"
+  },
+  "links": {
+    "github": "https://github.com/jmbannon/ytdl-sub",
+    "website": "https://ytdl-sub.readthedocs.io/",
+    "docs": [
+      "https://ytdl-sub.readthedocs.io/en/latest/guides/install/docker.html",
+      "https://ytdl-sub.readthedocs.io/en/latest/guides/getting_started/index.html",
+      "https://ytdl-sub.readthedocs.io/en/latest/guides/getting_started/automating_downloads.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the generated PASSWORD value from this app's environment settings. The editor includes a terminal into the container, so keep that password private."
+    },
+    {
+      "type": "warning",
+      "message": "Nothing downloads automatically until you edit /config/ytdl-sub-configs/cron in the editor and enable the ytdl-sub sub command. Test your subscriptions with a dry run first to avoid throttles or bans.",
+      "link": "https://ytdl-sub.readthedocs.io/en/latest/guides/getting_started/automating_downloads.html"
+    }
+  ]
+}

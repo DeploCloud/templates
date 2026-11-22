@@ -1,0 +1,37 @@
+services:
+  ytdl-sub:
+    image: ghcr.io/jmbannon/ytdl-sub-gui:2026.11.19@sha256:deb972c82315f6592e2796bf114d775d5d91046c5cdc1df22e0c635af7073d5f
+    restart: unless-stopped
+    # named media volumes start root-owned; hand them to the app user before s6 starts
+    entrypoint:
+      - /bin/sh
+      - -c
+      - chown "$${PUID}:$${PGID}" /tv_shows /movies /music_videos /music; exec /init
+    expose:
+      - 8443
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      PASSWORD: ${PASSWORD}
+      CRON_SCHEDULE: ${CRON_SCHEDULE}
+      UPDATE_YT_DLP_ON_START: ${UPDATE_YT_DLP_ON_START}
+    volumes:
+      - ytdl-sub-config:/config
+      - ytdl-sub-tv-shows:/tv_shows
+      - ytdl-sub-movies:/movies
+      - ytdl-sub-music-videos:/music_videos
+      - ytdl-sub-music:/music
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8443/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  ytdl-sub-config: {}
+  ytdl-sub-tv-shows: {}
+  ytdl-sub-movies: {}
+  ytdl-sub-music-videos: {}
+  ytdl-sub-music: {}
