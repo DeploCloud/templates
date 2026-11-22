@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "phpBB bulletin board forum with a MariaDB database, persistent board files and an admin account created on first start.",
+  "category": "communication",
+  "developedBy": {
+    "label": "phpBB Limited",
+    "url": "https://www.phpbb.com"
+  },
+  "links": {
+    "github": "https://github.com/phpbb/phpbb",
+    "website": "https://www.phpbb.com",
+    "docs": [
+      "https://www.phpbb.com/support/docs/en/3.3/ug/",
+      "https://github.com/EvanDarwin/phpbb-docker#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start installs the board with the admin account PHPBB_USERNAME and the generated PHPBB_PASSWORD from the environment variables. Sign in with them, set a real email for the admin in the User Control Panel, then set up email under ACP > General > Client communication."
+    }
+  ]
+}
