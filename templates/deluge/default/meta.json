@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight BitTorrent client with a password-protected web UI, a background daemon and persistent settings and downloads.",
+  "category": "media",
+  "developedBy": {
+    "label": "Deluge Team",
+    "url": "https://www.deluge-torrent.org/"
+  },
+  "links": {
+    "github": "https://github.com/deluge-torrent/deluge",
+    "website": "https://www.deluge-torrent.org/",
+    "docs": [
+      "https://deluge.readthedocs.io/en/latest/reference/web.html",
+      "https://dev.deluge-torrent.org/wiki/UserGuide",
+      "https://docs.linuxserver.io/images/docker-deluge/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated DELUGE_WEB_PASSWORD from the environment settings, then connect to the local daemon (127.0.0.1:58846) in the Connection Manager. The password is only applied on the first start; change it later under Preferences > Interface. The peer port is not published, so peers are reached through outgoing connections only."
+    }
+  ]
+}

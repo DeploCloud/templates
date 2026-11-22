@@ -1,0 +1,16 @@
+[variables]
+web_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "deluge"
+port = 8_112
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+DELUGE_WEB_PASSWORD = "${web_password}"
