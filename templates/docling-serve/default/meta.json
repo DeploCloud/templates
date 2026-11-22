@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "HTTP API and web UI that converts PDF, DOCX, PPTX, HTML and image files into Markdown, JSON and other structured formats with Docling, running on CPU.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Docling Project",
+    "url": "https://github.com/docling-project"
+  },
+  "links": {
+    "github": "https://github.com/docling-project/docling-serve",
+    "website": "https://www.docling.ai/",
+    "docs": [
+      "https://github.com/docling-project/docling-serve/blob/main/docs/configuration.md",
+      "https://github.com/docling-project/docling-serve/blob/main/docs/usage.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Conversion and task requests need the X-Api-Key header set to the generated DOCLING_SERVE_API_KEY, shown in the environment variables. The web UI at /ui asks for the same key before running conversions.",
+      "link": "https://github.com/docling-project/docling-serve/blob/main/docs/configuration.md"
+    }
+  ]
+}
