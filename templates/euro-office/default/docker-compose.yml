@@ -1,0 +1,29 @@
+services:
+  euro-office:
+    image: ghcr.io/euro-office/documentserver:v9.3.8@sha256:0f19cb676d48f85b826e199ac9e773ea12130f7d32bfc9a45e86aea320441b8a
+    restart: unless-stopped
+    stop_grace_period: 60s
+    expose:
+      - 80
+    environment:
+      JWT_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - euro-office-data:/var/www/euro-office/Data
+      - euro-office-lib:/var/lib/euro-office/documentserver
+      - euro-office-logs:/var/log/euro-office/documentserver
+      - euro-office-fonts:/usr/share/fonts/custom
+      - euro-office-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost/healthcheck | grep -q true"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+
+volumes:
+  euro-office-data: {}
+  euro-office-lib: {}
+  euro-office-logs: {}
+  euro-office-fonts: {}
+  euro-office-db: {}

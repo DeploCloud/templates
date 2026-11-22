@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Euro-Office Document Server: browser editors for documents, spreadsheets, presentations and PDFs with real-time co-editing, connected to Nextcloud or another file platform.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Euro-Office",
+    "url": "https://github.com/Euro-Office"
+  },
+  "links": {
+    "github": "https://github.com/Euro-Office/DocumentServer",
+    "website": "https://euro-office.github.io/documentation/",
+    "docs": [
+      "https://euro-office.github.io/documentation/installation/docker/",
+      "https://euro-office.github.io/documentation/integration/nextcloud/",
+      "https://euro-office.github.io/documentation/configuration/fonts/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Document Server has no file storage or user accounts of its own. Connect it from Nextcloud or another integration using this domain and the generated JWT_SECRET value. The Nextcloud app needs Nextcloud 34 or later.",
+      "link": "https://euro-office.github.io/documentation/integration/nextcloud/"
+    }
+  ]
+}
