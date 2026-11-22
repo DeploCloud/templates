@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Offline-first note taking server with a rich text editor, tags, attachments, note sharing and sync for the web and mobile apps.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "ZhFahim",
+    "url": "https://github.com/ZhFahim"
+  },
+  "links": {
+    "github": "https://github.com/ZhFahim/anchor",
+    "docs": [
+      "https://github.com/ZhFahim/anchor#self-hosting-with-docker",
+      "https://github.com/ZhFahim/anchor#oidc-authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open by default and the first account you register becomes the administrator. Register right after deploying, then disable sign-up or switch it to review in the admin panel.",
+      "link": "https://github.com/ZhFahim/anchor#self-hosting-with-docker"
+    }
+  ]
+}

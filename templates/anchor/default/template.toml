@@ -1,0 +1,14 @@
+[variables]
+pg_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "anchor"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+PG_PASSWORD = "${pg_password}"

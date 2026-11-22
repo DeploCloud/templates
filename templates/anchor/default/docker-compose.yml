@@ -1,0 +1,20 @@
+services:
+  anchor:
+    image: ghcr.io/zhfahim/anchor:0.18.1@sha256:83121433fcbc60f1491f1d5c761d2bac59519884ad31d0c464b7fce931d75d8e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      APP_URL: ${APP_URL}
+      PG_PASSWORD: ${PG_PASSWORD}
+    volumes:
+      - anchor-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  anchor-data: {}
