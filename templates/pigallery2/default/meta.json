@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Directory-first photo and video gallery with search, maps, albums, sharing links and browser uploads, backed by SQLite.",
+  "category": "media",
+  "developedBy": {
+    "label": "Patrik J. Braun",
+    "url": "https://github.com/bpatrik"
+  },
+  "links": {
+    "github": "https://github.com/bpatrik/pigallery2",
+    "website": "https://bpatrik.github.io/pigallery2/",
+    "docs": [
+      "https://bpatrik.github.io/pigallery2/setup/docker/",
+      "https://bpatrik.github.io/pigallery2/user-guide/configuration/",
+      "https://bpatrik.github.io/pigallery2/faq/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated ADMIN_PASSWORD. The gallery starts empty: upload photos from the web UI as admin. Folders are indexed when opened; run the indexing job in Settings so search and maps cover everything.",
+      "link": "https://bpatrik.github.io/pigallery2/setup/docker/"
+    }
+  ]
+}
