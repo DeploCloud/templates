@@ -1,0 +1,11 @@
+services:
+  mini-qr:
+    image: ghcr.io/lyqht/mini-qr:v0.32.0@sha256:bca2ac7ccbec8899e6e9a6b91d45d0286238fa0fccf357fa10ca9640d2d09916
+    restart: unless-stopped
+    expose:
+      - 8080
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
