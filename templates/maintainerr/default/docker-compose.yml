@@ -1,0 +1,37 @@
+services:
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:3.33.0@sha256:124b53cfec9c17dae03a69243b0a2e7b6de740150112b5210b784ce8fa0a2852
+    restart: unless-stopped
+    expose:
+      - 6246
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - maintainerr-data:/opt/data
+    healthcheck:
+      test: ["CMD", "/opt/app/healthcheck.sh"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  # Maintainerr has no login and its API hands out every saved credential
+  maintainerr-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      MAINTAINERR_USERNAME: ${MAINTAINERR_USERNAME}
+      MAINTAINERR_PASSWORD: ${MAINTAINERR_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - test -n "$$MAINTAINERR_PASSWORD" && export MAINTAINERR_PASSWORD_HASH="$$(caddy hash-password --plaintext="$$MAINTAINERR_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      maintainerr:
+        condition: service_healthy
+
+volumes:
+  maintainerr-data: {}

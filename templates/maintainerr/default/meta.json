@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Rule-based library cleanup for Plex, Jellyfin and Emby: collects unwatched or stale titles, shows them on the server for a grace period, then removes them from the media server, Sonarr, Radarr and Seerr.",
+  "category": "media",
+  "developedBy": {
+    "label": "Maintainerr",
+    "url": "https://github.com/Maintainerr"
+  },
+  "links": {
+    "github": "https://github.com/Maintainerr/Maintainerr",
+    "website": "https://maintainerr.info",
+    "docs": [
+      "https://docs.maintainerr.info/installation/",
+      "https://docs.maintainerr.info/configuration/",
+      "https://docs.maintainerr.info/security/",
+      "https://docs.maintainerr.info/reverseproxy/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Maintainerr has no login of its own, so the template puts it behind HTTP basic auth: sign in with MAINTAINERR_USERNAME and MAINTAINERR_PASSWORD from the environment variables. Then connect a Plex, Jellyfin or Emby server reachable from this host in Settings.",
+      "link": "https://docs.maintainerr.info/security/"
+    }
+  ]
+}
