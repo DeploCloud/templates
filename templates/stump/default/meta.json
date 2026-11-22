@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Comics, manga and ebook server with a web reader, OPDS feeds, reading progress and multi-user access, backed by SQLite.",
+  "category": "media",
+  "developedBy": {
+    "label": "Stump",
+    "url": "https://github.com/stumpapp"
+  },
+  "links": {
+    "github": "https://github.com/stumpapp/stump",
+    "website": "https://stumpapp.dev",
+    "docs": [
+      "https://stumpapp.dev/docs/getting-started/installation/docker",
+      "https://stumpapp.dev/docs/guides/configuration/server-config",
+      "https://stumpapp.dev/docs/guides/features/upload"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the server owner. Open the app right after deploying and create it before anyone else can.",
+      "link": "https://stumpapp.dev/docs/guides/access-control/users"
+    }
+  ]
+}

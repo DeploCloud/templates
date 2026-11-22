@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "stump"
+port = 10_801
+host = "${domain}"
+
+[config.env]
+STUMP_TRUST_PROXY_HEADERS = "true"
+STUMP_ALLOWED_ORIGINS = "https://${domain}"
+STUMP_ENABLE_UPLOAD = "true"
+STUMP_MAX_FILE_UPLOAD_SIZE = "524288000"
