@@ -1,0 +1,56 @@
+services:
+  soulsync:
+    image: boulderbadgedad/soulsync:3.6.8@sha256:2efc9d58b927f175c35ac85feb27cb53a6be7ee02af82fa3fd2fa4dd8704baae
+    restart: unless-stopped
+    # the image entrypoint only chowns /app dirs; these volumes start root-owned
+    entrypoint: ["/bin/sh", "-c", "chown \"$$PUID:$$PGID\" /app/samples /media/movies /media/tv /media/youtube; exec /entrypoint.sh \"$$@\"", "soulsync"]
+    command: ["gunicorn", "-c", "gunicorn.conf.py", "wsgi:application"]
+    expose:
+      - 8008
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      UMASK: ${UMASK}
+      TZ: ${TZ}
+      SOULSYNC_CONFIG_PATH: ${SOULSYNC_CONFIG_PATH}
+    volumes:
+      - soulsync-config:/app/config
+      - soulsync-data:/app/data
+      - soulsync-logs:/app/logs
+      - soulsync-storage:/app/storage
+      - soulsync-scripts:/app/scripts
+      - soulsync-downloads:/app/downloads
+      - soulsync-staging:/app/Staging
+      - soulsync-music:/app/Transfer
+      - soulsync-playlists:/app/Playlists
+      - soulsync-music-videos:/app/MusicVideos
+      - soulsync-podcasts:/app/podcasts
+      - soulsync-audiobooks:/app/audiobooks
+      - soulsync-samples:/app/samples
+      - soulsync-movies:/media/movies
+      - soulsync-tv:/media/tv
+      - soulsync-youtube:/media/youtube
+    healthcheck:
+      test: ["CMD", "curl", "-f", "--max-time", "5", "http://localhost:8008/api/startup-status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  soulsync-config: {}
+  soulsync-data: {}
+  soulsync-logs: {}
+  soulsync-storage: {}
+  soulsync-scripts: {}
+  soulsync-downloads: {}
+  soulsync-staging: {}
+  soulsync-music: {}
+  soulsync-playlists: {}
+  soulsync-music-videos: {}
+  soulsync-podcasts: {}
+  soulsync-audiobooks: {}
+  soulsync-samples: {}
+  soulsync-movies: {}
+  soulsync-tv: {}
+  soulsync-youtube: {}

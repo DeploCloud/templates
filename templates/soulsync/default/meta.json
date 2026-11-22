@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Music and video automation server that syncs playlists, watches artists and downloads from Soulseek, streaming services, torrent or usenet into an organized library.",
+  "category": "media",
+  "developedBy": {
+    "label": "Nezreka",
+    "url": "https://github.com/Nezreka"
+  },
+  "links": {
+    "github": "https://github.com/Nezreka/SoulSync",
+    "website": "https://ssync.net/",
+    "docs": [
+      "https://github.com/Nezreka/SoulSync#installation",
+      "https://github.com/Nezreka/SoulSync/blob/main/Support/REVERSE-PROXY.md",
+      "https://github.com/Nezreka/SoulSync/blob/main/Support/DOCKER-OAUTH-FIX.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no login until you set an admin PIN or username and password under Settings > System > Security. Turn on \"Behind a reverse proxy\" there too and restart the app.",
+      "link": "https://github.com/Nezreka/SoulSync/blob/main/Support/REVERSE-PROXY.md"
+    },
+    {
+      "type": "warning",
+      "message": "Spotify sign-in needs your own developer app credentials, with the redirect URI set to https://<your-domain>/callback in both Spotify and SoulSync. Soulseek needs a separate slskd instance and its API key.",
+      "link": "https://github.com/Nezreka/SoulSync/blob/main/Support/DOCKER-OAUTH-FIX.md"
+    }
+  ]
+}
