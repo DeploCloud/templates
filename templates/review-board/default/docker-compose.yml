@@ -1,0 +1,66 @@
+services:
+  review-board:
+    image: beanbag/reviewboard:8.1@sha256:67113ac4f99a48396d8bdeb501a2c7d561aecacf28543f71b725913d68d3c275
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DOMAIN: ${DOMAIN}
+      DATABASE_TYPE: postgresql
+      DATABASE_SERVER: review-board-db
+      DATABASE_NAME: reviewboard
+      DATABASE_USERNAME: reviewboard
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      MEMCACHED_SERVER: review-board-memcached:11211
+      NUM_WORKERS: ${NUM_WORKERS}
+      REVIEWBOARD_CRONTAB: /site/conf/cron.conf
+      # Lets gunicorn trust X-Forwarded-Proto from the nginx frontend
+      FORWARDED_ALLOW_IPS: "*"
+    volumes:
+      - review-board-site:/site
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+    depends_on:
+      review-board-db:
+        condition: service_healthy
+      review-board-memcached:
+        condition: service_started
+
+  review-board-nginx:
+    image: nginx:1.31.9-alpine@sha256:fb4658584bd9a916ffb6f6e365f97c25cfdb2923801f551ea08356e695f14ff7
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - review-board-site:/var/www/reviewboard:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - review-board
+
+  review-board-db:
+    image: postgres:17.11-alpine@sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: reviewboard
+      POSTGRES_USER: reviewboard
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - review-board-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reviewboard -d reviewboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  review-board-memcached:
+    image: memcached:1.6.45-alpine@sha256:084fb554292d1447bc2c68b80c2331b98834514f56c866bc21a61be3c2ee376d
+    restart: unless-stopped
+    command: ["memcached", "-m", "128"]
+
+volumes:
+  review-board-site: {}
+  review-board-db: {}

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based code and document review tool with an nginx frontend, PostgreSQL database and memcached cache.",
+  "category": "development",
+  "developedBy": {
+    "label": "Beanbag",
+    "url": "https://www.beanbaginc.com/"
+  },
+  "links": {
+    "github": "https://github.com/reviewboard/reviewboard",
+    "website": "https://www.reviewboard.org/",
+    "docs": [
+      "https://www.reviewboard.org/docs/manual/latest/admin/installation/docker/",
+      "https://www.reviewboard.org/docs/manual/latest/admin/configuration/general-settings/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates the administrator admin / admin. Sign in and change that password and the admin email right after the first deploy, then set Server to https://your-domain under Administration, General Settings so links in emails use HTTPS.",
+      "link": "https://www.reviewboard.org/docs/manual/latest/admin/installation/docker/"
+    }
+  ]
+}
