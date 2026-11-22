@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web file browser that publicly lists a directory with search, file hashes, README rendering and zip downloads.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Chris Kankiewicz",
+    "url": "https://www.chriskankiewicz.com"
+  },
+  "links": {
+    "github": "https://github.com/DirectoryLister/DirectoryLister",
+    "website": "https://www.directorylister.com",
+    "docs": [
+      "https://docs.directorylister.com/installation",
+      "https://docs.directorylister.com/configuration/configuration-reference"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no login and no upload from the web UI. Copy the files you want to share into the files volume mounted at /data; anyone with the URL can browse and download them.",
+      "link": "https://docs.directorylister.com/configuration/authentication"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

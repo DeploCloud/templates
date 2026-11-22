@@ -1,0 +1,11 @@
+services:
+  directory-lister:
+    image: directorylister/directorylister:5.8.3@sha256:5498c8cc29d650601c3f4ef8e4f35ab1b533951180dee958aa2bdeeab775ff58
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - directory-lister-files:/data
+
+volumes:
+  directory-lister-files: {}
