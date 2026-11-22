@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "manyfold"
+port = 3_214
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+MULTIUSER = "enabled"
+PUBLIC_HOSTNAME = "${domain}"
+HTTPS_ONLY = "enabled"
