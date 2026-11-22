@@ -1,0 +1,19 @@
+[variables]
+app_key = "${password:32}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "databasement"
+port = 2_226
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_KEY = "${app_key}"
+APP_DISPLAY_TIMEZONE = "UTC"
+DB_DATABASE = "databasement"
+DB_USERNAME = "databasement"
+DB_PASSWORD = "${db_password}"

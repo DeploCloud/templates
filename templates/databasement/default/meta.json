@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted database backup manager with a web UI, scheduler and queue worker in one container, storing its own data in SQLite.",
+  "category": "database",
+  "developedBy": {
+    "label": "David Courtey",
+    "url": "https://github.com/David-Crty"
+  },
+  "links": {
+    "github": "https://github.com/David-Crty/databasement",
+    "website": "https://david-crty.github.io/databasement/",
+    "docs": [
+      "https://david-crty.github.io/databasement/self-hosting/docker",
+      "https://david-crty.github.io/databasement/self-hosting/configuration/application",
+      "https://david-crty.github.io/databasement/user-guide/volumes"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Create the first account right after deployment: it becomes the administrator.",
+      "link": "https://david-crty.github.io/databasement/self-hosting/docker"
+    }
+  ]
+}
