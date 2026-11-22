@@ -1,0 +1,44 @@
+[config]
+
+[[config.domains]]
+serviceName = "paperless-gpt-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	basic_auth {
+		{$PAPERLESS_GPT_USERNAME} {$PAPERLESS_GPT_PASSWORD_HASH}
+	}
+	reverse_proxy paperless-gpt:8080 {
+		flush_interval -1
+	}
+}
+"""
+
+[config.env]
+PAPERLESS_GPT_USERNAME = "admin"
+PAPERLESS_GPT_PASSWORD = "${password:24}"
+PAPERLESS_BASE_URL = "http://paperless-webserver:8000"
+PAPERLESS_API_TOKEN = "replace-with-your-paperless-api-token"
+PAPERLESS_PUBLIC_URL = ""
+LLM_PROVIDER = "openai"
+LLM_MODEL = "gpt-4o"
+LLM_LANGUAGE = "English"
+OPENAI_API_KEY = "replace-with-your-openai-api-key"
+OPENAI_BASE_URL = ""
+ANTHROPIC_API_KEY = ""
+MISTRAL_API_KEY = ""
+GOOGLEAI_API_KEY = ""
+OLLAMA_HOST = ""
+OCR_PROVIDER = "llm"
+VISION_LLM_PROVIDER = "openai"
+VISION_LLM_MODEL = "gpt-4o"
+LOG_LEVEL = "info"
