@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Deception framework running an HTTP decoy that mimics a WordPress login and logs every request scanners and attackers send to it.",
+  "category": "security",
+  "developedBy": {
+    "label": "Beelzebub Labs",
+    "url": "https://github.com/beelzebub-labs"
+  },
+  "links": {
+    "github": "https://github.com/beelzebub-labs/beelzebub",
+    "website": "https://beelzebub.ai",
+    "docs": [
+      "https://docs.beelzebub.ai/protocols/http",
+      "https://docs.beelzebub.ai/reference/configuration",
+      "https://docs.beelzebub.ai/reference/environment",
+      "https://docs.beelzebub.ai/operations/production-safety"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "There is no admin interface: the domain serves the decoy itself, and captured requests appear in the service logs and in /logs/beelzebub.log.",
+      "link": "https://docs.beelzebub.ai/protocols/http"
+    }
+  ]
+}

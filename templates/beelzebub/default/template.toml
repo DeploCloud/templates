@@ -1,0 +1,74 @@
+[config]
+
+[[config.domains]]
+serviceName = "beelzebub"
+port = 8080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "wordpress.yaml"
+content = """apiVersion: "v1"
+protocol: "http"
+address: ":8080"
+description: "WordPress decoy"
+trustedProxies:
+  - "10.0.0.0/8"
+  - "172.16.0.0/12"
+  - "192.168.0.0/16"
+commands:
+  - regex: '^(/|/index[.]php)([?].*)?$'
+    methods: [GET, HEAD]
+    handler: '<!doctype html><html lang="en-US"><head><meta charset="UTF-8"><meta name="generator" content="WordPress 6.9.4"><title>Example Site</title></head><body><h1>Example Site</h1><p>Just another WordPress site</p></body></html>'
+    headers:
+      - "Content-Type: text/html; charset=UTF-8"
+      - "X-Powered-By: PHP/8.3.31"
+      - "Server: Apache/2.4.67 (Debian)"
+    statusCode: 200
+  - regex: '^/wp-login[.]php([?].*)?$'
+    methods: [GET, HEAD]
+    handler: '<!doctype html><html lang="en-US"><head><meta charset="UTF-8"><title>Log In - Example Site - WordPress</title></head><body class="login"><form name="loginform" id="loginform" action="/wp-login.php" method="post"><label for="user_login">Username or Email Address</label><input type="text" name="log" id="user_login"><label for="user_pass">Password</label><input type="password" name="pwd" id="user_pass"><input type="submit" name="wp-submit" value="Log In"></form></body></html>'
+    headers:
+      - "Content-Type: text/html; charset=UTF-8"
+      - "X-Powered-By: PHP/8.3.31"
+      - "Set-Cookie: wordpress_test_cookie=WP%20Cookie%20check; path=/; HttpOnly"
+      - "Server: Apache/2.4.67 (Debian)"
+    statusCode: 200
+  - regex: '^/wp-login[.]php([?].*)?$'
+    methods: [POST]
+    handler: '<!doctype html><html lang="en-US"><head><title>Log In - Example Site - WordPress</title></head><body><div id="login_error">Error: The username or password you entered is incorrect.</div></body></html>'
+    headers:
+      - "Content-Type: text/html; charset=UTF-8"
+      - "X-Powered-By: PHP/8.3.31"
+      - "Server: Apache/2.4.67 (Debian)"
+    statusCode: 200
+  - regex: '^/wp-admin(/.*)?$'
+    methods: [GET, HEAD]
+    handler: ""
+    headers:
+      - "Location: /wp-login.php?redirect_to=%2Fwp-admin%2F&reauth=1"
+      - "X-Powered-By: PHP/8.3.31"
+      - "Server: Apache/2.4.67 (Debian)"
+    statusCode: 302
+  - regex: '^/xmlrpc[.]php([?].*)?$'
+    methods: [POST]
+    handler: '<?xml version="1.0" encoding="UTF-8"?><methodResponse><fault><value><struct><member><name>faultCode</name><value><int>403</int></value></member><member><name>faultString</name><value><string>Incorrect username or password.</string></value></member></struct></value></fault></methodResponse>'
+    headers:
+      - "Content-Type: text/xml; charset=UTF-8"
+      - "X-Powered-By: PHP/8.3.31"
+      - "Server: Apache/2.4.67 (Debian)"
+    statusCode: 200
+  - regex: '^/xmlrpc[.]php([?].*)?$'
+    methods: [GET, HEAD]
+    handler: "XML-RPC server accepts POST requests only."
+    headers:
+      - "Content-Type: text/plain;charset=UTF-8"
+      - "Server: Apache/2.4.67 (Debian)"
+    statusCode: 405
+fallbackCommand:
+  handler: '<!doctype html><html><head><title>Page not found - Example Site</title></head><body><h1>Page not found</h1></body></html>'
+  headers:
+    - "Content-Type: text/html; charset=UTF-8"
+    - "X-Powered-By: PHP/8.3.31"
+    - "Server: Apache/2.4.67 (Debian)"
+  statusCode: 404
+"""
