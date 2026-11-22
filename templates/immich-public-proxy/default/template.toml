@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "immich-public-proxy"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+IMMICH_URL = "http://immich-server:2283"
+PUBLIC_BASE_URL = "https://${domain}"

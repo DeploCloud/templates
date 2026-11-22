@@ -1,0 +1,20 @@
+services:
+  immich-public-proxy:
+    image: alangrainger/immich-public-proxy:4.2.0@sha256:ebf84972652c4cf5a7ef7d2359db35ddca46a5cf17714975abf5a8674b05935d
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - 3000
+    environment:
+      IMMICH_URL: ${IMMICH_URL}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf -m 4 http://localhost:3000/robots.txt -o /dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

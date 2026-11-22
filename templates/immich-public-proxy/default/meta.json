@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Read-only proxy that serves the albums and photos you share from Immich to the public, without exposing your Immich server.",
+  "category": "media",
+  "developedBy": {
+    "label": "Alan Grainger",
+    "url": "https://github.com/alangrainger"
+  },
+  "links": {
+    "github": "https://github.com/alangrainger/immich-public-proxy",
+    "website": "https://docs.ipp.nz",
+    "docs": [
+      "https://docs.ipp.nz/installation",
+      "https://docs.ipp.nz/config/environment-variables",
+      "https://docs.ipp.nz/how-to-use"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Needs an existing Immich 3.0 or newer server. The default IMMICH_URL reaches an Immich app from this catalog in the same environment; for another server set IMMICH_URL to its internal (not public) URL and redeploy. Then in Immich, under Server Settings, set the External domain to this app's URL so share links point at the proxy.",
+      "link": "https://docs.ipp.nz/installation"
+    }
+  ]
+}
