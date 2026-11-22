@@ -1,0 +1,22 @@
+services:
+  pigallery2:
+    image: bpatrik/pigallery2:3.8.0@sha256:290de6eb5216218b0be7561ec04d719260e551a213257300abeaba7d72c4a5f5
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      Server-publicUrl: ${PUBLIC_URL}
+      Server-trustProxy: uniquelocal
+      Upload-enabled: "true"
+      Users-enforcedUsers: '[{"name":"${ADMIN_USERNAME}","role":"Admin","password":"${ADMIN_PASSWORD}"}]'
+    volumes:
+      - pigallery2-config:/app/data/config
+      - pigallery2-db:/app/data/db
+      - pigallery2-images:/app/data/images
+      - pigallery2-tmp:/app/data/tmp
+
+volumes:
+  pigallery2-config: {}
+  pigallery2-db: {}
+  pigallery2-images: {}
+  pigallery2-tmp: {}
