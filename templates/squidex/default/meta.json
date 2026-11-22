@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Headless CMS with a content editor, REST and GraphQL APIs, backed by MongoDB with persistent asset storage.",
+  "category": "cms",
+  "developedBy": {
+    "label": "Squidex",
+    "url": "https://github.com/Squidex"
+  },
+  "links": {
+    "github": "https://github.com/Squidex/squidex",
+    "website": "https://squidex.io",
+    "docs": [
+      "https://docs.squidex.io/id-01-getting-started/installation/platforms/install-on-docker",
+      "https://docs.squidex.io/id-01-getting-started/installation/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the administrator account from the IDENTITY__ADMINEMAIL and IDENTITY__ADMINPASSWORD environment variables. Google, GitHub and Microsoft login stay disabled until you set their client ID and secret."
+    }
+  ]
+}

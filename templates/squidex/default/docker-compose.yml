@@ -1,0 +1,54 @@
+services:
+  squidex:
+    image: squidex/squidex:7.24.0@sha256:acab8ab3a6757142a348c78f2c4b4d2b942ec53dfa01c34a1f7be3b94f54f928
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      URLS__BASEURL: ${URLS__BASEURL}
+      EVENTSTORE__TYPE: MongoDb
+      EVENTSTORE__MONGODB__CONFIGURATION: ${MONGO_URL}
+      STORE__TYPE: MongoDb
+      STORE__MONGODB__CONFIGURATION: ${MONGO_URL}
+      IDENTITY__ADMINEMAIL: ${IDENTITY__ADMINEMAIL}
+      IDENTITY__ADMINPASSWORD: ${IDENTITY__ADMINPASSWORD}
+      # Create the admin only on an empty database, so a changed password survives restarts.
+      IDENTITY__ADMINRECREATE: "false"
+      IDENTITY__GOOGLECLIENT: ${IDENTITY__GOOGLECLIENT}
+      IDENTITY__GOOGLESECRET: ${IDENTITY__GOOGLESECRET}
+      IDENTITY__GITHUBCLIENT: ${IDENTITY__GITHUBCLIENT}
+      IDENTITY__GITHUBSECRET: ${IDENTITY__GITHUBSECRET}
+      IDENTITY__MICROSOFTCLIENT: ${IDENTITY__MICROSOFTCLIENT}
+      IDENTITY__MICROSOFTSECRET: ${IDENTITY__MICROSOFTSECRET}
+    volumes:
+      - squidex-assets:/app/Assets
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      squidex-db:
+        condition: service_healthy
+
+  squidex-db:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - squidex-db:/data/db
+      - squidex-db-config:/data/configdb
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  squidex-assets: {}
+  squidex-db: {}
+  squidex-db-config: {}
