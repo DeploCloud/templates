@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "timetagger"
+port = 80
+host = "${domain}"
+
+[config.env]
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "${admin_password}"
