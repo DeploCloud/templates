@@ -1,0 +1,16 @@
+services:
+  maloja:
+    image: krateng/maloja:3.2.10@sha256:4c39b5daa893451a379802f267a1d83f2b5d15d8b369e73349e530133cc8fdb6
+    restart: unless-stopped
+    expose:
+      - 42010
+    environment:
+      MALOJA_DATA_DIRECTORY: /data
+      MALOJA_HOST: ${MALOJA_HOST}
+      MALOJA_FORCE_PASSWORD: ${MALOJA_FORCE_PASSWORD}
+      MALOJA_NAME: ${MALOJA_NAME}
+    volumes:
+      - maloja-data:/data
+
+volumes:
+  maloja-data: {}

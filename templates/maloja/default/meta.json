@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted music scrobble database that turns your listening history into personal statistics and charts.",
+  "category": "media",
+  "developedBy": {
+    "label": "krateng",
+    "url": "https://github.com/krateng"
+  },
+  "links": {
+    "github": "https://github.com/krateng/maloja",
+    "website": "https://maloja.krateng.ch",
+    "docs": [
+      "https://github.com/krateng/maloja#how-to-install",
+      "https://github.com/krateng/maloja/blob/master/settings.md",
+      "https://github.com/krateng/maloja/blob/master/API.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin password is the generated MALOJA_FORCE_PASSWORD value and is reapplied on every start. Log in at /admin_overview, then create an API key for each scrobbler client.",
+      "link": "https://github.com/krateng/maloja#how-to-scrobble"
+    }
+  ]
+}
