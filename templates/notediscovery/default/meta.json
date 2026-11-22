@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted knowledge base that stores notes as plain Markdown files, with full-text search, graph view, tags, templates and share links.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "gamosoft",
+    "url": "https://github.com/gamosoft"
+  },
+  "links": {
+    "github": "https://github.com/gamosoft/NoteDiscovery",
+    "website": "https://www.notediscovery.com",
+    "docs": [
+      "https://github.com/gamosoft/NoteDiscovery/blob/main/documentation/ENVIRONMENT_VARIABLES.md",
+      "https://github.com/gamosoft/NoteDiscovery/blob/main/documentation/AUTHENTICATION.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Password protection is enabled with a single shared password. Sign in with the generated AUTHENTICATION_PASSWORD from the environment variables.",
+      "link": "https://github.com/gamosoft/NoteDiscovery/blob/main/documentation/AUTHENTICATION.md"
+    }
+  ]
+}
