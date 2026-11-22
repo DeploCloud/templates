@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "QDirStat disk usage analyzer streamed to the browser, with a tree map of files and folders and a viewer for cache files collected on headless servers.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Stefan Hundhammer",
+    "url": "https://github.com/shundhammer"
+  },
+  "links": {
+    "github": "https://github.com/shundhammer/qdirstat",
+    "docs": [
+      "https://github.com/shundhammer/qdirstat/blob/master/README.md",
+      "https://github.com/shundhammer/qdirstat/blob/master/doc/QDirStat-for-Servers.md",
+      "https://github.com/jlesage/docker-qdirstat"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the WEB_AUTHENTICATION_USERNAME and generated WEB_AUTHENTICATION_PASSWORD values from the environment. QDirStat only sees files inside the container: upload files or a qdirstat-cache-writer cache file to /storage with the file manager (folder icon in the web control panel), then rescan or use File > Read Cache File.",
+      "link": "https://github.com/shundhammer/qdirstat/blob/master/doc/QDirStat-for-Servers.md"
+    }
+  ]
+}
