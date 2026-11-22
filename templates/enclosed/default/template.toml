@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "enclosed"
+port = 8_787
+host = "${domain}"
+
+[config.env]
+AUTHENTICATION_JWT_SECRET = "${secret:64}"
+PUBLIC_IS_AUTHENTICATION_REQUIRED = "false"
+AUTHENTICATION_USERS = ""
