@@ -1,0 +1,33 @@
+services:
+  byparr:
+    image: ghcr.io/thephaseless/byparr:3.1.1@sha256:c66fa161187b8fa527bfad7eefa2647ea1c553f77df68cbffd6fe83366d1787b
+    restart: unless-stopped
+    expose:
+      - 8191
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL}
+    shm_size: 1gb
+    # /cache holds the browser baked into the image, so only /tmp goes to RAM
+    tmpfs:
+      - /tmp:exec,mode=1777,size=1G
+    # /health launches a browser, upstream recommends probing /docs for readiness
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8191/docs"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 300s
+
+  # Byparr has no authentication, so the public route only answers under the secret token path
+  byparr-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      BYPARR_TOKEN: ${BYPARR_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      byparr:
+        condition: service_healthy
