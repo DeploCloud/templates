@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI for torrent clients, deployed with a bundled Transmission daemon and a shared persistent downloads volume.",
+  "category": "media",
+  "developedBy": {
+    "label": "Jesse Chan",
+    "url": "https://github.com/jesec"
+  },
+  "links": {
+    "github": "https://github.com/jesec/flood",
+    "website": "https://flood.js.org",
+    "docs": [
+      "https://github.com/jesec/flood#configuration",
+      "https://github.com/jesec/flood/wiki",
+      "https://docs.linuxserver.io/images/docker-transmission/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you register becomes the admin, so register right after deployment. On that form pick Transmission, URL http://flood-transmission:9091/transmission/rpc, username flood and the generated TRANSMISSION_PASS from the environment settings."
+    },
+    {
+      "type": "info",
+      "message": "The BitTorrent peer port is not published, so Transmission can only reach peers through outgoing connections."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+services:
+  flood:
+    image: jesec/flood:4.16.4@sha256:72bdc95ff160e1f6b8ad72c171eff53f0bab8aa651389ca710ffff170278390a
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      FLOOD_OPTION_HOST: 0.0.0.0
+      FLOOD_OPTION_ALLOWEDPATH: /downloads
+    volumes:
+      # rundir defaults to ~/.local/share/flood; mounting the home keeps the image's ownership
+      - flood-home:/home/download
+      - flood-downloads:/downloads
+    depends_on:
+      - flood-transmission
+  flood-transmission:
+    image: lscr.io/linuxserver/transmission:4.1.4@sha256:5baf08cd73a566699f35baad3c4a84ba7d7057220566c5fb29969bf2292dc2ff
+    restart: unless-stopped
+    expose:
+      - 9091
+    environment:
+      # matches the uid Flood runs as, so it can manage downloaded files
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      USER: ${TRANSMISSION_USER}
+      PASS: ${TRANSMISSION_PASS}
+    volumes:
+      - flood-transmission-config:/config
+      - flood-downloads:/downloads
+
+volumes:
+  flood-home: {}
+  flood-downloads: {}
+  flood-transmission-config: {}
