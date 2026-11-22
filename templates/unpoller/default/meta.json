@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Collects UniFi controller, device and client metrics into InfluxDB, with Grafana preconfigured to chart them.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "UnPoller",
+    "url": "https://github.com/unpoller"
+  },
+  "links": {
+    "github": "https://github.com/unpoller/unpoller",
+    "website": "https://unpoller.com",
+    "docs": [
+      "https://unpoller.com/docs/install/dockercompose",
+      "https://unpoller.com/docs/install/configuration",
+      "https://unpoller.com/docs/install/controllerlogin",
+      "https://unpoller.com/docs/install/grafana"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "UnPoller must reach your UniFi controller from this server. Set UNIFI_URL with UNIFI_USER and UNIFI_PASS of a read-only controller account, or UNIFI_API_KEY. For a console only reachable on your LAN, set UNIFI_REMOTE to true and UNIFI_REMOTE_API_KEY to a UniFi Site Manager API key instead.",
+      "link": "https://unpoller.com/docs/install/controllerlogin"
+    },
+    {
+      "type": "warning",
+      "message": "Sign in to Grafana as admin with the generated GRAFANA_ADMIN_PASSWORD from the environment. The InfluxDB data source is already set up; import the UnPoller dashboards by ID (10414 to 10419) from the Grafana dashboard import page.",
+      "link": "https://unpoller.com/docs/install/grafana"
+    }
+  ]
+}

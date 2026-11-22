@@ -1,0 +1,38 @@
+[variables]
+influxdb_password = "${password:32}"
+grafana_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "unpoller-grafana"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+UNIFI_URL = "https://unifi.example.com"
+UNIFI_USER = "unpoller"
+UNIFI_PASS = ""
+UNIFI_API_KEY = ""
+UNIFI_REMOTE = "false"
+UNIFI_REMOTE_API_KEY = ""
+INFLUXDB_PASSWORD = "${influxdb_password}"
+GRAFANA_ADMIN_PASSWORD = "${grafana_password}"
+GRAFANA_ROOT_URL = "https://${domain}"
+
+[[config.mounts]]
+filePath = "grafana-datasource.yaml"
+content = """apiVersion: 1
+datasources:
+  - name: UniFi InfluxDB
+    type: influxdb
+    access: proxy
+    url: http://unpoller-influxdb:8086
+    user: unpoller
+    isDefault: true
+    jsonData:
+      dbName: unpoller
+      httpMode: GET
+    secureJsonData:
+      password: "${influxdb_password}"
+"""

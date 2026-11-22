@@ -1,0 +1,57 @@
+services:
+  unpoller:
+    image: ghcr.io/unpoller/unpoller:v5.9.6@sha256:96c2c7645bce1ed6f43934b11584dfa378a170e262aba78972c18aec6cbc0e16
+    restart: unless-stopped
+    environment:
+      UP_UNIFI_DEFAULT_URL: ${UNIFI_URL}
+      UP_UNIFI_DEFAULT_USER: ${UNIFI_USER}
+      UP_UNIFI_DEFAULT_PASS: ${UNIFI_PASS}
+      UP_UNIFI_DEFAULT_API_KEY: ${UNIFI_API_KEY}
+      UP_UNIFI_REMOTE: ${UNIFI_REMOTE}
+      UP_UNIFI_REMOTE_API_KEY: ${UNIFI_REMOTE_API_KEY}
+      UP_INFLUXDB_URL: http://unpoller-influxdb:8086
+      UP_INFLUXDB_DB: unpoller
+      UP_INFLUXDB_USER: unpoller
+      UP_INFLUXDB_PASS: ${INFLUXDB_PASSWORD}
+      UP_PROMETHEUS_DISABLE: "true"
+    depends_on:
+      unpoller-influxdb:
+        condition: service_healthy
+
+  unpoller-influxdb:
+    image: influxdb:1.13.2@sha256:ffa96366d916545608b8ae8dcc09d1efb5d792e4139096dfdcb1daf8789b211a
+    restart: unless-stopped
+    environment:
+      INFLUXDB_DB: unpoller
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+      INFLUXDB_ADMIN_USER: unpoller
+      INFLUXDB_ADMIN_PASSWORD: ${INFLUXDB_PASSWORD}
+    volumes:
+      - unpoller-influxdb-data:/var/lib/influxdb
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8086/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  unpoller-grafana:
+    image: grafana/grafana:13.3.1@sha256:0615ec4fbd4072004b7d86b46ded63013a74b7d6eb1119273dd89e8fa25c13cf
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_SERVER_ROOT_URL: ${GRAFANA_ROOT_URL}
+      GF_PLUGINS_PREINSTALL: grafana-clock-panel
+    volumes:
+      - unpoller-grafana-data:/var/lib/grafana
+      - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/unpoller.yaml:ro
+    depends_on:
+      unpoller-influxdb:
+        condition: service_healthy
+
+volumes:
+  unpoller-influxdb-data: {}
+  unpoller-grafana-data: {}
