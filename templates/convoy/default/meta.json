@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Webhooks gateway for sending and receiving webhooks with retries, signatures and a dashboard, backed by PostgreSQL and Redis.",
+  "category": "development",
+  "developedBy": {
+    "label": "Frain Technologies",
+    "url": "https://github.com/frain-dev"
+  },
+  "links": {
+    "github": "https://github.com/frain-dev/convoy",
+    "website": "https://getconvoy.io",
+    "docs": [
+      "https://getconvoy.io/docs/deployment/install-convoy/docker",
+      "https://getconvoy.io/docs/deployment/configuration",
+      "https://getconvoy.io/docs/deployment/architecture"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates the account superuser@default.com with the password default. Sign in and change that password right away.",
+      "link": "https://getconvoy.io/docs/deployment/install-convoy/docker"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "convoy"
+port = 5_005
+host = "${domain}"
+
+[config.env]
+CONVOY_HOST = "https://${domain}"
+DB_USER = "convoy"
+DB_NAME = "convoy"
+DB_PASSWORD = "${db_password}"
+CONVOY_JWT_SECRET = "${secret:64}"
+CONVOY_JWT_REFRESH_SECRET = "${secret:64}"
+CONVOY_SIGNUP_ENABLED = "false"
+CONVOY_LOGGER_LEVEL = "error"
