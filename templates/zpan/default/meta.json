@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "File hosting and sharing web app on top of your own S3-compatible bucket, with share links, image hosting, WebDAV and an embedded SQLite database.",
+  "category": "storage",
+  "developedBy": {
+    "label": "saltbo",
+    "url": "https://github.com/saltbo"
+  },
+  "links": {
+    "github": "https://github.com/saltbo/zpan",
+    "website": "https://zpan.space",
+    "docs": [
+      "https://zpan.space/docs/deployment/docker/",
+      "https://zpan.space/docs/reference/environment-variables/",
+      "https://zpan.space/docs/site-management/public-url/",
+      "https://zpan.space/docs/site-management/storage/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Create it right after deployment.",
+      "link": "https://zpan.space/docs/deployment/docker/"
+    },
+    {
+      "type": "warning",
+      "message": "Set Admin Console > Settings > Site identity > Public URL to this app's HTTPS address after the first sign-in. Until then the auto-detected value can be the internal address, which breaks share links, image URLs and WebDAV discovery.",
+      "link": "https://zpan.space/docs/site-management/public-url/"
+    },
+    {
+      "type": "warning",
+      "message": "An S3-compatible bucket is required. Its endpoint must be reachable from users' browsers and its CORS policy must allow this ZPan origin, since uploads go directly from the browser to the bucket.",
+      "link": "https://zpan.space/docs/site-management/storage/"
+    }
+  ]
+}
