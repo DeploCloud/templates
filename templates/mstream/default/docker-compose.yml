@@ -1,0 +1,19 @@
+services:
+  mstream:
+    image: lscr.io/linuxserver/mstream:v6.35.0-ls47@sha256:0eec1a8cde541a2e8d22dfd8015b3adcf34dfe016cb352964eadeee29db4740b
+    restart: unless-stopped
+    # the image only chowns /config, so the music volume starts root-owned and uploads fail
+    entrypoint: ["/bin/sh", "-c", "chown ${PUID}:${PGID} /music && exec /init"]
+    expose:
+      - 3000
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - mstream-config:/config
+      - mstream-music:/music
+
+volumes:
+  mstream-config: {}
+  mstream-music: {}

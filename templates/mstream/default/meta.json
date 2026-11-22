@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "mStream personal music streaming server with a web player, playlists, transcoding and an admin panel, keeping its config, database and music library on persistent volumes.",
+  "category": "media",
+  "developedBy": {
+    "label": "mStream",
+    "url": "https://mstream.io/"
+  },
+  "links": {
+    "github": "https://github.com/IrosTheBeggar/mStream",
+    "website": "https://mstream.io/",
+    "docs": [
+      "https://github.com/IrosTheBeggar/mStream/blob/master/docs/json_config.md",
+      "https://github.com/linuxserver/docker-mstream"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "mStream starts in public mode with no login: anyone with the URL can use the player and the admin panel at /admin until a user exists. Create an admin user in the admin panel right after the first deploy."
+    },
+    {
+      "type": "info",
+      "message": "The music library starts empty and file uploading is disabled by default. Enable it under Admin > Settings > File Uploading to add music through the web player."
+    }
+  ]
+}
