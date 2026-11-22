@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Django forum with categories, private threads, polls, moderation tools and OAuth sign-in, backed by PostgreSQL, Redis and a Celery worker.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Rafał Pitoń",
+    "url": "https://github.com/rafalp"
+  },
+  "links": {
+    "github": "https://github.com/rafalp/Misago",
+    "website": "https://misago-project.org/",
+    "docs": [
+      "https://misago.gitbook.io/docs/",
+      "https://github.com/rafalp/misago_docker",
+      "https://github.com/tetricky/misago-image"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates the admin account from MISAGO_ADMIN_USERNAME, MISAGO_ADMIN_EMAIL and the generated MISAGO_ADMIN_PASSWORD. Set MISAGO_ADMIN_EMAIL to your own address before the first deploy, or change it from admin@example.com after signing in. The admin panel is at /admincp/."
+    },
+    {
+      "type": "warning",
+      "message": "Emails such as account activation and password resets are only written to the logs until SMTP is set: set MISAGO_EMAIL_PROVIDER to smtp, fill in the other MISAGO_EMAIL_* variables and redeploy."
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: session and CSRF cookies are marked Secure, so signing in fails on a plain HTTP domain."
+    }
+  ]
+}
