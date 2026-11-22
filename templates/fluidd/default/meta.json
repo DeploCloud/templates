@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Fluidd web interface for Klipper 3D printers, served from one place and connecting from the browser to the Moonraker API of each printer you add.",
+  "category": "other",
+  "developedBy": {
+    "label": "Fluidd",
+    "url": "https://github.com/fluidd-core"
+  },
+  "links": {
+    "github": "https://github.com/fluidd-core/fluidd",
+    "website": "https://docs.fluidd.xyz",
+    "docs": [
+      "https://docs.fluidd.xyz/getting-started/",
+      "https://docs.fluidd.xyz/features/multiple-printers/",
+      "https://docs.fluidd.xyz/configuration/#cors-domains"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This deploys only the web interface; your browser connects directly to each printer's Moonraker API. Because the page is served over HTTPS, Moonraker must be reachable from your browser over a secure WebSocket (wss), and its cors_domains setting must include this domain.",
+      "link": "https://docs.fluidd.xyz/features/multiple-printers/"
+    }
+  ]
+}
