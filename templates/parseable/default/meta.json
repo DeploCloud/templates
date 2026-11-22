@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Observability data lake for logs, metrics and traces with SQL queries, dashboards, alerting and native OpenTelemetry ingestion, stored on local disk.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Parseable",
+    "url": "https://www.parseable.com"
+  },
+  "links": {
+    "github": "https://github.com/parseablehq/parseable",
+    "website": "https://www.parseable.com",
+    "docs": [
+      "https://www.parseable.com/docs/self-hosted/installation/standalone/docker",
+      "https://www.parseable.com/docs/self-hosted/configuration",
+      "https://www.parseable.com/docs/ingest-data/otel"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated P_PASSWORD value from this app's environment variables. The same credentials authenticate ingestion requests."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "parseable"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+P_USERNAME = "admin"
+P_PASSWORD = "${admin_password}"
+P_ORIGIN_URI = "https://${domain}"
