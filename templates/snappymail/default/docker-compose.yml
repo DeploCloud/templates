@@ -1,0 +1,20 @@
+services:
+  snappymail:
+    image: djmaze/snappymail:v3.0.1.2@sha256:e2fa8e4f348905831f95826bf6c0711e15f85aec2bab3e96ffca0dd45b2e8aed
+    restart: unless-stopped
+    expose:
+      - 8888
+    environment:
+      UPLOAD_MAX_SIZE: ${UPLOAD_MAX_SIZE}
+      MEMORY_LIMIT: ${MEMORY_LIMIT}
+    volumes:
+      - snappymail-data:/var/lib/snappymail
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -T 3 -O /dev/null http://127.0.0.1:8888/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  snappymail-data: {}
