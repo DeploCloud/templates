@@ -1,0 +1,35 @@
+services:
+  # /app/.user is not in the image, so the volume starts root-owned; the app runs as nobody
+  beaverhabits-init:
+    image: daya0576/beaverhabits:0.10.0@sha256:d39bea489faedfbc55a29bb73bd8bd1845f52e406dd77ba264bd20ba1439e1e8
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "65534:65534", "/app/.user"]
+    volumes:
+      - beaverhabits-data:/app/.user
+
+  beaverhabits:
+    image: daya0576/beaverhabits:0.10.0@sha256:d39bea489faedfbc55a29bb73bd8bd1845f52e406dd77ba264bd20ba1439e1e8
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      HABITS_STORAGE: ${HABITS_STORAGE}
+      JWT_SECRET: ${JWT_SECRET}
+      NICEGUI_STORAGE_SECRET: ${NICEGUI_STORAGE_SECRET}
+      MAX_USER_COUNT: ${MAX_USER_COUNT}
+      FIRST_DAY_OF_WEEK: ${FIRST_DAY_OF_WEEK}
+    volumes:
+      - beaverhabits-data:/app/.user
+    healthcheck:
+      test: ["CMD", "python", "healthcheck.py"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      beaverhabits-init:
+        condition: service_completed_successfully
+
+volumes:
+  beaverhabits-data: {}

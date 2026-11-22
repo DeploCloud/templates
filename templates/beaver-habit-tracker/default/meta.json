@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted habit tracker without goals: tick off daily habits, review streaks and notes, with a SQLite database and a REST API.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "daya0576",
+    "url": "https://github.com/daya0576"
+  },
+  "links": {
+    "github": "https://github.com/daya0576/beaverhabits",
+    "website": "https://beaverhabits.com",
+    "docs": [
+      "https://github.com/daya0576/beaverhabits/wiki",
+      "https://github.com/daya0576/beaverhabits/wiki/Environment-variables",
+      "https://github.com/daya0576/beaverhabits/wiki/Beaver-Habit-Tracker-API-How%E2%80%90to-Guide"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you sign up with is yours: MAX_USER_COUNT is set to 1, so the sign-up page closes after it. Raise MAX_USER_COUNT and redeploy to allow more accounts.",
+      "link": "https://github.com/daya0576/beaverhabits/wiki/Environment-variables"
+    }
+  ]
+}
