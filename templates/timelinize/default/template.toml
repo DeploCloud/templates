@@ -1,0 +1,28 @@
+[config]
+
+[[config.domains]]
+serviceName = "timelinize-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	basic_auth {
+		{$TIMELINIZE_USERNAME} {$TIMELINIZE_PASSWORD_HASH}
+	}
+	header Content-Security-Policy "upgrade-insecure-requests"
+	reverse_proxy timelinize:12002
+}
+"""
+
+[config.env]
+TLZ_ORIGIN = "https://${domain}"
+TIMELINIZE_USERNAME = "admin"
+TIMELINIZE_PASSWORD = "${password:24}"
