@@ -1,0 +1,13 @@
+services:
+  universal-media-server:
+    image: universalmediaserver/ums:15.10.0@sha256:8470f3038350a58ceaab7188c2b5d39df9a70bd9e149f51b17596f92cd21aecc
+    restart: unless-stopped
+    expose:
+      - 9001
+    volumes:
+      - profile:/profile
+      - media:/media
+
+volumes:
+  profile: {}
+  media: {}

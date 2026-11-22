@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "universal-media-server"
+port = 9_001
+host = "${domain}"

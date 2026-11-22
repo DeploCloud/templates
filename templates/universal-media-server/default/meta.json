@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Media server with a browser-based player and settings interface for streaming video, music and photos, with FFmpeg transcoding.",
+  "category": "media",
+  "developedBy": {
+    "label": "Universal Media Server",
+    "url": "https://github.com/UniversalMediaServer"
+  },
+  "links": {
+    "github": "https://github.com/UniversalMediaServer/UniversalMediaServer",
+    "website": "https://www.universalmediaserver.com",
+    "docs": [
+      "https://support.universalmediaserver.com/installation/docker",
+      "https://support.universalmediaserver.com/guides/how-to-play-media"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor of the web interface creates the admin account. Open it right after deployment and add /media as a shared folder."
+    },
+    {
+      "type": "info",
+      "message": "DLNA and UPnP discovery by TVs and other renderers needs host networking, so this deployment is reached through the web interface only."
+    }
+  ]
+}
