@@ -1,0 +1,19 @@
+services:
+  twitch-drops-miner:
+    image: dungfu/twitch-drops-miner:webui-16.dev.213a9e4@sha256:a4c1f98e3678d1ae07817d042ba884f8d3ac240ca70964db9c0576953f0742f0
+    restart: unless-stopped
+    expose:
+      - 5800
+    volumes:
+      - twitch-drops-miner-config:/TwitchDropsMiner/config
+      - twitch-drops-miner-cache:/TwitchDropsMiner/cache
+    environment:
+      TZ: ${TZ}
+      WEBUI_AUTH: ${WEBUI_AUTH}
+      # Root, so the app can write the root-owned named volumes
+      USER_ID: ${USER_ID}
+      GROUP_ID: ${GROUP_ID}
+
+volumes:
+  twitch-drops-miner-config: {}
+  twitch-drops-miner-cache: {}
