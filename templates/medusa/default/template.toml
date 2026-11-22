@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "medusa"
+port = 8_081
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"

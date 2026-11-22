@@ -1,0 +1,19 @@
+services:
+  medusa:
+    image: pymedusa/medusa:master@sha256:0caf2991d15030b99864158144903c1d2b5f4f9ff019ec4450c4f1cb33569857
+    restart: unless-stopped
+    expose:
+      - 8081
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - medusa-config:/config
+      - medusa-downloads:/downloads
+      - medusa-tv:/tv
+      - medusa-anime:/anime
+
+volumes:
+  medusa-config: {}
+  medusa-downloads: {}
+  medusa-tv: {}
+  medusa-anime: {}
