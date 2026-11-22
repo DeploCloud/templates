@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Real-time monitoring for Plex, Jellyfin and Emby servers: track streams, analyze playback history and detect account sharing, backed by TimescaleDB and Redis.",
+  "category": "media",
+  "developedBy": {
+    "label": "Connor Gallopo",
+    "url": "https://github.com/connorgallopo"
+  },
+  "links": {
+    "github": "https://github.com/connorgallopo/Tracearr",
+    "website": "https://tracearr.com",
+    "docs": [
+      "https://docs.tracearr.com/getting-started/installation",
+      "https://docs.tracearr.com/getting-started/first-server",
+      "https://docs.tracearr.com/configuration/environment",
+      "https://docs.tracearr.com/configuration/backup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "First-time setup asks for a claim code: it is the CLAIM_CODE value in this template's environment, also printed in the tracearr container log on startup. The first account created becomes the only owner, so finish setup right after deploying.",
+      "link": "https://docs.tracearr.com/configuration/environment#claim-code"
+    }
+  ]
+}
