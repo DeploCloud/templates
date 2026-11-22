@@ -1,0 +1,49 @@
+[variables]
+console_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "i2p-web"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "router.config"
+content = """router.updateDisabled=true
+i2np.ntcp.port=12345
+i2np.udp.port=12345
+i2np.udp.internalPort=12345
+i2p.dir.base=/i2p
+i2p.dir.config=/i2p/.i2p
+i2cp.hostname=127.0.0.1
+consolePassword=${console_password}
+"""
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """# the console rejects POSTs whose Origin scheme differs from its own plain HTTP
+map $http_origin $i2p_origin {
+    default $http_origin;
+    "~^https://(.+)$" "http://$1";
+}
+
+server {
+    listen 80;
+    resolver 127.0.0.11 valid=30s ipv6=off;
+    client_max_body_size 100m;
+    set $i2p_console i2p:7657;
+
+    location / {
+        proxy_pass http://$i2p_console;
+        proxy_http_version 1.1;
+        proxy_set_header Host $http_host;
+        proxy_set_header Origin $i2p_origin;
+        proxy_redirect http://$http_host/ /;
+        proxy_read_timeout 300s;
+    }
+}
+"""
+
+[config.env]
+JVM_XMX = "512m"

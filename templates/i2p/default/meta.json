@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Java I2P router for the anonymous I2P network, with its web router console, I2PSnark torrent client and hidden service manager.",
+  "category": "networking",
+  "developedBy": {
+    "label": "The I2P Project",
+    "url": "https://i2p.net/"
+  },
+  "links": {
+    "github": "https://github.com/i2p/i2p.i2p",
+    "website": "https://i2p.net/",
+    "docs": [
+      "https://github.com/i2p/i2p.i2p/blob/master/Docker.md",
+      "https://i2p.net/en/docs/guides/gettingstarted/",
+      "https://i2p.net/en/docs/applications/bittorrent/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated password stored in the router.config mount (consolePassword). It is applied on the first start only; change it later under Configure > UI in the router console."
+    },
+    {
+      "type": "info",
+      "message": "The I2NP transport port is not published, so the router runs in firewalled mode. It still builds tunnels and reaches the network, but routes less traffic for other peers."
+    }
+  ]
+}
