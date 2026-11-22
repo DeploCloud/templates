@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted AI agent for teams and communities with typed graph memory, background workers, a web dashboard and Discord, Slack and Telegram adapters.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Spacedrive",
+    "url": "https://spacedrive.com"
+  },
+  "links": {
+    "github": "https://github.com/spacedriveapp/spacebot",
+    "website": "https://spacebot.sh",
+    "docs": [
+      "https://docs.spacebot.sh/docker",
+      "https://docs.spacebot.sh/config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Spacebot has no login of its own, so the template puts it behind HTTP basic auth: sign in with SPACEBOT_USERNAME and SPACEBOT_PASSWORD from the environment variables. Then add an LLM provider API key (Anthropic, OpenAI, OpenRouter or another supported provider) under Settings before the agent can answer."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+services:
+  spacebot:
+    image: ghcr.io/spacedriveapp/spacebot:v0.5.0@sha256:ccd9411f72def62b192e44aed23446b94e6e4774d55d7100a94de1531029f6ed
+    restart: unless-stopped
+    expose:
+      - 19898
+    volumes:
+      - spacebot-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:19898/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # the web UI has no login, so the public route goes through this basic auth gate
+  spacebot-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SPACEBOT_USERNAME: ${SPACEBOT_USERNAME}
+      SPACEBOT_PASSWORD: ${SPACEBOT_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - export SPACEBOT_PASSWORD_HASH="$$(caddy hash-password --plaintext "$$SPACEBOT_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      spacebot:
+        condition: service_healthy
+
+volumes:
+  spacebot-data: {}

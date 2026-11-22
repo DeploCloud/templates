@@ -1,0 +1,29 @@
+[config]
+
+[[config.domains]]
+serviceName = "spacebot-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	basic_auth {
+		{$SPACEBOT_USERNAME} {$SPACEBOT_PASSWORD_HASH}
+	}
+	reverse_proxy spacebot:19898 {
+		header_up -Authorization
+		flush_interval -1
+	}
+}
+"""
+
+[config.env]
+SPACEBOT_USERNAME = "admin"
+SPACEBOT_PASSWORD = "${password:24}"
