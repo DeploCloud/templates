@@ -1,0 +1,16 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "immich-kiosk"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+KIOSK_IMMICH_URL = "http://immich-server:2283"
+KIOSK_IMMICH_API_KEY = "replace-with-your-immich-api-key"
+KIOSK_IMMICH_EXTERNAL_URL = ""
+KIOSK_PASSWORD = "${password:24}"
+KIOSK_BEHIND_PROXY = "true"
+LANG = "en_GB"
+TZ = "UTC"
