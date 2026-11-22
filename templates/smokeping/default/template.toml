@@ -1,0 +1,41 @@
+[config]
+
+[[config.domains]]
+serviceName = "smokeping"
+port = 80
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+
+[[config.mounts]]
+filePath = "Targets"
+content = """*** Targets ***
+
+probe = FPing
+
+menu = Top
+title = Network Latency Grapher
+remark = Latency and packet loss measured by this SmokePing instance. Edit the Targets file to monitor your own hosts.
+
++ Internet
+menu = Internet
+title = Internet hosts
+
+++ Google
+menu = Google
+title = google.com
+host = google.com
+
+++ Cloudflare
+menu = Cloudflare DNS
+title = Cloudflare DNS 1.1.1.1
+host = 1.1.1.1
+
+++ Quad9
+menu = Quad9 DNS
+title = Quad9 DNS 9.9.9.9
+host = 9.9.9.9
+"""

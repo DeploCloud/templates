@@ -1,0 +1,18 @@
+services:
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:2.9.0@sha256:03e7437703cf7fa4032644d0b562aebada542bc40a8dc07ee3bc77ddede1adb9
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    volumes:
+      - smokeping-config:/config
+      - smokeping-data:/data
+      - ./Targets:/config/Targets
+
+volumes:
+  smokeping-config: {}
+  smokeping-data: {}

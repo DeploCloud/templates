@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Network latency monitor that pings your hosts around the clock and draws RRD graphs of round-trip time and packet loss.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Tobias Oetiker",
+    "url": "https://github.com/oetiker"
+  },
+  "links": {
+    "github": "https://github.com/oetiker/SmokePing",
+    "website": "https://oss.oetiker.ch/smokeping/",
+    "docs": [
+      "https://oss.oetiker.ch/smokeping/doc/smokeping_config.en.html",
+      "https://oss.oetiker.ch/smokeping/doc/smokeping_examples.en.html",
+      "https://github.com/linuxserver/docker-smokeping"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI has no login, so anyone with the URL can see your graphs. Hosts to monitor are set in the Targets config file of this app; edit it and redeploy, then wait about 10 minutes for the first graphs.",
+      "link": "https://oss.oetiker.ch/smokeping/doc/smokeping_config.en.html"
+    }
+  ]
+}
