@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "holyarrs"
+port = 6262
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "Etc/UTC"
+HOLYARRS_ALLOWED_HOSTS = "${domain}"
+HOLYARRS_TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

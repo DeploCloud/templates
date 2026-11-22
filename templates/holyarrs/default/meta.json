@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "One self-hosted app for shows, movies and music: browse, request, pick releases, fetch subtitles and send downloads to your existing downloader.",
+  "category": "media",
+  "developedBy": {
+    "label": "HolyArrs",
+    "url": "https://holyarrs.com"
+  },
+  "links": {
+    "github": "https://github.com/HolyArrs/HolyArrs",
+    "website": "https://holyarrs.com",
+    "docs": [
+      "https://docs.holyarrs.com/start/install/",
+      "https://docs.holyarrs.com/start/first-run/",
+      "https://docs.holyarrs.com/reference/env-vars/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no default password: whoever opens the app first becomes the owner. Create the owner account right after deploying.",
+      "link": "https://docs.holyarrs.com/start/first-run/"
+    },
+    {
+      "type": "warning",
+      "message": "HolyArrs does not download by itself. It needs an external downloader (qBittorrent, SABnzbd and others), not included here, whose finished files HolyArrs can read under /data.",
+      "link": "https://docs.holyarrs.com/start/folders/"
+    }
+  ]
+}

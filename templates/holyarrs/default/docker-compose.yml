@@ -1,0 +1,36 @@
+services:
+  # the image only chowns /config, and has no shell, so the data volume is prepared here
+  holyarrs-init:
+    image: busybox:1.38.0@sha256:a46257e06c82ad85242d0d38077d0a52d9896389ca60a1a59d3463db586e5fa4
+    restart: "no"
+    entrypoint: ["sh", "-c", "mkdir -p /data/downloads /data/media/movies /data/media/tv /data/media/music && chown ${PUID}:${PGID} /data /data/downloads /data/media /data/media/movies /data/media/tv /data/media/music"]
+    volumes:
+      - holyarrs-data:/data
+
+  holyarrs:
+    image: holyarrs/holyarrs:1.2.0@sha256:169d2c90773011fcdce576e44ff40f71e1ddef18408fc367d870bfa57325323e
+    restart: unless-stopped
+    expose:
+      - 6262
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      HOLYARRS_ALLOWED_HOSTS: ${HOLYARRS_ALLOWED_HOSTS}
+      HOLYARRS_TRUSTED_PROXIES: ${HOLYARRS_TRUSTED_PROXIES}
+    volumes:
+      - holyarrs-config:/config
+      - holyarrs-data:/data
+    healthcheck:
+      test: ["CMD", "/holyarrs", "-healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      holyarrs-init:
+        condition: service_completed_successfully
+
+volumes:
+  holyarrs-config: {}
+  holyarrs-data: {}
