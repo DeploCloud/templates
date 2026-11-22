@@ -1,0 +1,42 @@
+services:
+  portabase:
+    image: portabase/portabase:1.36.3@sha256:c54c3f91ebc7aac454a1ea27d41b21c11321a664097deaa7351096ddff22e646
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+      PROJECT_URL: ${PROJECT_URL}
+      PROJECT_SECRET: ${PROJECT_SECRET}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@portabase-db:5432/${POSTGRES_DB}?schema=public
+      TUSD_BEHIND_PROXY: ${TUSD_BEHIND_PROXY}
+    volumes:
+      - portabase-data:/data
+    depends_on:
+      portabase-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  portabase-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - portabase-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  portabase-data: {}
+  portabase-postgres: {}

@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+project_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "portabase"
+port = 80
+host = "${domain}"
+
+[config.env]
+PROJECT_URL = "https://${domain}"
+PROJECT_SECRET = "${project_secret}"
+POSTGRES_USER = "portabase"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "portabase"
+TUSD_BEHIND_PROXY = "true"
+TZ = "UTC"
