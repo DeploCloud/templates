@@ -1,0 +1,52 @@
+services:
+  yamtrack:
+    image: ghcr.io/fuzzygrim/yamtrack:0.26.3@sha256:78497b454b2b52d3b1062f6fd238351d714cff0895db4369e49ace36f4622e75
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      SECRET: ${SECRET}
+      URLS: ${URLS}
+      TZ: ${TZ}
+      REGISTRATION: ${REGISTRATION}
+      REDIS_URL: redis://yamtrack-redis:6379
+      DB_HOST: yamtrack-db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      yamtrack-db:
+        condition: service_healthy
+      yamtrack-redis:
+        condition: service_healthy
+
+  yamtrack-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - yamtrack-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  yamtrack-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - yamtrack-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  yamtrack-postgres: {}
+  yamtrack-redis: {}
