@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted API management platform and gateway with a backend app, developer portal and MySQL database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Apioo",
+    "url": "https://github.com/apioo"
+  },
+  "links": {
+    "github": "https://github.com/apioo/fusio",
+    "website": "https://www.fusio-project.org",
+    "docs": [
+      "https://docs.fusio-project.org/docs/installation/docker",
+      "https://docs.fusio-project.org/docs/bootstrap"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the backend at /apps/fusio with the user admin and the FUSIO_BACKEND_PW value from the environment. That password is only applied on first start; change it later from the backend."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

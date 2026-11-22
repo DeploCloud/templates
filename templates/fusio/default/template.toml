@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fusio"
+port = 80
+host = "${domain}"
+
+[config.env]
+FUSIO_PROJECT_KEY = "${hash:32}"
+DB_PASSWORD = "${db_password}"
+FUSIO_BACKEND_USER = "admin"
+FUSIO_BACKEND_EMAIL = "admin@${domain}"
+FUSIO_BACKEND_PW = "${admin_password}"
+FUSIO_URL = "https://${domain}"
+FUSIO_MAILER = "native://default"
