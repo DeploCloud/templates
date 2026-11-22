@@ -1,0 +1,47 @@
+services:
+  databasement:
+    image: davidcrty/databasement:1.10.12@sha256:ecf067e3e4c46d5b418553434e3eba48914205040098d9ae511e726b3edb48c9
+    restart: unless-stopped
+    expose:
+      - 2226
+    environment:
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      APP_DISPLAY_TIMEZONE: ${APP_DISPLAY_TIMEZONE}
+      DB_CONNECTION: pgsql
+      DB_HOST: databasement-db
+      DB_PORT: "5432"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ENABLE_QUEUE_WORKER: "true"
+    volumes:
+      - databasement-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2226/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      databasement-db:
+        condition: service_healthy
+
+  databasement-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - databasement-db:/var/lib/postgresql
+
+volumes:
+  databasement-data: {}
+  databasement-db: {}

@@ -1,0 +1,24 @@
+services:
+  databasement:
+    image: davidcrty/databasement:1.10.12@sha256:ecf067e3e4c46d5b418553434e3eba48914205040098d9ae511e726b3edb48c9
+    restart: unless-stopped
+    expose:
+      - 2226
+    environment:
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      APP_DISPLAY_TIMEZONE: ${APP_DISPLAY_TIMEZONE}
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /data/database.sqlite
+      ENABLE_QUEUE_WORKER: "true"
+    volumes:
+      - databasement-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2226/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  databasement-data: {}
