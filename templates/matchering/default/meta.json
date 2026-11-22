@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app for reference-based audio mastering: upload a target track and a reference track, get the target matched in loudness, frequency response, peak level and stereo width.",
+  "category": "media",
+  "developedBy": {
+    "label": "Sergree",
+    "url": "https://github.com/sergree"
+  },
+  "links": {
+    "github": "https://github.com/sergree/matchering",
+    "website": "https://sergree.github.io/matchering/",
+    "docs": [
+      "https://github.com/sergree/matchering-web",
+      "https://github.com/sergree/matchering/blob/master/DOCKER_LINUX.md",
+      "https://github.com/sergree/matchering/wiki/Keep-the-Privacy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web app has no login and runs Django in debug mode: anyone who knows its URL can upload tracks and use your server's CPU. Upstream builds it for home and in-house use, not public hosting.",
+      "link": "https://github.com/sergree/matchering/wiki/Keep-the-Privacy"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
