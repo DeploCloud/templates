@@ -1,0 +1,1 @@
+Watcharr is a self-hosted watched list for movies, TV series, anime and games. This template deploys the official Watcharr image, which serves both the web UI and the API on port 3080. The SQLite database, the generated server config (including the JWT secret) and the cache live in `/data` on a persistent volume. The first account you register becomes the admin.
