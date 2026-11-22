@@ -1,0 +1,17 @@
+[variables]
+session_secret = "${password:64}"
+db_encryption_key = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "yuvomi"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+SESSION_SECRET = "${session_secret}"
+DB_ENCRYPTION_KEY = "${db_encryption_key}"
+BASE_URL = "https://${domain}"
+TZ = "UTC"
