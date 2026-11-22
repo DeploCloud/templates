@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Ticket shop for conferences, concerts and workshops, with PostgreSQL, Redis-backed background tasks and a periodic task runner.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "pretix GmbH",
+    "url": "https://pretix.eu"
+  },
+  "links": {
+    "github": "https://github.com/pretix/pretix",
+    "website": "https://pretix.eu",
+    "docs": [
+      "https://docs.pretix.eu/self-hosting/installation/docker_smallscale/",
+      "https://docs.pretix.eu/self-hosting/config/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /control/ and sign in as admin@localhost with the password admin. Do it right away and change the email address and password of this account.",
+      "link": "https://docs.pretix.eu/self-hosting/installation/docker_smallscale/"
+    },
+    {
+      "type": "warning",
+      "message": "Ticket and order emails need an SMTP server. Set PRETIX_MAIL_HOST, PRETIX_MAIL_PORT, PRETIX_MAIL_USER, PRETIX_MAIL_PASSWORD and PRETIX_MAIL_FROM (PRETIX_MAIL_TLS for STARTTLS or PRETIX_MAIL_SSL for SMTPS), then redeploy.",
+      "link": "https://docs.pretix.eu/self-hosting/config/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
