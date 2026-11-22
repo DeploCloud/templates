@@ -1,0 +1,38 @@
+{
+  "name": "Default",
+  "shortDescription": "Database explorer and ERD tool to design, document and analyze large database schemas, with PostgreSQL and local project storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "Azimutt",
+    "url": "https://github.com/azimuttapp"
+  },
+  "links": {
+    "github": "https://github.com/azimuttapp/azimutt",
+    "website": "https://azimutt.app",
+    "docs": [
+      "https://github.com/azimuttapp/azimutt/blob/main/INSTALL.md",
+      "https://azimutt.app/docs"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can sign up. No email service is configured, so email confirmation is skipped and password reset emails are not sent; add an EMAIL_ADAPTER (smtp, mailgun or gmail) to enable them.",
+      "link": "https://github.com/azimuttapp/azimutt/blob/main/INSTALL.md#environment-variables"
+    },
+    {
+      "type": "warning",
+      "message": "Without a LICENCE_KEY from Azimutt, organizations only get the free plan: projects can be explored but not saved, and layouts hold at most 10 tables. Add LICENCE_KEY to the azimutt service to unlock the paid plans.",
+      "link": "https://azimutt.app/pricing"
+    },
+    {
+      "type": "info",
+      "message": "Connecting to a live database goes through the Azimutt gateway: run it locally with npx azimutt@latest gateway, or set GATEWAY_URL to a gateway you host.",
+      "link": "https://github.com/azimuttapp/azimutt/tree/main/gateway"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

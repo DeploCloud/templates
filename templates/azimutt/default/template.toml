@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "azimutt"
+port = 4_000
+host = "${domain}"
+
+[config.env]
+PHX_HOST = "${domain}"
+SECRET_KEY_BASE = "${base64:64}"
+DB_PASSWORD = "${db_password}"
+SKIP_EMAIL_CONFIRMATION = "true"
+SKIP_ONBOARDING_FUNNEL = "true"

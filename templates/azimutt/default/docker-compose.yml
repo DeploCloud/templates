@@ -1,0 +1,52 @@
+services:
+  # /app/bin/uploads is not in the image, so the volume starts root-owned; Azimutt runs as nobody
+  azimutt-init:
+    image: ghcr.io/azimuttapp/azimutt:main@sha256:ecb0ca8b51ed397cf5e8500de748c3d1490cdf1f9773777be8f769f4b9f1ae99
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "65534:65534", "/app/bin/uploads"]
+    volumes:
+      - azimutt-uploads:/app/bin/uploads
+
+  azimutt:
+    image: ghcr.io/azimuttapp/azimutt:main@sha256:ecb0ca8b51ed397cf5e8500de748c3d1490cdf1f9773777be8f769f4b9f1ae99
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      PHX_SERVER: "true"
+      PHX_PROTOCOL: ipv4
+      PHX_HOST: ${PHX_HOST}
+      PORT: "4000"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DATABASE_URL: postgresql://azimutt:${DB_PASSWORD}@azimutt-db:5432/azimutt
+      FILE_STORAGE_ADAPTER: local
+      AUTH_PASSWORD: "true"
+      SKIP_EMAIL_CONFIRMATION: ${SKIP_EMAIL_CONFIRMATION}
+      SKIP_ONBOARDING_FUNNEL: ${SKIP_ONBOARDING_FUNNEL}
+    volumes:
+      - azimutt-uploads:/app/bin/uploads
+    depends_on:
+      azimutt-init:
+        condition: service_completed_successfully
+      azimutt-db:
+        condition: service_healthy
+
+  azimutt-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: azimutt
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: azimutt
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U azimutt -d azimutt"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - azimutt-db:/var/lib/postgresql
+
+volumes:
+  azimutt-uploads: {}
+  azimutt-db: {}
