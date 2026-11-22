@@ -1,0 +1,44 @@
+services:
+  zipline:
+    image: ghcr.io/diced/zipline:4.8.4@sha256:9fef0ad6ed0c176c737a8016abccf6f098d26f2f84f6931f39fcbb1d2004499d
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      CORE_SECRET: ${CORE_SECRET}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@zipline-db:5432/${POSTGRES_DB}
+      CORE_RETURN_HTTPS_URLS: ${CORE_RETURN_HTTPS_URLS}
+    volumes:
+      - zipline-uploads:/zipline/uploads
+      - zipline-public:/zipline/public
+      - zipline-themes:/zipline/themes
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/api/healthcheck"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      zipline-db:
+        condition: service_healthy
+
+  zipline-db:
+    image: postgres:16.16@sha256:3950ad7c3148ca2175ef1b6c36c9efbf78957ae8fbe8b3a5d7c35af50500382f
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - zipline-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  zipline-uploads: {}
+  zipline-public: {}
+  zipline-themes: {}
+  zipline-db: {}

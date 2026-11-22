@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "File upload and URL shortening server for ShareX and other clients, with folders, embeds, 2FA, passkeys and a PostgreSQL database.",
+  "category": "storage",
+  "developedBy": {
+    "label": "diced",
+    "url": "https://github.com/diced"
+  },
+  "links": {
+    "github": "https://github.com/diced/zipline",
+    "website": "https://zipline.diced.sh",
+    "docs": [
+      "https://zipline.diced.sh/docs/get-started/docker",
+      "https://zipline.diced.sh/docs/config/core"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor completes the setup page and becomes the super admin."
+    },
+    {
+      "type": "info",
+      "message": "On x86_64 servers, Zipline requires a CPU with AVX support."
+    }
+  ]
+}
