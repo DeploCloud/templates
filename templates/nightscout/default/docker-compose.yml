@@ -1,0 +1,44 @@
+services:
+  nightscout:
+    image: nightscout/cgm-remote-monitor:15.0.9@sha256:28ec928271a293745724f934df2ed9f2cddaf66442de734c2780662171b611a2
+    restart: unless-stopped
+    expose:
+      - 1337
+    environment:
+      NODE_ENV: production
+      TZ: ${TZ}
+      PORT: 1337
+      NIGHTSCOUT_HOSTNAME: 0.0.0.0
+      INSECURE_USE_HTTP: "true"
+      TRUST_PROXY: "1"
+      MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@nightscout-db:27017/nightscout?authSource=admin
+      API_SECRET: ${API_SECRET}
+      BASE_URL: ${BASE_URL}
+      DISPLAY_UNITS: ${DISPLAY_UNITS}
+      ENABLE: ${ENABLE}
+      AUTH_DEFAULT_ROLES: ${AUTH_DEFAULT_ROLES}
+    depends_on:
+      nightscout-db:
+        condition: service_healthy
+
+  nightscout-db:
+    image: mongo:6.0.28@sha256:8b6d8f5bbedb25cb73517b65cf99f13aeb75ad5b157a56c479287a840bbad3ac
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 64000
+        hard: 64000
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - nightscout-db:/data/db
+
+volumes:
+  nightscout-db: {}

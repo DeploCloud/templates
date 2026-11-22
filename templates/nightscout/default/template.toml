@@ -1,0 +1,21 @@
+[variables]
+api_secret = "${password:32}"
+mongo_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nightscout"
+port = 1_337
+host = "${domain}"
+
+[config.env]
+API_SECRET = "${api_secret}"
+BASE_URL = "https://${domain}"
+DISPLAY_UNITS = "mg/dl"
+ENABLE = "careportal rawbg iob"
+AUTH_DEFAULT_ROLES = "denied"
+TZ = "Etc/UTC"
+MONGO_USER = "nightscout"
+MONGO_PASSWORD = "${mongo_password}"
