@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ocis"
+port = 9_200
+host = "${domain}"
+
+[config.env]
+OCIS_DOMAIN = "${domain}"
+IDM_ADMIN_PASSWORD = "${admin_password}"

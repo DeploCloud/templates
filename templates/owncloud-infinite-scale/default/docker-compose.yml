@@ -1,0 +1,28 @@
+services:
+  ocis:
+    image: owncloud/ocis:8.2.3@sha256:1422882f3d440b7ceea5bc59a057e0e3031ce932554afcec03e10b10c9ee5b5b
+    restart: unless-stopped
+    # init writes ocis.yaml with random secrets once and fails harmlessly on later starts
+    entrypoint: ["/bin/sh", "-c", "ocis init || true; exec ocis server"]
+    expose:
+      - 9200
+    environment:
+      OCIS_URL: https://${OCIS_DOMAIN}
+      OCIS_INSECURE: "false"
+      PROXY_TLS: "false"
+      PROXY_HTTP_ADDR: 0.0.0.0:9200
+      IDM_ADMIN_PASSWORD: ${IDM_ADMIN_PASSWORD}
+      IDM_CREATE_DEMO_USERS: "false"
+    volumes:
+      - ocis-config:/etc/ocis
+      - ocis-data:/var/lib/ocis
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:9205/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  ocis-config: {}
+  ocis-data: {}

@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "ownCloud Infinite Scale file sync and sharing platform with spaces, WebDAV access and its built-in identity provider, running as a single container.",
+  "category": "storage",
+  "developedBy": {
+    "label": "ownCloud",
+    "url": "https://owncloud.com"
+  },
+  "links": {
+    "github": "https://github.com/owncloud/ocis",
+    "website": "https://owncloud.com/infinite-scale/",
+    "docs": [
+      "https://doc.owncloud.com/ocis/8.2/admin/depl-examples/ubuntu-compose/ubuntu-compose-prod.html",
+      "https://doc.owncloud.com/ocis/8.2/admin/deployment/general/ocis-init.html",
+      "https://owncloud.dev/ocis/deployment/ocis_full/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated IDM_ADMIN_PASSWORD from the environment. It is applied only on the first start, so later changes to the variable do not change the password.",
+      "link": "https://doc.owncloud.com/ocis/8.2/admin/deployment/general/ocis-init.html"
+    }
+  ]
+}
