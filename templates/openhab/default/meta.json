@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Vendor-neutral home automation platform that integrates devices and services through bindings, with rules, automations and a web UI.",
+  "category": "automation",
+  "developedBy": {
+    "label": "openHAB Foundation",
+    "url": "https://www.openhab.org/"
+  },
+  "links": {
+    "github": "https://github.com/openhab/openhab-addons",
+    "website": "https://www.openhab.org/",
+    "docs": [
+      "https://www.openhab.org/docs/installation/docker.html",
+      "https://www.openhab.org/docs/tutorial/first_steps.html",
+      "https://www.openhab.org/docs/installation/security.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor creates the administrator account.",
+      "link": "https://www.openhab.org/docs/tutorial/first_steps.html"
+    },
+    {
+      "type": "info",
+      "message": "The container runs without host networking, so UPnP/mDNS device discovery on your LAN and USB sticks (Z-Wave, Zigbee) are not available. Cloud and IP-based bindings work normally."
+    }
+  ]
+}

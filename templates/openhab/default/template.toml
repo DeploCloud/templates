@@ -1,0 +1,17 @@
+[config]
+
+[[config.domains]]
+serviceName = "openhab"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "restauth.cfg"
+content = """
+# The instance is public: require a login for the REST API user role too.
+org.openhab.restauth:implicitUserRole=false
+"""
+
+[config.env]
+TZ = "Etc/UTC"
+CRYPTO_POLICY = "unlimited"
