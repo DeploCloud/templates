@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative plant management for tracking plants, care tasks, inventory and calendars, with a bundled MariaDB database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Daniel Brendel",
+    "url": "https://github.com/danielbrendel"
+  },
+  "links": {
+    "github": "https://github.com/danielbrendel/hortusfox-web",
+    "website": "https://www.hortusfox.com",
+    "docs": [
+      "https://www.hortusfox.com/documentation",
+      "https://github.com/danielbrendel/hortusfox-web#docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with APP_ADMIN_EMAIL and the generated APP_ADMIN_PASSWORD from the environment. The admin is only created on first start, so change the e-mail and password later from the profile page, not in the environment."
+    }
+  ]
+}

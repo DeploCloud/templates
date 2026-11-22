@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hortusfox"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_ADMIN_EMAIL = "admin@example.com"
+APP_ADMIN_PASSWORD = "${admin_password}"
+APP_TIMEZONE = "UTC"
+DB_PASSWORD = "${db_password}"
