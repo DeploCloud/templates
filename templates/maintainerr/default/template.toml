@@ -1,0 +1,29 @@
+[config]
+
+[[config.domains]]
+serviceName = "maintainerr-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	basic_auth {
+		{$MAINTAINERR_USERNAME} {$MAINTAINERR_PASSWORD_HASH}
+	}
+	reverse_proxy maintainerr:6246 {
+		header_up -Authorization
+	}
+}
+"""
+
+[config.env]
+TZ = "UTC"
+MAINTAINERR_USERNAME = "admin"
+MAINTAINERR_PASSWORD = "${password:24}"
