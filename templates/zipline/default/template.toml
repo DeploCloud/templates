@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+core_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zipline"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+CORE_SECRET = "${core_secret}"
+CORE_RETURN_HTTPS_URLS = "true"
+POSTGRES_USER = "zipline"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "zipline"
