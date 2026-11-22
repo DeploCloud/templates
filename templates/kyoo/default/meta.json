@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted media library for movies, series and anime with automatic metadata and on-demand transcoding.",
+  "category": "media",
+  "developedBy": {
+    "label": "Zoe Roux",
+    "url": "https://github.com/zoriya"
+  },
+  "links": {
+    "github": "https://github.com/zoriya/Kyoo",
+    "website": "https://kyoo.zoriya.dev",
+    "docs": [
+      "https://github.com/zoriya/Kyoo/blob/master/INSTALLING.md",
+      "https://github.com/zoriya/Kyoo/blob/master/OIDC.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you register becomes the administrator. Registration stays open afterwards and every new account can browse and play right away, so set DISABLE_REGISTRATION to true once your own account exists."
+    },
+    {
+      "type": "warning",
+      "message": "Copy your video files into the kyoo-library volume. The scanner and transcoder mount it read-only and pick up new files automatically."
+    }
+  ]
+}
