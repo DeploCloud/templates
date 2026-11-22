@@ -1,0 +1,144 @@
+services:
+  paca:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - paca-plugins-frontend:/var/www/plugins:ro
+      - paca-plugins-mcp:/var/www/plugins-mcp:ro
+      - paca-plugins-skills:/var/www/plugins-skills:ro
+    depends_on:
+      paca-api:
+        condition: service_started
+      paca-web:
+        condition: service_started
+      paca-realtime:
+        condition: service_started
+
+  paca-api:
+    image: pacaai/paca-api:0.22.0@sha256:299499ec9ada80ccd9c6658b3a59722844088fd733d44b5ce8873939abd501cb
+    restart: unless-stopped
+    environment:
+      ENV: production
+      PORT: 8080
+      DATABASE_URL: postgres://paca:${POSTGRES_PASSWORD}@paca-db:5432/paca?sslmode=disable
+      REDIS_URL: redis://:${VALKEY_PASSWORD}@paca-valkey:6379/0
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECURE: "true"
+      # The edge proxy and the gateway both append to X-Forwarded-For
+      TRUSTED_PROXY_HOPS: 2
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      STORAGE_PROVIDER: rustfs
+      STORAGE_ENDPOINT: paca-storage:9000
+      STORAGE_PUBLIC_URL: ${PUBLIC_URL}/storage
+      STORAGE_REGION: us-east-1
+      STORAGE_BUCKET: paca
+      STORAGE_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID}
+      STORAGE_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY}
+      STORAGE_USE_SSL: "false"
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      PUBLIC_URL: ${PUBLIC_URL}
+      PLUGINS_STORE: local
+      PLUGINS_WASM_DIR: /plugins
+      PLUGINS_FRONTEND_DIR: /plugins-frontend
+      PLUGINS_MCP_DIR: /plugins-mcp
+      PLUGINS_SKILLS_DIR: /plugins-skills
+      AI_AGENT_INTERNAL_KEY: ${INTERNAL_API_KEY}
+    volumes:
+      - paca-plugins:/plugins
+      - paca-plugins-frontend:/plugins-frontend
+      - paca-plugins-mcp:/plugins-mcp
+      - paca-plugins-skills:/plugins-skills
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+    depends_on:
+      paca-db:
+        condition: service_healthy
+      paca-valkey:
+        condition: service_healthy
+      paca-storage:
+        condition: service_healthy
+
+  paca-web:
+    image: pacaai/paca-web:0.22.0@sha256:de4305eebca9281418f6e0c373f3e47956634bb1d2a5ee2002a324b78afb6ae2
+    restart: unless-stopped
+    expose:
+      - 3000
+
+  paca-realtime:
+    image: pacaai/paca-realtime:0.22.0@sha256:dff495a78f4c26aeb75866221e72a2beefd36c3700d230dd73fc85011235d036
+    restart: unless-stopped
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      API_URL: http://paca-api:8080
+      REDIS_URL: redis://:${VALKEY_PASSWORD}@paca-valkey:6379/0
+      CORS_ORIGINS: ${PUBLIC_URL}
+      LOG_LEVEL: info
+    depends_on:
+      paca-valkey:
+        condition: service_healthy
+      paca-api:
+        condition: service_healthy
+
+  paca-db:
+    image: postgres:16.16-alpine@sha256:1d5b02d3a9941fbd52437db4107f8c52d6297dac553ca1e5c299ebb3756b4857
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: paca
+      POSTGRES_USER: paca
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - paca-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paca -d paca"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  paca-valkey:
+    image: valkey/valkey:8.1.12-alpine@sha256:9971099af41c36e887aabdfe22b80c0fe45df949163dfc9cb434febc57cfc3fc
+    restart: unless-stopped
+    command: ["valkey-server", "--appendonly", "yes", "--requirepass", "${VALKEY_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${VALKEY_PASSWORD}
+    volumes:
+      - paca-valkey:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  paca-storage:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${STORAGE_ACCESS_KEY_ID}
+      RUSTFS_SECRET_KEY: ${STORAGE_SECRET_ACCESS_KEY}
+      RUSTFS_VOLUMES: /data
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+    volumes:
+      - paca-storage:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  paca-db: {}
+  paca-valkey: {}
+  paca-storage: {}
+  paca-plugins: {}
+  paca-plugins-frontend: {}
+  paca-plugins-mcp: {}
+  paca-plugins-skills: {}
