@@ -1,0 +1,17 @@
+services:
+  matchering:
+    image: sergree/matchering-web:0.1.7@sha256:9894d2ccf228ef743e4cac4e4f03fcb289743d679b8b9904632bdf00c13fd8e0
+    restart: unless-stopped
+    expose:
+      - 8360
+    volumes:
+      - matchering-data:/app/data
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8360/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  matchering-data: {}

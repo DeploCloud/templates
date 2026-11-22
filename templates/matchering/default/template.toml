@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "matchering"
+port = 8_360
+host = "${domain}"
