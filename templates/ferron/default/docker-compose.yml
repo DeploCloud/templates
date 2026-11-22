@@ -1,0 +1,12 @@
+services:
+  ferron:
+    image: ferronserver/ferron:2.8.1-alpine@sha256:fcafe495ef439c52832dce04f2a8c34822e09c684908cf8438f49ea28661a0d9
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./ferron.kdl:/etc/ferron.kdl:ro
+      - ferron-www:/var/www/ferron
+
+volumes:
+  ferron-www: {}
