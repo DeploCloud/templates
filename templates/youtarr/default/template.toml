@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "youtarr"
+port = 3_011
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+DB_NAME = "youtarr"
+DB_USER = "youtarr"
+DB_PASSWORD = "${db_password}"
+AUTH_PRESET_USERNAME = "admin"
+AUTH_PRESET_PASSWORD = "${admin_password}"
+TRUST_PROXY = "1"
+LOG_LEVEL = "info"
