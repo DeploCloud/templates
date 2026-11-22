@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted drone flight log analyzer for DJI, Litchi and other logs, with maps, telemetry charts, tags, exports and password-protected profiles.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Arpan Ghosh",
+    "url": "https://github.com/arpanghosh8453"
+  },
+  "links": {
+    "github": "https://github.com/arpanghosh8453/open-dronelog",
+    "website": "https://www.opendronelog.com",
+    "docs": [
+      "https://github.com/arpanghosh8453/open-dronelog#docker-deployment-self-hosted-web",
+      "https://github.com/arpanghosh8453/open-dronelog#profiles-and-password-protection",
+      "https://github.com/arpanghosh8453/open-dronelog/blob/main/docs/manual.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The default profile is locked on first start with the generated DEFAULT_PROFILE_PASSWORD, and creating or deleting profiles asks for PROFILE_CREATION_PASS. Copy both from the environment variables. Changing DEFAULT_PROFILE_PASSWORD later has no effect; change it in Settings instead.",
+      "link": "https://github.com/arpanghosh8453/open-dronelog#profiles-and-password-protection"
+    }
+  ]
+}

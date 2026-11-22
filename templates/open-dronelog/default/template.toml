@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-dronelog"
+port = 80
+host = "${domain}"
+
+[config.env]
+RUST_LOG = "info"
+KEEP_UPLOADED_FILES = "true"
+PROFILE_CREATION_PASS = "${password:24}"
+DEFAULT_PROFILE_PASSWORD = "${password:24}"
+SESSION_TTL_HOURS = "24"
