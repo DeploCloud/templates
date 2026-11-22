@@ -1,0 +1,62 @@
+services:
+  invoiceshelf:
+    image: invoiceshelf/invoiceshelf:2.4.7@sha256:599dc6aa9d7303c9ae0d099397817c7f6002cd6f7af099bc90511d5eae4e9cd2
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      APP_NAME: InvoiceShelf
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: ${APP_URL}
+      SESSION_DOMAIN: ${APP_DOMAIN}
+      SANCTUM_STATEFUL_DOMAINS: ${APP_DOMAIN}
+      DB_CONNECTION: pgsql
+      DB_HOST: invoiceshelf-db
+      DB_PORT: "5432"
+      DB_DATABASE: invoiceshelf
+      DB_USERNAME: invoiceshelf
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_STORE: file
+      SESSION_DRIVER: file
+      SESSION_LIFETIME: "240"
+      AUTORUN_ENABLED: "true"
+      AUTORUN_LARAVEL_MIGRATION: "false"
+      AUTORUN_LARAVEL_OPTIMIZE: "false"
+    volumes:
+      - invoiceshelf-storage:/var/www/html/storage
+      - invoiceshelf-modules:/var/www/html/Modules
+    depends_on:
+      invoiceshelf-init:
+        condition: service_completed_successfully
+      invoiceshelf-db:
+        condition: service_healthy
+
+  # Modules/ is not in the 2.x image, so its volume starts root-owned; the app runs as www-data (82)
+  invoiceshelf-init:
+    image: invoiceshelf/invoiceshelf:2.4.7@sha256:599dc6aa9d7303c9ae0d099397817c7f6002cd6f7af099bc90511d5eae4e9cd2
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "82:82", "/var/www/html/Modules"]
+    volumes:
+      - invoiceshelf-modules:/var/www/html/Modules
+
+  invoiceshelf-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: invoiceshelf
+      POSTGRES_USER: invoiceshelf
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U invoiceshelf -d invoiceshelf"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - invoiceshelf-db:/var/lib/postgresql
+
+volumes:
+  invoiceshelf-storage: {}
+  invoiceshelf-modules: {}
+  invoiceshelf-db: {}
