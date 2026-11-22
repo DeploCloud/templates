@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Web interface for managing zones and records on a PowerDNS Authoritative Server, with role-based access and a SQLite database.",
+  "category": "networking",
+  "developedBy": {
+    "label": "PowerDNS-Admin",
+    "url": "https://github.com/PowerDNS-Admin"
+  },
+  "links": {
+    "github": "https://github.com/PowerDNS-Admin/PowerDNS-Admin",
+    "docs": [
+      "https://github.com/PowerDNS-Admin/PowerDNS-Admin/blob/dev/docs/wiki/install/Running-PowerDNS-Admin-on-Docker.md",
+      "https://github.com/PowerDNS-Admin/PowerDNS-Admin/blob/dev/docs/wiki/configuration/Environment-variables.md",
+      "https://github.com/PowerDNS-Admin/PowerDNS-Admin/blob/dev/docs/wiki/configuration/Getting-started.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Register it right after deployment, then turn off sign-ups under Settings > Authentication if you do not want open registration."
+    },
+    {
+      "type": "warning",
+      "message": "This deploys the web interface only. Enable the HTTP API on your PowerDNS Authoritative Server and enter its API URL and key under Settings > Server; the server must be reachable from this app."
+    }
+  ]
+}

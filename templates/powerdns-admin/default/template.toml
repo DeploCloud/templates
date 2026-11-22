@@ -1,0 +1,15 @@
+[variables]
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "powerdns-admin"
+port = 80
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${secret:64}"
+# bcrypt salt: 22 chars after the prefix, the last one must be . O e or u
+SALT = "$2b$12$${hash:21}u"
+SITE_URL = "https://${domain}"

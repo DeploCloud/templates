@@ -1,0 +1,25 @@
+services:
+  powerdns-admin:
+    image: powerdnsadmin/pda-legacy:2026.11.1@sha256:87434e7090efd0f7375b8b7a6129fc6557294295738b91edeb8c37a7928464f5
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      SALT: ${SALT}
+      SITE_URL: ${SITE_URL}
+      SQLALCHEMY_DATABASE_URI: sqlite:////data/powerdns-admin.db
+      SESSION_COOKIE_SECURE: "true"
+      CSRF_COOKIE_SECURE: "true"
+      AUTH_TRUSTED_PROXIES: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+    volumes:
+      - powerdns-admin-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  powerdns-admin-data: {}
