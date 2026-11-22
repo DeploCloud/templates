@@ -1,0 +1,14 @@
+[variables]
+password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "video-duplicate-finder"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+VDF_WEB_PASSWORD = "${password}"
+VDF_TRUSTED_PROXY_NETWORKS = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
