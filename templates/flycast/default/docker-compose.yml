@@ -1,0 +1,18 @@
+services:
+  flycast:
+    image: lscr.io/linuxserver/flycast:v2.7-ls84@sha256:93bb130bcd3fe67c950aab678fb685835afbc254b390484c956a8f62a4042042
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - flycast-config:/config
+
+volumes:
+  flycast-config: {}
