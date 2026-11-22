@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Retro web recreation of The Weather Channel's 1990s WeatherStar 4000 local forecast, served as a static app using US National Weather Service data.",
+  "category": "media",
+  "developedBy": {
+    "label": "Matt Walsh",
+    "url": "https://github.com/netbymatt"
+  },
+  "links": {
+    "github": "https://github.com/netbymatt/ws4kp",
+    "website": "https://weatherstar.netbymatt.com",
+    "docs": [
+      "https://github.com/netbymatt/ws4kp#docker-deployments",
+      "https://github.com/netbymatt/ws4kp#default-query-string-parameters-environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Forecasts come from the US National Weather Service API, so only locations in the United States are supported."
+    }
+  ]
+}
