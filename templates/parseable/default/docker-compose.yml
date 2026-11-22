@@ -1,0 +1,21 @@
+services:
+  parseable:
+    image: quay.io/parseablehq/parseable:v3.2.7@sha256:cdfb988a07662eb84a952e017639ef8c700c99d9a4b341ec8402402b88e53a68
+    restart: unless-stopped
+    command: ["/usr/bin/parseable", "local-store"]
+    expose:
+      - 8000
+    environment:
+      P_ADDR: 0.0.0.0:8000
+      P_USERNAME: ${P_USERNAME}
+      P_PASSWORD: ${P_PASSWORD}
+      P_ORIGIN_URI: ${P_ORIGIN_URI}
+      P_FS_DIR: /parseable/data
+      P_STAGING_DIR: /parseable/staging
+    volumes:
+      - parseable-data:/parseable/data
+      - parseable-staging:/parseable/staging
+
+volumes:
+  parseable-data: {}
+  parseable-staging: {}
