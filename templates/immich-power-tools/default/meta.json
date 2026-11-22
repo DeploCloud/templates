@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Companion web app for Immich with bulk people management and merging, potential albums, missing location fixes, date offsets, library analytics and natural language search.",
+  "category": "media",
+  "developedBy": {
+    "label": "Varun Raj",
+    "url": "https://github.com/varun-raj"
+  },
+  "links": {
+    "github": "https://github.com/immich-power-tools/immich-power-tools",
+    "docs": [
+      "https://github.com/immich-power-tools/immich-power-tools#-using-docker",
+      "https://github.com/immich-power-tools/immich-power-tools/blob/main/.env.sample"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Immich Power Tools needs an existing Immich 3.0 or newer server and direct access to its PostgreSQL database. The defaults reach an Immich app from this catalog in the same environment: copy DB_PASSWORD from that app's environment variables, set EXTERNAL_IMMICH_URL to its public URL, then redeploy. For another Immich server, change IMMICH_URL and the DB_* variables.",
+      "link": "https://github.com/immich-power-tools/immich-power-tools#-using-docker"
+    },
+    {
+      "type": "info",
+      "message": "Sign in with your Immich email and password. IMMICH_API_KEY is deliberately left unset: with it, anyone who opens the URL is signed in as that key's owner. The Find page needs AI_API_KEY for an OpenAI-compatible provider."
+    }
+  ]
+}

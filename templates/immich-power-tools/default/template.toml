@@ -1,0 +1,22 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "immich-power-tools"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+IMMICH_URL = "http://immich-server:2283"
+EXTERNAL_IMMICH_URL = ""
+DB_HOST = "immich-database"
+DB_PORT = "5432"
+DB_USERNAME = "immich"
+DB_PASSWORD = "replace-with-your-immich-db-password"
+DB_DATABASE_NAME = "immich"
+JWT_SECRET = "${secret:64}"
+SECURE_COOKIE = "true"
+POWER_TOOLS_ENDPOINT_URL = "https://${domain}"
+AI_API_KEY = ""
+AI_BASE_URL = "https://api.openai.com/v1"
+AI_MODEL = "gpt-4o-mini"
