@@ -1,0 +1,28 @@
+services:
+  gmail-cleaner:
+    image: ghcr.io/gururagavendra/gmail-cleaner:v1.3.0@sha256:e98a8539fa4e632e5fe50bae287942a6453950aec174587feb082ac1684afe36
+    restart: unless-stopped
+    expose:
+      - 8766
+      - 8767
+    environment:
+      WEB_AUTH: "true"
+      OAUTH_HOST: ${OAUTH_HOST}
+      OAUTH_EXTERNAL_PORT: "80"
+    volumes:
+      - gmail-cleaner-data:/app/data
+      - ./credentials.json:/app/credentials.json:ro
+
+  # the callback server on 8767 only listens during a sign-in, so this keeps the oauth route answering
+  gmail-cleaner-oauth:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - gmail-cleaner
+
+volumes:
+  gmail-cleaner-data: {}
