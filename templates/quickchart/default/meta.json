@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Stateless web API that renders Chart.js configs, QR codes and Graphviz diagrams into PNG, SVG or PDF images from a URL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Ian Webster",
+    "url": "https://github.com/typpo"
+  },
+  "links": {
+    "github": "https://github.com/typpo/quickchart",
+    "website": "https://quickchart.io/",
+    "docs": [
+      "https://github.com/typpo/quickchart/blob/master/README.md",
+      "https://quickchart.io/documentation/",
+      "https://quickchart.io/documentation/qr-codes/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The API has no authentication and chart configs may contain arbitrary JavaScript that runs on the server. Do not share the URL with untrusted parties.",
+      "link": "https://github.com/typpo/quickchart#securing-your-self-hosted-instance"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
