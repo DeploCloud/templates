@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted YouTube downloader that subscribes to channels and playlists, fetches new videos on a schedule with yt-dlp and writes metadata for Plex, Jellyfin, Emby and Kodi.",
+  "category": "media",
+  "developedBy": {
+    "label": "DialmasterOrg",
+    "url": "https://github.com/DialmasterOrg"
+  },
+  "links": {
+    "github": "https://github.com/DialmasterOrg/Youtarr",
+    "website": "https://youtarr.com",
+    "docs": [
+      "https://youtarr.com/docs",
+      "https://github.com/DialmasterOrg/Youtarr/blob/main/docs/USAGE_GUIDE.md",
+      "https://github.com/DialmasterOrg/Youtarr/blob/main/docs/AUTHENTICATION.md",
+      "https://github.com/DialmasterOrg/Youtarr/blob/main/docs/ENVIRONMENT_VARIABLES.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated AUTH_PRESET_PASSWORD from the environment settings. Youtarr reapplies these credentials on every restart, so change the password there and redeploy instead of changing it in the web UI.",
+      "link": "https://github.com/DialmasterOrg/Youtarr/blob/main/docs/AUTHENTICATION.md"
+    }
+  ]
+}
