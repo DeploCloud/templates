@@ -1,0 +1,67 @@
+services:
+  dreamfactory:
+    image: dreamfactorysoftware/df-docker:7.8.0@sha256:ae54f9d62bc47b1b3debd2095f541bab553c0a7d5167a06df4fa6a8173608291
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      SERVERNAME: ${SERVERNAME}
+      HTTPS_HEADER: "on"
+      APP_KEY: ${APP_KEY}
+      DB_DRIVER: mysql
+      DB_CONNECTION: mysql
+      DB_HOST: dreamfactory-db
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_DRIVER: redis
+      CACHE_HOST: dreamfactory-redis
+      CACHE_PORT: "6379"
+      CACHE_DATABASE: "0"
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_FIRST_NAME: ${ADMIN_FIRST_NAME}
+      ADMIN_LAST_NAME: ${ADMIN_LAST_NAME}
+      ENABLE_MCP_DAEMON: "true"
+      ENABLE_SYSTEM_MCP_DAEMON: "true"
+    volumes:
+      - dreamfactory-storage:/opt/dreamfactory/storage
+    depends_on:
+      dreamfactory-db:
+        condition: service_healthy
+      dreamfactory-redis:
+        condition: service_healthy
+
+  dreamfactory-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dreamfactory-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}"']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  dreamfactory-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - dreamfactory-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  dreamfactory-storage: {}
+  dreamfactory-db: {}
+  dreamfactory-redis: {}
