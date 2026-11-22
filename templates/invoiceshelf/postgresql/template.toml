@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "invoiceshelf"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_DOMAIN = "${domain}"
+DB_PASSWORD = "${db_password}"

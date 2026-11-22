@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "invoiceshelf"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+APP_DOMAIN = "${domain}"

@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "InvoiceShelf invoicing, estimates, recurring billing and expenses backed by a bundled PostgreSQL database.",
+  "category": "finance",
+  "developedBy": {
+    "label": "InvoiceShelf",
+    "url": "https://github.com/InvoiceShelf"
+  },
+  "links": {
+    "github": "https://github.com/InvoiceShelf/InvoiceShelf",
+    "website": "https://invoiceshelf.com",
+    "docs": [
+      "https://docs.invoiceshelf.com/installation.html",
+      "https://github.com/InvoiceShelf/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app after deployment to run the installation wizard. In the database step choose PostgreSQL and enter host invoiceshelf-db, port 5432, database and username invoiceshelf, and the DB_PASSWORD value from this app's environment variables. The wizard then creates the administrator account. The wizard is open to anyone who reaches the URL until it is finished, so complete it right after deployment.",
+      "link": "https://docs.invoiceshelf.com/installation.html"
+    }
+  ]
+}
