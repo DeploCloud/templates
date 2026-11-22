@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "teedy"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DOCS_BASE_URL = "https://${domain}"
+POSTGRES_DB = "teedy"
+POSTGRES_USER = "teedy"
+POSTGRES_PASSWORD = "${db_password}"
