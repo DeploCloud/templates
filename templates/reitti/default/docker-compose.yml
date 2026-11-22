@@ -1,0 +1,80 @@
+services:
+  reitti:
+    image: dedicatedcode/reitti:5.12.0@sha256:21ec8bf319ed6d542617e026dd21605fdc9c41799431a4650a0c3087db40673c
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      POSTGIS_HOST: reitti-db
+      POSTGIS_PORT: "5432"
+      POSTGIS_DB: ${POSTGIS_DB}
+      POSTGIS_USER: ${POSTGIS_USER}
+      POSTGIS_PASSWORD: ${POSTGIS_PASSWORD}
+      REDIS_HOST: reitti-redis
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      TILES_CACHE: http://reitti-tile-cache
+      ADVERTISE_URI: ${ADVERTISE_URI}
+    volumes:
+      - reitti-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs --max-time 2 http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+    depends_on:
+      reitti-db:
+        condition: service_healthy
+      reitti-redis:
+        condition: service_healthy
+      reitti-tile-cache:
+        condition: service_healthy
+
+  reitti-db:
+    image: postgis/postgis:17-3.5-alpine@sha256:894f570c0cf0664ed5576a8fd5d5bfb8fb1b19d592885b686c3a88c8bd90c41f
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGIS_DB}
+      POSTGRES_USER: ${POSTGIS_USER}
+      POSTGRES_PASSWORD: ${POSTGIS_PASSWORD}
+    volumes:
+      - reitti-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  reitti-redis:
+    image: redis:7.4-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - reitti-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  reitti-tile-cache:
+    image: dedicatedcode/reitti-tile-cache:5.12.0@sha256:851662e184a9c2b88dc1758a9098dc565cccfa252512abce1b43a75faac156c2
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - reitti-tile-cache:/var/cache/nginx
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  reitti-data: {}
+  reitti-db: {}
+  reitti-redis: {}
+  reitti-tile-cache: {}

@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal location tracking and analysis with visits, trips, statistics and live sharing, backed by PostGIS, Redis and a map tile cache.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "dedicatedcode",
+    "url": "https://www.dedicatedcode.com/"
+  },
+  "links": {
+    "github": "https://github.com/dedicatedcode/reitti",
+    "website": "https://www.dedicatedcode.com/projects/reitti/",
+    "docs": [
+      "https://www.dedicatedcode.com/projects/reitti/latest/installation/",
+      "https://www.dedicatedcode.com/projects/reitti/latest/infrastructure/docker-config/",
+      "https://www.dedicatedcode.com/projects/reitti/latest/integrations/mobile-apps/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visit prompts you to set the admin password.",
+      "link": "https://www.dedicatedcode.com/projects/reitti/latest/installation/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
