@@ -1,0 +1,20 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "slink"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ORIGIN = "https://${domain}"
+TZ = "UTC"
+REQUIRE_SSL = "true"
+USER_APPROVAL_REQUIRED = "true"
+IMAGE_MAX_SIZE = "15M"
+ADMIN_USERNAME = "admin"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"

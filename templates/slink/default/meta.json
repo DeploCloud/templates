@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted image hosting and sharing platform with private share links, collections, tags, API keys and ShareX uploads.",
+  "category": "media",
+  "developedBy": {
+    "label": "Andrii Kryvoviaz",
+    "url": "https://github.com/andrii-kryvoviaz"
+  },
+  "links": {
+    "github": "https://github.com/andrii-kryvoviaz/slink",
+    "website": "https://docs.slinkapp.io",
+    "docs": [
+      "https://docs.slinkapp.io/getting-started/02-quick-start/",
+      "https://docs.slinkapp.io/getting-started/03-first-user-setup/",
+      "https://docs.slinkapp.io/configuration/01-environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "An admin account is created on first start: sign in with ADMIN_EMAIL and the generated ADMIN_PASSWORD from the environment settings. New sign-ups need admin approval until USER_APPROVAL_REQUIRED is set to false."
+    }
+  ]
+}

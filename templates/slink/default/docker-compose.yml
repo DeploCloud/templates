@@ -1,0 +1,27 @@
+services:
+  slink:
+    image: anirdev/slink:v1.14.6@sha256:7f7cab180971caeb83ce8818a676be04a7923dff6bf6e201ae0a9ce4f64be593
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ORIGIN: ${ORIGIN}
+      TZ: ${TZ}
+      STORAGE_PROVIDER: local
+      REQUIRE_SSL: ${REQUIRE_SSL}
+      USER_APPROVAL_REQUIRED: ${USER_APPROVAL_REQUIRED}
+      IMAGE_MAX_SIZE: ${IMAGE_MAX_SIZE}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      - slink-data:/app/var/data
+      - slink-images:/app/slink/images
+      - slink-cache:/app/slink/cache
+      - slink-runtime:/data
+
+volumes:
+  slink-data: {}
+  slink-images: {}
+  slink-cache: {}
+  slink-runtime: {}
