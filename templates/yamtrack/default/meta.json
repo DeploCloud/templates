@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted tracker for movies, TV shows, anime, manga, games, books, comics and board games, with SQLite storage and a Redis-backed task queue.",
+  "category": "media",
+  "developedBy": {
+    "label": "FuzzyGrim",
+    "url": "https://github.com/FuzzyGrim"
+  },
+  "links": {
+    "github": "https://github.com/FuzzyGrim/Yamtrack",
+    "website": "https://fuzzygrim.github.io/Yamtrack/",
+    "docs": [
+      "https://fuzzygrim.github.io/Yamtrack/release/setup/",
+      "https://fuzzygrim.github.io/Yamtrack/release/env-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Public sign-up is open by default. Create your account, then set REGISTRATION to False in the environment and redeploy to stop strangers from registering.",
+      "link": "https://fuzzygrim.github.io/Yamtrack/release/env-variables/"
+    }
+  ]
+}

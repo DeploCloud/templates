@@ -1,0 +1,20 @@
+[variables]
+secret_key = "${secret:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "yamtrack"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SECRET = "${secret_key}"
+URLS = "https://${domain}"
+TZ = "UTC"
+REGISTRATION = "True"
+DB_NAME = "yamtrack"
+DB_USER = "yamtrack"
+DB_PASSWORD = "${db_password}"
