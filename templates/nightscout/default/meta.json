@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source CGM remote monitor that shows real-time glucose data, treatments and alarms in the browser, backed by MongoDB.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Nightscout",
+    "url": "https://github.com/nightscout"
+  },
+  "links": {
+    "github": "https://github.com/nightscout/cgm-remote-monitor",
+    "website": "https://nightscout.github.io/",
+    "docs": [
+      "https://nightscout.github.io/nightscout/first_setup/",
+      "https://nightscout.github.io/nightscout/setup_variables/",
+      "https://github.com/nightscout/cgm-remote-monitor#environment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Access is denied without login. Sign in with the generated API_SECRET from the environment variables, then create your treatment profile on first visit.",
+      "link": "https://nightscout.github.io/nightscout/first_setup/"
+    }
+  ]
+}
