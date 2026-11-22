@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted service that syncs and backs up watch play state between Plex, Jellyfin and Emby, with a web UI, webhooks and scheduled imports.",
+  "category": "media",
+  "developedBy": {
+    "label": "ArabCoders",
+    "url": "https://github.com/arabcoders"
+  },
+  "links": {
+    "github": "https://github.com/arabcoders/watchstate",
+    "docs": [
+      "https://github.com/arabcoders/watchstate#readme",
+      "https://github.com/arabcoders/watchstate/blob/master/FAQ.md",
+      "https://github.com/arabcoders/watchstate/blob/master/guides/one-way-sync.md",
+      "https://github.com/arabcoders/watchstate/blob/master/guides/webhooks.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visit to the web UI asks you to create the system user. Open it right after deploying so nobody else claims it.",
+      "link": "https://github.com/arabcoders/watchstate#management"
+    }
+  ]
+}
