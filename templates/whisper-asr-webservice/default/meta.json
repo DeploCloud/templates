@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Whisper speech recognition REST API on CPU with transcription, translation, language detection and subtitle output, plus a Swagger UI to try it.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Ahmet Oner",
+    "url": "https://github.com/ahmetoner"
+  },
+  "links": {
+    "github": "https://github.com/ahmetoner/whisper-asr-webservice",
+    "website": "https://ahmetoner.github.io/whisper-asr-webservice",
+    "docs": [
+      "https://ahmetoner.github.io/whisper-asr-webservice/run/",
+      "https://ahmetoner.github.io/whisper-asr-webservice/endpoints/",
+      "https://ahmetoner.github.io/whisper-asr-webservice/environmental-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The API has no authentication: anyone who knows the URL can submit audio and use your server's CPU. Keep the domain private or put access control in front of it."
+    },
+    {
+      "type": "info",
+      "message": "Transcription runs on the CPU. The model set in ASR_MODEL is downloaded on first start, so the service takes a while to come up, and larger models need several GB of RAM."
+    }
+  ]
+}

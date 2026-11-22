@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "whisper-asr-webservice"
+port = 9_000
+host = "${domain}"
+primary = true
+
+[config.env]
+ASR_ENGINE = "faster_whisper"
+ASR_MODEL = "base"
+MODEL_IDLE_TIMEOUT = "0"

@@ -1,0 +1,21 @@
+services:
+  whisper-asr-webservice:
+    image: onerahmet/openai-whisper-asr-webservice:v1.10.0@sha256:0616c3d5fc6924e9d59aa8a7a3a944fbe8f3a5d701e5fc1fa2ce5b933dfecb73
+    restart: unless-stopped
+    expose:
+      - 9000
+    environment:
+      ASR_ENGINE: ${ASR_ENGINE}
+      ASR_MODEL: ${ASR_MODEL}
+      MODEL_IDLE_TIMEOUT: ${MODEL_IDLE_TIMEOUT}
+    volumes:
+      - whisper-asr-cache:/root/.cache
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:9000/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  whisper-asr-cache: {}
