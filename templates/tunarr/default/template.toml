@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tunarr"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+TUNARR_SERVER_TRUST_PROXY = "true"
+TUNARR_BASIC_AUTH_USER = "admin"
+TUNARR_BASIC_AUTH_PASSWORD = "${admin_password}"

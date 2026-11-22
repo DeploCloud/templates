@@ -1,0 +1,22 @@
+services:
+  tunarr:
+    image: chrisbenincasa/tunarr:2026.11.2@sha256:98b23e0a9c9d48d74900ba7c4ab88cae4e8743d6e77b2f3f948cb554d0c4b0a4
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      TZ: "${TZ}"
+      TUNARR_SERVER_TRUST_PROXY: "${TUNARR_SERVER_TRUST_PROXY}"
+      TUNARR_BASIC_AUTH_USER: "${TUNARR_BASIC_AUTH_USER}"
+      TUNARR_BASIC_AUTH_PASSWORD: "${TUNARR_BASIC_AUTH_PASSWORD}"
+    volumes:
+      - tunarr-data:/config/tunarr
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:8000/discover.json"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  tunarr-data: {}

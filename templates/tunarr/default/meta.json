@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Live TV channel builder that turns Plex, Jellyfin or Emby libraries into an IPTV playlist, XMLTV guide and emulated HDHomeRun tuner.",
+  "category": "media",
+  "developedBy": {
+    "label": "Christian Benincasa",
+    "url": "https://github.com/chrisbenincasa"
+  },
+  "links": {
+    "github": "https://github.com/chrisbenincasa/tunarr",
+    "website": "https://tunarr.com/",
+    "docs": [
+      "https://tunarr.com/getting-started/run/",
+      "https://tunarr.com/getting-started/setup/",
+      "https://tunarr.com/configure/clients/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI asks for HTTP Basic Auth: sign in as admin with the generated TUNARR_BASIC_AUTH_PASSWORD from the environment settings. A Plex, Jellyfin or Emby server reachable from this host is needed to add programming."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
