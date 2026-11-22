@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted RSS and Atom reader with unread tracking, bookmarks, search, feed groups, keyboard shortcuts and a Fever API for mobile clients.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "0x2E",
+    "url": "https://github.com/0x2E"
+  },
+  "links": {
+    "github": "https://github.com/0x2E/fusion",
+    "docs": [
+      "https://github.com/0x2E/fusion#configuration",
+      "https://github.com/0x2E/fusion/blob/main/.env.example",
+      "https://github.com/0x2E/fusion/blob/main/docs/fever-api.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Fusion has a single password and no user accounts. Sign in with the generated FUSION_PASSWORD from the app's environment variables.",
+      "link": "https://github.com/0x2E/fusion#configuration"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Deploys the official Fusion image, a single Go binary that serves the RSS reader web UI, its REST API and a Fever-compatible API on one port. Feeds, groups, articles and read state live in a SQLite database on the `/data` volume. Sign in with the generated `FUSION_PASSWORD`; Fever clients use the username `fusion` with that same password.
