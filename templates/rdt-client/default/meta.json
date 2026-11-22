@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web client for Real-Debrid, AllDebrid, Premiumize, TorBox and DebridLink that adds torrents and NZBs, downloads the results locally and emulates the qBittorrent and SABnzbd APIs for Sonarr and Radarr.",
+  "category": "media",
+  "developedBy": {
+    "label": "Roger Far",
+    "url": "https://github.com/rogerfar"
+  },
+  "links": {
+    "github": "https://github.com/rogerfar/rdt-client",
+    "docs": [
+      "https://github.com/rogerfar/rdt-client#setup",
+      "https://github.com/rogerfar/rdt-client/blob/main/README-DOCKER.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first username and password entered in the web UI become the only login, so open it right after deployment. The setup then asks for your debrid provider and its API key; a premium Real-Debrid, AllDebrid, Premiumize, TorBox or DebridLink account, or a HIGHWAY account, is required.",
+      "link": "https://github.com/rogerfar/rdt-client#first-login"
+    }
+  ]
+}
