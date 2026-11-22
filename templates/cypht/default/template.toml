@@ -1,0 +1,21 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cypht"
+port = 80
+host = "${domain}"
+
+[config.env]
+AUTH_USERNAME = "admin"
+AUTH_PASSWORD = "${admin_password}"
+DB_NAME = "cypht"
+DB_USER = "cypht"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+TZ = "UTC"

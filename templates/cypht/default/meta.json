@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Webmail aggregator that reads IMAP, JMAP and Exchange (EWS) accounts plus RSS feeds in one interface, backed by MariaDB.",
+  "category": "email",
+  "developedBy": {
+    "label": "Cypht",
+    "url": "https://github.com/cypht-org"
+  },
+  "links": {
+    "github": "https://github.com/cypht-org/cypht",
+    "website": "https://www.cypht.org/",
+    "docs": [
+      "https://www.cypht.org/install/",
+      "https://www.cypht.org/documentation/setup/account-setup/",
+      "https://github.com/cypht-org/cypht/blob/master/docker/DOCKERHUB-README.md",
+      "https://github.com/cypht-org/cypht/blob/master/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated AUTH_PASSWORD from the environment settings. The account is created only on the first start, so change its password later in the Cypht account settings, not in the environment. Cypht does not host mail itself: add your IMAP, JMAP or EWS and SMTP accounts in the settings after signing in."
+    }
+  ]
+}
