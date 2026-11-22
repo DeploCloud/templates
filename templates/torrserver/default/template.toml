@@ -1,0 +1,14 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "torrserver"
+port = 8_090
+host = "${domain}"
+
+[config.env]
+TORRSERVER_USER = "admin"
+TORRSERVER_PASSWORD = "${admin_password}"

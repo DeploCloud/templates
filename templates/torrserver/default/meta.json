@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Torrent streaming server that caches torrents and plays them over HTTP from a web UI or API, without downloading files first.",
+  "category": "media",
+  "developedBy": {
+    "label": "YouROK",
+    "url": "https://github.com/YouROK"
+  },
+  "links": {
+    "github": "https://github.com/YouROK/TorrServer",
+    "website": "https://yourok.ru",
+    "docs": [
+      "https://github.com/YouROK/TorrServer#running-in-docker--docker-compose",
+      "https://github.com/YouROK/TorrServer#server-args",
+      "https://github.com/YouROK/TorrServer#authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "HTTP basic auth is enabled. Sign in with TORRSERVER_USER (admin) and the generated TORRSERVER_PASSWORD from the environment variables; change them there and redeploy to update the login."
+    }
+  ]
+}
