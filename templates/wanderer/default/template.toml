@@ -1,0 +1,23 @@
+[variables]
+meili_master_key = "${hash:64}"
+encryption_key = "${hash:32}"
+proxy_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wanderer"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ORIGIN = "https://${domain}"
+MEILI_MASTER_KEY = "${meili_master_key}"
+POCKETBASE_ENCRYPTION_KEY = "${encryption_key}"
+POCKETBASE_PROXY_SECRET = "${proxy_secret}"
+PUBLIC_DISABLE_SIGNUP = "false"
+PUBLIC_PRIVATE_INSTANCE = "false"
+VALHALLA_URL = "https://valhalla1.openstreetmap.de"
+NOMINATIM_URL = "https://nominatim.openstreetmap.org"
+OVERPASS_API_URL = "https://overpass-api.de"

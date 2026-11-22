@@ -1,0 +1,76 @@
+services:
+  wanderer:
+    image: flomp/wanderer-web:v0.21.2@sha256:849f63732d3e751f077c1567bda77aebc68c8b5691271cb418e10efbcf2f364f
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ORIGIN: ${ORIGIN}
+      MEILI_URL: http://wanderer-search:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      POCKETBASE_PROXY_SECRET: ${POCKETBASE_PROXY_SECRET}
+      PUBLIC_POCKETBASE_URL: http://wanderer-db:8090
+      PUBLIC_DISABLE_SIGNUP: ${PUBLIC_DISABLE_SIGNUP}
+      PUBLIC_PRIVATE_INSTANCE: ${PUBLIC_PRIVATE_INSTANCE}
+      UPLOAD_FOLDER: /app/uploads
+      VALHALLA_URL: ${VALHALLA_URL}
+      NOMINATIM_URL: ${NOMINATIM_URL}
+      OVERPASS_API_URL: ${OVERPASS_API_URL}
+      ADDRESS_HEADER: X-Forwarded-For
+      XFF_DEPTH: "1"
+    volumes:
+      - wanderer-uploads:/app/uploads
+    depends_on:
+      wanderer-search:
+        condition: service_healthy
+      wanderer-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000/"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+
+  wanderer-db:
+    image: flomp/wanderer-db:v0.21.2@sha256:2f8d7f29c2a473dce8e84b1a33ac3a692a21238c39b6757fa0e0162542d85865
+    restart: unless-stopped
+    environment:
+      ORIGIN: ${ORIGIN}
+      MEILI_URL: http://wanderer-search:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      POCKETBASE_ENCRYPTION_KEY: ${POCKETBASE_ENCRYPTION_KEY}
+      POCKETBASE_PROXY_SECRET: ${POCKETBASE_PROXY_SECRET}
+    volumes:
+      - wanderer-pb-data:/pb_data
+      - wanderer-plugins:/data/plugins
+    depends_on:
+      wanderer-search:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/curl", "--fail", "http://localhost:8090/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+
+  wanderer-search:
+    image: getmeili/meilisearch:v1.36.0@sha256:203a0854738be101bfdada825ac3cbf95e5681bc849757b6bc199e4cfae98faa
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - wanderer-search:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:7700/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+
+volumes:
+  wanderer-uploads: {}
+  wanderer-pb-data: {}
+  wanderer-plugins: {}
+  wanderer-search: {}

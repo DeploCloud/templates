@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted trail database to upload, plan, map and share hikes and other outdoor routes, with PocketBase and Meilisearch.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "open-wanderer",
+    "url": "https://github.com/open-wanderer"
+  },
+  "links": {
+    "github": "https://github.com/open-wanderer/wanderer",
+    "website": "https://wanderer.to",
+    "docs": [
+      "https://wanderer.to/run/installation/docker",
+      "https://wanderer.to/run/environment-configuration",
+      "https://wanderer.to/run/backend-configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open to anyone who can reach the instance. After creating your accounts, set PUBLIC_DISABLE_SIGNUP to true and redeploy.",
+      "link": "https://wanderer.to/run/environment-configuration"
+    }
+  ]
+}
