@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Decentralized peer-to-peer web search engine with its own crawler, Solr index and admin interface, usable as a public peer or a private intranet search.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "YaCy",
+    "url": "https://yacy.net"
+  },
+  "links": {
+    "github": "https://github.com/yacy/yacy_search_server",
+    "website": "https://yacy.net",
+    "docs": [
+      "https://yacy.net/download_installation/",
+      "https://github.com/yacy/yacy_search_server/blob/master/docker/README.md",
+      "https://yacy.net/operation/yacy_conf/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated ADMIN_PASSWORD from the environment. The password is re-applied on every start, so change it there rather than on the Accounts page."
+    }
+  ]
+}

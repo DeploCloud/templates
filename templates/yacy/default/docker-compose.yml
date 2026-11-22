@@ -1,0 +1,26 @@
+services:
+  yacy:
+    image: yacy/yacy_search_server:latest@sha256:4077e9d85ea13e3d2a29b63add60b109ccced191bebfc169d422dd50fca44c41
+    restart: unless-stopped
+    # Set the admin password from the env with the same hash bin/passwd.sh writes.
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd /opt/yacy_search_server
+        conf=DATA/SETTINGS/yacy.conf
+        [ -f "$$conf" ] || conf=defaults/yacy.init
+        user=$$(grep '^adminAccountUserName=' "$$conf" | cut -d= -f2- | tr -d '\r')
+        realm=$$(grep '^adminRealm=' "$$conf" | cut -d= -f2- | tr -d '\r')
+        hash=$$(printf '%s' "$${user:-admin}:$$realm:$$ADMIN_PASSWORD" | md5sum | cut -d' ' -f1)
+        sed -i "s/^adminAccountBase64MD5=.*/adminAccountBase64MD5=MD5:$$hash/" "$$conf"
+        exec /bin/sh startYACY.sh -f
+    expose:
+      - 8090
+    environment:
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      - yacy-data:/opt/yacy_search_server/DATA
+
+volumes:
+  yacy-data: {}

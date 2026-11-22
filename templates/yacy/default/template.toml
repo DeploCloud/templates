@@ -1,0 +1,13 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "yacy"
+port = 8_090
+host = "${domain}"
+
+[config.env]
+ADMIN_PASSWORD = "${admin_password}"
