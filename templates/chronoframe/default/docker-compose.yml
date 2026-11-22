@@ -1,0 +1,14 @@
+services:
+  chronoframe:
+    image: ghcr.io/hoshinosuzumi/chronoframe:1.2.0@sha256:ab43bf9fde170b86407bdba099b090587f6b5fc35e635e6ea6511084c8c8c6e2
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NUXT_TRUST_PROXY: ${NUXT_TRUST_PROXY}
+      NUXT_OG_IMAGE_SECRET: ${NUXT_OG_IMAGE_SECRET}
+    volumes:
+      - chronoframe-data:/app/data
+
+volumes:
+  chronoframe-data: {}

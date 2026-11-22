@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "chronoframe"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+NUXT_TRUST_PROXY = "true"
+NUXT_OG_IMAGE_SECRET = "${secret:64}"
