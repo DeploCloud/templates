@@ -1,0 +1,28 @@
+services:
+  dizquetv:
+    image: vexorian/dizquetv:1.5.5@sha256:4e325201727f3876d10e6587e6b1e50ba839794356be0127294977f5a2c58321
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - dizquetv-data:/home/node/app/.dizquetv
+
+  # dizqueTV has no login; the gateway guards the web UI and API, client endpoints stay open
+  dizquetv-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DIZQUETV_USERNAME: ${DIZQUETV_USERNAME}
+      DIZQUETV_PASSWORD: ${DIZQUETV_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - export DIZQUETV_PASSWORD_HASH="$$(caddy hash-password --plaintext "$$DIZQUETV_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - dizquetv
+
+volumes:
+  dizquetv-data: {}

@@ -1,0 +1,32 @@
+[config]
+
+[[config.domains]]
+serviceName = "dizquetv-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	@clients path /discover.json /device.xml /lineup.json /lineup_status.json /api/channels.m3u /api/xmltv.xml /video /radio /stream /m3u8 /playlist /setup /media-player/* /images/* /cache/images/*
+	handle @clients {
+		reverse_proxy dizquetv:8000
+	}
+	handle {
+		basic_auth {
+			{$DIZQUETV_USERNAME} {$DIZQUETV_PASSWORD_HASH}
+		}
+		reverse_proxy dizquetv:8000
+	}
+}
+"""
+
+[config.env]
+DIZQUETV_USERNAME = "admin"
+DIZQUETV_PASSWORD = "${password:24}"

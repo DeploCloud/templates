@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "Live TV channel server that builds scheduled channels from your Plex media and serves them as an emulated HDHomeRun tuner and an M3U playlist with XMLTV guide data.",
+  "category": "media",
+  "developedBy": {
+    "label": "vexorian",
+    "url": "https://github.com/vexorian"
+  },
+  "links": {
+    "github": "https://github.com/vexorian/dizquetv",
+    "docs": [
+      "https://github.com/vexorian/dizquetv/wiki",
+      "https://github.com/vexorian/dizquetv/wiki/Step-2:-Configure-Plex-in-dizqueTV",
+      "https://github.com/vexorian/dizquetv/wiki/Adding-dizqueTV-as-a-DVR-in-Plex"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "dizqueTV has no login of its own, so the template puts the web UI behind HTTP basic auth: sign in as admin with DIZQUETV_PASSWORD from the environment variables. The tuner, M3U, XMLTV and stream URLs stay public so media servers and IPTV players can reach them."
+    },
+    {
+      "type": "warning",
+      "message": "The XMLTV guide embeds your Plex address and token in program images unless image caching is on. Enable it under Settings > XMLTV before sharing the guide URL.",
+      "link": "https://github.com/vexorian/dizquetv/wiki/Notes-regarding-sharing-the-IPTV-stream-with-remote-computers"
+    },
+    {
+      "type": "warning",
+      "message": "A Plex Media Server reachable from this server is required. Add it under Settings > Plex after the first start."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
