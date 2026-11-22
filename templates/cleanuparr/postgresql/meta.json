@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Cleanuparr download cleaner for the arr stack, storing its data in an included PostgreSQL database instead of the default SQLite files.",
+  "category": "media",
+  "developedBy": {
+    "label": "Cleanuparr",
+    "url": "https://github.com/Cleanuparr"
+  },
+  "links": {
+    "github": "https://github.com/Cleanuparr/Cleanuparr",
+    "website": "https://cleanuparr.github.io/",
+    "docs": [
+      "https://cleanuparr.github.io/docs/installation/database",
+      "https://cleanuparr.github.io/docs/installation/detailed"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor to the web UI creates the admin account in the initial setup wizard, so open it right after deployment. Cleanuparr then needs the URLs and API keys of your arr apps and download clients, which must be reachable from this server. Keep the option that disables authentication for local addresses off: every request reaches Cleanuparr through the reverse proxy from a private address, so enabling it would open the UI to anyone."
+    }
+  ]
+}

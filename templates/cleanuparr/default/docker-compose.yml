@@ -1,0 +1,23 @@
+services:
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:2.11.1@sha256:923c2fe435e22fc58d261bacd2d6bbd8eb1ba3f95358803a8e4d3287ffd919d3
+    restart: unless-stopped
+    expose:
+      - 11011
+    environment:
+      PORT: "11011"
+      PUID: ${PUID}
+      PGID: ${PGID}
+      UMASK: "022"
+      TZ: ${TZ}
+    volumes:
+      - cleanuparr-config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  cleanuparr-config: {}

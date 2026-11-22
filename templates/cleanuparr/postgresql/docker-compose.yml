@@ -1,0 +1,48 @@
+services:
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:2.11.1@sha256:923c2fe435e22fc58d261bacd2d6bbd8eb1ba3f95358803a8e4d3287ffd919d3
+    restart: unless-stopped
+    expose:
+      - 11011
+    environment:
+      PORT: "11011"
+      PUID: ${PUID}
+      PGID: ${PGID}
+      UMASK: "022"
+      TZ: ${TZ}
+      DATABASE_PROVIDER: postgres
+      POSTGRES_HOST: cleanuparr-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: cleanuparr
+      POSTGRES_PASS: ${DB_PASSWORD}
+      POSTGRES_DB: cleanuparr
+    volumes:
+      - cleanuparr-config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11011/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+    depends_on:
+      cleanuparr-db:
+        condition: service_healthy
+
+  cleanuparr-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cleanuparr
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: cleanuparr
+    volumes:
+      - cleanuparr-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cleanuparr -d cleanuparr"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cleanuparr-config: {}
+  cleanuparr-db-data: {}
