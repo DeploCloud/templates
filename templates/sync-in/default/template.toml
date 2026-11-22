@@ -1,0 +1,20 @@
+[variables]
+db_root_password = "${password:32}"
+admin_password = "${hash:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "sync-in"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+INIT_ADMIN_LOGIN = "admin"
+INIT_ADMIN_PASSWORD = "${admin_password}"
+SYNCIN_SERVER_PUBLICURL = "https://${domain}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+SYNCIN_AUTH_ENCRYPTIONKEY = "${secret:64}"
+SYNCIN_AUTH_TOKEN_ACCESS_SECRET = "${secret:64}"
+SYNCIN_AUTH_TOKEN_REFRESH_SECRET = "${secret:64}"

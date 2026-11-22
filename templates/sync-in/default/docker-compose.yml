@@ -1,0 +1,45 @@
+services:
+  sync-in:
+    image: syncin/server:2.6.4@sha256:ccb2b756c151b66e86f75ce70cfadb0b9f1c66f427b0dd961c407159a638b6ba
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      INIT_ADMIN: "true"
+      INIT_ADMIN_LOGIN: ${INIT_ADMIN_LOGIN}
+      INIT_ADMIN_PASSWORD: ${INIT_ADMIN_PASSWORD}
+      SYNCIN_SERVER_PUBLICURL: ${SYNCIN_SERVER_PUBLICURL}
+      SYNCIN_MYSQL_URL: mysql://root:${DB_ROOT_PASSWORD}@sync-in-db:3306/sync_in
+      SYNCIN_AUTH_ENCRYPTIONKEY: ${SYNCIN_AUTH_ENCRYPTIONKEY}
+      SYNCIN_AUTH_TOKEN_ACCESS_SECRET: ${SYNCIN_AUTH_TOKEN_ACCESS_SECRET}
+      SYNCIN_AUTH_TOKEN_REFRESH_SECRET: ${SYNCIN_AUTH_TOKEN_REFRESH_SECRET}
+    volumes:
+      - sync-in-data:/app/data
+    depends_on:
+      sync-in-db:
+        condition: service_healthy
+
+  sync-in-db:
+    image: mariadb:11.8@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    command:
+      - --event-scheduler=ON
+      - --innodb_ft_cache_size=16000000
+      - --max-allowed-packet=1G
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_uca1400_ai_ci
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: sync_in
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - sync-in-db:/var/lib/mysql
+
+volumes:
+  sync-in-data: {}
+  sync-in-db: {}
