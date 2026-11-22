@@ -1,0 +1,59 @@
+services:
+  coral:
+    image: coralproject/talk:9.11.9@sha256:04bece445db596e7bccd7b5da3aac0b97e5efc854b049413a9c2f124c50da547
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      NODE_ENV: production
+      PORT: "5000"
+      MONGODB_URI: mongodb://coral:${MONGO_PASSWORD}@coral-mongo:27017/coral?authSource=admin
+      REDIS_URI: redis://coral-redis:6379
+      SIGNING_SECRET: ${SIGNING_SECRET}
+      TRUST_PROXY: ${TRUST_PROXY}
+    depends_on:
+      coral-mongo:
+        condition: service_healthy
+      coral-redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://127.0.0.1:5000/api/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  coral-mongo:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: coral
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - coral-mongo:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  coral-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - coral-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  coral-mongo: {}
+  coral-redis: {}
