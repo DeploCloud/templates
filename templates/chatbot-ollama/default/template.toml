@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "chatbot-ollama"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+OLLAMA_HOST = "http://chatbot-ollama-ollama:11434"
+DEFAULT_MODEL = "mistral:latest"
