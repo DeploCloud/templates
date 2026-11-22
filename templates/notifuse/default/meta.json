@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted newsletter, email marketing and transactional email platform with a visual MJML editor, automations and a PostgreSQL database.",
+  "category": "email",
+  "developedBy": {
+    "label": "Notifuse",
+    "url": "https://www.notifuse.com"
+  },
+  "links": {
+    "github": "https://github.com/Notifuse/notifuse",
+    "website": "https://www.notifuse.com",
+    "docs": [
+      "https://www.notifuse.com/docs/self-hosting/installation/",
+      "https://www.notifuse.com/docs/self-hosting/backups/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment to finish the setup wizard: whoever reaches it first sets the root administrator email. A working SMTP server is required, since sign-in codes are sent by email.",
+      "link": "https://www.notifuse.com/docs/self-hosting/installation/"
+    },
+    {
+      "type": "warning",
+      "message": "SECRET_KEY encrypts the provider credentials stored in the database. Keep it with your database backups: without it the stored settings cannot be read."
+    }
+  ]
+}
