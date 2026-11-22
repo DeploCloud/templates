@@ -1,0 +1,14 @@
+[variables]
+auth_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bitplay"
+port = 3_347
+host = "${domain}"
+
+[config.env]
+BITPLAY_AUTH_USERNAME = "admin"
+BITPLAY_AUTH_PASSWORD = "${auth_password}"
