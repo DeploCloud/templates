@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Project management and issue tracker where AI agents can be assigned issues like project members, with PostgreSQL and a bundled S3-compatible store for attachments.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "croffasia",
+    "url": "https://github.com/croffasia"
+  },
+  "links": {
+    "github": "https://github.com/croffasia/itsaplan",
+    "website": "https://itsaplan.dev/",
+    "docs": [
+      "https://github.com/croffasia/itsaplan/blob/main/docs/self-hosting.md",
+      "https://github.com/croffasia/itsaplan/blob/main/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you register becomes the instance admin. Register it right after the first deploy, then set the registration mode and an email provider in the admin panel."
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "itsaplan-caddy"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
+	handle_path /api/* {
+		reverse_proxy itsaplan-api:3000
+	}
+
+	@oauth path /.well-known/oauth-authorization-server* /.well-known/oauth-protected-resource* /.well-known/openid-configuration*
+	handle @oauth {
+		reverse_proxy itsaplan-api:3000
+	}
+
+	handle {
+		reverse_proxy itsaplan-web:3001
+	}
+}
+"""
+
+[config.env]
+POSTGRES_PASSWORD = "${db_password}"
+BETTER_AUTH_SECRET = "${secret:48}"
+APP_ENCRYPTION_KEY = "${secret:48}"
+S3_ACCESS_KEY_ID = "itsaplan"
+S3_SECRET_ACCESS_KEY = "${password:40}"
+APP_URL = "https://${domain}"
+API_URL = "https://${domain}/api"

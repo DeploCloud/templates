@@ -1,0 +1,151 @@
+services:
+  # joins web and api under one origin: /api is stripped and sent to the api
+  itsaplan-caddy:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - itsaplan-web
+      - itsaplan-api
+
+  itsaplan-web:
+    image: ghcr.io/croffasia/itsaplan-web:1.12.0@sha256:95d4a9253608a00e2e6b82c68f92dd7e24bbf86bca537d66b8868c3a12926e24
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      API_URL: ${API_URL}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3001/login"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      - itsaplan-api
+
+  itsaplan-api:
+    image: ghcr.io/croffasia/itsaplan-api:1.12.0@sha256:b46a6c56396b3e57eda3a56eb625da310e1ff55a65fce9abd6f36ae6d2479113
+    restart: unless-stopped
+    command: ["bun", "run", "apps/api/src/index.ts"]
+    expose:
+      - 3000
+    environment:
+      API_PORT: 3000
+      DATABASE_URL: postgres://itsaplan:${POSTGRES_PASSWORD}@itsaplan-db:5432/itsaplan
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY}
+      API_URL: ${API_URL}
+      APP_URL: ${APP_URL}
+      CLIENT_IP_HEADER: x-real-ip
+      S3_ENDPOINT: http://itsaplan-s3:9000
+      S3_BUCKET: planner-attachments
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      itsaplan-db:
+        condition: service_healthy
+      itsaplan-migrate:
+        condition: service_completed_successfully
+      itsaplan-s3-init:
+        condition: service_completed_successfully
+
+  itsaplan-worker:
+    image: ghcr.io/croffasia/itsaplan-worker:1.12.0@sha256:5ae5d1123f3dc9f366b1516d110a043f9caa60fcb043a54abc9f99ab0be3d200
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://itsaplan:${POSTGRES_PASSWORD}@itsaplan-db:5432/itsaplan
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY}
+      S3_ENDPOINT: http://itsaplan-s3:9000
+      S3_BUCKET: planner-attachments
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+    depends_on:
+      itsaplan-db:
+        condition: service_healthy
+      itsaplan-migrate:
+        condition: service_completed_successfully
+
+  # Telegram bot; idles until a bot token is set in the admin panel
+  itsaplan-bot:
+    image: ghcr.io/croffasia/itsaplan-bot:1.12.0@sha256:a3f5a1518a5194ccbd37ca014b2fd00e6c76a120582d4feec554829fa883d70a
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://itsaplan:${POSTGRES_PASSWORD}@itsaplan-db:5432/itsaplan
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY}
+    depends_on:
+      itsaplan-db:
+        condition: service_healthy
+      itsaplan-migrate:
+        condition: service_completed_successfully
+
+  # one-shot: dumps the database to /backups, then applies migrations
+  itsaplan-migrate:
+    image: ghcr.io/croffasia/itsaplan-api:1.12.0@sha256:b46a6c56396b3e57eda3a56eb625da310e1ff55a65fce9abd6f36ae6d2479113
+    restart: "no"
+    command: ["bun", "run", "packages/db/src/migrate.ts"]
+    environment:
+      DATABASE_URL: postgres://itsaplan:${POSTGRES_PASSWORD}@itsaplan-db:5432/itsaplan
+    volumes:
+      - itsaplan-backups:/backups
+    depends_on:
+      itsaplan-db:
+        condition: service_healthy
+
+  itsaplan-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: itsaplan
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: itsaplan
+    volumes:
+      - itsaplan-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U itsaplan -d itsaplan"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # S3-compatible store for attachments, reachable only inside the stack
+  itsaplan-s3:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: unless-stopped
+    user: "0:0"
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY_ID}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_ACCESS_KEY}
+    volumes:
+      - itsaplan-s3:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:9000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # one-shot: creates the attachments bucket (idempotent)
+  itsaplan-s3-init:
+    image: rustfs/rustfs:1.0.6@sha256:ee717072290bec9b11abfc0365f8310b00df1cd9b3639943edae47bdef05044a
+    restart: "no"
+    environment:
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+    entrypoint: ["/bin/sh", "-c", "curl -fsS -X PUT --aws-sigv4 aws:amz:us-east-1:s3 --user \"$$S3_ACCESS_KEY_ID:$$S3_SECRET_ACCESS_KEY\" http://itsaplan-s3:9000/planner-attachments"]
+    depends_on:
+      itsaplan-s3:
+        condition: service_healthy
+
+volumes:
+  itsaplan-postgres: {}
+  itsaplan-s3: {}
+  itsaplan-backups: {}
