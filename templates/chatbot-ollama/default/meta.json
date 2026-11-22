@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source chat UI for Ollama with document and image uploads, bundled with a private CPU-only Ollama server for local models.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Ivan Fioravanti",
+    "url": "https://github.com/ivanfioravanti"
+  },
+  "links": {
+    "github": "https://github.com/ivanfioravanti/chatbot-ollama",
+    "docs": [
+      "https://github.com/ivanfioravanti/chatbot-ollama#configuration",
+      "https://docs.ollama.com/docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "No model is installed. Run ollama pull mistral (the UI default) or a smaller model in the chatbot-ollama-ollama container, then pick it in the model menu. Ollama runs on CPU only: mistral needs about 5 GB of free RAM and smaller models respond faster."
+    },
+    {
+      "type": "warning",
+      "message": "Chatbot Ollama has no login: anyone who knows the URL can chat with your models and use the server CPU."
+    }
+  ]
+}

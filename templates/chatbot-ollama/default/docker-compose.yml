@@ -1,0 +1,29 @@
+services:
+  chatbot-ollama:
+    image: ghcr.io/ivanfioravanti/chatbot-ollama:main@sha256:d5db49980ca35935e636846966bee41ddfdcd834ab0428425f30665e29deb17e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      OLLAMA_HOST: ${OLLAMA_HOST}
+      DEFAULT_MODEL: ${DEFAULT_MODEL}
+    depends_on:
+      chatbot-ollama-ollama:
+        condition: service_healthy
+
+  chatbot-ollama-ollama:
+    image: ollama/ollama:0.40.16@sha256:910d0d8107b538fb0894e63163eb195de0cc7aefcbc666dc62d3b18f71124592
+    restart: unless-stopped
+    expose:
+      - 11434
+    volumes:
+      - ollama-data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  ollama-data: {}
