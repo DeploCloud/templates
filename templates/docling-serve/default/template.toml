@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "docling-serve"
+port = 5_001
+host = "${domain}"
+
+[config.env]
+DOCLING_SERVE_ENABLE_UI = "true"
+DOCLING_SERVE_API_KEY = "${password:32}"

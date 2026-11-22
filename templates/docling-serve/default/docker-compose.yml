@@ -1,0 +1,15 @@
+services:
+  docling-serve:
+    image: ghcr.io/docling-project/docling-serve-cpu:v1.38.2@sha256:7a480a1604fa3b42efeddc7db9527690d9f9bc903226136013e2bfe6b1a4dfb0
+    restart: unless-stopped
+    expose:
+      - 5001
+    environment:
+      DOCLING_SERVE_ENABLE_UI: "${DOCLING_SERVE_ENABLE_UI}"
+      DOCLING_SERVE_API_KEY: "${DOCLING_SERVE_API_KEY}"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
