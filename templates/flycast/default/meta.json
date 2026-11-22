@@ -1,0 +1,35 @@
+{
+  "name": "Default",
+  "shortDescription": "Flycast Dreamcast, Naomi and Atomiswave emulator streamed to the browser behind a password, with gamepad support and settings, BIOS and saves kept on a persistent volume.",
+  "category": "media",
+  "developedBy": {
+    "label": "flyinghead",
+    "url": "https://github.com/flyinghead"
+  },
+  "links": {
+    "github": "https://github.com/flyinghead/flycast",
+    "website": "https://flyinghead.github.io/flycast-builds/",
+    "docs": [
+      "https://github.com/TheArcadeStriker/flycast-wiki/wiki/Getting-started-with-Flycast",
+      "https://github.com/TheArcadeStriker/flycast-wiki/wiki/Configuration-files-and-command-line-parameters",
+      "https://docs.linuxserver.io/images/docker-flycast/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the CUSTOM_USER and PASSWORD values from the environment. This basic auth is the only protection, and anyone who signs in gets passwordless sudo inside the container. No games or BIOS files are included: uploads from the web client land in /config/Desktop.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-flycast/"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
