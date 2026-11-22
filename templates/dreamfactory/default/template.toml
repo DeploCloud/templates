@@ -1,0 +1,25 @@
+[variables]
+app_key = "${hash:32}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${hash:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dreamfactory"
+port = 80
+host = "${domain}"
+
+[config.env]
+SERVERNAME = "${domain}"
+APP_KEY = "${app_key}"
+DB_DATABASE = "dreamfactory"
+DB_USERNAME = "dreamfactory"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"
+ADMIN_FIRST_NAME = "Admin"
+ADMIN_LAST_NAME = "User"

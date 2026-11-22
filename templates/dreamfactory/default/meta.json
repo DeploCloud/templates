@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "API generation platform that turns databases and other data sources into secured, documented REST APIs with role-based access, API keys and MCP endpoints.",
+  "category": "development",
+  "developedBy": {
+    "label": "DreamFactory Software",
+    "url": "https://github.com/dreamfactorysoftware"
+  },
+  "links": {
+    "github": "https://github.com/dreamfactorysoftware/dreamfactory",
+    "website": "https://www.dreamfactory.com/",
+    "docs": [
+      "https://docs.dreamfactory.com/",
+      "https://docs.dreamfactory.com/getting-started/installing-dreamfactory/docker-installation",
+      "https://github.com/dreamfactorysoftware/df-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first admin is created on first start from ADMIN_EMAIL and the generated ADMIN_PASSWORD in the environment variables. Change ADMIN_EMAIL before the first deploy if you want your own address; editing either value later does not change the existing account."
+    }
+  ]
+}
