@@ -1,0 +1,49 @@
+services:
+  mail-archiver:
+    image: s1t5/mailarchiver:2611.2@sha256:4baca9cb9dc6f97f2824f62489ba649ededc1095c4555f4d8b87da71349f7ebc
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=mail-archiver-db;Database=MailArchiver;Username=mailuser;Password=${DB_PASSWORD}"
+      Authentication__Username: ${ADMIN_USERNAME}
+      Authentication__Password: ${ADMIN_PASSWORD}
+      Authentication__CookieSameSite: Lax
+      Security__CredentialEncryptionKey: ${CREDENTIAL_ENCRYPTION_KEY}
+      TimeZone__DisplayTimeZoneId: ${TIMEZONE}
+    volumes:
+      - mail-archiver-keys:/app/DataProtection-Keys
+      - mail-archiver-uploads:/app/uploads
+      - mail-archiver-exports:/app/exports
+    # The image ships no curl or wget, so bash's /dev/tcp probes the public login page
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/5000 && printf 'GET /Auth/Login HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && head -n1 <&3 | grep -q ' 200 '"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      mail-archiver-db:
+        condition: service_healthy
+
+  mail-archiver-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: MailArchiver
+      POSTGRES_USER: mailuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mail-archiver-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mailuser -d MailArchiver"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  mail-archiver-keys: {}
+  mail-archiver-uploads: {}
+  mail-archiver-exports: {}
+  mail-archiver-db: {}
