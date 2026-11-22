@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Inventory management for electronic components with parts, footprints, storage locations, suppliers and datasheets, backed by SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Part-DB",
+    "url": "https://github.com/Part-DB"
+  },
+  "links": {
+    "github": "https://github.com/Part-DB/Part-DB-server",
+    "website": "https://docs.part-db.de/",
+    "docs": [
+      "https://docs.part-db.de/installation/installation_docker.html",
+      "https://docs.part-db.de/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the password from the INITIAL_ADMIN_PW environment variable and change it after the first login. Set the base currency in the system settings before entering prices, it cannot be changed later.",
+      "link": "https://docs.part-db.de/installation/installation_docker.html"
+    }
+  ]
+}

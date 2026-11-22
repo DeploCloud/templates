@@ -1,0 +1,23 @@
+services:
+  part-db:
+    image: jbtronics/part-db1:v2.20.7@sha256:68adc8f99a915cf3e68d4a0d72aab16b0bffd3d48c3e3984cb688a37769309df
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - part-db-uploads:/var/www/html/uploads
+      - part-db-media:/var/www/html/public/media
+      - part-db-db:/var/www/html/var/db
+    environment:
+      APP_ENV: docker
+      APP_SECRET: ${APP_SECRET}
+      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_SQLITE_ENFORCE_FOREIGN_KEYS: "1"
+      DB_AUTOMIGRATE: "true"
+      INITIAL_ADMIN_PW: ${INITIAL_ADMIN_PW}
+      DEFAULT_URI: ${DEFAULT_URI}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+volumes:
+  part-db-uploads: {}
+  part-db-media: {}
+  part-db-db: {}
