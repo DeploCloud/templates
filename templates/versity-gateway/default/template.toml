@@ -1,0 +1,24 @@
+[variables]
+s3_domain = "s3.${domain}"
+access_key = "${hash:20}"
+secret_key = "${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "versitygw"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "versitygw"
+port = 7_070
+host = "${s3_domain}"
+
+[config.env]
+ROOT_ACCESS_KEY = "${access_key}"
+ROOT_SECRET_KEY = "${secret_key}"
+VGW_WEBUI_GATEWAYS = "https://${s3_domain}"
+VGW_CORS_ALLOW_ORIGIN = "https://${domain}"
