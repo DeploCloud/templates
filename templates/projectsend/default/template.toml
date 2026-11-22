@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "projectsend"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+DB_DATABASE = "projectsend"
+DB_USERNAME = "projectsend"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+TRUSTED_PROXIES = "*"

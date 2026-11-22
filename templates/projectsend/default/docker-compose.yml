@@ -1,0 +1,59 @@
+services:
+  projectsend:
+    image: projectsend/projectsend:2.9.0@sha256:210d7e6a46f1f06c861f85d98798ee01b8ec29f99953d68f5211df6c6f518d8a
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_URL: ${APP_URL}
+      DB_CONNECTION: mysql
+      DB_HOST: projectsend-db
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: projectsend-redis
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+    volumes:
+      - projectsend-storage:/var/www/html/storage
+    depends_on:
+      projectsend-db:
+        condition: service_healthy
+      projectsend-redis:
+        condition: service_healthy
+
+  projectsend-db:
+    image: mysql:8.4.13@sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - projectsend-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  projectsend-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - projectsend-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  projectsend-storage: {}
+  projectsend-db: {}
+  projectsend-redis: {}
