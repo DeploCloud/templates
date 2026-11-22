@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "swingmusic"
+port = 1_970
+host = "${domain}"
+
+[config.env]
+SWINGMUSIC_DEVICE_NAME = "Swing Music"

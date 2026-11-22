@@ -1,0 +1,16 @@
+services:
+  swingmusic:
+    image: ghcr.io/swingmx/swingmusic:v3.0.0@sha256:a49155d1809bc6ad09d87d76cc91648c149fc80146b5e10260e70fe1cfa78175
+    restart: unless-stopped
+    expose:
+      - 1970
+    environment:
+      SWINGMUSIC_PORT: 1970
+      SWINGMUSIC_DEVICE_NAME: ${SWINGMUSIC_DEVICE_NAME}
+    volumes:
+      - swingmusic-music:/music
+      - swingmusic-config:/config
+
+volumes:
+  swingmusic-music: {}
+  swingmusic-config: {}

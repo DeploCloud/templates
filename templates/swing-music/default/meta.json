@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted music streaming server with a browser player, multi-user accounts, folder view and Last.fm scrobbling for your own audio files.",
+  "category": "media",
+  "developedBy": {
+    "label": "Swing Music",
+    "url": "https://github.com/swingmx"
+  },
+  "links": {
+    "github": "https://github.com/swingmx/swingmusic",
+    "website": "https://swingmx.com",
+    "docs": [
+      "https://swingmx.com/guide/introduction.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin account in the onboarding screen, so open the app right after deploying."
+    },
+    {
+      "type": "warning",
+      "message": "Swing Music has no upload feature: copy your audio files into the music volume (mounted at /music) and pick it as a root folder during onboarding."
+    }
+  ]
+}
