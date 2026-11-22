@@ -1,0 +1,3 @@
+Deploys the ShellHub community server (API, agent tunnels and web terminal), its web console, PostgreSQL and a Valkey cache and task queue, with the console and API served on one domain. Devices run the ShellHub agent, which dials out to this server over HTTPS, so they need no inbound port and can sit behind NAT or a firewall.
+The database, the GeoIP data the server downloads, and the API token key pair and SSH host key generated on first start persist in named volumes; back up the key volume together with the database.
+After deploying, open the app and complete the /setup page to create the first account, which becomes the superadmin, then add devices with the install command shown in the console.

@@ -1,0 +1,79 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "shellhub-ui"
+port = 8_080
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/api"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/ws"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/info"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/healthcheck"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/install.sh"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/kickstart.sh"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/agent"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/ssh/connection"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/ssh/revdial"
+
+[[config.domains]]
+serviceName = "shellhub"
+port = 8_080
+host = "${domain}"
+path = "/mcp"
+
+[config.env]
+SHELLHUB_DOMAIN = "${domain}"
+SHELLHUB_PUBLIC_URL = "https://${domain}"
+SHELLHUB_PROXY_TRUSTED_IPS = "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+POSTGRES_USER = "shellhub"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "shellhub"

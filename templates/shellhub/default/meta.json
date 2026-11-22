@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Centralized SSH gateway for remote access to Linux devices behind NAT or firewalls, with a web console, browser terminal and PostgreSQL storage.",
+  "category": "networking",
+  "developedBy": {
+    "label": "O.S. Systems",
+    "url": "https://ossystems.tech"
+  },
+  "links": {
+    "github": "https://github.com/shellhub-io/shellhub",
+    "website": "https://shellhub.io",
+    "docs": [
+      "https://docs.shellhub.io/selfhosted/quickstart",
+      "https://docs.shellhub.io/selfhosted/environment-variables",
+      "https://docs.shellhub.io/about/ports-and-connectivity"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: until the first account exists every page redirects to /setup, and whoever completes it becomes the instance superadmin.",
+      "link": "https://docs.shellhub.io/selfhosted/quickstart"
+    },
+    {
+      "type": "warning",
+      "message": "Only HTTP(S) is routed, so devices connect and the web terminal works, but native SSH clients cannot reach the server's SSH port (2222 in the container).",
+      "link": "https://docs.shellhub.io/about/ports-and-connectivity"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
