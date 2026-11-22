@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Telegram file downloader with a web UI, multi-account support and rule-based automatic downloads, stored in SQLite.",
+  "category": "media",
+  "developedBy": {
+    "label": "jarvis2f",
+    "url": "https://github.com/jarvis2f"
+  },
+  "links": {
+    "github": "https://github.com/jarvis2f/telegram-files",
+    "docs": [
+      "https://github.com/jarvis2f/telegram-files#-getting-started",
+      "https://github.com/jarvis2f/telegram-files/blob/main/.env.example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The stack starts with placeholder Telegram credentials, so adding an account fails until you set TELEGRAM_API_ID and TELEGRAM_API_HASH from your own Telegram application, then redeploy.",
+      "link": "https://my.telegram.org/apps"
+    },
+    {
+      "type": "warning",
+      "message": "On first start the container log prints a one-time bootstrap code valid for 15 minutes. Enter it in the web UI to create the administrator account; restart the service to get a new code if it expires."
+    }
+  ]
+}

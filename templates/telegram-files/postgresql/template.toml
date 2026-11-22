@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "telegram-files"
+port = 80
+host = "${domain}"
+
+[config.env]
+TELEGRAM_API_ID = "1"
+TELEGRAM_API_HASH = "replace-with-api-hash"
+HTTP_SECURE_COOKIES = "true"
+HTTP_ALLOWED_ORIGINS = "https://${domain}"
+TZ = "UTC"
+LOG_LEVEL = "INFO"
+DB_NAME = "telegram-files"
+DB_USER = "telegram-files"
+DB_PASSWORD = "${db_password}"
