@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted task and project manager with areas, notes, tags, recurring tasks, CalDAV sync and a REST API, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Chris Veleris",
+    "url": "https://github.com/chrisvel"
+  },
+  "links": {
+    "github": "https://github.com/chrisvel/tududi",
+    "website": "https://tududi.com/",
+    "docs": [
+      "https://github.com/chrisvel/tududi/blob/main/docs/16-postgresql.md",
+      "https://github.com/chrisvel/tududi/blob/main/.env.example",
+      "https://docs.tududi.com/getting-started/first-steps"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with TUDUDI_USER_EMAIL and the generated TUDUDI_USER_PASSWORD from the environment. The admin account is created on the first start; change TUDUDI_USER_EMAIL before deploying if you want a different address, since editing the password later does not overwrite an existing account.",
+      "link": "https://github.com/chrisvel/tududi/blob/main/.env.example"
+    }
+  ]
+}

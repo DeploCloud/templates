@@ -1,0 +1,51 @@
+services:
+  tududi:
+    image: chrisvel/tududi:2.1.1@sha256:6e0341b58eb7a39b6a3dddf5351434d349c8b2e6d2e39522ab0f41bd11906b51
+    restart: unless-stopped
+    expose:
+      - 3002
+    environment:
+      DB_HOST: tududi-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      TUDUDI_USER_EMAIL: ${TUDUDI_USER_EMAIL}
+      TUDUDI_USER_PASSWORD: ${TUDUDI_USER_PASSWORD}
+      TUDUDI_SESSION_SECRET: ${TUDUDI_SESSION_SECRET}
+      TUDUDI_ALLOWED_ORIGINS: ${TUDUDI_ALLOWED_ORIGINS}
+      TUDUDI_TRUST_PROXY: ${TUDUDI_TRUST_PROXY}
+      BASE_URL: ${BASE_URL}
+    volumes:
+      - tududi-uploads:/app/uploads
+      - tududi-backups:/app/backups
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3002/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      tududi-db:
+        condition: service_healthy
+
+  tududi-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - tududi-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  tududi-uploads: {}
+  tududi-backups: {}
+  tududi-db: {}
