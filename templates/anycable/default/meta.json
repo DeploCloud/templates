@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Real-time server for WebSocket and SSE clients using the Action Cable protocol, running standalone with JWT authentication, signed streams and an HTTP broadcast API.",
+  "category": "development",
+  "developedBy": {
+    "label": "Evil Martians",
+    "url": "https://evilmartians.com"
+  },
+  "links": {
+    "github": "https://github.com/anycable/anycable",
+    "website": "https://anycable.io",
+    "docs": [
+      "https://docs.anycable.io/anycable-go/getting_started",
+      "https://docs.anycable.io/anycable-go/configuration",
+      "https://docs.anycable.io/anycable-go/broadcasting",
+      "https://docs.anycable.io/anycable-go/signed_streams",
+      "https://docs.anycable.io/anycable-go/jwt_identification"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI. Your backend signs client JWTs and stream names with ANYCABLE_SECRET and publishes by POSTing to https://<your domain>/_broadcast with the header Authorization: Bearer <ANYCABLE_BROADCAST_KEY>. Clients connect to wss://<your domain>/cable or https://<your domain>/events (SSE).",
+      "link": "https://docs.anycable.io/anycable-go/broadcasting"
+    }
+  ]
+}

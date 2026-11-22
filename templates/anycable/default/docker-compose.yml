@@ -1,0 +1,21 @@
+services:
+  anycable:
+    image: anycable/anycable-go:1.6.21-alpine@sha256:3a599d658f240a041050dfa0be9aad0e14b482138b7130c533e2356beb94f286
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      ANYCABLE_HOST: 0.0.0.0
+      ANYCABLE_PORT: "8080"
+      ANYCABLE_NORPC: ${ANYCABLE_NORPC}
+      ANYCABLE_SECRET: ${ANYCABLE_SECRET}
+      ANYCABLE_BROADCAST_KEY: ${ANYCABLE_BROADCAST_KEY}
+      ANYCABLE_BROADCAST_ADAPTER: http
+      ANYCABLE_BROKER: memory
+      ANYCABLE_SSE: "true"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
