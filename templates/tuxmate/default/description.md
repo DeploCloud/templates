@@ -1,0 +1,1 @@
+Deploys TuxMate, a cross-distro install command generator: pick apps from the catalog, choose your distro or package manager, then copy the generated command or download the install script. The official image serves the statically built web app with nginx on port 80. Selections are kept in the visitor's browser, so the stack is stateless and needs no volumes, accounts or setup.
