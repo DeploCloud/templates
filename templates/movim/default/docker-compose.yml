@@ -1,0 +1,49 @@
+services:
+  movim:
+    image: ghcr.io/delonium/movim-container:v0.35.5@sha256:0a6eccfc4d69b2848764ba5126489b0280e17d378f1d8817cae31a3924e1921a
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DB_DRIVER: pgsql
+      DB_HOST: movim-db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DAEMON_URL: ${DAEMON_URL}
+      MOVIM_UPLOAD_MAX_FILESIZE: ${MOVIM_UPLOAD_MAX_FILESIZE}
+    volumes:
+      - movim-cache:/var/www/movim/cache
+      - movim-log:/var/www/movim/log
+      - movim-public-cache:/var/www/movim/public/cache
+      - movim-images:/var/www/movim/public/images
+      - movim-emojis:/var/www/movim/public/emojis
+      - movim-picture-cache:/var/cache/picture_proxy
+    depends_on:
+      movim-db:
+        condition: service_healthy
+
+  movim-db:
+    image: postgres:18.7@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - movim-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  movim-cache: {}
+  movim-log: {}
+  movim-public-cache: {}
+  movim-images: {}
+  movim-emojis: {}
+  movim-picture-cache: {}
+  movim-db: {}

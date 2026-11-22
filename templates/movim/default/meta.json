@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Decentralized social platform and web client for XMPP, with chats, group chats, communities, blogs and calls, backed by PostgreSQL.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Movim",
+    "url": "https://github.com/movim"
+  },
+  "links": {
+    "github": "https://github.com/movim/movim",
+    "website": "https://movim.eu",
+    "docs": [
+      "https://github.com/movim/movim/blob/master/INSTALL.md",
+      "https://github.com/delonium/movim-container#configuration",
+      "https://github.com/movim/movim/wiki"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Movim does not include an XMPP server. Users sign in with an existing XMPP account on any server. To make an account the instance admin, sign in with it once, then run php daemon.php setAdmin <JID> in the movim container console.",
+      "link": "https://github.com/movim/movim/blob/master/INSTALL.md#8-success"
+    }
+  ]
+}

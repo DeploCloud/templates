@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "movim"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_DATABASE = "movim"
+DB_USERNAME = "movim"
+DB_PASSWORD = "${db_password}"
+DAEMON_URL = "https://${domain}/"
+MOVIM_UPLOAD_MAX_FILESIZE = "100M"
