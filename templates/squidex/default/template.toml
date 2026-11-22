@@ -1,0 +1,25 @@
+[variables]
+mongo_password = "${password:32}"
+admin_password = "${password:20}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "squidex"
+port = 80
+host = "${domain}"
+
+[config.env]
+URLS__BASEURL = "https://${domain}"
+MONGO_USER = "squidex"
+MONGO_PASSWORD = "${mongo_password}"
+MONGO_URL = "mongodb://squidex:${mongo_password}@squidex-db:27017"
+IDENTITY__ADMINEMAIL = "admin@${domain}"
+IDENTITY__ADMINPASSWORD = "Sq1-${admin_password}"
+IDENTITY__GOOGLECLIENT = ""
+IDENTITY__GOOGLESECRET = ""
+IDENTITY__GITHUBCLIENT = ""
+IDENTITY__GITHUBSECRET = ""
+IDENTITY__MICROSOFTCLIENT = ""
+IDENTITY__MICROSOFTSECRET = ""
