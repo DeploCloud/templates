@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "S3-compatible object storage server on a local POSIX filesystem, with flat-file IAM accounts, bucket versioning and the built-in WebUI.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Versity Software",
+    "url": "https://www.versity.com/"
+  },
+  "links": {
+    "github": "https://github.com/versity/versitygw",
+    "website": "https://www.versity.com/products/versitygw/",
+    "docs": [
+      "https://github.com/versity/versitygw/wiki/Docker",
+      "https://github.com/versity/versitygw/wiki/WebGUI",
+      "https://github.com/versity/versitygw/wiki/Global-Options"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the WebUI with the generated ROOT_ACCESS_KEY and ROOT_SECRET_KEY from the environment. S3 clients use the s3. subdomain of this app as endpoint, with path-style addressing.",
+      "link": "https://github.com/versity/versitygw/wiki/WebGUI"
+    }
+  ]
+}
