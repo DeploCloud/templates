@@ -1,0 +1,16 @@
+services:
+  podsync:
+    image: ghcr.io/mxpv/podsync:nightly@sha256:b88a9ec6ba6440744e8da249e8041139d80a18d13b68d7272c369ba2dc33e700
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PODSYNC_CONFIG_PATH: ${PODSYNC_CONFIG_PATH}
+    volumes:
+      - podsync-data:/app/data
+      - podsync-db:/app/db
+      - ./config.toml:/app/config.toml:ro
+
+volumes:
+  podsync-data: {}
+  podsync-db: {}

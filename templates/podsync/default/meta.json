@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Turns YouTube, Vimeo, SoundCloud and Twitch channels or playlists into podcast RSS feeds, downloading episodes with yt-dlp and serving them over HTTPS.",
+  "category": "media",
+  "developedBy": {
+    "label": "Maksym Pavlenko",
+    "url": "https://github.com/mxpv"
+  },
+  "links": {
+    "github": "https://github.com/mxpv/podsync",
+    "docs": [
+      "https://github.com/mxpv/podsync#readme",
+      "https://github.com/mxpv/podsync/blob/main/config.toml.example",
+      "https://github.com/mxpv/podsync/blob/main/docs/how_to_get_youtube_api_key.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Podsync has no admin UI: edit the generated config.toml to add your YouTube (or Vimeo) API key and replace the sample feed, then redeploy. Feeds stay empty until a valid API key is set.",
+      "link": "https://github.com/mxpv/podsync/blob/main/docs/how_to_get_youtube_api_key.md"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+[config]
+
+[[config.domains]]
+serviceName = "podsync"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.toml"
+content = """[server]
+port = 8080
+hostname = "https://${domain}"
+
+[storage]
+  [storage.local]
+  data_dir = "/app/data"
+
+# Uncomment and add your YouTube Data API key (vimeo works the same way, twitch takes "CLIENT_ID:CLIENT_SECRET").
+# [tokens]
+# youtube = "YOUR_YOUTUBE_API_KEY"
+
+[downloader]
+self_update = true
+timeout = 15
+
+# Replace this sample feed with your own channels or playlists. The feed is served at /example.xml
+[feeds]
+  [feeds.example]
+  url = "https://www.youtube.com/channel/UCxC5Ls6DwqV0e-CYcAKkExQ"
+  update_period = "12h"
+  format = "audio"
+  quality = "low"
+  opml = true
+
+  [feeds.example.clean]
+  keep_last = 10
+"""
+
+[config.env]
+PODSYNC_CONFIG_PATH = "/app/config.toml"
