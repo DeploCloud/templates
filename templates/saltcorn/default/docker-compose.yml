@@ -1,0 +1,41 @@
+services:
+  saltcorn:
+    image: saltcorn/saltcorn:1.6.4@sha256:e045f66a121400edf10d6e17ffb36ce1a2c4782c33b42fc39e15ca7801a0248a
+    restart: unless-stopped
+    command: ["serve", "--addschema"]
+    expose:
+      - 3000
+    environment:
+      PGHOST: saltcorn-db
+      PGPORT: "5432"
+      PGUSER: saltcorn
+      PGDATABASE: saltcorn
+      PGPASSWORD: ${DB_PASSWORD}
+      SALTCORN_SESSION_SECRET: ${SALTCORN_SESSION_SECRET}
+      SALTCORN_JWT_SECRET: ${SALTCORN_JWT_SECRET}
+      SALTCORN_NWORKERS: ${SALTCORN_NWORKERS}
+    volumes:
+      - saltcorn-files:/root/.local/share/saltcorn
+      - saltcorn-plugins:/root/.local/share/saltcorn-plugins
+    depends_on:
+      saltcorn-db:
+        condition: service_healthy
+  saltcorn-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: saltcorn
+      POSTGRES_DB: saltcorn
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saltcorn -d saltcorn"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - saltcorn-db:/var/lib/postgresql/data
+
+volumes:
+  saltcorn-files: {}
+  saltcorn-plugins: {}
+  saltcorn-db: {}

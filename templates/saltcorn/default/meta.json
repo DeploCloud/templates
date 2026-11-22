@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "No-code application builder for database-backed web apps, with drag-and-drop views, pages, user roles and plugins, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Saltcorn",
+    "url": "https://github.com/saltcorn"
+  },
+  "links": {
+    "github": "https://github.com/saltcorn/saltcorn",
+    "website": "https://saltcorn.com/",
+    "docs": [
+      "https://wiki.saltcorn.com/view/ShowPage/deploy-with-docker",
+      "https://wiki.saltcorn.com/view/ShowPage/quick-start-guide"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first account created on the setup page becomes the administrator."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
