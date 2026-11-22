@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "zpan"
+port = 8_222
+host = "${domain}"
+
+[config.env]
+BETTER_AUTH_SECRET = "${base64:32}"
+BETTER_AUTH_URL = "https://${domain}"

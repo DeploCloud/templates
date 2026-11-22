@@ -1,0 +1,22 @@
+services:
+  zpan:
+    image: ghcr.io/saltbo/zpan:2.9.0@sha256:e8412ea3d6ce434651c079506ac69eb2db004785053ab76362a939197bbbdfc9
+    restart: unless-stopped
+    expose:
+      - 8222
+    environment:
+      PORT: 8222
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      DATABASE_URL: /data/zpan.db
+    volumes:
+      - zpan-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8222/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+volumes:
+  zpan-data: {}
