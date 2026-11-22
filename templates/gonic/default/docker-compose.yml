@@ -1,0 +1,23 @@
+services:
+  gonic:
+    image: sentriz/gonic:v0.23.0@sha256:7b2298d905149ecb7e57cdd3bf7a40082758b9bda2e24454b41c17c99bf25e8f
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TZ: ${TZ}
+      GONIC_SCAN_AT_START_ENABLED: ${GONIC_SCAN_AT_START_ENABLED}
+      GONIC_SCAN_WATCHER_ENABLED: ${GONIC_SCAN_WATCHER_ENABLED}
+    volumes:
+      - gonic-data:/data
+      - gonic-music:/music
+      - gonic-podcasts:/podcasts
+      - gonic-playlists:/playlists
+      - gonic-cache:/cache
+
+volumes:
+  gonic-data: {}
+  gonic-music: {}
+  gonic-podcasts: {}
+  gonic-playlists: {}
+  gonic-cache: {}

@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gonic"
+port = 80
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+GONIC_SCAN_AT_START_ENABLED = "true"
+GONIC_SCAN_WATCHER_ENABLED = "true"
