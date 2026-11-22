@@ -1,0 +1,24 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "phpbb"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PHPBB_FORUM_NAME = "phpBB Forum"
+PHPBB_USERNAME = "admin"
+PHPBB_PASSWORD = "${admin_password}"
+PHPBB_EMAIL = "admin@example.com"
+SERVER_NAME = "${domain}"
+DB_NAME = "phpbb"
+DB_USER = "phpbb"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"

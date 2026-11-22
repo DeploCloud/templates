@@ -1,0 +1,48 @@
+services:
+  phpbb:
+    image: evandarwin/phpbb:3.3.19@sha256:3226c24eac5efd758215a4c0afc6abfc623d9252d4b19b724f53698bd8cecb41
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PHPBB_FORUM_NAME: ${PHPBB_FORUM_NAME}
+      PHPBB_USERNAME: ${PHPBB_USERNAME}
+      PHPBB_PASSWORD: ${PHPBB_PASSWORD}
+      PHPBB_EMAIL: ${PHPBB_EMAIL}
+      PHPBB_DATABASE_DRIVER: mysqli
+      PHPBB_DATABASE_HOST: phpbb-db
+      PHPBB_DATABASE_PORT: "3306"
+      PHPBB_DATABASE_NAME: ${DB_NAME}
+      PHPBB_DATABASE_USER: ${DB_USER}
+      PHPBB_DATABASE_PASSWORD: ${DB_PASSWORD}
+      SERVER_PROTOCOL: https://
+      SERVER_NAME: ${SERVER_NAME}
+      SERVER_PORT: "443"
+      COOKIE_SECURE: "true"
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES}
+    volumes:
+      - phpbb-data:/opt/phpbb
+    depends_on:
+      phpbb-db:
+        condition: service_healthy
+
+  phpbb-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - phpbb-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  phpbb-data: {}
+  phpbb-db: {}
