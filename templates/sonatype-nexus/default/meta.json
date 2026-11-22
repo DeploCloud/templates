@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Universal artifact repository manager for Maven, npm, Docker, PyPI and more, with the embedded H2 database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Sonatype",
+    "url": "https://www.sonatype.com/"
+  },
+  "links": {
+    "github": "https://github.com/sonatype/nexus-public",
+    "website": "https://www.sonatype.com/products/sonatype-nexus-repository",
+    "docs": [
+      "https://help.sonatype.com/en/sonatype-nexus-repository.html",
+      "https://github.com/sonatype/docker-nexus3",
+      "https://help.sonatype.com/en/ce-onboarding.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated NEXUS_SECURITY_INITIAL_PASSWORD from the environment, then accept the Community Edition EULA in the onboarding wizard before components can be fetched or uploaded. The first start takes 2-3 minutes.",
+      "link": "https://help.sonatype.com/en/ce-onboarding.html"
+    },
+    {
+      "type": "info",
+      "message": "The JVM reserves about 2.7 GB of heap by default. Lower the -Xms/-Xmx values in INSTALL4J_ADD_VM_PARAMS on small servers.",
+      "link": "https://github.com/sonatype/docker-nexus3"
+    }
+  ]
+}
