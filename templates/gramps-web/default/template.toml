@@ -1,0 +1,14 @@
+[variables]
+secret_key = "${secret:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gramps-web"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+SECRET_KEY = "${secret_key}"
