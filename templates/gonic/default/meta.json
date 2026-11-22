@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight music streaming server implementing the Subsonic API, with a web admin panel, podcasts and on-the-fly transcoding.",
+  "category": "media",
+  "developedBy": {
+    "label": "sentriz",
+    "url": "https://github.com/sentriz"
+  },
+  "links": {
+    "github": "https://github.com/sentriz/gonic",
+    "docs": [
+      "https://github.com/sentriz/gonic#configuration-options",
+      "https://github.com/sentriz/gonic/wiki/installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first login is admin / admin. Change this password in the web panel right after deployment."
+    },
+    {
+      "type": "warning",
+      "message": "Gonic has no upload feature: copy your music files into the gonic-music volume (mounted at /music) and they are scanned automatically."
+    }
+  ]
+}
