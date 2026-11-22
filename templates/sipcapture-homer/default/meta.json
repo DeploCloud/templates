@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source VoIP and SIP capture server that receives HEP from Kamailio, OpenSIPS, Asterisk, FreeSWITCH or capture agents and lets you search calls, view call flows and export PCAP in a web UI.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "SIPCAPTURE",
+    "url": "https://sipcapture.org/"
+  },
+  "links": {
+    "github": "https://github.com/sipcapture/homer",
+    "website": "https://sipcapture.org/",
+    "docs": [
+      "https://sipcapture.github.io/homer/",
+      "https://github.com/sipcapture/homer/blob/homer11/examples/docker/README.md",
+      "https://sipcapture.github.io/homer/ENVIRONMENT_VARIABLES/",
+      "https://sipcapture.github.io/homer/RETENTION/",
+      "https://sipcapture.github.io/homer/SECURITY/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates the admin user with a random password that is printed only once in the container logs: search them for bootstrap_password, sign in as admin and change the password.",
+      "link": "https://github.com/sipcapture/homer/blob/homer11/examples/docker/README.md#first-login"
+    },
+    {
+      "type": "warning",
+      "message": "HEP agents (Kamailio, OpenSIPS, Asterisk, FreeSWITCH, heplify, captagent) send to port 9060 over UDP or TCP, which is not exposed through the domain. Publish port 9060 of the homer service on the server and point the agents at it; without that only PCAP import from the web UI adds data."
+    },
+    {
+      "type": "info",
+      "message": "Upstream sizes the all-in-one container for about 8 GB of RAM. DuckDB is capped at 4 GB by HOMER_STORAGE_DUCKLAKE_TUNING_MEMORY_LIMIT; lower it on smaller servers or raise it under heavy SIP traffic.",
+      "link": "https://sipcapture.github.io/homer/OOM/"
+    }
+  ]
+}
