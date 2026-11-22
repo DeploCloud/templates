@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted watched list for movies, TV series, anime and games, with user accounts and a SQLite database.",
+  "category": "media",
+  "developedBy": {
+    "label": "sbondCo",
+    "url": "https://github.com/sbondCo"
+  },
+  "links": {
+    "github": "https://github.com/sbondCo/Watcharr",
+    "website": "https://watcharr.app",
+    "docs": [
+      "https://watcharr.app/docs/installation/docker-compose",
+      "https://watcharr.app/docs/server_config/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the admin. Create it right after deployment, then disable signups in the server settings if the instance should stay private.",
+      "link": "https://watcharr.app/docs/installation/docker-compose"
+    }
+  ]
+}

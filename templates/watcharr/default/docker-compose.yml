@@ -1,0 +1,11 @@
+services:
+  watcharr:
+    image: ghcr.io/sbondco/watcharr:v4.4.0@sha256:28673ff5eac318cb6fda2251bfd53d3402810288d4c335ce6c98060ace0940e6
+    restart: unless-stopped
+    expose:
+      - 3080
+    volumes:
+      - watcharr-data:/data
+
+volumes:
+  watcharr-data: {}
