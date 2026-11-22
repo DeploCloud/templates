@@ -1,0 +1,19 @@
+services:
+  rackpeek:
+    image: aptacode/rackpeek:v2.3.0@sha256:0c0939ccb5586fba29b88268922480dc0653f9ad066807d418691695aa19d9ec
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      RPK_API_KEY: ${RPK_API_KEY}
+    volumes:
+      - rackpeek-config:/app/config
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+
+volumes:
+  rackpeek-config: {}
