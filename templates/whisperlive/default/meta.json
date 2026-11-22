@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Near real-time speech-to-text server on CPU with a WebSocket streaming endpoint and an OpenAI-compatible transcription API, powered by faster-whisper.",
+  "category": "ai",
+  "developedBy": {
+    "label": "Collabora",
+    "url": "https://www.collabora.com/"
+  },
+  "links": {
+    "github": "https://github.com/collabora/WhisperLive",
+    "docs": [
+      "https://github.com/collabora/WhisperLive#running-the-server",
+      "https://github.com/collabora/WhisperLive#openai-rest-interface",
+      "https://github.com/collabora/WhisperLive#whisper-live-server-in-docker"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI and every request needs the generated WHISPERLIVE_API_KEY. OpenAI-compatible clients work with base URL https://<your-domain>/v1 and that key as the API key. WebSocket clients connect to the root URL and must send the key as an \"Authorization: Bearer\" header or a ?token= query parameter; the upstream Python client and browser extensions do not send it yet."
+    },
+    {
+      "type": "info",
+      "message": "Transcription runs on the CPU and models are downloaded from Hugging Face on first use, so the first request is slow and larger models need several GB of RAM. WHISPERLIVE_OMP_NUM_THREADS sets how many CPU threads transcription uses."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
