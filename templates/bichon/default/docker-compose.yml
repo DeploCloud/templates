@@ -1,0 +1,23 @@
+services:
+  bichon:
+    image: rustmailer/bichon:2.4.3@sha256:5bbc4bb525c0163531056000b6dcb84e90db81b612e4ca8fbc5ea14410538883
+    restart: unless-stopped
+    expose:
+      - 15630
+    environment:
+      BICHON_ROOT_DIR: /data
+      BICHON_ENCRYPT_PASSWORD: ${BICHON_ENCRYPT_PASSWORD}
+      BICHON_PUBLIC_URL: ${BICHON_PUBLIC_URL}
+      BICHON_LOG_LEVEL: ${BICHON_LOG_LEVEL}
+      BICHON_ANSI_LOGS: "false"
+    volumes:
+      - bichon-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs --max-time 4 http://localhost:15630/api/status || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  bichon-data: {}

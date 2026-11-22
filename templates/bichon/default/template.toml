@@ -1,0 +1,15 @@
+[variables]
+encrypt_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bichon"
+port = 15_630
+host = "${domain}"
+
+[config.env]
+BICHON_ENCRYPT_PASSWORD = "${encrypt_password}"
+BICHON_PUBLIC_URL = "https://${domain}"
+BICHON_LOG_LEVEL = "info"
