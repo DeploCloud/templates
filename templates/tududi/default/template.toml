@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+session_secret = "${hash:128}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tududi"
+port = 3_002
+host = "${domain}"
+
+[config.env]
+DB_NAME = "tududi"
+DB_USER = "tududi"
+DB_PASSWORD = "${db_password}"
+TUDUDI_USER_EMAIL = "admin@example.com"
+TUDUDI_USER_PASSWORD = "${admin_password}"
+TUDUDI_SESSION_SECRET = "${session_secret}"
+TUDUDI_ALLOWED_ORIGINS = "https://${domain}"
+TUDUDI_TRUST_PROXY = "1"
+BASE_URL = "https://${domain}"
