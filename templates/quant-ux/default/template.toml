@@ -1,0 +1,31 @@
+[variables]
+mongo_password = "${hash:32}"
+jwt_password = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "quant-ux"
+port = 8_082
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "quant-ux-websocket"
+port = 8_086
+host = "${domain}"
+path = "/ws"
+
+[config.env]
+QUX_DOMAIN = "${domain}"
+MONGO_PASSWORD = "${mongo_password}"
+QUX_JWT_PASSWORD = "${jwt_password}"
+QUX_USER_ALLOW_SIGNUP = "true"
+QUX_USER_ALLOWED_DOMAINS = "*"
+QUX_MAIL_HOST = ""
+QUX_MAIL_PORT = "587"
+QUX_MAIL_SSL = "required"
+QUX_MAIL_USER = ""
+QUX_MAIL_PASSWORD = ""
+QUX_AI_TOKEN = ""

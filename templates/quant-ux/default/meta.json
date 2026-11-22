@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "UX prototyping and usability testing tool with a Node.js web app, Java backend, collaboration websocket server and MongoDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Klaus Schaefers",
+    "url": "https://github.com/KlausSchaefers"
+  },
+  "links": {
+    "github": "https://github.com/KlausSchaefers/quant-ux",
+    "website": "https://quant-ux.com",
+    "docs": [
+      "https://github.com/KlausSchaefers/quant-ux#docker",
+      "https://github.com/KlausSchaefers/qux-java#config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up is open to anyone who can reach the domain. After creating your accounts, set QUX_USER_ALLOW_SIGNUP to false or limit QUX_USER_ALLOWED_DOMAINS to your email domains. Password resets and invitations need an SMTP server in the QUX_MAIL_* variables."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
