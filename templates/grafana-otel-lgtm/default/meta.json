@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "All-in-one OpenTelemetry backend: an OTel Collector, Prometheus, Tempo, Loki and Pyroscope behind a preconfigured Grafana, in a single container.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Grafana Labs",
+    "url": "https://grafana.com"
+  },
+  "links": {
+    "github": "https://github.com/grafana/docker-otel-lgtm",
+    "website": "https://grafana.com/docs/opentelemetry/docker-lgtm/",
+    "docs": [
+      "https://github.com/grafana/docker-otel-lgtm/blob/main/README.md",
+      "https://grafana.com/docs/opentelemetry/docker-lgtm/",
+      "https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to Grafana as admin with the generated GF_SECURITY_ADMIN_PASSWORD value from the environment variables. The OTLP/HTTP endpoint at https://<domain>/v1 has no authentication: anyone who knows the domain can send telemetry, so do not share it with untrusted clients."
+    },
+    {
+      "type": "info",
+      "message": "Upstream builds this image for development, demo and testing environments rather than production monitoring.",
+      "link": "https://github.com/grafana/docker-otel-lgtm/blob/main/README.md"
+    }
+  ]
+}
