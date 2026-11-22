@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Game server management panel built on Laravel, with a SQLite database, queue worker and scheduler in one container.",
+  "category": "other",
+  "developedBy": {
+    "label": "Pelican",
+    "url": "https://pelican.dev"
+  },
+  "links": {
+    "github": "https://github.com/pelican/panel",
+    "website": "https://pelican.dev",
+    "docs": [
+      "https://pelican.dev/docs/panel/advanced/docker",
+      "https://pelican.dev/docs/panel/panel-setup",
+      "https://pelican.dev/docs/wings/install"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After the first deploy, open https://<your-domain>/installer right away to finish setup and create the admin account; the installer is open to anyone until it is completed.",
+      "link": "https://pelican.dev/docs/panel/panel-setup"
+    },
+    {
+      "type": "warning",
+      "message": "Game servers run on separate nodes with the Wings daemon, which you install yourself on each node and link to the panel.",
+      "link": "https://pelican.dev/docs/wings/install"
+    }
+  ]
+}
