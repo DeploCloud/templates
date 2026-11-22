@@ -1,0 +1,23 @@
+services:
+  rdt-client:
+    image: rogerfar/rdtclient:2.0.143@sha256:68523637d09ec8a120bd272756d58b393448a656b5967bd45622c4891c65ff36
+    restart: unless-stopped
+    expose:
+      - 6500
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:6500"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - rdt-client-db:/data/db
+      - rdt-client-downloads:/data/downloads
+
+volumes:
+  rdt-client-db: {}
+  rdt-client-downloads: {}
