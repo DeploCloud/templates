@@ -1,0 +1,46 @@
+services:
+  bytestash:
+    image: ghcr.io/jordan-dalby/bytestash:1.6.2@sha256:86d5726ef9a417775cc05120eed04c36915cbc41aea83c5799fc6b8d3ad77db5
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      PUBLIC_URL: ${PUBLIC_URL}
+      TOKEN_EXPIRY: ${TOKEN_EXPIRY}
+      ALLOW_NEW_ACCOUNTS: ${ALLOW_NEW_ACCOUNTS}
+      ALLOW_PASSWORD_CHANGES: ${ALLOW_PASSWORD_CHANGES}
+      DISABLE_ACCOUNTS: "false"
+      DISABLE_INTERNAL_ACCOUNTS: "false"
+      DEBUG: "false"
+      POSTGRES_HOST: bytestash-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_SSL: "false"
+    volumes:
+      - bytestash-data:/data/snippets
+    depends_on:
+      bytestash-db:
+        condition: service_healthy
+
+  bytestash-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - bytestash-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  bytestash-data: {}
+  bytestash-db: {}

@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted code snippet manager with sharing, an API and an MCP endpoint, storing data in SQLite.",
+  "category": "development",
+  "developedBy": {
+    "label": "Jordan Dalby",
+    "url": "https://github.com/jordan-dalby"
+  },
+  "links": {
+    "github": "https://github.com/jordan-dalby/ByteStash",
+    "docs": [
+      "https://github.com/jordan-dalby/ByteStash#readme",
+      "https://github.com/jordan-dalby/ByteStash/wiki/FAQ"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Register your account right after deploying: the first sign-up is always allowed, further sign-ups only when ALLOW_NEW_ACCOUNTS is true. No account is an admin until you run `node src/scripts/admin.js grant <username>` inside the bytestash container.",
+      "link": "https://github.com/jordan-dalby/ByteStash#admin-access"
+    }
+  ]
+}

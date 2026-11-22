@@ -1,0 +1,20 @@
+services:
+  bytestash:
+    image: ghcr.io/jordan-dalby/bytestash:1.6.2@sha256:86d5726ef9a417775cc05120eed04c36915cbc41aea83c5799fc6b8d3ad77db5
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      PUBLIC_URL: ${PUBLIC_URL}
+      TOKEN_EXPIRY: ${TOKEN_EXPIRY}
+      ALLOW_NEW_ACCOUNTS: ${ALLOW_NEW_ACCOUNTS}
+      ALLOW_PASSWORD_CHANGES: ${ALLOW_PASSWORD_CHANGES}
+      DISABLE_ACCOUNTS: "false"
+      DISABLE_INTERNAL_ACCOUNTS: "false"
+      DEBUG: "false"
+    volumes:
+      - bytestash-data:/data/snippets
+
+volumes:
+  bytestash-data: {}
