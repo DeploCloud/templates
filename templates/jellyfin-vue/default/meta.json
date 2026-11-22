@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Experimental alternative web client for Jellyfin built with Vue, served as a static web app that connects from the browser to an existing Jellyfin server.",
+  "category": "media",
+  "developedBy": {
+    "label": "Jellyfin",
+    "url": "https://github.com/jellyfin"
+  },
+  "links": {
+    "github": "https://github.com/jellyfin/jellyfin-vue",
+    "website": "https://jellyfin.org/",
+    "docs": [
+      "https://jellyfin.org/docs/general/clients/jellyfin-vue",
+      "https://github.com/jellyfin/jellyfin-vue/wiki/Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This is only a client: it needs an existing Jellyfin server reachable over HTTPS from the browser, since an http:// server is blocked as mixed content. Enter its address on first visit, or prefill it with DEFAULT_SERVERS.",
+      "link": "https://jellyfin.org/docs/general/clients/jellyfin-vue"
+    },
+    {
+      "type": "info",
+      "message": "Jellyfin Vue is experimental and has no stable releases; upstream only supports its latest unstable build, pinned here by date."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+services:
+  jellyfin-vue:
+    image: ghcr.io/jellyfin/jellyfin-vue:unstable.2026-11-21.a3e4bd5@sha256:27f28b748dab9989833287f6eb095eae2543ac132ac46c61304b697aa0ebd738
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DEFAULT_SERVERS: ${DEFAULT_SERVERS}
