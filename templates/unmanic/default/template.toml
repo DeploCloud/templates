@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "unmanic"
+port = 8888
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"

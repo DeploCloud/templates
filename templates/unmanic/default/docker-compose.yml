@@ -1,0 +1,29 @@
+services:
+  unmanic-init:
+    image: josh5/unmanic:0.4.1@sha256:36a705923193db6b8ca7abd5b57b81a7309d04aedd320ec0ef4e9ac5970be885
+    restart: "no"
+    # the image only chowns /config and /tmp/unmanic, so the library volume starts root-owned
+    entrypoint: ["chown", "${PUID}:${PGID}", "/library"]
+    volumes:
+      - unmanic-library:/library
+
+  unmanic:
+    image: josh5/unmanic:0.4.1@sha256:36a705923193db6b8ca7abd5b57b81a7309d04aedd320ec0ef4e9ac5970be885
+    restart: unless-stopped
+    expose:
+      - 8888
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+    volumes:
+      - unmanic-config:/config
+      - unmanic-library:/library
+      - unmanic-cache:/tmp/unmanic
+    depends_on:
+      unmanic-init:
+        condition: service_completed_successfully
+
+volumes:
+  unmanic-config: {}
+  unmanic-library: {}
+  unmanic-cache: {}
