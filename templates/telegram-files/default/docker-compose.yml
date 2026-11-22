@@ -1,0 +1,26 @@
+services:
+  telegram-files:
+    image: ghcr.io/jarvis2f/telegram-files:0.4.1@sha256:8703bca181eb1f99015dc40549295d1b59eb7caf336bb54e87dc3c59e433e2c2
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_ENV: prod
+      APP_ROOT: /app/data
+      TZ: ${TZ}
+      LOG_LEVEL: ${LOG_LEVEL}
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+      HTTP_SECURE_COOKIES: ${HTTP_SECURE_COOKIES}
+      HTTP_ALLOWED_ORIGINS: ${HTTP_ALLOWED_ORIGINS}
+    volumes:
+      - telegram-files-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1/api/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  telegram-files-data: {}

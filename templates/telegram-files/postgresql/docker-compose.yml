@@ -1,0 +1,51 @@
+services:
+  telegram-files:
+    image: ghcr.io/jarvis2f/telegram-files:0.4.1@sha256:8703bca181eb1f99015dc40549295d1b59eb7caf336bb54e87dc3c59e433e2c2
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      APP_ENV: prod
+      APP_ROOT: /app/data
+      TZ: ${TZ}
+      LOG_LEVEL: ${LOG_LEVEL}
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+      HTTP_SECURE_COOKIES: ${HTTP_SECURE_COOKIES}
+      HTTP_ALLOWED_ORIGINS: ${HTTP_ALLOWED_ORIGINS}
+      DB_TYPE: postgres
+      DB_HOST: telegram-files-db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - telegram-files-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1/api/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      telegram-files-db:
+        condition: service_healthy
+
+  telegram-files-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - telegram-files-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  telegram-files-data: {}
+  telegram-files-db: {}
