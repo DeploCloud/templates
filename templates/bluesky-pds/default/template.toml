@@ -1,0 +1,21 @@
+[variables]
+admin_password = "${password:32}"
+jwt_secret = "${hash:32}"
+plc_rotation_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pds"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PDS_HOSTNAME = "${domain}"
+PDS_JWT_SECRET = "${jwt_secret}"
+PDS_ADMIN_PASSWORD = "${admin_password}"
+PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX = "${plc_rotation_key}"
+PDS_INVITE_REQUIRED = "true"
+PDS_EMAIL_SMTP_URL = ""
+PDS_EMAIL_FROM_ADDRESS = ""
