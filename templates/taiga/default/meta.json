@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Agile project management with Scrum and Kanban boards, issues, epics and a wiki, running the full Taiga stack on PostgreSQL and RabbitMQ.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Taiga",
+    "url": "https://github.com/taigaio"
+  },
+  "links": {
+    "github": "https://github.com/taigaio/taiga-docker",
+    "website": "https://taiga.io",
+    "docs": [
+      "https://docs.taiga.io/setup-production.html#setup-prod-with-docker",
+      "https://docs.taiga.io/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ADMIN_PASSWORD from the environment. The account is created on the first start only, so change the password later inside Taiga, not in the environment. Public sign-up is off: add people from the Django admin at /admin/ or through project invitations."
+    },
+    {
+      "type": "warning",
+      "message": "Emails are only written to the taiga-back logs. To send invitations and password resets, set EMAIL_BACKEND to smtp and fill in the EMAIL_* values.",
+      "link": "https://docs.taiga.io/setup-production.html#_basic_configuration"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
