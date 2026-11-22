@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted music streaming server with a web player, search, per-user playlists and support for large music collections.",
+  "category": "media",
+  "developedBy": {
+    "label": "Antoine Gersant",
+    "url": "https://github.com/agersant"
+  },
+  "links": {
+    "github": "https://github.com/agersant/polaris",
+    "docs": [
+      "https://github.com/agersant/polaris-docker#readme",
+      "https://github.com/agersant/polaris/blob/master/docs/CONFIGURATION.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor runs the setup wizard and creates the admin account. Copy your music into the polaris-music volume, then enter /music as the Location in the wizard's music source step."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

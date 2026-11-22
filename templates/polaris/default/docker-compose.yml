@@ -1,0 +1,15 @@
+services:
+  polaris:
+    image: agersant/polaris:0.16.1-alpine3.24.2@sha256:ea4a97747c6f51b06f0f1697064465ca04db252a083534ed44287e079bce4fd1
+    restart: unless-stopped
+    expose:
+      - 5050
+    volumes:
+      - polaris-music:/music
+      - polaris-data:/var/lib/polaris
+      - polaris-cache:/var/cache/polaris
+
+volumes:
+  polaris-music: {}
+  polaris-data: {}
+  polaris-cache: {}
