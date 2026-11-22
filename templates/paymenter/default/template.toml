@@ -1,0 +1,21 @@
+[variables]
+app_key = "${password:32}"
+admin_password = "${password:24}"
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "paymenter"
+port = 80
+host = "${domain}"
+
+[config.env]
+DOMAIN = "${domain}"
+APP_KEY = "${app_key}"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
