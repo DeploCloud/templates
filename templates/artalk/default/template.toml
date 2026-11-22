@@ -1,0 +1,21 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "artalk"
+port = 23_366
+host = "${domain}"
+
+[config.env]
+TIMEZONE = "UTC"
+ATK_LOCALE = "en"
+ATK_APP_KEY = "${password:32}"
+ATK_SITE_DEFAULT = "Default Site"
+ATK_SITE_URL = ""
+ATK_AUTH_CALLBACK = "https://${domain}/api/v2/auth/{provider}/callback"
+ADMIN_NAME = "admin"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"
