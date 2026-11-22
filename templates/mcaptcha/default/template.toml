@@ -1,0 +1,17 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "mcaptcha"
+port = 7000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+COOKIE_SECRET = "${secret:64}"
+CAPTCHA_SALT = "${secret:64}"
+MCAPTCHA_DOMAIN = "${domain}"
+MCAPTCHA_ALLOW_REGISTRATION = "true"
