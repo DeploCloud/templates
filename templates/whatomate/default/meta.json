@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "WhatsApp Business platform with a shared team inbox, chatbots, campaigns and templates, backed by PostgreSQL and Redis.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Shridhar Patil",
+    "url": "https://github.com/shridarpatil"
+  },
+  "links": {
+    "github": "https://github.com/shridarpatil/whatomate",
+    "website": "https://whatomate.io/",
+    "docs": [
+      "https://shridarpatil.github.io/whatomate/getting-started/quickstart/",
+      "https://shridarpatil.github.io/whatomate/getting-started/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin@admin.com (ADMIN_EMAIL) with the generated ADMIN_PASSWORD from the environment, then change the password in your profile. Keep ADMIN_EMAIL matching your admin email: each start recreates that account if it is missing.",
+      "link": "https://shridarpatil.github.io/whatomate/getting-started/quickstart/"
+    },
+    {
+      "type": "warning",
+      "message": "You need a WhatsApp Business account in Meta Business Suite. Add its phone number ID, business account ID and access token under Settings > Accounts, and point the Meta webhook to https://<your domain>/api/webhook with WEBHOOK_VERIFY_TOKEN as the verify token.",
+      "link": "https://shridarpatil.github.io/whatomate/getting-started/configuration/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the app runs in production mode with Secure cookies and only accepts its https:// origin, so a plain HTTP URL cannot sign in."
+    }
+  ]
+}
