@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Usenet meta search that queries many newznab and raw indexers at once and serves one unified API to Sonarr, Radarr and other download tools.",
+  "category": "media",
+  "developedBy": {
+    "label": "theotherp",
+    "url": "https://github.com/theotherp"
+  },
+  "links": {
+    "github": "https://github.com/theotherp/nzbhydra2",
+    "docs": [
+      "https://github.com/theotherp/nzbhydra2/wiki",
+      "https://github.com/theotherp/nzbhydra2/wiki/Tutorial-(Indexers,-newznab,-API,-*arr,-etc.)",
+      "https://github.com/theotherp/nzbhydra2/wiki/Exposing-Hydra-to-the-internet-and-using-reverse-proxies"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated HYDRA_PASSWORD from the environment settings. It is written only on first start, so change it later under Config > Authorization. You need your own Usenet indexer accounts and their API keys to get search results.",
+      "link": "https://github.com/theotherp/nzbhydra2/wiki/Tutorial-(Indexers,-newznab,-API,-*arr,-etc.)"
+    }
+  ]
+}
