@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Digital photo frame web app that shows a slideshow from your Immich library, with clock, weather and calendar overlays and a browser admin UI.",
+  "category": "media",
+  "developedBy": {
+    "label": "ImmichFrame",
+    "url": "https://github.com/immichFrame"
+  },
+  "links": {
+    "github": "https://github.com/immichFrame/ImmichFrame",
+    "website": "https://immichframe.dev",
+    "docs": [
+      "https://immichframe.dev/docs/getting-started/installation/docker",
+      "https://immichframe.dev/docs/getting-started/admin-ui",
+      "https://immichframe.dev/docs/getting-started/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "ImmichFrame needs an existing Immich v3.3.0 or newer server and an Immich API key. Open /admin, sign in with IMMICHFRAME_ADMIN_PASSWORD from the environment variables, then add the Immich server URL and API key under Accounts.",
+      "link": "https://immichframe.dev/docs/getting-started/admin-ui"
+    },
+    {
+      "type": "warning",
+      "message": "The slideshow is public by default: anyone with the URL can see the photos it shows. Set AuthenticationSecret in the admin UI and open the frame with ?authsecret=<secret> to restrict it.",
+      "link": "https://immichframe.dev/docs/getting-started/configuration#security"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+services:
+  immichframe:
+    image: ghcr.io/immichframe/immichframe:v1.0.40.0@sha256:907902c8be42629ea71b13e5f5b7996d83f2420270e2c404ebf282d2fd00c39a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      IMMICHFRAME_ADMIN_PASSWORD: ${IMMICHFRAME_ADMIN_PASSWORD}
+      TZ: ${TZ}
+      LOG_LEVEL: ${LOG_LEVEL}
+    volumes:
+      - immichframe-config:/app/Config
+
+volumes:
+  immichframe-config:
