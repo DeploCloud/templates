@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Online collaborative whiteboard where many users draw together in real time on a large shared board, saved as SVG files.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ophir Lojkine",
+    "url": "https://github.com/lovasoa"
+  },
+  "links": {
+    "github": "https://github.com/lovasoa/whitebophir",
+    "website": "https://wbo.ophir.dev",
+    "docs": [
+      "https://github.com/lovasoa/whitebophir#readme",
+      "https://github.com/lovasoa/whitebophir/wiki/Setup-behind-Reverse-Proxies"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Boards are public: anyone with a board URL can open and edit it. To restrict access, add an AUTH_SECRET_KEY environment variable and give users signed JWT tokens.",
+      "link": "https://github.com/lovasoa/whitebophir#authentication"
+    }
+  ]
+}
