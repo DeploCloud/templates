@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Portabase dashboard for scheduling, storing and restoring database backups through agents, with a dedicated PostgreSQL database.",
+  "category": "database",
+  "developedBy": {
+    "label": "Portabase",
+    "url": "https://github.com/Portabase"
+  },
+  "links": {
+    "github": "https://github.com/Portabase/portabase",
+    "website": "https://portabase.io",
+    "docs": [
+      "https://portabase.io/docs/installation/docker",
+      "https://portabase.io/docs/dashboard/configuration/environment",
+      "https://portabase.io/docs/dashboard/getting-started"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered on the dashboard becomes the super admin. Register it right after deployment and finish the onboarding wizard.",
+      "link": "https://portabase.io/docs/dashboard/getting-started"
+    },
+    {
+      "type": "info",
+      "message": "Backups run through Portabase agents installed next to the databases you protect. Create an agent in the dashboard and deploy it with the edge key it gives you.",
+      "link": "https://portabase.io/docs/installation"
+    }
+  ]
+}
