@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted book metadata server for Readarr and its community forks, sourcing data from Goodreads and caching it in PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "blampe",
+    "url": "https://github.com/blampe"
+  },
+  "links": {
+    "github": "https://github.com/blampe/rreading-glasses",
+    "docs": [
+      "https://github.com/blampe/rreading-glasses#usage",
+      "https://github.com/blampe/rreading-glasses#self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no admin UI. In Readarr, open /settings/development (hidden from the menu) and set Metadata Provider Source to this deployment's https:// address.",
+      "link": "https://github.com/blampe/rreading-glasses#usage"
+    }
+  ]
+}
