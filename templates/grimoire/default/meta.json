@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Local-first bookmark manager that saves links, extracts readable content and searches it by keyword or meaning, with optional AI summaries and tagging.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Robert Goniszewski",
+    "url": "https://github.com/goniszewski"
+  },
+  "links": {
+    "github": "https://github.com/goniszewski/grimoire",
+    "website": "https://goniszewski.com/grimoire/",
+    "docs": [
+      "https://github.com/goniszewski/grimoire/blob/main/docs/docker-deployment.md",
+      "https://github.com/goniszewski/grimoire/blob/main/docs/06-remote-access.md",
+      "https://github.com/goniszewski/grimoire/blob/main/API.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Grimoire has no login of its own, so the template puts it behind HTTP basic auth: sign in with GRIMOIRE_USERNAME and GRIMOIRE_PASSWORD from the environment variables. Only the MCP, capture and browser integration routes skip it, because Grimoire requires an integration token there.",
+      "link": "https://github.com/goniszewski/grimoire/blob/main/docs/06-remote-access.md"
+    },
+    {
+      "type": "info",
+      "message": "Grimoire is single-user. AI summaries, tagging and semantic search are optional and need a provider API key or an Ollama endpoint set in Settings."
+    }
+  ]
+}

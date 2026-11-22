@@ -1,0 +1,37 @@
+services:
+  grimoire:
+    image: goniszewski/grimoire:1.4.0@sha256:1d68f454d84cc692ece63ef71959ab528ca113b6480cdd739b2648cd390980de
+    restart: unless-stopped
+    expose:
+      - 3210
+    environment:
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    volumes:
+      - grimoire-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3210/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # the app has no login and upstream requires an authenticating proxy for remote access
+  grimoire-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      GRIMOIRE_USERNAME: ${GRIMOIRE_USERNAME}
+      GRIMOIRE_PASSWORD: ${GRIMOIRE_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - test -n "$$GRIMOIRE_USERNAME" && test -n "$$GRIMOIRE_PASSWORD" && export GRIMOIRE_PASSWORD_HASH="$$(caddy hash-password --plaintext="$$GRIMOIRE_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      grimoire:
+        condition: service_healthy
+
+volumes:
+  grimoire-data: {}
