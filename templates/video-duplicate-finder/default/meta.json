@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI that finds duplicate videos and images by visual similarity, even across different resolutions, frame rates or watermarks, with FFmpeg bundled.",
+  "category": "media",
+  "developedBy": {
+    "label": "0x90d",
+    "url": "https://github.com/0x90d"
+  },
+  "links": {
+    "github": "https://github.com/0x90d/videoduplicatefinder",
+    "docs": [
+      "https://github.com/0x90d/videoduplicatefinder#web-ui",
+      "https://github.com/0x90d/videoduplicatefinder#docker-web-ui"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the generated VDF_WEB_PASSWORD from the environment. The app only scans files inside the container: copy your videos into the /media volume, then add /media as a scan directory.",
+      "link": "https://github.com/0x90d/videoduplicatefinder#docker-web-ui"
+    },
+    {
+      "type": "info",
+      "message": "Upstream designs the web UI for local networks and advises against exposing it to the internet. The generated password is its only protection, so keep it private.",
+      "link": "https://github.com/0x90d/videoduplicatefinder#web-ui"
+    }
+  ]
+}

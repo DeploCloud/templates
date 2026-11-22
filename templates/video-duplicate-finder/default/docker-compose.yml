@@ -1,0 +1,18 @@
+services:
+  video-duplicate-finder:
+    image: ghcr.io/0x90d/vdf-web:4.1.1@sha256:aff56d6fdd91ea477bc7acd8d4183772609cb595db0545ebb2bdfaf819fa371d
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      VDF_WEB_PASSWORD: ${VDF_WEB_PASSWORD}
+      VDF_TRUSTED_PROXY_NETWORKS: ${VDF_TRUSTED_PROXY_NETWORKS}
+    volumes:
+      - video-duplicate-finder-config:/root/.config/VDF
+      - video-duplicate-finder-state:/root/.local/state/VDF
+      - video-duplicate-finder-media:/media
+
+volumes:
+  video-duplicate-finder-config: {}
+  video-duplicate-finder-state: {}
+  video-duplicate-finder-media: {}
