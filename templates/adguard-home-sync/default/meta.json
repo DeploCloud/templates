@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Synchronizes AdGuard Home settings, filters, rewrites and clients from an origin instance to replicas on a schedule, with a status dashboard.",
+  "category": "networking",
+  "developedBy": {
+    "label": "bakito",
+    "url": "https://github.com/bakito"
+  },
+  "links": {
+    "github": "https://github.com/bakito/adguardhome-sync",
+    "docs": [
+      "https://github.com/bakito/adguardhome-sync#config-via-environment-variables",
+      "https://github.com/bakito/adguardhome-sync#run-modes",
+      "https://github.com/bakito/adguardhome-sync/wiki/FAQ"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set ORIGIN_URL, ORIGIN_USERNAME, ORIGIN_PASSWORD and the REPLICA1_* variables to your existing AdGuard Home instances before syncing; the placeholders only let the dashboard start. Both instances must already be set up through the AdGuard Home wizard and reachable from this server. Add more replicas with REPLICA2_URL, REPLICA2_USERNAME, REPLICA2_PASSWORD and so on.",
+      "link": "https://github.com/bakito/adguardhome-sync#config-via-environment-variables"
+    },
+    {
+      "type": "info",
+      "message": "The dashboard uses HTTP basic auth: the user is API_USERNAME (admin) and the password is the generated API_PASSWORD."
+    }
+  ]
+}
