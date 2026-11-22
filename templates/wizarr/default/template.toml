@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wizarr"
+port = 5_690
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+TRUST_PROXY_HEADERS = "true"
