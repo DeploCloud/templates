@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted dashboard for sports and fitness data, importing FIT, TCX and GPX files or syncing from Strava, with a background import daemon.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Robin Ingelbrecht",
+    "url": "https://github.com/robiningelbrecht"
+  },
+  "links": {
+    "github": "https://github.com/dreeveapp/dreeve",
+    "website": "https://dreeve.app",
+    "docs": [
+      "https://docs.dreeve.app/getting-started/installation/",
+      "https://docs.dreeve.app/importing/file-import/",
+      "https://docs.dreeve.app/importing/strava-import/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the admin panel at /admin as admin with the generated ADMIN_PASSWORD from the environment. Import activities by uploading files at /admin/upload. For Strava sync, set IMPORT_MODE=stravaApi and fill STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET and STRAVA_REFRESH_TOKEN from your own Strava API application.",
+      "link": "https://docs.dreeve.app/importing/overview/"
+    }
+  ]
+}

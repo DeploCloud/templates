@@ -1,0 +1,65 @@
+services:
+  dreeve:
+    image: robiningelbrecht/dreeve:v5.9.1@sha256:c278e97ebc59766d88f18eb829ecc826c322afa75d4792278d365cb00ed8529c
+    restart: unless-stopped
+    # Dreeve expects a bcrypt hash, so derive it from the generated admin password on every start
+    entrypoint:
+      - /bin/sh
+      - -c
+      - export ADMIN_PASSWORD_HASH="$$(php -r 'echo password_hash(getenv("ADMIN_PASSWORD"), PASSWORD_BCRYPT);')" && exec docker-entrypoint.sh frankenphp run --config /etc/frankenphp/Caddyfile
+    expose:
+      - 8080
+    environment:
+      IMPORT_MODE: ${IMPORT_MODE}
+      APP_URL: ${APP_URL}
+      TZ: ${TZ}
+      APP_SECRET: ${APP_SECRET}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      STRAVA_CLIENT_ID: ${STRAVA_CLIENT_ID:-replace-me}
+      STRAVA_CLIENT_SECRET: ${STRAVA_CLIENT_SECRET:-replace-me}
+      STRAVA_REFRESH_TOKEN: ${STRAVA_REFRESH_TOKEN:-replace-me}
+    volumes:
+      - dreeve-build:/var/www/build
+      - dreeve-database:/var/www/storage/database
+      - dreeve-files:/var/www/storage/files
+      - dreeve-watch:/var/www/watch
+      - dreeve-backups:/var/www/backups
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2019/metrics"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  dreeve-daemon:
+    image: robiningelbrecht/dreeve:v5.9.1@sha256:c278e97ebc59766d88f18eb829ecc826c322afa75d4792278d365cb00ed8529c
+    restart: unless-stopped
+    command: ["bin/console", "app:daemon:run"]
+    environment:
+      IMPORT_MODE: ${IMPORT_MODE}
+      APP_URL: ${APP_URL}
+      TZ: ${TZ}
+      APP_SECRET: ${APP_SECRET}
+      STRAVA_CLIENT_ID: ${STRAVA_CLIENT_ID:-replace-me}
+      STRAVA_CLIENT_SECRET: ${STRAVA_CLIENT_SECRET:-replace-me}
+      STRAVA_REFRESH_TOKEN: ${STRAVA_REFRESH_TOKEN:-replace-me}
+    volumes:
+      - dreeve-build:/var/www/build
+      - dreeve-database:/var/www/storage/database
+      - dreeve-files:/var/www/storage/files
+      - dreeve-watch:/var/www/watch
+      - dreeve-backups:/var/www/backups
+    healthcheck:
+      test: ["CMD", "sh", "-c", "test -f /var/www/storage/database/dreeve.db"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  dreeve-build: {}
+  dreeve-database: {}
+  dreeve-files: {}
+  dreeve-watch: {}
+  dreeve-backups: {}
