@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source time tracker with an interactive timeline, tag-based tracking, PDF and CSV reports and sync between devices.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Almar Klein",
+    "url": "https://github.com/almarklein"
+  },
+  "links": {
+    "github": "https://github.com/almarklein/timetagger",
+    "website": "https://timetagger.app",
+    "docs": [
+      "https://timetagger.readthedocs.io/en/latest/libapi/",
+      "https://timetagger.app/articles/selfhost2/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated ADMIN_PASSWORD from the environment variables."
+    }
+  ]
+}
