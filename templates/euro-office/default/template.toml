@@ -1,0 +1,13 @@
+[variables]
+jwt_secret = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "euro-office"
+port = 80
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${jwt_secret}"
