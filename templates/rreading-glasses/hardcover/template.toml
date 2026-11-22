@@ -1,0 +1,16 @@
+[variables]
+db_password = "${hash:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rreading-glasses"
+port = 8_788
+host = "${domain}"
+
+[config.env]
+HARDCOVER_AUTH = "Bearer replace-with-your-hardcover-api-token"
+POSTGRES_DB = "rreading-glasses"
+POSTGRES_USER = "rreading-glasses"
+POSTGRES_PASSWORD = "${db_password}"

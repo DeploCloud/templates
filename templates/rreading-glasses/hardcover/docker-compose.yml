@@ -1,0 +1,38 @@
+services:
+  rreading-glasses:
+    image: blampe/rreading-glasses:hardcover@sha256:3f017a51d9007b715303a20f481c822e4df66485fc9e5f57f6fdf1de840dc02f
+    restart: unless-stopped
+    command: ["/main", "serve"]
+    expose:
+      - 8788
+    # The cache grows to fill available memory, so upstream recommends a limit.
+    mem_limit: 256m
+    environment:
+      HARDCOVER_AUTH: ${HARDCOVER_AUTH}
+      POSTGRES_HOST: rreading-glasses-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DATABASE: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      rreading-glasses-db:
+        condition: service_healthy
+
+  rreading-glasses-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - rreading-glasses-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  rreading-glasses-db: {}

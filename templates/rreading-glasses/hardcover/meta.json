@@ -1,0 +1,28 @@
+{
+  "name": "Hardcover",
+  "shortDescription": "Self-hosted book metadata server for Readarr community forks, sourcing curated data from the Hardcover API and caching it in PostgreSQL.",
+  "category": "media",
+  "developedBy": {
+    "label": "blampe",
+    "url": "https://github.com/blampe"
+  },
+  "links": {
+    "github": "https://github.com/blampe/rreading-glasses",
+    "docs": [
+      "https://github.com/blampe/rreading-glasses#hardcover-auth",
+      "https://github.com/blampe/rreading-glasses#self-hosting"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Set HARDCOVER_AUTH to your Hardcover API token, including the leading \"Bearer \", from Hardcover > Settings > Hardcover API. The token expires every January 1 and must be regenerated.",
+      "link": "https://github.com/blampe/rreading-glasses#hardcover-auth"
+    },
+    {
+      "type": "warning",
+      "message": "Hardcover metadata is not compatible with existing Readarr databases: it needs a Hardcover-enabled Readarr fork and a fresh library. Point that instance's Metadata Provider Source at this deployment's https:// address.",
+      "link": "https://github.com/blampe/rreading-glasses#usage"
+    }
+  ]
+}
