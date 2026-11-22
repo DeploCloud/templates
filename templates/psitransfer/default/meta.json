@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file sharing without accounts: resumable uploads of large files, expiring buckets, one-time downloads and password-protected download links.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Christoph Wiechert",
+    "url": "https://github.com/psi-4ward"
+  },
+  "links": {
+    "github": "https://github.com/psi-4ward/psitransfer",
+    "docs": [
+      "https://github.com/psi-4ward/psitransfer/blob/master/docs/configuration.md",
+      "https://github.com/psi-4ward/psitransfer/blob/master/config.js"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Uploads are protected by a generated password (PSITRANSFER_UPLOAD_PASS) and the /admin page by another one (PSITRANSFER_ADMIN_PASS). Read both from the environment variables after deploying."
+    }
+  ]
+}

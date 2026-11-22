@@ -1,0 +1,21 @@
+services:
+  psitransfer:
+    image: psitrax/psitransfer:v2.4.6@sha256:382ec8700be82dc348f47d2a20da7557ff106cdcb7614a234eafb2ee301c3efe
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PSITRANSFER_ADMIN_PASS: ${PSITRANSFER_ADMIN_PASS}
+      PSITRANSFER_UPLOAD_PASS: ${PSITRANSFER_UPLOAD_PASS}
+      PSITRANSFER_TRUST_PROXY: ${PSITRANSFER_TRUST_PROXY}
+    volumes:
+      - psitransfer-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  psitransfer-data: {}
