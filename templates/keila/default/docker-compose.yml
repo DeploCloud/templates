@@ -1,0 +1,45 @@
+services:
+  keila:
+    image: pentacent/keila:0.40.2@sha256:be6c1876da23042b8b90a91560d041fa3d06dbc21c122a1744b3b71ee4001245
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      PORT: "4000"
+      DB_URL: postgres://keila:${DB_PASSWORD}@keila-db/keila
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      URL_HOST: ${URL_HOST}
+      URL_SCHEMA: https
+      KEILA_USER: ${KEILA_USER}
+      KEILA_PASSWORD: ${KEILA_PASSWORD}
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+      USER_CONTENT_DIR: /opt/app/uploads
+      MAILER_SMTP_HOST: ${MAILER_SMTP_HOST}
+      MAILER_SMTP_PORT: ${MAILER_SMTP_PORT}
+      MAILER_SMTP_FROM_EMAIL: ${MAILER_SMTP_FROM_EMAIL}
+      MAILER_SMTP_USER: ${MAILER_SMTP_USER}
+      MAILER_SMTP_PASSWORD: ${MAILER_SMTP_PASSWORD}
+    volumes:
+      - keila-uploads:/opt/app/uploads
+    depends_on:
+      keila-db:
+        condition: service_healthy
+
+  keila-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: keila
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: keila
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keila -d keila"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - keila-db:/var/lib/postgresql
+
+volumes:
+  keila-uploads: {}
+  keila-db: {}

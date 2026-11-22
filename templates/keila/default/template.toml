@@ -1,0 +1,24 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "keila"
+port = 4_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+SECRET_KEY_BASE = "${base64:64}"
+URL_HOST = "${domain}"
+KEILA_USER = "admin@${domain}"
+KEILA_PASSWORD = "${admin_password}"
+DISABLE_REGISTRATION = "true"
+MAILER_SMTP_HOST = ""
+MAILER_SMTP_PORT = "587"
+MAILER_SMTP_FROM_EMAIL = "noreply@${domain}"
+MAILER_SMTP_USER = ""
+MAILER_SMTP_PASSWORD = ""
