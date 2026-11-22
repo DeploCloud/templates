@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Automatic TV show library manager that watches for new episodes, searches indexers and sends them to your download client.",
+  "category": "media",
+  "developedBy": {
+    "label": "pymedusa",
+    "url": "https://github.com/pymedusa"
+  },
+  "links": {
+    "github": "https://github.com/pymedusa/Medusa",
+    "docs": [
+      "https://github.com/pymedusa/Medusa/wiki",
+      "https://github.com/pymedusa/Medusa/wiki/Installation-&-Configuration-Guides",
+      "https://github.com/pymedusa/Medusa/wiki/FAQ%27s-and-Fixes"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web interface has no login by default, so anyone with the URL can change its settings. Set an HTTP username and password under Settings > General > Interface > Web Interface right after the first start, then restart Medusa."
+    }
+  ]
+}
