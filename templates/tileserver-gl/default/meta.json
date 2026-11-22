@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Map tile server that serves vector and raster tiles from MBTiles and PMTiles files with MapLibre GL styles, plus WMTS and a browser preview.",
+  "category": "development",
+  "developedBy": {
+    "label": "MapTiler",
+    "url": "https://www.maptiler.com/"
+  },
+  "links": {
+    "github": "https://github.com/maptiler/tileserver-gl",
+    "website": "https://tileserver.readthedocs.io/en/latest/",
+    "docs": [
+      "https://tileserver.readthedocs.io/en/latest/installation.html",
+      "https://tileserver.readthedocs.io/en/latest/usage.html",
+      "https://tileserver.readthedocs.io/en/latest/config.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first start the server downloads a small Zurich sample. To serve your own maps, copy .mbtiles or .pmtiles files into the data volume and either delete the sample or add a config.json listing your files, then restart. Without a config.json only the first tile file found is served.",
+      "link": "https://tileserver.readthedocs.io/en/latest/config.html"
+    },
+    {
+      "type": "info",
+      "message": "TileServer GL has no login: every map, style and tile it serves is publicly reachable."
+    }
+  ]
+}
