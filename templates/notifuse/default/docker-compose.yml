@@ -1,0 +1,56 @@
+services:
+  notifuse:
+    image: notifuse/notifuse:v44.0@sha256:59cd76e234870bc4bb5dc1261089988a653be845f1eefe3548cf9d2be233fef4
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SERVER_PORT: "8080"
+      SERVER_HOST: 0.0.0.0
+      ENVIRONMENT: production
+      DB_HOST: notifuse-db
+      DB_PORT: "5432"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PREFIX: notifuse
+      DB_NAME: notifuse_system
+      DB_SSLMODE: disable
+      SECRET_KEY: ${SECRET_KEY}
+      API_ENDPOINT: ${API_ENDPOINT}
+    volumes:
+      - notifuse-data:/app/data
+    # graceful shutdown lets in-flight sends and automation steps finish (70 s upstream)
+    stop_grace_period: 75s
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      notifuse-db:
+        condition: service_healthy
+
+  notifuse-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    # Notifuse creates one database per workspace from this superuser
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: postgres
+    # web analytics aggregations outgrow the default 64 MB /dev/shm
+    shm_size: 256mb
+    stop_grace_period: 1m
+    volumes:
+      - notifuse-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  notifuse-data: {}
+  notifuse-db: {}

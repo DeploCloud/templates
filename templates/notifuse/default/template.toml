@@ -1,0 +1,17 @@
+[variables]
+db_password = "${hash:48}"
+secret_key = "${base64:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "notifuse"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DB_USER = "postgres"
+DB_PASSWORD = "${db_password}"
+SECRET_KEY = "${secret_key}"
+API_ENDPOINT = "https://${domain}"
