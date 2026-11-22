@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tubesync"
+port = 4_848
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+DJANGO_SECRET_KEY = "${secret:64}"
+HTTP_USER = "admin"
+HTTP_PASS = "${password:24}"
+DB_PASSWORD = "${password:32}"

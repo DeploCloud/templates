@@ -1,0 +1,39 @@
+services:
+  tubesync:
+    image: ghcr.io/meeb/tubesync:v0.19.1@sha256:612d37b0e2edd1c969f3073d4b7b99d82ef6d280ef4878052f3fd778a042faef
+    restart: unless-stopped
+    stop_grace_period: 30m
+    expose:
+      - 4848
+    environment:
+      TZ: ${TZ}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      HTTP_USER: ${HTTP_USER}
+      HTTP_PASS: ${HTTP_PASS}
+      DATABASE_CONNECTION: postgresql://tubesync:${DB_PASSWORD}@tubesync-db:5432/tubesync
+    volumes:
+      - tubesync-config:/config
+      - tubesync-downloads:/downloads
+    depends_on:
+      tubesync-db:
+        condition: service_healthy
+
+  tubesync-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tubesync
+      POSTGRES_USER: tubesync
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tubesync -d tubesync"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - tubesync-postgres:/var/lib/postgresql/data
+
+volumes:
+  tubesync-config: {}
+  tubesync-downloads: {}
+  tubesync-postgres: {}

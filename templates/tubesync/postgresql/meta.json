@@ -1,0 +1,24 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "TubeSync backed by PostgreSQL instead of SQLite, for large or many channels where SQLite write contention slows indexing.",
+  "category": "media",
+  "developedBy": {
+    "label": "meeb",
+    "url": "https://github.com/meeb"
+  },
+  "links": {
+    "github": "https://github.com/meeb/tubesync",
+    "docs": [
+      "https://github.com/meeb/tubesync/wiki/Using-PostgreSQL,-MySQL-or-MariaDB-as-database-backends",
+      "https://github.com/meeb/tubesync/wiki/Environment-Variables",
+      "https://github.com/meeb/tubesync#installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI is protected by HTTP basic authentication. Sign in with the HTTP_USER and HTTP_PASS values from the environment variables; the password is generated at deploy time.",
+      "link": "https://github.com/meeb/tubesync/wiki/Environment-Variables#authentication"
+    }
+  ]
+}

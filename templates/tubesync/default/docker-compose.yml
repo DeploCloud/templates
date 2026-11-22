@@ -1,0 +1,19 @@
+services:
+  tubesync:
+    image: ghcr.io/meeb/tubesync:v0.19.1@sha256:612d37b0e2edd1c969f3073d4b7b99d82ef6d280ef4878052f3fd778a042faef
+    restart: unless-stopped
+    stop_grace_period: 30m
+    expose:
+      - 4848
+    environment:
+      TZ: ${TZ}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      HTTP_USER: ${HTTP_USER}
+      HTTP_PASS: ${HTTP_PASS}
+    volumes:
+      - tubesync-config:/config
+      - tubesync-downloads:/downloads
+
+volumes:
+  tubesync-config: {}
+  tubesync-downloads: {}
