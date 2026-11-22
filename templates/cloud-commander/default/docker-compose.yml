@@ -1,0 +1,18 @@
+services:
+  cloud-commander:
+    image: coderaiser/cloudcmd:19.23.2@sha256:b3709fef7718f84f68d31e163dffe5589e611494da79ec379b1d9a94bd5b8eda
+    restart: unless-stopped
+    expose:
+      - 8000
+    working_dir: /root
+    environment:
+      CLOUDCMD_AUTH: "true"
+      CLOUDCMD_USERNAME: ${CLOUDCMD_USERNAME}
+      CLOUDCMD_PASSWORD: ${CLOUDCMD_PASSWORD}
+      CLOUDCMD_CONFIG_AUTH: "false"
+      CLOUDCMD_ROOT: /root
+    volumes:
+      - cloud-commander-data:/root
+
+volumes:
+  cloud-commander-data: {}

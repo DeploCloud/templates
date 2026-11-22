@@ -1,0 +1,14 @@
+[variables]
+password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cloud-commander"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+CLOUDCMD_USERNAME = "admin"
+CLOUDCMD_PASSWORD = "${password}"
