@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app that generates inspectable bulk install commands and scripts for Linux apps across apt, pacman, AUR, dnf, zypper, Nix, Flatpak, Snap and Homebrew.",
+  "category": "development",
+  "developedBy": {
+    "label": "abusoww",
+    "url": "https://github.com/abusoww"
+  },
+  "links": {
+    "github": "https://github.com/abusoww/tuxmate",
+    "website": "https://tuxmate.com",
+    "docs": [
+      "https://github.com/abusoww/tuxmate/blob/main/README.md",
+      "https://github.com/abusoww/tuxmate/blob/main/CONTRIBUTING.md"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+services:
+  tuxmate:
+    image: ghcr.io/abusoww/tuxmate:latest@sha256:81f971908b8ebf8362f946a86c96dad60d18a644747423c4e7ed74fdb2cce8c8
+    restart: unless-stopped
+    expose:
+      - 80
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
