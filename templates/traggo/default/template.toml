@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "traggo"
+port = 3_030
+host = "${domain}"
+
+[config.env]
+TRAGGO_DEFAULT_USER_PASS = "${password:24}"

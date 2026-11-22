@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Tag-based time tracking server with a web UI, dashboards and a GraphQL API, storing its data in SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "traggo",
+    "url": "https://github.com/traggo"
+  },
+  "links": {
+    "github": "https://github.com/traggo/server",
+    "website": "https://traggo.net",
+    "docs": [
+      "https://traggo.net/install/",
+      "https://traggo.net/config/",
+      "https://traggo.net/first-login/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated TRAGGO_DEFAULT_USER_PASS from the environment variables. It is only applied on first start; change the password later in the user settings.",
+      "link": "https://traggo.net/first-login/"
+    }
+  ]
+}
