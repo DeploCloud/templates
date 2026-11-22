@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web application that renders PlantUML text into UML and other diagrams on the fly, with a live editor and PNG, SVG and ASCII endpoints.",
+  "category": "development",
+  "developedBy": {
+    "label": "PlantUML",
+    "url": "https://plantuml.com/"
+  },
+  "links": {
+    "github": "https://github.com/plantuml/plantuml-server",
+    "website": "https://plantuml.com/",
+    "docs": [
+      "https://github.com/plantuml/plantuml-server#how-to-set-plantuml-options",
+      "https://github.com/plantuml/plantuml-server/tree/master/docs/WebUI",
+      "https://plantuml.com/security"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "PlantUML Server has no authentication: anyone who knows the URL can render diagrams with this instance."
+    }
+  ]
+}
