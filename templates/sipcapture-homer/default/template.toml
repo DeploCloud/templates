@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "homer"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+HOMER_COORDINATOR_AUTH_ADMIN_USER = "admin"
+HOMER_STORAGE_DUCKLAKE_COMPACTION_RETENTION_DAYS = "30"
+HOMER_STORAGE_DUCKLAKE_TUNING_MEMORY_LIMIT = "4GB"
