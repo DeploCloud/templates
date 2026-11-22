@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Search engine rank tracker that monitors keyword positions in Google for your domains, with email reports and a built-in API.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "Towfiq I.",
+    "url": "https://github.com/towfiqi"
+  },
+  "links": {
+    "github": "https://github.com/towfiqi/serpbear",
+    "website": "https://docs.serpbear.com/",
+    "docs": [
+      "https://docs.serpbear.com/getting-started",
+      "https://docs.serpbear.com/miscellaneous/environment-variables",
+      "https://docs.serpbear.com/miscellaneous/api-documentation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the USER_NAME and generated PASSWORD from the environment variables. Rank tracking needs a scraper API key or your own proxies, configured in the app's Settings after the first login.",
+      "link": "https://docs.serpbear.com/getting-started"
+    }
+  ]
+}
