@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted email archiver in Rust that downloads mail from IMAP accounts, indexes it for full-text search and serves a web UI and REST API.",
+  "category": "email",
+  "developedBy": {
+    "label": "rustmailer",
+    "url": "https://rustmailer.com"
+  },
+  "links": {
+    "github": "https://github.com/rustmailer/bichon",
+    "website": "https://bichon.rustmailer.com",
+    "docs": [
+      "https://bichon.rustmailer.com/docs/quick-start",
+      "https://bichon.rustmailer.com/docs/configuration",
+      "https://bichon.rustmailer.com/docs/account-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin@bichon and change the password right away under Settings, Profile. Keep BICHON_ENCRYPT_PASSWORD unchanged, or the stored IMAP credentials can no longer be decrypted.",
+      "link": "https://bichon.rustmailer.com/docs/quick-start"
+    }
+  ]
+}
