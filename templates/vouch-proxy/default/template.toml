@@ -1,0 +1,20 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vouch-proxy"
+port = 9_090
+host = "${domain}"
+
+[config.env]
+VOUCH_DOMAINS = "${domain}"
+VOUCH_WHITELIST = ""
+VOUCH_JWT_SECRET = "${password:64}"
+OAUTH_PROVIDER = "github"
+OAUTH_CLIENT_ID = "replace-with-client-id"
+OAUTH_CLIENT_SECRET = "replace-with-client-secret"
+OAUTH_AUTH_URL = ""
+OAUTH_TOKEN_URL = ""
+OAUTH_USER_INFO_URL = ""
+OAUTH_SCOPES = ""
+OAUTH_CALLBACK_URL = "https://${domain}/auth"

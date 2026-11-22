@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "SSO login gateway for Nginx auth_request: protected sites check its /validate endpoint and visitors sign in through Google, GitHub or any OIDC provider.",
+  "category": "security",
+  "developedBy": {
+    "label": "Vouch",
+    "url": "https://github.com/vouch"
+  },
+  "links": {
+    "github": "https://github.com/vouch/vouch-proxy",
+    "docs": [
+      "https://github.com/vouch/vouch-proxy#installation-and-configuration",
+      "https://github.com/vouch/vouch-proxy#configuring-via-environmental-variables",
+      "https://github.com/vouch/vouch-proxy/blob/master/config/config.yml_example"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Vouch Proxy needs an OAuth app at your identity provider. Register one with the callback URL https://<your domain>/auth, then set OAUTH_CLIENT_ID and OAUTH_CLIENT_SECRET and redeploy. OAUTH_PROVIDER defaults to github; for a generic OIDC provider set it to oidc and fill OAUTH_AUTH_URL, OAUTH_TOKEN_URL, OAUTH_USER_INFO_URL and OAUTH_SCOPES (openid,email,profile).",
+      "link": "https://github.com/vouch/vouch-proxy/blob/master/config/config.yml_example"
+    },
+    {
+      "type": "warning",
+      "message": "Serve Vouch Proxy on a custom domain under the same parent domain as the apps you protect (for example vouch.example.com) and set VOUCH_DOMAINS to that parent domain (example.com) so the session cookie reaches them. List allowed users in VOUCH_WHITELIST (comma separated). With no whitelist only users whose email is in VOUCH_DOMAINS get through. Your reverse proxy must send each protected request to /validate and redirect 401 responses to /login.",
+      "link": "https://github.com/vouch/vouch-proxy#installation-and-configuration"
+    }
+  ]
+}
