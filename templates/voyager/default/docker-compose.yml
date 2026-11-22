@@ -1,0 +1,9 @@
+services:
+  voyager:
+    image: ghcr.io/aeharding/voyager:2.49.1@sha256:8e9d9ed499e3dc9069f8f385eaa5f47d06fc2daa62c4e0ac7f136ea5e73a9057
+    restart: unless-stopped
+    init: true
+    expose:
+      - 5314
+    environment:
+      CUSTOM_LEMMY_SERVERS: ${CUSTOM_LEMMY_SERVERS}

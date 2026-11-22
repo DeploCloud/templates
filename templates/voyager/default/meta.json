@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted copy of the Voyager progressive web app, a mobile-first client for Lemmy and PieFed served by nginx.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Alexander Harding",
+    "url": "https://github.com/aeharding"
+  },
+  "links": {
+    "github": "https://github.com/aeharding/voyager",
+    "website": "https://getvoyager.app",
+    "docs": [
+      "https://github.com/aeharding/voyager#self-host"
+    ]
+  }
+}
