@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Web interface for Borg Backup that creates, schedules and restores backups, and coordinates client machines through managed agents.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Karan Hudia",
+    "url": "https://github.com/karanhudia"
+  },
+  "links": {
+    "github": "https://github.com/karanhudia/borg-ui",
+    "website": "https://borgui.com",
+    "docs": [
+      "https://docs.borgui.com/installation",
+      "https://docs.borgui.com/configuration",
+      "https://docs.borgui.com/managed-agents",
+      "https://docs.borgui.com/ssh-keys"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated INITIAL_ADMIN_PASSWORD from the environment. Borg UI asks for a new password at first login; the variable is only read on first start.",
+      "link": "https://docs.borgui.com/authentication"
+    },
+    {
+      "type": "info",
+      "message": "The container has no access to the server's host filesystem and no FUSE device, so it cannot back up this machine's files, mount archives or run SSHFS pull backups. Use Borg UI Agent on the machines to back up, or Remote Direct Backup with the source and repository on the same SSH connection. Local repositories and restores go under /backups (the Quick Start suggests /local, change it).",
+      "link": "https://docs.borgui.com/ssh-keys"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "borg-ui"
+port = 8_081
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+PUBLIC_BASE_URL = "https://${domain}"
+INITIAL_ADMIN_PASSWORD = "${admin_password}"

@@ -1,0 +1,38 @@
+services:
+  borg-ui:
+    image: ainullcode/borg-ui:2.4.10@sha256:c5e56440bf4150defe6c9eeaa2c6cff8322d285490a2b6e1dc3c127c3f31926b
+    restart: unless-stopped
+    expose:
+      - 8081
+    environment:
+      PORT: "8081"
+      TZ: ${TZ}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD}
+      REDIS_HOST: borg-ui-redis
+      REDIS_PORT: "6379"
+      REDIS_DB: "0"
+      CACHE_MAX_SIZE_MB: "512"
+      LOCAL_MOUNT_POINTS: /backups
+    volumes:
+      - borg-ui-data:/data
+      - borg-ui-cache:/home/borg/.cache/borg
+      - borg-ui-backups:/backups
+    depends_on:
+      borg-ui-redis:
+        condition: service_healthy
+
+  borg-ui-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru --save "" --appendonly no
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  borg-ui-data: {}
+  borg-ui-cache: {}
+  borg-ui-backups: {}
