@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:20}"
+secret_key = "${secret:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "alerta"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DATABASE_URL = "postgres://alerta:${db_password}@alerta-db:5432/monitoring"
+SECRET_KEY = "${secret_key}"
+BASE_URL = "https://${domain}/api"
+AUTH_REQUIRED = "True"
+AUTH_PROVIDER = "basic"
+SIGNUP_ENABLED = "False"
+ADMIN_USERS = "admin"
+ADMIN_PASSWORD = "${admin_password}"
