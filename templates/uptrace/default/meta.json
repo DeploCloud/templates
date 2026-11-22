@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "OpenTelemetry APM for distributed traces, metrics and logs, with the Uptrace UI and OTLP ingestion, ClickHouse for telemetry, PostgreSQL for metadata and a Redis cache.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Uptrace",
+    "url": "https://uptrace.dev"
+  },
+  "links": {
+    "github": "https://github.com/uptrace/uptrace",
+    "website": "https://uptrace.dev",
+    "docs": [
+      "https://uptrace.dev/get/hosted/docker",
+      "https://uptrace.dev/get/hosted/config",
+      "https://uptrace.dev/get"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with UPTRACE_ADMIN_EMAIL and the generated UPTRACE_ADMIN_PASSWORD from the environment variables. Uptrace re-applies the seeded account on every start, so change the password there and redeploy instead of changing it in the UI."
+    },
+    {
+      "type": "warning",
+      "message": "Send telemetry over OTLP/HTTP to https://<domain> and pass the project DSN shown in the Uptrace UI in the uptrace-dsn header. The OTLP/gRPC port 4317 is not published.",
+      "link": "https://uptrace.dev/get"
+    }
+  ]
+}
