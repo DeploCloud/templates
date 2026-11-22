@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Headless email client that turns IMAP, SMTP, Gmail API and Microsoft Graph mailboxes into one REST API with webhooks, backed by Redis.",
+  "category": "email",
+  "developedBy": {
+    "label": "Postal Systems",
+    "url": "https://postalsys.com/"
+  },
+  "links": {
+    "github": "https://github.com/postalsys/emailengine",
+    "website": "https://emailengine.app/",
+    "docs": [
+      "https://learn.emailengine.app/docs/getting-started/quick-start",
+      "https://learn.emailengine.app/docs/installation/docker",
+      "https://learn.emailengine.app/docs/configuration/environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin dashboard has no password on first start. Open it right after deploying and click Enable authentication to set one before anyone else reaches it.",
+      "link": "https://learn.emailengine.app/docs/getting-started/quick-start"
+    },
+    {
+      "type": "warning",
+      "message": "EmailEngine is commercial source-available software. Until a 14-day trial is started or a paid license key is registered from the dashboard, all workers except the API stay suspended and no accounts sync.",
+      "link": "https://postalsys.com/plans"
+    }
+  ]
+}

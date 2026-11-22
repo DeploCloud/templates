@@ -1,0 +1,16 @@
+[variables]
+redis_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "emailengine"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+EENGINE_SECRET = "${hash:64}"
+REDIS_PASSWORD = "${redis_password}"
+EENGINE_REDIS = "redis://:${redis_password}@emailengine-redis:6379/2"
+EENGINE_LOG_LEVEL = "info"
