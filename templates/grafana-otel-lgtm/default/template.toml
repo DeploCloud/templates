@@ -1,0 +1,23 @@
+[variables]
+admin_password = "${password:32}"
+secret_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lgtm"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "lgtm"
+port = 4_318
+host = "${domain}"
+path = "/v1"
+
+[config.env]
+GF_SECURITY_ADMIN_PASSWORD = "${admin_password}"
+GF_SECURITY_SECRET_KEY = "${secret_key}"
+GF_SERVER_ROOT_URL = "https://${domain}"
