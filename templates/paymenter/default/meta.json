@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source webshop and billing panel for hosting companies, with products, invoices, tickets and server provisioning, backed by MariaDB and Redis.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Paymenter",
+    "url": "https://github.com/Paymenter"
+  },
+  "links": {
+    "github": "https://github.com/Paymenter/Paymenter",
+    "website": "https://paymenter.org",
+    "docs": [
+      "https://paymenter.org/docs/getting-started/introduction",
+      "https://paymenter.org/docs/installation/docker",
+      "https://paymenter.org/docs/guides/cli"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "An administrator is created on the first start: sign in at /admin with ADMIN_EMAIL and ADMIN_PASSWORD from the environment, then change the email and password in your account. Changing those variables later has no effect.",
+      "link": "https://paymenter.org/docs/installation/docker"
+    },
+    {
+      "type": "warning",
+      "message": "Paymenter runs behind the reverse proxy. Add it under Admin > Settings > Security > Trusted Proxies (for example *) or file uploads fail. Outgoing email needs SMTP settings under Admin > Settings > Mail.",
+      "link": "https://paymenter.org/docs/installation/docker"
+    }
+  ]
+}

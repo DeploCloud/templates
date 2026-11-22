@@ -1,0 +1,88 @@
+services:
+  paymenter:
+    image: ghcr.io/paymenter/paymenter:v1.5.9@sha256:27471e077f4413f5f7c4e63656a8e7894892fc8c6885e5481f91e420bd37b63b
+    restart: unless-stopped
+    expose:
+      - 80
+    # First start only: set the public URL and create the admin; the image entrypoint has already migrated and seeded.
+    command:
+      - sh
+      - -c
+      - |
+        if [ ! -f /app/var/.initialized ]; then
+          php artisan app:init Paymenter "$$APP_URL" --no-interaction &&
+          php artisan db:seed --class=CustomPropertySeeder --force --no-interaction &&
+          php artisan app:user:create --no-interaction -- Admin User "$$ADMIN_EMAIL" "$$ADMIN_PASSWORD" 1 &&
+          touch /app/var/.initialized
+        fi
+        exec supervisord -n -c /etc/supervisord.conf
+    environment:
+      APP_ENV: production
+      APP_URL: https://${DOMAIN}
+      APP_KEY: ${APP_KEY}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DB_CONNECTION: mariadb
+      DB_HOST: paymenter-db
+      DB_PORT: "3306"
+      DB_DATABASE: paymenter
+      DB_USERNAME: paymenter
+      DB_PASSWORD: ${DB_PASSWORD}
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
+      REDIS_HOST: paymenter-redis
+      PAYMENTER_SKIP_DEFAULT: "false"
+    volumes:
+      - paymenter-var:/app/var
+      - paymenter-storage:/app/storage/app
+      - paymenter-logs:/app/storage/logs
+      - paymenter-themes:/app/themes
+      - paymenter-extensions:/app/extensions
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+    depends_on:
+      paymenter-db:
+        condition: service_healthy
+      paymenter-redis:
+        condition: service_healthy
+
+  paymenter-db:
+    image: mariadb:12.3.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: paymenter
+      MARIADB_USER: paymenter
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - paymenter-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  paymenter-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - paymenter-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  paymenter-var: {}
+  paymenter-storage: {}
+  paymenter-logs: {}
+  paymenter-themes: {}
+  paymenter-extensions: {}
+  paymenter-db: {}
+  paymenter-redis: {}
