@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wbo"
+port = 80
+host = "${domain}"
+
+[config.env]
+NODE_ENV = "production"
+WBO_IP_SOURCE = "X-Forwarded-For"
+WBO_TRUST_PROXY_HOPS = "1"

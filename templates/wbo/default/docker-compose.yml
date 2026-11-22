@@ -1,0 +1,21 @@
+services:
+  wbo:
+    image: lovasoa/wbo:v2.18.44@sha256:30affce19c25313642153c90899a418f463527331840e7b5de490f095a764486
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      WBO_IP_SOURCE: ${WBO_IP_SOURCE}
+      WBO_TRUST_PROXY_HOPS: ${WBO_TRUST_PROXY_HOPS}
+    volumes:
+      - wbo-data:/opt/app/server-data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1/').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  wbo-data: {}
