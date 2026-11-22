@@ -1,0 +1,28 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Open translation management platform for teams: import and export many formats, collaborate on projects and automate it through a REST API, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Ever Co.",
+    "url": "https://ever.co"
+  },
+  "links": {
+    "github": "https://github.com/ever-co/ever-traduora",
+    "website": "https://traduora.co",
+    "docs": [
+      "https://docs.traduora.co/configuration",
+      "https://docs.traduora.co/deployment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates an account from TR_ADMIN_EMAIL (admin@example.com) and the generated TR_ADMIN_PASSWORD: set TR_ADMIN_EMAIL to your own address before deploying, sign in, then change the password. Every start recreates this account when no user has that email, so keep the variable in line with your sign-in email. Public sign-up is off: invite teammates from a project, or set TR_SIGNUPS_ENABLED to true. Invitation and password reset emails need the TR_MAIL_* SMTP settings.",
+      "link": "https://docs.traduora.co/configuration"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

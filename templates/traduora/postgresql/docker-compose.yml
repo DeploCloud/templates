@@ -1,0 +1,50 @@
+services:
+  traduora:
+    image: everco/ever-traduora:v0.23.0@sha256:4112c2fcab4e2d5eee02089a17ded310cfb87dd8c1244015cc7f4d07a61712de
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      NODE_ENV: production
+      TR_SECRET: ${TR_SECRET}
+      TR_VIRTUAL_HOST: ${TR_VIRTUAL_HOST}
+      TR_DB_TYPE: postgres
+      TR_DB_HOST: traduora-db
+      TR_DB_PORT: 5432
+      TR_DB_DATABASE: traduora
+      TR_DB_USER: traduora
+      TR_DB_PASSWORD: ${DB_PASSWORD}
+      TR_ADMIN_EMAIL: ${TR_ADMIN_EMAIL}
+      TR_ADMIN_PASSWORD: ${TR_ADMIN_PASSWORD}
+      TR_SIGNUPS_ENABLED: ${TR_SIGNUPS_ENABLED}
+      # the built-in global limit of 0 answers 429 to every request
+      TR_THROTTLE_TTL: 60000
+      TR_THROTTLE_LIMIT: 1000
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      traduora-db:
+        condition: service_healthy
+
+  traduora-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: traduora
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: traduora
+    volumes:
+      - traduora-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "traduora", "-d", "traduora"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  traduora-db: {}
