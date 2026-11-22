@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "profilarr"
+port = 6_868
+host = "${domain}"
+
+[config.env]
+ORIGIN = "https://${domain}"
+TZ = "Etc/UTC"

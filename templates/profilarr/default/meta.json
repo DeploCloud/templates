@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Configuration manager that builds, tests and syncs quality profiles and custom formats to Radarr and Sonarr, with the release parser included.",
+  "category": "media",
+  "developedBy": {
+    "label": "Dictionarry",
+    "url": "https://github.com/Dictionarry-Hub"
+  },
+  "links": {
+    "github": "https://github.com/Dictionarry-Hub/profilarr",
+    "website": "https://dictionarry.dev/",
+    "docs": [
+      "https://github.com/Dictionarry-Hub/profilarr/blob/develop/README.md",
+      "https://github.com/Dictionarry-Hub/profilarr/blob/develop/docs/backend/security.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor is sent to the setup page and creates the only password account. Open the app right after deploying to claim it.",
+      "link": "https://github.com/Dictionarry-Hub/profilarr/blob/develop/docs/backend/security.md"
+    }
+  ]
+}
