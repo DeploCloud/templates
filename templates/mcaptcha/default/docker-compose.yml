@@ -1,0 +1,55 @@
+services:
+  mcaptcha:
+    image: mcaptcha/mcaptcha:v0.1.0@sha256:af96090514a1311a7c0a0c2bf75a38175764a61a936b8df205c3b4fbc79d5218
+    restart: unless-stopped
+    expose:
+      - 7000
+    depends_on:
+      mcaptcha-db:
+        condition: service_healthy
+      mcaptcha-redis:
+        condition: service_healthy
+    environment:
+      MCAPTCHA_debug: "false"
+      MCAPTCHA_commercial: "false"
+      MCAPTCHA_source_code: https://github.com/mCaptcha/mCaptcha
+      MCAPTCHA_allow_registration: ${MCAPTCHA_ALLOW_REGISTRATION}
+      MCAPTCHA_allow_demo: "false"
+      DATABASE_URL: postgres://mcaptcha:${DB_PASSWORD}@mcaptcha-db:5432/mcaptcha
+      MCAPTCHA_redis_URL: redis://mcaptcha-redis
+      PORT: 7000
+      MCAPTCHA__server_IP: 0.0.0.0
+      MCAPTCHA_server_DOMAIN: ${MCAPTCHA_DOMAIN}
+      MCAPTCHA__server_COOKIE_SECRET: ${COOKIE_SECRET}
+      MCAPTCHA__server_PROXY_HAS_TLS: "true"
+      MCAPTCHA_captcha_SALT: ${CAPTCHA_SALT}
+
+  mcaptcha-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mcaptcha
+      POSTGRES_USER: mcaptcha
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mcaptcha-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mcaptcha -d mcaptcha"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mcaptcha-redis:
+    image: mcaptcha/cache:v0.1.0@sha256:c0c2609036d1a89c7b8515ffae439b233e94e44f26ea8ce84a5c3b52d7d0be5b
+    restart: unless-stopped
+    volumes:
+      - mcaptcha-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mcaptcha-db-data: {}
+  mcaptcha-redis-data: {}

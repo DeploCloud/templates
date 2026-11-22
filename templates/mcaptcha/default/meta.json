@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-respecting proof-of-work CAPTCHA server with a dashboard to create site keys, backed by PostgreSQL and the mCaptcha Redis cache.",
+  "category": "security",
+  "developedBy": {
+    "label": "mCaptcha",
+    "url": "https://mcaptcha.org"
+  },
+  "links": {
+    "github": "https://github.com/mCaptcha/mCaptcha",
+    "website": "https://mcaptcha.org",
+    "docs": [
+      "https://github.com/mCaptcha/mCaptcha/blob/master/docs/CONFIGURATION.md",
+      "https://github.com/mCaptcha/mCaptcha/blob/master/docs/DEPLOYMENT.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open after deploy so you can create your account. Once it exists, set MCAPTCHA_ALLOW_REGISTRATION to false and redeploy, or anyone can sign up."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
