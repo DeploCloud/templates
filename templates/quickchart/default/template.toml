@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "quickchart"
+port = 3_400
+host = "${domain}"

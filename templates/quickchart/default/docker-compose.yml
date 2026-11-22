@@ -1,0 +1,12 @@
+services:
+  quickchart:
+    image: ianw/quickchart:v1.8.1@sha256:12e2d442e2db9974f2b310b72fadd4f6d595d0a0bf5480c3d50ef5cb5967ee56
+    restart: unless-stopped
+    expose:
+      - 3400
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3400/healthcheck', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
