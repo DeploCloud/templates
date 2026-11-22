@@ -1,0 +1,15 @@
+[variables]
+mongo_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "coral"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+MONGO_PASSWORD = "${mongo_password}"
+SIGNING_SECRET = "${base64:48}"
+TRUST_PROXY = "true"

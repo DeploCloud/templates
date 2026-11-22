@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source commenting platform with moderation tools, embeddable comment streams, MongoDB storage and Redis for jobs and live updates.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Coral by Vox Media",
+    "url": "https://coralproject.net"
+  },
+  "links": {
+    "github": "https://github.com/coralproject/talk",
+    "website": "https://coralproject.net",
+    "docs": [
+      "https://docs.coralproject.net/",
+      "https://docs.coralproject.net/environment-variables",
+      "https://docs.coralproject.net/comment-embed"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app after deployment to run the install wizard, which creates the organization, the first site and the admin account. Run it right away: whoever opens the wizard first becomes the admin. The installation is bound to the domain it was installed on.",
+      "link": "https://docs.coralproject.net/"
+    }
+  ]
+}
