@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Slideshow web app that displays photos and videos from your Immich library on any browser, tablet or TV, with clock, weather and metadata overlays.",
+  "category": "media",
+  "developedBy": {
+    "label": "Damon Golding",
+    "url": "https://github.com/damongolding"
+  },
+  "links": {
+    "github": "https://github.com/damongolding/immich-kiosk",
+    "website": "https://immichkiosk.app",
+    "docs": [
+      "https://docs.immichkiosk.app/installation/",
+      "https://docs.immichkiosk.app/configuration/core/",
+      "https://docs.immichkiosk.app/configuration/additional-options/",
+      "https://docs.immichkiosk.app/configuration/url-params/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Immich Kiosk needs an existing Immich 3.2.0 or newer server and an Immich API key. Create the key in Immich under Account Settings > API Keys with the permissions listed in the installation docs, set KIOSK_IMMICH_API_KEY to it and redeploy. KIOSK_IMMICH_URL defaults to an Immich app from this catalog in the same environment; for another server set it to that server's URL. Set KIOSK_IMMICH_EXTERNAL_URL to the public Immich URL so asset links and QR codes open in a browser.",
+      "link": "https://docs.immichkiosk.app/installation/"
+    },
+    {
+      "type": "warning",
+      "message": "The slideshow is protected by the generated KIOSK_PASSWORD. Open the kiosk as https://<your-domain>/?password=<KIOSK_PASSWORD>.",
+      "link": "https://docs.immichkiosk.app/configuration/additional-options/"
+    }
+  ]
+}
