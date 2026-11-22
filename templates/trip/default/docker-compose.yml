@@ -1,0 +1,17 @@
+services:
+  trip:
+    image: ghcr.io/itskovacs/trip:1.50.1@sha256:a554617e98f6431a1e1855ad4a7d7e61ccdf22e97c62285057d635ad52063afa
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - trip-storage:/app/storage
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/info')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  trip-storage: {}
