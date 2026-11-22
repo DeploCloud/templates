@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "voyager"
+port = 5_314
+host = "${domain}"
+
+[config.env]
+CUSTOM_LEMMY_SERVERS = ""
