@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Apache Solr search platform built on Lucene, running a single user-managed node with basic authentication, a precreated core and persistent index storage.",
+  "category": "database",
+  "developedBy": {
+    "label": "Apache Software Foundation",
+    "url": "https://www.apache.org/"
+  },
+  "links": {
+    "github": "https://github.com/apache/solr",
+    "website": "https://solr.apache.org/",
+    "docs": [
+      "https://solr.apache.org/guide/solr/latest/deployment-guide/solr-in-docker.html",
+      "https://solr.apache.org/guide/solr/latest/deployment-guide/basic-authentication-plugin.html",
+      "https://solr.apache.org/guide/solr/latest/configuration-guide/coreadmin-api.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The Admin UI and API require basic authentication: log in as user admin with the generated SOLR_ADMIN_PASSWORD from the environment variables. The credentials are written to security.json on first start only; to change the password later use the Solr authentication API, then set SOLR_ADMIN_PASSWORD to the new value so the health check keeps passing.",
+      "link": "https://solr.apache.org/guide/solr/latest/deployment-guide/basic-authentication-plugin.html"
+    }
+  ]
+}

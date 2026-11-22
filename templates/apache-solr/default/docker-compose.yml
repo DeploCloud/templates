@@ -1,0 +1,25 @@
+services:
+  solr:
+    image: solr:10.1.0@sha256:3b75fc84c3222052b16b8b08dcacaefc581d50d7d9b930b3107ead1952ae4cef
+    restart: unless-stopped
+    command: ["solr-precreate", "${SOLR_CORE}"]
+    expose:
+      - 8983
+    environment:
+      SOLR_HEAP: ${SOLR_HEAP}
+      SOLR_ADMIN_USER: ${SOLR_ADMIN_USER}
+      SOLR_ADMIN_PASSWORD: ${SOLR_ADMIN_PASSWORD}
+    volumes:
+      - solr-data:/var/solr
+      - ./security.sh:/docker-entrypoint-initdb.d/security.sh:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl --output /dev/null --silent --fail -u "$${SOLR_ADMIN_USER}:$${SOLR_ADMIN_PASSWORD}" "http://localhost:8983/solr/admin/cores?action=STATUS"
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+
+volumes:
+  solr-data: {}

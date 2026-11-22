@@ -1,0 +1,46 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "solr"
+port = 8_983
+host = "${domain}"
+
+[config.env]
+SOLR_ADMIN_USER = "admin"
+SOLR_ADMIN_PASSWORD = "${admin_password}"
+SOLR_CORE = "gettingstarted"
+SOLR_HEAP = "512m"
+
+[[config.mounts]]
+filePath = "security.sh"
+content = """
+#!/bin/bash
+# First start only: one admin user, hashed like Solr's Sha256AuthenticationProvider (sha256 twice over salt + password).
+sec=/var/solr/data/security.json
+if [ ! -f "$sec" ]; then
+  if [ -z "$SOLR_ADMIN_USER" ] || [ -z "$SOLR_ADMIN_PASSWORD" ]; then
+    echo "SOLR_ADMIN_USER and SOLR_ADMIN_PASSWORD must be set" >&2
+    exit 1
+  fi
+  salt=$(head -c 32 /dev/urandom | base64 -w0)
+  hash=$({ printf '%s' "$salt" | base64 -d; printf '%s' "$SOLR_ADMIN_PASSWORD"; } | openssl dgst -sha256 -binary | openssl dgst -sha256 -binary | base64 -w0)
+  cat > "$sec" <<JSON
+{
+  "authentication": {
+    "class": "solr.BasicAuthPlugin",
+    "blockUnknown": true,
+    "credentials": {"$SOLR_ADMIN_USER": "$hash $salt"}
+  },
+  "authorization": {
+    "class": "solr.RuleBasedAuthorizationPlugin",
+    "permissions": [{"name": "all", "role": "admin"}],
+    "user-role": {"$SOLR_ADMIN_USER": "admin"}
+  }
+}
+JSON
+  echo "Created $sec with basic auth for user $SOLR_ADMIN_USER"
+fi
+"""
