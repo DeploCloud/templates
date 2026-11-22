@@ -1,0 +1,24 @@
+services:
+  flexget:
+    image: flexget/flexget:3.22.13@sha256:f6561bccce04e3d59c910f8b4f02b17d5e0cca3c9b80547a98a15b89793b4aaa
+    restart: unless-stopped
+    # Seeds a config with the web server on first start, then syncs the UI password from env.
+    entrypoint:
+      - sh
+      - -c
+      - |
+        [ -f /config/config.yml ] || printf 'web_server:\n  bind: 0.0.0.0\n  port: 5050\n\ntasks: {}\n' > /config/config.yml
+        flexget web passwd "$$FLEXGET_PASSWORD"
+        exec flexget daemon start
+    expose:
+      - 5050
+    environment:
+      FLEXGET_PASSWORD: ${FLEXGET_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - flexget-config:/config
+      - flexget-downloads:/downloads
+
+volumes:
+  flexget-config: {}
+  flexget-downloads: {}
