@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted error tracking compatible with Sentry SDKs, backed by PostgreSQL, with stacktraces, local variables and alerts.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Bugsink",
+    "url": "https://www.bugsink.com/"
+  },
+  "links": {
+    "github": "https://github.com/bugsink/bugsink",
+    "website": "https://www.bugsink.com/",
+    "docs": [
+      "https://www.bugsink.com/docs/docker-compose-install/",
+      "https://www.bugsink.com/docs/settings/",
+      "https://www.bugsink.com/docs/postgresql/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first start creates a superuser from ADMIN_EMAIL (admin@example.com) and the generated ADMIN_PASSWORD in the environment. Sign in with them, then change the password. Email alerts need EMAIL_HOST and the related SMTP settings added to the environment.",
+      "link": "https://www.bugsink.com/docs/settings/"
+    }
+  ]
+}

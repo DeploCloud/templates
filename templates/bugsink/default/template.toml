@@ -1,0 +1,22 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+secret_key = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bugsink"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${secret_key}"
+BASE_URL = "https://${domain}"
+DB_NAME = "bugsink"
+DB_USER = "bugsink"
+DB_PASSWORD = "${db_password}"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"
+TIME_ZONE = "UTC"
