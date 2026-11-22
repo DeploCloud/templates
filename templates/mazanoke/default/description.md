@@ -1,0 +1,1 @@
+This deploys MAZANOKE, an image optimizer served as a static web app by nginx. Images are compressed, resized and converted on the visitor's device and never uploaded, so there is no account, database or volume. To put the app behind a login, add both `USERNAME` and `PASSWORD` environment variables to the service to enable HTTP basic authentication.

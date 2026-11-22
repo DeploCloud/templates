@@ -1,0 +1,17 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted image optimizer that compresses, resizes and converts images entirely in the visitor's browser, with EXIF removal and offline support.",
+  "category": "media",
+  "developedBy": {
+    "label": "civilblur",
+    "url": "https://github.com/civilblur"
+  },
+  "links": {
+    "github": "https://github.com/civilblur/mazanoke",
+    "website": "https://mazanoke.com/",
+    "docs": [
+      "https://github.com/civilblur/mazanoke#install",
+      "https://github.com/civilblur/mazanoke/blob/main/docs/configuration.md"
+    ]
+  }
+}
