@@ -1,0 +1,17 @@
+[variables]
+transmission_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flood"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PUID = "1001"
+PGID = "1001"
+TZ = "Etc/UTC"
+TRANSMISSION_USER = "flood"
+TRANSMISSION_PASS = "${transmission_password}"
