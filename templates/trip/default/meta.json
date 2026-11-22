@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalist map tracker and trip planner to save points of interest, plan multi-day itineraries and share trips with companions.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "itskovacs",
+    "url": "https://github.com/itskovacs"
+  },
+  "links": {
+    "github": "https://github.com/itskovacs/trip",
+    "website": "https://itskovacs.github.io/trip/",
+    "docs": [
+      "https://itskovacs.github.io/trip/docs/intro",
+      "https://itskovacs.github.io/trip/docs/getting-started/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the admin. Register right after deployment, then disable registration in the admin settings if the instance is private.",
+      "link": "https://itskovacs.github.io/trip/docs/map-tracker/settings-admin"
+    }
+  ]
+}
