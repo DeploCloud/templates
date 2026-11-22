@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted fitness tracker for runs, rides and swims with GPX, TCX and FIT imports and Strava and Garmin Connect sync, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Endurain",
+    "url": "https://github.com/endurain-project"
+  },
+  "links": {
+    "github": "https://github.com/endurain-project/endurain",
+    "website": "https://endurain.com",
+    "docs": [
+      "https://docs.endurain.com/getting-started/quick-start/",
+      "https://docs.endurain.com/getting-started/advanced-setup/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account admin / admin and change the password right away.",
+      "link": "https://github.com/endurain-project/endurain/blob/v0.20.2/docs/getting-started/quick-start.md#default-credentials"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: authentication cookies are marked Secure, so login does not work over plain HTTP.",
+      "link": "https://docs.endurain.com/getting-started/advanced-setup/"
+    }
+  ]
+}

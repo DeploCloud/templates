@@ -1,0 +1,20 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "endurain"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+ENDURAIN_HOST = "https://${domain}"
+TRUSTED_PROXIES = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+TZ = "UTC"
+SECRET_KEY = "${hash:64}"
+FERNET_KEY = "${base64:43}="
+DB_USER = "endurain"
+DB_DATABASE = "endurain"
+DB_PASSWORD = "${db_password}"
