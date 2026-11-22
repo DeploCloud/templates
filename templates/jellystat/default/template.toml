@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "jellystat"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+JWT_SECRET = "${secret:64}"
+TZ = "Etc/UTC"

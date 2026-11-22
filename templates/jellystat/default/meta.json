@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Statistics dashboard for Jellyfin that logs sessions, watch history and per-user and per-library activity in PostgreSQL.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "CyferShepard",
+    "url": "https://github.com/CyferShepard"
+  },
+  "links": {
+    "github": "https://github.com/CyferShepard/Jellystat",
+    "docs": [
+      "https://github.com/CyferShepard/Jellystat#environmental-variables",
+      "https://hub.docker.com/r/cyfershepard/jellystat"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor creates the admin account, then connects Jellystat to a Jellyfin server with a URL reachable from this server and a Jellyfin API key."
+    }
+  ]
+}
