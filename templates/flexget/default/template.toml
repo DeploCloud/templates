@@ -1,0 +1,14 @@
+[variables]
+web_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "flexget"
+port = 5_050
+host = "${domain}"
+
+[config.env]
+FLEXGET_PASSWORD = "${web_password}"
+TZ = "UTC"

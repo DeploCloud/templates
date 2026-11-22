@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Multipurpose automation daemon that grabs torrents, NZBs, podcasts and RSS content on a schedule, with its web UI and REST API.",
+  "category": "automation",
+  "developedBy": {
+    "label": "FlexGet",
+    "url": "https://flexget.com/"
+  },
+  "links": {
+    "github": "https://github.com/Flexget/Flexget",
+    "website": "https://flexget.com/",
+    "docs": [
+      "https://flexget.com/InstallWizard/Docker",
+      "https://flexget.com/Web-UI",
+      "https://flexget.com/Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as user flexget with the FLEXGET_PASSWORD value. The password is re-applied from that variable on every start, so change it there rather than in the web UI.",
+      "link": "https://flexget.com/Web-UI"
+    }
+  ]
+}
