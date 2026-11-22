@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Drag-and-drop rack layout designer for homelabs, with server-side storage of layouts and custom device images behind a built-in login.",
+  "category": "networking",
+  "developedBy": {
+    "label": "RackulaLives",
+    "url": "https://github.com/RackulaLives"
+  },
+  "links": {
+    "github": "https://github.com/RackulaLives/Rackula",
+    "website": "https://racku.la",
+    "docs": [
+      "https://github.com/RackulaLives/Rackula/blob/main/docs/deployment/SELF-HOSTING.md",
+      "https://github.com/RackulaLives/Rackula/blob/main/docs/deployment/AUTHENTICATION.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin (RACKULA_LOCAL_USERNAME) with the generated RACKULA_LOCAL_PASSWORD from the environment variables. To change the password, edit RACKULA_LOCAL_PASSWORD and redeploy.",
+      "link": "https://github.com/RackulaLives/Rackula/blob/main/docs/deployment/AUTHENTICATION.md"
+    }
+  ]
+}

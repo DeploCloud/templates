@@ -1,0 +1,19 @@
+[variables]
+local_password = "${password:24}"
+session_secret = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rackula"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+RACKULA_AUTH_MODE = "local"
+RACKULA_LOCAL_USERNAME = "admin"
+RACKULA_LOCAL_PASSWORD = "${local_password}"
+RACKULA_AUTH_SESSION_SECRET = "${session_secret}"
+CORS_ORIGIN = "https://${domain}"
+RACKULA_BASE_URL = "https://${domain}"

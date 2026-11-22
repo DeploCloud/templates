@@ -1,0 +1,48 @@
+services:
+  rackula:
+    image: ghcr.io/rackulalives/rackula:v26.11.1-persist@sha256:55337da63db92c9d30e5d9e7231f5704f04ffa5fa78344696191156774afd658
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      API_HOST: rackula-api
+      API_PORT: "3001"
+      RACKULA_AUTH_MODE: ${RACKULA_AUTH_MODE}
+      RACKULA_STORAGE_MODE: server
+      RACKULA_TRUST_PROXY: "1"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8080/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    depends_on:
+      rackula-api:
+        condition: service_healthy
+
+  rackula-api:
+    image: ghcr.io/rackulalives/rackula-api:26.11.1@sha256:9158fed60549b49a61e89569501502ff5d25803ea6be8ef35c48e60ebc4f3249
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      DATA_DIR: /data
+      RACKULA_API_PORT: "3001"
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      RACKULA_BASE_URL: ${RACKULA_BASE_URL}
+      RACKULA_TRUST_PROXY: "true"
+      RACKULA_AUTH_MODE: ${RACKULA_AUTH_MODE}
+      RACKULA_AUTH_SESSION_SECRET: ${RACKULA_AUTH_SESSION_SECRET}
+      RACKULA_LOCAL_USERNAME: ${RACKULA_LOCAL_USERNAME}
+      RACKULA_LOCAL_PASSWORD: ${RACKULA_LOCAL_PASSWORD}
+    volumes:
+      - rackula-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3001/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10s
+      retries: 3
+
+volumes:
+  rackula-data: {}
