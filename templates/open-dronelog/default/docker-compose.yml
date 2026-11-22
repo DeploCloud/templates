@@ -1,0 +1,18 @@
+services:
+  open-dronelog:
+    image: ghcr.io/arpanghosh8453/open-dronelog:3.3.3@sha256:544582e001d0256c371baa810cb17e5c3d59e06c0282e23a63aa15111939da08
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DATA_DIR: /data/drone-logbook
+      RUST_LOG: ${RUST_LOG}
+      KEEP_UPLOADED_FILES: ${KEEP_UPLOADED_FILES}
+      PROFILE_CREATION_PASS: ${PROFILE_CREATION_PASS}
+      DEFAULT_PROFILE_PASSWORD: ${DEFAULT_PROFILE_PASSWORD}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS}
+    volumes:
+      - drone-data:/data/drone-logbook
+
+volumes:
+  drone-data: {}
