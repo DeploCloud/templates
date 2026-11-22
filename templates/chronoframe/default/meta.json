@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted photo gallery with EXIF parsing, Live and Motion Photos, albums and a map explorer, backed by SQLite with local, S3 or OpenList photo storage.",
+  "category": "media",
+  "developedBy": {
+    "label": "HoshinoSuzumi",
+    "url": "https://github.com/HoshinoSuzumi"
+  },
+  "links": {
+    "github": "https://github.com/HoshinoSuzumi/chronoframe",
+    "website": "https://docs.chronoframe.art/",
+    "docs": [
+      "https://docs.chronoframe.art/guide/getting-started.html",
+      "https://docs.chronoframe.art/guide/usage.html",
+      "https://docs.chronoframe.art/guide/updates.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visitor runs the setup wizard and creates the administrator. For local storage enter /app/data/storage so photos land on the persistent volume.",
+      "link": "https://docs.chronoframe.art/guide/getting-started.html"
+    }
+  ]
+}
