@@ -1,0 +1,65 @@
+[variables]
+db_password = "${password:32}"
+jwt_secret = "${password:64}"
+encryption_key = "${password:64}"
+webhook_verify_token = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "whatomate"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+APP_URL = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+JWT_SECRET = "${jwt_secret}"
+ENCRYPTION_KEY = "${encryption_key}"
+WEBHOOK_VERIFY_TOKEN = "${webhook_verify_token}"
+ADMIN_EMAIL = "admin@admin.com"
+ADMIN_PASSWORD = "${admin_password}"
+
+[[config.mounts]]
+filePath = "config.toml"
+content = """[app]
+name = "Whatomate"
+environment = "production"
+debug = false
+
+[server]
+host = "0.0.0.0"
+port = 8080
+
+[database]
+host = "whatomate-db"
+port = 5432
+user = "whatomate"
+name = "whatomate"
+ssl_mode = "disable"
+
+[redis]
+host = "whatomate-redis"
+port = 6379
+
+[storage]
+type = "local"
+local_path = "/app/uploads"
+
+[whatsapp]
+api_version = "v24.0"
+base_url = "https://graph.facebook.com"
+
+[rate_limit]
+enabled = true
+trust_proxy = true
+
+[tts]
+piper_binary = "/usr/local/bin/piper"
+piper_model = "/opt/piper/models/en_US-lessac-medium.onnx"
+
+[calling]
+audio_dir = "/app/audio"
+"""

@@ -1,0 +1,57 @@
+services:
+  whatomate:
+    image: shridh0r/whatomate:0.1.1-beta-0.17@sha256:8091fd13661bc51d5e14e7fbf25a4792e781b85e10b715172bf22aa87ed1e669
+    restart: unless-stopped
+    command: ["server", "-migrate", "-config", "/app/config.toml"]
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      WHATOMATE_DATABASE__PASSWORD: ${DB_PASSWORD}
+      WHATOMATE_JWT__SECRET: ${JWT_SECRET}
+      WHATOMATE_APP__ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      WHATOMATE_SERVER__ALLOWED_ORIGINS: ${APP_URL}
+      WHATOMATE_WHATSAPP__WEBHOOK_VERIFY_TOKEN: ${WEBHOOK_VERIFY_TOKEN}
+      WHATOMATE_DEFAULT_ADMIN__EMAIL: ${ADMIN_EMAIL}
+      WHATOMATE_DEFAULT_ADMIN__PASSWORD: ${ADMIN_PASSWORD}
+    volumes:
+      - whatomate-uploads:/app/uploads
+      - whatomate-audio:/app/audio
+      - ./config.toml:/app/config.toml:ro
+    depends_on:
+      whatomate-db:
+        condition: service_healthy
+      whatomate-redis:
+        condition: service_healthy
+
+  whatomate-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: whatomate
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: whatomate
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U whatomate -d whatomate"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    volumes:
+      - whatomate-db:/var/lib/postgresql/data
+
+  whatomate-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - whatomate-redis:/data
+
+volumes:
+  whatomate-uploads: {}
+  whatomate-audio: {}
+  whatomate-db: {}
+  whatomate-redis: {}
