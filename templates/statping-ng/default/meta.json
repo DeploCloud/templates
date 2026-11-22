@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Status page and uptime monitor for websites and services, storing its SQLite database, config and logs on a persistent volume.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Statping-ng",
+    "url": "https://github.com/statping-ng"
+  },
+  "links": {
+    "github": "https://github.com/statping-ng/statping-ng",
+    "website": "https://statping-ng.github.io",
+    "docs": [
+      "https://github.com/statping-ng/statping-ng/wiki/Docker",
+      "https://github.com/statping-ng/statping-ng/wiki/Environment-Variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_USER (admin) and the generated ADMIN_PASSWORD from the environment variables. The account is created on the first start only, so change the password later in the Users settings, not in the environment."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+services:
+  statping-ng:
+    image: ghcr.io/statping-ng/statping-ng:0.93.0@sha256:236d8490077decd23213eae50f50ae22db6b6758e8e491e6ab560ac9185c3d75
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - statping-ng-data:/app
+    environment:
+      DB_CONN: sqlite
+      NAME: ${NAME}
+      DESCRIPTION: ${DESCRIPTION}
+      DOMAIN: ${DOMAIN}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      SAMPLE_DATA: "false"
+      ALLOW_REPORTS: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:8080/health | jq -e '.online == true'"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  statping-ng-data: {}
