@@ -1,0 +1,21 @@
+services:
+  traefik-manager:
+    image: ghcr.io/chr0nzz/traefik-manager:1.15.8@sha256:f673a281c2333e22b6656995f55a7ecec47905e1ccfa42a1c17f2f5efffa62d3
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      COOKIE_SECURE: ${COOKIE_SECURE}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    volumes:
+      - traefik-manager-config:/app/config
+      - traefik-manager-backups:/app/backups
+
+volumes:
+  traefik-manager-config: {}
+  traefik-manager-backups: {}

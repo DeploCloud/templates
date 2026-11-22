@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "traefik-manager"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+COOKIE_SECURE = "true"
