@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source newsletter tool for campaigns, contacts, segments and sign-up forms, backed by PostgreSQL.",
+  "category": "email",
+  "developedBy": {
+    "label": "Pentacent",
+    "url": "https://github.com/pentacent"
+  },
+  "links": {
+    "github": "https://github.com/pentacent/keila",
+    "website": "https://www.keila.io",
+    "docs": [
+      "https://www.keila.io/docs/installation",
+      "https://www.keila.io/docs/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the KEILA_USER email and KEILA_PASSWORD from the environment; they only apply when the root user is first created. Fill in the MAILER_SMTP_* variables for system emails such as password resets. Newsletter senders are configured separately in the Keila UI.",
+      "link": "https://www.keila.io/docs/configuration"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
