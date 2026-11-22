@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Form.io Community Edition: a drag-and-drop form builder that turns every form into a REST API, backed by MongoDB.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Form.io",
+    "url": "https://form.io"
+  },
+  "links": {
+    "github": "https://github.com/formio/formio",
+    "website": "https://form.io",
+    "docs": [
+      "https://github.com/formio/formio#readme",
+      "https://help.form.io/form-building"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ROOT_EMAIL and ROOT_PASSWORD from the environment variables. The admin account is created only on the first start; change its password later under Admin resource / View Data."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
