@@ -1,0 +1,33 @@
+services:
+  fossbilling:
+    image: fossbilling/fossbilling:0.8.9@sha256:2087eaaa064837fd2d6bd8bf6f42cb23b612c0156546eb3cd5e74677c29e8707
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - fossbilling-app:/var/www/html
+      - ./forwarded-https.conf:/etc/apache2/conf-enabled/forwarded-https.conf:ro
+    depends_on:
+      fossbilling-db:
+        condition: service_healthy
+
+  fossbilling-db:
+    image: mariadb:12.3@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: fossbilling
+      MARIADB_USER: fossbilling
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - fossbilling-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  fossbilling-app: {}
+  fossbilling-db: {}

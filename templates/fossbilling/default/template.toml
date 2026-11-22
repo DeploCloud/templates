@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "fossbilling"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+
+[[config.mounts]]
+filePath = "forwarded-https.conf"
+content = """<IfModule setenvif_module>
+SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on
+</IfModule>
+"""
