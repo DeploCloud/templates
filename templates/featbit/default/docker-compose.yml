@@ -1,0 +1,74 @@
+services:
+  featbit-ui:
+    image: featbit/featbit-ui:6.1.2@sha256:08cd2a245ca4a953a83b9221d5afa388697bcc7b43cd403f77e8d49dcdf2061e
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      API_URL: ${PUBLIC_URL}
+      EVALUATION_URL: ${PUBLIC_URL}
+      BASE_HREF: /
+    depends_on:
+      - featbit-api
+
+  featbit-api:
+    image: featbit/featbit-api-server:6.1.2@sha256:38335cb29f3ab531973294dff5759494d046687aeb57ca058b319359e6d5e1c7
+    restart: unless-stopped
+    expose:
+      - 5000
+    environment:
+      DbProvider: Postgres
+      MqProvider: Postgres
+      CacheProvider: None
+      Postgres__ConnectionString: Host=featbit-db;Port=5432;Username=featbit;Password=${DB_PASSWORD};Database=featbit
+      Jwt__Algorithm: HS256
+      Jwt__Key: ${JWT_KEY}
+    depends_on:
+      featbit-db:
+        condition: service_healthy
+
+  featbit-evaluation:
+    image: featbit/featbit-evaluation-server:6.1.2@sha256:333792af848f07c620432160b46bdde169b31b082212cef05bc630ad1cbb9e17
+    restart: unless-stopped
+    expose:
+      - 5100
+    environment:
+      DbProvider: Postgres
+      MqProvider: Postgres
+      CacheProvider: None
+      Postgres__ConnectionString: Host=featbit-db;Port=5432;Username=featbit;Password=${DB_PASSWORD};Database=featbit
+    depends_on:
+      featbit-db:
+        condition: service_healthy
+
+  featbit-db:
+    image: postgres:15.20@sha256:10f9e886f772e9d6484350b043bcf990ead67ae5d9988ddce265d72a299055d5
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: featbit
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: featbit
+    healthcheck:
+      # -h forces TCP so the check fails while init scripts still run on the socket-only temp server
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U featbit -d featbit"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    volumes:
+      - featbit-db:/var/lib/postgresql/data
+      - ./initdb/v0.0.0.sql:/docker-entrypoint-initdb.d/v0.0.0.sql:ro
+      - ./initdb/v5.0.4.sql:/docker-entrypoint-initdb.d/v5.0.4.sql:ro
+      - ./initdb/v5.0.5.sql:/docker-entrypoint-initdb.d/v5.0.5.sql:ro
+      - ./initdb/v5.1.0.sql:/docker-entrypoint-initdb.d/v5.1.0.sql:ro
+      - ./initdb/v5.2.0.sql:/docker-entrypoint-initdb.d/v5.2.0.sql:ro
+      - ./initdb/v5.2.1.sql:/docker-entrypoint-initdb.d/v5.2.1.sql:ro
+      - ./initdb/v5.3.0.sql:/docker-entrypoint-initdb.d/v5.3.0.sql:ro
+      - ./initdb/v5.3.2.sql:/docker-entrypoint-initdb.d/v5.3.2.sql:ro
+      - ./initdb/v5.4.0.sql:/docker-entrypoint-initdb.d/v5.4.0.sql:ro
+      - ./initdb/v5.4.1.sql:/docker-entrypoint-initdb.d/v5.4.1.sql:ro
+      - ./initdb/v6.0.0.sql:/docker-entrypoint-initdb.d/v6.0.0.sql:ro
+      - ./initdb/v6.1.0.sql:/docker-entrypoint-initdb.d/v6.1.0.sql:ro
+
+volumes:
+  featbit-db: {}
