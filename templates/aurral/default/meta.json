@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted music discovery, download and streaming server with flows, playlist imports, a browser player and a Subsonic API.",
+  "category": "media",
+  "developedBy": {
+    "label": "lklynet",
+    "url": "https://github.com/lklynet"
+  },
+  "links": {
+    "github": "https://github.com/lklynet/aurral",
+    "website": "https://aurral.org",
+    "docs": [
+      "https://docs.aurral.org/getting-started/docker/",
+      "https://docs.aurral.org/getting-started/first-run/",
+      "https://docs.aurral.org/admin/environment/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and create the admin account: the first visitor sets it up. Keep the suggested Library folder, /data/downloads/aurral, so music lands on the persistent volume.",
+      "link": "https://docs.aurral.org/getting-started/first-run/"
+    }
+  ]
+}

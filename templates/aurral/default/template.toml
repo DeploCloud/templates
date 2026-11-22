@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "aurral"
+port = 3001
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+AURRAL_PUBLIC_URL = "https://${domain}"

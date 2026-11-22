@@ -1,0 +1,35 @@
+services:
+  aurral-init:
+    image: ghcr.io/lklynet/aurral:3.0.1@sha256:dfca50e61cfdea54506c9836431a3c6b526873e0650f4a348a4a032a1324b7dc
+    restart: "no"
+    # the image only chowns /config, so the music volume starts root-owned
+    entrypoint: ["sh", "-c", "mkdir -p /data/downloads/aurral && chown ${PUID}:${PGID} /data /data/downloads /data/downloads/aurral"]
+    volumes:
+      - aurral-data:/data
+
+  aurral:
+    image: ghcr.io/lklynet/aurral:3.0.1@sha256:dfca50e61cfdea54506c9836431a3c6b526873e0650f4a348a4a032a1324b7dc
+    restart: unless-stopped
+    expose:
+      - 3001
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      LIBRARY_FOLDER: /data/downloads/aurral
+      AURRAL_PUBLIC_URL: ${AURRAL_PUBLIC_URL}
+    volumes:
+      - aurral-config:/config
+      - aurral-data:/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/api/health/live').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      aurral-init:
+        condition: service_completed_successfully
+
+volumes:
+  aurral-config: {}
+  aurral-data: {}
