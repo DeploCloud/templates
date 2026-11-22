@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimal app for sharing end-to-end encrypted notes and files with optional password, expiration and self-destruct after reading.",
+  "category": "security",
+  "developedBy": {
+    "label": "Corentin Thomasset",
+    "url": "https://github.com/CorentinTh"
+  },
+  "links": {
+    "github": "https://github.com/CorentinTh/enclosed",
+    "website": "https://enclosed.cc",
+    "docs": [
+      "https://docs.enclosed.cc/self-hosting/docker-compose",
+      "https://docs.enclosed.cc/self-hosting/configuration",
+      "https://docs.enclosed.cc/self-hosting/users-authentication-key-generator"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: notes are encrypted with browser crypto APIs that only work in a secure context, so the app cannot create or open notes over plain HTTP.",
+      "link": "https://docs.enclosed.cc/self-hosting/troubleshooting"
+    }
+  ]
+}
