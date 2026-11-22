@@ -1,0 +1,54 @@
+services:
+  usertour:
+    image: usertour/usertour:0.9.8@sha256:445e039d380d9eda3d72014f33f068a39df202787e246c2d9062396c325298a7
+    restart: unless-stopped
+    expose:
+      - 80
+    # Passes optional keys you add, such as EMAIL_*, AWS_S3_* or OAuth providers.
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://usertour:${DB_PASSWORD}@usertour-db:5432/usertour?schema=usertour
+      DATABASE_DIRECT_URL: postgresql://usertour:${DB_PASSWORD}@usertour-db:5432/usertour?schema=usertour
+      Redis_HOST: usertour-redis
+      Redis_PORT: "6379"
+      APP_HOMEPAGE_URL: ${APP_URL}
+      API_URL: ${APP_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      TRUST_PROXY: ${TRUST_PROXY}
+      EMAIL_AUTH_ENABLED: ${EMAIL_AUTH_ENABLED}
+      USERTOUR_COOKIE_SECURE: "true"
+    depends_on:
+      usertour-db:
+        condition: service_healthy
+      usertour-redis:
+        condition: service_healthy
+  usertour-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: usertour
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: usertour
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usertour -d usertour"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - usertour-db-data:/var/lib/postgresql/data
+  usertour-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - usertour-redis-data:/data
+
+volumes:
+  usertour-db-data: {}
+  usertour-redis-data: {}
