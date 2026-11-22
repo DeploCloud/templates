@@ -1,0 +1,14 @@
+[variables]
+jwt_secret = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ech0"
+port = 6_277
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${jwt_secret}"
+ECH0_SETTING_SERVER_URL = "https://${domain}"
