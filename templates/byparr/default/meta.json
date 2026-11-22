@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "FlareSolverr-compatible API that loads pages in a stealth Firefox to pass Cloudflare and other anti-bot challenges, returning HTML and cookies to Prowlarr, Jackett or Open WebUI.",
+  "category": "networking",
+  "developedBy": {
+    "label": "ThePhaseless",
+    "url": "https://github.com/ThePhaseless"
+  },
+  "links": {
+    "github": "https://github.com/ThePhaseless/Byparr",
+    "docs": [
+      "https://github.com/ThePhaseless/Byparr#options",
+      "https://github.com/ThePhaseless/Byparr#usage",
+      "https://github.com/ThePhaseless/Byparr#open-webui-integration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Byparr has no authentication, so this template only answers under a secret path. Use https://<your-domain>/<BYPARR_TOKEN>/ as the FlareSolverr URL in Prowlarr or Jackett (or https://<your-domain>/<BYPARR_TOKEN>/load as the Open WebUI external web loader), where the token is the generated value in the environment settings; every other path returns 404. Keep the token private: anyone who has it can make the server browse any URL.",
+      "link": "https://github.com/ThePhaseless/Byparr#usage"
+    }
+  ]
+}
