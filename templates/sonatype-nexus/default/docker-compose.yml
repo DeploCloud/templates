@@ -1,0 +1,21 @@
+services:
+  nexus:
+    image: sonatype/nexus3:3.98.3@sha256:53ca1dc9580a3b616814694a28801bbf59c5e5423ad2d9b41e88cf93962c26b0
+    restart: unless-stopped
+    stop_grace_period: 2m
+    expose:
+      - 8081
+    environment:
+      NEXUS_SECURITY_INITIAL_PASSWORD: ${NEXUS_SECURITY_INITIAL_PASSWORD}
+      INSTALL4J_ADD_VM_PARAMS: ${INSTALL4J_ADD_VM_PARAMS}
+    volumes:
+      - nexus-data:/nexus-data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8081/service/rest/v1/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+volumes:
+  nexus-data: {}
