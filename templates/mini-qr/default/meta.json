@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app to create styled QR codes with custom colors, logos and frames, export them as PNG, JPG or SVG, and scan QR codes from the camera or an image.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Estee Tey",
+    "url": "https://github.com/lyqht"
+  },
+  "links": {
+    "github": "https://github.com/lyqht/mini-qr",
+    "website": "https://mini-qr-code-generator.vercel.app",
+    "docs": [
+      "https://github.com/lyqht/mini-qr/blob/main/SELF_HOSTING.md"
+    ]
+  }
+}
