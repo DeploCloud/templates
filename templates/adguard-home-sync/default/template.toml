@@ -1,0 +1,23 @@
+[variables]
+api_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "adguard-home-sync"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+CRON = "*/10 * * * *"
+ORIGIN_URL = "https://adguard-origin.example.com"
+ORIGIN_USERNAME = "admin"
+ORIGIN_PASSWORD = "change-me"
+REPLICA1_URL = "https://adguard-replica.example.com"
+REPLICA1_USERNAME = "admin"
+REPLICA1_PASSWORD = "change-me"
+REPLICA1_AUTO_SETUP = "false"
+API_USERNAME = "admin"
+API_PASSWORD = "${api_password}"
+LOG_LEVEL = "info"

@@ -1,0 +1,28 @@
+services:
+  adguard-home-sync:
+    image: ghcr.io/bakito/adguardhome-sync:v0.9.6@sha256:157e509baeef66cd400dae96c955a1e97312670e0285a92ebe2c3465b3e22e67
+    restart: unless-stopped
+    expose:
+      - 8080
+    # Passes optional keys you add, such as REPLICA2_*, *_COOKIE or FEATURES_*.
+    env_file:
+      - .env
+    environment:
+      CRON: ${CRON}
+      ORIGIN_URL: ${ORIGIN_URL}
+      ORIGIN_USERNAME: ${ORIGIN_USERNAME}
+      ORIGIN_PASSWORD: ${ORIGIN_PASSWORD}
+      REPLICA1_URL: ${REPLICA1_URL}
+      REPLICA1_USERNAME: ${REPLICA1_USERNAME}
+      REPLICA1_PASSWORD: ${REPLICA1_PASSWORD}
+      REPLICA1_AUTO_SETUP: ${REPLICA1_AUTO_SETUP}
+      API_PORT: "8080"
+      API_USERNAME: ${API_USERNAME}
+      API_PASSWORD: ${API_PASSWORD}
+      LOG_LEVEL: ${LOG_LEVEL}
+    healthcheck:
+      test: ["CMD", "/opt/go/adguardhome-sync", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
