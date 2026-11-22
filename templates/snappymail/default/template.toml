@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "snappymail"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+UPLOAD_MAX_SIZE = "25M"
+MEMORY_LIMIT = "128M"

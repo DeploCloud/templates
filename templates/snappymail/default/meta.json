@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight webmail client for existing IMAP and SMTP servers, with an admin panel for mail domains, plugins and settings.",
+  "category": "email",
+  "developedBy": {
+    "label": "the-djmaze",
+    "url": "https://github.com/the-djmaze"
+  },
+  "links": {
+    "github": "https://github.com/the-djmaze/snappymail",
+    "website": "https://snappymail.eu",
+    "docs": [
+      "https://github.com/the-djmaze/snappymail/wiki",
+      "https://github.com/the-djmaze/snappymail/blob/master/examples/docker/Docker.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin password is generated on first start and stored in /var/lib/snappymail/_data_/_default_/admin_password.txt. Read it from the container terminal, then sign in at https://<your-domain>/?admin as user admin and add the IMAP/SMTP domains your users will log in with.",
+      "link": "https://github.com/the-djmaze/snappymail/blob/master/examples/docker/Docker.md"
+    }
+  ]
+}
