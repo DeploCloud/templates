@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based localization platform for managing app translations with in-context editing, machine translation and a REST API, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Tolgee",
+    "url": "https://github.com/tolgee"
+  },
+  "links": {
+    "github": "https://github.com/tolgee/tolgee-platform",
+    "website": "https://tolgee.io",
+    "docs": [
+      "https://docs.tolgee.io/platform/self_hosting/running_with_docker",
+      "https://docs.tolgee.io/platform/self_hosting/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the username admin (the login form asks for an email, enter admin) and the password from the TOLGEE_AUTHENTICATION_INITIAL_PASSWORD environment variable, then change it in the account settings. Self-registration is disabled, so further users join through invitations from the admin.",
+      "link": "https://docs.tolgee.io/platform/self_hosting/running_with_docker"
+    }
+  ]
+}

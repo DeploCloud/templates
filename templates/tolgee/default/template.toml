@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+jwt_secret = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tolgee"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TOLGEE_AUTHENTICATION_INITIAL_USERNAME = "admin"
+TOLGEE_AUTHENTICATION_INITIAL_PASSWORD = "${admin_password}"
+TOLGEE_AUTHENTICATION_JWT_SECRET = "${jwt_secret}"
+TOLGEE_FRONT_END_URL = "https://${domain}"
+DB_NAME = "tolgee"
+DB_USER = "tolgee"
+DB_PASSWORD = "${db_password}"

@@ -1,0 +1,47 @@
+services:
+  tolgee:
+    image: tolgee/tolgee:v3.246.0@sha256:ba43dd7a81e91df439aac0ef6ba0895eb92eb5f5c2f242d300c374074476f33d
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      TOLGEE_AUTHENTICATION_ENABLED: "true"
+      TOLGEE_AUTHENTICATION_INITIAL_USERNAME: "${TOLGEE_AUTHENTICATION_INITIAL_USERNAME}"
+      TOLGEE_AUTHENTICATION_INITIAL_PASSWORD: "${TOLGEE_AUTHENTICATION_INITIAL_PASSWORD}"
+      TOLGEE_AUTHENTICATION_JWT_SECRET: "${TOLGEE_AUTHENTICATION_JWT_SECRET}"
+      TOLGEE_FRONT_END_URL: "${TOLGEE_FRONT_END_URL}"
+      TOLGEE_BACK_END_URL: "${TOLGEE_FRONT_END_URL}"
+      TOLGEE_POSTGRES_AUTOSTART_ENABLED: "false"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://tolgee-db:5432/${DB_NAME}"
+      SPRING_DATASOURCE_USERNAME: "${DB_USER}"
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - tolgee-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 120s
+    depends_on:
+      tolgee-db:
+        condition: service_healthy
+
+  tolgee-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - tolgee-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  tolgee-data: {}
+  tolgee-db: {}
