@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "All-in-one manager for private tracker users that automates torrent seeding with RSS rules, download client control and series tracking.",
+  "category": "media",
+  "developedBy": {
+    "label": "Vertex",
+    "url": "https://github.com/vertex-app"
+  },
+  "links": {
+    "github": "https://github.com/vertex-app/vertex",
+    "website": "https://wiki.vertex-app.top",
+    "docs": [
+      "https://wiki.vertex-app.top/xin-shou-ru-men/an-zhuang-cao-zuo",
+      "https://wiki.vertex-app.top/xin-shou-ru-men/deng-lu"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the random initial password stored in /vertex/data/password: run `cat /vertex/data/password` in the container terminal, then change the password under global settings right away.",
+      "link": "https://wiki.vertex-app.top/xin-shou-ru-men/deng-lu"
+    },
+    {
+      "type": "info",
+      "message": "The web interface and the documentation are available in Chinese only."
+    }
+  ]
+}
