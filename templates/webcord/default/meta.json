@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "WebCord privacy-hardened Discord and Spacebar desktop client streamed to the browser behind a password, with settings and sessions kept on a persistent volume.",
+  "category": "communication",
+  "developedBy": {
+    "label": "SpacingBat3",
+    "url": "https://github.com/SpacingBat3"
+  },
+  "links": {
+    "github": "https://github.com/SpacingBat3/WebCord",
+    "docs": [
+      "https://github.com/SpacingBat3/WebCord#readme",
+      "https://github.com/SpacingBat3/WebCord/blob/master/docs/Features.md",
+      "https://docs.linuxserver.io/images/docker-webcord/",
+      "https://docs.linuxserver.io/selkies/user-guide/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The app is protected by HTTP basic auth: sign in with the CUSTOM_USER and PASSWORD values from the environment, then log in to Discord inside WebCord. Anyone who signs in gets passwordless sudo inside the container, so keep the password private.",
+      "link": "https://docs.linuxserver.io/selkies/user-guide/security/"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the browser desktop does not work over plain HTTP.",
+      "link": "https://docs.linuxserver.io/images/docker-webcord/"
+    }
+  ]
+}

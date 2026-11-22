@@ -1,0 +1,18 @@
+services:
+  webcord:
+    image: lscr.io/linuxserver/webcord:v4.14.0-ls211@sha256:782d2f4997b501b92e2aad86fdba01794e9e93e6b2dda85ca8deec2e92a8a9be
+    restart: unless-stopped
+    expose:
+      - 3000
+    shm_size: "1gb"
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      CUSTOM_USER: ${CUSTOM_USER}
+      PASSWORD: ${PASSWORD}
+    volumes:
+      - webcord-config:/config
+
+volumes:
+  webcord-config: {}
