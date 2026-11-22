@@ -1,0 +1,40 @@
+services:
+  retrom:
+    image: ghcr.io/jmberesford/retrom-service:v0.8.4@sha256:840c8f8da77f366a0b658661913352b860e5388d009ca4925f560ea6d200ffe5
+    restart: unless-stopped
+    expose:
+      - 5101
+    volumes:
+      - retrom-config:/app/config
+      - retrom-data:/app/data
+      - retrom-psql:/app/psql
+      - retrom-library:/app/library
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:5101/web/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5m
+
+  # the service has no login, so the public route goes through this basic auth gate
+  retrom-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      RETROM_USERNAME: ${RETROM_USERNAME}
+      RETROM_PASSWORD: ${RETROM_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - export RETROM_PASSWORD_HASH="$$(caddy hash-password --plaintext "$$RETROM_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - retrom
+
+volumes:
+  retrom-config: {}
+  retrom-data: {}
+  retrom-psql: {}
+  retrom-library: {}

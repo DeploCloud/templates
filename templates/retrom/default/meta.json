@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted game library server with a built-in web client, in-browser emulation, metadata scraping and cloud saves, using an embedded PostgreSQL database.",
+  "category": "media",
+  "developedBy": {
+    "label": "John Beresford",
+    "url": "https://github.com/JMBeresford"
+  },
+  "links": {
+    "github": "https://github.com/JMBeresford/retrom",
+    "docs": [
+      "https://github.com/JMBeresford/retrom/wiki/Installation",
+      "https://github.com/JMBeresford/retrom/wiki/Quick-Start",
+      "https://github.com/JMBeresford/retrom/wiki/Library-Structure",
+      "https://github.com/JMBeresford/retrom/wiki/Metadata-Providers"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Retrom has no login of its own, so the template puts it behind HTTP basic auth: sign in with RETROM_USERNAME and RETROM_PASSWORD from the environment variables. The desktop client cannot send these credentials, so use the web client.",
+      "link": "https://github.com/JMBeresford/retrom/wiki/Installation"
+    },
+    {
+      "type": "warning",
+      "message": "The web client cannot upload games. Copy your platform and game folders into the retrom-library volume (mounted at /app/library), then run Library > Update Library. Metadata and artwork need IGDB API credentials set in the server configuration.",
+      "link": "https://github.com/JMBeresford/retrom/wiki/Library-Structure"
+    }
+  ]
+}
