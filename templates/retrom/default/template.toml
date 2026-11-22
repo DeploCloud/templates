@@ -1,0 +1,28 @@
+[config]
+
+[[config.domains]]
+serviceName = "retrom-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	basic_auth {
+		{$RETROM_USERNAME} {$RETROM_PASSWORD_HASH}
+	}
+	reverse_proxy retrom:5101 {
+		flush_interval -1
+	}
+}
+"""
+
+[config.env]
+RETROM_USERNAME = "admin"
+RETROM_PASSWORD = "${password:24}"
