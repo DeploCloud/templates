@@ -1,0 +1,41 @@
+services:
+  teedy:
+    image: sismics/docs:v1.11@sha256:70616d46a9bf772284a101b0e7a5d1fce611bf55b9eecda279440affdc96a7ca
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DOCS_BASE_URL: ${DOCS_BASE_URL}
+      DATABASE_URL: jdbc:postgresql://teedy-db:5432/${POSTGRES_DB}
+      DATABASE_USER: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - teedy-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/api/app || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    depends_on:
+      teedy-db:
+        condition: service_healthy
+
+  teedy-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - teedy-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  teedy-data: {}
+  teedy-db: {}

@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight document management system with OCR, full-text search, tags, workflows and file encryption, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Sismics",
+    "url": "https://github.com/sismics"
+  },
+  "links": {
+    "github": "https://github.com/sismics/docs",
+    "website": "https://teedy.io",
+    "docs": [
+      "https://github.com/sismics/docs#install-with-docker",
+      "https://github.com/sismics/docs#available-environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The initial administrator is admin with the password admin. Sign in and change this password right after the first deploy."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
