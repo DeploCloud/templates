@@ -1,0 +1,101 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "kyoo-proxy"
+port = 8_901
+host = "${domain}"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+PGPASSWORD = "${db_password}"
+DISABLE_REGISTRATION = "false"
+
+[[config.mounts]]
+filePath = "kyoo-routes.yml"
+content = """http:
+  routers:
+    front:
+      rule: "PathPrefix(`/`)"
+      service: front
+    auth:
+      rule: "PathPrefix(`/auth/`) || PathPrefix(`/.well-known/`)"
+      service: auth
+      middlewares:
+        - strip-forwarded
+    swagger:
+      rule: "PathPrefix(`/swagger`)"
+      service: api
+    api:
+      rule: "PathPrefix(`/api/`)"
+      service: api
+      middlewares:
+        - cors
+        - phantom-token
+    scanner:
+      rule: "PathPrefix(`/scanner/`)"
+      service: scanner
+      middlewares:
+        - phantom-token
+    transcoder:
+      rule: "PathPrefix(`/video`)"
+      service: transcoder
+      middlewares:
+        - cors
+        - phantom-token
+
+  middlewares:
+    phantom-token:
+      forwardAuth:
+        address: "http://kyoo-auth:4568/auth/jwt"
+        authRequestHeaders:
+          - Authorization
+          - Cookie
+          - X-Api-Key
+          - Sec-WebSocket-Protocol
+        authResponseHeaders:
+          - Authorization
+    cors:
+      headers:
+        accessControlAllowOriginList:
+          - "*"
+        accessControlAllowMethods:
+          - GET
+          - OPTIONS
+        accessControlAllowHeaders:
+          - Authorization
+          - Content-Type
+          - Range
+          - X-Api-Key
+        addVaryHeader: true
+    # presigns are checked against these, only forwardAuth may set them
+    strip-forwarded:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Uri: ""
+          X-Forwarded-Method: ""
+
+  services:
+    front:
+      loadBalancer:
+        servers:
+          - url: "http://kyoo-front:8901"
+    auth:
+      loadBalancer:
+        servers:
+          - url: "http://kyoo-auth:4568"
+    api:
+      loadBalancer:
+        servers:
+          - url: "http://kyoo-api:3567"
+    scanner:
+      loadBalancer:
+        servers:
+          - url: "http://kyoo-scanner:4389"
+    transcoder:
+      loadBalancer:
+        servers:
+          - url: "http://kyoo-transcoder:7666"
+"""

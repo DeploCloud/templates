@@ -1,0 +1,127 @@
+x-kyoo-db-env: &kyoo-db-env
+  PGUSER: kyoo
+  PGPASSWORD: ${PGPASSWORD}
+  PGDATABASE: kyoo
+  PGHOST: kyoo-db
+  PGPORT: "5432"
+
+services:
+  # Same routing and forward-auth token exchange as the upstream compose, from a file instead of docker labels.
+  kyoo-proxy:
+    image: traefik:v3.7.19@sha256:a6c0194dda77bcb804824580f36fa7edc56e315b1acfe933366c8b52844a78a4
+    restart: unless-stopped
+    command:
+      - --providers.file.filename=/etc/traefik/dynamic/kyoo.yml
+      - --entryPoints.web.address=:8901
+      - --entryPoints.web.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+    expose:
+      - 8901
+    volumes:
+      - ./kyoo-routes.yml:/etc/traefik/dynamic/kyoo.yml:ro
+
+  kyoo-front:
+    image: ghcr.io/zoriya/kyoo_front:5.3.0@sha256:8cc854d16c005fd8867e6e422f6af8e49e4ad2c271e1577a5b2b8193d837ffb4
+    restart: unless-stopped
+    expose:
+      - 8901
+
+  kyoo-auth:
+    image: ghcr.io/zoriya/kyoo_auth:5.3.0@sha256:00d30f5a8f36680694daf814c84b5f6810e1b8fbd41c8c5707ba0e9862da8e84
+    restart: unless-stopped
+    expose:
+      - 4568
+    environment:
+      <<: *kyoo-db-env
+      PUBLIC_URL: ${PUBLIC_URL}
+      EXTRA_OIDC_REDIRECT_URLS: kyoo
+      EXTRA_CLAIMS: '{"permissions": ["core.read", "core.play"], "verified": false}'
+      FIRST_USER_CLAIMS: '{"permissions": ["users.read", "users.write", "users.delete", "apikeys.read", "apikeys.write", "core.read", "core.write", "core.play", "scanner.trigger", "scanner.guess", "scanner.search", "scanner.add"], "verified": true}'
+      # empty: visitors must sign in; upstream alternatives are in its .env.example
+      GUEST_CLAIMS: ""
+      PROTECTED_CLAIMS: permissions,verified
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+      KEIBI_APIKEY_SCANNER: lazy
+      KEIBI_APIKEY_SCANNER_CLAIMS: '{"permissions": ["core.read", "core.write"]}'
+      # the image runs as nonroot, whose home is the only directory it can write to
+      PROFILE_PICTURE_PATH: /home/nonroot
+    volumes:
+      - kyoo-profile-pictures:/home/nonroot
+    depends_on:
+      kyoo-db:
+        condition: service_healthy
+
+  kyoo-api:
+    image: ghcr.io/zoriya/kyoo_api:5.3.0@sha256:719cca5a5817fc16e9a78f0738d4cbbe1db8ac4d71c1c4ac123d52f2bcb12373
+    restart: unless-stopped
+    expose:
+      - 3567
+    environment:
+      <<: *kyoo-db-env
+      JWT_ISSUER: ${PUBLIC_URL}
+      AUTH_SERVER: http://kyoo-auth:4568
+      TRANSCODER_SERVER: http://kyoo-transcoder:7666
+      IMAGES_PATH: /images
+    volumes:
+      - kyoo-images:/images
+    depends_on:
+      kyoo-db:
+        condition: service_healthy
+
+  kyoo-scanner:
+    image: ghcr.io/zoriya/kyoo_scanner:5.3.0@sha256:a19d38b807501793e5b4ac1c2155eff039af95cd546d0e66b9cfc4326a87240c
+    restart: unless-stopped
+    expose:
+      - 4389
+    environment:
+      <<: *kyoo-db-env
+      KYOO_URL: http://kyoo-proxy:8901/api
+      AUTH_SERVER: http://kyoo-auth:4568
+      JWKS_URL: http://kyoo-auth:4568/.well-known/jwks.json
+      JWT_ISSUER: ${PUBLIC_URL}
+      LIBRARY_IGNORE_PATTERN: ".*/[dD]ownloads?/.*"
+    volumes:
+      - kyoo-library:/video:ro
+    depends_on:
+      kyoo-db:
+        condition: service_healthy
+      kyoo-auth:
+        condition: service_started
+
+  kyoo-transcoder:
+    image: ghcr.io/zoriya/kyoo_transcoder:5.3.0@sha256:1171f5001e10a082db3da7e12f4b9ac958feb1e51d9a4a62a392c50a3e2fab4b
+    restart: unless-stopped
+    expose:
+      - 7666
+    environment:
+      <<: *kyoo-db-env
+      JWKS_URL: http://kyoo-auth:4568/.well-known/jwks.json
+    volumes:
+      - kyoo-library:/video:ro
+      - kyoo-transcoder-cache:/cache
+      - kyoo-transcoder-metadata:/metadata
+    depends_on:
+      kyoo-db:
+        condition: service_healthy
+
+  kyoo-db:
+    image: postgres:18.7@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kyoo
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: kyoo
+    volumes:
+      - kyoo-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kyoo -d kyoo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  kyoo-db-data: {}
+  kyoo-images: {}
+  kyoo-profile-pictures: {}
+  kyoo-library: {}
+  kyoo-transcoder-cache: {}
+  kyoo-transcoder-metadata: {}
