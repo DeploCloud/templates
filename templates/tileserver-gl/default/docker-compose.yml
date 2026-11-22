@@ -1,0 +1,18 @@
+services:
+  tileserver-gl:
+    image: maptiler/tileserver-gl:v5.7.0@sha256:24d0364e1d40da0ae3fb3269f617c26e36a883ad4b7454e5c4064a8795bfc807
+    restart: unless-stopped
+    command: ["--public_url", "${PUBLIC_URL}"]
+    expose:
+      - 8080
+    volumes:
+      - tileserver-data:/data
+    healthcheck:
+      test: ["CMD", "node", "/usr/src/app/src/healthcheck.js"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+
+volumes:
+  tileserver-data: {}
