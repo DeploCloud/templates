@@ -1,0 +1,33 @@
+services:
+  manyfold-init:
+    image: ghcr.io/manyfold3d/manyfold-solo:0.154.3@sha256:958e0266bccfcdb8cb928f38a902049fffdfbf4c29520ba612137fb3cc2835c9
+    restart: "no"
+    user: "0:0"
+    # Named volumes start root-owned; Manyfold drops to PUID:PGID after setup
+    entrypoint: ["chown", "1000:1000", "/config", "/models"]
+    volumes:
+      - manyfold-config:/config
+      - manyfold-models:/models
+
+  manyfold:
+    image: ghcr.io/manyfold3d/manyfold-solo:0.154.3@sha256:958e0266bccfcdb8cb928f38a902049fffdfbf4c29520ba612137fb3cc2835c9
+    restart: unless-stopped
+    expose:
+      - 3214
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      MULTIUSER: ${MULTIUSER}
+      PUBLIC_HOSTNAME: ${PUBLIC_HOSTNAME}
+      HTTPS_ONLY: ${HTTPS_ONLY}
+    volumes:
+      - manyfold-config:/config
+      - manyfold-models:/models
+    depends_on:
+      manyfold-init:
+        condition: service_completed_successfully
+
+volumes:
+  manyfold-config: {}
+  manyfold-models: {}

@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted digital asset manager for 3D print files, using the all-in-one image with a built-in SQLite database and Redis.",
+  "category": "media",
+  "developedBy": {
+    "label": "Manyfold",
+    "url": "https://github.com/manyfold3d"
+  },
+  "links": {
+    "github": "https://github.com/manyfold3d/manyfold",
+    "website": "https://manyfold.app",
+    "docs": [
+      "https://manyfold.app/get-started/docker",
+      "https://manyfold.app/sysadmin/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor is signed in automatically to set the administrator username, email and password, so open the app right after deployment. Then create a library with the path /models, which is the persistent model folder of this deployment."
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: the app is configured with its public hostname and HTTPS-only mode, so it treats every request as secure, sends HSTS and sets secure cookies. Signing in over plain HTTP fails."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "manyfold"
+port = 3_214
+host = "${domain}"
+
+[config.env]
+SECRET_KEY_BASE = "${hash:128}"
+MULTIUSER = "enabled"
+PUBLIC_HOSTNAME = "${domain}"
+HTTPS_ONLY = "enabled"
+DATABASE_NAME = "manyfold"
+DATABASE_USER = "manyfold"
+DATABASE_PASSWORD = "${db_password}"

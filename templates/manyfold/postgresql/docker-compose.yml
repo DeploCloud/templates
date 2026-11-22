@@ -1,0 +1,71 @@
+services:
+  manyfold-init:
+    image: ghcr.io/manyfold3d/manyfold:0.154.3@sha256:528f9be8568782b1d6f3acc71659ddfc8975af109dfb1e0f4865ba3feca27c05
+    restart: "no"
+    user: "0:0"
+    # Named volumes start root-owned; Manyfold drops to PUID:PGID after setup
+    entrypoint: ["chown", "1000:1000", "/models", "/usr/src/app/plugins"]
+    volumes:
+      - manyfold-models:/models
+      - manyfold-plugins:/usr/src/app/plugins
+
+  manyfold:
+    image: ghcr.io/manyfold3d/manyfold:0.154.3@sha256:528f9be8568782b1d6f3acc71659ddfc8975af109dfb1e0f4865ba3feca27c05
+    restart: unless-stopped
+    expose:
+      - 3214
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      MULTIUSER: ${MULTIUSER}
+      PUBLIC_HOSTNAME: ${PUBLIC_HOSTNAME}
+      HTTPS_ONLY: ${HTTPS_ONLY}
+      DATABASE_ADAPTER: postgresql
+      DATABASE_HOST: manyfold-db
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      REDIS_URL: redis://manyfold-redis:6379/1
+    volumes:
+      - manyfold-models:/models
+      - manyfold-plugins:/usr/src/app/plugins
+    depends_on:
+      manyfold-init:
+        condition: service_completed_successfully
+      manyfold-db:
+        condition: service_healthy
+      manyfold-redis:
+        condition: service_healthy
+
+  manyfold-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - manyfold-db:/var/lib/postgresql
+
+  manyfold-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - manyfold-redis:/data
+
+volumes:
+  manyfold-models: {}
+  manyfold-plugins: {}
+  manyfold-db: {}
+  manyfold-redis: {}
