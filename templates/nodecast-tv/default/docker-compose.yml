@@ -1,0 +1,21 @@
+services:
+  nodecast-tv:
+    image: ghcr.io/technomancer702/nodecast-tv:2.2.8@sha256:92eab8088e88cfaca81422e139471b17b0ec178f8ffa428a7a4be35eb078100d
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      APP_ORIGIN: ${APP_ORIGIN}
+    volumes:
+      - nodecast-data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "scripts/healthcheck.cjs"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  nodecast-data: {}

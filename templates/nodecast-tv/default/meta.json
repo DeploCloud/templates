@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based IPTV player for Live TV, EPG, movies and series from Xtream Codes or M3U providers, with FFmpeg transcoding.",
+  "category": "media",
+  "developedBy": {
+    "label": "technomancer702",
+    "url": "https://github.com/technomancer702"
+  },
+  "links": {
+    "github": "https://github.com/technomancer702/nodecast-tv",
+    "docs": [
+      "https://github.com/technomancer702/nodecast-tv#docker-deployment",
+      "https://github.com/technomancer702/nodecast-tv#usage",
+      "https://github.com/technomancer702/nodecast-tv#authentication-and-reverse-proxies"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin account. Open the app right after deployment, then add your Xtream Codes or M3U provider under Settings - Content Sources."
+    }
+  ]
+}
