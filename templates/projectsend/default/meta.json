@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted client file sharing portal with accounts, groups and share links, backed by MySQL and Redis with persistent uploads.",
+  "category": "storage",
+  "developedBy": {
+    "label": "ProjectSend",
+    "url": "https://github.com/projectsend"
+  },
+  "links": {
+    "github": "https://github.com/projectsend/projectsend",
+    "website": "https://www.projectsend.org/",
+    "docs": [
+      "https://www.projectsend.org/docs/docker",
+      "https://github.com/projectsend/projectsend/blob/main/DOCKER.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deployment: the first-run setup screen creates the administrator account, so whoever reaches it first becomes admin."
+    },
+    {
+      "type": "warning",
+      "message": "Email notifications need an SMTP server. Configure it after login in System > Settings > Email, which has a test button."
+    }
+  ]
+}
