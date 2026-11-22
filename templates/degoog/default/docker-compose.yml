@@ -1,0 +1,16 @@
+services:
+  degoog:
+    image: ghcr.io/degoog-org/degoog:1.2.0@sha256:c3a975a2c512300aae942b2d8713be643e457dabf2475adf187536a4a6c6b3dd
+    restart: unless-stopped
+    expose:
+      - 4444
+    environment:
+      DEGOOG_SETTINGS_PASSWORDS: ${DEGOOG_SETTINGS_PASSWORDS}
+      DEGOOG_PUBLIC_INSTANCE: ${DEGOOG_PUBLIC_INSTANCE}
+      DEGOOG_BASE_URL: ${DEGOOG_BASE_URL}
+      DEGOOG_DISTRUST_PROXY: ${DEGOOG_DISTRUST_PROXY}
+    volumes:
+      - degoog-data:/app/data
+
+volumes:
+  degoog-data: {}

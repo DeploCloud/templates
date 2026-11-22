@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted search aggregator that merges results from multiple engines, with plugins, themes and a local SQLite indexer.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "degoog-org",
+    "url": "https://github.com/degoog-org"
+  },
+  "links": {
+    "github": "https://github.com/degoog-org/degoog",
+    "website": "https://degoog-org.github.io/docs/",
+    "docs": [
+      "https://degoog-org.github.io/docs/environment-variables.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The settings page is locked with the generated DEGOOG_SETTINGS_PASSWORDS value; read it from the environment variables to sign in. Keep it set: an unlocked instance lets anyone install extensions that run code on the server."
+    }
+  ]
+}

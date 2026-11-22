@@ -1,0 +1,18 @@
+[variables]
+settings_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "degoog"
+port = 4_444
+host = "${domain}"
+
+[config.env]
+DEGOOG_SETTINGS_PASSWORDS = "${settings_password}"
+DEGOOG_PUBLIC_INSTANCE = "false"
+DEGOOG_BASE_URL = "https://${domain}"
+DEGOOG_DISTRUST_PROXY = "false"
+DB_PASSWORD = "${db_password}"
