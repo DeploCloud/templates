@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted music streaming server with a web player, Subsonic/OpenSubsonic API, podcasts, playlists and a recommendation engine.",
+  "category": "media",
+  "developedBy": {
+    "label": "Emeric Poupon",
+    "url": "https://github.com/epoupon"
+  },
+  "links": {
+    "github": "https://github.com/epoupon/lms",
+    "docs": [
+      "https://github.com/epoupon/lms/blob/master/INSTALL.md",
+      "https://hub.docker.com/r/epoupon/lms",
+      "https://github.com/epoupon/lms/blob/master/SUBSONIC.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin account in the setup assistant, so open the app right after deploying. Then copy your music into the lms-music volume and add /music as a library in the administration settings.",
+      "link": "https://github.com/epoupon/lms/blob/master/INSTALL.md#first-launch"
+    }
+  ]
+}

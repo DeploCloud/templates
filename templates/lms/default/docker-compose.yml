@@ -1,0 +1,14 @@
+services:
+  lms:
+    image: epoupon/lms:3.82.0@sha256:f05b37d6297e1dcbd1270bf1e17e5c35e6553b0406f3dd2afcadfc3751237d5e
+    restart: unless-stopped
+    expose:
+      - 5082
+    volumes:
+      - lms-data:/var/lms
+      - lms-music:/music
+      - ./lms.conf:/etc/lms.conf:ro
+
+volumes:
+  lms-data: {}
+  lms-music: {}
