@@ -1,0 +1,17 @@
+services:
+  sqlpage:
+    image: lovasoa/sqlpage:v0.48.0@sha256:ab972cb8e0090458f7d528c7fc41f2311c2daf6a8d7e1895cf4b4e7cd2d63c1f
+    restart: unless-stopped
+    # named volumes are root-owned; the image user (1000) could not write the database or uploads
+    user: "0:0"
+    expose:
+      - 8080
+    environment:
+      DATABASE_URL: sqlite:///etc/sqlpage/sqlpage.db?mode=rwc
+    volumes:
+      - sqlpage-www:/var/www
+      - sqlpage-config:/etc/sqlpage
+
+volumes:
+  sqlpage-www: {}
+  sqlpage-config: {}
