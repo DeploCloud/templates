@@ -1,0 +1,40 @@
+services:
+  pg-back-web:
+    image: eduardolat/pgbackweb:0.5.2@sha256:cd902026c133fbd8b25fd2a8b5b1727dbac94ae4094e12c0321442af449cac5c
+    restart: unless-stopped
+    expose:
+      - 8085
+    environment:
+      PBW_ENCRYPTION_KEY: ${PBW_ENCRYPTION_KEY}
+      PBW_POSTGRES_CONN_STRING: postgresql://pgbackweb:${DB_PASSWORD}@pg-back-web-db:5432/pgbackweb?sslmode=disable
+      TZ: ${TZ}
+    volumes:
+      - pg-back-web-backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8085/api/v1/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      pg-back-web-db:
+        condition: service_healthy
+
+  pg-back-web-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pgbackweb
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: pgbackweb
+    volumes:
+      - pg-back-web-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pgbackweb -d pgbackweb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pg-back-web-backups: {}
+  pg-back-web-db-data: {}
