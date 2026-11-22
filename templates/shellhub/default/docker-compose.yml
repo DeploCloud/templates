@@ -1,0 +1,102 @@
+services:
+  # Gateway off: the reverse proxy routes the API, agent and terminal paths here and the rest to shellhub-ui.
+  shellhub:
+    image: shellhubio/server:v0.31.1@sha256:481447ba28e14528b3c4ba115d9cf08a9c36ec8d7999507e8e6c09f3c055f3a6
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SHELLHUB_VERSION: v0.31.1
+      SHELLHUB_EDITION: community
+      SHELLHUB_GATEWAY: "false"
+      SHELLHUB_AUTO_SSL: "false"
+      SHELLHUB_DOMAIN: ${SHELLHUB_DOMAIN}
+      SHELLHUB_PUBLIC_URL: ${SHELLHUB_PUBLIC_URL}
+      SHELLHUB_PROXY_TRUSTED_IPS: ${SHELLHUB_PROXY_TRUSTED_IPS}
+      SHELLHUB_SSH_PORT: "22"
+      PRIVATE_KEY: /keys/api_private_key
+      PUBLIC_KEY: /keys/api_public_key
+      SSH_HOST_KEY_FILE: /keys/ssh_private_key
+      POSTGRES_HOST: shellhub-db
+      POSTGRES_PORT: "5432"
+      POSTGRES_USERNAME: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DB}
+      REDIS_URI: redis://shellhub-redis:6379
+    volumes:
+      - shellhub-keys:/keys:ro
+      - shellhub-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/api/healthcheck || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      shellhub-keygen:
+        condition: service_completed_successfully
+      shellhub-db:
+        condition: service_healthy
+      shellhub-redis:
+        condition: service_healthy
+
+  shellhub-ui:
+    image: shellhubio/ui:v0.31.1@sha256:df2156142a158833c07fc4ba9883fdb7802f90a2cd210f941aa7b6cd073f84a8
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SHELLHUB_VERSION: v0.31.1
+      SHELLHUB_EDITION: community
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider -T 5 http://127.0.0.1:8080/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # One-shot: generates the API token key pair and the SSH host key once, like `make keygen`.
+  shellhub-keygen:
+    image: postgres:18.7-trixie@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    restart: "no"
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        cd /keys
+        [ -s api_private_key ] || openssl genpkey -algorithm RSA -out api_private_key -pkeyopt rsa_keygen_bits:2048
+        openssl rsa -in api_private_key -pubout -out api_public_key
+        [ -s ssh_private_key ] || openssl genpkey -algorithm RSA -out ssh_private_key -pkeyopt rsa_keygen_bits:2048
+    volumes:
+      - shellhub-keys:/keys
+
+  shellhub-db:
+    image: postgres:18.7-trixie@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a
+    restart: unless-stopped
+    command: ["postgres", "-c", "io_method=worker", "-c", "shared_preload_libraries=pg_stat_statements"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - shellhub-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
+
+  shellhub-redis:
+    image: valkey/valkey:9.1.4-alpine@sha256:56729e68bdda139cbd3f6a2538683dc3523325fc5711ea1a379938f1b37893f0
+    restart: unless-stopped
+    command: ["valkey-server", "--appendonly", "no", "--save", ""]
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  shellhub-keys: {}
+  shellhub-data: {}
+  shellhub-db: {}
