@@ -1,0 +1,11 @@
+services:
+  companion:
+    image: ghcr.io/bitfocus/companion/companion:v5.1.3@sha256:923f35eb015d89180dc50ca61dee5680735840ac55b9b6aec33b1ccdd964acc2
+    restart: unless-stopped
+    expose:
+      - 8000
+    volumes:
+      - companion-config:/companion
+
+volumes:
+  companion-config: {}

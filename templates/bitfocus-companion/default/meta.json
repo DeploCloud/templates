@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Headless Companion server that turns Stream Decks, web buttons and other surfaces into a control panel for 700+ broadcast and AV devices.",
+  "category": "automation",
+  "developedBy": {
+    "label": "Bitfocus",
+    "url": "https://bitfocus.io/"
+  },
+  "links": {
+    "github": "https://github.com/bitfocus/companion",
+    "website": "https://companion.free/",
+    "docs": [
+      "https://companion.free/user-guide/v5.1/getting-started/Installation#docker",
+      "https://companion.free/user-guide/v5.1/getting-started/config-reference",
+      "https://companion.free/user-guide/v5.1/security"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The admin UI has no password by default, so anyone with the URL can change your configuration and import custom modules that run code on the server. Set one under Settings > Advanced > Admin UI Password right after the first start.",
+      "link": "https://companion.free/user-guide/v5.1/security"
+    },
+    {
+      "type": "info",
+      "message": "USB control surfaces cannot be passed into the container and the Satellite ports (16622/16623) are not published. Use the web buttons and emulator, and make sure the controlled devices are reachable from this server."
+    }
+  ]
+}
