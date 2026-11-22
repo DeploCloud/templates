@@ -1,0 +1,16 @@
+[variables]
+secret = "${secret:64}"
+broadcast_key = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "anycable"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+ANYCABLE_NORPC = "true"
+ANYCABLE_SECRET = "${secret}"
+ANYCABLE_BROADCAST_KEY = "${broadcast_key}"
