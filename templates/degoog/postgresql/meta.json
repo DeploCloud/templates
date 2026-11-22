@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Self-hosted search aggregator with its result indexer on PostgreSQL, for busy public instances that outgrow SQLite.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "degoog-org",
+    "url": "https://github.com/degoog-org"
+  },
+  "links": {
+    "github": "https://github.com/degoog-org/degoog",
+    "website": "https://degoog-org.github.io/docs/",
+    "docs": [
+      "https://degoog-org.github.io/docs/environment-variables.html",
+      "https://github.com/degoog-org/degoog/blob/main/docker-compose-examples/postgres.yml"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The settings page is locked with the generated DEGOOG_SETTINGS_PASSWORDS value; read it from the environment variables to sign in. Keep it set: an unlocked instance lets anyone install extensions that run code on the server."
+    }
+  ]
+}

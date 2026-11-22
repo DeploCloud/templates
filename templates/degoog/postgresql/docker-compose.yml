@@ -1,0 +1,37 @@
+services:
+  degoog:
+    image: ghcr.io/degoog-org/degoog:1.2.0@sha256:c3a975a2c512300aae942b2d8713be643e457dabf2475adf187536a4a6c6b3dd
+    restart: unless-stopped
+    expose:
+      - 4444
+    environment:
+      DEGOOG_SETTINGS_PASSWORDS: ${DEGOOG_SETTINGS_PASSWORDS}
+      DEGOOG_PUBLIC_INSTANCE: ${DEGOOG_PUBLIC_INSTANCE}
+      DEGOOG_BASE_URL: ${DEGOOG_BASE_URL}
+      DEGOOG_DISTRUST_PROXY: ${DEGOOG_DISTRUST_PROXY}
+      DEGOOG_POSTGRES: postgresql://degoog:${DB_PASSWORD}@degoog-db:5432/degoog
+    volumes:
+      - degoog-data:/app/data
+    depends_on:
+      degoog-db:
+        condition: service_healthy
+
+  degoog-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: degoog
+      POSTGRES_USER: degoog
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U degoog -d degoog"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    volumes:
+      - degoog-postgres:/var/lib/postgresql/data
+
+volumes:
+  degoog-data: {}
+  degoog-postgres: {}
