@@ -1,0 +1,42 @@
+services:
+  alerta:
+    image: alerta/alerta-web:9.1.0@sha256:693845fb8a95a483c8c9d560786f661f5b6198e5ea0baa6ddf368a7e53c94f39
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      SECRET_KEY: ${SECRET_KEY}
+      BASE_URL: ${BASE_URL}
+      AUTH_REQUIRED: ${AUTH_REQUIRED}
+      AUTH_PROVIDER: ${AUTH_PROVIDER}
+      SIGNUP_ENABLED: ${SIGNUP_ENABLED}
+      ADMIN_USERS: ${ADMIN_USERS}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/api/_"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      alerta-db:
+        condition: service_healthy
+
+  alerta-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: monitoring
+      POSTGRES_USER: alerta
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alerta -d monitoring"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - alerta-db:/var/lib/postgresql
+
+volumes:
+  alerta-db: {}

@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Alert consolidation and de-duplication console with a REST API, collecting alerts from many monitoring tools on one screen, backed by PostgreSQL.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "Alerta",
+    "url": "https://github.com/alerta"
+  },
+  "links": {
+    "github": "https://github.com/alerta/alerta",
+    "website": "https://alerta.io",
+    "docs": [
+      "https://docs.alerta.io/",
+      "https://docs.alerta.io/configuration.html",
+      "https://docs.alerta.io/authentication.html",
+      "https://github.com/alerta/docker-alerta"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as user admin with the ADMIN_PASSWORD value from the environment. The password is only applied when the admin user is first created, so change it later from the Users page in the console, not in the environment. Self sign-up is off: add other users from the Users page.",
+      "link": "https://docs.alerta.io/authentication.html"
+    }
+  ]
+}
