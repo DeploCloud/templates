@@ -1,0 +1,21 @@
+services:
+  sickchill:
+    image: sickchill/sickchill:2026.10.8@sha256:472e592e4dc50554770e5f1abb4c5cabeb98af4ef82e2164fa0fb7f1ad05bf4e
+    restart: unless-stopped
+    expose:
+      - 8081
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "-o", "/dev/null", "http://localhost:8081/ui/get_messages"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    volumes:
+      - sickchill-data:/data
+      - sickchill-downloads:/downloads
+      - sickchill-tv:/tv
+
+volumes:
+  sickchill-data: {}
+  sickchill-downloads: {}
+  sickchill-tv: {}

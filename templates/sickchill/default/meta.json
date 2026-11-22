@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Automatic TV show manager that tracks series, searches indexers for new episodes and sends them to your download client.",
+  "category": "media",
+  "developedBy": {
+    "label": "SickChill",
+    "url": "https://github.com/SickChill"
+  },
+  "links": {
+    "github": "https://github.com/SickChill/sickchill",
+    "website": "https://sickchill.github.io",
+    "docs": [
+      "https://github.com/SickChill/SickChill/wiki/Docker",
+      "https://github.com/SickChill/SickChill/wiki/Installation-&-Configuration-Guides",
+      "https://github.com/SickChill/SickChill/wiki/Settings-explained"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web interface has no login by default, so anyone who opens the domain has full access. Set a username and password under Config > General > Interface > Web Interface right after the first start."
+    }
+  ]
+}
