@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Mines timed Twitch drops unattended, with automatic channel switching and drop claiming, managed from a password-protected web UI.",
+  "category": "automation",
+  "developedBy": {
+    "label": "DevilXD",
+    "url": "https://github.com/DevilXD"
+  },
+  "links": {
+    "github": "https://github.com/DevilXD/TwitchDropsMiner",
+    "docs": [
+      "https://github.com/DevilXD/TwitchDropsMiner#usage",
+      "https://github.com/fireph/docker-twitch-drops-miner#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first username and password entered on the web UI login page become the only web UI account. Open the app right after deploying and set them before anyone else can."
+    },
+    {
+      "type": "warning",
+      "message": "After signing in to the web UI, click Login to sign in to Twitch through the embedded browser. The session is saved in config/cookies.jar and grants access to your Twitch account. Link your game accounts on the Twitch drops campaigns page to mine their drops.",
+      "link": "https://www.twitch.tv/drops/campaigns"
+    }
+  ]
+}

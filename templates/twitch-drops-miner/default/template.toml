@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "twitch-drops-miner"
+port = 5_800
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+WEBUI_AUTH = "1"
+USER_ID = "0"
+GROUP_ID = "0"
