@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted notes and checklists app with a rich text Markdown editor, Kanban task projects, sharing and PGP encryption, storing everything as plain files.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "fccview",
+    "url": "https://github.com/fccview"
+  },
+  "links": {
+    "github": "https://github.com/fccview/jotty",
+    "website": "https://jotty.page",
+    "docs": [
+      "https://github.com/fccview/jotty/blob/main/howto/DOCKER.md",
+      "https://github.com/fccview/jotty/blob/main/howto/ENV-VARIABLES.md",
+      "https://github.com/fccview/jotty/blob/main/howto/SSO.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deploying: the first visit goes to /auth/setup, and the first account created there becomes the admin.",
+      "link": "https://github.com/fccview/jotty#initial-setup"
+    }
+  ]
+}
