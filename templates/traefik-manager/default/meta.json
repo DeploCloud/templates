@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI for managing Traefik routes, middlewares, services, certificates and logs, with agents that manage Traefik on remote servers.",
+  "category": "networking",
+  "developedBy": {
+    "label": "chr0nzz",
+    "url": "https://github.com/chr0nzz"
+  },
+  "links": {
+    "github": "https://github.com/chr0nzz/traefik-manager",
+    "website": "https://traefik-manager.xyzlab.dev/",
+    "docs": [
+      "https://traefik-manager.xyzlab.dev/docker",
+      "https://traefik-manager.xyzlab.dev/env-vars",
+      "https://traefik-manager.xyzlab.dev/agent"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first login password is printed once in the container logs under AUTO-GENERATED PASSWORD; the setup wizard then asks for a permanent one.",
+      "link": "https://traefik-manager.xyzlab.dev/docker"
+    },
+    {
+      "type": "warning",
+      "message": "This deployment does not control the server's own reverse proxy. Point it at a Traefik API you can reach, or run the Traefik Manager Agent next to each remote Traefik and add it under Settings - Agents.",
+      "link": "https://traefik-manager.xyzlab.dev/agent"
+    }
+  ]
+}
