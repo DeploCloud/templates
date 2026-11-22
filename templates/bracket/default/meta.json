@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted tournament system for round-robin, single elimination and Swiss formats, with a Next.js frontend, FastAPI backend and PostgreSQL.",
+  "category": "other",
+  "developedBy": {
+    "label": "Erik Vroon",
+    "url": "https://github.com/evroon"
+  },
+  "links": {
+    "github": "https://github.com/evroon/bracket",
+    "website": "https://docs.bracketapp.nl",
+    "docs": [
+      "https://docs.bracketapp.nl/docs/deployment/docker",
+      "https://docs.bracketapp.nl/docs/running-bracket/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with ADMIN_EMAIL and ADMIN_PASSWORD from the environment variables. Public sign-up is off; set ALLOW_USER_REGISTRATION to true to let others create accounts."
+    },
+    {
+      "type": "warning",
+      "message": "The API is served on the api. subdomain of the app domain, so that subdomain must resolve to this server too."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+services:
+  bracket-frontend:
+    image: ghcr.io/evroon/bracket-frontend:v2.2.5@sha256:c194f4af762549d7f64faaa2c57d61d255b3c19130217d79af1ff9afbdbb8b41
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
+      NEXT_PUBLIC_HCAPTCHA_SITE_KEY: ${NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+    # the image's own healthcheck passes "||" to wget as a URL and never succeeds
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      - bracket
+
+  bracket:
+    image: ghcr.io/evroon/bracket-backend:v2.2.5@sha256:23f80cb6f7422e2cb248d7aff0467484ca9c92334e59d4975064811e7ea960ad
+    restart: unless-stopped
+    expose:
+      - 8400
+    environment:
+      ENVIRONMENT: PRODUCTION
+      PG_DSN: postgresql://bracket:${DB_PASSWORD}@bracket-db:5432/bracket
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ALLOW_USER_REGISTRATION: ${ALLOW_USER_REGISTRATION}
+      ALLOW_DEMO_USER_REGISTRATION: ${ALLOW_DEMO_USER_REGISTRATION}
+      ALLOW_INSECURE_HTTP_SSO: "false"
+      AUTO_RUN_MIGRATIONS: "true"
+    volumes:
+      - bracket-static:/app/static
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8400/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      bracket-db:
+        condition: service_healthy
+
+  bracket-db:
+    image: postgres:17-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bracket
+      POSTGRES_USER: bracket
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - bracket-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bracket -d bracket"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  bracket-static: {}
+  bracket-db: {}

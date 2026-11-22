@@ -1,0 +1,29 @@
+[variables]
+api_domain = "api.${domain}"
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bracket-frontend"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "bracket"
+port = 8_400
+host = "${api_domain}"
+
+[config.env]
+NEXT_PUBLIC_API_BASE_URL = "https://${api_domain}"
+NEXT_PUBLIC_HCAPTCHA_SITE_KEY = "10000000-ffff-ffff-ffff-000000000001"
+CORS_ORIGINS = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+JWT_SECRET = "${hash:64}"
+ADMIN_EMAIL = "admin@${domain}"
+ADMIN_PASSWORD = "${admin_password}"
+ALLOW_USER_REGISTRATION = "false"
+ALLOW_DEMO_USER_REGISTRATION = "false"
