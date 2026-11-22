@@ -1,0 +1,19 @@
+services:
+  atomic-server:
+    image: ghcr.io/ontola/atomic-server:develop@sha256:2740024e48593dd6aa47b03633a6626a7f40df98fa97c8b5dba374cfe868f8f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      ATOMIC_DOMAIN: ${ATOMIC_DOMAIN}
+      ATOMIC_SERVER_URL: ${ATOMIC_SERVER_URL}
+      ATOMIC_HTTPS: "false"
+      ATOMIC_PORT: "80"
+      ATOMIC_IP: 0.0.0.0
+      ATOMIC_CACHE_DIR: /atomic-storage/cache
+      ATOMIC_OWNER_AGENT: ${ATOMIC_OWNER_AGENT}
+    volumes:
+      - atomic-storage:/atomic-storage
+
+volumes:
+  atomic-storage: {}
