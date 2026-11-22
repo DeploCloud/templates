@@ -1,0 +1,16 @@
+[variables]
+db_password = "${password:32}"
+encryption_key = "${secret:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pg-back-web"
+port = 8_085
+host = "${domain}"
+
+[config.env]
+PBW_ENCRYPTION_KEY = "${encryption_key}"
+DB_PASSWORD = "${db_password}"
+TZ = "UTC"

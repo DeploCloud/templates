@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Web interface for scheduled PostgreSQL backups to local storage or S3, with downloads, restores, health checks and webhooks.",
+  "category": "database",
+  "developedBy": {
+    "label": "Luis Eduardo",
+    "url": "https://github.com/eduardolat"
+  },
+  "links": {
+    "github": "https://github.com/eduardolat/pgbackweb",
+    "docs": [
+      "https://github.com/eduardolat/pgbackweb#installation",
+      "https://github.com/eduardolat/pgbackweb#configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the only admin account. Open the app right after deployment and create it."
+    }
+  ]
+}
