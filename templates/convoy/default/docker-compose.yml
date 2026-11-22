@@ -1,0 +1,87 @@
+x-convoy-env: &convoy-env
+  CONVOY_HOST: ${CONVOY_HOST}
+  CONVOY_DB_HOST: convoy-db
+  CONVOY_DB_PORT: "5432"
+  CONVOY_DB_USERNAME: ${DB_USER}
+  CONVOY_DB_PASSWORD: ${DB_PASSWORD}
+  CONVOY_DB_DATABASE: ${DB_NAME}
+  CONVOY_DB_OPTIONS: sslmode=disable&connect_timeout=30
+  CONVOY_REDIS_SCHEME: redis
+  CONVOY_REDIS_HOST: convoy-redis
+  CONVOY_REDIS_PORT: "6379"
+  CONVOY_JWT_SECRET: ${CONVOY_JWT_SECRET}
+  CONVOY_JWT_REFRESH_SECRET: ${CONVOY_JWT_REFRESH_SECRET}
+  CONVOY_SIGNUP_ENABLED: ${CONVOY_SIGNUP_ENABLED}
+  CONVOY_LOGGER_LEVEL: ${CONVOY_LOGGER_LEVEL}
+
+services:
+  convoy:
+    image: getconvoy/convoy:v26.10.0@sha256:83d7ff99f5afbf8d794b51ddffdd44e8002e90577b1a4dc5935fb78a535acbb8
+    restart: unless-stopped
+    # the server refuses to start with pending migrations
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["/cmd migrate up && exec /cmd server"]
+    expose:
+      - 5005
+    environment: *convoy-env
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:5005/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      convoy-db:
+        condition: service_healthy
+      convoy-redis:
+        condition: service_healthy
+
+  convoy-agent:
+    image: getconvoy/convoy:v26.10.0@sha256:83d7ff99f5afbf8d794b51ddffdd44e8002e90577b1a4dc5935fb78a535acbb8
+    restart: unless-stopped
+    command: ["agent"]
+    expose:
+      - 5008
+    environment: *convoy-env
+    volumes:
+      - convoy-export:/var/convoy/export
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:5008/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      convoy:
+        condition: service_healthy
+
+  convoy-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - convoy-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  convoy-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - convoy-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  convoy-db: {}
+  convoy-redis: {}
+  convoy-export: {}
