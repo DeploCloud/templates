@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative task and chore manager with recurring schedules, assignee rotation, points and a SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Donetick",
+    "url": "https://github.com/donetick"
+  },
+  "links": {
+    "github": "https://github.com/donetick/donetick",
+    "website": "https://donetick.com",
+    "docs": [
+      "https://docs.donetick.com/getting-started/",
+      "https://docs.donetick.com/getting-started/configration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the instance can sign up. After creating your accounts, set DT_IS_USER_CREATION_DISABLED to true and redeploy to close registration."
+    }
+  ]
+}

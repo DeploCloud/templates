@@ -1,0 +1,27 @@
+services:
+  donetick:
+    image: donetick/donetick:v0.1.86@sha256:66253a32a8e8ed8c49c49418b43abe1181db23e07defe97748d2cb7508c487cd
+    restart: unless-stopped
+    expose:
+      - 2021
+    environment:
+      DT_ENV: selfhosted
+      DT_SQLITE_PATH: /donetick-data/donetick.db
+      DT_JWT_SECRET: ${DT_JWT_SECRET}
+      DT_SERVER_PUBLIC_HOST: ${DT_SERVER_PUBLIC_HOST}
+      DT_EMAIL_APP_HOST: ${DT_SERVER_PUBLIC_HOST}
+      DT_IS_USER_CREATION_DISABLED: ${DT_IS_USER_CREATION_DISABLED}
+      TZ: ${TZ}
+    volumes:
+      - donetick-data:/donetick-data
+      - donetick-config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:2021/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  donetick-data: {}
+  donetick-config: {}

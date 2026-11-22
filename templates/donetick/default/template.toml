@@ -1,0 +1,16 @@
+[variables]
+jwt_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "donetick"
+port = 2_021
+host = "${domain}"
+
+[config.env]
+DT_JWT_SECRET = "${jwt_secret}"
+DT_SERVER_PUBLIC_HOST = "https://${domain}"
+DT_IS_USER_CREATION_DISABLED = "false"
+TZ = "UTC"
