@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Standalone audio sending node for Discord music bots, with a password-protected REST and WebSocket API and the YouTube source plugin.",
+  "category": "media",
+  "developedBy": {
+    "label": "Lavalink",
+    "url": "https://github.com/lavalink-devs"
+  },
+  "links": {
+    "github": "https://github.com/lavalink-devs/Lavalink",
+    "website": "https://lavalink.dev/",
+    "docs": [
+      "https://lavalink.dev/getting-started/docker",
+      "https://lavalink.dev/configuration/config/environment-variables",
+      "https://lavalink.dev/api/",
+      "https://github.com/lavalink-devs/youtube-source#plugin"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Lavalink has no web UI. Point your bot's Lavalink client at this domain on port 443 with secure (TLS) enabled, using the generated LAVALINK_SERVER_PASSWORD as the password.",
+      "link": "https://lavalink.dev/clients"
+    }
+  ]
+}

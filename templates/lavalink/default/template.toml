@@ -1,0 +1,15 @@
+[variables]
+password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lavalink"
+port = 2_333
+host = "${domain}"
+
+[config.env]
+LAVALINK_SERVER_PASSWORD = "${password}"
+LAVALINK_PLUGINS_0_DEPENDENCY = "dev.lavalink.youtube:youtube-plugin:1.18.2"
+JAVA_TOOL_OPTIONS = "-Xmx1G"
