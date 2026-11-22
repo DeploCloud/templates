@@ -1,0 +1,21 @@
+[variables]
+jwt_secret = "${secret:64}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "bytestash"
+port = 5_000
+host = "${domain}"
+
+[config.env]
+JWT_SECRET = "${jwt_secret}"
+PUBLIC_URL = "https://${domain}"
+TOKEN_EXPIRY = "24h"
+ALLOW_NEW_ACCOUNTS = "false"
+ALLOW_PASSWORD_CHANGES = "true"
+DB_NAME = "bytestash"
+DB_USER = "bytestash"
+DB_PASSWORD = "${db_password}"
