@@ -1,0 +1,50 @@
+services:
+  your-spotify:
+    image: yooooomi/your_spotify_client:1.20.0@sha256:e4da90a0634c7862f9f4e893026ee8cd91380234fa2125b88b26c6fb9da3d47e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      API_ENDPOINT: ${API_ENDPOINT}
+    depends_on:
+      - your-spotify-server
+
+  your-spotify-server:
+    image: yooooomi/your_spotify_server:1.20.0@sha256:624ea009f2ef9d877989bee9c7913ac66840449f566517871696c31a8ea13ddf
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      API_ENDPOINT: ${API_ENDPOINT}
+      CLIENT_ENDPOINT: ${CLIENT_ENDPOINT}
+      SPOTIFY_PUBLIC: ${SPOTIFY_PUBLIC}
+      SPOTIFY_SECRET: ${SPOTIFY_SECRET}
+      TIMEZONE: ${TIMEZONE}
+      MONGO_ENDPOINT: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@your-spotify-db:27017/your_spotify?authSource=admin
+    volumes:
+      # uploaded history files, kept so a failed import can be retried after a restart
+      - your-spotify-imports:/tmp/imports
+    depends_on:
+      your-spotify-db:
+        condition: service_healthy
+
+  your-spotify-db:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - your-spotify-db:/data/db
+      - your-spotify-db-config:/data/configdb
+
+volumes:
+  your-spotify-imports: {}
+  your-spotify-db: {}
+  your-spotify-db-config: {}
