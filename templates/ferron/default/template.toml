@@ -1,0 +1,23 @@
+[config]
+
+[[config.domains]]
+serviceName = "ferron"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "ferron.kdl"
+content = """// HTTPS is terminated by the reverse proxy in front, so Ferron only listens on :80
+globals {
+  log_stdout
+  error_log_stderr
+}
+
+:80 {
+  trust_x_forwarded_for
+  root "/var/www/ferron"
+
+  // directory_listing
+  // proxy "http://other-service:8080/"
+}
+"""

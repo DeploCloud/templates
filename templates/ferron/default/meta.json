@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Rust web server and reverse proxy that serves a static site from a persistent volume, configured through an editable KDL file.",
+  "category": "networking",
+  "developedBy": {
+    "label": "Ferron",
+    "url": "https://github.com/ferronweb"
+  },
+  "links": {
+    "github": "https://github.com/ferronweb/ferron",
+    "website": "https://ferron.sh",
+    "docs": [
+      "https://ferron.sh/docs/v2/installation/docker",
+      "https://ferron.sh/docs/v2/configuration/fundamentals",
+      "https://ferron.sh/docs/v2/use-cases/static-file-serving",
+      "https://ferron.sh/docs/v2/use-cases/reverse-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Ferron serves its welcome page until you replace the files in the ferron-www volume (/var/www/ferron) or edit ferron.kdl. Keep the :80 host block: HTTPS is handled in front of the container, so Ferron's automatic TLS stays off.",
+      "link": "https://ferron.sh/docs/v2/installation/docker"
+    }
+  ]
+}
