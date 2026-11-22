@@ -1,0 +1,28 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+admin_password = "${password:24}"
+jwt_salt = "${secret:48}"
+# hex is valid base64; 32 chars decode to a 24-byte AES key
+encryption_key = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "loonflow"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+JWT_SALT = "${jwt_salt}"
+ENCRYPTION_KEY = "${encryption_key}"
+TENANT_NAME = "loonflow"
+TENANT_DOMAIN = "${domain}"
+ADMIN_NAME = "admin"
+ADMIN_EMAIL = "admin@example.com"
+ADMIN_PASSWORD = "${admin_password}"
+GUNICORN_WORKERS = "2"
+CELERY_CONCURRENCY = "2"

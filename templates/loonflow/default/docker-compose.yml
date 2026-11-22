@@ -1,0 +1,132 @@
+services:
+  loonflow:
+    image: blackholll/loonflow-ui:r3.2.3@sha256:45a1f266af53dcf977f2120d7ae848a0b571bf6753109cfc6bf1f4c28e7e827d
+    restart: unless-stopped
+    expose:
+      - 80
+    depends_on:
+      - loonflow-backend
+      - loonflow-mcp
+
+  loonflow-backend:
+    image: blackholll/loonflow-backend:r3.2.3@sha256:9a9e87d0aacedfc6a4c30b4f4510d3894827a721104e8881327fedf2010da3b1
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      DB_NAME: loonflow
+      DB_HOST: loonflow-db
+      DB_USER: loonflow
+      DB_PASS: ${DB_PASSWORD}
+      POSTGRES_PORT: "5432"
+      REDIS_HOST: loonflow-redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      JWT_SALT: ${JWT_SALT}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      TENANT_NAME: ${TENANT_NAME}
+      TENANT_DOMAIN: ${TENANT_DOMAIN}
+      ADMIN_NAME: ${ADMIN_NAME}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      DJANGO_SUPERUSER_PASSWORD: ${ADMIN_PASSWORD}
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS}
+      LOONFLOW_DATA_DIR: /app/loonflow_data
+    volumes:
+      - loonflow-data:/app/loonflow_data
+    command:
+      - sh
+      - -c
+      - |
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py createsuperuser --noinput --email "$$ADMIN_EMAIL" --name "$$ADMIN_NAME" || true
+        exec gunicorn --bind 0.0.0.0:8000 --workers "$$GUNICORN_WORKERS" --chdir /app/loonflow --pythonpath /app/loonflow --access-logfile - --error-logfile - --log-level info loonflow.wsgi:application
+    depends_on:
+      loonflow-db:
+        condition: service_healthy
+      loonflow-redis:
+        condition: service_healthy
+
+  loonflow-task:
+    image: blackholll/loonflow-backend:r3.2.3@sha256:9a9e87d0aacedfc6a4c30b4f4510d3894827a721104e8881327fedf2010da3b1
+    restart: unless-stopped
+    environment:
+      DB_NAME: loonflow
+      DB_HOST: loonflow-db
+      DB_USER: loonflow
+      DB_PASS: ${DB_PASSWORD}
+      POSTGRES_PORT: "5432"
+      REDIS_HOST: loonflow-redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      JWT_SALT: ${JWT_SALT}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      CELERY_CONCURRENCY: ${CELERY_CONCURRENCY}
+      LOONFLOW_DATA_DIR: /app/loonflow_data
+    volumes:
+      - loonflow-data:/app/loonflow_data
+    command:
+      - sh
+      - -c
+      - exec celery -A tasks worker -l info -c "$$CELERY_CONCURRENCY" -Q loonflow
+    depends_on:
+      - loonflow-backend
+
+  loonflow-mcp:
+    image: blackholll/loonflow-backend:r3.2.3@sha256:9a9e87d0aacedfc6a4c30b4f4510d3894827a721104e8881327fedf2010da3b1
+    restart: unless-stopped
+    expose:
+      - 8002
+    environment:
+      DB_NAME: loonflow
+      DB_HOST: loonflow-db
+      DB_USER: loonflow
+      DB_PASS: ${DB_PASSWORD}
+      POSTGRES_PORT: "5432"
+      REDIS_HOST: loonflow-redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      JWT_SALT: ${JWT_SALT}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      LOONFLOW_DATA_DIR: /app/loonflow_data
+      LOONFLOW_MCP_HOST: 0.0.0.0
+      LOONFLOW_MCP_PORT: "8002"
+      LOONFLOW_MCP_TRANSPORT: streamable-http
+    volumes:
+      - loonflow-data:/app/loonflow_data
+    command:
+      - python
+      - mcp_ticket_server.py
+    depends_on:
+      - loonflow-backend
+
+  loonflow-db:
+    image: postgres:15.20@sha256:10f9e886f772e9d6484350b043bcf990ead67ae5d9988ddce265d72a299055d5
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: loonflow
+      POSTGRES_USER: loonflow
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U loonflow -d loonflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - loonflow-db:/var/lib/postgresql/data
+
+  loonflow-redis:
+    image: redis:8.10.3@sha256:1f88291b4c57bdf249f02eb085a8669889b2d2954e91d4de5118a5da6b78dd53
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - loonflow-redis:/data
+
+volumes:
+  loonflow-data: {}
+  loonflow-db: {}
+  loonflow-redis: {}

@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Visual workflow and ticketing system with a drag-and-drop process designer, approvals, hooks and an MCP server, backed by PostgreSQL and Redis.",
+  "category": "automation",
+  "developedBy": {
+    "label": "blackholll",
+    "url": "https://github.com/blackholll"
+  },
+  "links": {
+    "github": "https://github.com/blackholll/loonflow",
+    "website": "https://www.loonflow.com/",
+    "docs": [
+      "https://loonflow.readthedocs.io/en/latest/installtion_deployment/installation_guide/deployment_with_docker_compose.html",
+      "https://loonflow.readthedocs.io/en/latest/mcp/index.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the email admin@example.com and the generated ADMIN_PASSWORD from the environment. The admin account is created once on first start, so changing ADMIN_PASSWORD or ADMIN_EMAIL later does not update it."
+    }
+  ]
+}
