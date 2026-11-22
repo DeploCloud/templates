@@ -1,0 +1,65 @@
+services:
+  tracearr:
+    image: ghcr.io/connorgallopo/tracearr:3.2.1@sha256:6bcaf17c012b4fe11b898f343244af19b3c87b7847bdc652897e2c9781465f2c
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      TZ: ${TZ}
+      DATABASE_URL: postgres://tracearr:${DB_PASSWORD}@tracearr-db:5432/tracearr
+      REDIS_URL: redis://tracearr-redis:6379
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      CLAIM_CODE: ${CLAIM_CODE}
+      TRUST_PROXY: ${TRUST_PROXY}
+      LOG_LEVEL: ${LOG_LEVEL}
+    volumes:
+      - tracearr-backups:/data/backup
+      - tracearr-images:/data/tracearr/image-cache
+    depends_on:
+      tracearr-db:
+        condition: service_healthy
+      tracearr-redis:
+        condition: service_healthy
+
+  tracearr-db:
+    image: timescale/timescaledb-ha:pg18.4-ts2.29.1@sha256:26a7598a17939878a388864a8faea56f4b90558163b28cfa0e73600091689c82
+    restart: unless-stopped
+    shm_size: 512mb
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    command: postgres -c timescaledb.license=timescale -c timescaledb.max_tuples_decompressed_per_dml_transaction=100000 -c max_locks_per_transaction=4096 -c timescaledb.telemetry_level=off -c max_connections=150
+    environment:
+      POSTGRES_USER: tracearr
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: tracearr
+    volumes:
+      - tracearr-db:/home/postgres/pgdata/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tracearr -d tracearr"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  tracearr-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - tracearr-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  tracearr-backups: {}
+  tracearr-images: {}
+  tracearr-db: {}
+  tracearr-redis: {}
