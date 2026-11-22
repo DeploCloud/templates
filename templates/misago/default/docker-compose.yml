@@ -1,0 +1,101 @@
+x-misago: &misago
+  image: tetricky/misago-image:v0.39.6@sha256:ad4ea960b63734497c291d3eb387de0734aebc8294945607387dcca911d6a141
+  restart: unless-stopped
+  environment:
+    VIRTUAL_HOST: ${VIRTUAL_HOST}
+    MISAGO_SECRET_KEY: ${MISAGO_SECRET_KEY}
+    MISAGO_DEBUG: "no"
+    MISAGO_LANGUAGE_CODE: ${MISAGO_LANGUAGE_CODE}
+    MISAGO_TIME_ZONE: ${MISAGO_TIME_ZONE}
+    MISAGO_SEARCH_CONFIG: ${MISAGO_SEARCH_CONFIG}
+    MISAGO_DEFAULT_FROM_EMAIL: ${MISAGO_DEFAULT_FROM_EMAIL}
+    MISAGO_EMAIL_PROVIDER: ${MISAGO_EMAIL_PROVIDER}
+    MISAGO_EMAIL_HOST: ${MISAGO_EMAIL_HOST}
+    MISAGO_EMAIL_PORT: ${MISAGO_EMAIL_PORT}
+    MISAGO_EMAIL_USER: ${MISAGO_EMAIL_USER}
+    MISAGO_EMAIL_PASSWORD: ${MISAGO_EMAIL_PASSWORD}
+    MISAGO_EMAIL_USE_TLS: ${MISAGO_EMAIL_USE_TLS}
+    MISAGO_EMAIL_USE_SSL: ${MISAGO_EMAIL_USE_SSL}
+    MISAGO_ADMIN_USERNAME: ${MISAGO_ADMIN_USERNAME}
+    MISAGO_ADMIN_EMAIL: ${MISAGO_ADMIN_EMAIL}
+    MISAGO_ADMIN_PASSWORD: ${MISAGO_ADMIN_PASSWORD}
+    POSTGRES_HOST: misago-db
+    POSTGRES_DB: ${POSTGRES_DB}
+    POSTGRES_USER: ${POSTGRES_USER}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    CACHE_REDIS_URL: redis://misago-redis:6379/1
+    CELERY_BROKER_URL: redis://misago-redis:6379/0
+  volumes:
+    - misago-media:/misago/media
+    - misago-static:/misago/static
+    - misago-logs:/misago/logs
+    - ./settings_override.py:/misago/misagodocker/settings_override.py:ro
+  depends_on:
+    misago-db:
+      condition: service_healthy
+    misago-redis:
+      condition: service_healthy
+
+services:
+  misago:
+    <<: *misago
+    # First start only: load the avatar gallery and create the admin from MISAGO_ADMIN_*
+    command:
+      - bash
+      - -c
+      - >-
+        python manage.py migrate --noinput &&
+        python manage.py collectstatic --noinput &&
+        if [ ! -f media/.initialized ]; then
+        python manage.py loadavatargallery &&
+        python manage.py createsuperuser --noinput --username "$$MISAGO_ADMIN_USERNAME" --email "$$MISAGO_ADMIN_EMAIL" --password "$$MISAGO_ADMIN_PASSWORD" &&
+        touch media/.initialized; fi &&
+        exec uwsgi --chdir /misago --module misagodocker.wsgi --master --die-on-term
+        --processes 2 --offload-threads 1 --http-socket 0.0.0.0:8000 --buffer-size 8192
+        --static-map /static=/misago/static --static-map /media=/misago/media
+        --log-x-forwarded-for --ignore-sigpipe --ignore-write-errors --disable-write-exception
+    expose:
+      - 8000
+
+  misago-celery:
+    <<: *misago
+    command: ["celery", "-A", "misagodocker", "worker", "--concurrency=2", "--loglevel=info"]
+
+  misago-cron:
+    <<: *misago
+    # Daily maintenance from the image's cron script, as upstream schedules it on the host
+    command: ["bash", "-c", "trap 'exit 0' TERM; while true; do sleep 86400 & wait $$!; bash ./cron; done"]
+
+  misago-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - misago-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  misago-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - misago-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  misago-media: {}
+  misago-static: {}
+  misago-logs: {}
+  misago-db: {}
+  misago-redis: {}

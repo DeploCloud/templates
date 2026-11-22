@@ -1,0 +1,37 @@
+[variables]
+secret_key = "${secret:64}"
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+[[config.mounts]]
+filePath = "settings_override.py"
+content = """
+MISAGO_ADDRESS = "https://${domain}/"
+"""
+
+[[config.domains]]
+serviceName = "misago"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+VIRTUAL_HOST = "${domain}"
+MISAGO_SECRET_KEY = "${secret_key}"
+MISAGO_LANGUAGE_CODE = "en-us"
+MISAGO_TIME_ZONE = "UTC"
+MISAGO_SEARCH_CONFIG = "english"
+MISAGO_ADMIN_USERNAME = "admin"
+MISAGO_ADMIN_EMAIL = "admin@example.com"
+MISAGO_ADMIN_PASSWORD = "${admin_password}"
+MISAGO_DEFAULT_FROM_EMAIL = "noreply@${domain}"
+MISAGO_EMAIL_PROVIDER = "console"
+MISAGO_EMAIL_HOST = ""
+MISAGO_EMAIL_PORT = "587"
+MISAGO_EMAIL_USER = ""
+MISAGO_EMAIL_PASSWORD = ""
+MISAGO_EMAIL_USE_TLS = "yes"
+MISAGO_EMAIL_USE_SSL = "no"
+POSTGRES_DB = "misago"
+POSTGRES_USER = "misago"
+POSTGRES_PASSWORD = "${db_password}"
