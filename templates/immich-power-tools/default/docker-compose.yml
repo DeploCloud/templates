@@ -1,0 +1,31 @@
+services:
+  immich-power-tools:
+    image: ghcr.io/immich-power-tools/immich-power-tools:v0.26.0@sha256:a089be108f86d157ac8e078ddf47de2a2564dcb09b3d4bdd8c91f0074f25bef8
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      IMMICH_URL: ${IMMICH_URL}
+      EXTERNAL_IMMICH_URL: ${EXTERNAL_IMMICH_URL}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE_NAME: ${DB_DATABASE_NAME}
+      JWT_SECRET: ${JWT_SECRET}
+      SECURE_COOKIE: ${SECURE_COOKIE}
+      POWER_TOOLS_ENDPOINT_URL: ${POWER_TOOLS_ENDPOINT_URL}
+      AI_API_KEY: ${AI_API_KEY}
+      AI_BASE_URL: ${AI_BASE_URL}
+      AI_MODEL: ${AI_MODEL}
+    volumes:
+      - immich-power-tools-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  immich-power-tools-data:
