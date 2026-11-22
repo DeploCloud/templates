@@ -1,0 +1,70 @@
+services:
+  uptrace:
+    image: uptrace/uptrace:2.1.0@sha256:a8de46695a475c812d195e5dd80a103200c7f0d8ac5107732d13756057783176
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      UPTRACE_SECRET: ${UPTRACE_SECRET}
+      UPTRACE_ADMIN_EMAIL: ${UPTRACE_ADMIN_EMAIL}
+      UPTRACE_ADMIN_PASSWORD: ${UPTRACE_ADMIN_PASSWORD}
+      UPTRACE_USER_TOKEN: ${UPTRACE_USER_TOKEN}
+      UPTRACE_PROJECT_TOKEN: ${UPTRACE_PROJECT_TOKEN}
+      UPTRACE_DB_PASSWORD: ${UPTRACE_DB_PASSWORD}
+      UPTRACE_CLICKHOUSE_PASSWORD: ${UPTRACE_CLICKHOUSE_PASSWORD}
+    volumes:
+      - ./uptrace.yml:/etc/uptrace/config.yml
+    depends_on:
+      uptrace-clickhouse:
+        condition: service_healthy
+      uptrace-db:
+        condition: service_healthy
+      uptrace-redis:
+        condition: service_healthy
+
+  uptrace-clickhouse:
+    image: clickhouse/clickhouse-server:26.3.67.30@sha256:7a02acd2b0ea043f58a81a8e574173e40abc614c125d9630d8ec551792b4f044
+    restart: unless-stopped
+    environment:
+      CLICKHOUSE_DB: uptrace
+      CLICKHOUSE_USER: uptrace
+      CLICKHOUSE_PASSWORD: ${UPTRACE_CLICKHOUSE_PASSWORD}
+    volumes:
+      - uptrace-clickhouse-data:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "localhost:8123/ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
+
+  uptrace-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: uptrace
+      POSTGRES_PASSWORD: ${UPTRACE_DB_PASSWORD}
+      POSTGRES_DB: uptrace
+    volumes:
+      - uptrace-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U uptrace -d uptrace"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  uptrace-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - uptrace-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  uptrace-clickhouse-data: {}
+  uptrace-db-data: {}
+  uptrace-redis-data: {}

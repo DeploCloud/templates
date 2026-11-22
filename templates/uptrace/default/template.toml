@@ -1,0 +1,122 @@
+[config]
+[[config.mounts]]
+filePath = "uptrace.yml"
+content = """
+# Quoted dollar values are expanded by Uptrace from the container environment.
+service:
+  env: hosted
+  secret: "$UPTRACE_SECRET"
+
+site:
+  url: https://${domain}
+
+listen:
+  http:
+    addr: :80
+  grpc:
+    addr: :4317
+
+# The image runs `db seed` on every start, so these values are re-applied.
+seed_data:
+  update: true
+  delete: true
+  users:
+    - key: user1
+      name: Admin
+      email: "$UPTRACE_ADMIN_EMAIL"
+      password: "$UPTRACE_ADMIN_PASSWORD"
+      email_confirmed: true
+  user_tokens:
+    - key: user_token1
+      user_key: user1
+      token: "$UPTRACE_USER_TOKEN"
+  orgs:
+    - key: org1
+      name: Org1
+  org_users:
+    - key: org_user1
+      org_key: org1
+      user_key: user1
+      role: owner
+  projects:
+    - key: project1
+      name: Project1
+      org_key: org1
+  project_tokens:
+    - key: project_token1
+      project_key: project1
+      token: "$UPTRACE_PROJECT_TOKEN"
+  project_users:
+    - key: project_user1
+      project_key: project1
+      org_user_key: org_user1
+      perm_level: admin
+
+ch_cluster:
+  cluster: uptrace1
+  replicated: false
+  distributed: false
+  shards:
+    - replicas:
+        - addr: uptrace-clickhouse:9000
+          database: uptrace
+          user: uptrace
+          password: "$UPTRACE_CLICKHOUSE_PASSWORD"
+          dial_timeout: 3s
+          write_timeout: 5s
+          max_retries: 3
+          max_execution_time: 15s
+
+pg:
+  addr: uptrace-db:5432
+  user: uptrace
+  password: "$UPTRACE_DB_PASSWORD"
+  database: uptrace
+
+ch_schema:
+  compression: ZSTD(1)
+  spans_index: { storage_policy: default }
+  spans_data: { storage_policy: default }
+  span_links: { storage_policy: default }
+  service_graph_edges: { storage_policy: default }
+  logs_index: { storage_policy: default }
+  logs_data: { storage_policy: default }
+  events_index: { storage_policy: default }
+  events_data: { storage_policy: default }
+  timeseries: { storage_policy: default }
+  datapoints: { storage_policy: default }
+
+redis_cache:
+  addrs:
+    1: uptrace-redis:6379
+
+# Set enabled: true and your SMTP server to send alert and invitation emails.
+mailer:
+  smtp:
+    enabled: false
+    host: smtp.example.com
+    port: 587
+    username: ""
+    password: ""
+    from: no-reply@${domain}
+
+self_monitoring:
+  dsn: http://$UPTRACE_PROJECT_TOKEN@localhost:80?grpc=4317
+
+logging:
+  level: INFO
+"""
+
+[[config.domains]]
+serviceName = "uptrace"
+port = 80
+host = "${domain}"
+
+[config.env]
+UPTRACE_SECRET = "${hash:64}"
+UPTRACE_ADMIN_EMAIL = "admin@uptrace.local"
+UPTRACE_ADMIN_PASSWORD = "${password:24}"
+UPTRACE_USER_TOKEN = "${hash:32}"
+UPTRACE_PROJECT_TOKEN = "${hash:32}"
+UPTRACE_DB_PASSWORD = "${password:32}"
+UPTRACE_CLICKHOUSE_PASSWORD = "${password:32}"
