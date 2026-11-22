@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative web genealogy app built on Gramps, with a Celery worker, Valkey queue and persistent tree, media and user storage.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Gramps Project",
+    "url": "https://github.com/gramps-project"
+  },
+  "links": {
+    "github": "https://github.com/gramps-project/gramps-web",
+    "website": "https://www.grampsweb.org",
+    "docs": [
+      "https://www.grampsweb.org/install_setup/deployment/",
+      "https://www.grampsweb.org/install_setup/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor runs the first-run wizard and creates the owner (admin) account.",
+      "link": "https://www.grampsweb.org/install_setup/deployment/"
+    }
+  ]
+}
