@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "maloja"
+port = 42_010
+host = "${domain}"
+
+[config.env]
+MALOJA_HOST = "0.0.0.0"
+MALOJA_FORCE_PASSWORD = "${admin_password}"
+MALOJA_NAME = "Maloja"
