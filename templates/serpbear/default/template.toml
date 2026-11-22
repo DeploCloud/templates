@@ -1,0 +1,20 @@
+[variables]
+admin_password = "${password:24}"
+app_secret = "${hash:64}"
+api_key = "${password:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "serpbear"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+USER_NAME = "admin"
+PASSWORD = "${admin_password}"
+SECRET = "${app_secret}"
+APIKEY = "${api_key}"
+SESSION_DURATION = "24"
+NEXT_PUBLIC_APP_URL = "https://${domain}"
