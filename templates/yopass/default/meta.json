@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "End-to-end encrypted sharing of passwords, secrets and small files through one-time, self-expiring links, backed by Memcached.",
+  "category": "security",
+  "developedBy": {
+    "label": "Johan Haals",
+    "url": "https://github.com/jhaals"
+  },
+  "links": {
+    "github": "https://github.com/jhaals/yopass",
+    "website": "https://yopass.se",
+    "docs": [
+      "https://yopass.se/docs/quickstart",
+      "https://yopass.se/docs/server-options",
+      "https://yopass.se/docs/file-storage"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "Secrets live only in Memcached memory, so every unread secret is lost when the stack restarts. Use the Redis variant to keep them across restarts.",
+      "link": "https://yopass.se/docs/server-options"
+    }
+  ]
+}

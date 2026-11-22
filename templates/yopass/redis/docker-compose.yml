@@ -1,0 +1,33 @@
+services:
+  yopass:
+    image: jhaals/yopass:16.2.0@sha256:6e245cd019198164117a77a01b8c5e0437b639e261fa6cacd0c54d5ea732cd53
+    restart: unless-stopped
+    expose:
+      - 1337
+    environment:
+      DATABASE: redis
+      REDIS: redis://yopass-redis:6379/0
+    healthcheck:
+      test: ["CMD", "/yopass-server", "--health-check"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      yopass-redis:
+        condition: service_healthy
+
+  yopass-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - yopass-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  yopass-redis: {}
