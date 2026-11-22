@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Stream video torrents in the browser from magnet links or torrent files, with optional Prowlarr or Jackett search and SOCKS5 proxy support.",
+  "category": "media",
+  "developedBy": {
+    "label": "aculix",
+    "url": "https://github.com/aculix"
+  },
+  "links": {
+    "github": "https://github.com/aculix/bitplay",
+    "docs": [
+      "https://github.com/aculix/bitplay#configuration",
+      "https://github.com/aculix/bitplay#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The whole app is protected by HTTP basic auth. Sign in as admin with the generated BITPLAY_AUTH_PASSWORD from the environment variables."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+services:
+  bitplay:
+    image: ghcr.io/aculix/bitplay:1.1.0@sha256:2d594c77969ebd86361f8032f2b3cc7cc7d5924ed3da8ebc68e168f9493f963d
+    restart: unless-stopped
+    expose:
+      - 3347
+    environment:
+      BITPLAY_AUTH_USERNAME: ${BITPLAY_AUTH_USERNAME}
+      BITPLAY_AUTH_PASSWORD: ${BITPLAY_AUTH_PASSWORD}
+    volumes:
+      - bitplay-config:/app/config
+      - bitplay-torrent-data:/app/torrent-data
+
+volumes:
+  bitplay-config: {}
+  bitplay-torrent-data: {}
