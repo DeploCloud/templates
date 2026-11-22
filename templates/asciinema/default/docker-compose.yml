@@ -1,0 +1,39 @@
+services:
+  asciinema:
+    image: ghcr.io/asciinema/asciinema-server:20260626@sha256:0474b2186be46b23f5e16dbd4319727dbb68f27a303705fbe632821bf524b313
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      DATABASE_URL: postgresql://asciinema:${DB_PASSWORD}@asciinema-db:5432/asciinema
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      URL_HOST: ${URL_HOST}
+      URL_SCHEME: ${URL_SCHEME}
+      ADMIN_PANEL_ON_MAIN_ENDPOINT: ${ADMIN_PANEL_ON_MAIN_ENDPOINT}
+      SIGN_UP_DISABLED: ${SIGN_UP_DISABLED}
+      UPLOAD_AUTH_REQUIRED: ${UPLOAD_AUTH_REQUIRED}
+      ADMIN_BIND_ALL: ${ADMIN_BIND_ALL}
+    volumes:
+      - asciinema-data:/var/lib/asciinema
+    depends_on:
+      asciinema-db:
+        condition: service_healthy
+
+  asciinema-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: asciinema
+      POSTGRES_USER: asciinema
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U asciinema -d asciinema"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - asciinema-db:/var/lib/postgresql/data
+
+volumes:
+  asciinema-data: {}
+  asciinema-db: {}

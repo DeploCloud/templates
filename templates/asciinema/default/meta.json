@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted platform for uploading, sharing, embedding and live streaming terminal session recordings made with the asciinema CLI.",
+  "category": "development",
+  "developedBy": {
+    "label": "asciinema",
+    "url": "https://github.com/asciinema"
+  },
+  "links": {
+    "github": "https://github.com/asciinema/asciinema-server",
+    "website": "https://asciinema.org",
+    "docs": [
+      "https://docs.asciinema.org/manual/server/self-hosting/quick-start/",
+      "https://docs.asciinema.org/manual/server/self-hosting/configuration/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Login is passwordless via an emailed link. Without SMTP configured (add SMTP_HOST, SMTP_USERNAME and SMTP_PASSWORD to the asciinema service), the link is printed to the asciinema service logs on a line containing \"url from email\". The first account to sign up becomes the admin; set SIGN_UP_DISABLED to true afterwards to close registration.",
+      "link": "https://docs.asciinema.org/manual/server/self-hosting/configuration/"
+    }
+  ]
+}
