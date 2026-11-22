@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted comment system for blogs and websites with an embeddable widget, admin dashboard and SQLite storage.",
+  "category": "communication",
+  "developedBy": {
+    "label": "ArtalkJS",
+    "url": "https://github.com/ArtalkJS"
+  },
+  "links": {
+    "github": "https://github.com/ArtalkJS/Artalk",
+    "website": "https://artalk.js.org",
+    "docs": [
+      "https://artalk.js.org/en/guide/deploy.html",
+      "https://artalk.js.org/en/guide/env.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the dashboard with ADMIN_EMAIL and ADMIN_PASSWORD. This admin account is re-applied on every start, so set ADMIN_EMAIL to your real address before the first start (changing it later adds a second admin). Add the URL of each website that embeds the widget as a site in the dashboard (or ATK_SITE_URL) so its requests are accepted.",
+      "link": "https://artalk.js.org/en/guide/env.html"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+services:
+  artalk:
+    image: artalk/artalk-go:2.10.1@sha256:5616037f7b273b65cb583bedba1d7b5ec7c313828403daccf5849c36f70bf52c
+    restart: unless-stopped
+    expose:
+      - 23366
+    volumes:
+      - artalk-data:/data
+    environment:
+      TZ: ${TIMEZONE}
+      ATK_TIMEZONE: ${TIMEZONE}
+      ATK_LOCALE: ${ATK_LOCALE}
+      ATK_APP_KEY: ${ATK_APP_KEY}
+      ATK_SITE_DEFAULT: ${ATK_SITE_DEFAULT}
+      ATK_SITE_URL: ${ATK_SITE_URL}
+      ATK_HTTP_PROXY_HEADER: X-Forwarded-For
+      ATK_AUTH_CALLBACK: ${ATK_AUTH_CALLBACK}
+      ATK_ADMIN_USERS_0_NAME: ${ADMIN_NAME}
+      ATK_ADMIN_USERS_0_EMAIL: ${ADMIN_EMAIL}
+      ATK_ADMIN_USERS_0_PASSWORD: ${ADMIN_PASSWORD}
+volumes:
+  artalk-data: {}
