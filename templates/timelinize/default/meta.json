@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal archive that organizes photos, messages, location history, social media and contacts into one searchable timeline.",
+  "category": "media",
+  "developedBy": {
+    "label": "Timelinize",
+    "url": "https://github.com/timelinize"
+  },
+  "links": {
+    "github": "https://github.com/timelinize/timelinize",
+    "website": "https://timelinize.com",
+    "docs": [
+      "https://timelinize.com/docs/install",
+      "https://timelinize.com/docs/data-preparation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Timelinize has no login of its own, so the template puts it behind HTTP basic auth: sign in with TIMELINIZE_USERNAME and TIMELINIZE_PASSWORD from the environment variables."
+    },
+    {
+      "type": "warning",
+      "message": "On first visit, create the timeline in /repo so it is stored on the persistent volume. The import file picker only sees the container filesystem, so copy your data exports into that volume before importing."
+    },
+    {
+      "type": "info",
+      "message": "Timelinize is pre-release software and its schema can change between versions. Keep your original data exports so you can rebuild the timeline after an upgrade.",
+      "link": "https://github.com/timelinize/timelinize#how-it-works"
+    }
+  ]
+}

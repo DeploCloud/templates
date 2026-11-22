@@ -1,0 +1,44 @@
+services:
+  timelinize:
+    image: ghcr.io/timelinize/timelinize:v0.0.28@sha256:cd004f5a9bb1610f14da893ecf114fda597202c78241a1abec61eeec7d861992
+    restart: unless-stopped
+    expose:
+      - 12002
+    environment:
+      TLZ_ORIGIN: ${TLZ_ORIGIN}
+    volumes:
+      - timelinize-repo:/repo
+      - timelinize-config:/app/.config/timelinize
+      - timelinize-cache:/app/.cache
+      - timelinize-local:/app/.local
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:12002/"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # the app has no login, so this gate adds basic auth; it also upgrades the
+  # v0.0.28 frontend's hardcoded ws:// log socket to wss://
+  timelinize-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TIMELINIZE_USERNAME: ${TIMELINIZE_USERNAME}
+      TIMELINIZE_PASSWORD: ${TIMELINIZE_PASSWORD}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - export TIMELINIZE_PASSWORD_HASH="$$(caddy hash-password --plaintext "$$TIMELINIZE_PASSWORD")" && exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      timelinize:
+        condition: service_healthy
+
+volumes:
+  timelinize-repo: {}
+  timelinize-config: {}
+  timelinize-cache: {}
+  timelinize-local: {}
