@@ -1,0 +1,24 @@
+{
+  "name": "MariaDB",
+  "shortDescription": "Part-DB electronic component inventory backed by a bundled MariaDB server, suited to larger databases and multi-user instances.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Part-DB",
+    "url": "https://github.com/Part-DB"
+  },
+  "links": {
+    "github": "https://github.com/Part-DB/Part-DB-server",
+    "website": "https://docs.part-db.de/",
+    "docs": [
+      "https://docs.part-db.de/installation/installation_docker.html",
+      "https://docs.part-db.de/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the password from the INITIAL_ADMIN_PW environment variable and change it after the first login. Set the base currency in the system settings before entering prices, it cannot be changed later.",
+      "link": "https://docs.part-db.de/installation/installation_docker.html"
+    }
+  ]
+}

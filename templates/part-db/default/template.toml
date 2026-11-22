@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:16}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "part-db"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_SECRET = "${hash:64}"
+DATABASE_URL = "sqlite:///%kernel.project_dir%/var/db/app.db"
+INITIAL_ADMIN_PW = "${admin_password}"
+DEFAULT_URI = "https://${domain}/"
+TRUSTED_PROXIES = "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
