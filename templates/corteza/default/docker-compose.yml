@@ -1,0 +1,46 @@
+services:
+  corteza:
+    image: cortezaproject/corteza:2026.9.0@sha256:46773468bac01f3da7631f222c594a6fa66e5d28b8c467bacf9ff236e35458f9
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DOMAIN: ${DOMAIN}
+      DOMAIN_WEBAPP: ${DOMAIN}
+      HTTP_SSL_TERMINATED: ${HTTP_SSL_TERMINATED}
+      HTTP_WEBAPP_ENABLED: ${HTTP_WEBAPP_ENABLED}
+      DB_DSN: ${DB_DSN}
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET}
+      AUTH_EXTERNAL_COOKIE_SECRET: ${AUTH_EXTERNAL_COOKIE_SECRET}
+      AUTH_CSRF_SECRET: ${AUTH_CSRF_SECRET}
+    volumes:
+      - corteza-data:/data
+    # the image's own /healthcheck fails while SMTP is unset, so probe /version instead
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail http://127.0.0.1:80/version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      corteza-db:
+        condition: service_healthy
+
+  corteza-db:
+    image: postgres:15.20@sha256:10f9e886f772e9d6484350b043bcf990ead67ae5d9988ddce265d72a299055d5
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: corteza
+      POSTGRES_DB: corteza
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - corteza-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U corteza -d corteza"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  corteza-data: {}
+  corteza-db: {}

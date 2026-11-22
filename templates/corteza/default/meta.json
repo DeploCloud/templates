@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source low-code platform for building CRM, case management and business apps, with workflows, reporting and a REST API, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Corteza Project",
+    "url": "https://github.com/cortezaproject"
+  },
+  "links": {
+    "github": "https://github.com/cortezaproject/corteza",
+    "website": "https://cortezaproject.org",
+    "docs": [
+      "https://docs.cortezaproject.org/corteza-docs/2026.9/devops-guide/index.html",
+      "https://docs.cortezaproject.org/corteza-docs/2026.9/devops-guide/references/configuration/server.html",
+      "https://docs.cortezaproject.org/corteza-docs/2026.9/devops-guide/examples/deploy-online/multi-pgsql.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created through the sign-up form becomes the administrator. Sign up right after deployment. Without SMTP configured, every sign-up is confirmed automatically.",
+      "link": "https://docs.cortezaproject.org/corteza-docs/2026.9/devops-guide/index.html"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
