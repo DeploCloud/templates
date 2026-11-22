@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "birdnet-go"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+BIRDNET_URL = "https://${domain}"
