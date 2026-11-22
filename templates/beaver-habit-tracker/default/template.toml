@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "beaverhabits"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+HABITS_STORAGE = "DATABASE"
+JWT_SECRET = "${secret:64}"
+NICEGUI_STORAGE_SECRET = "${secret:64}"
+MAX_USER_COUNT = "1"
+FIRST_DAY_OF_WEEK = "0"
