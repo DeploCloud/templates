@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source feature flag and experimentation platform with a web portal, management API and evaluation server for SDKs, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "FeatBit",
+    "url": "https://www.featbit.co/"
+  },
+  "links": {
+    "github": "https://github.com/featbit/featbit",
+    "website": "https://www.featbit.co/",
+    "docs": [
+      "https://docs.featbit.co/installation/docker-compose",
+      "https://docs.featbit.co/installation/faq"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the seeded account test@featbit.com and password 123456, then change the password right away.",
+      "link": "https://docs.featbit.co/installation/docker-compose"
+    }
+  ]
+}

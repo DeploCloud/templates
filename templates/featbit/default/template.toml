@@ -1,0 +1,1933 @@
+[variables]
+db_password = "${hash:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "featbit-ui"
+port = 80
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "featbit-api"
+port = 5_000
+host = "${domain}"
+path = "/api"
+
+[[config.domains]]
+serviceName = "featbit-api"
+port = 5_000
+host = "${domain}"
+path = "/mcp"
+
+[[config.domains]]
+serviceName = "featbit-evaluation"
+port = 5_100
+host = "${domain}"
+path = "/api/public"
+
+[[config.domains]]
+serviceName = "featbit-evaluation"
+port = 5_100
+host = "${domain}"
+path = "/streaming"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+JWT_KEY = "${hash:64}"
+
+[[config.mounts]]
+filePath = "initdb/v0.0.0.sql"
+content = """
+-- 1. create tables
+
+
+CREATE TABLE access_tokens
+(
+    id              uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    name            character varying(128)   NOT NULL,
+    type            character varying(64)    NOT NULL,
+    status          character varying(64)    NOT NULL,
+    token           text                     NOT NULL,
+    creator_id      uuid                     NOT NULL,
+    permissions     jsonb,
+    last_used_at    timestamp with time zone,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_access_tokens PRIMARY KEY (id)
+);
+
+
+CREATE TABLE audit_logs
+(
+    id          uuid                     NOT NULL,
+    env_id      uuid                     NOT NULL,
+    ref_id      text                     NOT NULL,
+    ref_type    character varying(64)    NOT NULL,
+    keyword     character varying(128)   NOT NULL,
+    operation   character varying(64)    NOT NULL,
+    data_change jsonb,
+    comment     character varying(512),
+    creator_id  uuid                     NOT NULL,
+    created_at  timestamp with time zone NOT NULL,
+    CONSTRAINT pk_audit_logs PRIMARY KEY (id)
+);
+
+
+CREATE TABLE end_user_properties
+(
+    id                     uuid                     NOT NULL,
+    env_id                 uuid                     NOT NULL,
+    name                   character varying(128)   NOT NULL,
+    preset_values          jsonb,
+    use_preset_values_only boolean                  NOT NULL,
+    is_built_in            boolean                  NOT NULL,
+    is_digest_field        boolean                  NOT NULL,
+    remark                 text,
+    created_at             timestamp with time zone NOT NULL,
+    updated_at             timestamp with time zone NOT NULL,
+    CONSTRAINT pk_end_user_properties PRIMARY KEY (id)
+);
+
+
+CREATE TABLE end_users
+(
+    id                    uuid                     NOT NULL,
+    workspace_id          uuid,
+    env_id                uuid,
+    key_id                character varying(512)   NOT NULL,
+    name                  character varying(256)   NOT NULL,
+    customized_properties jsonb,
+    created_at            timestamp with time zone NOT NULL,
+    updated_at            timestamp with time zone NOT NULL,
+    CONSTRAINT pk_end_users PRIMARY KEY (id)
+);
+
+
+CREATE TABLE environments
+(
+    id          uuid                     NOT NULL,
+    project_id  uuid                     NOT NULL,
+    name        character varying(128)   NOT NULL,
+    key         character varying(128)   NOT NULL,
+    description text,
+    secrets     jsonb,
+    settings    jsonb,
+    created_at  timestamp with time zone NOT NULL,
+    updated_at  timestamp with time zone NOT NULL,
+    CONSTRAINT pk_environments PRIMARY KEY (id)
+);
+
+
+CREATE TABLE experiment_metrics
+(
+    id                            uuid                     NOT NULL,
+    env_id                        uuid                     NOT NULL,
+    name                          character varying(128)   NOT NULL,
+    description                   text,
+    maintainer_user_id            uuid                     NOT NULL,
+    event_name                    character varying(128)   NOT NULL,
+    event_type                    integer                  NOT NULL,
+    custom_event_track_option     integer                  NOT NULL,
+    custom_event_unit             character varying(128),
+    custom_event_success_criteria integer                  NOT NULL,
+    element_targets               text,
+    target_urls                   jsonb,
+    is_arvhived                   boolean                  NOT NULL,
+    created_at                    timestamp with time zone NOT NULL,
+    updated_at                    timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_metrics PRIMARY KEY (id)
+);
+
+
+CREATE TABLE experiments
+(
+    id                    uuid                     NOT NULL,
+    env_id                uuid                     NOT NULL,
+    metric_id             uuid                     NOT NULL,
+    feature_flag_id       uuid                     NOT NULL,
+    is_archived           boolean                  NOT NULL,
+    status                character varying(64)    NOT NULL,
+    baseline_variation_id text,
+    iterations            jsonb,
+    alpha                 double precision,
+    created_at            timestamp with time zone NOT NULL,
+    updated_at            timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiments PRIMARY KEY (id)
+);
+
+
+CREATE TABLE feature_flags
+(
+    id                       uuid                     NOT NULL,
+    env_id                   uuid                     NOT NULL,
+    revision                 uuid                     NOT NULL,
+    name                     character varying(128)   NOT NULL,
+    description              text,
+    key                      character varying(128)   NOT NULL,
+    variation_type           character varying(64)    NOT NULL,
+    variations               jsonb,
+    target_users             jsonb,
+    rules                    jsonb,
+    is_enabled               boolean                  NOT NULL,
+    disabled_variation_id    character varying(128)   NOT NULL,
+    fallthrough              jsonb,
+    expt_include_all_targets boolean                  NOT NULL,
+    tags                     text[],
+    is_archived              boolean                  NOT NULL,
+    created_at               timestamp with time zone NOT NULL,
+    updated_at               timestamp with time zone NOT NULL,
+    creator_id               uuid                     NOT NULL,
+    updator_id               uuid                     NOT NULL,
+    CONSTRAINT pk_feature_flags PRIMARY KEY (id)
+);
+
+
+CREATE TABLE flag_change_requests
+(
+    id            uuid                     NOT NULL,
+    org_id        uuid                     NOT NULL,
+    env_id        uuid                     NOT NULL,
+    flag_draft_id uuid                     NOT NULL,
+    flag_id       uuid                     NOT NULL,
+    status        character varying(64)    NOT NULL,
+    reason        character varying(512),
+    reviewers     jsonb,
+    schedule_id   uuid,
+    created_at    timestamp with time zone NOT NULL,
+    updated_at    timestamp with time zone NOT NULL,
+    creator_id    uuid                     NOT NULL,
+    updator_id    uuid                     NOT NULL,
+    CONSTRAINT pk_flag_change_requests PRIMARY KEY (id)
+);
+
+
+CREATE TABLE flag_drafts
+(
+    id          uuid                     NOT NULL,
+    env_id      uuid                     NOT NULL,
+    flag_id     uuid                     NOT NULL,
+    status      character varying(64)    NOT NULL,
+    comment     character varying(512),
+    data_change jsonb,
+    created_at  timestamp with time zone NOT NULL,
+    updated_at  timestamp with time zone NOT NULL,
+    creator_id  uuid                     NOT NULL,
+    updator_id  uuid                     NOT NULL,
+    CONSTRAINT pk_flag_drafts PRIMARY KEY (id)
+);
+
+
+CREATE TABLE flag_revisions
+(
+    id      uuid NOT NULL,
+    flag    jsonb,
+    comment character varying(512),
+    CONSTRAINT pk_flag_revisions PRIMARY KEY (id)
+);
+
+
+CREATE TABLE flag_schedules
+(
+    id                uuid                     NOT NULL,
+    org_id            uuid                     NOT NULL,
+    env_id            uuid                     NOT NULL,
+    flag_draft_id     uuid                     NOT NULL,
+    flag_id           uuid                     NOT NULL,
+    status            character varying(64)    NOT NULL,
+    title             character varying(128)   NOT NULL,
+    scheduled_time    timestamp with time zone NOT NULL,
+    change_request_id uuid,
+    created_at        timestamp with time zone NOT NULL,
+    updated_at        timestamp with time zone NOT NULL,
+    creator_id        uuid                     NOT NULL,
+    updator_id        uuid                     NOT NULL,
+    CONSTRAINT pk_flag_schedules PRIMARY KEY (id)
+);
+
+
+CREATE TABLE group_members
+(
+    id              uuid                     NOT NULL,
+    group_id        uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    member_id       uuid                     NOT NULL,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_group_members PRIMARY KEY (id)
+);
+
+
+CREATE TABLE group_policies
+(
+    id         uuid                     NOT NULL,
+    group_id   uuid                     NOT NULL,
+    policy_id  uuid                     NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT pk_group_policies PRIMARY KEY (id)
+);
+
+
+CREATE TABLE groups
+(
+    id              uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    name            character varying(128)   NOT NULL,
+    description     text,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_groups PRIMARY KEY (id)
+);
+
+
+CREATE TABLE member_policies
+(
+    id              uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    member_id       uuid                     NOT NULL,
+    policy_id       uuid                     NOT NULL,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_member_policies PRIMARY KEY (id)
+);
+
+
+CREATE TABLE organization_users
+(
+    id               uuid                     NOT NULL,
+    organization_id  uuid                     NOT NULL,
+    user_id          uuid                     NOT NULL,
+    invitor_id       uuid,
+    initial_password text,
+    created_at       timestamp with time zone NOT NULL,
+    updated_at       timestamp with time zone NOT NULL,
+    CONSTRAINT pk_organization_users PRIMARY KEY (id)
+);
+
+
+CREATE TABLE organizations
+(
+    id                  uuid                     NOT NULL,
+    workspace_id        uuid                     NOT NULL,
+    name                character varying(128)   NOT NULL,
+    key                 character varying(128)   NOT NULL,
+    initialized         boolean                  NOT NULL DEFAULT FALSE,
+    license             text,
+    default_permissions jsonb                    NOT NULL,
+    created_at          timestamp with time zone NOT NULL,
+    updated_at          timestamp with time zone NOT NULL,
+    CONSTRAINT pk_organizations PRIMARY KEY (id)
+);
+
+
+CREATE TABLE policies
+(
+    id              uuid                     NOT NULL,
+    organization_id uuid,
+    name            character varying(128)   NOT NULL,
+    description     character varying(512),
+    type            character varying(64)    NOT NULL,
+    statements      jsonb,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_policies PRIMARY KEY (id)
+);
+
+
+CREATE TABLE projects
+(
+    id              uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    name            character varying(128)   NOT NULL,
+    key             character varying(128)   NOT NULL,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_projects PRIMARY KEY (id)
+);
+
+
+CREATE TABLE queue_messages
+(
+    id                bigint GENERATED ALWAYS AS IDENTITY,
+    topic             character varying(128)   NOT NULL,
+    status            character varying(64)    NOT NULL DEFAULT 'Pending',
+    enqueued_at       timestamp with time zone NOT NULL DEFAULT (now()),
+    not_visible_until timestamp with time zone,
+    last_deliver_at   timestamp with time zone,
+    last_handled_at   timestamp with time zone,
+    deliver_count     integer                  NOT NULL DEFAULT 0,
+    payload           text,
+    error             text,
+    CONSTRAINT pk_queue_messages PRIMARY KEY (id)
+);
+
+
+CREATE TABLE relay_proxies
+(
+    id              uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    name            character varying(128)   NOT NULL,
+    key             character varying(128)   NOT NULL,
+    description     character varying(512),
+    is_all_envs     boolean                  NOT NULL,
+    scopes          jsonb,
+    agents          jsonb,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_relay_proxies PRIMARY KEY (id)
+);
+
+
+CREATE TABLE segments
+(
+    id           uuid                     NOT NULL,
+    workspace_id uuid                     NOT NULL,
+    env_id       uuid                     NOT NULL,
+    name         character varying(128)   NOT NULL,
+    type         character varying(64)    NOT NULL,
+    scopes       text[],
+    description  character varying(512),
+    included     text[],
+    excluded     text[],
+    rules        jsonb,
+    is_archived  boolean                  NOT NULL,
+    created_at   timestamp with time zone NOT NULL,
+    updated_at   timestamp with time zone NOT NULL,
+    CONSTRAINT pk_segments PRIMARY KEY (id)
+);
+
+
+CREATE TABLE triggers
+(
+    id                uuid                     NOT NULL,
+    target_id         uuid                     NOT NULL,
+    type              character varying(64)    NOT NULL,
+    action            character varying(64)    NOT NULL,
+    token             character varying(128)   NOT NULL,
+    description       text                     NOT NULL,
+    is_enabled        boolean                  NOT NULL,
+    triggered_times   integer                  NOT NULL,
+    last_triggered_at timestamp with time zone,
+    created_at        timestamp with time zone NOT NULL,
+    updated_at        timestamp with time zone NOT NULL,
+    CONSTRAINT pk_triggers PRIMARY KEY (id)
+);
+
+
+CREATE TABLE users
+(
+    id           uuid                     NOT NULL,
+    workspace_id uuid                     NOT NULL,
+    name         character varying(128)   NOT NULL,
+    email        character varying(256)   NOT NULL,
+    password     text                     NOT NULL,
+    origin       character varying(64),
+    created_at   timestamp with time zone NOT NULL,
+    updated_at   timestamp with time zone NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (id)
+);
+
+
+CREATE TABLE webhook_deliveries
+(
+    id         uuid                     NOT NULL,
+    webhook_id uuid                     NOT NULL,
+    success    boolean                  NOT NULL,
+    events     text,
+    request    jsonb,
+    response   jsonb,
+    error      jsonb,
+    started_at timestamp with time zone NOT NULL,
+    ended_at   timestamp with time zone NOT NULL,
+    CONSTRAINT pk_webhook_deliveries PRIMARY KEY (id)
+);
+
+
+CREATE TABLE webhooks
+(
+    id                     uuid                     NOT NULL,
+    org_id                 uuid                     NOT NULL,
+    name                   character varying(128)   NOT NULL,
+    url                    text                     NOT NULL,
+    scopes                 text[],
+    events                 text[],
+    headers                jsonb,
+    payload_template_type  character varying(64),
+    payload_template       text,
+    secret                 text,
+    is_active              boolean                  NOT NULL,
+    prevent_empty_payloads boolean                  NOT NULL,
+    last_delivery          jsonb,
+    created_at             timestamp with time zone NOT NULL,
+    updated_at             timestamp with time zone NOT NULL,
+    creator_id             uuid                     NOT NULL,
+    updator_id             uuid                     NOT NULL,
+    CONSTRAINT pk_webhooks PRIMARY KEY (id)
+);
+
+
+CREATE TABLE workspaces
+(
+    id         uuid                     NOT NULL,
+    name       character varying(128)   NOT NULL,
+    key        character varying(128)   NOT NULL,
+    license    text,
+    sso        jsonb,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT pk_workspaces PRIMARY KEY (id)
+);
+
+
+CREATE INDEX ix_access_tokens_organization_id ON access_tokens (organization_id);
+
+
+CREATE INDEX ix_audit_logs_env_id_ref_id_created_at ON audit_logs (env_id, ref_id, created_at);
+
+
+CREATE UNIQUE INDEX ix_end_users_env_id_key_id ON end_users (env_id, key_id);
+
+
+CREATE INDEX ix_end_users_updated_at ON end_users (updated_at);
+
+
+CREATE INDEX ix_end_users_workspace_id ON end_users (workspace_id);
+
+
+CREATE INDEX ix_environments_project_id ON environments (project_id);
+
+
+CREATE INDEX ix_experiment_metrics_env_id ON experiment_metrics (env_id);
+
+
+CREATE INDEX ix_experiments_env_id_feature_flag_id ON experiments (env_id, feature_flag_id);
+
+
+CREATE INDEX ix_feature_flags_env_id_updated_at ON feature_flags (env_id, updated_at);
+
+
+CREATE INDEX ix_flag_change_requests_flag_id ON flag_change_requests (flag_id);
+
+
+CREATE INDEX ix_flag_schedules_flag_id ON flag_schedules (flag_id);
+
+
+CREATE INDEX ix_group_members_organization_id_group_id_member_id ON group_members (organization_id, group_id, member_id);
+
+
+CREATE INDEX ix_group_policies_group_id_policy_id ON group_policies (group_id, policy_id);
+
+
+CREATE INDEX ix_groups_organization_id ON groups (organization_id);
+
+
+CREATE INDEX ix_member_policies_organization_id_member_id_policy_id ON member_policies (organization_id, member_id, policy_id);
+
+
+CREATE INDEX ix_organization_users_organization_id_user_id ON organization_users (organization_id, user_id);
+
+
+CREATE INDEX ix_organizations_workspace_id ON organizations (workspace_id);
+
+
+CREATE INDEX ix_policies_organization_id ON policies (organization_id);
+
+
+CREATE INDEX ix_projects_organization_id ON projects (organization_id);
+
+
+CREATE INDEX ix_queue_messages_not_visible_until_topic_status ON queue_messages (not_visible_until, topic, status);
+
+
+CREATE INDEX ix_relay_proxies_organization_id ON relay_proxies (organization_id);
+
+
+CREATE INDEX ix_segments_workspace_id_updated_at ON segments (workspace_id, updated_at);
+
+
+CREATE INDEX ix_triggers_target_id ON triggers (target_id);
+
+
+CREATE UNIQUE INDEX ix_users_workspace_id_email ON users (workspace_id, email);
+
+
+CREATE INDEX ix_webhook_deliveries_webhook_id_started_at ON webhook_deliveries (webhook_id, started_at);
+
+
+CREATE INDEX ix_webhooks_org_id_created_at ON webhooks (org_id, created_at);
+
+-- 2. seed data
+
+DO
+$$
+    DECLARE
+        workspace_id            UUID := gen_random_uuid();
+        user_id                 UUID := gen_random_uuid();
+        organization_id         UUID := gen_random_uuid();
+        -- Built-in policies
+        owner_policy_id         UUID := '98881f6a-5c6c-4277-bcf7-fda94c538785';
+        administrator_policy_id UUID := '3e961f0f-6fd4-4cf4-910f-52d356f8cc08';
+        developer_policy_id     UUID := '66f3687f-939d-4257-bd3f-c3553d39e1b6';
+    BEGIN
+        -- truncate tables
+        TRUNCATE TABLE workspaces CASCADE;
+        TRUNCATE TABLE users CASCADE;
+        TRUNCATE TABLE organizations CASCADE;
+        TRUNCATE TABLE organization_users CASCADE;
+        TRUNCATE TABLE policies CASCADE;
+        TRUNCATE TABLE member_policies CASCADE;
+
+-- seed workspace
+        INSERT INTO workspaces (id, name, key, sso, license, created_at, updated_at)
+        VALUES (workspace_id, 'Default Workspace', 'default-workspace', NULL, NULL, CURRENT_TIMESTAMP,
+                CURRENT_TIMESTAMP);
+
+-- seed user
+        INSERT INTO users (id, email, password, name, origin, workspace_id, created_at, updated_at)
+        VALUES (user_id, 'test@featbit.com',
+                'AQAAAAEAACcQAAAAELDHEjCrDQrmnAXU5C//mOLvUBJ7lnVFEMMFxNMDIIrF7xK8JDQKUifU3HH4gexNAQ==',
+                'tester', 'Local', workspace_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- seed organization
+        INSERT INTO organizations (id, workspace_id, name, key, initialized, default_permissions, created_at,
+                                   updated_at)
+        VALUES (organization_id, workspace_id, 'playground', 'playground', false,
+                jsonb_build_object('policyIds', jsonb_build_array(developer_policy_id), 'groupIds',
+                                   jsonb_build_array()),
+                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- seed organization users
+        INSERT INTO organization_users (id, organization_id, user_id, invitor_id, initial_password, created_at,
+                                        updated_at)
+        VALUES (gen_random_uuid(), organization_id, user_id, NULL, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- seed system managed policies
+        INSERT INTO policies (id, organization_id, name, description, type, statements, created_at, updated_at)
+        VALUES (owner_policy_id, NULL, 'Owner',
+                'Contains all permissions. This policy is granted to the user who created the organization',
+                'SysManaged',
+                jsonb_build_array(
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', '*',
+                                'effect', 'allow',
+                                'actions', ARRAY ['*'],
+                                'resources', ARRAY ['*']
+                        )
+                ),
+                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+               (administrator_policy_id, NULL, 'Administrator',
+                'Contains all the permissions required by an administrator',
+                'SysManaged',
+                jsonb_build_array(
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'organization',
+                                'effect', 'allow',
+                                'actions', ARRAY ['UpdateOrgName'],
+                                'resources', ARRAY ['organization/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'organization',
+                                'effect', 'allow',
+                                'actions', ARRAY ['UpdateOrgDefaultUserPermissions'],
+                                'resources', ARRAY ['organization/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'iam',
+                                'effect', 'allow',
+                                'actions', ARRAY ['CanManageIAM'],
+                                'resources', ARRAY ['iam/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'access-token',
+                                'effect', 'allow',
+                                'actions',
+                                ARRAY ['ManageServiceAccessTokens', 'ManagePersonalAccessTokens', 'ListAccessTokens'],
+                                'resources', ARRAY ['access-token/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'relay-proxy',
+                                'effect', 'allow',
+                                'actions', ARRAY ['ManageRelayProxies', 'ListRelayProxies'],
+                                'resources', ARRAY ['relay-proxy/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'project',
+                                'effect', 'allow',
+                                'actions', ARRAY ['CanAccessProject', 'CreateProject', 'DeleteProject', 'UpdateProjectSettings', 'CreateEnv'],
+                                'resources', ARRAY ['project/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'env',
+                                'effect', 'allow',
+                                'actions', ARRAY ['DeleteEnv', 'UpdateEnvSettings', 'CreateEnvSecret', 'DeleteEnvSecret', 'UpdateEnvSecret'],
+                                'resources', ARRAY ['project/*:env/*']
+                        )
+                ),
+                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+
+               (developer_policy_id, NULL, 'Developer',
+                'Contains all the permissions required by a developer',
+                'SysManaged',
+                jsonb_build_array(
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'access-token',
+                                'effect', 'allow',
+                                'actions',
+                                ARRAY ['ManageServiceAccessTokens', 'ManagePersonalAccessTokens', 'ListAccessTokens'],
+                                'resources', ARRAY ['access-token/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'relay-proxy',
+                                'effect', 'allow',
+                                'actions', ARRAY ['ManageRelayProxies', 'ListRelayProxies'],
+                                'resources', ARRAY ['relay-proxy/*']
+                        ),
+                        jsonb_build_object(
+                                'id', gen_random_uuid(),
+                                'resourceType', 'project',
+                                'effect', 'allow',
+                                'actions', ARRAY ['CanAccessProject'],
+                                'resources', ARRAY ['project/*']
+                        )
+                ),
+                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+-- seed member policy
+        INSERT INTO member_policies (id, organization_id, policy_id, member_id, created_at, updated_at)
+        VALUES (gen_random_uuid(), organization_id, owner_policy_id, user_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+    END
+$$;
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.0.4.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/754
+UPDATE policies
+SET statements = statements || jsonb_build_object(
+        'id', gen_random_uuid(),
+        'resourceType', 'workspace',
+        'effect', 'allow',
+        'actions', '["UpdateWorkspaceGeneralSettings", "UpdateWorkspaceLicense", "UpdateWorkspaceSSOSettings"]'::jsonb,
+        'resources', '["workspace/*"]'::jsonb
+                               )
+WHERE id = '3e961f0f-6fd4-4cf4-910f-52d356f8cc08'
+  AND NOT EXISTS (
+    SELECT 1 FROM jsonb_array_elements(statements) AS stmt
+    WHERE stmt ->> 'resourceType' = 'workspace'
+);
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.0.5.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/759
+UPDATE policies
+SET statements = (
+-- rebuild the statements
+  (
+    SELECT jsonb_agg(stmt)
+    FROM jsonb_array_elements(statements) AS stmt
+    WHERE stmt ->> 'resourceType' != 'organization'
+  ) || jsonb_build_object(
+    'id', gen_random_uuid(),
+    'resourceType', 'organization',
+    'effect', 'allow',
+    'actions', '["UpdateOrgName", "UpdateOrgDefaultUserPermissions", "CreateOrg"]'::jsonb,
+    'resources', '["organization/*"]'::jsonb
+  )
+)
+WHERE id = '3e961f0f-6fd4-4cf4-910f-52d356f8cc08';
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.1.0.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/761
+
+-- add auto_agents column
+alter table relay_proxies
+    add column auto_agents JSONB default '[]'::jsonb;
+
+-- flatten the envIds array in relay_proxies.scopes
+update relay_proxies outer_rp
+set scopes = (select coalesce(jsonb_agg(envId), '[]'::jsonb)
+              from relay_proxies inner_rp,
+                   jsonb_array_elements(scopes) as scope,
+                   jsonb_array_elements_text(scope -> 'envIds') as envId
+              where inner_rp.id = outer_rp.id)
+where is_all_envs = false;
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.2.0.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/802
+
+alter table segments
+    add column tags text[] default array[]::text[];
+
+-- https://github.com/featbit/featbit/pull/811
+
+alter table organizations
+    add column settings jsonb not null default '{}';
+
+UPDATE policies policy
+SET statements = (
+    SELECT jsonb_agg(
+                   CASE
+                       WHEN elem->>'resourceType' = 'organization' THEN
+                           jsonb_set(
+                                   elem,
+                                   '{actions}',
+                                   ('["UpdateOrgSortFlagsBy"]'::jsonb || (elem->'actions')::jsonb)
+                           )
+                       ELSE
+                           elem
+                       END
+           )
+    FROM jsonb_array_elements(policy.statements) AS elem
+)
+WHERE policy.type = 'SysManaged' AND policy.name = 'Administrator';
+
+-- https://github.com/featbit/featbit/pull/821
+
+UPDATE policies
+SET statements =
+        (SELECT jsonb_agg(
+                        CASE
+                            WHEN stmt ->> 'resourceType' = 'flag'
+                                AND stmt -> 'actions' ? 'ManageFeatureFlag'
+                                THEN
+                                jsonb_set(
+                                        stmt,
+                                        '{actions}',
+                                        '["*"]'::jsonb,
+                                        false
+                                )
+                            ELSE
+                                stmt
+                            END
+                )
+         FROM jsonb_array_elements(statements) AS stmt)
+WHERE statements @> '[{"resourceType":"flag"}]';
+
+UPDATE access_tokens
+SET permissions =
+        (SELECT jsonb_agg(
+                        CASE
+                            WHEN stmt ->> 'resourceType' = 'flag'
+                                AND stmt -> 'actions' ? 'ManageFeatureFlag'
+                                THEN
+                                jsonb_set(
+                                        stmt,
+                                        '{actions}',
+                                        '["*"]'::jsonb,
+                                        false
+                                )
+                            ELSE
+                                stmt
+                            END
+                )
+         FROM jsonb_array_elements(permissions) AS stmt)
+WHERE permissions @> '[{"resourceType":"flag"}]';
+
+-- update built-in 'Administrator' and 'Developer' policies
+
+-- add access to envs for 'Developer' policy
+UPDATE policies policy
+SET statements = COALESCE(policy.statements, '[]'::jsonb) ||
+                 jsonb_build_array(
+                         jsonb_build_object(
+                                 'id', gen_random_uuid(),
+                                 'resourceType', 'env',
+                                 'effect', 'allow',
+                                 'actions', ARRAY ['CanAccessEnv'],
+                                 'resources', ARRAY ['project/*:env/*']
+                         )
+                 )
+WHERE policy.organization_id IS NULL
+  AND policy.type = 'SysManaged'
+  AND policy.name = 'Developer'
+    AND NOT EXISTS (SELECT 1
+                    FROM jsonb_array_elements(COALESCE(policy.statements, '[]'::jsonb)) s
+                    WHERE s ->> 'resourceType' = 'env');
+
+-- add access to envs for 'Administrator' policy
+UPDATE policies policy
+SET statements = (
+    SELECT jsonb_agg(
+        CASE
+            WHEN stmt->>'resourceType' = 'env'
+            THEN jsonb_set(
+                stmt,
+                '{actions}',
+                '["CanAccessEnv", "DeleteEnv", "UpdateEnvSettings", "CreateEnvSecret", "DeleteEnvSecret", "UpdateEnvSecret"]'::jsonb
+            )
+            ELSE stmt
+        END
+    )
+    FROM jsonb_array_elements(policy.statements) AS stmt
+)
+WHERE policy.organization_id IS NULL
+  AND policy.type = 'SysManaged'
+  AND policy.name = 'Administrator';
+
+-- add full access to feature flags
+UPDATE policies policy
+SET statements = COALESCE(policy.statements, '[]'::jsonb) ||
+                 jsonb_build_array(
+                         jsonb_build_object(
+                                 'id', gen_random_uuid(),
+                                 'resourceType', 'flag',
+                                 'effect', 'allow',
+                                 'actions', ARRAY ['*'],
+                                 'resources', ARRAY ['project/*:env/*:flag/*']
+                         )
+                 )
+WHERE policy.organization_id IS NULL
+  AND policy.type = 'SysManaged'
+  AND policy.name IN ('Administrator', 'Developer')
+  AND NOT EXISTS (SELECT 1
+                  FROM jsonb_array_elements(COALESCE(policy.statements, '[]'::jsonb)) s
+                  WHERE s ->> 'resourceType' = 'flag');
+
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.2.1.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/836
+-- fix incorrect developer_policy_id
+
+DO
+$$
+    DECLARE
+        old_developer_policy_id UUID := '66f3687f-939f-4257-bd3f-c3553d39e1b6';
+        new_developer_policy_id UUID := '66f3687f-939d-4257-bd3f-c3553d39e1b6';
+    BEGIN
+        -- 1. Update the id of the built-in developer policy
+        UPDATE policies
+        SET id = new_developer_policy_id
+        WHERE id = old_developer_policy_id
+          AND type = 'SysManaged'
+          AND name = 'Developer';
+
+        -- 2. Update organizations table - fix default_permissions jsonb
+        UPDATE organizations
+        SET default_permissions = jsonb_set(
+                default_permissions,
+                '{policyIds}',
+                (
+                    SELECT jsonb_agg(
+                                   CASE
+                                       WHEN elem::text = concat('"', old_developer_policy_id::text, '"')
+                                           THEN to_jsonb(new_developer_policy_id::text)
+                                       ELSE elem
+                                       END
+                           )
+                    FROM jsonb_array_elements(default_permissions -> 'policyIds') AS elem
+                )
+            )
+        WHERE default_permissions -> 'policyIds' @> to_jsonb(old_developer_policy_id::text);
+
+        -- 3. Update member_policies table
+        UPDATE member_policies
+        SET policy_id = new_developer_policy_id
+        WHERE policy_id = old_developer_policy_id;
+
+        -- 4. Update group_policies table
+        UPDATE group_policies
+        SET policy_id = new_developer_policy_id
+        WHERE policy_id = old_developer_policy_id;
+
+    END
+$$;
+
+-- https://github.com/featbit/featbit/pull/841
+-- added key to policies table
+ALTER TABLE policies
+    ADD COLUMN key varchar(128);
+
+-- fill keys if null
+UPDATE policies
+SET key =
+        regexp_replace(
+                regexp_replace(
+                        regexp_replace(
+                                lower(trim(name)),
+                                '[^[:alnum:]_[:space:]-]', '', 'g'
+                        ),
+                        '[[:space:]_-]+', '-', 'g'
+                ),
+                '^-+|-+$', '', 'g'
+        )
+WHERE key IS NULL;
+
+-- make sure keys are unique per organization
+WITH ranked AS (
+    SELECT
+        id,
+        organization_id,
+        key,
+        ROW_NUMBER() OVER (
+            PARTITION BY organization_id, key
+            ORDER BY created_at, id
+            ) AS rn
+    FROM policies
+    WHERE key IS NOT NULL
+)
+UPDATE policies p
+SET key = p.key || '-' || ranked.rn
+FROM ranked
+WHERE p.id = ranked.id
+  AND ranked.rn > 1;
+
+-- make key not nullable
+ALTER TABLE policies
+    ALTER COLUMN key SET NOT NULL;
+
+-- https://github.com/featbit/featbit/pull/844
+-- added key to segments table
+ALTER TABLE segments
+    ADD COLUMN key varchar(128);
+
+UPDATE segments
+SET key =
+        regexp_replace(
+                regexp_replace(
+                        regexp_replace(
+                                lower(trim(name)),
+                                '[^[:alnum:]_[:space:]-]', '', 'g'
+                        ),
+                        '[[:space:]_-]+', '-', 'g'
+                ),
+                '^-+|-+$', '', 'g'
+        )
+WHERE key IS NULL;
+
+WITH ranked AS (
+    SELECT
+        id,
+        key,
+        ROW_NUMBER() OVER (
+            PARTITION BY
+                CASE
+                    WHEN type = 'shared' THEN workspace_id
+                    WHEN type = 'environment-specific' THEN env_id
+                    END,
+                key
+            ORDER BY created_at, id
+            ) AS rn
+    FROM segments
+    WHERE key IS NOT NULL
+      AND type IN ('shared', 'environment-specific')
+)
+UPDATE segments s
+SET key = s.key || '-' || ranked.rn
+FROM ranked
+WHERE s.id = ranked.id
+  AND ranked.rn > 1;
+
+ALTER TABLE segments
+    ALTER COLUMN key SET NOT NULL;
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.3.0.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/868
+-- added refresh_tokens table to support refresh token rotation and revocation
+CREATE TABLE refresh_tokens
+(
+    id                uuid primary key                  default gen_random_uuid(),
+    token             varchar(500)             not null,
+    user_id           uuid                     not null,
+    is_revoked        boolean                  not null default false,
+    replaced_by_token varchar(500)             null,
+    created_by_ip     varchar(45)              null,
+    revoked_by_ip     varchar(45)              null,
+    expires_at        timestamp with time zone not null,
+    revoked_at        timestamp with time zone null,
+    last_used_at      timestamp with time zone null,
+    created_at        timestamp with time zone not null default now(),
+    updated_at        timestamp with time zone not null
+);
+
+CREATE INDEX ix_refresh_tokens_token ON refresh_tokens (token);
+CREATE INDEX ix_refresh_tokens_revoked_at ON refresh_tokens (revoked_at);
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.3.2.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/885
+
+-- Replace the legacy 'ManageSegment' action with the wildcard '*' in all policy statements.
+-- This normalizes existing action names after the segment permission model was broadened.
+UPDATE policies
+SET statements = (
+    SELECT COALESCE(
+                   jsonb_agg(
+                           jsonb_set(
+                                   elem,
+                                   '{actions}',
+                                   (
+                                       SELECT COALESCE(
+                                                      jsonb_agg(
+                                                              CASE
+                                                                  WHEN action = '"ManageSegment"'::jsonb THEN '"*"'::jsonb
+                                                                  ELSE action
+                                                                  END
+                                                      ),
+                                                      '[]'::jsonb
+                                              )
+                                       FROM jsonb_array_elements(elem->'actions') AS action
+                                   )
+                           )
+                   ),
+                   '[]'::jsonb
+           )
+    FROM jsonb_array_elements(statements) AS elem
+)
+WHERE statements IS NOT NULL;
+
+-- Append a new 'allow all' statement for the segment resource type to the built-in
+-- admin and developer policies so they retain full segment access after the model change.
+UPDATE policies
+SET statements = statements || jsonb_build_array(
+        jsonb_build_object(
+                'id', gen_random_uuid(),
+                'effect', 'allow',
+                'actions', jsonb_build_array('*'),
+                'resources', jsonb_build_array('project/*:env/*:segment/*'),
+                'resourceType', 'segment'
+        )
+                               )
+WHERE id IN (
+             '3e961f0f-6fd4-4cf4-910f-52d356f8cc08', -- admin
+             '66f3687f-939d-4257-bd3f-c3553d39e1b6' -- developer
+    );
+
+-- Mirror the same 'ManageSegment' -> '*' action migration for access token permissions.
+UPDATE access_tokens
+SET
+    permissions = (
+        SELECT COALESCE(
+                       jsonb_agg(
+                               jsonb_set(
+                                       elem,
+                                       '{actions}',
+                                       (
+                                           SELECT COALESCE(
+                                                          jsonb_agg(
+                                                                  CASE
+                                                                      WHEN action = '"ManageSegment"'::jsonb THEN '"*"'::jsonb
+                                                                      ELSE action
+                                                                      END
+                                                          ),
+                                                          '[]'::jsonb
+                                                  )
+                                           FROM jsonb_array_elements(elem->'actions') AS action
+                                       )
+                               )
+                       ),
+                       '[]'::jsonb
+               )
+        FROM jsonb_array_elements(permissions) AS elem
+    )
+WHERE permissions IS NOT NULL;    
+    
+
+-- https://github.com/featbit/featbit/pull/888
+
+-- Monthly unique end users per environment
+-- One row per (env_id, year_month, user_key); first_seen_at is written once on insert and never updated.
+-- Equivalent of Redis ZADD NX: only the first occurrence in a month is recorded.
+--
+-- Queries this enables:
+--   MAU / DAU  : SELECT COUNT(*) FROM usage_end_user_stats WHERE env_id = ANY(?) AND first_seen_at BETWEEN ? AND ?
+--   Daily trend: SELECT GROUP BY first_seen_at
+--   Per-env    : SELECT GROUP BY env_id
+CREATE TABLE usage_end_user_stats
+(
+    env_id        uuid                     NOT NULL,
+    year_month    integer                  NOT NULL, -- format YYYYMM, e.g. 202604
+    user_key      varchar(512)             NOT NULL,
+    first_seen_at date                     NOT NULL,
+    CONSTRAINT pk_usage_end_user_stats PRIMARY KEY (env_id, year_month, user_key)
+);
+
+-- All read queries filter on (env_id, first_seen_at); year_month only appears in the PK for upsert deduplication.
+CREATE INDEX ix_usage_end_user_stats_env_date ON usage_end_user_stats (env_id, first_seen_at);
+
+-- Daily aggregated metrics per environment
+-- Tracks total flag_evaluations and custom_metrics per day
+-- Upsert with increment so multiple writes on the same day accumulate correctly
+CREATE TABLE usage_event_stats
+(
+    env_id           uuid   NOT NULL,
+    stats_date       date   NOT NULL,
+    flag_evaluations integer NOT NULL DEFAULT 0,
+    custom_metrics   integer NOT NULL DEFAULT 0,
+    CONSTRAINT pk_usage_event_stats PRIMARY KEY (env_id, stats_date)
+);
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.4.0.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/906
+update environments set settings = '{}'::jsonb where true;
+
+-- https://github.com/featbit/featbit/pull/910
+-- ================================================================
+-- Migration: extract workspace membership out of users table
+-- ================================================================
+
+-- 1. Create the new join table
+CREATE TABLE workspace_users
+(
+    id           uuid                     NOT NULL,
+    workspace_id uuid                     NOT NULL,
+    user_id      uuid                     NOT NULL,
+    created_at   timestamp with time zone NOT NULL,
+    updated_at   timestamp with time zone NOT NULL,
+    CONSTRAINT pk_workspace_users PRIMARY KEY (id)
+);
+
+CREATE UNIQUE INDEX ix_workspace_users_workspace_id_user_id
+    ON workspace_users (workspace_id, user_id);
+
+-- 2. Resolve canonical user per email (earliest created_at wins)
+--    then insert one workspace_users row per original users row.
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+INSERT INTO workspace_users (id, workspace_id, user_id, created_at, updated_at)
+SELECT
+    gen_random_uuid(),
+    u.workspace_id,
+    c.canonical_id,
+    u.created_at,
+    u.updated_at
+FROM users u
+         JOIN canonical c ON c.email = u.email;
+
+-- 3. Re-point any other tables that hold a user_id FK to the canonical user.
+--    Add one UPDATE per dependent table before the DELETE below, e.g.:
+--
+--    UPDATE some_table st
+--    SET user_id = c.canonical_id
+--    FROM users u
+--    JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+--    WHERE st.user_id = u.id;
+--
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE organization_users ou
+SET user_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE ou.user_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE organization_users ou
+SET invitor_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE ou.invitor_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE refresh_tokens r
+SET user_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE r.user_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE access_tokens t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE audit_logs t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE experiment_metrics t
+SET maintainer_user_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.maintainer_user_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE feature_flags t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE feature_flags t
+SET updator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.updator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE flag_change_requests t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE flag_change_requests t
+SET updator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.updator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+),
+id_map AS (
+    SELECT u.id AS old_id, c.canonical_id AS new_id
+    FROM users u
+             JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+)
+UPDATE flag_change_requests fcr
+SET reviewers = (
+    SELECT jsonb_agg(
+               CASE
+                   WHEN im.new_id IS NOT NULL
+                       THEN elem || jsonb_build_object('memberId', im.new_id::text)
+                   ELSE elem
+                   END
+           )
+    FROM jsonb_array_elements(fcr.reviewers) AS elem
+             LEFT JOIN id_map im ON im.old_id = (elem ->> 'memberId')::uuid
+)
+WHERE fcr.reviewers IS NOT NULL
+  AND EXISTS (
+    SELECT 1
+    FROM jsonb_array_elements(fcr.reviewers) AS elem
+             JOIN id_map im ON im.old_id = (elem ->> 'memberId')::uuid
+);
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE flag_drafts t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE flag_drafts t
+SET updator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.updator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE flag_schedules t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE flag_schedules t
+SET updator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.updator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE group_members t
+SET member_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.member_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE member_policies t
+SET member_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.member_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE webhooks t
+SET creator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.creator_id = u.id;
+
+WITH canonical AS (
+    SELECT DISTINCT ON (email)
+        id    AS canonical_id,
+        email
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+)
+UPDATE webhooks t
+SET updator_id = c.canonical_id
+FROM users u
+         JOIN canonical c ON c.email = u.email AND c.canonical_id <> u.id
+WHERE t.updator_id = u.id;
+
+-- 4. Delete duplicate (non-canonical) user rows
+DELETE FROM users
+WHERE id NOT IN (
+    SELECT DISTINCT ON (email) id
+    FROM users
+    ORDER BY email, created_at ASC, id ASC
+);
+
+-- 5. Drop the now-redundant workspace_id column
+ALTER TABLE users DROP COLUMN workspace_id;
+
+-- Enforce global uniqueness of user email after workspace_id removal
+CREATE UNIQUE INDEX ix_users_email ON users (email);
+
+ALTER TABLE users ADD COLUMN initial_password text;
+-- Copy initial_password from organization_users to users
+-- Uses the most recent record per user if multiple org memberships exist
+UPDATE users u
+SET initial_password = ou.initial_password
+FROM (
+         SELECT DISTINCT ON (user_id) user_id, initial_password
+         FROM organization_users
+         WHERE initial_password IS NOT NULL
+         ORDER BY user_id, created_at DESC
+     ) ou
+WHERE u.id = ou.user_id;
+
+ALTER TABLE organization_users DROP COLUMN initial_password;
+"""
+
+[[config.mounts]]
+filePath = "initdb/v5.4.1.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/915
+CREATE INDEX ix_end_users_env_id_updated_at_id
+    ON end_users (env_id, updated_at DESC, id DESC);
+
+DROP INDEX IF EXISTS ix_end_users_workspace_id;
+CREATE INDEX ix_end_users_workspace_id_updated_at_id
+    ON end_users (workspace_id, updated_at DESC, id DESC);
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX gin_end_users_key_id_trgm
+    ON end_users USING gin (key_id gin_trgm_ops);
+
+CREATE INDEX gin_end_users_name_trgm
+    ON end_users USING gin (name gin_trgm_ops);
+
+-- https://github.com/featbit/featbit/pull/917
+
+-- Expand audit_logs.keyword from varchar(128) to varchar(512).
+-- The keyword is a comma-joined concatenation of a flag/segment key and name,
+-- each of which can be up to 128 characters (128 + "," + 128 = 257).
+ALTER TABLE audit_logs
+    ALTER COLUMN keyword TYPE character varying(512);
+"""
+
+[[config.mounts]]
+filePath = "initdb/v6.0.0.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/940
+-- Control plane data center membership leases (Option A consistency).
+-- One row per data center, keyed by dc_id. Mirrors the Mongo "dc_leases" collection.
+CREATE TABLE IF NOT EXISTS dc_leases
+(
+    dc_id              text PRIMARY KEY,
+    region             text,
+    last_heartbeat_at  timestamptz,
+    lease_expires_at   timestamptz,
+    applied_watermarks jsonb
+);
+
+-- The live-set query filters on lease_expires_at > now().
+CREATE INDEX IF NOT EXISTS ix_dc_leases_lease_expires_at
+    ON dc_leases (lease_expires_at);
+
+-- B4: committed-vs-pending for feature_flags (Postgres parity with the Mongo path).
+-- committed_version: monotonic version of the last COMMITTED change (default 0).
+-- pending: a staged-but-not-committed change, stored as jsonb (NULL when none).
+ALTER TABLE feature_flags
+    ADD COLUMN committed_version bigint NOT NULL DEFAULT 0,
+    ADD COLUMN pending           jsonb  NULL;
+
+-- S1: committed-vs-pending for segments (Postgres parity with the Mongo path).
+-- committed_version: monotonic version of the last COMMITTED change (default 0).
+-- pending: a staged-but-not-committed change, stored as jsonb (NULL when none).
+ALTER TABLE segments
+    ADD COLUMN committed_version bigint NOT NULL DEFAULT 0,
+    ADD COLUMN pending           jsonb  NULL;
+
+-- https://github.com/featbit/featbit/pull/921
+
+-- Preserve legacy data without migrating it into the v6 schema. If migration is needed, contact FeatBit for data migration assistance.
+ALTER TABLE IF EXISTS events RENAME TO events_legacy;
+ALTER TABLE IF EXISTS events_legacy RENAME CONSTRAINT events_pkey TO events_pkey_legacy;
+ALTER INDEX IF EXISTS idx_events_combined RENAME TO idx_events_combined_legacy;
+
+ALTER TABLE IF EXISTS experiments RENAME TO experiments_legacy;
+ALTER TABLE IF EXISTS experiments_legacy RENAME CONSTRAINT pk_experiments TO pk_experiments_legacy;
+ALTER INDEX IF EXISTS ix_experiments_env_id_feature_flag_id RENAME TO ix_experiments_env_id_feature_flag_id_legacy;
+
+ALTER TABLE IF EXISTS experiment_metrics RENAME TO experiment_metrics_legacy;
+ALTER TABLE IF EXISTS experiment_metrics_legacy RENAME CONSTRAINT pk_experiment_metrics TO pk_experiment_metrics_legacy;
+ALTER INDEX IF EXISTS ix_experiment_metrics_env_id RENAME TO ix_experiment_metrics_env_id_legacy;
+
+-- New tables for experiment exposure events, layers, and metric events
+CREATE TABLE IF NOT EXISTS experiment_exposure_events
+(
+    id              uuid                     NOT NULL,
+    env_id          uuid                     NOT NULL,
+    flag_key        character varying(256)   NOT NULL,
+    user_key        character varying(512)   NOT NULL,
+    variation_id    character varying(256)   NOT NULL,
+    variation_value character varying(512),
+    exposed_at      timestamp with time zone NOT NULL,
+    created_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_exposure_events PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS experiment_layers
+(
+    id                       uuid                     NOT NULL,
+    env_id                   uuid                     NOT NULL,
+    name                     character varying(256)   NOT NULL,
+    key                      character varying(128)   NOT NULL,
+    description              text,
+    assignment_unit_selector character varying(256),
+    status                   character varying(64)    NOT NULL,
+    created_at               timestamp with time zone NOT NULL,
+    updated_at               timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_layers PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS experiment_metric_events
+(
+    id               uuid                     NOT NULL,
+    env_id           uuid                     NOT NULL,
+    user_key         character varying(512)   NOT NULL,
+    event_name       character varying(256)   NOT NULL,
+    event_type       character varying(64)    NOT NULL,
+    numeric_value    double precision         NOT NULL,
+    application_type character varying(128),
+    occurred_at      timestamp with time zone NOT NULL,
+    created_at       timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_metric_events PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS experiment_metrics
+(
+    id          uuid                     NOT NULL,
+    env_id      uuid                     NOT NULL,
+    name        character varying(256)   NOT NULL,
+    key         character varying(128)   NOT NULL,
+    event_name  varchar(256)             NOT NULL,
+    description text,
+    metric_type character varying(64)    NOT NULL,
+    metric_agg  character varying(64)    NOT NULL,
+    status      character varying(64)    NOT NULL,
+    created_at  timestamp with time zone NOT NULL,
+    updated_at  timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_metrics PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS experiment_run_assignments
+(
+    id                    uuid                     NOT NULL,
+    run_id                uuid                     NOT NULL,
+    env_id                uuid                     NOT NULL,
+    flag_key              character varying(256)   NOT NULL,
+    allocation_key        character varying(512)   NOT NULL,
+    assignment_unit       character varying(512)   NOT NULL,
+    user_key              character varying(512)   NOT NULL,
+    expected_variation_id character varying(256),
+    actual_variation_id   character varying(256),
+    role                  character varying(64)    NOT NULL,
+    analysis_role         character varying(64)    NOT NULL,
+    bucket                double precision         NOT NULL,
+    layer_bucket          double precision,
+    sampling_bucket       double precision,
+    included_by_sampling  boolean                  NOT NULL,
+    exclusion_reason      character varying(64),
+    assigned_at           timestamp with time zone NOT NULL,
+    first_exposed_at      timestamp with time zone NOT NULL,
+    created_at            timestamp with time zone NOT NULL,
+    updated_at            timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_run_assignments PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS experiment_runs
+(
+    id                       uuid                     NOT NULL,
+    experiment_id            uuid                     NOT NULL,
+    slug                     character varying(128)   NOT NULL,
+    method                   character varying(64),
+    primary_metric           jsonb,
+    guardrail_metrics        jsonb                    NOT NULL DEFAULT '[]'::jsonb,
+    control_variant          character varying(256),
+    treatment_variants       jsonb                    NOT NULL DEFAULT '[]'::jsonb,
+    variations               jsonb                    NOT NULL DEFAULT '[]'::jsonb,
+    minimum_sample           integer,
+    observation_start        timestamp with time zone,
+    observation_end          timestamp with time zone,
+    prior_proper             boolean                  NOT NULL,
+    prior_mean               double precision,
+    prior_stddev             double precision,
+    analysis_result          text,
+    decision                 text,
+    decision_summary         text,
+    decision_reason          text,
+    what_changed             text,
+    what_happened            text,
+    confirmed_or_refuted     text,
+    why_it_happened          text,
+    next_hypothesis          text,
+    traffic_percent          double precision,
+    layer_id                 uuid,
+    traffic_offset           integer,
+    layer_key                character varying(128),
+    allocation_key_selector  character varying(256),
+    slice_start              double precision,
+    slice_end                double precision,
+    allocation_plan          text,
+    assignment_unit_selector character varying(256),
+    layer_traffic_percent    double precision,
+    analysis_sampling_plan   text,
+    created_at               timestamp with time zone NOT NULL,
+    updated_at               timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiment_runs PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS experiments
+(
+    id                uuid                     NOT NULL,
+    name              character varying(256)   NOT NULL,
+    description       text,
+    stage             character varying(64)    NOT NULL,
+    flag_id           uuid,
+    env_id            uuid,
+    hypothesis        text,
+    change            text,
+    constraints       text,
+    goal              text,
+    guardrail_metrics jsonb                    NOT NULL DEFAULT '[]'::jsonb,
+    intent            text,
+    last_action       text,
+    last_learning     text,
+    last_run_number   integer                  NOT NULL DEFAULT 0,
+    primary_metric    jsonb,
+    conflict_analysis text,
+    created_at        timestamp with time zone NOT NULL,
+    updated_at        timestamp with time zone NOT NULL,
+    CONSTRAINT pk_experiments PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS mcp_access_token_sessions
+(
+    id              uuid                     NOT NULL,
+    token_id        character varying(128)   NOT NULL,
+    client_id       character varying(256)   NOT NULL,
+    user_id         uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    workspace_id    uuid                     NOT NULL,
+    expires_at      timestamp with time zone NOT NULL,
+    revoked_at      timestamp with time zone,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_mcp_access_token_sessions PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS mcp_device_authorizations
+(
+    id                       uuid                     NOT NULL,
+    client_id                character varying(256)   NOT NULL,
+    device_code_hash         character varying(64)    NOT NULL,
+    user_code                character varying(16)    NOT NULL,
+    env_id                   uuid                     NOT NULL,
+    experiment_id            uuid,
+    expires_at               timestamp with time zone NOT NULL,
+    is_approved              boolean                  NOT NULL,
+    approved_user_id         uuid,
+    approved_organization_id uuid,
+    approved_workspace_id    uuid,
+    created_at               timestamp with time zone NOT NULL,
+    updated_at               timestamp with time zone NOT NULL,
+    CONSTRAINT pk_mcp_device_authorizations PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS mcp_refresh_authorizations
+(
+    id              uuid                     NOT NULL,
+    token_hash      character varying(64)    NOT NULL,
+    client_id       character varying(256)   NOT NULL,
+    user_id         uuid                     NOT NULL,
+    organization_id uuid                     NOT NULL,
+    workspace_id    uuid                     NOT NULL,
+    env_id          uuid                     NOT NULL,
+    experiment_id   uuid,
+    expires_at      timestamp with time zone NOT NULL,
+    created_at      timestamp with time zone NOT NULL,
+    updated_at      timestamp with time zone NOT NULL,
+    CONSTRAINT pk_mcp_refresh_authorizations PRIMARY KEY (id)
+);
+
+CREATE INDEX IF NOT EXISTS ix_experiment_exposure_events_env_id_flag_key_exposed_at
+    ON experiment_exposure_events (env_id, flag_key, exposed_at);
+CREATE INDEX IF NOT EXISTS ix_experiment_metric_events_env_id_event_name_occurred_at
+    ON experiment_metric_events (env_id, event_name, occurred_at);
+
+CREATE INDEX IF NOT EXISTS ix_experiments_env_id_updated_at
+    ON experiments (env_id, updated_at);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_experiment_metrics_env_id_key
+    ON experiment_metrics (env_id, key);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_experiment_layers_env_id_key
+    ON experiment_layers (env_id, key);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ix_experiment_runs_experiment_id_slug
+    ON experiment_runs (experiment_id, slug);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_experiment_run_assignments_run_id_allocation_key
+    ON experiment_run_assignments (run_id, allocation_key);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_experiment_run_assignments_run_id_assignment_unit
+    ON experiment_run_assignments (run_id, assignment_unit);
+
+CREATE INDEX IF NOT EXISTS ix_mcp_access_token_sessions_expires_at
+    ON mcp_access_token_sessions (expires_at);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_mcp_access_token_sessions_token_id
+    ON mcp_access_token_sessions (token_id);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_mcp_device_authorizations_device_code_hash
+    ON mcp_device_authorizations (device_code_hash);
+CREATE INDEX IF NOT EXISTS ix_mcp_device_authorizations_expires_at
+    ON mcp_device_authorizations (expires_at);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_mcp_device_authorizations_user_code
+    ON mcp_device_authorizations (user_code);
+CREATE INDEX IF NOT EXISTS ix_mcp_refresh_authorizations_expires_at
+    ON mcp_refresh_authorizations (expires_at);
+CREATE UNIQUE INDEX IF NOT EXISTS ix_mcp_refresh_authorizations_token_hash
+    ON mcp_refresh_authorizations (token_hash);
+
+"""
+
+[[config.mounts]]
+filePath = "initdb/v6.1.0.sql"
+content = """
+-- https://github.com/featbit/featbit/pull/1005
+-- Per-flag insights toggle. Existing flags keep collecting insights (default true).
+ALTER TABLE feature_flags
+    ADD COLUMN IF NOT EXISTS insights_enabled boolean NOT NULL DEFAULT true;
+
+-- https://github.com/featbit/featbit/pull/1022
+-- ViewEnvSecret is independent at runtime. Preserve existing secret managers'
+-- access and grant the built-in Developer read access for SDK integration.
+UPDATE policies p
+SET statements = (
+    SELECT jsonb_agg(
+        CASE WHEN s->>'effect' = 'allow'
+                  AND s->>'resourceType' = 'env'
+                  AND NOT (COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['ViewEnvSecret', '*'])
+                  AND (
+                      COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['CreateEnvSecret', 'UpdateEnvSecret', 'DeleteEnvSecret']
+                      OR (p.type = 'SysManaged' AND p.organization_id IS NULL AND p.name = 'Developer'
+                          AND COALESCE(s->'actions', '[]'::jsonb) ? 'CanAccessEnv')
+                  )
+             THEN jsonb_set(s, '{actions}', s->'actions' || '["ViewEnvSecret"]'::jsonb)
+             ELSE s END
+        ORDER BY position
+    )
+    FROM jsonb_array_elements(p.statements) WITH ORDINALITY AS statement(s, position)
+)
+WHERE EXISTS (
+    SELECT 1 FROM jsonb_array_elements(p.statements) s
+    WHERE s->>'effect' = 'allow' AND s->>'resourceType' = 'env'
+      AND NOT (COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['ViewEnvSecret', '*'])
+      AND (COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['CreateEnvSecret', 'UpdateEnvSecret', 'DeleteEnvSecret']
+           OR (p.type = 'SysManaged' AND p.organization_id IS NULL AND p.name = 'Developer'
+               AND COALESCE(s->'actions', '[]'::jsonb) ? 'CanAccessEnv'))
+);
+
+-- Service tokens store their own permissions rather than inheriting policies.
+UPDATE access_tokens t
+SET permissions = (
+    SELECT jsonb_agg(
+        CASE WHEN s->>'effect' = 'allow'
+                  AND s->>'resourceType' = 'env'
+                  AND NOT (COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['ViewEnvSecret', '*'])
+                  AND COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['CreateEnvSecret', 'UpdateEnvSecret', 'DeleteEnvSecret']
+             THEN jsonb_set(s, '{actions}', s->'actions' || '["ViewEnvSecret"]'::jsonb)
+             ELSE s END
+        ORDER BY position
+    )
+    FROM jsonb_array_elements(t.permissions) WITH ORDINALITY AS statement(s, position)
+)
+WHERE t.type = 'Service'
+  AND EXISTS (
+    SELECT 1 FROM jsonb_array_elements(t.permissions) s
+    WHERE s->>'effect' = 'allow' AND s->>'resourceType' = 'env'
+      AND NOT (COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['ViewEnvSecret', '*'])
+      AND COALESCE(s->'actions', '[]'::jsonb) ?| ARRAY['CreateEnvSecret', 'UpdateEnvSecret', 'DeleteEnvSecret']
+);
+
+-- https://github.com/featbit/featbit/pull/1038
+-- Backfill workspace_id and organization_id for audit logs.
+ALTER TABLE audit_logs
+    ADD COLUMN IF NOT EXISTS workspace_id uuid,
+    ADD COLUMN IF NOT EXISTS organization_id uuid;
+ALTER TABLE audit_logs ALTER COLUMN env_id DROP NOT NULL;
+
+UPDATE audit_logs a SET workspace_id = o.workspace_id, organization_id = o.id
+FROM environments e
+JOIN projects p ON p.id = e.project_id
+JOIN organizations o ON o.id = p.organization_id
+WHERE a.workspace_id IS NULL AND a.env_id = e.id;
+
+DROP INDEX IF EXISTS ix_audit_logs_env_id_ref_id_created_at;
+DROP INDEX IF EXISTS ix_audit_logs_workspace_created;
+CREATE INDEX IF NOT EXISTS ix_audit_logs_workspace_id_env_id_created_at_id
+    ON audit_logs(workspace_id, env_id, created_at DESC, id DESC);
+CREATE INDEX IF NOT EXISTS ix_audit_logs_workspace_id_ref_type_ref_id_created_at_id
+    ON audit_logs(workspace_id, ref_type, ref_id, created_at DESC, id DESC);
+CREATE INDEX IF NOT EXISTS ix_audit_logs_workspace_id_organization_id_created_at_id
+    ON audit_logs(workspace_id, organization_id, created_at DESC, id DESC);
+
+"""
