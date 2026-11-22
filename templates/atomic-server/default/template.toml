@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "atomic-server"
+port = 80
+host = "${domain}"
+
+[config.env]
+ATOMIC_DOMAIN = "${domain}"
+ATOMIC_SERVER_URL = "https://${domain}"
+ATOMIC_OWNER_AGENT = ""

@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Local-first workspace for documents, tables, chat and files, served from a real-time graph database with full-text search and live sync.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ontola",
+    "url": "https://ontola.io"
+  },
+  "links": {
+    "github": "https://github.com/ontola/atomic-server",
+    "website": "https://atomic.place",
+    "docs": [
+      "https://docs.atomicdata.dev/atomicserver/installation.html",
+      "https://docs.atomicdata.dev/atomicserver/gui.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Until an owner is set, anyone who reaches the server can create an account and store data on it. Right after deploy, open the site, create your account and save the secret it shows (it cannot be recovered), then copy your Agent ID from Settings into ATOMIC_OWNER_AGENT and redeploy.",
+      "link": "https://github.com/ontola/atomic-server/blob/develop/docs/src/atomicserver/installation.md#putting-your-server-on-the-internet"
+    }
+  ]
+}
