@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source billing and client management for hosting providers, with invoicing, orders, support tickets and a client area, backed by MariaDB.",
+  "category": "finance",
+  "developedBy": {
+    "label": "FOSSBilling",
+    "url": "https://github.com/FOSSBilling"
+  },
+  "links": {
+    "github": "https://github.com/FOSSBilling/FOSSBilling",
+    "website": "https://fossbilling.org",
+    "docs": [
+      "https://docs.fossbilling.org/getting-started/docker/",
+      "https://docs.fossbilling.org/getting-started/installation/",
+      "https://docs.fossbilling.org/maintenance/updating/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Finish setup in the web installer: database host fossbilling-db, port 3306, database and user fossbilling, password = the DB_PASSWORD environment variable. Keep the URL as https://<your domain>/ and tick \"Trust this reverse proxy configuration\" so client IPs reach the rate limiter. The installer creates the first admin account.",
+      "link": "https://docs.fossbilling.org/getting-started/docker/"
+    }
+  ]
+}
