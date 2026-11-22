@@ -1,0 +1,42 @@
+services:
+  authorizer:
+    image: quay.io/authorizer/authorizer:2.4.7@sha256:7a31f6aa05dcbc18d0c3c7dad32feebf944337f628038d55e7b3c1aed1a569ca
+    restart: unless-stopped
+    expose:
+      - 8080
+    # v2 reads its configuration from CLI flags only, not from environment variables
+    command:
+      - --env=production
+      - --log-level=info
+      - --url=${AUTHORIZER_URL}
+      - --database-type=postgres
+      - --database-url=postgres://authorizer:${DB_PASSWORD}@authorizer-db:5432/authorizer?sslmode=disable
+      - --client-id=${CLIENT_ID}
+      - --client-secret=${CLIENT_SECRET}
+      - --admin-secret=${ADMIN_SECRET}
+      - --jwt-type=HS256
+      - --jwt-secret=${JWT_SECRET}
+      - --encryption-key=${ENCRYPTION_KEY}
+      - --allowed-origins=${ALLOWED_ORIGINS}
+      - --trusted-proxies=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+    depends_on:
+      authorizer-db:
+        condition: service_healthy
+
+  authorizer-db:
+    image: postgres:18.7-alpine@sha256:ff64c9e3bdf8e2120107d3559de8db314e8305f7e38c5105903c6295876738ff
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: authorizer
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: authorizer
+    volumes:
+      - authorizer-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authorizer -d authorizer"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  authorizer-db: {}

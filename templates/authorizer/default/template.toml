@@ -1,0 +1,21 @@
+[variables]
+db_password = "${password:32}"
+admin_secret = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "authorizer"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+AUTHORIZER_URL = "https://${domain}"
+DB_PASSWORD = "${db_password}"
+CLIENT_ID = "${uuid}"
+CLIENT_SECRET = "${secret:48}"
+ADMIN_SECRET = "${admin_secret}"
+JWT_SECRET = "${secret:64}"
+ENCRYPTION_KEY = "${secret:64}"
+ALLOWED_ORIGINS = "*"

@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source authentication and authorization server with OAuth 2.0, OpenID Connect, social logins, MFA, a hosted login page and an admin dashboard, backed by PostgreSQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "Authorizer",
+    "url": "https://github.com/authorizerdev"
+  },
+  "links": {
+    "github": "https://github.com/authorizerdev/authorizer",
+    "website": "https://authorizer.dev",
+    "docs": [
+      "https://docs.authorizer.dev/deployment/docker",
+      "https://docs.authorizer.dev/core/server-config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /dashboard and sign in with the value of the ADMIN_SECRET environment variable. Your apps use CLIENT_ID as the client ID; set ALLOWED_ORIGINS to their comma-separated origins before going to production.",
+      "link": "https://docs.authorizer.dev/deployment/docker"
+    },
+    {
+      "type": "info",
+      "message": "Email verification, password reset emails, magic links and social logins are off until you add the matching flags (for example --smtp-host, --smtp-port, --smtp-sender-email or --google-client-id) to the authorizer command in docker-compose.yml.",
+      "link": "https://docs.authorizer.dev/core/server-config"
+    }
+  ]
+}
