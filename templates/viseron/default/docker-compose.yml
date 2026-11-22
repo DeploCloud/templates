@@ -1,0 +1,39 @@
+services:
+  viseron:
+    image: roflcoopter/viseron:3.7.0@sha256:73ed6822f4878f2eb52b423e48d6077dbbc8c6aeb6d7636d5452b5c1271145e3
+    restart: unless-stopped
+    shm_size: "1024mb"
+    stop_grace_period: 60s
+    # Seed config.yaml once (auth on), then hand over to the image's s6 init.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        [ -f /config/config.yaml ] || cp /seed/config.yaml /config/config.yaml
+        exec /init
+    expose:
+      - 8888
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - viseron-config:/config
+      - viseron-segments:/segments
+      - viseron-snapshots:/snapshots
+      - viseron-thumbnails:/thumbnails
+      - viseron-event-clips:/event_clips
+      - viseron-timelapse:/timelapse
+      - ./config.yaml:/seed/config.yaml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost:8888/api/v1/auth/enabled"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  viseron-config: {}
+  viseron-segments: {}
+  viseron-snapshots: {}
+  viseron-thumbnails: {}
+  viseron-event-clips: {}
+  viseron-timelapse: {}

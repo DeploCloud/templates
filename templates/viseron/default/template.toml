@@ -1,0 +1,42 @@
+[config]
+
+[[config.domains]]
+serviceName = "viseron"
+port = 8_888
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+
+[[config.mounts]]
+filePath = "config.yaml"
+content = """# Edit this file from the Configuration page of the web UI, then restart.
+# See https://viseron.netlify.app/docs/documentation/configuration
+webserver:
+  public_base_url: https://${domain}
+  auth:
+
+## Example camera with CPU object detection and recording:
+# ffmpeg:
+#   camera:
+#     camera_1:
+#       name: Front door
+#       host: 192.168.1.10
+#       port: 554
+#       path: /stream1
+#       username: user
+#       password: pass
+#
+# darknet:
+#   object_detector:
+#     cameras:
+#       camera_1:
+#         fps: 1
+#         labels:
+#           - label: person
+#             confidence: 0.75
+#             trigger_event_recording: true
+#
+# nvr:
+#   camera_1:
+"""

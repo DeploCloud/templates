@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted network video recorder with object, motion and face detection for IP cameras, running on the CPU with recordings kept on persistent volumes.",
+  "category": "security",
+  "developedBy": {
+    "label": "roflcoopter",
+    "url": "https://github.com/roflcoopter"
+  },
+  "links": {
+    "github": "https://github.com/roflcoopter/viseron",
+    "website": "https://viseron.netlify.app",
+    "docs": [
+      "https://viseron.netlify.app/docs/documentation/installation",
+      "https://viseron.netlify.app/docs/documentation/configuration",
+      "https://viseron.netlify.app/docs/documentation/configuration/authentication"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Authentication is enabled and the first visit opens an onboarding page: create the admin account right after deploying, before anyone else reaches the URL.",
+      "link": "https://viseron.netlify.app/docs/documentation/configuration/authentication"
+    },
+    {
+      "type": "warning",
+      "message": "No cameras are configured. Add them in the web UI under Settings > Configuration, save, then reload or restart from the editor. Cameras must be reachable from this server over RTSP.",
+      "link": "https://viseron.netlify.app/docs/documentation/configuration"
+    }
+  ]
+}
