@@ -1,0 +1,42 @@
+services:
+  airtrail:
+    image: johly/airtrail:v3.14.0@sha256:69ef0a421d6a5f99c06d04ea6b66445a5d1261dd533d6efe3bd8bc3e2dfd018f
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ORIGIN: ${ORIGIN}
+      DB_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@airtrail-db:5432/${DB_DATABASE_NAME}
+      UPLOAD_LOCATION: /app/uploads
+      ADDRESS_HEADER: ${ADDRESS_HEADER}
+      BODY_SIZE_LIMIT: ${BODY_SIZE_LIMIT}
+    volumes:
+      - airtrail-uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "airtrail-healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      airtrail-db:
+        condition: service_healthy
+
+  airtrail-db:
+    image: postgres:16.16-alpine@sha256:f2f98726820d0342055351c6e9d36e705f5bfffb3dd53ff556325114b08afb6d
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - airtrail-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  airtrail-uploads: {}
+  airtrail-db: {}

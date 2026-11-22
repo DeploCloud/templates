@@ -1,0 +1,18 @@
+[variables]
+db_password = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "airtrail"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ORIGIN = "https://${domain}"
+DB_USERNAME = "airtrail"
+DB_DATABASE_NAME = "airtrail"
+DB_PASSWORD = "${db_password}"
+ADDRESS_HEADER = "X-Forwarded-For"
+BODY_SIZE_LIMIT = "20M"

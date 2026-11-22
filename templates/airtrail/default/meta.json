@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal flight tracker that maps every flight you have taken, with statistics, imports from other trackers and multi-user support, backed by PostgreSQL.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Johan Ohly",
+    "url": "https://github.com/johanohly"
+  },
+  "links": {
+    "github": "https://github.com/johanohly/AirTrail",
+    "website": "https://airtrail.johan.ohly.dk/",
+    "docs": [
+      "https://airtrail.johan.ohly.dk/docs/install/docker-compose",
+      "https://airtrail.johan.ohly.dk/docs/administration/environment-variables",
+      "https://airtrail.johan.ohly.dk/docs/install/post-installation"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the owner account on the Welcome screen. Open the app right after deployment to claim it.",
+      "link": "https://airtrail.johan.ohly.dk/docs/install/post-installation"
+    }
+  ]
+}
