@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "OCI-native container image and artifact registry with a web UI for browsing and searching images, htpasswd login and persistent storage.",
+  "category": "development",
+  "developedBy": {
+    "label": "Project zot",
+    "url": "https://github.com/project-zot"
+  },
+  "links": {
+    "github": "https://github.com/project-zot/zot",
+    "website": "https://zotregistry.dev",
+    "docs": [
+      "https://zotregistry.dev/latest/admin-guide/admin-configuration/",
+      "https://zotregistry.dev/latest/articles/authn-authz/",
+      "https://zotregistry.dev/latest/user-guides/user-guide-gui/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the web UI and run `docker login <your domain>` with ZOT_USERNAME and ZOT_PASSWORD from the environment settings. Anonymous users have no access.",
+      "link": "https://zotregistry.dev/latest/articles/authn-authz/"
+    }
+  ]
+}
