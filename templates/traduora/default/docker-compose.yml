@@ -1,0 +1,29 @@
+services:
+  traduora:
+    image: everco/ever-traduora:v0.23.0@sha256:4112c2fcab4e2d5eee02089a17ded310cfb87dd8c1244015cc7f4d07a61712de
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      NODE_ENV: production
+      TR_SECRET: ${TR_SECRET}
+      TR_VIRTUAL_HOST: ${TR_VIRTUAL_HOST}
+      TR_DB_TYPE: better-sqlite3
+      TR_DB_DATABASE: /opt/traduora/data/traduora.sqlite3
+      TR_ADMIN_EMAIL: ${TR_ADMIN_EMAIL}
+      TR_ADMIN_PASSWORD: ${TR_ADMIN_PASSWORD}
+      TR_SIGNUPS_ENABLED: ${TR_SIGNUPS_ENABLED}
+      # the built-in global limit of 0 answers 429 to every request
+      TR_THROTTLE_TTL: 60000
+      TR_THROTTLE_LIMIT: 1000
+    volumes:
+      - traduora-data:/opt/traduora/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  traduora-data: {}

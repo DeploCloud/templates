@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "traduora"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TR_SECRET = "${hash:64}"
+TR_VIRTUAL_HOST = "https://${domain}"
+TR_ADMIN_EMAIL = "admin@example.com"
+TR_ADMIN_PASSWORD = "${admin_password}"
+TR_SIGNUPS_ENABLED = "false"
