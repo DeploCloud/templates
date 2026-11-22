@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nzbhydra2"
+port = 5076
+host = "${domain}"
+
+[config.env]
+PUID = "1000"
+PGID = "1000"
+TZ = "UTC"
+HYDRA_USERNAME = "admin"
+HYDRA_PASSWORD = "${admin_password}"

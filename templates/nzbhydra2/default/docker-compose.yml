@@ -1,0 +1,27 @@
+services:
+  nzbhydra2:
+    image: lscr.io/linuxserver/nzbhydra2:v9.3.3-ls116@sha256:924939b98fe18398f306e69f0a123f4fb92dd3651a8aef1a1d7b5d78d7b6c197
+    restart: unless-stopped
+    # First start only: seed form login with an admin user so the UI is never open on the public domain.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        if [ ! -f /config/nzbhydra.yml ]; then
+          printf '  users:\n    - username: "%s"\n      password: "{noop}%s"\n      maySeeAdmin: true\n      maySeeDetailsDl: true\n      maySeeStats: true\n      showIndexerSelection: true\n' "$$HYDRA_USERNAME" "$$HYDRA_PASSWORD" > /tmp/hydra-users.yml
+          sed -e 's/^  authType: "NONE"/  authType: "FORM"/' -e 's/^  \(restrict[A-Za-z]*\): false/  \1: true/' -e '/^  users: \[\]/{r /tmp/hydra-users.yml' -e 'd' -e '}' /defaults/nzbhydra.yml > /config/nzbhydra.yml
+        fi
+        exec /init
+    expose:
+      - 5076
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+      HYDRA_USERNAME: ${HYDRA_USERNAME}
+      HYDRA_PASSWORD: ${HYDRA_PASSWORD}
+    volumes:
+      - nzbhydra2-config:/config
+
+volumes:
+  nzbhydra2-config: {}
