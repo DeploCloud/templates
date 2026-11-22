@@ -1,0 +1,21 @@
+[variables]
+admin_user = "admin"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "rutorrent"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+PUID = "1000"
+PGID = "1000"
+UPLOAD_MAX_SIZE = "16M"
+
+[[config.mounts]]
+filePath = "rutorrent.htpasswd"
+content = """${admin_user}:{PLAIN}${admin_password}
+"""

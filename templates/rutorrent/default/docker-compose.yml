@@ -1,0 +1,29 @@
+services:
+  rutorrent:
+    image: crazymax/rtorrent-rutorrent:5.3.18-0.16.25@sha256:a6577938d9b2d1e9038a9989c395990738c984ff6d7a2037a082a06bb4ab8a2d
+    restart: unless-stopped
+    # lets rTorrent save its session before shutdown
+    stop_grace_period: 1m
+    expose:
+      - 8080
+    environment:
+      TZ: ${TZ}
+      PUID: ${PUID}
+      PGID: ${PGID}
+      UPLOAD_MAX_SIZE: ${UPLOAD_MAX_SIZE}
+    volumes:
+      - rutorrent-data:/data
+      - rutorrent-downloads:/downloads
+      - rutorrent-passwd:/passwd
+      # a non-empty file switches on nginx basic auth for the web UI
+      - ./rutorrent.htpasswd:/passwd/rutorrent.htpasswd
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+
+volumes:
+  rutorrent-data: {}
+  rutorrent-downloads: {}
+  rutorrent-passwd: {}

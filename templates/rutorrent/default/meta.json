@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Web front-end for the rTorrent BitTorrent client, bundled with rTorrent behind HTTP basic auth, with persistent session, settings and downloads.",
+  "category": "media",
+  "developedBy": {
+    "label": "Novik",
+    "url": "https://github.com/Novik"
+  },
+  "links": {
+    "github": "https://github.com/Novik/ruTorrent",
+    "docs": [
+      "https://github.com/Novik/ruTorrent/wiki",
+      "https://github.com/crazy-max/docker-rtorrent-rutorrent#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated password stored after {PLAIN} in the rutorrent.htpasswd mount. Edit that mount to change the login, then redeploy."
+    },
+    {
+      "type": "info",
+      "message": "The BitTorrent peer ports are not published, so rTorrent can only reach peers through outgoing connections."
+    }
+  ]
+}
