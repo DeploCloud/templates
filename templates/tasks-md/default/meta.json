@@ -1,0 +1,21 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted kanban board that stores every lane as a directory and every card as a Markdown file.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Matheus Baldissara",
+    "url": "https://github.com/BaldissaraMatheus"
+  },
+  "links": {
+    "github": "https://github.com/BaldissaraMatheus/Tasks.md",
+    "docs": [
+      "https://github.com/BaldissaraMatheus/Tasks.md#readme"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Tasks.md has no built-in authentication: anyone who knows the domain can read and edit every board. Restrict access in front of the app if the board is not meant to be public."
+    }
+  ]
+}

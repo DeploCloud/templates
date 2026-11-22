@@ -1,0 +1,16 @@
+services:
+  tasks-md:
+    image: baldissaramatheus/tasks.md:3.3.0@sha256:fd3e212fd5619794598418c049feda17810dae4438a84c00a0fb06fe3621b97a
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+    volumes:
+      - tasks-md-tasks:/tasks
+      - tasks-md-config:/config
+
+volumes:
+  tasks-md-tasks: {}
+  tasks-md-config: {}
