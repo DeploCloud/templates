@@ -1,0 +1,6 @@
+services:
+  weatherstar:
+    image: ghcr.io/netbymatt/ws4kp:8.2.3@sha256:bc8caaade5e49bfc14c12786b86f52bd10ae4a47575b5e209cd27ab42c9f1688
+    restart: unless-stopped
+    expose:
+      - 8080
