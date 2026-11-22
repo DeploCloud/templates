@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "fredy"
+port = 9_998
+host = "${domain}"
+
+[config.env]
+NODE_ENV = "production"
