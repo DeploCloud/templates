@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted family planner with tasks, calendar, budget, meals and shopping lists, backed by an encrypted SQLite database on a persistent volume.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ulaş Kalaycı",
+    "url": "https://github.com/ulsklyc"
+  },
+  "links": {
+    "github": "https://github.com/ulsklyc/yuvomi",
+    "website": "https://yuvomi.cloud/",
+    "docs": [
+      "https://github.com/ulsklyc/yuvomi/blob/main/docs/installation.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor creates the admin account in the browser. Open the app right after deployment to claim it."
+    },
+    {
+      "type": "warning",
+      "message": "DB_ENCRYPTION_KEY encrypts the database and its backups and cannot be changed on an existing database. Keep a copy of it outside the server, or backups cannot be opened."
+    }
+  ]
+}
