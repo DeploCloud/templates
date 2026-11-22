@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted WakaTime-compatible backend that collects coding statistics from editor plugins, with a SQLite database on a persistent volume.",
+  "category": "development",
+  "developedBy": {
+    "label": "Ferdinand Mütsch",
+    "url": "https://github.com/muety"
+  },
+  "links": {
+    "github": "https://github.com/muety/wakapi",
+    "website": "https://wakapi.dev",
+    "docs": [
+      "https://github.com/muety/wakapi#-configuration-options",
+      "https://github.com/muety/wakapi/blob/master/config.default.yml",
+      "https://github.com/muety/wakapi#-client-setup"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the administrator. Sign up right after deployment, then set WAKAPI_ALLOW_SIGNUP to false if the instance is private."
+    }
+  ]
+}

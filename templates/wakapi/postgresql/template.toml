@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "wakapi"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+WAKAPI_PUBLIC_URL = "https://${domain}"
+WAKAPI_PASSWORD_SALT = "${password:32}"
+WAKAPI_COOKIE_KEY = "${hash:64}"
+WAKAPI_INSECURE_COOKIES = "false"
+WAKAPI_ALLOW_SIGNUP = "true"
+DB_PASSWORD = "${db_password}"

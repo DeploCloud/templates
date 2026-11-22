@@ -1,0 +1,46 @@
+services:
+  wakapi:
+    image: ghcr.io/muety/wakapi:2.18.2@sha256:7a14217db1b6a47816c8d8d0590cc40fa12fd409dfed6c194bbb4cd50f43d913
+    restart: unless-stopped
+    init: true
+    expose:
+      - 3000
+    environment:
+      WAKAPI_PUBLIC_URL: ${WAKAPI_PUBLIC_URL}
+      WAKAPI_PASSWORD_SALT: ${WAKAPI_PASSWORD_SALT}
+      WAKAPI_COOKIE_KEY: ${WAKAPI_COOKIE_KEY}
+      WAKAPI_INSECURE_COOKIES: ${WAKAPI_INSECURE_COOKIES}
+      WAKAPI_ALLOW_SIGNUP: ${WAKAPI_ALLOW_SIGNUP}
+      WAKAPI_DB_TYPE: postgres
+      WAKAPI_DB_HOST: wakapi-db
+      WAKAPI_DB_PORT: "5432"
+      WAKAPI_DB_NAME: wakapi
+      WAKAPI_DB_USER: wakapi
+      WAKAPI_DB_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "/app/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      wakapi-db:
+        condition: service_healthy
+
+  wakapi-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: wakapi
+      POSTGRES_USER: wakapi
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - wakapi-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wakapi -d wakapi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  wakapi-db-data: {}
