@@ -1,0 +1,36 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Spotify listening tracker that polls your history and shows statistics in a web dashboard, backed by MongoDB.",
+  "category": "media",
+  "developedBy": {
+    "label": "Yooooomi",
+    "url": "https://github.com/Yooooomi"
+  },
+  "links": {
+    "github": "https://github.com/Yooooomi/your_spotify",
+    "docs": [
+      "https://github.com/Yooooomi/your_spotify#creating-the-spotify-application",
+      "https://github.com/Yooooomi/your_spotify#environment",
+      "https://github.com/Yooooomi/your_spotify#importing-past-history"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "A Spotify developer app is required. Create one in the Spotify developer dashboard with the Web API enabled, add https://api.<your domain>/oauth/spotify/callback as a redirect URI, then set SPOTIFY_PUBLIC (client ID) and SPOTIFY_SECRET (client secret) and redeploy. Other Spotify users must be added under User Management in that app.",
+      "link": "https://github.com/Yooooomi/your_spotify#creating-the-spotify-application"
+    },
+    {
+      "type": "warning",
+      "message": "The API is served on its own api. subdomain of the app domain, so a custom domain needs DNS for both names. Upstream reports that hostnames containing the word spotify can be flagged as deceptive by Google; prefer an app name and domain without it."
+    },
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the site can sign in with a Spotify account allowed by your app. The first user is the administrator and can turn off new registrations in Settings."
+    },
+    {
+      "type": "info",
+      "message": "MongoDB needs a CPU with AVX support on x86_64 servers."
+    }
+  ]
+}

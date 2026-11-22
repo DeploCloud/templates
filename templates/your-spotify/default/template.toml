@@ -1,0 +1,26 @@
+[variables]
+api_domain = "api.${domain}"
+mongo_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "your-spotify"
+port = 3_000
+host = "${domain}"
+primary = true
+
+[[config.domains]]
+serviceName = "your-spotify-server"
+port = 8_080
+host = "${api_domain}"
+
+[config.env]
+API_ENDPOINT = "https://${api_domain}"
+CLIENT_ENDPOINT = "https://${domain}"
+SPOTIFY_PUBLIC = ""
+SPOTIFY_SECRET = ""
+TIMEZONE = "UTC"
+MONGO_USER = "your_spotify"
+MONGO_PASSWORD = "${mongo_password}"
