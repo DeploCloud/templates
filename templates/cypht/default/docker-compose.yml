@@ -1,0 +1,48 @@
+services:
+  cypht:
+    image: cypht/cypht:2.14.0@sha256:141ec827dc5faf01a056a6d61c49c7a43366e967b7535c254b39ff6b7b26a4e1
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      AUTH_TYPE: DB
+      AUTH_USERNAME: ${AUTH_USERNAME}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      ADMIN_USERS: ${AUTH_USERNAME}
+      DB_CONNECTION_TYPE: host
+      DB_DRIVER: mysql
+      DB_HOST: cypht-db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASSWORD}
+      SESSION_TYPE: DB
+      USER_CONFIG_TYPE: DB
+      ENABLE_REDIS: "false"
+      ENABLE_MEMCACHED: "false"
+      DEFAULT_SETTING_TIMEZONE: ${TZ}
+    volumes:
+      - cypht-data:/var/lib/hm3
+    depends_on:
+      cypht-db:
+        condition: service_healthy
+
+  cypht-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - cypht-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  cypht-data: {}
+  cypht-db: {}
