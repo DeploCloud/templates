@@ -1,0 +1,17 @@
+services:
+  watchstate:
+    image: ghcr.io/arabcoders/watchstate:v1.11.0@sha256:8d70d906f7cc30b35187072db6593b5205758fea77506e2bc3be47ae02bcbf5b
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - watchstate-config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/v1/api/system/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  watchstate-config: {}
