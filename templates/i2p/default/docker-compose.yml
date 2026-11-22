@@ -1,0 +1,28 @@
+services:
+  i2p-web:
+    image: nginx:1.30.7-alpine@sha256:caf4e1e032a20f9c3c5e28fc7f25ffd768ad8677b4975c54193075997b3a97e3
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - i2p
+
+  i2p:
+    image: geti2p/i2p:i2p-2.14.1@sha256:a2569d38e31f56934c6b2c6842ad1b0f1435218645140532ddf5ec0a51dd1e29
+    restart: unless-stopped
+    expose:
+      - 7657
+    environment:
+      JVM_XMX: ${JVM_XMX}
+      # 0.0.0.0 also lifts the console's Host header allowlist
+      IP_ADDR: 0.0.0.0
+    volumes:
+      - i2p-config:/i2p/.i2p
+      - i2p-snark:/i2psnark
+      - ./router.config:/entrypoint/i2p-config-templates/router.config:ro
+
+volumes:
+  i2p-config: {}
+  i2p-snark: {}
