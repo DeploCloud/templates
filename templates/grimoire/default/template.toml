@@ -1,0 +1,38 @@
+[config]
+
+[[config.domains]]
+serviceName = "grimoire-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	# Grimoire itself requires an integration bearer token on these routes
+	@token path /mcp /capture /integrations/browser/v1/*
+	handle @token {
+		reverse_proxy grimoire:3210
+	}
+
+	handle {
+		basic_auth {
+			{$GRIMOIRE_USERNAME} {$GRIMOIRE_PASSWORD_HASH}
+		}
+		# the daemon rejects any Authorization header that is not a bearer token
+		reverse_proxy grimoire:3210 {
+			header_up -Authorization
+		}
+	}
+}
+"""
+
+[config.env]
+CORS_ORIGINS = "https://${domain}"
+GRIMOIRE_USERNAME = "admin"
+GRIMOIRE_PASSWORD = "${password:24}"
