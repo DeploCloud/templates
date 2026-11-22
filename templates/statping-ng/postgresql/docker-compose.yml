@@ -1,0 +1,50 @@
+services:
+  statping-ng:
+    image: ghcr.io/statping-ng/statping-ng:0.93.0@sha256:236d8490077decd23213eae50f50ae22db6b6758e8e491e6ab560ac9185c3d75
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - statping-ng-data:/app
+    environment:
+      DB_CONN: postgres
+      DB_HOST: statping-ng-db
+      DB_PORT: "5432"
+      DB_DATABASE: statping
+      DB_USER: statping
+      DB_PASS: ${DB_PASSWORD}
+      NAME: ${NAME}
+      DESCRIPTION: ${DESCRIPTION}
+      DOMAIN: ${DOMAIN}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      SAMPLE_DATA: "false"
+      ALLOW_REPORTS: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:8080/health | jq -e '.online == true'"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      statping-ng-db:
+        condition: service_healthy
+
+  statping-ng-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: statping
+      POSTGRES_USER: statping
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - statping-ng-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U statping -d statping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  statping-ng-data: {}
+  statping-ng-postgres: {}
