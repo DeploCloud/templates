@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted personal microblog for publishing short posts, links and media to a public timeline with RSS, optional comments and an HTTP API.",
+  "category": "cms",
+  "developedBy": {
+    "label": "lin-snow",
+    "url": "https://github.com/lin-snow"
+  },
+  "links": {
+    "github": "https://github.com/lin-snow/Ech0",
+    "website": "https://www.ech0.app/",
+    "docs": [
+      "https://www.ech0.app/docs/start/installation",
+      "https://github.com/lin-snow/Ech0/blob/main/DEPLOYMENT.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the Owner with admin rights. Register it right after deployment, then disable open registration in the admin panel if you do not want other sign-ups."
+    }
+  ]
+}

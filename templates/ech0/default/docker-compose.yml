@@ -1,0 +1,20 @@
+services:
+  ech0:
+    image: sn0wl1n/ech0:v5.9.10@sha256:d4341225ee7b87cd5055925ad3b5a74b8fbb9f5c7517cff959e70685d66aeab2
+    restart: unless-stopped
+    expose:
+      - 6277
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      ECH0_SETTING_SERVER_URL: ${ECH0_SETTING_SERVER_URL}
+    volumes:
+      - ech0-data:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:6277/api/hello > /dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  ech0-data: {}
