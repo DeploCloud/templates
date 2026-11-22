@@ -1,0 +1,14 @@
+[variables]
+db_password = "${hash:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "middleware"
+port = 3_333
+host = "${domain}"
+
+[config.env]
+DB_PASS = "${db_password}"
+DEFAULT_SYNC_DAYS = "31"
