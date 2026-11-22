@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Library optimiser that watches a media library and transcodes or remuxes video files through FFmpeg using configurable plugin flows.",
+  "category": "media",
+  "developedBy": {
+    "label": "Josh.5",
+    "url": "https://github.com/Josh5"
+  },
+  "links": {
+    "github": "https://github.com/Unmanic/unmanic",
+    "website": "https://docs.unmanic.app/",
+    "docs": [
+      "https://docs.unmanic.app/docs/installation/docker",
+      "https://docs.unmanic.app/docs/using_unmanic/getting_started"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Unmanic has no built-in login: anyone who knows the URL can change settings, install plugins and process files. The default library already points at the /library volume; put the media you want optimised there.",
+      "link": "https://docs.unmanic.app/docs/guides/basic_auth_nginx"
+    }
+  ]
+}
