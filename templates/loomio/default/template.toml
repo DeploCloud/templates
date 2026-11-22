@@ -1,0 +1,30 @@
+[variables]
+db_password = "${password:32}"
+secret_cookie_token = "${hash:64}"
+inbound_email_password = "${hash:64}"
+server_api_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "loomio"
+port = 3000
+host = "${domain}"
+
+[config.env]
+SITE_NAME = "Loomio"
+CANONICAL_HOST = "${domain}"
+SUPPORT_EMAIL = ""
+NOTIFICATIONS_EMAIL_ADDRESS = "notifications@${domain}"
+DB_PASSWORD = "${db_password}"
+SECRET_COOKIE_TOKEN = "${secret_cookie_token}"
+RAILS_INBOUND_EMAIL_PASSWORD = "${inbound_email_password}"
+SERVER_API_KEY = "${server_api_key}"
+SMTP_SERVER = ""
+SMTP_PORT = "465"
+SMTP_AUTH = "plain"
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+SMTP_USE_SSL = "1"
+WEB_CONCURRENCY = "2"

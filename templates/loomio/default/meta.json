@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Collaborative decision-making for groups: threaded discussions, proposals, polls and votes, with a background job worker, PostgreSQL and Redis.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Loomio",
+    "url": "https://github.com/loomio"
+  },
+  "links": {
+    "github": "https://github.com/loomio/loomio",
+    "website": "https://www.loomio.com",
+    "docs": [
+      "https://github.com/loomio/loomio/blob/master/deploy/README.md",
+      "https://github.com/loomio/loomio/blob/master/deploy/env_template",
+      "https://github.com/loomio/loomio/blob/master/deploy/UPGRADING.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-in works through emailed login links, so set SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD and SUPPORT_EMAIL before the first sign-up. For STARTTLS on port 587, set SMTP_PORT to 587 and leave SMTP_USE_SSL empty. NOTIFICATIONS_EMAIL_ADDRESS must be a sender your SMTP server accepts.",
+      "link": "https://github.com/loomio/loomio/blob/master/deploy/README.md#set-up-smtp"
+    },
+    {
+      "type": "warning",
+      "message": "No account is an admin by default. After your first sign-in, run rails runner 'User.last.update!(is_admin: true)' in the loomio container to open /admin.",
+      "link": "https://github.com/loomio/loomio/blob/master/deploy/README.md#try-it-out"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: Loomio forces secure cookies, so sign-in fails over plain HTTP."
+    }
+  ]
+}
