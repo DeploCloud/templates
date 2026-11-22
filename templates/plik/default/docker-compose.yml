@@ -1,0 +1,37 @@
+services:
+  # /data is not in the image, so the volume starts root-owned; plikd runs as plik (1000)
+  plik-init:
+    image: rootgg/plik:1.4.3@sha256:7b450ff320b3a3f6444ca6fa94c8fde2f5e6eb82d6b9d50bf813ad93e7858f01
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "1000:1000", "/data"]
+    volumes:
+      - plik-data:/data
+
+  plik:
+    image: rootgg/plik:1.4.3@sha256:7b450ff320b3a3f6444ca6fa94c8fde2f5e6eb82d6b9d50bf813ad93e7858f01
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      PLIKD_PLIK_DOMAIN: https://${PLIK_DOMAIN}
+      PLIKD_SOURCE_IP_HEADER: X-Real-Ip
+      PLIKD_FEATURE_AUTHENTICATION: ${PLIK_FEATURE_AUTHENTICATION}
+      PLIKD_DEFAULT_ADMIN_LOGIN: ${PLIK_ADMIN_LOGIN}
+      PLIKD_DEFAULT_ADMIN_PASSWORD: ${PLIK_ADMIN_PASSWORD}
+      PLIKD_DATA_BACKEND_CONFIG: '{"Directory":"/data/files"}'
+      PLIKD_METADATA_BACKEND_CONFIG: '{"Driver":"sqlite3","ConnectionString":"/data/plik.db"}'
+    volumes:
+      - plik-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      plik-init:
+        condition: service_completed_successfully
+
+volumes:
+  plik-data: {}
