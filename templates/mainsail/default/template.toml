@@ -1,0 +1,18 @@
+[[config.domains]]
+serviceName = "mainsail"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.json"
+content = """{
+  "defaultLocale": "en",
+  "defaultMode": "dark",
+  "defaultTheme": "mainsail",
+  "hostname": null,
+  "port": null,
+  "path": null,
+  "instancesDB": "browser",
+  "instances": []
+}
+"""
