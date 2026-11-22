@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Invitation and user management for Plex, Jellyfin, Emby and other media servers, with guided onboarding wizards for invited users.",
+  "category": "media",
+  "developedBy": {
+    "label": "Wizarr",
+    "url": "https://github.com/wizarrrr"
+  },
+  "links": {
+    "github": "https://github.com/wizarrrr/wizarr",
+    "website": "https://docs.wizarr.dev",
+    "docs": [
+      "https://docs.wizarr.dev/getting-started/installation",
+      "https://docs.wizarr.dev/getting-started/reverse-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the first visitor creates the admin account. Then connect your media server (URL and API key or token) in the settings."
+    }
+  ]
+}

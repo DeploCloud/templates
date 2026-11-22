@@ -1,0 +1,15 @@
+services:
+  wizarr:
+    image: ghcr.io/wizarrrr/wizarr:v2026.10.1@sha256:08f2c6de534ec7d36d39a4f55b7c5c379021ca881dc519c702aad0ddafbdc67a
+    restart: unless-stopped
+    expose:
+      - 5690
+    environment:
+      TZ: ${TZ}
+      DISABLE_BUILTIN_AUTH: "false"
+      TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS}
+    volumes:
+      - wizarr-data:/data
+
+volumes:
+  wizarr-data: {}
