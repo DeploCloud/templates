@@ -1,0 +1,1 @@
+Runs the official SketchForge image: a Next.js server that delivers a local-first 3D design editor to the browser. Private projects stay in each user's browser storage, while the shared `.skf` project library and its thumbnails persist in the `/data/projects` volume. No setup is needed after deployment; open the URL and start a project.
