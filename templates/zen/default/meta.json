@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted Markdown notes app with tags, full-text search and version history, stored in a single SQLite database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Sheshbabu Chinnakonda",
+    "url": "https://github.com/sheshbabu"
+  },
+  "links": {
+    "github": "https://github.com/sheshbabu/zen",
+    "website": "https://www.sheshbabu.com/zen/",
+    "docs": [
+      "https://www.sheshbabu.com/zen/documentation.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Zen supports a single user. Create the account right after deployment: the first person to open the app and register becomes its owner."
+    }
+  ]
+}

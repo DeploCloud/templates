@@ -1,0 +1,13 @@
+services:
+  zen:
+    image: ghcr.io/sheshbabu/zen/zen:2.0.0@sha256:3ec9c007b194ca0873c358b9306b1c5f11d75261cbde4e78bbfce94bef00c17c
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - zen-data:/data
+      - zen-images:/images
+
+volumes:
+  zen-data: {}
+  zen-images: {}
