@@ -1,0 +1,16 @@
+{
+  "name": "Default",
+  "shortDescription": "Privacy-respecting meta search engine written in Rust that aggregates results from DuckDuckGo, Wikipedia and other engines without ads or tracking.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "neon-mmd",
+    "url": "https://github.com/neon-mmd"
+  },
+  "links": {
+    "github": "https://github.com/neon-mmd/websurfx",
+    "docs": [
+      "https://github.com/neon-mmd/websurfx/blob/rolling/docs/installation.md",
+      "https://github.com/neon-mmd/websurfx/blob/rolling/docs/configuration.md"
+    ]
+  }
+}

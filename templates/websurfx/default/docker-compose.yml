@@ -1,0 +1,13 @@
+services:
+  websurfx:
+    image: ghcr.io/neon-mmd/websurfx:v1.31.1-memory@sha256:202ed09ba7ce4d1e924011b0c2e81fe66ef6700115af471a5b284668452ac253
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - ./config.lua:/etc/xdg/websurfx/config.lua:ro
+      - ./allowlist.txt:/etc/xdg/websurfx/allowlist.txt:ro
+      - ./blocklist.txt:/etc/xdg/websurfx/blocklist.txt:ro
+    # scratch image has no /tmp; the settings import upload is buffered there
+    tmpfs:
+      - /tmp

@@ -1,0 +1,70 @@
+[config]
+
+[[config.domains]]
+serviceName = "websurfx"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.lua"
+content = """-- see https://github.com/neon-mmd/websurfx/blob/rolling/docs/configuration.md
+logging = true
+debug = false
+threads = 10
+
+port = "8080"
+binding_ip = "0.0.0.0"
+production_use = false
+request_timeout = 30
+tcp_connection_keep_alive = 30
+pool_idle_connection_timeout = 30
+-- every client reaches the app through the proxy IP, so this limit is shared
+rate_limiter = {
+	number_of_requests = 200,
+	time_limit = 1,
+}
+https_adaptive_window_size = true
+-- the image has no CA bundle: use the bundled webpki roots
+operating_system_tls_certificates = false
+number_of_https_connections = 10
+client_connection_keep_alive = 120
+
+-- 0 None, 1 Low, 2 Moderate, 3 High, 4 Aggressive
+safe_search = 2
+
+colorscheme = "catppuccin-mocha"
+theme = "simple"
+animation = "simple-frosted-glow"
+
+redis_url = "redis://127.0.0.1:8082"
+cache_expiry_time = 600
+http_cache_expiry_time = 60
+
+upstream_search_engines = {
+	DuckDuckGo = true,
+	Searx = false,
+	Brave = false,
+	Startpage = false,
+	LibreX = false,
+	Mojeek = false,
+	Bing = false,
+	Qwant = false,
+	Wikipedia = true,
+	Yahoo = false,
+	SepiaSearch = false,
+}
+
+proxy = nil
+"""
+
+[[config.mounts]]
+filePath = "allowlist.txt"
+content = """
+
+"""
+
+[[config.mounts]]
+filePath = "blocklist.txt"
+content = """
+
+"""
