@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Alternative YouTube frontend without ads or tracking, with local accounts, subscriptions, watch history and SponsorBlock support.",
+  "category": "media",
+  "developedBy": {
+    "label": "ViewTube",
+    "url": "https://github.com/ViewTube"
+  },
+  "links": {
+    "github": "https://github.com/ViewTube/viewtube",
+    "website": "https://viewtube.wiki",
+    "docs": [
+      "https://viewtube.wiki/installation/docker",
+      "https://viewtube.wiki/configuration/environment",
+      "https://viewtube.wiki/configuration/admin"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open and VIEWTUBE_ADMIN_USER is set to admin, so whoever registers that username first gets admin rights. Register it right after deploying, then turn off registration in the admin panel if the instance should stay private.",
+      "link": "https://viewtube.wiki/configuration/admin"
+    }
+  ]
+}
