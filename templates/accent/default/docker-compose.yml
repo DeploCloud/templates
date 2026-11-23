@@ -1,0 +1,35 @@
+services:
+  accent:
+    image: mirego/accent:v1.32.1@sha256:05f09602b2f8d0a7625b6673dbcfa6f8f2e5ac912cb4b523fac625c81de6e23b
+    restart: unless-stopped
+    expose:
+      - 4000
+    environment:
+      PORT: "4000"
+      DATABASE_URL: postgres://accent:${DB_PASSWORD}@accent-db:5432/accent
+      CANONICAL_URL: ${CANONICAL_URL}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      SIGNING_SALT: ${SIGNING_SALT}
+      MACHINE_TRANSLATIONS_VAULT_KEY: ${MACHINE_TRANSLATIONS_VAULT_KEY}
+      DUMMY_LOGIN_ENABLED: ${DUMMY_LOGIN_ENABLED}
+    depends_on:
+      accent-db:
+        condition: service_healthy
+
+  accent-db:
+    image: postgres:18.7-alpine@sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: accent
+      POSTGRES_USER: accent
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U accent -d accent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - accent-db:/var/lib/postgresql
+
+volumes:
+  accent-db: {}
