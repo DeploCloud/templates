@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Developer-oriented translation management with a web UI, GraphQL API, review history and CLI sync, backed by PostgreSQL.",
+  "category": "development",
+  "developedBy": {
+    "label": "Mirego",
+    "url": "https://www.mirego.com"
+  },
+  "links": {
+    "github": "https://github.com/mirego/accent",
+    "website": "https://www.accent.reviews",
+    "docs": [
+      "https://github.com/mirego/accent#-environment-variables",
+      "https://github.com/mirego/accent/tree/master/cli"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Password-less email login is enabled so the instance works on first start: anyone who can reach the URL can sign in with any email address, including one that already owns projects. Set up GitHub, GitLab, Google, Microsoft or OIDC login (for example OIDC_ISSUER, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET) and delete the DUMMY_LOGIN_ENABLED variable entirely; setting it to false does not disable it.",
+      "link": "https://github.com/mirego/accent#authentication-setup"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
