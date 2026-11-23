@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted TLS certificate manager to issue, renew, inventory and deploy certificates through ACME with DNS-01 providers, plus a web UI and REST API.",
+  "category": "security",
+  "developedBy": {
+    "label": "Fabrizio Salmi",
+    "url": "https://github.com/fabriziosalmi"
+  },
+  "links": {
+    "github": "https://github.com/fabriziosalmi/certmate",
+    "website": "https://www.certmate.org/",
+    "docs": [
+      "https://www.certmate.org/docs/",
+      "https://github.com/fabriziosalmi/certmate/blob/main/docs/docker.md",
+      "https://github.com/fabriziosalmi/certmate/blob/main/docs/configuration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first page creates the administrator account and asks for the API bearer token: copy the generated API_BEARER_TOKEN value from this deployment's environment variables. Public certificates are usually validated through DNS-01, which needs credentials for a supported DNS provider, added in Settings.",
+      "link": "https://github.com/fabriziosalmi/certmate/blob/main/docs/docker.md"
+    }
+  ]
+}
