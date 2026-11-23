@@ -1,0 +1,25 @@
+[variables]
+db_root_password = "${password:32}"
+secret_token = "${hash:128}"
+
+[config]
+[[config.mounts]]
+filePath = "site.yml"
+content = """
+authentication_schemes:
+  - "database"
+time_zone: "UTC"
+secure_cookies: true
+secret_token: "${secret_token}"
+force_ssl: false
+open_signups: false
+admin_email: "admin@${domain}"
+"""
+
+[[config.domains]]
+serviceName = "tracks"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DB_ROOT_PASSWORD = "${db_root_password}"

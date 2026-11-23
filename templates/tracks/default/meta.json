@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Getting Things Done (GTD) task manager with contexts, projects, recurring actions and feeds, backed by a persistent MariaDB database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "TracksApp",
+    "url": "https://github.com/TracksApp"
+  },
+  "links": {
+    "github": "https://github.com/TracksApp/tracks",
+    "website": "https://www.getontracks.org/",
+    "docs": [
+      "https://github.com/TracksApp/tracks/blob/master/doc/installation.md",
+      "https://github.com/TracksApp/tracks/blob/master/doc/upgrading.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open /signup right after deployment: the first account created there becomes the administrator. Public signups stay closed afterwards."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
