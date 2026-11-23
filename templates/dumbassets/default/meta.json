@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Simple self-hosted asset tracker for physical items, their components, warranties and maintenance, with photo and receipt uploads and Apprise notifications.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "DumbWare",
+    "url": "https://github.com/DumbWareio"
+  },
+  "links": {
+    "github": "https://github.com/DumbWareio/DumbAssets",
+    "website": "https://dumbware.io/",
+    "docs": [
+      "https://github.com/DumbWareio/DumbAssets#environment-variables",
+      "https://github.com/DumbWareio/DumbAssets#data-storage"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The asset tracker is open to anyone with the URL until you set DUMBASSETS_PIN to a numeric PIN of 4 or more digits in the environment and redeploy.",
+      "link": "https://github.com/DumbWareio/DumbAssets#environment-variables"
+    }
+  ]
+}

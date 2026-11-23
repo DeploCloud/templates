@@ -1,0 +1,18 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "dumbassets"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+BASE_URL = "https://${domain}"
+SESSION_SECRET = "${secret:64}"
+DUMBASSETS_PIN = ""
+SITE_TITLE = "DumbAssets"
+ALLOWED_ORIGINS = "*"
+APPRISE_URL = ""
+CURRENCY_CODE = "USD"
+CURRENCY_LOCALE = "en-US"
+TZ = "UTC"
