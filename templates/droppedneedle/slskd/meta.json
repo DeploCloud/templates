@@ -1,0 +1,34 @@
+{
+  "name": "slskd",
+  "shortDescription": "DroppedNeedle with a bundled slskd Soulseek client that downloads into the same media volume, so requested albums are fetched, verified and filed in your library.",
+  "category": "media",
+  "developedBy": {
+    "label": "DroppedNeedle",
+    "url": "https://github.com/DroppedNeedle"
+  },
+  "links": {
+    "github": "https://github.com/DroppedNeedle/DroppedNeedle",
+    "website": "https://www.droppedneedle.com/",
+    "docs": [
+      "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/download-clients.md",
+      "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/configuration.md",
+      "https://github.com/slskd/slskd/blob/master/docs/config.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created in the web UI becomes the admin, so open the app right after deploying. Then add /data/music under Settings > Library and, under Settings > Download Client, connect slskd with URL http://droppedneedle-slskd:5030 and the generated SLSKD_API_KEY.",
+      "link": "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/download-clients.md#slskd"
+    },
+    {
+      "type": "warning",
+      "message": "slskd only joins Soulseek once you set your Soulseek account in SLSKD_SLSK_USERNAME and SLSKD_SLSK_PASSWORD. It shares SLSKD_SHARED_DIR (the library at /data/music by default) with the network, and Soulseek bans clients that share nothing.",
+      "link": "https://github.com/slskd/slskd/blob/master/docs/config.md#shares"
+    },
+    {
+      "type": "info",
+      "message": "Only DroppedNeedle is routed. The slskd web UI and the Soulseek listen port 50300 stay private, so peers that cannot accept incoming connections either may fail to transfer."
+    }
+  ]
+}

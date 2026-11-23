@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "droppedneedle"
+port = 8688
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"

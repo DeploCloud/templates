@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "droppedneedle"
+port = 8688
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+SLSKD_API_KEY = "${hash:48}"
+SLSKD_PASSWORD = "${password:32}"
+SLSKD_SLSK_USERNAME = ""
+SLSKD_SLSK_PASSWORD = ""
+SLSKD_SHARED_DIR = "/data/music"
