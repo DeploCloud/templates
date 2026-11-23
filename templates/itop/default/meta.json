@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based CMDB and IT service management tool for assets, incidents, changes and service catalogs, with MariaDB and a background cron worker.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Combodo",
+    "url": "https://combodo.com/"
+  },
+  "links": {
+    "github": "https://github.com/Combodo/iTop",
+    "website": "https://combodo.com/features/",
+    "docs": [
+      "https://www.itophub.io/wiki/page?id=latest:install:installing_itop",
+      "https://www.itophub.io/wiki/page?id=latest:admin:cron"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site right after deploying to run the setup wizard: until it is completed, anyone who reaches the site can run it. On the database step use server itop-db, login itop and the generated DB_PASSWORD, then select the existing itop database. Create the administrator account with ITOP_ADMIN_USER and ITOP_ADMIN_PASSWORD from the environment: the cron service signs in with them to run notifications, SLAs and backups.",
+      "link": "https://www.itophub.io/wiki/page?id=latest:install:installing_itop"
+    }
+  ]
+}

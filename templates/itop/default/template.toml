@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "itop"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+ITOP_ADMIN_USER = "admin"
+ITOP_ADMIN_PASSWORD = "${admin_password}"
