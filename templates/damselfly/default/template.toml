@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "damselfly"
+port = 6_363
+host = "${domain}"

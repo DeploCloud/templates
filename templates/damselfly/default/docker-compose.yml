@@ -1,0 +1,15 @@
+services:
+  damselfly:
+    image: webreaper/damselfly:4.5.3@sha256:6dedb903ee37463619495aad8652d2aaf23ccba61acf253e1ada764f4529dd13
+    restart: unless-stopped
+    expose:
+      - 6363
+    volumes:
+      - damselfly-config:/config
+      - damselfly-thumbs:/thumbs
+      - damselfly-pictures:/pictures
+
+volumes:
+  damselfly-config: {}
+  damselfly-thumbs: {}
+  damselfly-pictures: {}

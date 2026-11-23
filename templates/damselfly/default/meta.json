@@ -1,0 +1,33 @@
+{
+  "name": "Default",
+  "shortDescription": "Photo management server that indexes a folder-based library with keyword tagging, metadata search and local face and object recognition.",
+  "category": "media",
+  "developedBy": {
+    "label": "Mark Otway",
+    "url": "https://github.com/Webreaper"
+  },
+  "links": {
+    "github": "https://github.com/Webreaper/Damselfly",
+    "website": "https://damselfly.info",
+    "docs": [
+      "https://github.com/Webreaper/Damselfly/blob/master/docs/Installation.md",
+      "https://github.com/Webreaper/Damselfly/blob/master/docs/Multi-user.md",
+      "https://github.com/Webreaper/Damselfly/blob/master/docs/FAQ.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Login is not required out of the box, so anyone with the URL can browse your photos. Open Settings (cog icon), User Management, and add the first account with the Admin role, then enable \"Force users to login\" under System Settings. The API itself does not check logins, so keep the URL private.",
+      "link": "https://github.com/Webreaper/Damselfly/blob/master/docs/Multi-user.md"
+    },
+    {
+      "type": "warning",
+      "message": "Damselfly has no upload in the web UI. Copy your photos into the pictures volume (mounted at /pictures) and they are indexed automatically."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
