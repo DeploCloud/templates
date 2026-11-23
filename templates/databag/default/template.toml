@@ -1,0 +1,13 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "databag"
+port = 7_000
+host = "${domain}"
+
+[config.env]
+ADMIN = "${admin_password}"

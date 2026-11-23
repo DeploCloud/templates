@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight federated messenger with end-to-end encrypted topics, group threads and audio/video calls, backed by SQLite.",
+  "category": "communication",
+  "developedBy": {
+    "label": "balzack",
+    "url": "https://github.com/balzack"
+  },
+  "links": {
+    "github": "https://github.com/balzack/databag",
+    "docs": [
+      "https://github.com/balzack/databag#installation",
+      "https://github.com/balzack/databag#audio-and-video-calls",
+      "https://github.com/balzack/databag/blob/main/doc/design_overview.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the site, click the cog icon and sign in with the generated ADMIN password. In the admin settings set Federated Host to your domain and save, then use the add-user icon to generate account links for your users.",
+      "link": "https://github.com/balzack/databag#installation"
+    },
+    {
+      "type": "info",
+      "message": "Audio and video calls need a STUN/TURN relay server, configured in the admin settings.",
+      "link": "https://github.com/balzack/databag#audio-and-video-calls"
+    }
+  ]
+}
