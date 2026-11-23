@@ -1,0 +1,23 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Simple single-user expense tracker with a monthly pie chart, cashflow view, recurring transactions and CSV import, backed by a bundled PostgreSQL database.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Tanq16",
+    "url": "https://github.com/Tanq16"
+  },
+  "links": {
+    "github": "https://github.com/Tanq16/ExpenseOwl",
+    "docs": [
+      "https://github.com/Tanq16/ExpenseOwl#data-backends",
+      "https://github.com/Tanq16/ExpenseOwl#configuration-options"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "ExpenseOwl has no built-in authentication: anyone who can open the URL can view and edit all data. Put it behind an authenticating proxy or keep the domain private.",
+      "link": "https://github.com/Tanq16/ExpenseOwl#usage"
+    }
+  ]
+}
