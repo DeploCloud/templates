@@ -1,0 +1,32 @@
+services:
+  # the entrypoint only chowns /config and /cache, so the files volume starts root-owned
+  nextexplorer-init:
+    image: nxzai/explorer:v4.0.1@sha256:3b3f441d3ea3c0b2ee3094c292dbc59a1fbf54b70a492f6d96513f99caf4facc
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["chown", "1000:1000", "/mnt/Files"]
+    volumes:
+      - nextexplorer-files:/mnt/Files
+
+  nextexplorer:
+    image: nxzai/explorer:v4.0.1@sha256:3b3f441d3ea3c0b2ee3094c292dbc59a1fbf54b70a492f6d96513f99caf4facc
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      PUBLIC_URL: ${PUBLIC_URL}
+      PUID: "1000"
+      PGID: "1000"
+    volumes:
+      - nextexplorer-config:/config
+      - nextexplorer-cache:/cache
+      - nextexplorer-files:/mnt/Files
+    depends_on:
+      nextexplorer-init:
+        condition: service_completed_successfully
+
+volumes:
+  nextexplorer-config: {}
+  nextexplorer-cache: {}
+  nextexplorer-files: {}
