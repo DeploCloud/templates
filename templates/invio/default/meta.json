@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Lightweight self-hosted invoicing with customers, products, PDF invoices and e-invoice exports such as Factur-X, FatturaPA and UBL, stored in SQLite.",
+  "category": "finance",
+  "developedBy": {
+    "label": "kittendevv",
+    "url": "https://github.com/kittendevv"
+  },
+  "links": {
+    "github": "https://github.com/kittendevv/Invio",
+    "website": "https://invio.codingkitten.dev",
+    "docs": [
+      "https://github.com/kittendevv/Invio/wiki/Quick-Start",
+      "https://github.com/kittendevv/Invio/wiki/Environment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as ADMIN_USER with the generated ADMIN_PASS from the environment. The admin account is created only on the first start, so changing these values later does not change the existing login."
+    }
+  ]
+}
