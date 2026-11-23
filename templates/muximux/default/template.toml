@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "muximux"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"

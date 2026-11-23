@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Homelab dashboard that opens your self-hosted apps inside one tab, with an embedding proxy for apps that refuse iframes, split view and built-in auth.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "mescon",
+    "url": "https://github.com/mescon"
+  },
+  "links": {
+    "github": "https://github.com/mescon/Muximux",
+    "docs": [
+      "https://github.com/mescon/Muximux/blob/main/docs/wiki/getting-started.md",
+      "https://github.com/mescon/Muximux/blob/main/docs/wiki/deployment.md",
+      "https://github.com/mescon/Muximux/blob/main/docs/wiki/authentication.md",
+      "https://github.com/mescon/Muximux/blob/main/docs/wiki/configuration.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The setup wizard asks for a one-time setup token. Copy it from the container logs (line \"Generated new setup token\" or \"Reusing existing setup token\") and pick Password in the Security step to create the admin account: \"None\" leaves the dashboard open to anyone who reaches the domain.",
+      "link": "https://github.com/mescon/Muximux/blob/main/docs/wiki/authentication.md#setup-token"
+    }
+  ]
+}
