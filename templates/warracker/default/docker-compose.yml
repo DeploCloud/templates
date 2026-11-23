@@ -1,0 +1,45 @@
+services:
+  warracker:
+    image: ghcr.io/sassanix/warracker/main:1.0.6@sha256:8a59ead00c8c4c6df28c1ad3abd5d6de72cb2bab57f294413e1492f57672170c
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      DB_HOST: warracker-db
+      DB_PORT: "5432"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_ADMIN_USER: ${DB_ADMIN_USER}
+      DB_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+      FRONTEND_URL: ${APP_URL}
+      APP_BASE_URL: ${APP_URL}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB}
+      NGINX_MAX_BODY_SIZE_VALUE: ${MAX_UPLOAD_MB}M
+      WARRACKER_MEMORY_MODE: ${WARRACKER_MEMORY_MODE}
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - warracker-uploads:/data/uploads
+    depends_on:
+      warracker-db:
+        condition: service_healthy
+
+  warracker-db:
+    image: postgres:15.20-alpine@sha256:e18480a22d6e48f4d816a6696769b1ec09ac73a824c5649e49c7d8b684913f3d
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - warracker-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  warracker-uploads: {}
+  warracker-db: {}

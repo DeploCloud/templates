@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted warranty tracker for products, expiry dates, receipts and manuals, with multi-user accounts and a bundled PostgreSQL database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "sassanix",
+    "url": "https://github.com/sassanix"
+  },
+  "links": {
+    "github": "https://github.com/sassanix/Warracker",
+    "website": "https://warracker.com",
+    "docs": [
+      "https://github.com/sassanix/Warracker/wiki/Getting-Started",
+      "https://github.com/sassanix/Warracker/wiki/Configuration",
+      "https://github.com/sassanix/Warracker/wiki/Notifications"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you register becomes the administrator, so create it right after deploying. Email notifications and password resets need SMTP_HOST, SMTP_PORT, SMTP_USERNAME and SMTP_PASSWORD added to the environment.",
+      "link": "https://github.com/sassanix/Warracker/wiki/Configuration#email--smtp"
+    }
+  ]
+}
