@@ -1,0 +1,29 @@
+services:
+  materialious:
+    image: wardpearce/materialious-full:1.18.35@sha256:9ad5e04634809a44aa48eb25ab828e5ebd2659870bff836c5b89257a6b3ee46c
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      ORIGIN: ${ORIGIN}
+      ADDRESS_HEADER: X-Forwarded-For
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      DATABASE_CONNECTION_URI: sqlite:///materialious-data/materialious.db
+      PUBLIC_INTERNAL_AUTH: "true"
+      PUBLIC_REQUIRE_AUTH: "true"
+      PUBLIC_REGISTRATION_ALLOWED: ${PUBLIC_REGISTRATION_ALLOWED}
+      PUBLIC_ADMIN_USERNAMES: ${PUBLIC_ADMIN_USERNAMES}
+      PUBLIC_DEFAULT_INVIDIOUS_INSTANCE: ${PUBLIC_DEFAULT_INVIDIOUS_INSTANCE}
+      PUBLIC_DEFAULT_RETURNYTDISLIKES_INSTANCE: https://returnyoutubedislikeapi.com
+      HISTORY_CULLING: "365"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://127.0.0.1:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    volumes:
+      - materialious-data:/materialious-data
+
+volumes:
+  materialious-data: {}

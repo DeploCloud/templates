@@ -1,0 +1,14 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "materialious"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ORIGIN = "https://${domain}"
+COOKIE_SECRET = "${hash:64}"
+PUBLIC_REGISTRATION_ALLOWED = "true"
+PUBLIC_ADMIN_USERNAMES = ""
+PUBLIC_DEFAULT_INVIDIOUS_INSTANCE = ""
