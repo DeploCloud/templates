@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Realtime self-hosted recipe app with recipe imports, meal planning and shared grocery lists, backed by PostgreSQL and Valkey.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Norish",
+    "url": "https://github.com/norish-recipes"
+  },
+  "links": {
+    "github": "https://github.com/norish-recipes/norish",
+    "website": "https://norish.dev",
+    "docs": [
+      "https://docs.norish.dev/quick-start/",
+      "https://docs.norish.dev/configuration/server-runtime/",
+      "https://docs.norish.dev/configuration/authentication/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account to sign in becomes the server owner and admin, and registration closes right after. Create it as soon as the app is up; reopen registration under Settings > Admin > General.",
+      "link": "https://docs.norish.dev/configuration/server-runtime/"
+    }
+  ]
+}

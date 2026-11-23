@@ -1,0 +1,78 @@
+services:
+  norish:
+    image: norishapp/norish:v0.27.0-beta@sha256:9d53a73da34e3a83b9dd6b3d55da72563add3a4588d25e332fa071c12f104a44
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - norish-uploads:/app/uploads
+    environment:
+      AUTH_URL: ${AUTH_URL}
+      MASTER_KEY: ${MASTER_KEY}
+      DATABASE_HOST: norish-db
+      DATABASE_PORT: "5432"
+      DATABASE: norish
+      DATABASE_USER: norish
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      VALKEY_URL: valkey://norish-valkey:6379
+      OBSCURA_ENDPOINT: ws://norish-obscura:9222
+      OBSCURA_CDP_TOKEN: ${OBSCURA_CDP_TOKEN}
+      UPLOADS_DIR: /app/uploads
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000/api/v1/health/live', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 1m
+    depends_on:
+      norish-db:
+        condition: service_healthy
+      norish-valkey:
+        condition: service_healthy
+      norish-obscura:
+        condition: service_started
+
+  norish-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: norish
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: norish
+    volumes:
+      - norish-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U norish -d norish"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  norish-valkey:
+    image: valkey/valkey:9.2.0-alpine@sha256:c8e2d17498838af5d91e12eb7c11220b3434a7b7131a333e3af52ad5e0b80882
+    restart: unless-stopped
+    volumes:
+      - norish-valkey:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  norish-obscura:
+    image: norishapp/obscura:0.2.7-norish.1@sha256:0d4af74d4984688d071a4a2ccb12bf0292790707da1c10bdb51e85754e15b702
+    restart: unless-stopped
+    expose:
+      - 9222
+    environment:
+      OBSCURA_CDP_TOKEN: ${OBSCURA_CDP_TOKEN}
+
+volumes:
+  norish-uploads: {}
+  norish-db: {}
+  norish-valkey: {}
