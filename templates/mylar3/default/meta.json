@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Automated comic book (cbr/cbz) downloader that watches series, grabs new issues from NZB and torrent sources, then renames, sorts and metatags them.",
+  "category": "media",
+  "developedBy": {
+    "label": "MylarComics",
+    "url": "https://github.com/MylarComics"
+  },
+  "links": {
+    "github": "https://github.com/mylar3/mylar3",
+    "website": "https://mylar.nerdfirehurricane.com/",
+    "docs": [
+      "https://mylar.nerdfirehurricane.com/docs/introduction",
+      "https://mylar.nerdfirehurricane.com/docs/installation/docker",
+      "https://mylar.nerdfirehurricane.com/docs/installation/base_requirements",
+      "https://mylar.nerdfirehurricane.com/docs/installation/cv_cache"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The web UI is open to anyone with the URL until you set a username and password under Settings > Web Interface. Searching for series needs a free ComicVine API key (or the Comic Vine cache), and downloads need an NZB or torrent client or the built-in direct download, all configured in Settings.",
+      "link": "https://mylar.nerdfirehurricane.com/docs/installation/base_requirements"
+    }
+  ]
+}
