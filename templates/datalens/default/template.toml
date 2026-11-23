@@ -1,0 +1,57 @@
+[variables]
+db_password = "${password:32}"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "datalens"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+POSTGRES_USER = "pg-user"
+POSTGRES_PASSWORD = "${db_password}"
+US_MASTER_TOKEN = "${password:32}"
+AUTH_MASTER_TOKEN = "${password:32}"
+EXPORT_DATA_VERIFICATION_KEY = "${password:32}"
+CONTROL_API_CRYPTO_KEY = "${secret:43}="
+AUTH_ADMIN_PASSWORD = "${admin_password}"
+AUTH_SIGNUP_DISABLED = "true"
+UI_APP_ENDPOINT = "https://${domain}"
+
+[[config.mounts]]
+filePath = "keyenv.sh"
+content = """#!/bin/sh
+# Exports NAME=keyfile pairs read from the keys volume, then runs the image's own command after --.
+set -e
+while [ "$1" != "--" ]; do
+  export "${1%%=*}=$(cat "/keys/${1#*=}")"
+  shift
+done
+shift
+exec "$@"
+"""
+
+[[config.mounts]]
+filePath = "keygen.py"
+content = """import os
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+
+# One-line PEM with literal backslash-n, the form upstream passes through env.
+NL, ESC = chr(10), chr(92) + "n"
+for name in ("auth-token", "bi-us-auth", "ui-us-auth", "temporal-auth"):
+    if os.path.exists(f"/keys/{name}.pub"):
+        continue
+    key = rsa.generate_private_key(public_exponent=65537, key_size=4096)
+    pems = {
+        "key": key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()),
+        "pub": key.public_key().public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo),
+    }
+    for ext, pem in pems.items():
+        path = f"/keys/{name}.{ext}"
+        with open(path, "w") as f:
+            f.write(pem.decode().replace(NL, ESC))
+        os.chmod(path, 0o644)
+"""
