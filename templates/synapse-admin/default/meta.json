@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web admin console for Synapse Matrix homeservers: manage users, rooms, media and reports through the Synapse admin API from your browser.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Awesome Technologies",
+    "url": "https://github.com/Awesome-Technologies"
+  },
+  "links": {
+    "github": "https://github.com/Awesome-Technologies/synapse-admin",
+    "website": "https://awesome-technologies.github.io/synapse-admin/",
+    "docs": [
+      "https://github.com/Awesome-Technologies/synapse-admin/blob/master/README.md",
+      "https://element-hq.github.io/synapse/latest/reverse_proxy.html#synapse-administration-endpoints",
+      "https://element-hq.github.io/synapse/latest/usage/administration/admin_api/index.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "This is only the admin console: it needs an existing Synapse homeserver (v1.93.0 or newer) whose /_matrix and /_synapse/admin endpoints your browser can reach. Sign in with the homeserver URL and a Synapse server admin account.",
+      "link": "https://element-hq.github.io/synapse/latest/reverse_proxy.html#synapse-administration-endpoints"
+    }
+  ]
+}
