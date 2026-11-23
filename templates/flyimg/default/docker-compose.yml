@@ -1,0 +1,18 @@
+services:
+  flyimg:
+    image: flyimg/flyimg:1.12.13@sha256:02377941f6fba406d9b0c535f83126dd0cdcd7f0166a1abe577b1a0f320fb6c0
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - flyimg-uploads:/var/www/html/web/uploads
+      - ./parameters.yml:/var/www/html/config/parameters.yml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  flyimg-uploads: {}

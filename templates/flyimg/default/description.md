@@ -1,0 +1,3 @@
+Flyimg is an image processing server that fetches a source image by URL, resizes, crops and compresses it with ImageMagick, and serves it in modern formats such as AVIF, WebP or JPEG XL. Request images as `https://<your-domain>/upload/w_600,h_400,q_90/<source-image-url>`; the root page is an interactive demo.
+Generated images are cached on a persistent volume mounted at `/var/www/html/web/uploads`.
+All settings live in the mounted `parameters.yml` file, which Flyimg reads on every request. Out of the box it accepts any source URL, so restrict the allowed domains or enable URL signing there before exposing it publicly.

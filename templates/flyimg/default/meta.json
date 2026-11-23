@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "On-the-fly image resizing, cropping and compression server that serves AVIF, WebP, JPEG XL, MozJPEG or PNG from source URLs with a local cache.",
+  "category": "media",
+  "developedBy": {
+    "label": "Flyimg",
+    "url": "https://github.com/flyimg"
+  },
+  "links": {
+    "github": "https://github.com/flyimg/flyimg",
+    "website": "https://flyimg.io",
+    "docs": [
+      "https://docs.flyimg.io/install/",
+      "https://docs.flyimg.io/configuration/",
+      "https://docs.flyimg.io/url-options/",
+      "https://docs.flyimg.io/security/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "By default Flyimg fetches and transforms images from any URL. Set restricted_domains and whitelist_domains, or security_key and security_iv for signed URLs, in the parameters.yml config file to prevent abuse.",
+      "link": "https://docs.flyimg.io/security/"
+    }
+  ]
+}
