@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Continuwuity, a lightweight Rust Matrix homeserver with embedded RocksDB storage and federation on port 443 through a served .well-known.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Continuwuity",
+    "url": "https://continuwuity.org"
+  },
+  "links": {
+    "github": "https://github.com/continuwuity/continuwuity",
+    "website": "https://continuwuity.org",
+    "docs": [
+      "https://continuwuity.org/deploying/docker",
+      "https://continuwuity.org/configuration",
+      "https://continuwuity.org/reference/config",
+      "https://continuwuity.org/guides/dns"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "On first start the container logs print a one-time registration token. Use it to register the first account from a Matrix client; that account becomes the server admin and is invited to the admin room.",
+      "link": "https://continuwuity.org/deploying/docker#starting-your-server"
+    },
+    {
+      "type": "warning",
+      "message": "The domain becomes the Matrix server name (user IDs look like @alice:your-domain). Set the final domain before the first start; it cannot be changed later without wiping the database.",
+      "link": "https://continuwuity.org/reference/config"
+    }
+  ]
+}

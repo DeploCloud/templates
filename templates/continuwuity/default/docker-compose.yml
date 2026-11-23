@@ -1,0 +1,20 @@
+services:
+  continuwuity:
+    image: ghcr.io/continuwuity/continuwuity:v26.9.4@sha256:5f21a556290df5b6eda30c7d695288f5c4b06f9529a64e2cae040297287496c3
+    restart: unless-stopped
+    expose:
+      - 8008
+    environment:
+      CONTINUWUITY_SERVER_NAME: ${CONTINUWUITY_SERVER_NAME}
+      CONTINUWUITY_DATABASE_PATH: /var/lib/continuwuity
+      CONTINUWUITY_ADDRESS: 0.0.0.0
+      CONTINUWUITY_PORT: 8008
+      CONTINUWUITY_WELL_KNOWN__CLIENT: ${CONTINUWUITY_WELL_KNOWN__CLIENT}
+      CONTINUWUITY_WELL_KNOWN__SERVER: ${CONTINUWUITY_WELL_KNOWN__SERVER}
+    volumes:
+      - continuwuity-data:/var/lib/continuwuity
+      # Docker's embedded resolver times out under federation load
+      - ./continuwuity-resolv.conf:/etc/resolv.conf:ro
+
+volumes:
+  continuwuity-data: {}
