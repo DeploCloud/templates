@@ -1,0 +1,16 @@
+[variables]
+redis_password = "${password:32}"
+jwt_secret = "${base64:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "viewtube"
+port = 8_066
+host = "${domain}"
+
+[config.env]
+VIEWTUBE_ADMIN_USER = "admin"
+VIEWTUBE_JWT_SECRET = "${jwt_secret}"
+REDIS_PASSWORD = "${redis_password}"

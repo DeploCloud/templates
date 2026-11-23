@@ -1,0 +1,54 @@
+services:
+  viewtube:
+    image: mauriceo/viewtube:0.17.0@sha256:5bc6c42c3be8e5357deeb2be4e97c12b283cc66400868b51d041a8f8c84e9997
+    restart: unless-stopped
+    expose:
+      - 8066
+    environment:
+      VIEWTUBE_DATABASE_HOST: viewtube-db
+      VIEWTUBE_DATABASE_PORT: "27017"
+      VIEWTUBE_REDIS_HOST: viewtube-redis
+      VIEWTUBE_REDIS_PORT: "6379"
+      VIEWTUBE_REDIS_PASSWORD: ${REDIS_PASSWORD}
+      VIEWTUBE_DATA_DIRECTORY: /data
+      VIEWTUBE_SECURE: "true"
+      VIEWTUBE_ADMIN_USER: ${VIEWTUBE_ADMIN_USER}
+      VIEWTUBE_JWT_SECRET: ${VIEWTUBE_JWT_SECRET}
+    volumes:
+      - viewtube-data:/data
+    depends_on:
+      viewtube-db:
+        condition: service_healthy
+      viewtube-redis:
+        condition: service_healthy
+
+  viewtube-db:
+    image: mongo:7.0.48@sha256:41e8195b2791692695e1dc9bd21cd51d0a3af05fff8ace9304a5c1acf94f1ae1
+    restart: unless-stopped
+    volumes:
+      - viewtube-db:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  viewtube-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    volumes:
+      - viewtube-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  viewtube-data: {}
+  viewtube-db: {}
+  viewtube-redis: {}
