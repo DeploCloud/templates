@@ -1,0 +1,18 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lowcoder"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+LOWCODER_PUBLIC_URL = "https://${domain}"
+LOWCODER_DB_ENCRYPTION_PASSWORD = "${password:32}"
+LOWCODER_DB_ENCRYPTION_SALT = "${password:32}"
+LOWCODER_API_KEY_SECRET = "${hash:64}"
+LOWCODER_NODE_SERVICE_SECRET = "${hash:64}"
+LOWCODER_NODE_SERVICE_SECRET_SALT = "${password:32}"
+LOWCODER_SUPERUSER_USERNAME = "admin@localhost"
+LOWCODER_SUPERUSER_PASSWORD = "${password:24}"
+LOWCODER_EMAIL_SIGNUP_ENABLED = "true"

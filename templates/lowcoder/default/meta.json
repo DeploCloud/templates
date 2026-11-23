@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Open source low-code platform for building internal tools, apps and dashboards, run as one all-in-one container with embedded MongoDB and Redis.",
+  "category": "development",
+  "developedBy": {
+    "label": "Lowcoder",
+    "url": "https://github.com/lowcoder-org"
+  },
+  "links": {
+    "github": "https://github.com/lowcoder-org/lowcoder",
+    "website": "https://www.lowcoder.cloud/",
+    "docs": [
+      "https://docs.lowcoder.cloud/lowcoder-documentation/setup-and-run/self-hosting",
+      "https://github.com/lowcoder-org/lowcoder/blob/main/deploy/docker/README.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the super admin account from LOWCODER_SUPERUSER_USERNAME and LOWCODER_SUPERUSER_PASSWORD. Email sign-up is open by default, so anyone who reaches the URL can register and create a workspace; set LOWCODER_EMAIL_SIGNUP_ENABLED to false to close it."
+    }
+  ]
+}
