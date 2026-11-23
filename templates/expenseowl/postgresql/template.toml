@@ -1,0 +1,15 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "expenseowl"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+DB_NAME = "expenseowl"
+DB_USER = "expenseowl"
+DB_PASSWORD = "${db_password}"
