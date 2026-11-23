@@ -1,0 +1,2 @@
+Warracker tracks product warranties, their expiration dates and the receipts, invoices and manuals that go with them. This template deploys the official Warracker image, which serves the web UI and API on one port, together with a PostgreSQL 15 database.
+Warranty records live in the database volume, and uploaded files live in the uploads volume. The first account registered becomes the administrator; email notifications and password resets work only after you add SMTP settings to the environment.

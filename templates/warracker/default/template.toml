@@ -1,0 +1,23 @@
+[variables]
+db_password = "${password:32}"
+db_admin_password = "${password:32}"
+secret_key = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "warracker"
+port = 80
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+DB_NAME = "warranty_db"
+DB_USER = "warranty_user"
+DB_PASSWORD = "${db_password}"
+DB_ADMIN_USER = "warracker_admin"
+DB_ADMIN_PASSWORD = "${db_admin_password}"
+SECRET_KEY = "${secret_key}"
+MAX_UPLOAD_MB = "32"
+WARRACKER_MEMORY_MODE = "optimized"
