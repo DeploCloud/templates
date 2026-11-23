@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Personal internet radio station with an AI DJ that plays your Navidrome or Subsonic library over one shared Icecast stream and talks between tracks.",
+  "category": "media",
+  "developedBy": {
+    "label": "Perminder Klair",
+    "url": "https://github.com/perminder-klair"
+  },
+  "links": {
+    "github": "https://github.com/perminder-klair/subwave",
+    "website": "https://www.getsubwave.com",
+    "docs": [
+      "https://www.getsubwave.com/setup",
+      "https://www.getsubwave.com/manual",
+      "https://github.com/perminder-klair/subwave/blob/main/docs/deployment.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "After the first start, open /onboarding and sign in as admin with the ADMIN_PASS value from the environment. The wizard needs a reachable Navidrome or other Subsonic server and an LLM provider (a local or cloud Ollama, or a hosted API key).",
+      "link": "https://www.getsubwave.com/setup"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
