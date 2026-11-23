@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted email archiving with full-text search over emails and attachments, ingesting from IMAP, Google Workspace, Microsoft 365, PST, EML and mbox.",
+  "category": "email",
+  "developedBy": {
+    "label": "LogicLabs OU",
+    "url": "https://github.com/LogicLabs-OU"
+  },
+  "links": {
+    "github": "https://github.com/LogicLabs-OU/OpenArchiver",
+    "website": "https://openarchiver.com",
+    "docs": [
+      "https://docs.openarchiver.com/user-guides/installation.html",
+      "https://docs.openarchiver.com/user-guides/email-providers/imap.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visit opens the /setup page, where the first account created becomes the administrator. Open the app right after deploying.",
+      "link": "https://docs.openarchiver.com/user-guides/installation.html"
+    }
+  ]
+}

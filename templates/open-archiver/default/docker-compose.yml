@@ -1,0 +1,93 @@
+services:
+  open-archiver:
+    image: logiclabshq/open-archiver:v0.6.2@sha256:ec2e954959f7d0ee0089c4338437720da9b85520a23779cb6d7642943b3ae8e5
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      NODE_ENV: production
+      PORT_BACKEND: 4000
+      APP_URL: ${APP_URL}
+      ORIGIN: ${APP_URL}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@open-archiver-db:5432/${POSTGRES_DB}
+      REDIS_HOST: open-archiver-valkey
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_TLS_ENABLED: "false"
+      MEILI_HOST: http://open-archiver-meilisearch:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      TIKA_URL: http://open-archiver-tika:9998
+      STORAGE_TYPE: local
+      STORAGE_LOCAL_ROOT_PATH: /var/data/open-archiver
+      STORAGE_ENCRYPTION_KEY: ${STORAGE_ENCRYPTION_KEY}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: 7d
+      BODY_SIZE_LIMIT: ${BODY_SIZE_LIMIT}
+      ENABLE_DELETION: ${ENABLE_DELETION}
+    volumes:
+      - archiver-data:/var/data/open-archiver
+    depends_on:
+      open-archiver-db:
+        condition: service_healthy
+      open-archiver-valkey:
+        condition: service_healthy
+      open-archiver-meilisearch:
+        condition: service_healthy
+      open-archiver-tika:
+        condition: service_started
+
+  open-archiver-db:
+    image: postgres:17.12-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  open-archiver-valkey:
+    image: valkey/valkey:8.1.12-alpine@sha256:9971099af41c36e887aabdfe22b80c0fe45df949163dfc9cb434febc57cfc3fc
+    restart: unless-stopped
+    command: valkey-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - valkeydata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a \"$${REDIS_PASSWORD}\" --no-auth-warning ping | grep -q PONG"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  open-archiver-meilisearch:
+    image: getmeili/meilisearch:v1.38.2@sha256:448a5b1b3e9303fabf39b84a2672f184295f665b1cb8eaffb11c738273430e5e
+    restart: unless-stopped
+    environment:
+      MEILI_ENV: production
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_SCHEDULE_SNAPSHOT: "86400"
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meilidata:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:7700/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  open-archiver-tika:
+    image: apache/tika:4.1.0-full@sha256:d69fab827fa004a5e1db786e6d78da947a6cfeedbf595bc5c353ef99622bb2e2
+    restart: unless-stopped
+
+volumes:
+  archiver-data: {}
+  pgdata: {}
+  valkeydata: {}
+  meilidata: {}
