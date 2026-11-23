@@ -1,0 +1,13 @@
+services:
+  wsgidav:
+    image: mar10/wsgidav:v4.4.1@sha256:ad32e2a0e030c620a1695b77267868362e7b1825ccd91c0a8c949152cc511338
+    restart: unless-stopped
+    command: ["wsgidav", "--config=/etc/wsgidav/wsgidav.yaml"]
+    expose:
+      - 8080
+    volumes:
+      - wsgidav-data:/var/wsgidav-root
+      - ./wsgidav.yaml:/etc/wsgidav/wsgidav.yaml:ro
+
+volumes:
+  wsgidav-data: {}

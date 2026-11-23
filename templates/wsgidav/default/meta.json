@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Generic WebDAV server written in Python that shares a persistent folder over HTTPS with password-protected read and write access.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Martin Wendt",
+    "url": "https://github.com/mar10"
+  },
+  "links": {
+    "github": "https://github.com/mar10/wsgidav",
+    "website": "https://wsgidav.readthedocs.io",
+    "docs": [
+      "https://wsgidav.readthedocs.io/en/latest/user_guide_configure.html",
+      "https://wsgidav.readthedocs.io/en/latest/user_guide_access.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated wsgidav_password, which is written into the wsgidav.yaml config file (simple_dc.user_mapping). There is no web app: connect a WebDAV client to https://<your domain>/; a browser only shows a read-only directory listing."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
