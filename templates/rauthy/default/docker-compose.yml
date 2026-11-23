@@ -1,0 +1,31 @@
+services:
+  rauthy:
+    image: ghcr.io/sebadob/rauthy:0.37.2@sha256:d733b7580f53c1601c286b5504853b2774e70245f5f9427d9bcda32496b753ee
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      LISTEN_SCHEME: http
+      LISTEN_PORT_HTTP: "8080"
+      PUB_URL: ${PUB_URL}
+      PROXY_MODE: "true"
+      TRUSTED_PROXIES: |
+        10.0.0.0/8
+        172.16.0.0/12
+        192.168.0.0/16
+        fc00::/7
+      RP_ID: ${RP_ID}
+      RP_ORIGIN: ${RP_ORIGIN}
+      HQL_NODE_ID: "1"
+      HQL_SECRET_RAFT: ${HQL_SECRET_RAFT}
+      HQL_SECRET_API: ${HQL_SECRET_API}
+      ENC_KEYS: ${ENC_KEYS}
+      ENC_KEY_ACTIVE: ${ENC_KEY_ACTIVE}
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL}
+      BOOTSTRAP_ADMIN_PASSWORD_PLAIN: ${BOOTSTRAP_ADMIN_PASSWORD_PLAIN}
+      RAUTHY_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL}
+    volumes:
+      - rauthy-data:/app/data
+
+volumes:
+  rauthy-data: {}

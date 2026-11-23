@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Single sign-on identity and access management server for OpenID Connect and OAuth 2, with passkeys and MFA, backed by an embedded Hiqlite database.",
+  "category": "security",
+  "developedBy": {
+    "label": "Sebastian Dobe",
+    "url": "https://github.com/sebadob"
+  },
+  "links": {
+    "github": "https://github.com/sebadob/rauthy",
+    "website": "https://sebadob.github.io/rauthy/",
+    "docs": [
+      "https://sebadob.github.io/rauthy/getting_started/docker.html",
+      "https://sebadob.github.io/rauthy/getting_started/first_start.html",
+      "https://sebadob.github.io/rauthy/config/config.html",
+      "https://sebadob.github.io/rauthy/config/bootstrap.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in at /auth/v1/account with the BOOTSTRAP_ADMIN_EMAIL and BOOTSTRAP_ADMIN_PASSWORD_PLAIN values from the environment and change the password right away. They only apply to the very first start.",
+      "link": "https://sebadob.github.io/rauthy/getting_started/first_start.html"
+    },
+    {
+      "type": "warning",
+      "message": "No SMTP server is configured, so Rauthy cannot send password reset or new user emails. To enable them, add SMTP_URL, SMTP_USERNAME, SMTP_PASSWORD and SMTP_FROM (plus SMTP_TLS_MODE=starttls for port 587) to the rauthy service in docker-compose.yml and redeploy. Never set SMTP_URL to an empty or unreachable server: Rauthy stops on startup when it cannot connect.",
+      "link": "https://sebadob.github.io/rauthy/config/config.html"
+    }
+  ]
+}

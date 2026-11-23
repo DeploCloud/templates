@@ -1,0 +1,24 @@
+[variables]
+enc_key_id = "deplo1"
+# cryptr wants base64 of exactly 32 bytes: 42 hex chars + "A=" decodes to 32 bytes
+enc_key = "${hash:42}A="
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "rauthy"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+PUB_URL = "${domain}"
+RP_ID = "${domain}"
+RP_ORIGIN = "https://${domain}:443"
+HQL_SECRET_RAFT = "${password:32}"
+HQL_SECRET_API = "${password:32}"
+ENC_KEYS = "${enc_key_id}/${enc_key}"
+ENC_KEY_ACTIVE = "${enc_key_id}"
+BOOTSTRAP_ADMIN_EMAIL = "admin@${domain}"
+BOOTSTRAP_ADMIN_PASSWORD_PLAIN = "${admin_password}"
