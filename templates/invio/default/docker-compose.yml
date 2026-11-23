@@ -1,0 +1,25 @@
+services:
+  invio:
+    image: ghcr.io/kittendevv/invio:v2.5.0@sha256:8e2222c699daaee1e996c0de54cb94a53ad494a295b72bd693ed9fdcd1a5d7b6
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+      JWT_SECRET: ${JWT_SECRET}
+      ORIGIN: ${ORIGIN}
+      DATABASE_PATH: /app/data/invio.db
+      BACKEND_URL: http://localhost:3000
+      RATE_LIMIT_TRUST_PROXY: "true"
+    volumes:
+      - invio-data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  invio-data: {}

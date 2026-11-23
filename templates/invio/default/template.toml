@@ -1,0 +1,17 @@
+[variables]
+admin_password = "${password:24}"
+jwt_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "invio"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+ADMIN_USER = "admin"
+ADMIN_PASS = "${admin_password}"
+JWT_SECRET = "${jwt_secret}"
+ORIGIN = "https://${domain}"
