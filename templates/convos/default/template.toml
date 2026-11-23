@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "convos"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+CONVOS_REQUEST_BASE = "https://${domain}/"
