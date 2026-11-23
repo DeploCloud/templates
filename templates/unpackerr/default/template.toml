@@ -1,0 +1,14 @@
+[variables]
+ui_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "unpackerr"
+port = 5656
+host = "${domain}"
+
+[config.env]
+TZ = "Etc/UTC"
+UI_PASSWORD = "${ui_password}"

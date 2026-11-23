@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Archive extractor for Sonarr, Radarr, Lidarr, Readarr and watch folders that unpacks completed downloads for import, with a web UI for queue, history and settings.",
+  "category": "media",
+  "developedBy": {
+    "label": "Go Lift",
+    "url": "https://golift.io/"
+  },
+  "links": {
+    "github": "https://github.com/Unpackerr/unpackerr",
+    "website": "https://unpackerr.zip/",
+    "docs": [
+      "https://unpackerr.zip/docs/install/docker",
+      "https://unpackerr.zip/docs/install/web-ui",
+      "https://unpackerr.zip/docs/install/configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the generated UI_PASSWORD from the environment; while that variable is set the password cannot be changed in the UI. Unpackerr only finds archives that sit in its downloads volume at the same /downloads path your Starr apps report, and it needs the URL and API key of each Starr app.",
+      "link": "https://unpackerr.zip/docs/install/web-ui"
+    }
+  ]
+}
