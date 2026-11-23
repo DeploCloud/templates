@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Stores the locations OwnTracks apps send over HTTP and shows them on a live map, tables and a JSON API, behind HTTP basic auth.",
+  "category": "other",
+  "developedBy": {
+    "label": "OwnTracks",
+    "url": "https://owntracks.org"
+  },
+  "links": {
+    "github": "https://github.com/owntracks/recorder",
+    "website": "https://owntracks.org",
+    "docs": [
+      "https://owntracks.org/booklet/clients/recorder/",
+      "https://owntracks.org/booklet/tech/http/",
+      "https://github.com/owntracks/docker-recorder",
+      "https://github.com/owntracks/recorder/blob/master/API.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as owntracks with the generated password stored after {PLAIN} in the htpasswd mount. In the OwnTracks app pick HTTP mode, set the URL to https://<your domain>/pub and enter the same username and password under Identification. Add one name:{PLAIN}password line per person and redeploy.",
+      "link": "https://owntracks.org/booklet/tech/http/"
+    },
+    {
+      "type": "info",
+      "message": "This template runs the Recorder in HTTP mode without an MQTT broker, so the apps must be switched from MQTT to HTTP mode. To let users see each other in the app, add entries to the friends database with ocat --load=friends inside the recorder container.",
+      "link": "https://github.com/owntracks/recorder#friends-in-http-mode"
+    }
+  ]
+}

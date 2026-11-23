@@ -1,0 +1,38 @@
+services:
+  owntracks-recorder:
+    image: owntracks/recorder:1.0.7@sha256:8d48df647eb280bb94668658b7fc7ad3b47b9a7307e252aaf63d4c3681c6deaf
+    restart: unless-stopped
+    expose:
+      - 8083
+    environment:
+      # HTTP mode: apps POST to /pub, no MQTT broker
+      OTR_PORT: "0"
+      OTR_HTTPHOST: 0.0.0.0
+      OTR_HTTPPORT: "8083"
+      OTR_HTTPPREFIX: ${OTR_HTTPPREFIX}
+    volumes:
+      - owntracks-recorder-store:/store
+      - owntracks-recorder-config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:8083/api/0/version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # the Recorder has no authentication of its own
+  owntracks-recorder-proxy:
+    image: nginx:1.30.7-alpine@sha256:caf4e1e032a20f9c3c5e28fc7f25ffd768ad8677b4975c54193075997b3a97e3
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./htpasswd:/etc/nginx/htpasswd:ro
+    depends_on:
+      owntracks-recorder:
+        condition: service_healthy
+
+volumes:
+  owntracks-recorder-store: {}
+  owntracks-recorder-config: {}
