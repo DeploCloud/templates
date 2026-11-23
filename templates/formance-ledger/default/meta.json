@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Programmable double-entry financial ledger with a REST API, Numscript transactions and PostgreSQL storage, behind a token-protected gateway.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Formance",
+    "url": "https://github.com/formancehq"
+  },
+  "links": {
+    "github": "https://github.com/formancehq/ledger",
+    "website": "https://www.formance.com/",
+    "docs": [
+      "https://github.com/formancehq/ledger/blob/v2.4.18/docs/api/README.md",
+      "https://docs.formance.com/v3.2/modules/ledger/core-concepts",
+      "https://docs.formance.com/modules/numscript"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web UI. The ledger API has no authentication of its own, so every request goes through a gateway that requires the generated LEDGER_API_TOKEN from the environment settings as an Authorization: Bearer <token> header. Example: curl -X POST -H \"Authorization: Bearer <token>\" https://<your-domain>/v2/main creates a ledger named main.",
+      "link": "https://github.com/formancehq/ledger/blob/v2.4.18/docs/api/README.md"
+    }
+  ]
+}
