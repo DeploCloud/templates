@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Network speed testing and monitoring with Speedtest, iperf3 and LibreSpeed tests, packet loss and DNS monitors, backed by SQLite.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "autobrr",
+    "url": "https://github.com/autobrr"
+  },
+  "links": {
+    "github": "https://github.com/autobrr/netronome",
+    "website": "https://netrono.me",
+    "docs": [
+      "https://netrono.me/getting-started/installation/",
+      "https://netrono.me/getting-started/first-run/",
+      "https://netrono.me/reference/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Netronome has no default account. Open the app right after deployment and register the first user; registration closes once a user exists.",
+      "link": "https://netrono.me/getting-started/first-run/"
+    }
+  ]
+}
