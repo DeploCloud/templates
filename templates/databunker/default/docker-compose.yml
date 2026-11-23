@@ -1,0 +1,38 @@
+services:
+  databunker:
+    image: securitybunker/databunker:0.8.39@sha256:e9fd150723317e1cb8eecc55ce6482b1ca3b9ad9da1f94456288c801534f3401
+    restart: unless-stopped
+    expose:
+      - 3000
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - /databunker/bin/databunker -init -db databunkerdb && exec /databunker/bin/databunker -start -db databunkerdb -conf /databunker/conf/databunker.yaml
+    environment:
+      DATABUNKER_MASTERKEY: ${DATABUNKER_MASTERKEY}
+      DATABUNKER_ROOTTOKEN: ${DATABUNKER_ROOTTOKEN}
+      PGSQL_HOST: databunker-db
+      PGSQL_PORT: "5432"
+      PGSQL_USER_NAME: databunker
+      PGSQL_USER_PASS: ${DB_PASSWORD}
+      PGSSLMODE: disable
+    depends_on:
+      databunker-db:
+        condition: service_healthy
+
+  databunker-db:
+    image: postgres:18.7-alpine@sha256:0115267ab5a509022df9319c77be365cef335adb71556c75f60f5360ee247e71
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: databunker
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: databunkerdb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U databunker -d databunkerdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - databunker-db:/var/lib/postgresql
+
+volumes:
+  databunker-db: {}
