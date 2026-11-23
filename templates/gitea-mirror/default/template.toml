@@ -1,0 +1,16 @@
+[variables]
+auth_secret = "${base64:32}"
+encryption_secret = "${base64:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "gitea-mirror"
+port = 4_321
+host = "${domain}"
+
+[config.env]
+BETTER_AUTH_SECRET = "${auth_secret}"
+ENCRYPTION_SECRET = "${encryption_secret}"
+BETTER_AUTH_URL = "https://${domain}"
