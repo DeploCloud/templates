@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Discord bot that delivers customizable RSS and Atom feed articles to Discord channels, managed from a web control panel.",
+  "category": "communication",
+  "developedBy": {
+    "label": "synzen",
+    "url": "https://github.com/synzen"
+  },
+  "links": {
+    "github": "https://github.com/synzen/MonitoRSS",
+    "website": "https://monitorss.xyz",
+    "docs": [
+      "https://github.com/synzen/MonitoRSS#self-host",
+      "https://github.com/synzen/MonitoRSS#enable-email-notifications"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Login and delivery need a Discord application. Create one in the Discord Developer Portal, set DISCORD_BOT_TOKEN, DISCORD_CLIENT_ID and DISCORD_CLIENT_SECRET in the environment variables, add https://<your domain>/api/v1/discord/callback-v2 as an OAuth2 redirect, then redeploy.",
+      "link": "https://github.com/synzen/MonitoRSS#self-host"
+    }
+  ]
+}
