@@ -1,0 +1,26 @@
+[config]
+
+[[config.domains]]
+serviceName = "globaleaks-proxy"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """server {
+    listen 80;
+    server_name _;
+    client_max_body_size 0;
+    resolver 127.0.0.11 valid=10s ipv6=off;
+    set $globaleaks_upstream globaleaks:8443;
+
+    location / {
+        proxy_pass https://$globaleaks_upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_request_buffering off;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+    }
+}
+"""

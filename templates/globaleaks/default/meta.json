@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Whistleblowing platform for receiving reports, optionally anonymous, with encrypted storage, a setup wizard and a SQLite database on a persistent volume.",
+  "category": "security",
+  "developedBy": {
+    "label": "GlobaLeaks",
+    "url": "https://globaleaks.org/"
+  },
+  "links": {
+    "github": "https://github.com/globaleaks/globaleaks-whistleblowing-software",
+    "website": "https://globaleaks.org/",
+    "docs": [
+      "https://docs.globaleaks.org/en/stable/setup/installation.html",
+      "https://docs.globaleaks.org/en/stable/setup/initialization.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The setup wizard is open to the first visitor. Open the site right after deployment to set the project name, the administrator account and the first recipient.",
+      "link": "https://docs.globaleaks.org/en/stable/setup/initialization.html"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}
