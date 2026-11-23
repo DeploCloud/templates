@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web server for a Cooklang recipe collection: browse, edit and scale recipes, plan meals, and keep a shopping list and pantry.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Cooklang",
+    "url": "https://cooklang.org/"
+  },
+  "links": {
+    "github": "https://github.com/cooklang/cookcli",
+    "website": "https://cooklang.org/cli/",
+    "docs": [
+      "https://github.com/cooklang/cookcli/blob/main/docs/server.md",
+      "https://github.com/cooklang/cookcli/blob/main/README.md#sign-in-in-a-container",
+      "https://cooklang.org/docs/spec/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Visitors can browse recipes without signing in; changes need a user. Sign in as admin with the COOK_ADMIN_PASSWORD value from the environment variables. It only applies on the first deploy: later, manage users with cook server user add|passwd|remove in the cookcli container terminal.",
+      "link": "https://github.com/cooklang/cookcli/blob/main/docs/server.md#signing-in-to-make-changes"
+    }
+  ]
+}
