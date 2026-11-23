@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted music request and discovery app with a web player and Subsonic and Jellyfin APIs. This variant bundles no download client, so music arrives through drop imports or download plugins.",
+  "category": "media",
+  "developedBy": {
+    "label": "DroppedNeedle",
+    "url": "https://github.com/DroppedNeedle"
+  },
+  "links": {
+    "github": "https://github.com/DroppedNeedle/DroppedNeedle",
+    "website": "https://www.droppedneedle.com/",
+    "docs": [
+      "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/README.md",
+      "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/configuration.md",
+      "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/download-clients.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account created in the web UI becomes the admin. Open the app right after deploying to claim it, then add /data/music as the library path under Settings > Library.",
+      "link": "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/accounts-and-sign-in.md"
+    },
+    {
+      "type": "info",
+      "message": "No download client is included, and one on another server cannot hand its files to this stack. Requests wait until you add a download plugin or use the slskd variant; drop imports work without one.",
+      "link": "https://github.com/DroppedNeedle/DroppedNeedle/blob/main/docs/download-clients.md"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+services:
+  droppedneedle-init:
+    image: droppedneedle/droppedneedle:v3.1.0@sha256:58726b681d23a9136bc09ce81592cba18cb97d7933b4b76044a444f1c879054e
+    restart: "no"
+    # the media volume starts root-owned and slskd never creates its own folders
+    entrypoint: ["sh", "-c", "mkdir -p /data/music /data/slskd/complete /data/slskd/incomplete && chown 1000:1000 /data /data/music /data/slskd /data/slskd/complete /data/slskd/incomplete"]
+    volumes:
+      - droppedneedle-media:/data
+
+  droppedneedle:
+    image: droppedneedle/droppedneedle:v3.1.0@sha256:58726b681d23a9136bc09ce81592cba18cb97d7933b4b76044a444f1c879054e
+    restart: unless-stopped
+    expose:
+      - 8688
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      PORT: "8688"
+      TZ: ${TZ}
+      TRUSTED_PROXY_IPS: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+      SLSKD_DOWNLOADS_PATH: /data/slskd/complete
+    volumes:
+      - droppedneedle-config:/app/config
+      - droppedneedle-cache:/app/cache
+      - droppedneedle-plugins:/app/plugins
+      - droppedneedle-imports:/app/imports
+      - droppedneedle-media:/data
+    depends_on:
+      droppedneedle-init:
+        condition: service_completed_successfully
+      droppedneedle-slskd:
+        condition: service_started
+
+  droppedneedle-slskd:
+    image: slskd/slskd:0.26.2@sha256:d0963a3e5b16facd295bf4f2156dad0182f246b1b21a032cae12f5494c694843
+    restart: unless-stopped
+    expose:
+      - 5030
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      SLSKD_NO_HTTPS: "true"
+      SLSKD_USERNAME: slskd
+      SLSKD_PASSWORD: ${SLSKD_PASSWORD}
+      SLSKD_API_KEY: ${SLSKD_API_KEY}
+      SLSKD_SLSK_USERNAME: ${SLSKD_SLSK_USERNAME}
+      SLSKD_SLSK_PASSWORD: ${SLSKD_SLSK_PASSWORD}
+      SLSKD_SHARED_DIR: ${SLSKD_SHARED_DIR}
+      SLSKD_DOWNLOADS_DIR: /data/slskd/complete
+      SLSKD_INCOMPLETE_DIR: /data/slskd/incomplete
+    volumes:
+      - droppedneedle-slskd:/app
+      - droppedneedle-media:/data
+    depends_on:
+      droppedneedle-init:
+        condition: service_completed_successfully
+
+volumes:
+  droppedneedle-config: {}
+  droppedneedle-cache: {}
+  droppedneedle-plugins: {}
+  droppedneedle-imports: {}
+  droppedneedle-media: {}
+  droppedneedle-slskd: {}

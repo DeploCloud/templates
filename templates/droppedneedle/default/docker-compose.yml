@@ -1,0 +1,36 @@
+services:
+  droppedneedle-init:
+    image: droppedneedle/droppedneedle:v3.1.0@sha256:58726b681d23a9136bc09ce81592cba18cb97d7933b4b76044a444f1c879054e
+    restart: "no"
+    # the image only hands /app over to its user, so the media volume starts root-owned
+    entrypoint: ["sh", "-c", "mkdir -p /data/music && chown 1000:1000 /data /data/music"]
+    volumes:
+      - droppedneedle-media:/data
+
+  droppedneedle:
+    image: droppedneedle/droppedneedle:v3.1.0@sha256:58726b681d23a9136bc09ce81592cba18cb97d7933b4b76044a444f1c879054e
+    restart: unless-stopped
+    expose:
+      - 8688
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      PORT: "8688"
+      TZ: ${TZ}
+      TRUSTED_PROXY_IPS: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+    volumes:
+      - droppedneedle-config:/app/config
+      - droppedneedle-cache:/app/cache
+      - droppedneedle-plugins:/app/plugins
+      - droppedneedle-imports:/app/imports
+      - droppedneedle-media:/data
+    depends_on:
+      droppedneedle-init:
+        condition: service_completed_successfully
+
+volumes:
+  droppedneedle-config: {}
+  droppedneedle-cache: {}
+  droppedneedle-plugins: {}
+  droppedneedle-imports: {}
+  droppedneedle-media: {}
