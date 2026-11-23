@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "hometube"
+port = 8_501
+host = "${domain}"
+
+[config.env]
+TZ = "UTC"
+UI_LANGUAGE = "en"
+LANGUAGE_PRIMARY = "en"
+VIDEO_QUALITY_MAX = "max"

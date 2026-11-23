@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI built on yt-dlp that downloads single videos and playlists, with language, subtitle, quality and cutting options, into an organized folder layout ready for a home media server.",
+  "category": "media",
+  "developedBy": {
+    "label": "EgalitarianMonkey",
+    "url": "https://github.com/EgalitarianMonkey"
+  },
+  "links": {
+    "github": "https://github.com/EgalitarianMonkey/hometube",
+    "website": "https://hometube.latentnoise.dev",
+    "docs": [
+      "https://github.com/EgalitarianMonkey/hometube/blob/main/docs/docker.md",
+      "https://github.com/EgalitarianMonkey/hometube/blob/main/docs/usage.md",
+      "https://github.com/EgalitarianMonkey/hometube/blob/main/docs/deployment.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "HomeTube has no built-in login: anyone who can reach the URL can start downloads on the server. Put it behind access control if the domain is public.",
+      "link": "https://github.com/EgalitarianMonkey/hometube/blob/main/docs/deployment.md"
+    },
+    {
+      "type": "warning",
+      "message": "YouTube often blocks downloads from server IPs without cookies. Export a cookies.txt file from a browser signed in to YouTube and place it at /config/youtube_cookies.txt on the hometube-config volume; HomeTube picks it up automatically.",
+      "link": "https://github.com/EgalitarianMonkey/hometube/blob/main/docs/usage.md"
+    }
+  ]
+}
