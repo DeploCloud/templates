@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Web-based file explorer with previews, search, sharing links, an in-browser editor and local user accounts, serving a persistent files volume.",
+  "category": "storage",
+  "developedBy": {
+    "label": "nxzai",
+    "url": "https://github.com/nxzai"
+  },
+  "links": {
+    "github": "https://github.com/nxzai/NextExplorer",
+    "website": "https://explorer.nxz.ai",
+    "docs": [
+      "https://explorer.nxz.ai/installation/deployment",
+      "https://explorer.nxz.ai/configuration/environment",
+      "https://explorer.nxz.ai/admin/guide"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor completes the setup screen and becomes the administrator. Open the app right after deploying to create your account."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nextexplorer"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
