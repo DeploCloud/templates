@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Automation engine that runs business processes declared as YAML task templates, with an encrypted PostgreSQL audit trail and a web dashboard.",
+  "category": "automation",
+  "developedBy": {
+    "label": "OVHcloud",
+    "url": "https://github.com/ovh"
+  },
+  "links": {
+    "github": "https://github.com/ovh/utask",
+    "docs": [
+      "https://github.com/ovh/utask/blob/master/README.md",
+      "https://github.com/ovh/utask/blob/master/config/README.md",
+      "https://github.com/ovh/utask/tree/master/examples"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The dashboard is at /ui/dashboard/ and asks for HTTP basic auth: sign in as admin with the UTASK_ADMIN_PASSWORD value from the environment. Task templates are YAML files mounted into /app/templates; edit or add mounts to change them.",
+      "link": "https://github.com/ovh/utask#templates"
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+services:
+  utask:
+    image: ovhcom/utask:v1.36.0@sha256:cc8398b8ed2b9f30df91ef2fb5b089fe8ea902efae5c4121bac0fa892d39aaf3
+    restart: unless-stopped
+    expose:
+      - 8081
+    environment:
+      CONFIGURATION_FROM: env:CFG
+      CFG_DATABASE: postgres://utask:${UTASK_DB_PASSWORD}@utask-db:5432/utask?sslmode=disable
+      CFG_UTASK_CFG: '{"application_name":"uTask","admin_usernames":["admin"],"base_url":"https://${UTASK_DOMAIN}","concealed_secrets":["database","encryption-key","utask-cfg","basic-auth","callback-config"]}'
+      CFG_CALLBACK_CONFIG: '{"base_url":"https://${UTASK_DOMAIN}"}'
+      CFG_BASIC_AUTH: '{"admin":"${UTASK_ADMIN_PASSWORD}"}'
+      CFG_ENCRYPTION_KEY: '{"identifier":"storage","cipher":"aes-gcm","timestamp":1700000000,"key":"${UTASK_ENCRYPTION_KEY}"}'
+    volumes:
+      - ./hello-world.yaml:/app/templates/hello-world.yaml:ro
+    depends_on:
+      utask-db:
+        condition: service_healthy
+
+  utask-db:
+    image: postgres:17-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: utask
+      POSTGRES_PASSWORD: ${UTASK_DB_PASSWORD}
+      POSTGRES_DB: utask
+    volumes:
+      - utask-db:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U utask -d utask"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  utask-db: {}
