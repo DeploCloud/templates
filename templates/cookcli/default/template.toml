@@ -1,0 +1,15 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cookcli"
+port = 9_080
+host = "${domain}"
+
+[config.env]
+COOK_CORS_ORIGIN = "https://${domain}"
+COOK_ADMIN_USER = "admin"
+COOK_ADMIN_PASSWORD = "${admin_password}"

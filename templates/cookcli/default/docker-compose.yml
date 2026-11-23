@@ -1,0 +1,38 @@
+services:
+  cookcli:
+    image: ghcr.io/cooklang/cookcli:0.41.1@sha256:c6bed1fae7ff3351e2bdea26efa953dc239964d72869cfb7fb367c3a93e48cf9
+    restart: unless-stopped
+    expose:
+      - 9080
+    environment:
+      COOK_CONFIG_DIR: /config
+      COOK_CORS_ORIGIN: ${COOK_CORS_ORIGIN}
+    volumes:
+      - cookcli-recipes:/recipes
+      - cookcli-config:/config
+    depends_on:
+      cookcli-init:
+        condition: service_completed_successfully
+
+  # /config is not in the image, so the volume starts root-owned; cook runs as 1000
+  cookcli-init:
+    image: ghcr.io/cooklang/cookcli:0.41.1@sha256:c6bed1fae7ff3351e2bdea26efa953dc239964d72869cfb7fb367c3a93e48cf9
+    restart: "no"
+    user: "0:0"
+    entrypoint:
+      - sh
+      - -c
+      - |
+        set -e
+        [ -f /config/users.toml ] || printf '%s\n' "$$COOK_ADMIN_PASSWORD" | cook server user add "$$COOK_ADMIN_USER"
+        chown -R 1000:1000 /config
+    environment:
+      COOK_CONFIG_DIR: /config
+      COOK_ADMIN_USER: ${COOK_ADMIN_USER}
+      COOK_ADMIN_PASSWORD: ${COOK_ADMIN_PASSWORD}
+    volumes:
+      - cookcli-config:/config
+
+volumes:
+  cookcli-recipes: {}
+  cookcli-config: {}
