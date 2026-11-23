@@ -1,0 +1,48 @@
+services:
+  formance-ledger:
+    image: ghcr.io/formancehq/ledger:v2.4.18@sha256:cd4aed286a5e59e9a656a4bbd2db3f5f53f617be0423ed0ab6ac58dfcf46062a
+    restart: unless-stopped
+    expose:
+      - 3068
+    environment:
+      POSTGRES_URI: postgresql://ledger:${POSTGRES_PASSWORD}@formance-ledger-db:5432/ledger?sslmode=disable
+      POSTGRES_MAX_OPEN_CONNS: "40"
+      POSTGRES_MAX_IDLE_CONNS: "40"
+      POSTGRES_CONN_MAX_IDLE_TIME: 5m
+      AUTO_UPGRADE: "true"
+      WORKER: "true"
+    depends_on:
+      formance-ledger-db:
+        condition: service_healthy
+
+  formance-ledger-db:
+    image: postgres:16.16-alpine@sha256:f2f98726820d0342055351c6e9d36e705f5bfffb3dd53ff556325114b08afb6d
+    restart: unless-stopped
+    command: ["-c", "max_connections=200"]
+    environment:
+      POSTGRES_USER: ledger
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ledger
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledger -d ledger"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - formance-ledger-db:/var/lib/postgresql/data
+
+  # the ledger API has no authentication without an OIDC issuer, so the public route goes through this token gate
+  formance-ledger-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      LEDGER_API_TOKEN: ${LEDGER_API_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - formance-ledger
+
+volumes:
+  formance-ledger-db: {}
