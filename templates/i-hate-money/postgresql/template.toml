@@ -1,0 +1,24 @@
+[variables]
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "ihatemoney"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+SECRET_KEY = "${password:64}"
+ACTIVATE_DEMO_PROJECT = "False"
+ALLOW_PUBLIC_PROJECT_CREATION = "True"
+BABEL_DEFAULT_TIMEZONE = "UTC"
+MAIL_SERVER = "localhost"
+MAIL_PORT = "25"
+MAIL_USE_TLS = "False"
+MAIL_USE_SSL = "False"
+MAIL_USERNAME = ""
+MAIL_PASSWORD = ""
+MAIL_DEFAULT_SENDER = "I Hate Money <admin@example.com>"
+DB_PASSWORD = "${db_password}"

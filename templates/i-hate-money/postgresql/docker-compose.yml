@@ -1,0 +1,46 @@
+services:
+  ihatemoney:
+    image: ihatemoney/ihatemoney:7.2.1@sha256:009d1520552782765c8c41750262cc69410be7ac616f93a9f371556e472f23c6
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      SQLALCHEMY_DATABASE_URI: postgresql://ihatemoney:${DB_PASSWORD}@ihatemoney-db:5432/ihatemoney?client_encoding=utf8
+      ACTIVATE_DEMO_PROJECT: ${ACTIVATE_DEMO_PROJECT}
+      ALLOW_PUBLIC_PROJECT_CREATION: ${ALLOW_PUBLIC_PROJECT_CREATION}
+      BABEL_DEFAULT_TIMEZONE: ${BABEL_DEFAULT_TIMEZONE}
+      MAIL_SERVER: ${MAIL_SERVER}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USE_TLS: ${MAIL_USE_TLS}
+      MAIL_USE_SSL: ${MAIL_USE_SSL}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_DEFAULT_SENDER: ${MAIL_DEFAULT_SENDER}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8000/healthcheck | grep -q OK"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      ihatemoney-db:
+        condition: service_healthy
+
+  ihatemoney-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ihatemoney
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ihatemoney
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ihatemoney -d ihatemoney"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ihatemoney-db:/var/lib/postgresql/data
+
+volumes:
+  ihatemoney-db: {}
