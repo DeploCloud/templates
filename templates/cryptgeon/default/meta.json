@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-destructing notes and files, encrypted in the browser and stored only in memory until they expire or reach their view limit.",
+  "category": "security",
+  "developedBy": {
+    "label": "cupcakearmy",
+    "url": "https://github.com/cupcakearmy"
+  },
+  "links": {
+    "github": "https://github.com/cupcakearmy/cryptgeon",
+    "website": "https://cryptgeon.org/",
+    "docs": [
+      "https://github.com/cupcakearmy/cryptgeon/tree/v2.9.3#environment-variables",
+      "https://github.com/cupcakearmy/cryptgeon/tree/v2.9.3#deployment"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: browsers only expose the cryptographic functions Cryptgeon needs on a secure origin, so the app does not work over plain HTTP.",
+      "link": "https://github.com/cupcakearmy/cryptgeon/tree/v2.9.3#deployment"
+    }
+  ]
+}
