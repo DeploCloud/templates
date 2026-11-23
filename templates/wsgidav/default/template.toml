@@ -1,0 +1,28 @@
+[variables]
+wsgidav_password = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "wsgidav"
+port = 8_080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "wsgidav.yaml"
+content = """host: 0.0.0.0
+port: 8080
+provider_mapping:
+  "/": /var/wsgidav-root
+http_authenticator:
+  accept_basic: true
+  accept_digest: true
+  default_to_digest: true
+simple_dc:
+  user_mapping:
+    "*":
+      admin:
+        password: "${wsgidav_password}"
+dir_browser:
+  enable: true
+"""
