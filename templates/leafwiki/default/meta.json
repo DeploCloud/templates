@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted wiki that stores pages as Markdown files on disk, with SQLite for users and search, tree navigation and a built-in Markdown editor.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Patrick Erber",
+    "url": "https://github.com/perber"
+  },
+  "links": {
+    "github": "https://github.com/perber/leafwiki",
+    "website": "https://leafwiki.com",
+    "docs": [
+      "https://github.com/perber/leafwiki#configuration",
+      "https://github.com/perber/leafwiki#docker-compose"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in as admin with the password in LEAFWIKI_ADMIN_PASSWORD from the environment variables. It only seeds the first admin account, so change it in the UI after the first login."
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required: login and CSRF cookies are marked secure, so signing in over the plain HTTP address fails."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "leafwiki"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+LEAFWIKI_JWT_SECRET = "${secret:64}"
+LEAFWIKI_ADMIN_PASSWORD = "${password:24}"
+LEAFWIKI_PUBLIC_URL = "https://${domain}"
+LEAFWIKI_TRUSTED_PROXY_IPS = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
