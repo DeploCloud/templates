@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "User management for Jellyfin and Emby: invite links, account expiry, password resets and a self-service account page.",
+  "category": "media",
+  "developedBy": {
+    "label": "hrfee",
+    "url": "https://github.com/hrfee"
+  },
+  "links": {
+    "github": "https://github.com/hrfee/jfa-go",
+    "website": "https://jfa-go.com",
+    "docs": [
+      "https://wiki.jfa-go.com/docs/",
+      "https://wiki.jfa-go.com/docs/reverse-proxy/",
+      "https://wiki.jfa-go.com/docs/pwr/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment: the setup wizard is unauthenticated until it is finished. It asks for the URL and admin credentials of an existing Jellyfin or Emby server. Keep Address 0.0.0.0, port 8056 and HTTPS off, and set \"External jfa-go URL\" to this app's HTTPS address.",
+      "link": "https://wiki.jfa-go.com/docs/reverse-proxy/"
+    }
+  ]
+}
