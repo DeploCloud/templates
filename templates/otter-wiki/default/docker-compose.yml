@@ -1,0 +1,17 @@
+services:
+  otterwiki:
+    image: redimp/otterwiki:2.27.0@sha256:9cf1d76c6bff097ff924404aa5a149b235b15aaa05553870e96504cd1d92752b
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - otterwiki-data:/app-data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/-/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  otterwiki-data: {}
