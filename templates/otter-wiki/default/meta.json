@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Minimalistic wiki that stores pages as Markdown in a git repository, with page history, attachments and a SQLite user database.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Ralph Thesen",
+    "url": "https://github.com/redimp"
+  },
+  "links": {
+    "github": "https://github.com/redimp/otterwiki",
+    "website": "https://otterwiki.com",
+    "docs": [
+      "https://otterwiki.com/Installation",
+      "https://otterwiki.com/Configuration"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Register right after deploying: the first account becomes the admin. Until you change the permissions in the admin settings, anonymous visitors can read and edit pages.",
+      "link": "https://otterwiki.com/Installation"
+    }
+  ]
+}
