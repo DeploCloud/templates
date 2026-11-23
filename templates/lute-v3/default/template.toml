@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "lute"
+port = 5_001
+host = "${domain}"
