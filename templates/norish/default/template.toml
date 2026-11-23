@@ -1,0 +1,18 @@
+[variables]
+db_password = "${password:32}"
+master_key = "${base64:44}"
+obscura_token = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "norish"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+AUTH_URL = "https://${domain}"
+MASTER_KEY = "${master_key}"
+DB_PASSWORD = "${db_password}"
+OBSCURA_CDP_TOKEN = "${obscura_token}"
