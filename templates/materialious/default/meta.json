@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Material design frontend for YouTube and Invidious with its own account system, encrypted subscriptions, watch history sync, SponsorBlock and a built-in proxy.",
+  "category": "media",
+  "developedBy": {
+    "label": "Materialious",
+    "url": "https://github.com/Materialious"
+  },
+  "links": {
+    "github": "https://github.com/Materialious/Materialious",
+    "website": "https://materialio.us",
+    "docs": [
+      "https://github.com/Materialious/Materialious/blob/main/docs/DOCKER-FULL.md",
+      "https://github.com/Materialious/Materialious/blob/main/docs/SETTINGS.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Registration is open so you can create your account; set PUBLIC_REGISTRATION_ALLOWED to false afterwards and redeploy. Add your username to PUBLIC_ADMIN_USERNAMES to get the admin panel.",
+      "link": "https://github.com/Materialious/Materialious/blob/main/docs/DOCKER-FULL.md"
+    }
+  ]
+}
