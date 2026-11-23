@@ -1,0 +1,14 @@
+services:
+  pigeonpod:
+    image: ghcr.io/aizhimou/pigeon-pod:release-1.31.0@sha256:27f0e7d6b7eb6499ac418b334d83d912fe20df50dbb7eb77bef52bd8fe58ea5c
+    restart: unless-stopped
+    expose:
+      - 8080
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      PIGEON_BASE_URL: ${PIGEON_BASE_URL}
+    volumes:
+      - pigeonpod-data:/data
+
+volumes:
+  pigeonpod-data: {}
