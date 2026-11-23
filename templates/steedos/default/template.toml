@@ -1,0 +1,15 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "steedos"
+port = 80
+host = "${domain}"
+
+[config.env]
+ROOT_URL = "https://${domain}"
+STEEDOS_TENANT_TOKEN_SECRET = "${secret:43}"
+STEEDOS_SESSION_SECRET = "${secret:48}"
+B6_JWT_SECRET = "${secret:48}"
+B6_SESSION_SECRET = "${secret:48}"
+NODERED_CREDENTIAL_SECRET = "${secret:48}"

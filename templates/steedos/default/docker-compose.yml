@@ -1,0 +1,20 @@
+services:
+  steedos:
+    image: steedos/steedos-community:3.0.14@sha256:f8bcd584dc698ae252c33f7a791e54b4a4f1dea2d6b7cdb318a9ceba4bd8faa8
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      ROOT_URL: ${ROOT_URL}
+      STEEDOS_TENANT_TOKEN_SECRET: ${STEEDOS_TENANT_TOKEN_SECRET}
+      STEEDOS_SESSION_SECRET: ${STEEDOS_SESSION_SECRET}
+      B6_JWT_SECRET: ${B6_JWT_SECRET}
+      B6_SESSION_SECRET: ${B6_SESSION_SECRET}
+      NODERED_CREDENTIAL_SECRET: ${NODERED_CREDENTIAL_SECRET}
+    volumes:
+      - steedos-storage:/steedos-storage
+      - steedos-packages:/app/.steedos
+
+volumes:
+  steedos-storage: {}
+  steedos-packages: {}
