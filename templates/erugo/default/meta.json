@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file sharing with resumable uploads, human-readable share links, password protection, expiry dates and reverse shares.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Erugo",
+    "url": "https://github.com/ErugoOSS"
+  },
+  "links": {
+    "github": "https://github.com/ErugoOSS/Erugo",
+    "website": "https://erugo.app",
+    "docs": [
+      "https://erugo.app/docs/getting-started/quickstart",
+      "https://erugo.app/docs/reference/configuration",
+      "https://erugo.app/docs/guides/reverse-proxy"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor runs the setup wizard and creates the admin account, so open the app right after deploying. Keep the Application URL in the wizard set to https://<your domain> so share links in emails are correct.",
+      "link": "https://erugo.app/docs/getting-started/quickstart"
+    }
+  ]
+}

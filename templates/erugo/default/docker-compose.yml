@@ -1,0 +1,17 @@
+services:
+  erugo:
+    image: wardy784/erugo:0.2.15@sha256:0d9d31365e180408baee86172694a420418a7e05badd158fe84eb873a9f77753
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - erugo-storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1/up"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 2m
+
+volumes:
+  erugo-storage: {}
