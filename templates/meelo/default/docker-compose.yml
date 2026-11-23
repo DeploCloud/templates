@@ -1,0 +1,187 @@
+services:
+  meelo:
+    image: nginx:1.31.9-alpine@sha256:fb4658584bd9a916ffb6f6e365f97c25cfdb2923801f551ea08356e695f14ff7
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      meelo-server:
+        condition: service_started
+      meelo-front:
+        condition: service_started
+
+  meelo-server:
+    image: arthichaud/meelo-server:v3.13.2@sha256:44fd18d29392a31cb74524e0bb00b78d996d38135329c05804abdcdb578c4593
+    restart: unless-stopped
+    init: true
+    expose:
+      - 4000
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@meelo-db:5432/${POSTGRES_DB}?schema=public
+      MEILI_HOST: http://meelo-search:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      RABBITMQ_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@meelo-mq:5672
+      TRANSCODER_URL: http://meelo-transcoder:7666
+      JWT_SIGNATURE: ${JWT_SIGNATURE}
+      API_KEYS: ${API_KEYS}
+      ALLOW_ANONYMOUS: ${ALLOW_ANONYMOUS}
+      ENABLE_USER_REGISTRATION: ${ENABLE_USER_REGISTRATION}
+      LASTFM_API_KEY: ${LASTFM_API_KEY}
+      LASTFM_API_SECRET: ${LASTFM_API_SECRET}
+      INTERNAL_DATA_DIR: /data
+      INTERNAL_CONFIG_DIR: /config
+    volumes:
+      - meelo-data:/data
+      - meelo-config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- localhost:4000"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    depends_on:
+      meelo-db:
+        condition: service_healthy
+      meelo-search:
+        condition: service_healthy
+      meelo-mq:
+        condition: service_healthy
+      meelo-transcoder:
+        condition: service_started
+
+  meelo-scanner:
+    image: arthichaud/meelo-scanner:v3.13.2@sha256:2714f18f126095be4d9a84df0f5604d39adca27d2340f577bb87a67d0cb89b41
+    restart: unless-stopped
+    expose:
+      - 8133
+    environment:
+      API_URL: http://meelo-server:4000
+      API_KEYS: ${API_KEYS}
+      INTERNAL_DATA_DIR: /data
+      INTERNAL_CONFIG_DIR: /config
+    volumes:
+      - meelo-data:/data:ro
+      - ./settings.json:/config/settings.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- localhost:8133"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    depends_on:
+      meelo-server:
+        condition: service_healthy
+
+  meelo-matcher:
+    image: arthichaud/meelo-matcher:v3.13.2@sha256:6fb868126bd1d6a40f24000a82d52653e46ba0a8f0e87266db8cc6d415425a27
+    restart: unless-stopped
+    expose:
+      - 6789
+    environment:
+      API_URL: http://meelo-server:4000
+      API_KEYS: ${API_KEYS}
+      INTERNAL_CONFIG_DIR: /config
+      RABBITMQ_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@meelo-mq:5672
+    volumes:
+      - ./settings.json:/config/settings.json:ro
+    depends_on:
+      meelo-server:
+        condition: service_healthy
+      meelo-mq:
+        condition: service_healthy
+
+  meelo-front:
+    image: arthichaud/meelo-front:v3.13.2@sha256:00af1c6a86e046ce3f411b31e91c874eafc92180d923fbfbbdf609d7052e2863
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PUBLIC_SERVER_URL: ${PUBLIC_URL}/api
+      SSR_SERVER_URL: http://meelo-server:4000
+      PUBLIC_SCANNER_URL: ${PUBLIC_URL}/scanner
+      SSR_SCANNER_URL: http://meelo-scanner:8133
+      PUBLIC_MATCHER_URL: ${PUBLIC_URL}/matcher
+      SSR_MATCHER_URL: http://meelo-matcher:6789
+    depends_on:
+      meelo-server:
+        condition: service_healthy
+      meelo-scanner:
+        condition: service_healthy
+
+  meelo-transcoder:
+    image: ghcr.io/zoriya/kyoo_transcoder:5.2.1@sha256:04b69ec2300682df0e354284be69f8e13f9c07a667e98dc8ccbda9bc745ffbe8
+    restart: unless-stopped
+    cpus: 1
+    expose:
+      - 7666
+    environment:
+      GOCODER_SAFE_PATH: /data
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: ${POSTGRES_DB}
+      PGHOST: meelo-db
+      PGPORT: "5432"
+    volumes:
+      - meelo-data:/data:ro
+      - meelo-transcoder-cache:/cache
+      - meelo-transcoder-metadata:/metadata
+    depends_on:
+      meelo-db:
+        condition: service_healthy
+
+  meelo-db:
+    image: postgres:17.11-alpine@sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - meelo-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  meelo-search:
+    image: getmeili/meilisearch:v1.5.1@sha256:c87af13975fbe0e59ecaca0953e9c76f9e29ce58ecc51a7790bc233d797d98cc
+    restart: unless-stopped
+    expose:
+      - 7700
+    environment:
+      MEILI_ENV: production
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_LOG_LEVEL: WARN
+    volumes:
+      - meelo-search:/meili_data
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://0.0.0.0:7700/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  meelo-mq:
+    image: rabbitmq:4.3.8-alpine@sha256:0587d3fba5307d0120efd3c556162a80a15669c2955d95626f2ef2bd6261bb44
+    restart: unless-stopped
+    hostname: meelo-mq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - meelo-mq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+
+volumes:
+  meelo-data: {}
+  meelo-config: {}
+  meelo-db: {}
+  meelo-search: {}
+  meelo-mq: {}
+  meelo-transcoder-cache: {}
+  meelo-transcoder-metadata: {}

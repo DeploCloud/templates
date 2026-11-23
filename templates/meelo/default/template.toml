@@ -1,0 +1,95 @@
+[variables]
+db_password = "${password:32}"
+mq_password = "${password:32}"
+jwt_signature = "${secret:64}"
+meili_master_key = "${hash:48}"
+api_key = "${hash:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "meelo"
+port = 80
+host = "${domain}"
+
+[config.env]
+PUBLIC_URL = "https://${domain}"
+POSTGRES_USER = "meelo"
+POSTGRES_PASSWORD = "${db_password}"
+POSTGRES_DB = "meelo"
+RABBITMQ_USER = "meelo"
+RABBITMQ_PASSWORD = "${mq_password}"
+JWT_SIGNATURE = "${jwt_signature}"
+MEILI_MASTER_KEY = "${meili_master_key}"
+API_KEYS = "${api_key}"
+ALLOW_ANONYMOUS = "0"
+ENABLE_USER_REGISTRATION = "1"
+LASTFM_API_KEY = ""
+LASTFM_API_SECRET = ""
+
+[[config.mounts]]
+filePath = "nginx.conf"
+content = """
+resolver 127.0.0.11 valid=10s ipv6=off;
+
+server {
+    listen 80 default_server;
+    server_name _;
+    access_log off;
+
+    location = /api {
+        return 302 /api/;
+    }
+    location /api/ {
+        set $meelo_server http://meelo-server:4000;
+        rewrite ^/api(/.*)$ $1 break;
+        proxy_pass $meelo_server;
+    }
+    location = /scanner {
+        return 302 /scanner/;
+    }
+    location /scanner/ {
+        set $meelo_scanner http://meelo-scanner:8133;
+        rewrite ^/scanner(/.*)$ $1 break;
+        proxy_pass $meelo_scanner;
+    }
+    location = /matcher {
+        return 302 /matcher/;
+    }
+    location /matcher/ {
+        set $meelo_matcher http://meelo-matcher:6789;
+        rewrite ^/matcher(/.*)$ $1 break;
+        proxy_pass $meelo_matcher;
+    }
+    location / {
+        set $meelo_front http://meelo-front:3000;
+        proxy_pass $meelo_front;
+    }
+}
+"""
+
+[[config.mounts]]
+filePath = "settings.json"
+content = """
+{
+  "trackRegex": [
+    "^([\\/\\\\]+.*)*[\\/\\\\]+(?P<AlbumArtist>.+)[\\/\\\\]+Unknown Album[\\/\\\\]+(?P<Track>.*)\\..*$",
+    "^([\\/\\\\]+.*)*[\\/\\\\]+(?P<AlbumArtist>.+)[\\/\\\\]+(?P<Album>.+)(\\s+\\((?P<Year>\\d{4})\\))?[\\/\\\\]+((?P<Disc>[0-9]+)-)?(?P<Index>[0-9]+)\\s+(?P<Track>.*)\\..*$"
+  ],
+  "metadata": {
+    "source": "embedded",
+    "order": "only",
+    "useExternalProviderGenres": true
+  },
+  "providers": {
+    "musicbrainz": {}
+  },
+  "compilations": {
+    "useID3CompTag": true,
+    "artists": [
+      "Various Artists"
+    ]
+  },
+  "useEmbeddedThumbnails": false
+}
+"""

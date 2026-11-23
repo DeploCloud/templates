@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted music server for collectors, with album releases, song versions, music videos, metadata providers and scrobbling, backed by PostgreSQL, Meilisearch and RabbitMQ.",
+  "category": "media",
+  "developedBy": {
+    "label": "Arthi-chaud",
+    "url": "https://github.com/Arthi-chaud"
+  },
+  "links": {
+    "github": "https://github.com/Arthi-chaud/Meelo",
+    "docs": [
+      "https://github.com/Arthi-chaud/Meelo/wiki",
+      "https://github.com/Arthi-chaud/Meelo/wiki/Setup:-Settings",
+      "https://github.com/Arthi-chaud/Meelo/wiki/Setup:-Admin-Account-and-First-Library",
+      "https://github.com/Arthi-chaud/Meelo/wiki/Setup:-Scrobblers-(Optional)"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account you create becomes the admin. Register it right after deploying; later accounts must be enabled by an admin.",
+      "link": "https://github.com/Arthi-chaud/Meelo/wiki/Setup:-Admin-Account-and-First-Library"
+    },
+    {
+      "type": "warning",
+      "message": "Meelo has no upload feature: copy your music into the data volume mounted at /data, then create a library in Settings > Libraries with a path relative to /data and run a scan.",
+      "link": "https://github.com/Arthi-chaud/Meelo/wiki/Setup:-Requirements"
+    }
+  ]
+}
