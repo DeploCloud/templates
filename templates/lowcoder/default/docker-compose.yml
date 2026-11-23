@@ -1,0 +1,23 @@
+services:
+  lowcoder:
+    image: lowcoderorg/lowcoder-ce:3.0.0@sha256:7eba83baa9a38f4869a146a0b5b41d6ace5ab1de30474f27be25e6a09fa0040e
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      LOWCODER_PUBLIC_URL: ${LOWCODER_PUBLIC_URL}
+      LOWCODER_DB_ENCRYPTION_PASSWORD: ${LOWCODER_DB_ENCRYPTION_PASSWORD}
+      LOWCODER_DB_ENCRYPTION_SALT: ${LOWCODER_DB_ENCRYPTION_SALT}
+      LOWCODER_API_KEY_SECRET: ${LOWCODER_API_KEY_SECRET}
+      LOWCODER_NODE_SERVICE_SECRET: ${LOWCODER_NODE_SERVICE_SECRET}
+      LOWCODER_NODE_SERVICE_SECRET_SALT: ${LOWCODER_NODE_SERVICE_SECRET_SALT}
+      LOWCODER_SUPERUSER_USERNAME: ${LOWCODER_SUPERUSER_USERNAME}
+      LOWCODER_SUPERUSER_PASSWORD: ${LOWCODER_SUPERUSER_PASSWORD}
+      LOWCODER_EMAIL_SIGNUP_ENABLED: ${LOWCODER_EMAIL_SIGNUP_ENABLED}
+    volumes:
+      - lowcoder-stacks:/lowcoder-stacks
+      - lowcoder-assets:/lowcoder/assets
+
+volumes:
+  lowcoder-stacks: {}
+  lowcoder-assets: {}
