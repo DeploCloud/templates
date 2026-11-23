@@ -1,0 +1,18 @@
+[variables]
+admin_password = "${password:24}"
+db_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "nexus-repository"
+port = 8_081
+host = "${domain}"
+
+[config.env]
+DB_NAME = "nexus"
+DB_USER = "nexus"
+DB_PASSWORD = "${db_password}"
+NEXUS_SECURITY_INITIAL_PASSWORD = "${admin_password}"
+INSTALL4J_ADD_VM_PARAMS = "-Xms2703m -Xmx2703m -XX:MaxDirectMemorySize=2703m -Djava.util.prefs.userRoot=/nexus-data/javaprefs"

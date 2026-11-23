@@ -1,0 +1,30 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Sonatype Nexus Repository Community Edition backed by a bundled PostgreSQL database, the setup Sonatype recommends over the embedded H2 database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Sonatype",
+    "url": "https://www.sonatype.com"
+  },
+  "links": {
+    "github": "https://github.com/sonatype/docker-nexus3",
+    "website": "https://www.sonatype.com/products/sonatype-nexus-repository",
+    "docs": [
+      "https://help.sonatype.com/en/install-nexus-repository-with-a-postgresql-database.html",
+      "https://help.sonatype.com/en/ce-onboarding.html",
+      "https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated NEXUS_SECURITY_INITIAL_PASSWORD from the environment; it is applied only on the first start. Finish the onboarding wizard and accept the Community Edition EULA before components can be fetched or uploaded. The first start takes 2-3 minutes.",
+      "link": "https://help.sonatype.com/en/ce-onboarding.html"
+    },
+    {
+      "type": "info",
+      "message": "Community Edition is limited to 40,000 components and 100,000 requests per day, and the JVM reserves about 2.7 GB of heap by default; tune INSTALL4J_ADD_VM_PARAMS to fit your server.",
+      "link": "https://help.sonatype.com/en/sonatype-nexus-repository-system-requirements.html"
+    }
+  ]
+}
