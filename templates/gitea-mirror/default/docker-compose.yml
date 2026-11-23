@@ -1,0 +1,22 @@
+services:
+  gitea-mirror:
+    image: ghcr.io/raylabshq/gitea-mirror:v3.54.0@sha256:be5600216ff8a152ea7ddd9152c68cc94b56886e85bf44fe67853ee1bcac2ada
+    restart: unless-stopped
+    expose:
+      - 4321
+    environment:
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      BETTER_AUTH_TRUSTED_ORIGINS: ${BETTER_AUTH_URL}
+    volumes:
+      - gitea-mirror-data:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:4321/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  gitea-mirror-data: {}

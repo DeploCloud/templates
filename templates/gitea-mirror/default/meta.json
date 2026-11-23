@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI that mirrors GitHub repositories, issues, wikis and releases to a self-hosted Gitea or Forgejo instance on a schedule.",
+  "category": "development",
+  "developedBy": {
+    "label": "RayLabs",
+    "url": "https://github.com/RayLabsHQ"
+  },
+  "links": {
+    "github": "https://github.com/RayLabsHQ/gitea-mirror",
+    "website": "https://gitea-mirror.raylabs.io",
+    "docs": [
+      "https://gitea-mirror.raylabs.io/docs/quickstart/",
+      "https://gitea-mirror.raylabs.io/docs/environment-variables/",
+      "https://gitea-mirror.raylabs.io/docs/reverse-proxy/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account to sign up becomes the admin; further sign-ups are disabled. You need a token for the source (for example a GitHub personal access token) and an existing Gitea or Forgejo instance with an access token, both entered on the Configuration page.",
+      "link": "https://gitea-mirror.raylabs.io/docs/quickstart/"
+    }
+  ]
+}
