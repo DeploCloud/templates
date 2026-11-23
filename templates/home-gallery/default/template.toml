@@ -1,0 +1,22 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "home-gallery"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+ADMIN_PASSWORD = "${admin_password}"
+GALLERY_WATCH_POLL_INTERVAL = "300"
+
+[[config.mounts]]
+filePath = "gallery.config.yml"
+content = """sources:
+  - /data/Pictures
+
+server:
+  publicUrl: 'https://${domain}'
+"""

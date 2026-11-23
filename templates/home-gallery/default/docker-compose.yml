@@ -1,0 +1,28 @@
+services:
+  home-gallery:
+    image: xemle/home-gallery:1.22.0@sha256:fbfd4b804ea2677cb154fb79fbfa37586cc0242e0d71661504ee423250ff756a
+    restart: unless-stopped
+    command: ["server", "--user", "admin:${ADMIN_PASSWORD}"]
+    expose:
+      - 3000
+    environment:
+      GALLERY_API_SERVER: http://home-gallery-api:3000
+      GALLERY_API_SERVER_CONCURRENT: "5"
+      GALLERY_API_SERVER_TIMEOUT: "30"
+      GALLERY_WATCH_POLL_INTERVAL: ${GALLERY_WATCH_POLL_INTERVAL}
+    volumes:
+      - home-gallery-data:/data
+      - home-gallery-media:/data/Pictures
+      - ./gallery.config.yml:/data/config/gallery.config.yml
+    depends_on:
+      - home-gallery-api
+
+  home-gallery-api:
+    image: xemle/home-gallery-api-server:latest@sha256:40150de7a85292538fd0edcf9e101d4716ea7c2dae7293caa344d124429d6f76
+    restart: unless-stopped
+    environment:
+      BACKEND: wasm
+
+volumes:
+  home-gallery-data: {}
+  home-gallery-media: {}
