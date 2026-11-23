@@ -1,0 +1,12 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "databunker"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+DATABUNKER_MASTERKEY = "${hash:48}"
+DATABUNKER_ROOTTOKEN = "${uuid}"
+DB_PASSWORD = "${password:32}"

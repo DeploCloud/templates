@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Encrypted vault for customer PII with tokenization, consent management, audit log and an admin UI, backed by PostgreSQL.",
+  "category": "security",
+  "developedBy": {
+    "label": "Databunker",
+    "url": "https://databunker.org/"
+  },
+  "links": {
+    "github": "https://github.com/securitybunker/databunker",
+    "website": "https://databunker.org/",
+    "docs": [
+      "https://docs.databunker.org/oss/installation/overview",
+      "https://docs.databunker.org/oss/get-started/quickstart",
+      "https://docs.databunker.org/oss/api/overview"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in to the admin UI with the root token stored in DATABUNKER_ROOTTOKEN. Back up DATABUNKER_MASTERKEY: the stored records cannot be decrypted without it."
+    }
+  ]
+}
