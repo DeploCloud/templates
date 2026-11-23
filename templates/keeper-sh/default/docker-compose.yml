@@ -1,0 +1,59 @@
+services:
+  keeper-sh:
+    image: ghcr.io/ridafkih/keeper-services:2.34.2@sha256:a212eada18b7946ef25f3d3c5f8fc84b54e61a6b131be200e6a6edd25b4587e6
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      DATABASE_URL: postgres://keeper:${DB_PASSWORD}@keeper-sh-db:5432/keeper
+      REDIS_URL: redis://keeper-sh-redis:6379
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      TRUSTED_ORIGINS: ${BETTER_AUTH_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      MICROSOFT_CLIENT_ID: ${MICROSOFT_CLIENT_ID}
+      MICROSOFT_CLIENT_SECRET: ${MICROSOFT_CLIENT_SECRET}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -H 'Accept: text/html' http://localhost:3000/ > /dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    depends_on:
+      keeper-sh-db:
+        condition: service_healthy
+      keeper-sh-redis:
+        condition: service_healthy
+
+  keeper-sh-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=200"]
+    environment:
+      POSTGRES_USER: keeper
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: keeper
+    volumes:
+      - keeper-sh-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keeper -d keeper"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  keeper-sh-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    volumes:
+      - keeper-sh-redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  keeper-sh-db:
+  keeper-sh-redis:

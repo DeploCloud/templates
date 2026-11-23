@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Calendar sync server that aggregates Google, Outlook, iCloud, CalDAV and ICS calendars, with a REST API, PostgreSQL and Redis.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Rida F'kih",
+    "url": "https://github.com/ridafkih"
+  },
+  "links": {
+    "github": "https://github.com/ridafkih/keeper.sh",
+    "website": "https://www.keeper.sh",
+    "docs": [
+      "https://github.com/ridafkih/keeper.sh#collective-services-image",
+      "https://github.com/ridafkih/keeper.sh#environment-variables"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign-up stays open to anyone who can reach the URL, so create your account right after deployment. Google Calendar and Outlook only work after you register your own OAuth apps and set GOOGLE_CLIENT_ID/GOOGLE_CLIENT_SECRET or MICROSOFT_CLIENT_ID/MICROSOFT_CLIENT_SECRET.",
+      "link": "https://github.com/ridafkih/keeper.sh#google-oauth-credentials"
+    }
+  ]
+}
