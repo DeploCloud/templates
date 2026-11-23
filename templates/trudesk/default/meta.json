@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source help desk and ticketing system with teams, departments, public ticket submission and email-to-ticket, backed by MongoDB.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Chris Brame",
+    "url": "https://github.com/polonel"
+  },
+  "links": {
+    "github": "https://github.com/polonel/trudesk",
+    "docs": [
+      "https://github.com/polonel/trudesk#readme",
+      "https://github.com/polonel/trudesk/blob/master/docker-compose.yml"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and finish the install wizard: it creates the administrator account, and whoever reaches it first can claim it."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

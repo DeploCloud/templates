@@ -1,0 +1,39 @@
+services:
+  trudesk:
+    image: polonel/trudesk:1.2.11@sha256:4dc6b30f57f873c7175386c1628015eb44efa5c7c1df6929fa2362f6ee694dc9
+    restart: unless-stopped
+    expose:
+      - 8118
+    environment:
+      NODE_ENV: production
+      TRUDESK_DOCKER: "true"
+      TD_MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@trudesk-db:27017/trudesk?authSource=admin
+      TD_MONGODB_DATABASE: trudesk
+      TRUDESK_JWTSECRET: ${TRUDESK_JWTSECRET}
+      USE_XFORWARDIP: "true"
+    volumes:
+      - trudesk-uploads:/usr/src/trudesk/public/uploads
+      - trudesk-backups:/usr/src/trudesk/backups
+    depends_on:
+      trudesk-db:
+        condition: service_healthy
+
+  trudesk-db:
+    image: mongo:6.0.28@sha256:8b6d8f5bbedb25cb73517b65cf99f13aeb75ad5b157a56c479287a840bbad3ac
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    volumes:
+      - trudesk-db:/data/db
+
+volumes:
+  trudesk-uploads: {}
+  trudesk-backups: {}
+  trudesk-db: {}

@@ -1,0 +1,15 @@
+[variables]
+mongo_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "trudesk"
+port = 8_118
+host = "${domain}"
+
+[config.env]
+MONGO_USER = "trudesk"
+MONGO_PASSWORD = "${mongo_password}"
+TRUDESK_JWTSECRET = "${secret:64}"
