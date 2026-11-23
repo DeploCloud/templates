@@ -1,0 +1,22 @@
+services:
+  unpackerr:
+    image: ghcr.io/unpackerr/unpackerr:1.0.1@sha256:22b4693fbeaae4bd927905d63b59b8f67b4a1446682d965ac876c61a48976658
+    restart: unless-stopped
+    expose:
+      - 5656
+    environment:
+      TZ: ${TZ}
+      UN_WEBSERVER_UI_PASSWORD: admin:${UI_PASSWORD}
+    volumes:
+      - unpackerr-config:/config
+      - unpackerr-downloads:/downloads
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:5656/"]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+
+volumes:
+  unpackerr-config: {}
+  unpackerr-downloads: {}
