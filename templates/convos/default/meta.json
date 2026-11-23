@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Multiuser IRC client that runs in the browser, staying connected to chat networks and keeping history when you are offline.",
+  "category": "communication",
+  "developedBy": {
+    "label": "Convos",
+    "url": "https://github.com/convos-chat"
+  },
+  "links": {
+    "github": "https://github.com/convos-chat/convos",
+    "website": "https://convos.chat",
+    "docs": [
+      "https://convos.chat/doc/start",
+      "https://convos.chat/doc/config",
+      "https://convos.chat/doc/faq"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first account registered becomes the admin. Register right after deployment; later users need an invite link unless public registration is enabled in the admin settings.",
+      "link": "https://convos.chat/doc/config"
+    }
+  ]
+}

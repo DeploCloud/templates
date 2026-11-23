@@ -1,0 +1,19 @@
+services:
+  convos:
+    image: ghcr.io/convos-chat/convos:v8.07@sha256:d9ab6aefce1b47a1e6d10c70a558ae0120a35e32b1f92d87ca364bfa17f1f3a6
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      CONVOS_REQUEST_BASE: ${CONVOS_REQUEST_BASE}
+    volumes:
+      - convos-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://localhost:3000/sw/info"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  convos-data: {}
