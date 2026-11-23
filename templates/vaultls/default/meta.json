@@ -1,0 +1,28 @@
+{
+  "name": "Default",
+  "shortDescription": "Web app for running your own certificate authority and managing mTLS client, server and SSH certificates, with a REST API and ACME support.",
+  "category": "security",
+  "developedBy": {
+    "label": "7ritn",
+    "url": "https://github.com/7ritn"
+  },
+  "links": {
+    "github": "https://github.com/7ritn/VaulTLS",
+    "docs": [
+      "https://github.com/7ritn/VaulTLS#installation",
+      "https://github.com/7ritn/VaulTLS/blob/main/docs/acme.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and complete the setup form: the first account created there becomes the administrator.",
+      "link": "https://github.com/7ritn/VaulTLS#usage"
+    },
+    {
+      "type": "destructive",
+      "message": "HTTPS is required; the login cookie is marked Secure, so signing in fails over plain HTTP.",
+      "link": "https://github.com/7ritn/VaulTLS#i-can-not-login"
+    }
+  ]
+}

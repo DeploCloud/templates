@@ -1,0 +1,14 @@
+[variables]
+api_secret = "${hash:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "vaultls"
+port = 80
+host = "${domain}"
+
+[config.env]
+VAULTLS_API_SECRET = "${api_secret}"
+VAULTLS_URL = "https://${domain}/"

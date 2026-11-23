@@ -1,0 +1,14 @@
+services:
+  vaultls:
+    image: ghcr.io/7ritn/vaultls:v1.4.1@sha256:fc8ea1491626974973678294ef964c47aafaa22a67e20e1f1c6b88725f3a99f7
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      VAULTLS_API_SECRET: ${VAULTLS_API_SECRET}
+      VAULTLS_URL: ${VAULTLS_URL}
+    volumes:
+      - vaultls-data:/app/data
+
+volumes:
+  vaultls-data: {}
