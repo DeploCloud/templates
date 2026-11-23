@@ -1,0 +1,34 @@
+[variables]
+postgres_password = "${password:32}"
+rabbitmq_password = "${password:32}"
+session_secret = "${password:64}"
+session_salt = "${password:16}"
+encryption_key = "${hash:64}"
+feed_requests_api_key = "${password:32}"
+user_feeds_api_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "monitorss"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+DISCORD_BOT_TOKEN = "replace-with-your-bot-token"
+DISCORD_CLIENT_ID = "replace-with-your-application-id"
+DISCORD_CLIENT_SECRET = "replace-with-your-client-secret"
+PUBLIC_URL = "https://${domain}"
+FEED_USER_AGENT = "MonitoRSS [Self-Hosted]/1.0"
+SESSION_SECRET = "${session_secret}"
+SESSION_SALT = "${session_salt}"
+ENCRYPTION_KEY_HEX = "${encryption_key}"
+FEED_REQUESTS_API_KEY = "${feed_requests_api_key}"
+USER_FEEDS_API_KEY = "${user_feeds_api_key}"
+POSTGRES_PASSWORD = "${postgres_password}"
+RABBITMQ_PASSWORD = "${rabbitmq_password}"
+SMTP_HOST = ""
+SMTP_USERNAME = ""
+SMTP_PASSWORD = ""
+SMTP_FROM_DOMAIN = ""

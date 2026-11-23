@@ -1,0 +1,237 @@
+x-backend-env: &backend-env
+  NODE_ENV: production
+  BACKEND_API_PORT: "8000"
+  BACKEND_API_MONGODB_URI: "mongodb://monitorss-mongo:27017/rss?replicaSet=dbrs&directConnection=true"
+  BACKEND_API_RABBITMQ_BROKER_URL: amqp://monitorss:${RABBITMQ_PASSWORD}@monitorss-rabbitmq:5672
+  BACKEND_API_DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+  BACKEND_API_DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+  BACKEND_API_DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+  BACKEND_API_DISCORD_REDIRECT_URI: ${PUBLIC_URL}/api/v1/discord/callback-v2
+  BACKEND_API_LOGIN_REDIRECT_URI: ${PUBLIC_URL}
+  BACKEND_API_SESSION_SECRET: ${SESSION_SECRET}
+  BACKEND_API_SESSION_SALT: ${SESSION_SALT}
+  BACKEND_API_SESSION_COOKIE_SECURE: "true"
+  BACKEND_API_ENCRYPTION_KEY_HEX: ${ENCRYPTION_KEY_HEX}
+  BACKEND_API_FEED_REQUESTS_API_HOST: http://monitorss-feed-requests:5000
+  BACKEND_API_FEED_REQUESTS_API_KEY: ${FEED_REQUESTS_API_KEY}
+  BACKEND_API_USER_FEEDS_API_HOST: http://monitorss-user-feeds:5000
+  BACKEND_API_USER_FEEDS_API_KEY: ${USER_FEEDS_API_KEY}
+  BACKEND_API_FEED_USER_AGENT: ${FEED_USER_AGENT}
+  BACKEND_API_DEFAULT_REFRESH_RATE_MINUTES: "10"
+  BACKEND_API_DEFAULT_MAX_FEEDS: "999999"
+  BACKEND_API_DEFAULT_MAX_USER_FEEDS: "10000"
+  BACKEND_API_MAX_DAILY_ARTICLES_DEFAULT: "100000"
+  BACKEND_API_SMTP_HOST: ${SMTP_HOST}
+  BACKEND_API_SMTP_USERNAME: ${SMTP_USERNAME}
+  BACKEND_API_SMTP_PASSWORD: ${SMTP_PASSWORD}
+  BACKEND_API_SMTP_FROM_DOMAIN: ${SMTP_FROM_DOMAIN}
+
+services:
+  monitorss:
+    image: ghcr.io/synzen/monitorss-monolith:7.5.1@sha256:102b02ef157d548d42ad8dae8630678e4c13081f3300d9ea99dbea1172768cc0
+    restart: unless-stopped
+    command: ["node", "dist/main.js"]
+    expose:
+      - 8000
+    environment: *backend-env
+    depends_on:
+      monitorss-mongo:
+        condition: service_healthy
+      monitorss-rabbitmq:
+        condition: service_healthy
+      monitorss-user-feeds:
+        condition: service_healthy
+      monitorss-feed-requests:
+        condition: service_healthy
+
+  monitorss-schedule-emitter:
+    image: ghcr.io/synzen/monitorss-monolith:7.5.1@sha256:102b02ef157d548d42ad8dae8630678e4c13081f3300d9ea99dbea1172768cc0
+    restart: unless-stopped
+    command: ["node", "dist/scripts/schedule-emitter.js"]
+    environment: *backend-env
+    depends_on:
+      monitorss-mongo:
+        condition: service_healthy
+      monitorss-rabbitmq:
+        condition: service_healthy
+
+  monitorss-user-feeds:
+    image: ghcr.io/synzen/monitorss-user-feeds:7.5.1@sha256:8a8731e454502e7328f85d9389f90c39deae7061f50222a91f50032606d0af89
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      USER_FEEDS_API_PORT: "5000"
+      USER_FEEDS_API_KEY: ${USER_FEEDS_API_KEY}
+      USER_FEEDS_POSTGRES_URI: postgres://monitorss:${POSTGRES_PASSWORD}@monitorss-db:5432/userfeeds
+      USER_FEEDS_RABBITMQ_BROKER_URL: amqp://monitorss:${RABBITMQ_PASSWORD}@monitorss-rabbitmq:5672
+      USER_FEEDS_REDIS_URI: redis://monitorss-redis:6379
+      USER_FEEDS_REDIS_DISABLE_CLUSTER: "true"
+      USER_FEEDS_FEED_REQUESTS_API_URL: http://monitorss-feed-requests:5000/v1/feed-requests
+      USER_FEEDS_FEED_REQUESTS_API_KEY: ${FEED_REQUESTS_API_KEY}
+      USER_FEEDS_DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      USER_FEEDS_DISCORD_API_TOKEN: ${DISCORD_BOT_TOKEN}
+      USER_FEEDS_DELIVERY_RECORD_PERSISTENCE_MONTHS: "1"
+      USER_FEEDS_ARTICLE_PERSISTENCE_MONTHS: "12"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:5000/v1/user-feeds/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      monitorss-user-feeds-migration:
+        condition: service_completed_successfully
+      monitorss-feed-requests:
+        condition: service_healthy
+      monitorss-rabbitmq:
+        condition: service_healthy
+      monitorss-redis:
+        condition: service_healthy
+
+  monitorss-user-feeds-migration:
+    image: ghcr.io/synzen/monitorss-user-feeds:7.5.1@sha256:8a8731e454502e7328f85d9389f90c39deae7061f50222a91f50032606d0af89
+    restart: "no"
+    command: ["node", "./dist/src/scripts/run-migrations.js"]
+    environment:
+      NODE_ENV: production
+      USER_FEEDS_POSTGRES_URI: postgres://monitorss:${POSTGRES_PASSWORD}@monitorss-db:5432/userfeeds
+    depends_on:
+      monitorss-db:
+        condition: service_healthy
+
+  monitorss-feed-requests:
+    image: ghcr.io/synzen/monitorss-feed-requests:7.5.1@sha256:09193712239279d0efe117e1ff15e4961e216f847c4a7dc528c43e1d1cd97f4b
+    restart: unless-stopped
+    command: ["node", "dist/main.js"]
+    environment:
+      NODE_ENV: production
+      FEED_REQUESTS_API_PORT: "5000"
+      FEED_REQUESTS_API_KEY: ${FEED_REQUESTS_API_KEY}
+      FEED_REQUESTS_POSTGRES_URI: postgres://monitorss:${POSTGRES_PASSWORD}@monitorss-db:5432/feedrequests
+      FEED_REQUESTS_RABBITMQ_BROKER_URL: amqp://monitorss:${RABBITMQ_PASSWORD}@monitorss-rabbitmq:5672
+      FEED_REQUESTS_REDIS_URI: redis://monitorss-redis:6379
+      FEED_REQUESTS_REDIS_DISABLE_CLUSTER: "true"
+      FEED_REQUESTS_FEED_REQUEST_DEFAULT_USER_AGENT: ${FEED_USER_AGENT}
+      FEED_REQUESTS_HISTORY_PERSISTENCE_MONTHS: "1"
+      FEED_REQUESTS_REQUEST_TIMEOUT_MS: "15000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:5000/v1/feed-requests/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    depends_on:
+      monitorss-feed-requests-migration:
+        condition: service_completed_successfully
+      monitorss-rabbitmq:
+        condition: service_healthy
+      monitorss-redis:
+        condition: service_healthy
+
+  monitorss-feed-requests-migration:
+    image: ghcr.io/synzen/monitorss-feed-requests:7.5.1@sha256:09193712239279d0efe117e1ff15e4961e216f847c4a7dc528c43e1d1cd97f4b
+    restart: "no"
+    command: ["npm", "run", "migration:up"]
+    environment:
+      NODE_ENV: production
+      FEED_REQUESTS_POSTGRES_URI: postgres://monitorss:${POSTGRES_PASSWORD}@monitorss-db:5432/feedrequests
+    depends_on:
+      monitorss-db:
+        condition: service_healthy
+
+  monitorss-discord-rest-listener:
+    image: ghcr.io/synzen/monitorss-discord-rest-listener:7.5.1@sha256:12b95d37acb062742842f5d6cd7c9c3302dcf791a25cb39b264018e5bb9cc2ed
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DISCORD_REST_LISTENER_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      DISCORD_REST_LISTENER_BOT_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_REST_LISTENER_MONGO_URI: "mongodb://monitorss-mongo:27017/rss?replicaSet=dbrs&directConnection=true"
+      DISCORD_REST_LISTENER_RABBITMQ_URI: amqp://monitorss:${RABBITMQ_PASSWORD}@monitorss-rabbitmq:5672
+      DISCORD_REST_LISTENER_MAX_REQ_PER_SEC: "40"
+    depends_on:
+      monitorss-mongo:
+        condition: service_healthy
+      monitorss-rabbitmq:
+        condition: service_healthy
+
+  monitorss-bot-presence:
+    image: ghcr.io/synzen/monitorss-bot-presence:7.5.1@sha256:232732f776a512ebbe0d0c8e57220c37fdeb414c5eb1271bd3082eaa225aaaf8
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      BOT_PRESENCE_DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
+      BOT_PRESENCE_DISCORD_BOT_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      BOT_PRESENCE_RABBITMQ_URL: amqp://monitorss:${RABBITMQ_PASSWORD}@monitorss-rabbitmq:5672
+      BOT_PRESENCE_STATUS: online
+    depends_on:
+      monitorss-rabbitmq:
+        condition: service_healthy
+
+  # Transactions need a replica set; the healthcheck initiates it on first start.
+  monitorss-mongo:
+    image: mongo:8.0.38@sha256:479e85ced54ffb8a40dade1dcde2da2a9ae858515b9415e9cc54bfb8f0575d01
+    restart: unless-stopped
+    command: ["--replSet", "dbrs", "--bind_ip_all"]
+    healthcheck:
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "try { rs.status() } catch (e) { rs.initiate({ _id: 'dbrs', members: [{ _id: 0, host: 'monitorss-mongo:27017' }] }) }; quit(db.hello().isWritablePrimary ? 0 : 1)"
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 20s
+    volumes:
+      - monitorss-mongo-data:/data/db
+
+  monitorss-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: monitorss
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: monitorss
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monitorss -d monitorss"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - monitorss-postgres-data:/var/lib/postgresql/data
+
+  monitorss-redis:
+    image: redis:7.4.12-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - monitorss-redis-data:/data
+
+  monitorss-rabbitmq:
+    image: rabbitmq:3.13.7-alpine@sha256:d7af1c87c5f1eda13fcfca06db452bf3aeab6619fc3358b68535c0c02c4e52bc
+    restart: unless-stopped
+    # A fixed hostname keeps the node name, and so its data directory, stable.
+    hostname: monitorss-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: monitorss
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+    volumes:
+      - monitorss-rabbitmq-data:/var/lib/rabbitmq
+
+volumes:
+  monitorss-mongo-data: {}
+  monitorss-postgres-data: {}
+  monitorss-redis-data: {}
+  monitorss-rabbitmq-data: {}
