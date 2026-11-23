@@ -1,0 +1,28 @@
+[variables]
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "scanservjs"
+port = 8080
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "config.local.js"
+content = """module.exports = {
+  afterConfig(config) {
+    if (process.env.SCANSERVJS_PASSWORD) {
+      config.users = { [process.env.SCANSERVJS_USER || 'admin']: process.env.SCANSERVJS_PASSWORD };
+    }
+  }
+};
+"""
+
+[config.env]
+SANED_NET_HOSTS = ""
+AIRSCAN_DEVICES = ""
+PIXMA_HOSTS = ""
+OCR_LANG = "eng"
+SCANSERVJS_USER = "admin"
+SCANSERVJS_PASSWORD = "${admin_password}"
