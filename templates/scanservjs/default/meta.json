@@ -1,0 +1,31 @@
+{
+  "name": "Default",
+  "shortDescription": "Web UI for SANE scanners: preview, scan, crop, apply filters and OCR, then download documents as PDF, JPG, PNG, TIF or text.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Sam Strachan",
+    "url": "https://github.com/sbs20"
+  },
+  "links": {
+    "github": "https://github.com/sbs20/scanservjs",
+    "website": "https://sbs20.github.io/scanservjs/",
+    "docs": [
+      "https://sbs20.github.io/scanservjs/docs/02-docker.html",
+      "https://sbs20.github.io/scanservjs/docs/03-sane.html",
+      "https://sbs20.github.io/scanservjs/docs/10-configuration.html",
+      "https://sbs20.github.io/scanservjs/docs/12-recipes.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Scanners are reached over the network only, so they must be reachable from this server: USB scanners and mDNS auto-discovery are not available. Set SANED_NET_HOSTS, AIRSCAN_DEVICES or PIXMA_HOSTS (semicolon separated) to your scanner addresses and redeploy.",
+      "link": "https://sbs20.github.io/scanservjs/docs/02-docker.html"
+    },
+    {
+      "type": "warning",
+      "message": "The UI is protected by HTTP basic auth. Sign in with SCANSERVJS_USER and the generated SCANSERVJS_PASSWORD from the environment variables.",
+      "link": "https://sbs20.github.io/scanservjs/docs/12-recipes.html#add-basic-authentication"
+    }
+  ]
+}

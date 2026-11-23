@@ -1,0 +1,19 @@
+services:
+  scanservjs:
+    image: sbs20/scanservjs:v3.3.0@sha256:7a0c0dfd546f483c2fe8c5ccdcd8fc96301a41fb0d4309747fc8268108defb6a
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - scanservjs-output:/var/lib/scanservjs/output
+      - ./config.local.js:/etc/scanservjs/config.local.js:ro
+    environment:
+      SANED_NET_HOSTS: ${SANED_NET_HOSTS}
+      AIRSCAN_DEVICES: ${AIRSCAN_DEVICES}
+      PIXMA_HOSTS: ${PIXMA_HOSTS}
+      OCR_LANG: ${OCR_LANG}
+      SCANSERVJS_USER: ${SCANSERVJS_USER}
+      SCANSERVJS_PASSWORD: ${SCANSERVJS_PASSWORD}
+
+volumes:
+  scanservjs-output: {}
