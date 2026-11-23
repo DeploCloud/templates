@@ -1,0 +1,57 @@
+services:
+  splitpro:
+    image: ossapps/splitpro:v2.1.6@sha256:dc6914ed24a7d595dfc74eaecc649f24336856ae517deca2f10f35da6faa5ac6
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://splitpro:${POSTGRES_PASSWORD}@splitpro-db:5432/splitpro
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_URL_INTERNAL: http://127.0.0.1:3000
+      DEFAULT_HOMEPAGE: ${DEFAULT_HOMEPAGE}
+      ENABLE_SENDING_INVITES: ${ENABLE_SENDING_INVITES}
+      DISABLE_EMAIL_SIGNUP: ${DISABLE_EMAIL_SIGNUP}
+      FROM_EMAIL: ${FROM_EMAIL}
+      EMAIL_SERVER_HOST: ${EMAIL_SERVER_HOST}
+      EMAIL_SERVER_PORT: ${EMAIL_SERVER_PORT}
+      EMAIL_SERVER_USER: ${EMAIL_SERVER_USER}
+      EMAIL_SERVER_PASSWORD: ${EMAIL_SERVER_PASSWORD}
+    volumes:
+      - splitpro-uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:3000/api/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      splitpro-db:
+        condition: service_healthy
+
+  # Upstream Postgres build with pg_cron, required by the recurring expenses migration.
+  splitpro-db:
+    image: ossapps/postgres:17.7-trixie@sha256:7b28a64dca6bc8a5a9df32b69f413939f93d1b87b169748f3754ef25eaa5b962
+    restart: unless-stopped
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_cron
+      -c cron.database_name=splitpro
+      -c cron.timezone=UTC
+    environment:
+      POSTGRES_USER: splitpro
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: splitpro
+    volumes:
+      - splitpro-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U splitpro -d splitpro"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  splitpro-uploads: {}
+  splitpro-db: {}
