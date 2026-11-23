@@ -1,0 +1,7 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "jfa-go"
+port = 8_056
+host = "${domain}"

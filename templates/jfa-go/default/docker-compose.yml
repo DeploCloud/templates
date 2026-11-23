@@ -1,0 +1,11 @@
+services:
+  jfa-go:
+    image: hrfee/jfa-go:latest@sha256:701cfca823f9278b65f4cf7706b0c7f89b3be33e17ca077f11d89dc119e9f307
+    restart: unless-stopped
+    expose:
+      - 8056
+    volumes:
+      - jfa-go-data:/data
+
+volumes:
+  jfa-go-data: {}
