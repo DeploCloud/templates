@@ -1,0 +1,19 @@
+services:
+  lute:
+    image: jzohrab/lute3:3.10.3@sha256:ca0c26b8160a6e68d15af9a0e8de3ee2443ca1587e1cf5091cece5907b0a05d4
+    restart: unless-stopped
+    expose:
+      - 5001
+    volumes:
+      - lute-data:/lute_data
+      - lute-backup:/lute_backup
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/version')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  lute-data: {}
+  lute-backup: {}

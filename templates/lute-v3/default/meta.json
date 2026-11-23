@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Learn foreign languages by reading: import texts, look up unknown words, and track how well you know each term in a self-hosted web app.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "LuteOrg",
+    "url": "https://github.com/LuteOrg"
+  },
+  "links": {
+    "github": "https://github.com/LuteOrg/lute-v3",
+    "website": "https://luteorg.github.io/lute-manual/",
+    "docs": [
+      "https://luteorg.github.io/lute-manual/install/install.html#using-docker",
+      "https://hub.docker.com/r/jzohrab/lute3",
+      "https://luteorg.github.io/lute-manual/backup/backup.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Lute is a single-user app with no login: anyone who knows the URL can read and change your data. Keep the domain private or put it behind an authentication layer."
+    }
+  ]
+}
