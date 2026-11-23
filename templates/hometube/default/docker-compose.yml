@@ -1,0 +1,29 @@
+services:
+  hometube:
+    image: ghcr.io/egalitarianmonkey/hometube:2.13.3@sha256:14376a3cd14770679a593a601e923aa78b0a92f6b1bf5c6f24982b5dffc6a119
+    restart: unless-stopped
+    expose:
+      - 8501
+    environment:
+      TZ: ${TZ}
+      UI_LANGUAGE: ${UI_LANGUAGE}
+      LANGUAGE_PRIMARY: ${LANGUAGE_PRIMARY}
+      VIDEO_QUALITY_MAX: ${VIDEO_QUALITY_MAX}
+      VIDEOS_FOLDER: /data/videos
+      TMP_DOWNLOAD_FOLDER: /data/tmp
+      YOUTUBE_COOKIES_FILE_PATH: /config/youtube_cookies.txt
+    volumes:
+      - hometube-videos:/data/videos
+      - hometube-tmp:/data/tmp
+      - hometube-config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8501/_stcore/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  hometube-videos: {}
+  hometube-tmp: {}
+  hometube-config: {}
