@@ -1,0 +1,22 @@
+services:
+  muximux:
+    image: ghcr.io/mescon/muximux:3.7.3@sha256:31a0f6655912c9f0de2259c39f78feaa83267a127384e25e8842fad65faeb766
+    restart: unless-stopped
+    init: true
+    expose:
+      - 8080
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: ${TZ}
+    volumes:
+      - muximux-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  muximux-data: {}
