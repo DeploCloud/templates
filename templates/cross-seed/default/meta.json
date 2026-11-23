@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Daemon that finds cross-seeds for your existing torrents on other trackers through Torznab indexers and injects them into your torrent client, with an HTTP API for webhooks.",
+  "category": "media",
+  "developedBy": {
+    "label": "cross-seed",
+    "url": "https://github.com/cross-seed"
+  },
+  "links": {
+    "github": "https://github.com/cross-seed/cross-seed",
+    "website": "https://www.cross-seed.org",
+    "docs": [
+      "https://www.cross-seed.org/docs/basics/getting-started",
+      "https://www.cross-seed.org/docs/basics/options",
+      "https://www.cross-seed.org/docs/reference/api"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The daemon stays idle until you set TORRENT_CLIENTS (for example qbittorrent:http://user:pass@host:8080) and TORZNAB_URLS (comma-separated Prowlarr or Jackett Torznab URLs with apikey) and redeploy. The torrent client and indexers must be reachable from this server.",
+      "link": "https://www.cross-seed.org/docs/basics/options"
+    },
+    {
+      "type": "info",
+      "message": "Matching runs in strict mode without linking because this stack does not share storage with your torrent client. Edit the mounted config.js to add linkDirs and dataDirs if you mount shared storage."
+    }
+  ]
+}

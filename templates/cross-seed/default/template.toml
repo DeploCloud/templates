@@ -1,0 +1,64 @@
+[variables]
+api_key = "${password:32}"
+
+[config]
+
+[[config.domains]]
+serviceName = "cross-seed"
+port = 2468
+host = "${domain}"
+
+[config.env]
+API_KEY = "${api_key}"
+TORZNAB_URLS = ""
+TORRENT_CLIENTS = ""
+TZ = "UTC"
+
+[[config.mounts]]
+filePath = "config.js"
+content = """// Lists come from comma-separated env vars; edit any other option here.
+// see https://www.cross-seed.org/docs/basics/options
+const list = (v) => (v || "").split(",").map((s) => s.trim()).filter(Boolean);
+const torrentClients = list(process.env.TORRENT_CLIENTS);
+// Without a torrent client the daemon idles with only the API up.
+const ready = torrentClients.length > 0;
+
+module.exports = {
+	apiKey: process.env.API_KEY,
+	torznab: list(process.env.TORZNAB_URLS),
+	sonarr: [],
+	radarr: [],
+	host: "0.0.0.0",
+	port: 2468,
+	notificationWebhookUrls: [],
+	torrentClients,
+	useClientTorrents: ready,
+	delay: 30,
+	dataDirs: [],
+	linkCategory: "cross-seed-link",
+	linkDirs: [],
+	linkType: "hardlink",
+	flatLinking: false,
+	matchMode: "strict",
+	skipRecheck: true,
+	autoResumeMaxDownload: 52428800,
+	ignoreNonRelevantFilesToResume: false,
+	maxDataDepth: 2,
+	torrentDir: null,
+	outputDir: null,
+	includeSingleEpisodes: false,
+	includeNonVideos: false,
+	seasonFromEpisodes: null,
+	fuzzySizeThreshold: 0.02,
+	excludeOlder: "2 weeks",
+	excludeRecentSearch: "3 days",
+	action: ready ? "inject" : "save",
+	duplicateCategories: false,
+	rssCadence: ready ? "30 minutes" : null,
+	searchCadence: ready ? "1 day" : null,
+	snatchTimeout: "30 seconds",
+	searchTimeout: "2 minutes",
+	searchLimit: 400,
+	blockList: [],
+};
+"""

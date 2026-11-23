@@ -1,0 +1,24 @@
+services:
+  cross-seed:
+    image: ghcr.io/cross-seed/cross-seed:6.13.9@sha256:c310f84e040b82c140424f6377fa36487335261037175ef9cec3aefc92b93076
+    restart: unless-stopped
+    command: daemon
+    expose:
+      - 2468
+    environment:
+      API_KEY: "${API_KEY}"
+      TORZNAB_URLS: "${TORZNAB_URLS}"
+      TORRENT_CLIENTS: "${TORRENT_CLIENTS}"
+      TZ: "${TZ}"
+    volumes:
+      - cross-seed-config:/config
+      - ./config.js:/config/config.js:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:2468/api/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  cross-seed-config: {}
