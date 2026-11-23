@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Business intelligence and data visualization platform with dashboards, charts and connectors for ClickHouse, PostgreSQL, MySQL, Trino and more, with built-in user authentication.",
+  "category": "analytics",
+  "developedBy": {
+    "label": "DataLens",
+    "url": "https://github.com/datalens-tech"
+  },
+  "links": {
+    "github": "https://github.com/datalens-tech/datalens",
+    "website": "https://datalens.tech",
+    "docs": [
+      "https://datalens.tech/docs/en/",
+      "https://github.com/datalens-tech/datalens#authentication",
+      "https://github.com/datalens-tech/datalens#faq"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated AUTH_ADMIN_PASSWORD from the environment. Self-signup is turned off, so add further users from the admin panel and grant them the datalens.editor role to let them create objects.",
+      "link": "https://github.com/datalens-tech/datalens#authentication"
+    }
+  ]
+}
