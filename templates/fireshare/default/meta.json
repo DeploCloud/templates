@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted sharing of game clips, videos and images through unique links, with public and private feeds, uploads and multiple users.",
+  "category": "media",
+  "developedBy": {
+    "label": "Fireshare",
+    "url": "https://github.com/fireshare-app"
+  },
+  "links": {
+    "github": "https://github.com/fireshare-app/fireshare",
+    "website": "https://fireshare.net",
+    "docs": [
+      "https://github.com/fireshare-app/fireshare/blob/main/docs/EnvironmentVariables.md",
+      "https://github.com/fireshare-app/fireshare/blob/main/docs/Users.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Log in with the ADMIN_USERNAME and ADMIN_PASSWORD values from the environment. They are re-applied on every start, so change the password there rather than in the app."
+    }
+  ]
+}
