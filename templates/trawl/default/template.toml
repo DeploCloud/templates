@@ -1,0 +1,36 @@
+[variables]
+token = "${hash:48}"
+
+[config]
+
+[[config.domains]]
+serviceName = "trawl-gateway"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "Caddyfile"
+content = """
+{
+	admin off
+	auto_https off
+}
+
+:80 {
+	handle_path /{$TRAWL_TOKEN}/* {
+		reverse_proxy trawl:8191
+	}
+	handle /dashboard* {
+		reverse_proxy trawl:8191
+	}
+	handle {
+		respond "Not Found" 404
+	}
+}
+"""
+
+[config.env]
+TRAWL_TOKEN = "${token}"
+BROWSER_POOL_SIZE = "1"
+MCP_ENABLED = "true"
+LOG_LEVEL = "info"
