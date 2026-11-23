@@ -1,0 +1,15 @@
+[variables]
+api_token = "${password:48}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "certmate"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+API_BEARER_TOKEN = "${api_token}"
+SECRET_KEY = "${hash:64}"
+CERTMATE_BACKUP_PASSPHRASE = "${password:48}"

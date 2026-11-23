@@ -1,0 +1,34 @@
+services:
+  certmate:
+    image: fabriziosalmi/certmate:2.58.0@sha256:ddb4e46abefc2766d5c0faa22a53011163e6cd19f7c74b3164396afe436cc85c
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      API_BEARER_TOKEN: ${API_BEARER_TOKEN}
+      SECRET_KEY: ${SECRET_KEY}
+      CERTMATE_BACKUP_PASSPHRASE: ${CERTMATE_BACKUP_PASSPHRASE}
+      BEHIND_PROXY: "true"
+      PREFERRED_URL_SCHEME: https
+      FLASK_ENV: production
+    volumes:
+      - certmate-certificates:/app/certificates
+      - certmate-data:/app/data
+      - certmate-logs:/app/logs
+      - certmate-backups:/app/backups
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  certmate-certificates: {}
+  certmate-data: {}
+  certmate-logs: {}
+  certmate-backups: {}
