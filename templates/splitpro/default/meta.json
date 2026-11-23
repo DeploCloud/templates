@@ -1,0 +1,30 @@
+{
+  "name": "Default",
+  "shortDescription": "Open-source expense splitting app for groups and friends, with balances, settle-ups, multi-currency expenses, receipt uploads and recurring expenses on PostgreSQL.",
+  "category": "finance",
+  "developedBy": {
+    "label": "OSS Apps",
+    "url": "https://github.com/oss-apps"
+  },
+  "links": {
+    "github": "https://github.com/oss-apps/split-pro",
+    "website": "https://splitpro.app",
+    "docs": [
+      "https://github.com/oss-apps/split-pro/blob/main/docker/README.md",
+      "https://github.com/oss-apps/split-pro/blob/main/docs/CONFIGURATION.md",
+      "https://github.com/oss-apps/split-pro/blob/main/docs/AUTHENTICATION.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "SplitPro has no password login: sign-in uses emailed magic links. Replace the placeholder EMAIL_SERVER_HOST and set EMAIL_SERVER_PORT, EMAIL_SERVER_USER, EMAIL_SERVER_PASSWORD and FROM_EMAIL for a working SMTP server, then redeploy. Google, Authentik, Keycloak or a generic OIDC provider can be added with the variables from the configuration docs.",
+      "link": "https://github.com/oss-apps/split-pro/blob/main/docs/AUTHENTICATION.md"
+    },
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the instance can sign up by email. Set DISABLE_EMAIL_SIGNUP to true after creating your accounts to close registration.",
+      "link": "https://github.com/oss-apps/split-pro/blob/main/docs/CONFIGURATION.md"
+    }
+  ]
+}
