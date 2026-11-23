@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted photo and video gallery with tagging, similar image search, face and object detection, run by a bundled local AI API server.",
+  "category": "media",
+  "developedBy": {
+    "label": "Sebastian Felis",
+    "url": "https://github.com/xemle"
+  },
+  "links": {
+    "github": "https://github.com/xemle/home-gallery",
+    "website": "https://home-gallery.org",
+    "docs": [
+      "https://home-gallery.org/docs/install/docker-compose.html",
+      "https://home-gallery.org/docs/configuration/index.html",
+      "https://home-gallery.org/docs/api-server/index.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with user admin and the generated ADMIN_PASSWORD. The web UI has no upload: copy your photos and videos into the home-gallery-media volume (mounted at /data/Pictures). New files are imported automatically within about 5 minutes.",
+      "link": "https://home-gallery.org/docs/install/docker-compose.html"
+    }
+  ]
+}
