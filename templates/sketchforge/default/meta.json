@@ -1,0 +1,22 @@
+{
+  "name": "Default",
+  "shortDescription": "Browser-based 3D design editor for building shapes, cutting holes, importing STL files and exporting STL, OBJ or STEP models, with a shared project library.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Formsmith746",
+    "url": "https://github.com/Formsmith746"
+  },
+  "links": {
+    "github": "https://github.com/Formsmith746/SketchForge-3D",
+    "website": "https://sketchforge3d.com",
+    "docs": [
+      "https://github.com/Formsmith746/SketchForge-3D#docker--fablab-server-recommended"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "info",
+      "message": "SketchForge has no login: anyone who can open the URL can use the editor and read or save files in the shared project library."
+    }
+  ]
+}

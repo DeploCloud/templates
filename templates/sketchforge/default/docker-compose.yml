@@ -1,0 +1,19 @@
+services:
+  sketchforge:
+    image: ghcr.io/formsmith746/sketchforge-3d:latest@sha256:7d3eac6d30e5c63e898bbe5bba750eb17b5ad224f7667c428dea035a501a3b37
+    restart: unless-stopped
+    expose:
+      - 3000
+    environment:
+      SKETCHFORGE_SHARED_PROJECTS_DIR: /data/projects
+    volumes:
+      - sketchforge-projects:/data/projects
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:3000/api/shared-projects | grep -q '\"enabled\":true'"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  sketchforge-projects: {}
