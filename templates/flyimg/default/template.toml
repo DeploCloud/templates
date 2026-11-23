@@ -1,0 +1,245 @@
+[config]
+
+[[config.domains]]
+serviceName = "flyimg"
+port = 80
+host = "${domain}"
+
+[[config.mounts]]
+filePath = "parameters.yml"
+content = """
+---
+# Debug
+debug: false
+
+# Log level: possible values are: debug, info, notice, warning, error
+log_level: error
+
+# Home page title
+home_page_title: Flyimg
+
+# Enable or disable the demo page (default /)
+# When false, returns an empty page with 200 code
+demo_page_enabled: true
+
+# Application domain name (optional) - used when running in containers to override localhost detection
+# Leave empty to use automatic detection from HTTP headers
+# without trailing slash
+app_domain: 'https://${domain}'
+
+# Number of days for header cache expires `max_age`
+header_cache_days: 365
+
+# To enable the Cleanup Cronjob to purge the var/tmp folder
+enable_cronjob_cleanup: true
+
+# The cronjob interval to cleanup the var/tmp folder
+cronjob_cleanup_interval: "0 */5 * * *"
+
+# Options separator
+# When changing this value, you should change
+# the OPTIONS_SEPARATOR value in web/js/main.js!
+options_separator: ','
+
+# Security: Signature generation
+# Security key
+security_key: ''
+# Secret Initialization vector(IV)
+security_iv: ''
+
+# Restrict domains, false by default
+restricted_domains: false
+
+# If restricted_domains is enabled, put whitelist domains here
+# You can use both exact domain matches and wildcard patterns:
+# - Exact matches: example.com (matches only example.com)
+# - Wildcard patterns: *.example.com (matches any subdomain of example.com)
+whitelist_domains:
+  - domain-1.com
+  - domain-2.com
+  - "*.example.com"
+
+# Default storage system is local, to use AWS S3, change this param to s3
+storage_system: local
+
+# In case storage_system: s3, you need to add those AWS S3 parameters:
+aws_s3:
+  # Traditional AWS credentials (required for non-IRSA setups)
+  access_id: '' # optional when using IRSA (IAM Roles for Service Accounts)
+  secret_key: '' # optional when using IRSA (IAM Roles for Service Accounts)
+  # Required parameters
+  region: 'eu-central-1'
+  bucket_name: ''
+  # Optional parameters
+  # path_prefix: '' # optional
+  #visibility: 'PRIVATE' # options: PUBLIC or PRIVATE
+  #endpoint: 'https://%s.s3.%s.amazonaws.com/' # optional for third party
+  # S3 compatible services, the format is https://<bucket-name>.
+  # s3.<region>.amazonaws.com/
+  # IRSA Note: For EKS/container environments, access_id and secret_key are not needed
+  # when using IAM Roles for Service Accounts. The AWS SDK will automatically
+  # use the role credentials injected by the Kubernetes ServiceAccount.
+
+# Number of threads for Imagemagick to use
+thread: 1
+
+# For Avif format: conversion speed parameter for the HEIF library.
+heic_speed: 8
+
+# For Webp format: enable multi-threaded encoding: 0 = disabled, 1 = enabled.
+webp_threads: 1
+
+# Read source image timeout in seconds
+source_image_request_timeout: 5
+
+# When set to true the generated image will be deleted
+# from the cache in web/upload and served directly in the response
+disable_cache: false
+
+# When supported by the browser, AVIF format will be served as default output
+enable_avif: true
+
+# When supported by the browser, Webp format will be served
+# as default output (after checking AVIF support)
+enable_webp: true
+
+# Enable JPEG XL auto output when browser supports it
+enable_jxl: true
+
+# Extra options for the header sent to source image server,
+# as some servers requires the User-Agent.
+header_extra_options:
+  - 'User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2)
+     Gecko/20110201'
+
+# List of request header to forward to source image server
+# (example Authorization)
+forward_request_headers: [ ]
+
+# Rate Limiting
+# Enable or disable rate limiting (default: false)
+rate_limit_enabled: false
+
+## Rate limit storage backend: 'file' or 'redis'
+## - 'file': Stores rate limit data in files (persistent, suitable for single-instance, default)
+## - 'redis': Stores rate limit data in Redis (persistent, suitable for multi-instance, recommended for production)
+# rate_limit_storage: file
+
+## Optional: Rate limit instance-group identifier
+## All replicas of the same deployment should share this value.
+## Different environments or deployments should use different values to avoid sharing
+## rate limit counters when using Redis storage.
+# rate_limit_instance_id: 'my-deployment-id'
+
+## Redis configuration (only used when rate_limit_storage is 'redis')
+## Optional: Redis connection configuration
+## Uncomment and configure if using Redis storage
+# rate_limit_redis:
+#   host: 'localhost'
+#   port: 6379
+#   scheme: 'tcp'
+#   # Or use connection URL:
+#   # url: 'redis://localhost:6379'
+
+## Rate limit intervals: list of { value, unit, requests }.
+## value: number; unit: minute|hour|day|month (singular or plural); requests: max requests in that window.
+## At least one limit is required when rate limiting is enabled.
+# rate_limit_limits:
+#   - { value: 1, unit: minute, requests: 100 }
+#   - { value: 1, unit: hour, requests: 1000 }
+#   - { value: 30, unit: day, requests: 10000 }
+
+# Keys used in url to match options. Ex: q_80,w_200,h_100
+options_keys:
+  q: quality
+  o: output
+  unsh: unsharp
+  sh: sharpen
+  blr: blur
+  fc: face-crop
+  fcp: face-crop-position
+  fb: face-blur
+  w: width
+  h: height
+  c: crop
+  bg: background
+  st: strip
+  ao: auto-orient
+  rz: resize
+  g: gravity
+  f: filter
+  r: rotate
+  t: text
+  tc: text-color
+  ts: text-size
+  tbg: text-bg
+  sc: scale
+  sf: sampling-factor
+  rf: refresh
+  smc: smart-crop
+  ett: extent
+  par: preserve-aspect-ratio
+  pns: preserve-natural-size
+  webpl: webp-lossless
+  webpm: webp-method
+  jxlef: jxl-effort
+  jxlds: jxl-decoding-speed
+  gf: gif-frame
+  e: extract
+  p1x: extract-top-x
+  p1y: extract-top-y
+  p2x: extract-bottom-x
+  p2y: extract-bottom-y
+  pdfp: pdf-page-number
+  dnst: density
+  tm: time
+  clsp: colorspace
+  mnchr: monochrome
+
+# Default options values
+default_options:
+  quality: 90
+  output: auto
+  unsharp: null
+  sharpen: null
+  blur: null
+  face-crop: 0
+  face-crop-position: 0
+  face-blur: 0
+  width: null
+  height: null
+  crop: null
+  background: null
+  strip: 1
+  auto-orient: 0
+  resize: null
+  filter: Lanczos
+  rotate: null
+  text: null
+  text-color: white
+  text-size: 14
+  text-bg: null
+  gravity: Center
+  scale: null
+  sampling-factor: 1x1
+  refresh: false
+  smart-crop: false
+  extent: null
+  preserve-aspect-ratio: 1
+  preserve-natural-size: 1
+  webp-lossless: 0
+  webp-method: 4
+  jxl-effort: 5
+  jxl-decoding-speed: null
+  gif-frame: 0
+  extract: null
+  extract-top-x: null
+  extract-top-y: null
+  extract-bottom-x: null
+  extract-bottom-y: null
+  pdf-page-number: 1
+  time: '00:00:01'
+  colorspace: 'sRGB'
+  monochrome: null
+  density: 72
+"""
