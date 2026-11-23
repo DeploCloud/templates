@@ -1,0 +1,25 @@
+[variables]
+db_password = "${password:32}"
+redis_password = "${password:32}"
+meili_master_key = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "open-archiver"
+port = 3_000
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+POSTGRES_DB = "open_archive"
+POSTGRES_USER = "openarchiver"
+POSTGRES_PASSWORD = "${db_password}"
+REDIS_PASSWORD = "${redis_password}"
+MEILI_MASTER_KEY = "${meili_master_key}"
+JWT_SECRET = "${secret:64}"
+ENCRYPTION_KEY = "${hash:64}"
+STORAGE_ENCRYPTION_KEY = "${hash:64}"
+BODY_SIZE_LIMIT = "100M"
+ENABLE_DELETION = "false"
