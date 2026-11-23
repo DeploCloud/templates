@@ -1,0 +1,22 @@
+services:
+  subwave:
+    image: ghcr.io/perminder-klair/subwave-aio:1.34.0@sha256:3c9021d7ac9716f1a6e07e6e285cbcda7d1ca755802f6c9c06ef5b9965009fac
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASS: ${ADMIN_PASS}
+      SITE_URL: ${SITE_URL}
+      TZ: ${TZ}
+    volumes:
+      - subwave-state:/var/sub-wave
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:80/api/health > /dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 60s
+
+volumes:
+  subwave-state: {}

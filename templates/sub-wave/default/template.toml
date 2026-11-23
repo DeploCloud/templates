@@ -1,0 +1,16 @@
+[variables]
+admin_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "subwave"
+port = 80
+host = "${domain}"
+
+[config.env]
+ADMIN_USER = "admin"
+ADMIN_PASS = "${admin_password}"
+SITE_URL = "https://${domain}"
+TZ = "Etc/UTC"
