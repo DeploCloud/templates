@@ -1,0 +1,27 @@
+{
+  "name": "Default",
+  "shortDescription": "Amazon S3-compatible object storage server with a local file backend for data and metadata, protected by a generated access key pair.",
+  "category": "storage",
+  "developedBy": {
+    "label": "Scality",
+    "url": "https://github.com/scality"
+  },
+  "links": {
+    "github": "https://github.com/scality/cloudserver",
+    "website": "https://www.zenko.io/cloudserver/",
+    "docs": [
+      "https://s3-server.readthedocs.io/en/latest/DOCKER.html",
+      "https://s3-server.readthedocs.io/en/latest/GETTING_STARTED.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web interface. Connect an S3 client to https://<your domain> with path-style addressing and region us-east-1, using the SCALITY_ACCESS_KEY_ID and SCALITY_SECRET_ACCESS_KEY values from the environment."
+    },
+    {
+      "type": "info",
+      "message": "This image runs on x86_64 servers only."
+    }
+  ]
+}

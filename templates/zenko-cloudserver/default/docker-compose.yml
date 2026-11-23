@@ -1,0 +1,24 @@
+services:
+  cloudserver:
+    image: ghcr.io/scality/cloudserver:9.5.7@sha256:c9807719bb38bcd4a6a15ac9d55d657942a5356f96028ef9286304e806132796
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      ENDPOINT: ${ENDPOINT}
+      SCALITY_ACCESS_KEY_ID: ${SCALITY_ACCESS_KEY_ID}
+      SCALITY_SECRET_ACCESS_KEY: ${SCALITY_SECRET_ACCESS_KEY}
+      LOG_LEVEL: ${LOG_LEVEL}
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('net').connect(8000, '127.0.0.1').on('connect', () => process.exit(0)).on('error', () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - cloudserver-data:/usr/src/app/localData
+      - cloudserver-metadata:/usr/src/app/localMetadata
+
+volumes:
+  cloudserver-data: {}
+  cloudserver-metadata: {}

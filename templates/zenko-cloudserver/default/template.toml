@@ -1,0 +1,17 @@
+[variables]
+access_key = "${hash:20}"
+secret_key = "${password:40}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cloudserver"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+ENDPOINT = "${domain}"
+SCALITY_ACCESS_KEY_ID = "${access_key}"
+SCALITY_SECRET_ACCESS_KEY = "${secret_key}"
+LOG_LEVEL = "info"
