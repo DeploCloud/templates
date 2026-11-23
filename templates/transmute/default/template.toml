@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "transmute"
+port = 3_313
+host = "${domain}"
+
+[config.env]
+APP_URL = "https://${domain}"
+AUTH_SECRET_KEY = "${secret:64}"

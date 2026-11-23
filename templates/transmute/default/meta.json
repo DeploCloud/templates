@@ -1,0 +1,26 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted file converter and compressor for images, video, audio, documents, spreadsheets, subtitles and fonts, with user accounts and a REST API.",
+  "category": "productivity",
+  "developedBy": {
+    "label": "Transmute",
+    "url": "https://github.com/transmute-app"
+  },
+  "links": {
+    "github": "https://github.com/transmute-app/transmute",
+    "website": "https://transmute.sh",
+    "docs": [
+      "https://transmute.sh/docs/getting-started/",
+      "https://transmute.sh/docs/authentication/",
+      "https://transmute.sh/docs/environment-variables/",
+      "https://transmute.sh/docs/oidc/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "The first visitor sees a Create Admin form and that account becomes the administrator. Open the app right after deployment to claim it.",
+      "link": "https://transmute.sh/docs/authentication/"
+    }
+  ]
+}
