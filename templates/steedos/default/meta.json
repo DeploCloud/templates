@@ -1,0 +1,24 @@
+{
+  "name": "Default",
+  "shortDescription": "Metadata-driven low-code platform for building enterprise apps with objects, workflows and approvals, bundled with MongoDB, Redis and Node-RED.",
+  "category": "development",
+  "developedBy": {
+    "label": "Steedos",
+    "url": "https://www.steedos.com"
+  },
+  "links": {
+    "github": "https://github.com/steedos/steedos-platform",
+    "website": "https://www.steedos.com",
+    "docs": [
+      "https://docs.steedos.com/deploy/deploy-docker",
+      "https://docs.steedos.com/deploy/steedos-config"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Open the app right after deployment and register: the first account creates the organization and becomes its administrator. The first start takes a few minutes while the database is initialized.",
+      "link": "https://docs.steedos.com/deploy/deploy-docker"
+    }
+  ]
+}
