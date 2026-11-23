@@ -1,0 +1,15 @@
+[variables]
+rest_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "restic-rest-server"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+REST_USER = "restic"
+REST_PASSWORD = "${rest_password}"
+OPTIONS = ""
