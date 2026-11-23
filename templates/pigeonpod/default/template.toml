@@ -1,0 +1,11 @@
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "pigeonpod"
+port = 8_080
+host = "${domain}"
+
+[config.env]
+SPRING_DATASOURCE_URL = "jdbc:sqlite:/data/pigeon-pod.db"
+PIGEON_BASE_URL = "https://${domain}"

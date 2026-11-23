@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "shortDescription": "Turns YouTube and Bilibili channels and playlists into podcast RSS feeds, downloading episodes as audio or video with yt-dlp.",
+  "category": "media",
+  "developedBy": {
+    "label": "aizhimou",
+    "url": "https://github.com/aizhimou"
+  },
+  "links": {
+    "github": "https://github.com/aizhimou/pigeon-pod",
+    "website": "https://pigeonpod.cloud",
+    "docs": [
+      "https://github.com/aizhimou/pigeon-pod/wiki/Quick-Start",
+      "https://github.com/aizhimou/pigeon-pod/wiki/Installation",
+      "https://github.com/aizhimou/pigeon-pod/wiki/Configuration-Overview"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in with the default account root / Root@123 and change the password right away. YouTube subscriptions also need a YouTube Data API v3 key set in User Settings.",
+      "link": "https://github.com/aizhimou/pigeon-pod/wiki/YouTube-API-Key-Setup"
+    }
+  ]
+}
