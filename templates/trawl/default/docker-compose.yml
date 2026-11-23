@@ -1,0 +1,54 @@
+services:
+  trawl:
+    image: ghcr.io/germondai/trawl:1.11.1@sha256:f41dac1727c7d0c6d18381279792d89704b36ccfee537262118c7ee32d293ba8
+    restart: unless-stopped
+    expose:
+      - 8191
+    shm_size: 1gb
+    environment:
+      SESSION_CACHE_DRIVER: redis
+      REDIS_URL: redis://trawl-redis:6379
+      BROWSER_POOL_SIZE: ${BROWSER_POOL_SIZE}
+      MCP_ENABLED: ${MCP_ENABLED}
+      METRICS_DASHBOARD_TOKEN: ${TRAWL_TOKEN}
+      LOG_LEVEL: ${LOG_LEVEL}
+    volumes:
+      - trawl-metrics:/data/metrics
+    depends_on:
+      trawl-redis:
+        condition: service_healthy
+    # /health answers 503 until a browser is warm
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "-o", "/dev/null", "http://localhost:8191/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  trawl-redis:
+    image: redis:8.10.3-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    restart: unless-stopped
+    volumes:
+      - trawl-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # TRAWL has no API authentication, so the public route only answers under the secret token path
+  trawl-gateway:
+    image: caddy:2.11.9-alpine@sha256:003a97808e781aa9f7e75cc2f43d34d461099031faf5e20faefb9f61126836f0
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      TRAWL_TOKEN: ${TRAWL_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - trawl
+
+volumes:
+  trawl-metrics: {}
+  trawl-redis-data: {}

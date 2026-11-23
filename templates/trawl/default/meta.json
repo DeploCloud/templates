@@ -1,0 +1,32 @@
+{
+  "name": "Default",
+  "shortDescription": "Self-hosted scraping engine that passes Cloudflare and other browser challenges and CAPTCHAs, with a native scrape API, a FlareSolverr-compatible /v1 endpoint, MCP tools for AI agents and a metrics dashboard.",
+  "category": "networking",
+  "developedBy": {
+    "label": "germondai",
+    "url": "https://github.com/germondai"
+  },
+  "links": {
+    "github": "https://github.com/germondai/trawl",
+    "website": "https://trawl.germondai.com",
+    "docs": [
+      "https://docs.trawl.germondai.com/getting-started/quick-start",
+      "https://docs.trawl.germondai.com/getting-started/configuration",
+      "https://docs.trawl.germondai.com/api-reference/native-api",
+      "https://docs.trawl.germondai.com/integrations/prowlarr",
+      "https://docs.trawl.germondai.com/integrations/mcp"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "TRAWL has no API authentication, so this template only answers under a secret path. Use https://<your-domain>/<TRAWL_TOKEN>/ as the FlareSolverr URL in Prowlarr or Jackett, https://<your-domain>/<TRAWL_TOKEN>/scrape for the native API and https://<your-domain>/<TRAWL_TOKEN>/mcp as the MCP endpoint, where the token is the generated value in the environment settings. The dashboard at https://<your-domain>/dashboard asks for the same token. Keep it private: anyone who has it can make the server browse any URL.",
+      "link": "https://docs.trawl.germondai.com/api-reference/overview"
+    },
+    {
+      "type": "info",
+      "message": "On x86_64 servers the standard image needs a CPU with AVX2. On older CPUs or NAS hardware, switch the trawl image to ghcr.io/germondai/trawl:1.11.1-baseline.",
+      "link": "https://docs.trawl.germondai.com/deployment/standalone"
+    }
+  ]
+}
