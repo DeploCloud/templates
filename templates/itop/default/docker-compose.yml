@@ -1,0 +1,58 @@
+services:
+  itop:
+    image: supervisions/itop:3.3.0@sha256:d3bbc8ef707ae835cc0b2c175704add6b0aa490a2017e6eaab7e7810c1f7f7be
+    restart: unless-stopped
+    expose:
+      - 80
+    volumes:
+      - itop-conf:/var/www/html/conf
+      - itop-data:/var/www/html/data
+      - itop-env:/var/www/html/env-production
+      - itop-log:/var/www/html/log
+    depends_on:
+      itop-db:
+        condition: service_healthy
+
+  # runs iTop background tasks; cron.php exits on its own, so it is looped
+  itop-cron:
+    image: supervisions/itop:3.3.0@sha256:d3bbc8ef707ae835cc0b2c175704add6b0aa490a2017e6eaab7e7810c1f7f7be
+    restart: unless-stopped
+    user: www-data
+    entrypoint: ["sh", "-c"]
+    command:
+      - while true; do php webservices/cron.php --auth_user="$$ITOP_ADMIN_USER" --auth_pwd="$$ITOP_ADMIN_PASSWORD"; sleep 60; done
+    environment:
+      ITOP_ADMIN_USER: ${ITOP_ADMIN_USER}
+      ITOP_ADMIN_PASSWORD: ${ITOP_ADMIN_PASSWORD}
+    volumes:
+      - itop-conf:/var/www/html/conf
+      - itop-data:/var/www/html/data
+      - itop-env:/var/www/html/env-production
+      - itop-log:/var/www/html/log
+    depends_on:
+      itop-db:
+        condition: service_healthy
+
+  itop-db:
+    image: mariadb:11.8.9@sha256:e1d5495f445654134f226f55a41ce0da227116f6f27f283101f405c794d841fc
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: itop
+      MARIADB_USER: itop
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - itop-db:/var/lib/mysql
+
+volumes:
+  itop-conf: {}
+  itop-data: {}
+  itop-env: {}
+  itop-log: {}
+  itop-db: {}
