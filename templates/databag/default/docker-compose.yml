@@ -1,0 +1,19 @@
+services:
+  databag:
+    image: balzack/databag:0.1.18@sha256:37c4ab38f64842afa44ed8aea0e47271112795180708f0cb7be8ee7c7defebac
+    restart: unless-stopped
+    expose:
+      - 7000
+    environment:
+      ADMIN: ${ADMIN}
+    volumes:
+      - databag-data:/var/lib/databag
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:7000/admin/status || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  databag-data: {}
