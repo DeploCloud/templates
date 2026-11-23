@@ -1,0 +1,28 @@
+services:
+  dumbassets:
+    image: dumbwareio/dumbassets:1.0.11@sha256:1bbe3a1c4aa404f3cbd9641cbf7ef24dfd3f4f09a92570eecc88d48de31517ab
+    restart: unless-stopped
+    expose:
+      - 3000
+    volumes:
+      - dumbassets-data:/app/data
+    environment:
+      NODE_ENV: production
+      BASE_URL: ${BASE_URL}
+      SESSION_SECRET: ${SESSION_SECRET}
+      DUMBASSETS_PIN: ${DUMBASSETS_PIN}
+      SITE_TITLE: ${SITE_TITLE}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      APPRISE_URL: ${APPRISE_URL}
+      CURRENCY_CODE: ${CURRENCY_CODE}
+      CURRENCY_LOCALE: ${CURRENCY_LOCALE}
+      TZ: ${TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/pin-length || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  dumbassets-data: {}
