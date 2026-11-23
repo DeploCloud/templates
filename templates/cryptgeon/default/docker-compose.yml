@@ -1,0 +1,37 @@
+services:
+  cryptgeon:
+    image: cupcakearmy/cryptgeon:2.9.3@sha256:0344b34ba5375b9cb5bc6740fd35d075d2a581ddb0fcd30e0494c62ba3408e87
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      REDIS: ${REDIS_URL}
+      SIZE_LIMIT: ${SIZE_LIMIT}
+      MAX_VIEWS: ${MAX_VIEWS}
+      MAX_EXPIRATION: ${MAX_EXPIRATION}
+      ALLOW_FILES: ${ALLOW_FILES}
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8000/api/live"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      cryptgeon-valkey:
+        condition: service_healthy
+
+  cryptgeon-valkey:
+    image: valkey/valkey:9.1.4-alpine@sha256:56729e68bdda139cbd3f6a2538683dc3523325fc5711ea1a379938f1b37893f0
+    restart: unless-stopped
+    # notes stay in RAM only, by upstream design
+    command: ["valkey-server", "--requirepass", "${VALKEY_PASSWORD}", "--save", "", "--appendonly", "no"]
+    environment:
+      REDISCLI_AUTH: ${VALKEY_PASSWORD}
+    tmpfs:
+      - /data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s

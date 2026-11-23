@@ -1,0 +1,18 @@
+[variables]
+valkey_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "cryptgeon"
+port = 8_000
+host = "${domain}"
+
+[config.env]
+VALKEY_PASSWORD = "${valkey_password}"
+REDIS_URL = "redis://:${valkey_password}@cryptgeon-valkey:6379/"
+SIZE_LIMIT = "4 MiB"
+MAX_VIEWS = "100"
+MAX_EXPIRATION = "360"
+ALLOW_FILES = "true"
