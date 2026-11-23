@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Tabby terminal served as a web app with OAuth login, per-user config sync and a MariaDB database.",
+  "category": "development",
+  "developedBy": {
+    "label": "Eugeny",
+    "url": "https://github.com/Eugeny"
+  },
+  "links": {
+    "github": "https://github.com/Eugeny/tabby-web",
+    "website": "https://tabby.sh",
+    "docs": [
+      "https://github.com/Eugeny/tabby-web#readme",
+      "https://github.com/Eugeny/tabby-web/blob/master/docs/DEPLOYMENT.md"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Login needs at least one OAuth provider. Fill the GitHub, GitLab, Google, Microsoft or OIDC key and secret variables and redeploy; the callback URL is https://<your-domain>/api/1/auth/social/complete/<provider>/ (github, gitlab, google-oauth2, microsoft-graph or oidc). Every account that can sign in with a configured provider gets its own Tabby Web account, so use an OIDC provider you control to limit who can log in.",
+      "link": "https://github.com/Eugeny/tabby-web#authentication-providers"
+    },
+    {
+      "type": "info",
+      "message": "SSH and Telnet connections go through a separate tabby-connection-gateway; enter its address and token in the Tabby settings after logging in.",
+      "link": "https://github.com/Eugeny/tabby-connection-gateway"
+    }
+  ]
+}

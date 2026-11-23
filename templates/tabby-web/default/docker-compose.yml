@@ -1,0 +1,53 @@
+services:
+  tabby-web:
+    image: ghcr.io/eugeny/tabby-web:latest@sha256:f2260273b5f03d7d12ab0e0a7cf003a04a7cadbabc8e6c2444cc06cc0e62d326
+    restart: unless-stopped
+    expose:
+      - 80
+    environment:
+      PORT: "80"
+      DATABASE_URL: mysql://tabby:${DB_PASSWORD}@tabby-web-db:3306/tabby
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      SOCIAL_AUTH_GITHUB_KEY: ${SOCIAL_AUTH_GITHUB_KEY}
+      SOCIAL_AUTH_GITHUB_SECRET: ${SOCIAL_AUTH_GITHUB_SECRET}
+      SOCIAL_AUTH_GITLAB_KEY: ${SOCIAL_AUTH_GITLAB_KEY}
+      SOCIAL_AUTH_GITLAB_SECRET: ${SOCIAL_AUTH_GITLAB_SECRET}
+      SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: ${SOCIAL_AUTH_GOOGLE_OAUTH2_KEY}
+      SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: ${SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET}
+      SOCIAL_AUTH_MICROSOFT_GRAPH_KEY: ${SOCIAL_AUTH_MICROSOFT_GRAPH_KEY}
+      SOCIAL_AUTH_MICROSOFT_GRAPH_SECRET: ${SOCIAL_AUTH_MICROSOFT_GRAPH_SECRET}
+      SOCIAL_AUTH_OIDC_OIDC_ENDPOINT: ${SOCIAL_AUTH_OIDC_OIDC_ENDPOINT}
+      SOCIAL_AUTH_OIDC_KEY: ${SOCIAL_AUTH_OIDC_KEY}
+      SOCIAL_AUTH_OIDC_SECRET: ${SOCIAL_AUTH_OIDC_SECRET}
+    volumes:
+      - tabby-web-dist:/app-dist
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1/api/1/auth/providers || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      tabby-web-db:
+        condition: service_healthy
+
+  tabby-web-db:
+    image: mariadb:10.11.19@sha256:e5fe75b2b9de0eb9f6f9a4d9c97272fb3a7480e389ccd487a786bab2a12cc0d7
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: tabby
+      MARIADB_USER: tabby
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - tabby-web-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  tabby-web-dist: {}
+  tabby-web-db: {}

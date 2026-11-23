@@ -1,0 +1,27 @@
+[variables]
+db_password = "${password:32}"
+db_root_password = "${password:32}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "tabby-web"
+port = 80
+host = "${domain}"
+
+[config.env]
+DB_PASSWORD = "${db_password}"
+DB_ROOT_PASSWORD = "${db_root_password}"
+DJANGO_SECRET_KEY = "${secret:64}"
+SOCIAL_AUTH_GITHUB_KEY = ""
+SOCIAL_AUTH_GITHUB_SECRET = ""
+SOCIAL_AUTH_GITLAB_KEY = ""
+SOCIAL_AUTH_GITLAB_SECRET = ""
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ""
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ""
+SOCIAL_AUTH_MICROSOFT_GRAPH_KEY = ""
+SOCIAL_AUTH_MICROSOFT_GRAPH_SECRET = ""
+SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = ""
+SOCIAL_AUTH_OIDC_KEY = ""
+SOCIAL_AUTH_OIDC_SECRET = ""
