@@ -1,0 +1,29 @@
+{
+  "name": "Default",
+  "shortDescription": "Shared budget manager for tracking who paid what in a group and settling debts, with a persistent SQLite database.",
+  "category": "finance",
+  "developedBy": {
+    "label": "Spiral Project",
+    "url": "https://github.com/spiral-project"
+  },
+  "links": {
+    "github": "https://github.com/spiral-project/ihatemoney",
+    "website": "https://ihatemoney.org",
+    "docs": [
+      "https://ihatemoney.readthedocs.io/en/latest/installation.html",
+      "https://ihatemoney.readthedocs.io/en/latest/configuration.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Anyone who can reach the URL can create a project. Restricting creation needs a hashed ADMIN_PASSWORD (from `ihatemoney generate_password_hash`, with every $ escaped as $$) added to the service environment and ALLOW_PUBLIC_PROJECT_CREATION set to False.",
+      "link": "https://ihatemoney.readthedocs.io/en/latest/configuration.html#admin-password"
+    },
+    {
+      "type": "warning",
+      "message": "Invitation and password reminder emails need an SMTP server: set the MAIL_* variables before using them.",
+      "link": "https://ihatemoney.readthedocs.io/en/latest/configuration.html#configuring-email-sending"
+    }
+  ]
+}
