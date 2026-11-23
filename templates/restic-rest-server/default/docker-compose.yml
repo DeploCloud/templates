@@ -1,0 +1,19 @@
+services:
+  restic-rest-server:
+    image: restic/rest-server:0.14.0@sha256:d2aff06f47eb38637dff580c3e6bce4af98f386c396a25d32eb6727ec96214a5
+    restart: unless-stopped
+    command:
+      - /bin/sh
+      - -c
+      - (umask 027 && touch "$$PASSWORD_FILE") && create_user "$$REST_USER" "$$REST_PASSWORD" && exec /entrypoint.sh
+    expose:
+      - 8000
+    environment:
+      REST_USER: ${REST_USER}
+      REST_PASSWORD: ${REST_PASSWORD}
+      OPTIONS: ${OPTIONS}
+    volumes:
+      - restic-rest-server-data:/data
+
+volumes:
+  restic-rest-server-data: {}

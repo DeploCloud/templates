@@ -1,0 +1,23 @@
+{
+  "name": "Default",
+  "shortDescription": "HTTP server implementing restic's REST backend API, storing encrypted restic backup repositories behind basic authentication.",
+  "category": "storage",
+  "developedBy": {
+    "label": "restic",
+    "url": "https://restic.net/"
+  },
+  "links": {
+    "github": "https://github.com/restic/rest-server",
+    "website": "https://restic.net/",
+    "docs": [
+      "https://github.com/restic/rest-server#docker",
+      "https://restic.readthedocs.io/en/latest/030_preparing_a_new_repo.html#rest-server"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "There is no web interface. Point the restic client at rest:https://REST_USER:REST_PASSWORD@your-domain/ using the generated credentials from the environment variables."
+    }
+  ]
+}
