@@ -1,0 +1,16 @@
+services:
+  netronome:
+    image: ghcr.io/autobrr/netronome:v0.17.0@sha256:6fca12258fd3290e532c49d6853f8078db4af8fd9602fe085168b812fffb14f5
+    restart: unless-stopped
+    expose:
+      - 7575
+    environment:
+      NETRONOME__HOST: 0.0.0.0
+      NETRONOME__PORT: "7575"
+      NETRONOME__DB_PATH: /data/netronome.db
+      NETRONOME__SESSION_SECRET: ${SESSION_SECRET}
+    volumes:
+      - netronome-data:/data
+
+volumes:
+  netronome-data: {}

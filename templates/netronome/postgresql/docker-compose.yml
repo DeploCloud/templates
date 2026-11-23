@@ -1,0 +1,41 @@
+services:
+  netronome:
+    image: ghcr.io/autobrr/netronome:v0.17.0@sha256:6fca12258fd3290e532c49d6853f8078db4af8fd9602fe085168b812fffb14f5
+    restart: unless-stopped
+    expose:
+      - 7575
+    environment:
+      NETRONOME__HOST: 0.0.0.0
+      NETRONOME__PORT: "7575"
+      NETRONOME__SESSION_SECRET: ${SESSION_SECRET}
+      NETRONOME__DB_TYPE: postgres
+      NETRONOME__DB_HOST: netronome-db
+      NETRONOME__DB_PORT: "5432"
+      NETRONOME__DB_USER: netronome
+      NETRONOME__DB_PASSWORD: ${DB_PASSWORD}
+      NETRONOME__DB_NAME: netronome
+      NETRONOME__DB_SSLMODE: disable
+    volumes:
+      - netronome-data:/data
+    depends_on:
+      netronome-db:
+        condition: service_healthy
+
+  netronome-db:
+    image: postgres:17.12-alpine@sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: netronome
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: netronome
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U netronome -d netronome"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - netronome-db:/var/lib/postgresql/data
+
+volumes:
+  netronome-data: {}
+  netronome-db: {}

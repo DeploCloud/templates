@@ -1,0 +1,13 @@
+[variables]
+session_secret = "${password:64}"
+
+[config]
+mounts = []
+
+[[config.domains]]
+serviceName = "netronome"
+port = 7_575
+host = "${domain}"
+
+[config.env]
+SESSION_SECRET = "${session_secret}"

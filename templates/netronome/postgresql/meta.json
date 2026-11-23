@@ -1,0 +1,25 @@
+{
+  "name": "PostgreSQL",
+  "shortDescription": "Netronome network speed testing and monitoring with its data stored in a dedicated PostgreSQL 17 database instead of SQLite.",
+  "category": "monitoring",
+  "developedBy": {
+    "label": "autobrr",
+    "url": "https://github.com/autobrr"
+  },
+  "links": {
+    "github": "https://github.com/autobrr/netronome",
+    "website": "https://netrono.me",
+    "docs": [
+      "https://netrono.me/configuration/database/",
+      "https://netrono.me/getting-started/first-run/",
+      "https://netrono.me/reference/environment-variables/"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Netronome has no default account. Open the app right after deployment and register the first user; registration closes once a user exists.",
+      "link": "https://netrono.me/getting-started/first-run/"
+    }
+  ]
+}
