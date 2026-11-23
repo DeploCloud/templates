@@ -1,0 +1,34 @@
+{
+  "name": "Default",
+  "shortDescription": "Gerrit Code Review server for Git-based code review, behind an nginx proxy that handles sign-in with HTTP basic auth.",
+  "category": "development",
+  "developedBy": {
+    "label": "Gerrit Code Review",
+    "url": "https://www.gerritcodereview.com/"
+  },
+  "links": {
+    "github": "https://github.com/GerritCodeReview/gerrit",
+    "website": "https://www.gerritcodereview.com/",
+    "docs": [
+      "https://gerrit-review.googlesource.com/Documentation/index.html",
+      "https://github.com/GerritCodeReview/docker-gerrit",
+      "https://gerrit-review.googlesource.com/Documentation/config-sso.html"
+    ]
+  },
+  "alerts": [
+    {
+      "type": "warning",
+      "message": "Sign in as admin with the generated password stored after {PLAIN} in the gerrit.htpasswd mount. The first account to sign in becomes the Gerrit administrator, so sign in as admin right after the first start. Add one user:{PLAIN}password line per user to that mount and redeploy.",
+      "link": "https://gerrit-review.googlesource.com/Documentation/config-sso.html"
+    },
+    {
+      "type": "warning",
+      "message": "Outgoing email is not configured, so users cannot confirm email addresses. Set the [sendemail] section in /var/gerrit/etc/gerrit.config, or have an administrator add user emails through the REST API.",
+      "link": "https://gerrit-review.googlesource.com/Documentation/config-gerrit.html"
+    },
+    {
+      "type": "info",
+      "message": "The SSH port 29418 is not published. Use Git over HTTPS with the HTTP password generated under Settings > HTTP Credentials."
+    }
+  ]
+}

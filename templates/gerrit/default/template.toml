@@ -1,0 +1,48 @@
+[variables]
+admin_user = "admin"
+admin_password = "${password:24}"
+
+[config]
+
+[[config.domains]]
+serviceName = "gerrit-proxy"
+port = 80
+host = "${domain}"
+
+[config.env]
+CANONICAL_WEB_URL = "https://${domain}/"
+HTTPD_LISTEN_URL = "proxy-https://*:8080/"
+
+[[config.mounts]]
+filePath = "gerrit.htpasswd"
+content = """${admin_user}:{PLAIN}${admin_password}
+"""
+
+[[config.mounts]]
+filePath = "gerrit-proxy.conf"
+content = """server {
+  listen 80;
+  client_max_body_size 0;
+  proxy_request_buffering off;
+  proxy_buffering off;
+  proxy_read_timeout 600s;
+  proxy_http_version 1.1;
+  proxy_set_header Host $host;
+  proxy_set_header X-Forwarded-For $remote_addr;
+
+  # re-resolve so a recreated gerrit container is picked up
+  resolver 127.0.0.11 valid=10s ipv6=off;
+  set $gerrit http://gerrit:8080;
+
+  # Gerrit trusts the Authorization header only on its sign-in servlet
+  location ^~ /login {
+    auth_basic "Gerrit Code Review";
+    auth_basic_user_file /etc/nginx/gerrit.htpasswd;
+    proxy_pass $gerrit;
+  }
+
+  location / {
+    proxy_pass $gerrit;
+  }
+}
+"""
